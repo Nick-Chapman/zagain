@@ -4,7 +4,4 @@
 stack.yaml.lock
 .markdown-preview.html
 story/
-c/hello.exe
-c/hello.html
-c/hello.js
-c/hello.wasm
+c/_build

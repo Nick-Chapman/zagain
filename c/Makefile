@@ -1,17 +1,21 @@
 
-top: run-node-hello
+top: _build/hello.js _build/goodbye.js
 
 GCC_FLAGS = -Wall -Werror
 
-run-native-%: %.exe
-	./$^
+.SECONDARY:
 
-%.exe : %.c
+run-native-%: _build/%.exe
+	$^
+
+run-node-%: _build/%.js
+	node $^
+
+_build/%.exe : %.c .dir
 	gcc $(GCC_FLAGS) $< -o $@
 
+_build/%.js : %.c .dir
+	emcc $< -o $@
 
-run-node-%: %.js
-	node ./$^
-
-hello.js : hello.c
-	emcc hello.c -o hello.html
+.dir:
+	mkdir -p _build
