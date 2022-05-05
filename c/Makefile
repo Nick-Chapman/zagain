@@ -17,5 +17,8 @@ _build/%.exe : %.c .dir
 _build/%.js : %.c .dir
 	emcc $< -o $@
 
+_build/%.js : %.cpp .dir
+	emcc $< -o $@
+
 .dir:
 	mkdir -p _build
