@@ -1,5 +1,5 @@
 
-top: _build/hello.js _build/goodbye.js
+top: _build/hello.js _build/goodbye.js _build/cube.js _build/mine.js
 
 GCC_FLAGS = -Wall -Werror
 
