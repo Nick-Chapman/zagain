@@ -1,5 +1,5 @@
 
-module Dis (run) where
+module Dis (run1,run) where
 
 import Prelude hiding (Word)
 
@@ -12,6 +12,13 @@ import Text.Printf (printf)
 import qualified Instruction (pretty)
 
 type Word = Word16
+
+run1 :: IO () -- for current "make" regression
+run1 = do
+  let filename = "story/zork1.88-840726.z3"
+  story <- loadStory filename
+  let messages = disStory story
+  mapM_ putStrLn messages
 
 run :: IO ()
 run = do
