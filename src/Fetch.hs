@@ -16,4 +16,4 @@ data Fetch a where
   Bind :: Fetch a -> (a -> Fetch b) -> Fetch b
   NextByte :: Fetch Byte
   Here :: Fetch Addr
-  Trace :: String -> Fetch ()
+  Err :: String -> Fetch a

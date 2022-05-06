@@ -4,12 +4,12 @@ module Decode (fetchInstruction) where
 import Addr(Addr)
 import Data.Bits (testBit,(.&.))
 import Data.Word (Word8)
-import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F))
-import qualified Addr
-import qualified Instruction as I
-
-import qualified Fetch
 import Fetch (Fetch)
+import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F))
+import Text.Printf (printf)
+import qualified Addr
+import qualified Fetch
+import qualified Instruction as I
 
 type Byte = Word8
 
@@ -31,7 +31,7 @@ fetchInstruction = fetchOp >>= \case
   Op 225 [t1,t2,t3] -> I.Storew <$> arg t1 <*> arg t2 <*> arg t3
   Op 227 [t1,t2,t3] -> I.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
   op ->
-    error (show ("fetchInstructionForOp",op))
+    Fetch.Err (printf "illegal: %s" (show op))
 
 data Form = LongForm | ShortForm | VarForm
 
@@ -87,9 +87,9 @@ decodeLongRandType x a =
 
 func :: RandType -> Fetch Func
 func = \case
-  ByteConst{} -> error "func, ByteConst"
+  ByteConst{} -> Fetch.Err "func, ByteConst"
   WordConst{} -> (Floc . Addr.ofPackedWord) <$> fetchNextWord
-  ByteVariable{} -> undefined
+  ByteVariable{} -> Fetch.Err "ByteVariable"
 
 args :: [RandType] -> Fetch Args
 args ts = Args <$> mapM arg ts
@@ -120,7 +120,7 @@ label = do
       dest <- decodeDest offset
       pure (Branch sense dest)
     False ->
-      undefined
+      Fetch.Err "big label"
 
 decodeDest :: Byte -> Fetch Dest
 decodeDest = \case

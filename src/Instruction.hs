@@ -28,6 +28,7 @@ data Instruction
   | New_line
   | Insert_obj Arg Arg
   | Jump Addr
+  | Bad String
   deriving Show
 
 newtype Args = Args [Arg]
