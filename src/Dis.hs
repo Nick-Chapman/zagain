@@ -113,3 +113,5 @@ runFetch pc0 story eff = loop pc0 eff $ \pc x -> Right (x,pc)
       NextByte -> k (pc+1) (readStoryByte story pc)
       Here -> k pc pc
       Err s -> Left s
+      GetByte a -> k pc (readStoryByte story a)
+      WithPC pc' e -> loop pc' e $ \_ a -> k pc a

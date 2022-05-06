@@ -1,14 +1,17 @@
 
-module Decode (fetchInstruction,fetchRoutineHeader) where
+module Decode
+  ( fetchInstruction
+  , fetchRoutineHeader
+  ) where
 
-import Addr(Addr)
-import Data.Bits (testBit,(.&.))
+import Addr (Addr)
+import Data.Array (Array,(!),listArray)
+import Data.Bits (testBit,(.&.),shiftR)
 import Data.Word (Word8)
-import Fetch (Fetch)
+import Fetch (Fetch(..))
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Addr
-import qualified Fetch
 import qualified Instruction as I
 
 type Byte = Word8
@@ -27,7 +30,7 @@ fetchInstruction = fetchOp >>= \case
   Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
   Op 140 [WordConst] -> I.Jump <$> jumpLocation
-  Op 179 [] -> pure (I.Print_ret "todo!")
+  Op 179 [] -> I.Print_ret  <$> ztext
   Op 187 [] -> pure I.New_line
   Op 224 (t1:ts) -> I.Call <$> func t1 <*> args ts <*> target
   Op 225 [t1,t2,t3] -> I.Storew <$> arg t1 <*> arg t2 <*> arg t3
@@ -157,3 +160,66 @@ fetchRoutineHeader = do
   if n > 15 then Fetch.Err "fetchRoutineHeader, n>15" else do
     ws <- sequence (take (fromIntegral n) (repeat fetchNextWord))
     pure (RoutineHeader (map fromIntegral ws))
+
+----------------------------------------------------------------------
+data Alpha = A0 | A1 | A2
+
+shiftUp :: Alpha -> Alpha
+shiftUp = \case A0 -> A1; A1 -> A2; A2 -> A0
+
+shiftDown :: Alpha -> Alpha
+shiftDown = \case A0 -> A2; A1 -> A0; A2 -> A1
+
+deco :: Alpha -> Word -> Char
+deco alpha i = a ! i
+  where
+    a = case alpha of A0 -> a0; A1 -> a1; A2 -> a2
+    a0 :: Array Word Char = listArray (0,25) "abcdefghijklmnopqrstuvwxyz"
+    a1 :: Array Word Char = listArray (0,25) "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    a2 :: Array Word Char = listArray (0,25) " \n0123456789.,!?_#'\"/\\-:()"
+    --a2':: Array Word Char = listArray (0,25) " 0123456789.,!?_#'\"/\\<-:()" -- Z1
+
+abbrev :: Word -> Fetch String
+abbrev n = do
+  baseAbbrev :: Addr <- fromIntegral <$> getWord 0x18 -- should we avoid the repeated fetch?
+  thisAbbrev :: Addr <- Addr.ofPackedWord <$> getWord (baseAbbrev + fromIntegral (2 * n))
+  WithPC thisAbbrev ztext
+
+getWord :: Addr -> Fetch Word
+getWord a = do
+  hi <- GetByte a
+  lo <- GetByte (a+1)
+  pure (256 * fromIntegral hi + fromIntegral lo)
+
+ztext :: Fetch String
+ztext = loop A0 A0 []
+  where
+    loop :: Alpha -> Alpha -> [Char] -> Fetch String
+    loop alpha lock acc = do
+      x <- fetchNextWord
+      let stop = (x `testBit` 15)
+      let z1 = (x `shiftR` 10) .&. 0x1f
+      let z2 = (x `shiftR` 5) .&. 0x1f
+      let z3 = x .&. 0x1f
+      inner alpha lock stop acc [z1,z2,z3]
+
+    inner :: Alpha -> Alpha -> Bool -> [Char] -> [Word] -> Fetch String
+    inner alpha lock stop acc = \case
+      [] ->
+        if stop then pure (reverse acc) else loop alpha lock acc
+      0:zs ->
+        inner alpha lock stop (' ' : acc) zs
+      1:z:zs -> do
+        expansion <- abbrev z
+        inner alpha lock stop (reverse expansion ++ acc) zs
+      2:zs ->
+        undefined zs
+      3:zs ->
+        undefined zs
+      4:zs ->
+        inner (shiftUp alpha) lock stop acc zs
+      5:zs ->
+        inner (shiftDown alpha) lock stop acc zs
+      z:zs ->
+        -- revert to pre-lock
+        inner lock lock stop (deco alpha (z - 6) : acc) zs

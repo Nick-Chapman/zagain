@@ -17,3 +17,5 @@ data Fetch a where
   NextByte :: Fetch Byte
   Here :: Fetch Addr
   Err :: String -> Fetch a
+  GetByte :: Addr -> Fetch Byte
+  WithPC :: Addr -> Fetch a -> Fetch a
