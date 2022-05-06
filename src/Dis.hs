@@ -4,6 +4,9 @@ module Dis (runAll,runReach) where
 import Prelude hiding (Word)
 
 import Addr (Addr)
+import Data.List (sortBy)
+import Data.Ord (comparing)
+import Data.Set as Set
 import Data.Word (Word16)
 import Decode (fetchInstruction,fetchRoutineHeader)
 import Fetch (Fetch(..))
@@ -51,31 +54,52 @@ runReach = do
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let a0 :: Addr = fromIntegral (readStoryWord story 0x6) - 1 -- back 1 for the header
-  let r0 = collectRoutine a0 story
-  dumpRoutine r0
-  let a1 :: Addr = 20386 -- hack
-  let r1 = collectRoutine a1 story
-  dumpRoutine r1
-  case callAddresses r0 of
-    [] -> print "*no calls"
-    a2:_ -> do
-      let r2 = collectRoutine a2 story
-      let _ = dumpRoutine r2 --next
-      pure ()
+  -- extra places not picked up by reachability...
+  let extra = [20076,20386,20688,21700]
+  let startingPoints = [a0] ++ extra
+  let rs = sortBy (comparing start) $ collectRoutines startingPoints story
+  printf "Found %d reachable routines:\n" (length rs)
+  mapM_ dumpRoutine rs
+
+dumpRoutine :: Routine -> IO ()
+dumpRoutine Routine{start,header,body=xs,finish=_} = do
+  printf "--------------------------------------------------\n"
+  printf "[%s] %s\n" (show start) (show header)
+  mapM_ pr xs
+  --printf "[%s]\n" (show finish)
+  where
+    pr (a,i) = printf "[%s] %s\n" (show a) (Instruction.pretty i)
+
+collectRoutines :: [Addr] -> Story -> [Routine]
+collectRoutines as story = loop Set.empty [] as
+  where
+    loop :: Set Addr -> [Routine] -> [Addr] -> [Routine]
+    loop done acc = \case
+      [] -> acc
+      a:todo -> do
+        if a `Set.member` done then loop done acc todo else do
+          let r = collectRoutine a story
+          let done' = Set.insert a done
+          let todo' = callAddresses r ++ todo
+          loop done' (r:acc) todo'
+
 
 collectRoutine :: Addr -> Story -> Routine
-collectRoutine a story =
-  case runFetch a story fetchRoutineHeader of
+collectRoutine start story =
+  case runFetch start story fetchRoutineHeader of
     Left{} -> undefined
-    Right (header,a') -> do
-      let body = loop a'
-      Routine { start=a, header, body }
+    Right (header,a0) -> do
+      let (body,finish) = loop Set.empty [] a0
+      Routine { start, header, body, finish }
   where
-    loop :: Addr -> [(Addr,Instruction)]
-    loop a = do
+    loop :: Set Addr -> [(Addr,Instruction)] -> Addr -> ([(Addr,Instruction)], Addr)
+    loop bps acc a = do
       case runFetch a story fetchInstruction of
-        Left s -> [(a,I.Bad s)]
-        Right (i,a') -> (a,i) : loop a'
+        Left s -> (reverse ((a,I.Bad s):acc), a)
+        Right (i,a') -> do
+          let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOfI i)
+          let continue = not (isStoppingI i) || a' `Set.member` bps
+          if continue then loop bps' ((a,i):acc) a' else (reverse((a,i):acc),a')
 
 callAddresses :: Routine -> [Addr]
 callAddresses Routine{body=xs} = do
@@ -86,21 +110,31 @@ callsOfI = \case
   I.Call (I.Floc a) _ _ -> [a]
   _ -> []
 
+branchesOfI :: Instruction -> [Addr]
+branchesOfI = \case
+  I.Jump a -> [a]
+  I.Je _ (I.Branch _ (I.Dloc a)) -> [a]
+  I.Jz _ (I.Branch _ (I.Dloc a)) -> [a]
+  _ -> []
+
+isStoppingI :: Instruction -> Bool
+isStoppingI = \case
+  I.Jump{} -> True
+  I.Print_ret{} -> True
+  I.Ret_popped -> True
+  I.Return{} -> True
+  I.Rfalse{} -> True
+  I.Rtrue{} -> True
+  _ -> False
+
 
 ----------------------------------------------------------------------
 data Routine = Routine
   { start :: Addr
   , header :: RoutineHeader
   , body :: [(Addr,Instruction)]
+  , finish :: Addr
   }
-
-dumpRoutine :: Routine -> IO ()
-dumpRoutine Routine{start,header,body=xs} = do
-  printf "--------------------------------------------------\n"
-  printf "[%s] %s\n" (show start) (show header)
-  mapM_ pr xs
-  where
-    pr (a,i) = printf "[%s] %s\n" (show a) (Instruction.pretty i)
 
 ----------------------------------------------------------------------
 runFetch :: Addr -> Story -> Fetch a -> Either String (a, Addr)

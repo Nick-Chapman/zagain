@@ -122,6 +122,9 @@ bracket i = if needBracket i then printf "(%s)" else id
   where
     needBracket = \case
       New_line -> False
+      Ret_popped -> False
+      Rfalse -> False
+      Rtrue -> False
       _ -> True
 
 data RoutineHeader = RoutineHeader [Int]

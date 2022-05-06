@@ -25,18 +25,33 @@ data RandType = ByteConst | WordConst | ByteVariable
 fetchInstruction :: Fetch Instruction
 fetchInstruction = fetchOp >>= \case
   Op 1 ts -> I.Je <$> args ts <*> label
+  Op 3 [t1,t2] -> I.Jg <$> arg t1 <*> arg t2 <*> label
   Op 10 [t1,t2] -> I.Test_attr <$> arg t1 <*> arg t2 <*> label
   Op 13 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
   Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
+  Op 15 [t1,t2] -> I.Load_word <$> arg t1 <*> arg t2 <*> target
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
+  Op 21 [t1,t2] -> I.Sub <$> arg t1 <*> arg t2 <*> target
+  Op 22 [t1,t2] -> I.Mul <$> arg t1 <*> arg t2 <*> target
+  Op 128 [t] -> I.Jz <$> arg t <*> label
+  Op 133 [t] -> I.Inc <$> arg t
+  Op 134 [t] -> I.Dec <$> arg t
+  Op 135 [t] -> I.Print_addr <$> arg t
   Op 138 [t] -> I.Print_obj <$> arg t
+  Op 139 [t] -> I.Return <$> arg t
   Op 140 [WordConst] -> I.Jump <$> jumpLocation
-  Op 178 [] -> I.Print  <$> ztext
-  Op 179 [] -> I.Print_ret  <$> ztext
+  Op 176 [] -> pure I.Rtrue
+  Op 177 [] -> pure I.Rfalse
+  Op 184 [] -> pure I.Ret_popped
+  Op 178 [] -> I.Print <$> ztext
+  Op 179 [] -> I.Print_ret <$> ztext
   Op 187 [] -> pure I.New_line
+  Op 197 [t1,t2] -> I.Inc_check <$> arg t1 <*> arg t2 <*> label
   Op 224 (t1:ts) -> I.Call <$> func t1 <*> args ts <*> target
   Op 225 [t1,t2,t3] -> I.Storew <$> arg t1 <*> arg t2 <*> arg t3
   Op 227 [t1,t2,t3] -> I.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
+  Op 231 [t] -> I.Random <$> arg t <*> target
+  Op 232 [t] -> I.Push <$> arg t
   op ->
     Fetch.Err (printf "illegal: %s" (show op))
 
@@ -53,7 +68,7 @@ fetchOp = do
     ShortForm -> do
       case decodeRandType x (5,4) of
         Nothing -> pure (Op x [])
-        Just ty -> pure (Op (x .&. 0xDF) [ty])
+        Just ty -> pure (Op (x .&. 0xCF) [ty])
     VarForm -> do
       x2 <- Fetch.NextByte
       let tys = decodeRandTypes x2
@@ -221,10 +236,12 @@ ztext = loop [] A0 A0 []
       2:z:zs -> do
         expansion <- abbrev (z + 32)
         inner alpha lock stop (reverse expansion ++ acc) zs
-      [3] ->
-        undefined
+
+      --[3] -> undefined
       3:zs ->
-        undefined zs
+        --undefined zs
+        inner alpha lock stop ('3' : acc) zs -- TEMP
+
       4:zs ->
         inner (shiftUp alpha) lock stop acc zs
       5:zs ->
