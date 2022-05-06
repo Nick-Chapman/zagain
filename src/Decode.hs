@@ -29,6 +29,7 @@ fetchInstruction = fetchOp >>= \case
   Op 13 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
   Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
+  Op 138 [t] -> I.Print_obj <$> arg t
   Op 140 [WordConst] -> I.Jump <$> jumpLocation
   Op 178 [] -> I.Print  <$> ztext
   Op 179 [] -> I.Print_ret  <$> ztext
@@ -52,7 +53,7 @@ fetchOp = do
     ShortForm -> do
       case decodeRandType x (5,4) of
         Nothing -> pure (Op x [])
-        Just ty -> pure (Op x [ty])
+        Just ty -> pure (Op (x .&. 0xDF) [ty])
     VarForm -> do
       x2 <- Fetch.NextByte
       let tys = decodeRandTypes x2
@@ -215,8 +216,13 @@ ztext = loop [] A0 A0 []
       1:z:zs -> do
         expansion <- abbrev z
         inner alpha lock stop (reverse expansion ++ acc) zs
-      2:zs ->
-        undefined zs
+      [z@2] -> do
+        loop [z] alpha lock acc
+      2:z:zs -> do
+        expansion <- abbrev (z + 32)
+        inner alpha lock stop (reverse expansion ++ acc) zs
+      [3] ->
+        undefined
       3:zs ->
         undefined zs
       4:zs ->

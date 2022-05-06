@@ -21,19 +21,74 @@ type Byte = Word8
 
 data Instruction
   = Bad String
-  | Call Func Args Variable
-  | Storew Arg Arg Arg
-  | Put_prop Arg Arg Arg
+
   | Add Arg Arg Variable
-  | Store Arg Arg
-  | Test_attr Arg Arg Label
-  | New_line
+  | Call Func Args Variable
   | Insert_obj Arg Arg
-  | Jump Addr
   | Je Args Label
-  | Print_ret String
+  | Jump Addr
+  | New_line
   | Print String
+  | Print_ret String
+  | Put_prop Arg Arg Arg
+  | Store Arg Arg
+  | Storew Arg Arg Arg
+  | Test_attr Arg Arg Label
+
+  | And_ Arg Arg Variable
+  | Aread Arg Arg Variable
+  | CallN Func Args
+  | Clear_attr Arg Arg
+  | Dec Arg
+  | Dec_check Arg Arg Label
+  | Div Arg Arg Variable
+  | Get_child Arg Variable Label
+  | Get_next_prop Arg Arg Variable
+  | Get_parent Arg Variable
+  | Get_prop Arg Arg Variable
+  | Get_prop_addr Arg Arg Variable
+  | Get_prop_len Arg Variable
+  | Get_sibling Arg Variable Label
+  | Inc Arg
+  | Inc_check Arg Arg Label
+  | Input_Stream Arg
+  | Jg Arg Arg Label
+  | Jin Arg Arg Label
+  | Jl Arg Arg Label
+  | Jz Arg Label
+  | Load Arg Variable
+  | Load_byte Arg Arg Variable
+  | Load_word Arg Arg Variable
+  | Mod_ Arg Arg Variable
+  | Mul Arg Arg Variable
+  | Or_ Arg Arg Variable
+  | Output_Stream Arg (Maybe Arg)
+  | Print_addr Arg
+  | Print_char Arg
+  | Print_num Arg
+  | Print_obj Arg
+  | Print_paddr Arg
+  | Push Arg
+  | Quit
+  | Random Arg Variable
+  | Remove_obj Arg
+  | Restart
+  | Restore_lab Label
+  | Ret_popped
+  | Return Arg
+  | Rfalse
+  | Rtrue
+  | Save_lab Label
+  | Set_attr Arg Arg
+  | Show_status
+  | Sread Arg Arg
+  | Storeb Arg Arg Arg
+  | Sub Arg Arg Variable
+  | Test Arg Arg Label
+  | Verify Label
+
   deriving Show
+
 
 newtype Args = Args [Arg]
 
