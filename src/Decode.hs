@@ -6,7 +6,7 @@ module Decode
 
 import Addr (Addr)
 import Data.Array (Array,(!),listArray)
-import Data.Bits (testBit,(.&.),shiftR)
+import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Data.Word (Word8)
 import Fetch (Fetch(..))
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
@@ -24,22 +24,44 @@ data RandType = ByteConst | WordConst | ByteVariable
 
 fetchInstruction :: Fetch Instruction
 fetchInstruction = fetchOp >>= \case
+  -- Op (1|193) ts -> I.Je <$> args ts <*> label -- TODO: Haskell extension for this?
   Op 1 ts -> I.Je <$> args ts <*> label
+  Op 193 ts -> I.Je <$> args ts <*> label
+  Op 2 [t1,t2] -> I.Jl <$> arg t1 <*> arg t2 <*> label
   Op 3 [t1,t2] -> I.Jg <$> arg t1 <*> arg t2 <*> label
+  Op 195 [t1,t2] -> I.Jg <$> arg t1 <*> arg t2 <*> label
+  Op 4 [t1,t2] -> I.Dec_check <$> arg t1 <*> arg t2 <*> label
+  Op 5 [t1,t2] -> I.Inc_check <$> arg t1 <*> arg t2 <*> label
+  Op 6 [t1,t2] -> I.Jin <$> arg t1 <*> arg t2 <*> label
+  Op 7 [t1,t2] -> I.Test <$> arg t1 <*> arg t2 <*> label
+  Op 9 [t1,t2] -> I.And_ <$> arg t1 <*> arg t2 <*> target
+  Op 201 [t1,t2] -> I.And_ <$> arg t1 <*> arg t2 <*> target
   Op 10 [t1,t2] -> I.Test_attr <$> arg t1 <*> arg t2 <*> label
+  Op 11 [t1,t2] -> I.Set_attr <$> arg t1 <*> arg t2
+  Op 12 [t1,t2] -> I.Clear_attr <$> arg t1 <*> arg t2
   Op 13 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
+  Op 205 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
   Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
   Op 15 [t1,t2] -> I.Load_word <$> arg t1 <*> arg t2 <*> target
+  Op 16 [t1,t2] -> I.Load_byte <$> arg t1 <*> arg t2 <*> target
+  Op 17 [t1,t2] -> I.Get_prop <$> arg t1 <*> arg t2 <*> target
+  Op 18 [t1,t2] -> I.Get_prop_addr <$> arg t1 <*> arg t2 <*> target
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
   Op 21 [t1,t2] -> I.Sub <$> arg t1 <*> arg t2 <*> target
   Op 22 [t1,t2] -> I.Mul <$> arg t1 <*> arg t2 <*> target
+  Op 23 [t1,t2] -> I.Div <$> arg t1 <*> arg t2 <*> target
   Op 128 [t] -> I.Jz <$> arg t <*> label
+  Op 129 [t] -> I.Get_sibling <$> arg t <*> target <*> label
+  Op 130 [t] -> I.Get_child <$> arg t <*> target <*> label
+  Op 131 [t] -> I.Get_parent <$> arg t <*> target
+  Op 132 [t] -> I.Get_prop_len <$> arg t <*> target
   Op 133 [t] -> I.Inc <$> arg t
   Op 134 [t] -> I.Dec <$> arg t
   Op 135 [t] -> I.Print_addr <$> arg t
   Op 138 [t] -> I.Print_obj <$> arg t
   Op 139 [t] -> I.Return <$> arg t
   Op 140 [WordConst] -> I.Jump <$> jumpLocation
+  Op 141 [t] -> I.Print_paddr <$> arg t
   Op 176 [] -> pure I.Rtrue
   Op 177 [] -> pure I.Rfalse
   Op 184 [] -> pure I.Ret_popped
@@ -49,9 +71,14 @@ fetchInstruction = fetchOp >>= \case
   Op 197 [t1,t2] -> I.Inc_check <$> arg t1 <*> arg t2 <*> label
   Op 224 (t1:ts) -> I.Call <$> func t1 <*> args ts <*> target
   Op 225 [t1,t2,t3] -> I.Storew <$> arg t1 <*> arg t2 <*> arg t3
+  Op 226 [t1,t2,t3] -> I.Storeb <$> arg t1 <*> arg t2 <*> arg t3
+  Op 228 [t1,t2] -> I.Sread <$> arg t1 <*> arg t2
   Op 227 [t1,t2,t3] -> I.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
+  Op 229 [t] -> I.Print_char <$> arg t
+  Op 230 [t] -> I.Print_num <$> arg t
   Op 231 [t] -> I.Random <$> arg t <*> target
   Op 232 [t] -> I.Push <$> arg t
+  Op 233 [t] -> I.Pull <$> arg t
   op ->
     Fetch.Err (printf "illegal: %s" (show op))
 
@@ -138,13 +165,17 @@ label = do
   case small of
     True -> do
       -- interpret 6bit number as unsigned; small braches are always forward!
-      let offset = x .&. 0x3F
+      let offset = fromIntegral (x .&. 0x3F)
       dest <- decodeDest offset
       pure (Branch sense dest)
-    False ->
-      Fetch.Err "big label"
+    False -> do
+      y <- Fetch.NextByte
+      let offset = fromIntegral (x .&. 0x3F) `shiftL` 8 .|. fromIntegral y
+      let signed = x `testBit` 5
+      dest <- decodeDest (if signed then offset - 0x4000 else offset)
+      pure (Branch sense dest)
 
-decodeDest :: Byte -> Fetch Dest
+decodeDest :: Int -> Fetch Dest
 decodeDest = \case
   0 -> pure Dfalse
   1 -> pure Dtrue
@@ -236,12 +267,11 @@ ztext = loop [] A0 A0 []
       2:z:zs -> do
         expansion <- abbrev (z + 32)
         inner alpha lock stop (reverse expansion ++ acc) zs
-
-      --[3] -> undefined
-      3:zs ->
-        --undefined zs
-        inner alpha lock stop ('3' : acc) zs -- TEMP
-
+      [z@3] -> do
+        loop [z] alpha lock acc
+      3:z:zs -> do
+        expansion <- abbrev (z + 64)
+        inner alpha lock stop (reverse expansion ++ acc) zs
       4:zs ->
         inner (shiftUp alpha) lock stop acc zs
       5:zs ->

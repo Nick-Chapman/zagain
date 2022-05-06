@@ -23,20 +23,9 @@ data Instruction
   = Bad String
 
   | Add Arg Arg Variable
-  | Call Func Args Variable
-  | Insert_obj Arg Arg
-  | Je Args Label
-  | Jump Addr
-  | New_line
-  | Print String
-  | Print_ret String
-  | Put_prop Arg Arg Arg
-  | Store Arg Arg
-  | Storew Arg Arg Arg
-  | Test_attr Arg Arg Label
-
   | And_ Arg Arg Variable
   | Aread Arg Arg Variable
+  | Call Func Args Variable
   | CallN Func Args
   | Clear_attr Arg Arg
   | Dec Arg
@@ -52,23 +41,31 @@ data Instruction
   | Inc Arg
   | Inc_check Arg Arg Label
   | Input_Stream Arg
+  | Insert_obj Arg Arg
+  | Je Args Label
   | Jg Arg Arg Label
   | Jin Arg Arg Label
   | Jl Arg Arg Label
+  | Jump Addr
   | Jz Arg Label
   | Load Arg Variable
   | Load_byte Arg Arg Variable
   | Load_word Arg Arg Variable
   | Mod_ Arg Arg Variable
   | Mul Arg Arg Variable
+  | New_line
   | Or_ Arg Arg Variable
   | Output_Stream Arg (Maybe Arg)
+  | Print String
   | Print_addr Arg
   | Print_char Arg
   | Print_num Arg
   | Print_obj Arg
   | Print_paddr Arg
+  | Print_ret String
+  | Pull Arg
   | Push Arg
+  | Put_prop Arg Arg Arg
   | Quit
   | Random Arg Variable
   | Remove_obj Arg
@@ -82,9 +79,12 @@ data Instruction
   | Set_attr Arg Arg
   | Show_status
   | Sread Arg Arg
+  | Store Arg Arg
   | Storeb Arg Arg Arg
+  | Storew Arg Arg Arg
   | Sub Arg Arg Variable
   | Test Arg Arg Label
+  | Test_attr Arg Arg Label
   | Verify Label
 
   deriving Show

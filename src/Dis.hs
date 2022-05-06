@@ -112,9 +112,15 @@ callsOfI = \case
 
 branchesOfI :: Instruction -> [Addr]
 branchesOfI = \case
-  I.Jump a -> [a]
+  I.Dec_check _ _ (I.Branch _ (I.Dloc a)) -> [a]
+  I.Inc_check _ _ (I.Branch _ (I.Dloc a)) -> [a]
   I.Je _ (I.Branch _ (I.Dloc a)) -> [a]
+  I.Jg _ _ (I.Branch _ (I.Dloc a)) -> [a]
+  I.Jl _ _ (I.Branch _ (I.Dloc a)) -> [a]
+  I.Jump a -> [a]
   I.Jz _ (I.Branch _ (I.Dloc a)) -> [a]
+  I.Test _ _ (I.Branch _ (I.Dloc a)) -> [a]
+  I.Test_attr _ _ (I.Branch _ (I.Dloc a)) -> [a]
   _ -> []
 
 isStoppingI :: Instruction -> Bool
