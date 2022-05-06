@@ -2,30 +2,39 @@
 module Instruction
   ( Instruction(..)
   , Func(..)
+  , Args(..)
   , Arg(..)
   , Variable(..)
   , Label(..)
+  , Boolean(..)
   , Dest(..)
   ) where
 
+import Addr (Addr)
+import Data.List (intercalate)
 import Data.Word (Word8)
+import Text.Printf (printf)
 
 type Byte = Word8
-type Addr = Int
 
 data Instruction
-  = Call Func [Arg] Variable
-  | StoreW Arg Arg Arg
-  | PutProp Arg Arg Arg
+  = Call Func Args Variable
+  | Storew Arg Arg Arg
+  | Put_prop Arg Arg Arg
   | Add Arg Arg Variable
   | Store Arg Arg
-  | TestAttr Arg Arg Label
-  | Newline
-  | InsertObj Arg Arg
+  | Test_attr Arg Arg Label
+  | New_line
+  | Insert_obj Arg Arg
   | Jump Addr
   deriving Show
 
-data Func = FuncA Addr | FuncV Variable
+newtype Args = Args [Arg]
+
+instance Show Args where
+  show (Args xs) = printf "(%s)" (intercalate " " (map (printf "(%s)" . show) xs))
+
+data Func = Floc Addr | FuncV Variable
   deriving Show
 
 data Arg = Con Int | Var Variable
@@ -34,8 +43,12 @@ data Arg = Con Int | Var Variable
 data Variable = Sp | Local Byte | Global Byte
   deriving Show
 
-data Label = Branch Bool Dest
+data Label = Branch Boolean Dest
   deriving Show
 
 data Dest = Dfalse | Dtrue | Dloc Addr
   deriving Show
+
+data Boolean = T | F
+
+instance Show Boolean where show = \case T -> "true"; F -> "false"

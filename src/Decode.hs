@@ -1,14 +1,15 @@
 
 module Decode (decodeInstruction) where
 
+import Addr(Addr)
 import Control.Monad (ap,liftM)
 import Data.Bits (testBit,(.&.))
 import Data.Word (Word8)
-import Instruction (Instruction,Func(..),Arg(..),Variable(..),Label(..),Dest(..))
+import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F))
+import qualified Addr
 import qualified Instruction as I
 
 type Byte = Word8
-type Addr = Int
 
 decodeInstruction :: Addr -> [Byte] -> (Instruction,Int)
 decodeInstruction = runFetch fetchInstruction
@@ -21,15 +22,15 @@ data RandType = ByteConst | WordConst | ByteVariable
 
 fetchInstruction :: Fetch Instruction
 fetchInstruction = fetchOp >>= \case
-  Op 10 [t1,t2] -> I.TestAttr <$> arg t1 <*> arg t2 <*> label
+  Op 10 [t1,t2] -> I.Test_attr <$> arg t1 <*> arg t2 <*> label
   Op 13 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
-  Op 14 [t1,t2] -> I.InsertObj <$> arg t1 <*> arg t2
+  Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
   Op 140 [WordConst] -> I.Jump <$> jumpLocation
-  Op 187 [] -> pure I.Newline
+  Op 187 [] -> pure I.New_line
   Op 224 (t1:ts) -> I.Call <$> func t1 <*> args ts <*> target
-  Op 225 [t1,t2,t3] -> I.StoreW <$> arg t1 <*> arg t2 <*> arg t3
-  Op 227 [t1,t2,t3] -> I.PutProp <$> arg t1 <*> arg t2 <*> arg t3
+  Op 225 [t1,t2,t3] -> I.Storew <$> arg t1 <*> arg t2 <*> arg t3
+  Op 227 [t1,t2,t3] -> I.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
   op ->
     error (show ("fetchInstructionForOp",op))
 
@@ -88,14 +89,11 @@ decodeLongRandType x a =
 func :: RandType -> Fetch Func
 func = \case
   ByteConst{} -> error "func, ByteConst"
-  WordConst{} -> (FuncA . ofPackedAddr) <$> fetchWord
+  WordConst{} -> (Floc . Addr.ofPackedWord) <$> fetchWord
   ByteVariable{} -> undefined
 
-ofPackedAddr :: Word -> Addr
-ofPackedAddr w = 2 * fromIntegral w
-
-args :: [RandType] -> Fetch [Arg]
-args = mapM arg
+args :: [RandType] -> Fetch Args
+args ts = Args <$> mapM arg ts
 
 target :: Fetch Variable
 target = makeVariable <$> FetchByte
@@ -114,7 +112,7 @@ makeVariable = \case
 label :: Fetch Label
 label = do
   x <- FetchByte
-  let sense = x `testBit` 7
+  let sense = if x `testBit` 7 then T else F
   let small = x `testBit` 6
   case small of
     True -> do
@@ -137,7 +135,7 @@ jumpLocation :: Fetch Addr
 jumpLocation = do
   here <- Here
   w <- fetchWord
-  pure (here + decodeSigned w)
+  pure $ fromIntegral (fromIntegral here + decodeSigned w)
 
 decodeSigned :: Word -> Int
 decodeSigned w =
@@ -173,5 +171,5 @@ runFetch m pc bs = (res,resN)
       FetchByte -> case bs of
         [] -> error "runFetch"
         b:bs -> (b,bs,n+1)
-      Here -> (pc+n,bs,n)
+      Here -> (pc + fromIntegral n,bs,n)
 

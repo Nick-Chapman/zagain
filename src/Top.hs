@@ -2,15 +2,17 @@ module Top (main)  where
 
 import Prelude hiding (Word)
 
+import Addr (Addr)
 import Control.Monad (ap,liftM)
 import Data.Array (Array,(!),listArray)
 import Data.Word (Word8,Word16)
-import qualified Data.ByteString as BS (readFile,unpack)
 import Decode (decodeInstruction)
+import Instruction (Instruction(..))
+import Text.Printf (printf)
+import qualified Data.ByteString as BS (readFile,unpack)
 
 type Byte = Word8
 type Word = Word16
-type Addr = Int
 
 main :: IO ()
 main = do
@@ -22,21 +24,23 @@ main = do
 
 theEffect :: Eff ()
 theEffect = do
-  Trace "theEffect.."
   let a = 0x6 -- initial PC
   w <- readW a
-  Trace (show w)
-  disFrom (addrOfWord w)
+  disFrom (fromIntegral w)
 
 disFrom :: Addr -> Eff ()
 disFrom a = do
   bs <- ReadBs a
   let (i,n) = decodeInstruction a bs
-  Trace (show (a,i))
-  disFrom (a+n)
+  Trace (printf "[%s] %s" (show a) (bracket i (show i)))
+  disFrom (a+fromIntegral n)
 
-addrOfWord :: Word -> Addr
-addrOfWord = fromIntegral
+bracket :: Instruction -> String -> String
+bracket i = if needBracket i then printf "(%s)" else id
+  where
+    needBracket = \case
+      New_line -> False
+      _ -> True
 
 readW :: Addr -> Eff Word
 readW a = do
@@ -74,12 +78,13 @@ readB RunState{story} a = readStoryByte story a
 initRunState :: Story -> RunState
 initRunState story = RunState { story }
 
-data Story = Story { size :: Int, bytesA :: Array Addr Byte }
+data Story = Story { size :: Int, bytesA :: Array Int Byte }
 
 readStoryByte :: Story -> Addr -> Byte
 readStoryByte Story{size, bytesA} a =  if
-  | a < size -> bytesA ! a
+  | i < size -> bytesA ! i
   | otherwise -> error (show ("readStoryByte",a,size))
+    where i = fromIntegral a
 
 loadStory :: FilePath -> IO Story
 loadStory path = do

@@ -5,3 +5,5 @@ stack.yaml.lock
 .markdown-preview.html
 story/
 c/_build
+run.expected
+run.out
