@@ -30,6 +30,7 @@ fetchInstruction = fetchOp >>= \case
   Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
   Op 140 [WordConst] -> I.Jump <$> jumpLocation
+  Op 178 [] -> I.Print  <$> ztext
   Op 179 [] -> I.Print_ret  <$> ztext
   Op 187 [] -> pure I.New_line
   Op 224 (t1:ts) -> I.Call <$> func t1 <*> args ts <*> target
@@ -171,7 +172,7 @@ shiftDown :: Alpha -> Alpha
 shiftDown = \case A0 -> A2; A1 -> A0; A2 -> A1
 
 deco :: Alpha -> Word -> Char
-deco alpha i = a ! i
+deco alpha i = if i <0 || i > 25 then error (show ("deco",i)) else a ! i
   where
     a = case alpha of A0 -> a0; A1 -> a1; A2 -> a2
     a0 :: Array Word Char = listArray (0,25) "abcdefghijklmnopqrstuvwxyz"
@@ -192,23 +193,25 @@ getWord a = do
   pure (256 * fromIntegral hi + fromIntegral lo)
 
 ztext :: Fetch String
-ztext = loop A0 A0 []
+ztext = loop [] A0 A0 []
   where
-    loop :: Alpha -> Alpha -> [Char] -> Fetch String
-    loop alpha lock acc = do
+    loop :: [Word] -> Alpha -> Alpha -> [Char] -> Fetch String
+    loop delayedZs alpha lock acc = do
       x <- fetchNextWord
       let stop = (x `testBit` 15)
       let z1 = (x `shiftR` 10) .&. 0x1f
       let z2 = (x `shiftR` 5) .&. 0x1f
       let z3 = x .&. 0x1f
-      inner alpha lock stop acc [z1,z2,z3]
+      inner alpha lock stop acc (delayedZs ++ [z1,z2,z3])
 
     inner :: Alpha -> Alpha -> Bool -> [Char] -> [Word] -> Fetch String
     inner alpha lock stop acc = \case
       [] ->
-        if stop then pure (reverse acc) else loop alpha lock acc
+        if stop then pure (reverse acc) else loop [] alpha lock acc
       0:zs ->
         inner alpha lock stop (' ' : acc) zs
+      [z@1] -> do
+        loop [z] alpha lock acc
       1:z:zs -> do
         expansion <- abbrev z
         inner alpha lock stop (reverse expansion ++ acc) zs

@@ -32,6 +32,7 @@ data Instruction
   | Jump Addr
   | Je Args Label
   | Print_ret String
+  | Print String
   deriving Show
 
 newtype Args = Args [Arg]
