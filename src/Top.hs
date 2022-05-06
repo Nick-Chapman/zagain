@@ -5,8 +5,8 @@ import Prelude hiding (Word)
 import Control.Monad (ap,liftM)
 import Data.Array (Array,(!),listArray)
 import Data.Word (Word8,Word16)
-
 import qualified Data.ByteString as BS (readFile,unpack)
+import Decode (decodeInstruction)
 
 type Byte = Word8
 type Word = Word16
@@ -14,7 +14,6 @@ type Addr = Int
 
 main :: IO ()
 main = do
-  --putStrLn "*zagain*"
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let rs = initRunState story
@@ -23,26 +22,27 @@ main = do
 
 theEffect :: Eff ()
 theEffect = do
-  let _ = (decode,exec) -- TODO
   Trace "theEffect.."
   let a = 0x6 -- initial PC
   w <- readW a
   Trace (show w)
-  Trace "theEffect..done"
+  disFrom (addrOfWord w)
 
-decode :: Addr -> Eff Instruction
-decode = undefined
+disFrom :: Addr -> Eff ()
+disFrom a = do
+  bs <- ReadBs a
+  let (i,n) = decodeInstruction a bs
+  Trace (show (a,i))
+  disFrom (a+n)
 
-exec :: Instruction -> Eff ()
-exec = undefined
+addrOfWord :: Word -> Addr
+addrOfWord = fromIntegral
 
 readW :: Addr -> Eff Word
 readW a = do
   hi <- ReadB a
   lo <- ReadB (a+1)
   pure $ wordOfHiLo HiLo {hi,lo}
-
-data Instruction
 
 instance Functor Eff where fmap = liftM
 instance Applicative Eff where pure = return; (<*>) = ap
@@ -53,6 +53,7 @@ data Eff a where
   Bind :: Eff a -> (a -> Eff b) -> Eff b
   ReadB :: Addr -> Eff Byte
   Trace :: String -> Eff ()
+  ReadBs :: Addr -> Eff [Byte]
 
 runEffect :: RunState -> Eff () -> [String]
 runEffect rs eff = loop eff $ \() -> []
@@ -62,6 +63,7 @@ runEffect rs eff = loop eff $ \() -> []
       Ret a -> k a
       Bind e f -> loop e $ \a -> loop (f a) k
       ReadB a -> k (readB rs a)
+      ReadBs a -> k [ readB rs (a+i) | i <- [0..] ]
       Trace mes -> mes : k ()
 
 data RunState = RunState { story :: Story }
