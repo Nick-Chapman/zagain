@@ -95,7 +95,7 @@ newtype Args = Args [Arg]
 instance Show Args where
   show (Args xs) = printf "(%s)" (intercalate " " (map (printf "(%s)" . show) xs))
 
-data Func = Floc Addr | FuncV Variable
+data Func = Floc Addr | Fvar Variable
   deriving Show
 
 data Arg = Con Int | Var Variable

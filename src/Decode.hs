@@ -109,9 +109,9 @@ decodeLongRandType x a =
 
 func :: RandType -> Fetch Func
 func = \case
-  ByteConst{} -> Fetch.Err "func, ByteConst"
-  WordConst{} -> (Floc . Addr.ofPackedWord) <$> fetchNextWord
-  ByteVariable{} -> Fetch.Err "ByteVariable"
+  ByteConst -> Fetch.Err "func, ByteConst"
+  WordConst -> (Floc . Addr.ofPackedWord) <$> fetchNextWord
+  ByteVariable -> (Fvar . makeVariable) <$> Fetch.NextByte
 
 args :: [RandType] -> Fetch Args
 args ts = Args <$> mapM arg ts
