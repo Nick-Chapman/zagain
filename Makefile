@@ -8,4 +8,4 @@ run.expected: Makefile
 	cat ~/projects/niz/story-dumps/zork1-88/zork.dis | tail +25 | head -38 > run.expected
 
 run.out: src/*.hs Makefile
-	(stack run > run.out ) || true
+	(stack run dis > run.out ) || true

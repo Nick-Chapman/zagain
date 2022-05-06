@@ -8,6 +8,7 @@ module Instruction
   , Label(..)
   , Boolean(..)
   , Dest(..)
+  , pretty
   ) where
 
 import Addr (Addr)
@@ -52,3 +53,13 @@ data Dest = Dfalse | Dtrue | Dloc Addr
 data Boolean = T | F
 
 instance Show Boolean where show = \case T -> "true"; F -> "false"
+
+pretty :: Instruction -> String
+pretty i = bracket i (show i)
+
+bracket :: Instruction -> String -> String
+bracket i = if needBracket i then printf "(%s)" else id
+  where
+    needBracket = \case
+      New_line -> False
+      _ -> True

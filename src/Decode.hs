@@ -1,18 +1,17 @@
 
-module Decode (decodeInstruction) where
+module Decode (fetchInstruction) where
 
 import Addr(Addr)
-import Control.Monad (ap,liftM)
 import Data.Bits (testBit,(.&.))
 import Data.Word (Word8)
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F))
 import qualified Addr
 import qualified Instruction as I
 
-type Byte = Word8
+import qualified Fetch
+import Fetch (Fetch)
 
-decodeInstruction :: Addr -> [Byte] -> (Instruction,Int)
-decodeInstruction = runFetch fetchInstruction
+type Byte = Word8
 
 data Op = Op Byte [RandType]
   deriving Show
@@ -38,7 +37,7 @@ data Form = LongForm | ShortForm | VarForm
 
 fetchOp :: Fetch Op
 fetchOp = do
-  x <- FetchByte
+  x <- Fetch.NextByte
   case decodeForm x of
     LongForm -> do
       let t1 = decodeLongRandType x 6
@@ -49,7 +48,7 @@ fetchOp = do
         Nothing -> pure (Op x [])
         Just ty -> pure (Op x [ty])
     VarForm -> do
-      x2 <- FetchByte
+      x2 <- Fetch.NextByte
       let tys = decodeRandTypes x2
       pure (Op x tys)
 
@@ -89,20 +88,20 @@ decodeLongRandType x a =
 func :: RandType -> Fetch Func
 func = \case
   ByteConst{} -> error "func, ByteConst"
-  WordConst{} -> (Floc . Addr.ofPackedWord) <$> fetchWord
+  WordConst{} -> (Floc . Addr.ofPackedWord) <$> fetchNextWord
   ByteVariable{} -> undefined
 
 args :: [RandType] -> Fetch Args
 args ts = Args <$> mapM arg ts
 
 target :: Fetch Variable
-target = makeVariable <$> FetchByte
+target = makeVariable <$> Fetch.NextByte
 
 arg :: RandType -> Fetch Arg
 arg = \case
-  ByteConst -> (Con . fromIntegral) <$> FetchByte
-  WordConst -> (Con . fromIntegral) <$> fetchWord
-  ByteVariable -> (Var . makeVariable) <$> FetchByte
+  ByteConst -> (Con . fromIntegral) <$> Fetch.NextByte
+  WordConst -> (Con . fromIntegral) <$> fetchNextWord
+  ByteVariable -> (Var . makeVariable) <$> Fetch.NextByte
 
 makeVariable :: Byte -> Variable
 makeVariable = \case
@@ -111,7 +110,7 @@ makeVariable = \case
 
 label :: Fetch Label
 label = do
-  x <- FetchByte
+  x <- Fetch.NextByte
   let sense = if x `testBit` 7 then T else F
   let small = x `testBit` 6
   case small of
@@ -128,13 +127,13 @@ decodeDest = \case
   0 -> pure Dfalse
   1 -> pure Dtrue
   offset -> do
-    here <- Here
+    here <- Fetch.Here
     pure $ Dloc (here + fromIntegral offset - 2)
 
 jumpLocation :: Fetch Addr
 jumpLocation = do
-  here <- Here
-  w <- fetchWord
+  here <- Fetch.Here
+  w <- fetchNextWord
   pure $ fromIntegral (fromIntegral here + decodeSigned w)
 
 decodeSigned :: Word -> Int
@@ -143,33 +142,8 @@ decodeSigned w =
   then fromIntegral w - 0x10000
   else fromIntegral w
 
-fetchWord :: Fetch Word
-fetchWord = do
-  hi <- FetchByte
-  lo <- FetchByte
+fetchNextWord :: Fetch Word
+fetchNextWord = do
+  hi <- Fetch.NextByte
+  lo <- Fetch.NextByte
   pure (256 * fromIntegral hi + fromIntegral lo)
-
-
-instance Functor Fetch where fmap = liftM
-instance Applicative Fetch where pure = return; (<*>) = ap
-instance Monad Fetch where return = Ret; (>>=) = Bind
-
-data Fetch a where
-  Ret :: a -> Fetch a
-  Bind :: Fetch a -> (a -> Fetch b) -> Fetch b
-  FetchByte :: Fetch Byte
-  Here :: Fetch Addr
-
-runFetch :: Fetch a -> Addr -> [Byte]-> (a,Int)
-runFetch m pc bs = (res,resN)
-  where
-    (res,_,resN) = loop bs 0 m
-    loop :: [Byte] -> Int -> Fetch a -> (a,[Byte],Int)
-    loop bs n m = case m of
-      Ret a -> (a,bs,n)
-      Bind m f -> let (a,bs',n') = loop bs n m in loop bs' n' (f a)
-      FetchByte -> case bs of
-        [] -> error "runFetch"
-        b:bs -> (b,bs,n+1)
-      Here -> (pc + fromIntegral n,bs,n)
-
