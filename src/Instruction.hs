@@ -9,6 +9,7 @@ module Instruction
   , Boolean(..)
   , Dest(..)
   , pretty
+  , RoutineHeader(..)
   ) where
 
 import Addr (Addr)
@@ -19,7 +20,8 @@ import Text.Printf (printf)
 type Byte = Word8
 
 data Instruction
-  = Call Func Args Variable
+  = Bad String
+  | Call Func Args Variable
   | Storew Arg Arg Arg
   | Put_prop Arg Arg Arg
   | Add Arg Arg Variable
@@ -28,7 +30,8 @@ data Instruction
   | New_line
   | Insert_obj Arg Arg
   | Jump Addr
-  | Bad String
+  | Je Args Label
+  | Print_ret String
   deriving Show
 
 newtype Args = Args [Arg]
@@ -64,3 +67,10 @@ bracket i = if needBracket i then printf "(%s)" else id
     needBracket = \case
       New_line -> False
       _ -> True
+
+data RoutineHeader = RoutineHeader [Int]
+
+instance Show RoutineHeader where
+  show (RoutineHeader xs) =
+    printf "((var_initializations (%s)))" (intercalate " " (map show xs))
+

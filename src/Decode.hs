@@ -1,11 +1,11 @@
 
-module Decode (fetchInstruction) where
+module Decode (fetchInstruction,fetchRoutineHeader) where
 
 import Addr(Addr)
 import Data.Bits (testBit,(.&.))
 import Data.Word (Word8)
 import Fetch (Fetch)
-import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F))
+import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Addr
 import qualified Fetch
@@ -21,11 +21,13 @@ data RandType = ByteConst | WordConst | ByteVariable
 
 fetchInstruction :: Fetch Instruction
 fetchInstruction = fetchOp >>= \case
+  Op 1 ts -> I.Je <$> args ts <*> label
   Op 10 [t1,t2] -> I.Test_attr <$> arg t1 <*> arg t2 <*> label
   Op 13 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
   Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
   Op 140 [WordConst] -> I.Jump <$> jumpLocation
+  Op 179 [] -> pure (I.Print_ret "todo!")
   Op 187 [] -> pure I.New_line
   Op 224 (t1:ts) -> I.Call <$> func t1 <*> args ts <*> target
   Op 225 [t1,t2,t3] -> I.Storew <$> arg t1 <*> arg t2 <*> arg t3
@@ -147,3 +149,11 @@ fetchNextWord = do
   hi <- Fetch.NextByte
   lo <- Fetch.NextByte
   pure (256 * fromIntegral hi + fromIntegral lo)
+
+
+fetchRoutineHeader :: Fetch RoutineHeader
+fetchRoutineHeader = do
+  n <- Fetch.NextByte
+  if n > 15 then Fetch.Err "fetchRoutineHeader, n>15" else do
+    ws <- sequence (take (fromIntegral n) (repeat fetchNextWord))
+    pure (RoutineHeader (map fromIntegral ws))
