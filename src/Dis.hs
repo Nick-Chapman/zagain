@@ -1,5 +1,5 @@
 
-module Dis (disZork) where
+module Dis (disZork,runFetch) where
 
 import Prelude hiding (Word)
 

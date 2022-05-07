@@ -98,10 +98,10 @@ instance Show Args where
 data Func = Floc Addr | Fvar Variable
   deriving Show
 
-data Arg = Con Int | Var Variable
+data Arg = Con Int | Var Variable -- TODO: perhaps Con should carry a (signed) Value
   deriving Show
 
-data Variable = Sp | Local Byte | Global Byte
+data Variable = Sp | Local Byte | Global Byte -- TODO: rename Variable -> Target
   deriving Show
 
 data Label = Branch Boolean Dest -- TODO: prefer Sense to Boolean
