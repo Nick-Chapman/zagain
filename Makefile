@@ -1,8 +1,9 @@
 
-top: test
+top: regression
 
-test: run.out run.expected
-	git diff --no-index run.expected run.out
+regression: src/*.hs Makefile .gen
+	stack run dis-zork > gen/zork.dis
+	git diff gen/zork.dis
 
-run.out: src/*.hs Makefile
-	(stack run > run.out ) || true
+.gen:
+	mkdir -p gen

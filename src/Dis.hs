@@ -1,5 +1,5 @@
 
-module Dis (runReach) where
+module Dis (disZork) where
 
 import Prelude hiding (Word)
 
@@ -17,8 +17,8 @@ import qualified Instruction as I
 
 type Word = Word16
 
-runReach :: IO ()
-runReach = do
+disZork :: IO ()
+disZork = do
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let a0 :: Addr = fromIntegral (readStoryWord story 0x6) - 1 -- back 1 for the header

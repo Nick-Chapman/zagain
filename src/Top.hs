@@ -4,19 +4,19 @@ module Top (main)  where
 import Prelude hiding (Word)
 
 import System.Environment (getArgs)
-import qualified Dis
+import Dis (disZork)
 
 main :: IO ()
 main = getArgs >>= (run . parseCommandLine)
 
 parseCommandLine :: [String] -> Config
 parseCommandLine = \case
-  [] -> DisReach
+  ["dis-zork"] -> DisZork
   args ->
     error (show ("parse",args))
 
-data Config = DisReach
+data Config = DisZork
 
 run :: Config -> IO ()
 run = \case
-  DisReach -> Dis.runReach
+  DisZork -> disZork
