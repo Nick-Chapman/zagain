@@ -11,14 +11,12 @@ main = getArgs >>= (run . parseCommandLine)
 
 parseCommandLine :: [String] -> Config
 parseCommandLine = \case
-  ["disAll"] -> DisAll
   [] -> DisReach
   args ->
     error (show ("parse",args))
 
-data Config = DisAll | DisReach
+data Config = DisReach
 
 run :: Config -> IO ()
 run = \case
-  DisAll -> Dis.runAll
   DisReach -> Dis.runReach

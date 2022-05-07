@@ -1,5 +1,5 @@
 
-module Dis (runAll,runReach) where
+module Dis (runReach) where
 
 import Prelude hiding (Word)
 
@@ -17,49 +17,23 @@ import qualified Instruction as I
 
 type Word = Word16
 
-readStoryWord :: Story -> Addr -> Word
-readStoryWord story a = do
-  let hi = readStoryByte story a
-  let lo = readStoryByte story (a+1)
-  256 * fromIntegral hi + fromIntegral lo
-
-----------------------------------------------------------------------
-runAll :: IO ()
-runAll = do
-  let filename = "story/zork1.88-840726.z3"
-  story <- loadStory filename
-  let startA :: Addr = 0
-  disStory startA story
-
-disStory :: Addr -> Story -> IO ()
-disStory startA story = do
-  let js = [ (a,i) | (a,i) <- collectInstructions startA story, notBad i ]
-  mapM_ pr js
-    where
-      notBad = \case I.Bad{} -> False; _ -> True
-      pr (a,i) = printf "[%s] %s\n" (show a) (Instruction.pretty i)
-
-collectInstructions :: Addr -> Story -> [(Addr,Instruction)]
-collectInstructions a story = loop a
-  where
-    loop :: Addr -> [(Addr,Instruction)]
-    loop a = do
-      case runFetch a story fetchInstruction of
-        Left s -> (a,I.Bad s) : loop (a+1)
-        Right (i,a') -> (a,i) : loop a'
-
-----------------------------------------------------------------------
 runReach :: IO ()
 runReach = do
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let a0 :: Addr = fromIntegral (readStoryWord story 0x6) - 1 -- back 1 for the header
   -- extra places not picked up by reachability...
-  let extra = [20076,20386,20688,21700]
+  let extra = [] -- [20076,20386,20688,21700]
   let startingPoints = [a0] ++ extra
   let rs = sortBy (comparing start) $ collectRoutines startingPoints story
   printf "Found %d reachable routines:\n" (length rs)
   mapM_ dumpRoutine rs
+
+readStoryWord :: Story -> Addr -> Word
+readStoryWord story a = do
+  let hi = readStoryByte story a
+  let lo = readStoryByte story (a+1)
+  256 * fromIntegral hi + fromIntegral lo
 
 dumpRoutine :: Routine -> IO ()
 dumpRoutine Routine{start,header,body=xs,finish=_} = do
@@ -82,7 +56,6 @@ collectRoutines as story = loop Set.empty [] as
           let done' = Set.insert a done
           let todo' = callAddresses r ++ todo
           loop done' (r:acc) todo'
-
 
 collectRoutine :: Addr -> Story -> Routine
 collectRoutine start story =
@@ -134,7 +107,6 @@ isStoppingI = \case
   _ -> False
 
 
-----------------------------------------------------------------------
 data Routine = Routine
   { start :: Addr
   , header :: RoutineHeader
