@@ -22,17 +22,30 @@ type Byte = Word8
 data Instruction -- TODO: check naming matches spec
   = Bad String
 
+  -- This instructions are not yet decoded
+  -- | Aread Arg Arg Variable
+  -- | CallN Func Args
+  -- | Get_next_prop Arg Arg Variable
+  -- | Input_Stream Arg
+  -- | Load Arg Variable
+  -- | Mod_ Arg Arg Variable
+  -- | Or_ Arg Arg Variable
+  -- | Output_Stream Arg (Maybe Arg)
+  -- | Quit
+  -- | Remove_obj Arg
+  -- | Restart
+  -- | Restore_lab Label
+  -- | Save_lab Label
+  -- | Show_status
+  -- | Verify Label
   | Add Arg Arg Variable
   | And_ Arg Arg Variable
-  | Aread Arg Arg Variable
   | Call Func Args Variable
-  | CallN Func Args
   | Clear_attr Arg Arg
   | Dec Arg
   | Dec_check Arg Arg Label
   | Div Arg Arg Variable
   | Get_child Arg Variable Label
-  | Get_next_prop Arg Arg Variable
   | Get_parent Arg Variable
   | Get_prop Arg Arg Variable
   | Get_prop_addr Arg Arg Variable
@@ -40,7 +53,6 @@ data Instruction -- TODO: check naming matches spec
   | Get_sibling Arg Variable Label
   | Inc Arg
   | Inc_check Arg Arg Label
-  | Input_Stream Arg
   | Insert_obj Arg Arg
   | Je Args Label
   | Jg Arg Arg Label
@@ -48,14 +60,10 @@ data Instruction -- TODO: check naming matches spec
   | Jl Arg Arg Label
   | Jump Addr
   | Jz Arg Label
-  | Load Arg Variable
   | Load_byte Arg Arg Variable
   | Load_word Arg Arg Variable
-  | Mod_ Arg Arg Variable
   | Mul Arg Arg Variable
   | New_line
-  | Or_ Arg Arg Variable
-  | Output_Stream Arg (Maybe Arg)
   | Print String
   | Print_addr Arg
   | Print_char Arg
@@ -66,18 +74,12 @@ data Instruction -- TODO: check naming matches spec
   | Pull Arg
   | Push Arg
   | Put_prop Arg Arg Arg
-  | Quit
   | Random Arg Variable
-  | Remove_obj Arg
-  | Restart
-  | Restore_lab Label
   | Ret_popped
   | Return Arg
   | Rfalse
   | Rtrue
-  | Save_lab Label
   | Set_attr Arg Arg
-  | Show_status
   | Sread Arg Arg
   | Store Arg Arg
   | Storeb Arg Arg Arg
@@ -85,7 +87,6 @@ data Instruction -- TODO: check naming matches spec
   | Sub Arg Arg Variable
   | Test Arg Arg Label
   | Test_attr Arg Arg Label
-  | Verify Label
 
   deriving Show
 
