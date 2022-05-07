@@ -19,7 +19,7 @@ import Text.Printf (printf)
 
 type Byte = Word8
 
-data Instruction
+data Instruction -- TODO: check naming matches spec
   = Bad String
 
   | Add Arg Arg Variable
@@ -89,8 +89,7 @@ data Instruction
 
   deriving Show
 
-
-newtype Args = Args [Arg]
+newtype Args = Args [Arg] -- TODO: deprecate (changes regression)
 
 instance Show Args where
   show (Args xs) = printf "(%s)" (intercalate " " (map (printf "(%s)" . show) xs))
@@ -104,13 +103,13 @@ data Arg = Con Int | Var Variable
 data Variable = Sp | Local Byte | Global Byte
   deriving Show
 
-data Label = Branch Boolean Dest
+data Label = Branch Boolean Dest -- TODO: prefer Sense to Boolean
   deriving Show
 
 data Dest = Dfalse | Dtrue | Dloc Addr
   deriving Show
 
-data Boolean = T | F
+data Boolean = T | F -- TODO: deprecate (changes regression)
 
 instance Show Boolean where show = \case T -> "true"; F -> "false"
 
@@ -120,7 +119,7 @@ pretty i = bracket i (show i)
 bracket :: Instruction -> String -> String
 bracket i = if needBracket i then printf "(%s)" else id
   where
-    needBracket = \case
+    needBracket = \case -- TODO: deprecate (changes regression)
       New_line -> False
       Ret_popped -> False
       Rfalse -> False

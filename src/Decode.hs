@@ -24,7 +24,7 @@ data RandType = ByteConst | WordConst | ByteVariable
 
 fetchInstruction :: Fetch Instruction
 fetchInstruction = fetchOp >>= \case
-  -- Op (1|193) ts -> I.Je <$> args ts <*> label -- TODO: Haskell extension for this?
+  -- TODO: Haskell extension for: Op (1|193) ?
   Op 1 ts -> I.Je <$> args ts <*> label
   Op 193 ts -> I.Je <$> args ts <*> label
   Op 2 [t1,t2] -> I.Jl <$> arg t1 <*> arg t2 <*> label

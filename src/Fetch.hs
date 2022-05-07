@@ -11,7 +11,7 @@ instance Functor Fetch where fmap = liftM
 instance Applicative Fetch where pure = return; (<*>) = ap
 instance Monad Fetch where return = Ret; (>>=) = Bind
 
-data Fetch a where
+data Fetch a where -- TODO: move into Decode?
   Ret :: a -> Fetch a
   Bind :: Fetch a -> (a -> Fetch b) -> Fetch b
   NextByte :: Fetch Byte

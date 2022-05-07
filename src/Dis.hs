@@ -19,7 +19,7 @@ type Word = Word16
 
 disZork :: IO ()
 disZork = do
-  let filename = "story/zork1.88-840726.z3"
+  let filename = "story/zork1.88-840726.z3" -- TODO: try other stories!
   story <- loadStory filename
   let a0 :: Addr = fromIntegral (readStoryWord story 0x6) - 1 -- back 1 for the header
   -- extra places not picked up by reachability...
@@ -37,6 +37,7 @@ readStoryWord story a = do
 
 dumpRoutine :: Routine -> IO ()
 dumpRoutine Routine{start,header,body=xs,finish=_} = do
+  -- TODO: show gap between routines
   printf "--------------------------------------------------\n"
   printf "[%s] %s\n" (show start) (show header)
   mapM_ pr xs
