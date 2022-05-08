@@ -225,9 +225,9 @@ eval = \case
   I.Jg arg1 arg2 label -> do undefined arg1 arg2 label
   I.Jin arg1 arg2 label -> do undefined arg1 arg2 label
   I.Jl arg1 arg2 label -> do undefined arg1 arg2 label
-  I.Jump addr -> do undefined addr
-  I.Jz arg label -> do
-    evalArg arg >>= IsZero >>= evalLabel label
+
+  I.Jump addr -> do SetPC addr
+  I.Jz arg label -> do evalArg arg >>= IsZero >>= evalLabel label
 
   I.Load_byte arg1 arg2 target -> do undefined arg1 arg2 target
   I.Load_word arg1 arg2 target -> do
