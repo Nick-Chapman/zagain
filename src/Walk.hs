@@ -38,8 +38,8 @@ runInter = loop []
     loop :: [String] -> Inter -> IO ()
     loop buf = \case
       I_Trace _n a instruction next -> do
-        --printf "(Decode %d %s %s)\n" _n (show a) (I.pretty instruction)
-        printf "(Decode %s %s)\n" (show a) (I.pretty instruction)
+        printf "(Decode %d %s %s)\n" _n (show a) (I.pretty instruction)
+        --printf "(Decode %s %s)\n" (show a) (I.pretty instruction)
         loop buf next
       I_Output text next -> do
         --let _ = putStrLn ("OUTPUT: " ++ s) --TODO: buffer and print
@@ -82,7 +82,7 @@ runEff s0 e0 = loop s0 e0 $ \_ () -> I_Stop
        --I_Output (show s) $ do
         let State{story,pc,count} = s
         let (ins',pc') = fetchI pc story
-        let ins = if count > 400 then error "too many!" else ins'
+        let ins = if count > 225 then error "too many!" else ins'
         I_Trace count pc ins (k s { pc = pc', count = count + 1 } ins)
 
       FetchHeader{} -> do
@@ -244,33 +244,33 @@ eval = \case
 
   I.Get_child arg target label -> do
     let _ = undefined arg target label --TODO
-    --Debug (show ("Get_child",arg,target,label))
+    Debug (show ("TODO:Get_child",arg,target,label))
     pure ()
 
   I.Get_parent arg target -> do
     let _ = undefined arg target --TODO
     let res = 999
-    --Debug (show ("Get_parent(HACK res)",arg,target,res))
+    Debug (show ("TODO:Get_parent(HACK res)",arg,target,res))
     setTarget target res
     pure ()
 
   I.Get_prop arg1 arg2 target -> do
     let _ = undefined arg1 arg2 target --TODO
     let res = 19102
-    --Debug (show ("Get_prop(HACK fixed res)",arg1,arg2,target,res))
+    Debug (show ("TODO:Get_prop(HACK fixed res)",arg1,arg2,target,res))
     setTarget target res
     pure ()
 
   I.Get_prop_addr arg1 arg2 target -> do
     let _ = undefined arg1 arg2 target --TODO
-    --Debug (show ("TODO:Get_prop_addr",arg1,arg2,target))
+    Debug (show ("TODO:Get_prop_addr",arg1,arg2,target))
     pure ()
 
   I.Get_prop_len arg target -> do undefined arg target
 
   I.Get_sibling arg target label -> do
     let _ = undefined arg target label --TODO
-    --Debug (show ("TODO:Get_sibling",arg,target,label))
+    Debug (show ("TODO:Get_sibling",arg,target,label))
     pure ()
 
   I.Inc arg -> do undefined arg
@@ -287,7 +287,7 @@ eval = \case
 
   I.Insert_obj arg1 arg2 -> do
     let _ = undefined arg1 arg2 --TODO
-    --Debug (show ("TODO: Insert_obj",arg1,arg2))
+    Debug (show ("TODO:Insert_obj",arg1,arg2))
     pure ()
 
   I.Je (Args args) label -> do
@@ -300,7 +300,7 @@ eval = \case
 
   I.Jin arg1 arg2 label -> do
     let _ = undefined arg1 arg2 label --TODO
-    --Debug (show ("TODO: Jin",arg1,arg2,label))
+    Debug (show ("TODO: Jin",arg1,arg2,label))
     pure ()
 
   I.Jl arg1 arg2 label -> do undefined arg1 arg2 label
@@ -355,7 +355,7 @@ eval = \case
 
   I.Put_prop arg1 arg2 arg3 -> do
     let _ = undefined arg1 arg2 arg3 --TODO
-    --Debug (show ("TODO: Put_prop",arg1,arg2,arg3))
+    Debug (show ("TODO: Put_prop",arg1,arg2,arg3))
     pure ()
 
   I.Random arg target -> do undefined arg target
@@ -370,7 +370,7 @@ eval = \case
 
   I.Set_attr arg1 arg2 -> do
     let _ = undefined arg1 arg2 --TODO
-    --Debug (show ("TODO: Set_attr",arg1,arg2))
+    Debug (show ("TODO: Set_attr",arg1,arg2))
     pure ()
 
   I.Sread arg1 arg2 -> do
@@ -380,11 +380,10 @@ eval = \case
     Debug (show ("Sread",(arg1,v1),(arg2,v2),"-->",typed))
 
   I.Store arg1 arg2 -> do
-    let _ = undefined arg1 arg2 --TODO
     v1 <- evalArg arg1
     let target :: Target = makeVariable (valueToByte v1)
     v2 <- evalArg arg2
-    --Debug (show ("TODO: Store",(arg1,v1,target),(arg2,v2)))
+    --Debug (show ("Store",(arg1,v1,target),(arg2,v2)))
     case target of
       Sp{} -> undefined (do _ <- PopStack; pure ()) -- from niz
       _ -> pure ()
@@ -415,7 +414,7 @@ eval = \case
   I.Test_attr arg1 arg2 label -> do
     let _ = undefined arg1 arg2 label --TODO
     let res = False
-    --Debug (show ("TODO: Test_attr(hack res=FALSE)",arg1,arg2,label))
+    Debug (show ("TODO:Test_attr(hack res=FALSE)",arg1,arg2,label))
     branchMaybe label res
 
 getObjShortName :: Value -> Eff String
