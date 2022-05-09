@@ -1,12 +1,13 @@
 
 module Walk (walkZork) where
 
-import Addr (Addr)
+import Addr (Addr,ofPackedWord)
 import Control.Monad (ap,liftM)
 import Data.Bits -- (testBit,(.&.),shiftR)
+import qualified Data.Char as Char
 import Data.Int (Int16)
 import Data.Word (Word8)
-import Decode (fetchInstruction,fetchRoutineHeader)
+import Decode (fetchInstruction,fetchRoutineHeader,makeVariable)
 import Dis (runFetch)
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..))
 import Story (Story,loadStory,readStoryByte)
@@ -16,7 +17,7 @@ import Data.Map (Map)
 import qualified Data.Map as Map
 
 type Byte = Word8
-type Target = Variable -- TODO: actually do the rename
+type Target = Variable --TODO: actually do the rename
 
 
 walkZork :: IO ()
@@ -32,21 +33,34 @@ walkZork = do
 --[run interaction as IO]---------------------------------------------
 
 runInter :: Inter -> IO ()
-runInter = \case
-  I_Trace n a instruction next -> do
-    printf "(Decode %d %s %s)\n" n (show a) (I.pretty instruction)
-    runInter next
-  I_Output s next -> do
-    putStrLn s
-    runInter next
-  I_Stop -> do
-    print (show ("I_Stop"))
+runInter = loop []
+  where
+    loop :: [String] -> Inter -> IO ()
+    loop buf = \case
+      I_Trace _n a instruction next -> do
+        --printf "(Decode %d %s %s)\n" _n (show a) (I.pretty instruction)
+        printf "(Decode %s %s)\n" (show a) (I.pretty instruction)
+        loop buf next
+      I_Output text next -> do
+        --let _ = putStrLn ("OUTPUT: " ++ s) --TODO: buffer and print
+        loop (text:buf) next
+      I_Debug s next -> do
+        putStrLn ("DEBUG:" ++ s)
+        loop buf next
+      I_Input f -> do
+        let s :: String = undefined "get text from user"
+        loop buf (f s)
+      I_Stop -> do
+        print "**Stop**(buffered output...)"
+        mapM_ putStr (reverse buf)
 
 --[interaction type]--------------------------------------------------
 
 data Inter
   = I_Trace Int Addr Instruction Inter
   | I_Output String Inter
+  | I_Debug String Inter
+  | I_Input (String -> Inter) --TODO: make use of this!
   | I_Stop
 
 --[interpreter for execution effect]----------------------------------
@@ -58,13 +72,18 @@ runEff s0 e0 = loop s0 e0 $ \_ () -> I_Stop
     loop s e k = case e of
       Ret x -> k s x
       Bind e f -> loop s e $ \s a -> loop s (f a) k
-      Print mes -> I_Output mes (k s ())
+      GamePrint mes -> I_Output mes (k s ())
+      Debug mes -> I_Debug mes (k s ())
+
+      --ReadInputFromUser -> do I_Input $ \response -> k s response
+      ReadInputFromUser -> I_Stop
 
       FetchI -> do
        --I_Output (show s) $ do
         let State{story,pc,count} = s
-        let (i,pc') = fetchI pc story
-        I_Trace count pc i (k s { pc = pc', count = count + 1 } i)
+        let (ins',pc') = fetchI pc story
+        let ins = if count > 400 then error "too many!" else ins'
+        I_Trace count pc ins (k s { pc = pc', count = count + 1 } ins)
 
       FetchHeader{} -> do
         let State{story,pc} = s
@@ -91,31 +110,43 @@ runEff s0 e0 = loop s0 e0 $ \_ () -> I_Stop
 
       SetLocal n v -> do
         let State{locals} = s
-        --let _debug = I_Output (show ("SetLocal",n,v))
-        k s { locals = Map.insert n v locals } ()
+        let _debug = id --I_Debug (show ("SetLocal",n,v))
+        _debug $ k s { locals = Map.insert n v locals } ()
 
-      AllEqual vs -> do
-        let res = (case vs of [v1,v2] -> v1==v2; _ -> undefined)
-        --let _debug = I_Output (show ("AllEqual",vs,res))
-        k s res
+      EqualAny vs -> do
+        let
+          res =
+            case vs of
+              [v1,v2] -> v1==v2
+              [v1,v2,v3] -> v1==v2 || v1==v3
+              vs -> error (show ("EqualAny",vs))
+        let _debug = id --I_Debug (show ("EqualAny",vs,res))
+        _debug $ k s res
       IsZero value -> do
         let res = (value == 0)
-        --let _debug = I_Output (show ("IsZero",value,res))
-        k s res
+        let _debug = id --I_Debug (show ("IsZero",value,res))
+        _debug $ k s res
       BinOp bin v1 v2 -> do
-        let res = case bin of BAdd -> v1+v2; BSub -> v1-v2
-        --let _debug = I_Output (show ("BinOp",bin,v1,v2,res))
-        k s res
+        let res = case bin of
+              BAdd -> v1 + v2
+              BSub -> v1 - v2
+              BAnd -> v1 .&. v2
+        let _debug = id --I_Debug (show ("BinOp",bin,v1,v2,res))
+        _debug $ k s res
 
       GetByte a -> do
         let State{story,overrides} = s
-        case Map.lookup a overrides of
-          Just b -> k s b
-          Nothing -> k s (readStoryByte story a)
+        let (_over,b) =
+              case Map.lookup a overrides of
+                Just b -> (True,b)
+                Nothing -> (False,readStoryByte story a)
+        let _debug = id --I_Debug (show ("GetByte",a,_over,b))
+        _debug $ k s b
 
       SetByte a b -> do
         let State{overrides} = s
-        k s { overrides = Map.insert a b overrides } ()
+        let _debug = id --I_Debug (show ("SetByte",a,b))
+        _debug $ k s { overrides = Map.insert a b overrides } ()
 
       PushStack v -> do
         let State{stack} = s
@@ -128,13 +159,13 @@ runEff s0 e0 = loop s0 e0 $ \_ () -> I_Stop
           v:stack -> do
             k s { stack } v
 
-fetchI :: Addr -> Story -> (Instruction,Addr) -- TODO: inline
+fetchI :: Addr -> Story -> (Instruction,Addr) --TODO: inline
 fetchI a story =
   case (runFetch a story fetchInstruction) of
     Left e -> error (show ("fetchI",e))
     Right x -> x
 
-fetchH :: Addr -> Story -> (RoutineHeader,Addr) -- TODO: inline
+fetchH :: Addr -> Story -> (RoutineHeader,Addr) --TODO: inline
 fetchH a story =
   case (runFetch a story fetchRoutineHeader) of
     Left e -> error (show ("fetchH",e))
@@ -194,10 +225,10 @@ theEffect = loop
 
 eval :: Instruction -> Eff ()
 eval = \case
+  I.Bad s -> do error (show ("Bad",s))
 
   I.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
-
-  I.And_ arg1 arg2 target -> do undefined arg1 arg2 target
+  I.And_ arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
 
   I.Call func (Args args) target -> do
     funcAddress <- evalFunc func
@@ -210,26 +241,79 @@ eval = \case
   I.Dec arg -> do undefined arg
   I.Dec_check arg1 arg2 label -> do undefined arg1 arg2 label
   I.Div arg1 arg2 target -> do undefined arg1 arg2 target
-  I.Get_child arg target label -> do undefined arg target label
-  I.Get_parent arg target -> do undefined arg target
-  I.Get_prop arg1 arg2 target -> do undefined arg1 arg2 target
-  I.Get_prop_addr arg1 arg2 target -> do undefined arg1 arg2 target
-  I.Get_prop_len arg target -> do undefined arg target
-  I.Get_sibling arg target label -> do undefined arg target label
-  I.Inc arg -> do undefined arg
-  I.Inc_check arg1 arg2 label -> do undefined arg1 arg2 label
-  I.Insert_obj arg1 arg2 -> do undefined arg1 arg2
-  I.Je (Args args) label -> do
-    mapM evalArg args >>= AllEqual >>= evalLabel label
 
-  I.Jg arg1 arg2 label -> do undefined arg1 arg2 label
-  I.Jin arg1 arg2 label -> do undefined arg1 arg2 label
+  I.Get_child arg target label -> do
+    let _ = undefined arg target label --TODO
+    --Debug (show ("Get_child",arg,target,label))
+    pure ()
+
+  I.Get_parent arg target -> do
+    let _ = undefined arg target --TODO
+    let res = 999
+    --Debug (show ("Get_parent(HACK res)",arg,target,res))
+    setTarget target res
+    pure ()
+
+  I.Get_prop arg1 arg2 target -> do
+    let _ = undefined arg1 arg2 target --TODO
+    let res = 19102
+    --Debug (show ("Get_prop(HACK fixed res)",arg1,arg2,target,res))
+    setTarget target res
+    pure ()
+
+  I.Get_prop_addr arg1 arg2 target -> do
+    let _ = undefined arg1 arg2 target --TODO
+    --Debug (show ("TODO:Get_prop_addr",arg1,arg2,target))
+    pure ()
+
+  I.Get_prop_len arg target -> do undefined arg target
+
+  I.Get_sibling arg target label -> do
+    let _ = undefined arg target label --TODO
+    --Debug (show ("TODO:Get_sibling",arg,target,label))
+    pure ()
+
+  I.Inc arg -> do undefined arg
+
+  I.Inc_check arg1 arg2 label -> do
+    v0 <- evalArg arg1
+    let target :: Target = makeVariable (valueToByte v0)
+    --let v1 = v0
+    v1 <- evalTarget target
+    v2 <- evalArg arg2
+    --Debug (show ("inc-check",v1,v2,(v1 >= v2)))
+    setTarget target (v1 + 1)
+    branchMaybe label (v1 >= v2)
+
+  I.Insert_obj arg1 arg2 -> do
+    let _ = undefined arg1 arg2 --TODO
+    --Debug (show ("TODO: Insert_obj",arg1,arg2))
+    pure ()
+
+  I.Je (Args args) label -> do
+    mapM evalArg args >>= EqualAny >>= branchMaybe label
+
+  I.Jg arg1 arg2 label -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    branchMaybe label (v1 > v2)
+
+  I.Jin arg1 arg2 label -> do
+    let _ = undefined arg1 arg2 label --TODO
+    --Debug (show ("TODO: Jin",arg1,arg2,label))
+    pure ()
+
   I.Jl arg1 arg2 label -> do undefined arg1 arg2 label
 
   I.Jump addr -> do SetPC addr
-  I.Jz arg label -> do evalArg arg >>= IsZero >>= evalLabel label
+  I.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
 
-  I.Load_byte arg1 arg2 target -> do undefined arg1 arg2 target
+  I.Load_byte arg1 arg2 target -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    b <- GetByte (fromIntegral (v1 + 2*v2))
+    setTarget target (valueOfByte b)
+
   I.Load_word arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
@@ -237,30 +321,77 @@ eval = \case
     setTarget target (valueOfWord w)
 
   I.Mul arg1 arg2 target -> do undefined arg1 arg2 target
-  I.New_line -> do undefined
-  I.Print string -> do undefined string
+
+  I.New_line -> do GamePrint "\n"
+  I.Print string -> do GamePrint string
+
   I.Print_addr arg -> do undefined arg
-  I.Print_char arg -> do undefined arg
-  I.Print_num arg -> do undefined arg
-  I.Print_obj arg -> do undefined arg
+
+  I.Print_char arg -> do
+    v <- evalArg arg
+    let c :: Char = Char.chr (fromIntegral v)
+    -- todo -- check char in bound!
+    GamePrint [c]
+
+  I.Print_num arg -> do evalArg arg >>= GamePrint . show
+
+  I.Print_obj arg -> do
+    v <- evalArg arg
+    shortName <- getObjShortName v
+    GamePrint shortName
+
   I.Print_paddr arg -> do undefined arg
   I.Print_ret string -> do undefined string
-  I.Pull arg -> do undefined arg
-  I.Push arg -> do undefined arg
-  I.Put_prop arg1 arg2 arg -> do undefined arg1 arg2 arg
+
+  I.Pull arg -> do
+    v0 <- evalArg arg
+    let target :: Target = makeVariable (valueToByte v0)
+    v1 <- PopStack
+    --Debug (show ("pull",v0,target,v1))
+    setTarget target v1
+
+
+  I.Push arg -> do evalArg arg >>= PushStack
+
+  I.Put_prop arg1 arg2 arg3 -> do
+    let _ = undefined arg1 arg2 arg3 --TODO
+    --Debug (show ("TODO: Put_prop",arg1,arg2,arg3))
+    pure ()
+
   I.Random arg target -> do undefined arg target
-  I.Ret_popped -> do undefined
+  I.Ret_popped -> do PopStack >>= returnValue
   I.Return arg -> do
     v <- evalArg arg
     target <- PopFrame
     setTarget target v
 
-  I.Rfalse -> do undefined
-  I.Rtrue -> do undefined
-  I.Set_attr arg1 arg2 -> do undefined arg1 arg2
-  I.Sread arg1 arg2 -> do undefined arg1 arg2
-  I.Store arg1 arg2 -> do undefined arg1 arg2
-  I.Storeb arg1 arg2 arg -> do undefined arg1 arg2 arg
+  I.Rfalse -> do returnValue 0
+  I.Rtrue -> do returnValue 1
+
+  I.Set_attr arg1 arg2 -> do
+    let _ = undefined arg1 arg2 --TODO
+    --Debug (show ("TODO: Set_attr",arg1,arg2))
+    pure ()
+
+  I.Sread arg1 arg2 -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    typed <- ReadInputFromUser
+    Debug (show ("Sread",(arg1,v1),(arg2,v2),"-->",typed))
+
+  I.Store arg1 arg2 -> do
+    let _ = undefined arg1 arg2 --TODO
+    v1 <- evalArg arg1
+    let target :: Target = makeVariable (valueToByte v1)
+    v2 <- evalArg arg2
+    --Debug (show ("TODO: Store",(arg1,v1,target),(arg2,v2)))
+    case target of
+      Sp{} -> undefined (do _ <- PopStack; pure ()) -- from niz
+      _ -> pure ()
+    setTarget target v2
+    pure ()
+
+  I.Storeb arg1 arg2 arg3 -> do undefined arg1 arg2 arg3
 
   I.Storew arg1 arg2 arg3 -> do
     v1 <- evalArg arg1
@@ -268,16 +399,28 @@ eval = \case
     v3 <- evalArg arg3
     let w1 = valueToAddr v1
     let w2 = valueToAddr v2
-    let w3 = valueToUnsigned v3
+    let w3 = valueToWord v3
     let a = w1 + 2*w2
     setWord a w3
 
   I.Sub arg1 arg2 target -> do evalBin BSub arg1 arg2 target
 
-  I.Test arg1 arg2 label -> do undefined arg1 arg2 label
-  I.Test_attr arg1 arg2 label -> do undefined arg1 arg2 label
+  I.Test arg1 arg2 label -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    let res = v1 .&. v2 == v2
+    --Debug (show ("Test",(arg1,v1),(arg2,v2),label))
+    branchMaybe label res
 
-  _ -> do error "eval"
+  I.Test_attr arg1 arg2 label -> do
+    let _ = undefined arg1 arg2 label --TODO
+    let res = False
+    --Debug (show ("TODO: Test_attr(hack res=FALSE)",arg1,arg2,label))
+    branchMaybe label res
+
+getObjShortName :: Value -> Eff String
+getObjShortName v = do
+  pure $ printf "object<%s>" (show v) --TODO
 
 
 evalBin :: Bin -> Arg -> Arg -> Target -> Eff ()
@@ -287,8 +430,8 @@ evalBin bin arg1 arg2 target = do
   v <- BinOp bin v1 v2
   setTarget target v
 
-evalLabel :: Label -> Bool -> Eff ()
-evalLabel (Branch sense dest) b = case (sense,b) of
+branchMaybe :: Label -> Bool -> Eff ()
+branchMaybe (Branch sense dest) b = case (sense,b) of
   (I.T,False) -> pure ()
   (I.F,True) -> pure ()
   (I.T,True) -> gotoDest dest
@@ -296,14 +439,18 @@ evalLabel (Branch sense dest) b = case (sense,b) of
 
 gotoDest :: Dest -> Eff ()
 gotoDest = \case
-  Dfalse -> undefined
-  Dtrue -> undefined
+  Dfalse -> returnValue 0
+  Dtrue -> returnValue 1
   Dloc a -> SetPC a
 
 evalFunc :: Func -> Eff Addr
 evalFunc = \case
   Floc a -> pure a
-  Fvar{} -> undefined
+  Fvar var -> do
+    v <- evalTarget var
+    let a = Addr.ofPackedWord (valueToWord v)
+    --Debug(show("evalFunc(Fvar)",var,v,a))
+    pure a
 
 evalArg :: Arg -> Eff Value
 evalArg = \case
@@ -321,13 +468,24 @@ evalTarget = \case
     --Print (show ("valueOfWord:",w,v))
     pure v
 
+returnValue :: Value -> Eff ()
+returnValue v = do
+  target <- PopFrame
+  setTarget target v
+
+
 setTarget :: Target -> Value -> Eff ()
-setTarget var v = case var of
+setTarget var v = do
+  --Debug (show ("setTarget",var,v))
+  setTarget' var v
+
+setTarget' :: Target -> Value -> Eff ()
+setTarget' var v = case var of
   Sp -> PushStack v
   Local n -> SetLocal n v
   Global b -> do
     a <- globalAddr b
-    let w = valueToUnsigned v
+    let w = valueToWord v
     setWord a w
 
 globalAddr :: Byte -> Eff Addr
@@ -362,7 +520,10 @@ instance Monad Eff where return = Ret; (>>=) = Bind
 data Eff a where
   Ret :: a -> Eff a
   Bind :: Eff a -> (a -> Eff b) -> Eff b
-  Print :: String -> Eff ()
+
+  GamePrint :: String -> Eff ()
+  Debug :: String -> Eff ()
+  ReadInputFromUser :: Eff String
 
   FetchI :: Eff Instruction
   FetchHeader :: Eff RoutineHeader
@@ -374,7 +535,7 @@ data Eff a where
   GetLocal :: Byte -> Eff Value
   SetLocal :: Byte -> Value -> Eff ()
 
-  AllEqual :: [Value] -> Eff Bool
+  EqualAny :: [Value] -> Eff Bool
   IsZero :: Value -> Eff Bool
   BinOp :: Bin -> Value -> Value -> Eff Value
 
@@ -388,21 +549,33 @@ data Eff a where
 
 type Value = Int16
 
-data Bin = BAdd | BSub
+data Bin = BAdd | BSub | BAnd
   deriving Show
 
-valueToAddr :: Value -> Addr
-valueToAddr v = fromIntegral (valueToUnsigned v)
+valueToWord :: Value -> Word
+valueToWord v = do
+  -- fromIntegral just does the _right thing_ :)
+  let w :: Word = fromIntegral v -- .&. 0xffff -- .&. needed for show
+  --if v < 0 then error (show ("valueToWord(is-neg)",v,w)) else
+  w
 
-valueToUnsigned :: Value -> Word
-valueToUnsigned v =
-  if v < 0 then fromIntegral v else -- error (show ("valueToUnsigned",v)) else
-    fromIntegral v
+valueToAddr :: Value -> Addr
+valueToAddr v = fromIntegral (valueToWord v) -- always ok
+
+valueToByte :: Value -> Byte
+valueToByte v = do
+  if v < 0 || v > 255 then error (show ("valueToByte",v)) else fromIntegral v
 
 valueOfWord :: Word -> Value
-valueOfWord w =
-  --if w `testBit` 15 then undefined else
-    fromIntegral w
+valueOfWord w = do
+  let v :: Value = fromIntegral w
+  --if w `testBit` 15 then error (show ("valueOfWord",w,v)) else
+  v
 
-valueOfInt :: Int -> Value
+
+valueOfByte :: Byte -> Value
+valueOfByte b = fromIntegral b -- always ok
+
+valueOfInt :: Int -> Value --TODO: why do we ever have ints?
 valueOfInt = fromIntegral
+

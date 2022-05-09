@@ -2,6 +2,7 @@
 module Decode
   ( fetchInstruction
   , fetchRoutineHeader
+  , makeVariable
   ) where
 
 import Addr (Addr)

@@ -13,7 +13,7 @@ dev: run.out run.expected Makefile
 	git diff --color --no-index run.expected run.out
 
 run.expected: ~/niz.trace Makefile
-	cat ~/niz.trace | head -120 > run.expected
+	cat ~/niz.trace | head -400 | sed 's/Decode [^ ]*/Decode/' > run.expected
 
 run.out: src/*.hs Makefile
 	stack build
