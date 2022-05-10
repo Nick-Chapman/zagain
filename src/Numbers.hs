@@ -5,13 +5,18 @@ module Numbers
   , Value, valueToByte, valueOfByte, valueOfWord, valueToAddr, valueToWord, valueOfInt
   ) where
 
-import Text.Printf (printf)
+import Data.Bits (Bits)
 import Data.Int (Int16)
 import Data.Word (Word8)
+import Text.Printf (printf)
 
 --[byte]--------------------------------------------------------------
 
-type Byte = Word8
+newtype Byte = Byte Word8
+  deriving (Ord,Eq,Integral,Real,Enum,Num,Bits)
+
+instance Show Byte where
+  show (Byte w8) = show w8
 
 --[address: index into story file]------------------------------------
 
@@ -27,7 +32,8 @@ instance Show Addr where
 
 --[z-value]-----------------------------------------------------------
 
-type Value = Int16
+newtype Value = Value Int16
+  deriving (Ord,Eq,Show,Integral,Real,Enum,Num,Bits)
 
 valueToWord :: Value -> Word
 valueToWord v = do

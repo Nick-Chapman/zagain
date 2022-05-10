@@ -2,11 +2,8 @@
 module Story (Story,loadStory,readStoryByte) where
 
 import Data.Array (Array,(!),listArray)
-import Data.Word (Word8)
-import Numbers (Addr)
+import Numbers (Byte,Addr)
 import qualified Data.ByteString as BS (readFile,unpack)
-
-type Byte = Word8
 
 data Story = Story { size :: Int, bytesA :: Array Int Byte }
 
@@ -17,8 +14,8 @@ loadStory path = do
   let bytesA = listArray (0,size-1) bytes
   pure $ Story { size, bytesA }
 
-loadBytes :: FilePath -> IO [Word8]
-loadBytes path = BS.unpack <$> BS.readFile path
+loadBytes :: FilePath -> IO [Byte]
+loadBytes path = (map fromIntegral . BS.unpack) <$> BS.readFile path
 
 readStoryByte :: Story -> Addr -> Byte
 readStoryByte Story{size, bytesA} a =  if

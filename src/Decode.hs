@@ -7,14 +7,11 @@ module Decode
 
 import Data.Array (Array,(!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
-import Data.Word (Word8)
 import Fetch (Fetch(..))
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
-import Numbers (Addr,addrOfPackedWord)
+import Numbers (Byte,Addr,addrOfPackedWord)
 import Text.Printf (printf)
 import qualified Instruction as I
-
-type Byte = Word8
 
 data Op = Op Byte [RandType]
   deriving Show

@@ -2,10 +2,7 @@
 module Fetch (Fetch(..)) where
 
 import Control.Monad (ap,liftM)
-import Data.Word (Word8)
-import Numbers(Addr)
-
-type Byte = Word8
+import Numbers (Byte,Addr)
 
 instance Functor Fetch where fmap = liftM
 instance Applicative Fetch where pure = return; (<*>) = ap
