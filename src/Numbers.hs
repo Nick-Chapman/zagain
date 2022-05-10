@@ -29,6 +29,7 @@ byteOfValue :: Value -> Byte
 byteOfValue v = do
   if v < 0 || v > 255 then error (show ("byteOfValue",v)) else fromIntegral v
 
+{-
 newtype Word = SixteenBits Word16
   deriving (Ord,Eq,Num,Integral,Real,Enum,Ix,Bits)
 
@@ -36,6 +37,8 @@ instance Show Word where
   show (SixteenBits w16) = if
     | matchNizFormat -> show w16
     | otherwise -> printf "0x%04x" w16
+-}
+type Word = Value
 
 newtype Addr = StoryIndex Prelude.Word
   deriving (Ord,Eq,Num,Integral,Real,Enum)
@@ -48,10 +51,10 @@ instance Show Addr where
     | matchNizFormat -> printf "%05i" i
     | otherwise -> printf "[%05i]" i
 
-newtype Value = Value Int16
-  deriving (Ord,Eq,Integral,Real,Enum,Num,Bits)
+newtype Value = Value Int16 -- for signed numeric operations
+  deriving (Ord,Eq,Integral,Real,Enum,Num,Bits,Ix)
 
 instance Show Value where
   show (Value x) = if
-    | matchNizFormat -> show (fromIntegral x :: Word) -- show unsigned
+    | matchNizFormat -> show (fromIntegral x :: Word16) -- show unsigned
     | otherwise -> show x

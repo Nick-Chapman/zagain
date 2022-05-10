@@ -125,7 +125,7 @@ bracket i = if needBracket i then printf "(%s)" else id
       Rtrue -> False
       _ -> True
 
-data RoutineHeader = RoutineHeader [Int]
+data RoutineHeader = RoutineHeader [Value]
 
 instance Show RoutineHeader where
   show (RoutineHeader xs) =

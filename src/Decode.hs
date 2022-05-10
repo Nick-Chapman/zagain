@@ -186,13 +186,7 @@ jumpLocation :: Fetch Addr
 jumpLocation = do
   here <- Fetch.Here
   w <- fetchNextWord
-  pure $ fromIntegral (fromIntegral here + decodeSigned w)
-
-decodeSigned :: Word -> Int
-decodeSigned w =
-  if w `testBit` 15
-  then fromIntegral w - 0x10000
-  else fromIntegral w
+  pure $ fromIntegral (here + fromIntegral w)
 
 fetchNextWord :: Fetch Word
 fetchNextWord = do
