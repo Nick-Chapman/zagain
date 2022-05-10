@@ -45,7 +45,7 @@ runInter = loop []
         --let _ = putStrLn ("OUTPUT: " ++ s) --TODO: buffer and print
         loop (text:buf) next
       I_Debug s next -> do
-        putStrLn ("DEBUG:" ++ s)
+        let _ = putStrLn ("DEBUG:" ++ s) --hide debug for now
         loop buf next
       I_Input f -> do
         let s :: String = undefined "get text from user"
