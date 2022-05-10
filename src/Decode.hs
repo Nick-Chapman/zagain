@@ -2,14 +2,14 @@
 module Decode
   ( fetchInstruction
   , fetchRoutineHeader
-  , makeVariable
+  , makeTarget
   ) where
 
 import Data.Array (Array,(!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Data.Word (Word8)
 import Fetch (Fetch(..))
-import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
+import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
 import Numbers (Addr,addrOfPackedWord)
 import Text.Printf (printf)
 import qualified Instruction as I
@@ -138,22 +138,22 @@ func :: RandType -> Fetch Func
 func = \case
   ByteConst -> Fetch.Err "func, ByteConst"
   WordConst -> (Floc . addrOfPackedWord) <$> fetchNextWord
-  ByteVariable -> (Fvar . makeVariable) <$> Fetch.NextByte
+  ByteVariable -> (Fvar . makeTarget) <$> Fetch.NextByte
 
 args :: [RandType] -> Fetch Args
 args ts = Args <$> mapM arg ts
 
-target :: Fetch Variable
-target = makeVariable <$> Fetch.NextByte
+target :: Fetch Target
+target = makeTarget <$> Fetch.NextByte
 
 arg :: RandType -> Fetch Arg
 arg = \case
   ByteConst -> (Con . fromIntegral) <$> Fetch.NextByte
   WordConst -> (Con . fromIntegral) <$> fetchNextWord
-  ByteVariable -> (Var . makeVariable) <$> Fetch.NextByte
+  ByteVariable -> (Var . makeTarget) <$> Fetch.NextByte
 
-makeVariable :: Byte -> Variable
-makeVariable = \case
+makeTarget :: Byte -> Target
+makeTarget = \case
   0 -> Sp
   n -> if n < 16 then Local n else Global (n - 16)
 

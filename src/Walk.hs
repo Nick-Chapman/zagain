@@ -3,18 +3,16 @@ module Walk (walkZork) where
 
 import Data.Bits ((.&.),shiftR)
 import Data.Map (Map)
-import Decode (fetchInstruction,fetchRoutineHeader,makeVariable)
+import Decode (fetchInstruction,fetchRoutineHeader,makeTarget)
 import Dis (runFetch)
 import Eff (Eff(..),Bin(..))
-import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..))
+import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import Numbers (Addr,addrOfPackedWord,Value,Byte,valueToByte,valueOfByte,valueOfWord,valueToAddr,valueToWord,valueOfInt)
 import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Data.Map as Map
 import qualified Instruction as I
-
-type Target = Variable --TODO: actually do the rename
 
 walkZork :: IO ()
 walkZork = do
@@ -273,7 +271,7 @@ eval = \case
 
   I.Inc_check arg1 arg2 label -> do
     v0 <- evalArg arg1
-    let target :: Target = makeVariable (valueToByte v0)
+    let target :: Target = makeTarget (valueToByte v0)
     --let v1 = v0
     v1 <- evalTarget target
     v2 <- evalArg arg2
@@ -341,7 +339,7 @@ eval = \case
 
   I.Pull arg -> do
     v0 <- evalArg arg
-    let target :: Target = makeVariable (valueToByte v0)
+    let target :: Target = makeTarget (valueToByte v0)
     v1 <- PopStack
     --Debug (show ("pull",v0,target,v1))
     setTarget target v1
@@ -377,7 +375,7 @@ eval = \case
 
   I.Store arg1 arg2 -> do
     v1 <- evalArg arg1
-    let target :: Target = makeVariable (valueToByte v1)
+    let target :: Target = makeTarget (valueToByte v1)
     v2 <- evalArg arg2
     --Debug (show ("Store",(arg1,v1,target),(arg2,v2)))
     case target of

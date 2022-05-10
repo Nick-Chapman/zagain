@@ -4,7 +4,7 @@ module Instruction
   , Func(..)
   , Args(..)
   , Arg(..)
-  , Variable(..)
+  , Target(..)
   , Label(..)
   , Boolean(..)
   , Dest(..)
@@ -13,23 +13,20 @@ module Instruction
   ) where
 
 import Data.List (intercalate)
-import Data.Word (Word8)
-import Numbers (Addr)
+import Numbers (Byte,Addr)
 import Text.Printf (printf)
-
-type Byte = Word8
 
 data Instruction -- TODO: check naming matches spec
   = Bad String
 
   -- This instructions are not yet decoded
-  -- | Aread Arg Arg Variable
+  -- | Aread Arg Arg Target
   -- | CallN Func Args
-  -- | Get_next_prop Arg Arg Variable
+  -- | Get_next_prop Arg Arg Target
   -- | Input_Stream Arg
-  -- | Load Arg Variable
-  -- | Mod_ Arg Arg Variable
-  -- | Or_ Arg Arg Variable
+  -- | Load Arg Target
+  -- | Mod_ Arg Arg Target
+  -- | Or_ Arg Arg Target
   -- | Output_Stream Arg (Maybe Arg)
   -- | Quit
   -- | Remove_obj Arg
@@ -38,19 +35,19 @@ data Instruction -- TODO: check naming matches spec
   -- | Save_lab Label
   -- | Show_status
   -- | Verify Label
-  | Add Arg Arg Variable
-  | And_ Arg Arg Variable
-  | Call Func Args Variable
+  | Add Arg Arg Target
+  | And_ Arg Arg Target
+  | Call Func Args Target
   | Clear_attr Arg Arg
   | Dec Arg
   | Dec_check Arg Arg Label
-  | Div Arg Arg Variable
-  | Get_child Arg Variable Label
-  | Get_parent Arg Variable
-  | Get_prop Arg Arg Variable
-  | Get_prop_addr Arg Arg Variable
-  | Get_prop_len Arg Variable
-  | Get_sibling Arg Variable Label
+  | Div Arg Arg Target
+  | Get_child Arg Target Label
+  | Get_parent Arg Target
+  | Get_prop Arg Arg Target
+  | Get_prop_addr Arg Arg Target
+  | Get_prop_len Arg Target
+  | Get_sibling Arg Target Label
   | Inc Arg
   | Inc_check Arg Arg Label
   | Insert_obj Arg Arg
@@ -60,9 +57,9 @@ data Instruction -- TODO: check naming matches spec
   | Jl Arg Arg Label
   | Jump Addr
   | Jz Arg Label
-  | Load_byte Arg Arg Variable
-  | Load_word Arg Arg Variable
-  | Mul Arg Arg Variable
+  | Load_byte Arg Arg Target
+  | Load_word Arg Arg Target
+  | Mul Arg Arg Target
   | New_line
   | Print String
   | Print_addr Arg
@@ -74,7 +71,7 @@ data Instruction -- TODO: check naming matches spec
   | Pull Arg
   | Push Arg
   | Put_prop Arg Arg Arg
-  | Random Arg Variable
+  | Random Arg Target
   | Ret_popped
   | Return Arg
   | Rfalse
@@ -84,7 +81,7 @@ data Instruction -- TODO: check naming matches spec
   | Store Arg Arg
   | Storeb Arg Arg Arg
   | Storew Arg Arg Arg
-  | Sub Arg Arg Variable
+  | Sub Arg Arg Target
   | Test Arg Arg Label
   | Test_attr Arg Arg Label
 
@@ -95,13 +92,13 @@ newtype Args = Args [Arg] -- TODO: deprecate (changes regression)
 instance Show Args where
   show (Args xs) = printf "(%s)" (intercalate " " (map (printf "(%s)" . show) xs))
 
-data Func = Floc Addr | Fvar Variable
+data Func = Floc Addr | Fvar Target
   deriving Show
 
-data Arg = Con Int | Var Variable -- TODO: perhaps Con should carry a (signed) Value
+data Arg = Con Int | Var Target -- TODO: perhaps Con should carry a (signed) Value
   deriving Show
 
-data Variable = Sp | Local Byte | Global Byte -- TODO: rename Variable -> Target
+data Target = Sp | Local Byte | Global Byte
   deriving Show
 
 data Label = Branch Boolean Dest -- TODO: prefer Sense to Boolean

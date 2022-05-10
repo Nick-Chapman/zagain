@@ -3,10 +3,8 @@
 module Eff (Eff(..),Bin(..)) where
 
 import Control.Monad (ap,liftM)
-import Instruction (Instruction,Variable,RoutineHeader)
+import Instruction (Instruction,Target,RoutineHeader)
 import Numbers (Byte,Addr,Value)
-
-type Target = Variable --TODO: actually do the rename
 
 instance Functor Eff where fmap = liftM
 instance Applicative Eff where pure = return; (<*>) = ap
