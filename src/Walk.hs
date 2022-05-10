@@ -2,21 +2,18 @@
 module Walk (walkZork) where
 
 import Control.Monad (ap,liftM)
-import Data.Bits -- (testBit,(.&.),shiftR)
-import Data.Int (Int16)
+import Data.Bits ((.&.),shiftR)
 import Data.Map (Map)
-import Data.Word (Word8)
 import Decode (fetchInstruction,fetchRoutineHeader,makeVariable)
 import Dis (runFetch)
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..))
-import Numbers (Addr,addrOfPackedWord)
+import Numbers --(Addr,addrOfPackedWord)
 import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Data.Map as Map
 import qualified Instruction as I
 
-type Byte = Word8
 type Target = Variable --TODO: actually do the rename
 
 
@@ -544,37 +541,5 @@ data Eff a where
   PushStack :: Value -> Eff ()
   PopStack :: Eff Value
 
---[z-value]-----------------------------------------------------------
-
-type Value = Int16
-
 data Bin = BAdd | BSub | BAnd
   deriving Show
-
-valueToWord :: Value -> Word
-valueToWord v = do
-  -- fromIntegral just does the _right thing_ :)
-  let w :: Word = fromIntegral v -- .&. 0xffff -- .&. needed for show
-  --if v < 0 then error (show ("valueToWord(is-neg)",v,w)) else
-  w
-
-valueToAddr :: Value -> Addr
-valueToAddr v = fromIntegral (valueToWord v) -- always ok
-
-valueToByte :: Value -> Byte
-valueToByte v = do
-  if v < 0 || v > 255 then error (show ("valueToByte",v)) else fromIntegral v
-
-valueOfWord :: Word -> Value
-valueOfWord w = do
-  let v :: Value = fromIntegral w
-  --if w `testBit` 15 then error (show ("valueOfWord",w,v)) else
-  v
-
-
-valueOfByte :: Byte -> Value
-valueOfByte b = fromIntegral b -- always ok
-
-valueOfInt :: Int -> Value --TODO: why do we ever have ints?
-valueOfInt = fromIntegral
-
