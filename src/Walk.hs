@@ -1,13 +1,13 @@
 
 module Walk (walkZork) where
 
-import Control.Monad (ap,liftM)
 import Data.Bits ((.&.),shiftR)
 import Data.Map (Map)
 import Decode (fetchInstruction,fetchRoutineHeader,makeVariable)
 import Dis (runFetch)
+import Eff (Eff(..),Bin(..))
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..))
-import Numbers --(Addr,addrOfPackedWord)
+import Numbers (Addr,addrOfPackedWord,Value,Byte,valueToByte,valueOfByte,valueOfWord,valueToAddr,valueToWord,valueOfInt)
 import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
 import qualified Data.Char as Char
@@ -15,7 +15,6 @@ import qualified Data.Map as Map
 import qualified Instruction as I
 
 type Target = Variable --TODO: actually do the rename
-
 
 walkZork :: IO ()
 walkZork = do
@@ -506,40 +505,3 @@ setWord a w = do
   let lo = fromIntegral (w .&. 0xff)
   SetByte a hi
   SetByte (a+1) lo
-
---[exection effect]---------------------------------------------------
-
-instance Functor Eff where fmap = liftM
-instance Applicative Eff where pure = return; (<*>) = ap
-instance Monad Eff where return = Ret; (>>=) = Bind
-
-data Eff a where
-  Ret :: a -> Eff a
-  Bind :: Eff a -> (a -> Eff b) -> Eff b
-
-  GamePrint :: String -> Eff ()
-  Debug :: String -> Eff ()
-  ReadInputFromUser :: Eff String
-
-  FetchI :: Eff Instruction
-  FetchHeader :: Eff RoutineHeader
-
-  PushFrame :: Addr -> Target -> Eff ()
-  PopFrame :: Eff Target
-  SetPC :: Addr -> Eff ()
-
-  GetLocal :: Byte -> Eff Value
-  SetLocal :: Byte -> Value -> Eff ()
-
-  EqualAny :: [Value] -> Eff Bool
-  IsZero :: Value -> Eff Bool
-  BinOp :: Bin -> Value -> Value -> Eff Value
-
-  GetByte :: Addr -> Eff Byte
-  SetByte :: Addr -> Byte -> Eff ()
-
-  PushStack :: Value -> Eff ()
-  PopStack :: Eff Value
-
-data Bin = BAdd | BSub | BAnd
-  deriving Show
