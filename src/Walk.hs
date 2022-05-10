@@ -1,20 +1,20 @@
 
 module Walk (walkZork) where
 
-import Addr (Addr,ofPackedWord)
 import Control.Monad (ap,liftM)
 import Data.Bits -- (testBit,(.&.),shiftR)
-import qualified Data.Char as Char
 import Data.Int (Int16)
+import Data.Map (Map)
 import Data.Word (Word8)
 import Decode (fetchInstruction,fetchRoutineHeader,makeVariable)
 import Dis (runFetch)
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..))
+import Numbers (Addr,addrOfPackedWord)
 import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
-import qualified Instruction as I
-import Data.Map (Map)
+import qualified Data.Char as Char
 import qualified Data.Map as Map
+import qualified Instruction as I
 
 type Byte = Word8
 type Target = Variable --TODO: actually do the rename
@@ -447,7 +447,7 @@ evalFunc = \case
   Floc a -> pure a
   Fvar var -> do
     v <- evalTarget var
-    let a = Addr.ofPackedWord (valueToWord v)
+    let a = addrOfPackedWord (valueToWord v)
     --Debug(show("evalFunc(Fvar)",var,v,a))
     pure a
 

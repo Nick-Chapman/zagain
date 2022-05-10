@@ -1,9 +1,9 @@
 
 module Fetch (Fetch(..)) where
 
-import Addr(Addr)
 import Control.Monad (ap,liftM)
 import Data.Word (Word8)
+import Numbers(Addr)
 
 type Byte = Word8
 

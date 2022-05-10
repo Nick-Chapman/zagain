@@ -5,14 +5,13 @@ module Decode
   , makeVariable
   ) where
 
-import Addr (Addr)
 import Data.Array (Array,(!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Data.Word (Word8)
 import Fetch (Fetch(..))
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Variable(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
+import Numbers (Addr,addrOfPackedWord)
 import Text.Printf (printf)
-import qualified Addr
 import qualified Instruction as I
 
 type Byte = Word8
@@ -138,7 +137,7 @@ decodeLongRandType x a =
 func :: RandType -> Fetch Func
 func = \case
   ByteConst -> Fetch.Err "func, ByteConst"
-  WordConst -> (Floc . Addr.ofPackedWord) <$> fetchNextWord
+  WordConst -> (Floc . addrOfPackedWord) <$> fetchNextWord
   ByteVariable -> (Fvar . makeVariable) <$> Fetch.NextByte
 
 args :: [RandType] -> Fetch Args
@@ -231,7 +230,7 @@ deco alpha i = if i <0 || i > 25 then error (show ("deco",i)) else a ! i
 abbrev :: Word -> Fetch String
 abbrev n = do
   baseAbbrev :: Addr <- fromIntegral <$> getWord 0x18 -- should we avoid the repeated fetch?
-  thisAbbrev :: Addr <- Addr.ofPackedWord <$> getWord (baseAbbrev + fromIntegral (2 * n))
+  thisAbbrev :: Addr <- addrOfPackedWord <$> getWord (baseAbbrev + fromIntegral (2 * n))
   WithPC thisAbbrev ztext
 
 getWord :: Addr -> Fetch Word

@@ -3,7 +3,6 @@ module Dis (disZork,runFetch) where
 
 import Prelude hiding (Word)
 
-import Addr (Addr)
 import Data.List (sortBy)
 import Data.Ord (comparing)
 import Data.Set as Set
@@ -11,6 +10,7 @@ import Data.Word (Word16)
 import Decode (fetchInstruction,fetchRoutineHeader)
 import Fetch (Fetch(..))
 import Instruction (Instruction,pretty,RoutineHeader)
+import Numbers (Addr)
 import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
 import qualified Instruction as I

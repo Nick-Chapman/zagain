@@ -12,9 +12,9 @@ module Instruction
   , RoutineHeader(..)
   ) where
 
-import Addr (Addr)
 import Data.List (intercalate)
 import Data.Word (Word8)
+import Numbers (Addr)
 import Text.Printf (printf)
 
 type Byte = Word8

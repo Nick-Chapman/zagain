@@ -1,9 +1,9 @@
 
 module Story (Story,loadStory,readStoryByte) where
 
-import Addr (Addr)
 import Data.Array (Array,(!),listArray)
 import Data.Word (Word8)
+import Numbers (Addr)
 import qualified Data.ByteString as BS (readFile,unpack)
 
 type Byte = Word8
