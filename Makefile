@@ -1,6 +1,5 @@
 
-#top: dis-regression
-top: dev
+top: dis-regression dev
 
 dis-regression: src/*.hs Makefile .gen
 	stack run dis-zork > gen/zork.dis
@@ -14,7 +13,7 @@ dev: run.out run.expected Makefile
 
 run.expected: ~/niz.trace Makefile
 	#cat ~/niz.trace | head -400 | sed 's/Decode [^ ]*/Decode/' > run.expected
-	cat ~/niz.trace | head -227 > run.expected
+	cat ~/niz.trace | tail +2 | head -222 > run.expected
 
 run.out: src/*.hs Makefile
 	stack build

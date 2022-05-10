@@ -9,7 +9,8 @@ import Data.Array (Array,(!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
-import Numbers (Byte,Addr,addrOfPackedWord)
+import Numbers (Byte,Word,Addr,addrOfPackedWord)
+import Prelude hiding (Word)
 import Text.Printf (printf)
 import qualified Instruction as I
 
@@ -161,14 +162,15 @@ label = do
   let small = x `testBit` 6
   case small of
     True -> do
-      -- interpret 6bit number as unsigned; small braches are always forward!
+      -- interpret 6bit number as unsigned; small branches are always forward
       let offset = fromIntegral (x .&. 0x3F)
       dest <- decodeDest offset
       pure (Branch sense dest)
     False -> do
       y <- Fetch.NextByte
-      let offset = fromIntegral (x .&. 0x3F) `shiftL` 8 .|. fromIntegral y
+      let offset :: Int = fromIntegral (x .&. 0x3F) `shiftL` 8 .|. fromIntegral y
       let signed = x `testBit` 5
+      -- interpret 14bit number as signed; branches can be forwards or backwards
       dest <- decodeDest (if signed then offset - 0x4000 else offset)
       pure (Branch sense dest)
 

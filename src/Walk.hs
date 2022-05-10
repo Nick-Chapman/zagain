@@ -1,6 +1,7 @@
 
 module Walk (walkZork) where
 
+import Control.Monad (when)
 import Data.Bits ((.&.))
 import Data.Map (Map)
 import Decode (fetchInstruction,fetchRoutineHeader)
@@ -16,37 +17,37 @@ import qualified Instruction as I
 
 walkZork :: IO ()
 walkZork = do
-  print "*walkZork*"
+  let debug = False
+  let maxSteps = 221 -- TODO: we diverge at 222
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let e = theEffect
   let s :: State = initState story
-  let i :: Inter = runEff s e
-  runInter i
+  let i :: Inter = runEff maxSteps s e
+  runInter debug i
 
 --[run interaction as IO]---------------------------------------------
 
-runInter :: Inter -> IO ()
-runInter = loop []
+runInter :: Bool -> Inter -> IO ()
+runInter debug = loop []
   where
     loop :: [String] -> Inter -> IO ()
     loop buf = \case
       I_Trace _n a instruction next -> do
         printf "(Decode %d %s %s)\n" _n (show a) (I.pretty instruction)
-        --printf "(Decode %s %s)\n" (show a) (I.pretty instruction)
         loop buf next
       I_Output text next -> do
-        --let _ = putStrLn ("OUTPUT: " ++ s) --TODO: buffer and print
         loop (text:buf) next
       I_Debug s next -> do
-        let _ = putStrLn ("DEBUG:" ++ s) --hide debug for now
+        when (debug) $ putStrLn ("Debug: " ++ s)
         loop buf next
-      I_Input f -> do
-        let s :: String = undefined "get text from user"
-        loop buf (f s)
-      I_Stop -> do
-        print "**Stop**(buffered output...)"
+      I_Input _f -> do
         mapM_ putStr (reverse buf)
+        putStrLn ""
+        --loop buf (_f "text from user") -- TODO: get text from user
+        pure ()
+      I_Stop -> do
+        pure ()
 
 --[interaction type]--------------------------------------------------
 
@@ -59,25 +60,24 @@ data Inter
 
 --[interpreter for execution effect]----------------------------------
 
-runEff :: State -> Eff () -> Inter
-runEff s0 e0 = loop s0 e0 $ \_ () -> I_Stop
+runEff :: Int -> State -> Eff () -> Inter
+runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
   where
     loop :: State -> Eff a -> (State -> a -> Inter) -> Inter
     loop s e k = case e of
       Ret x -> k s x
       Bind e f -> loop s e $ \s a -> loop s (f a) k
       GamePrint mes -> I_Output mes (k s ())
-      Debug mes -> I_Debug mes (k s ())
+      Debug a -> I_Debug (show a) (k s ())
 
-      --ReadInputFromUser -> do I_Input $ \response -> k s response
-      ReadInputFromUser -> I_Stop
+      ReadInputFromUser -> do I_Input $ \response -> k s response
 
       FetchI -> do
        --I_Output (show s) $ do
         let State{story,pc,count} = s
-        let (ins',pc') = fetchI pc story
-        let ins = if count > 225 then error "too many!" else ins'
-        I_Trace count pc ins (k s { pc = pc', count = count + 1 } ins)
+        let (ins,pc') = fetchI pc story
+        if count > maxSteps then I_Stop else
+          I_Trace count pc ins (k s { pc = pc', count = count + 1 } ins)
 
       FetchHeader{} -> do
         let State{story,pc} = s

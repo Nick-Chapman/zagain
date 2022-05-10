@@ -1,10 +1,9 @@
 
 module Top (main)  where
 
-import Prelude hiding (Word)
-
-import System.Environment (getArgs)
 import Dis (disZork)
+import Prelude hiding (Word)
+import System.Environment (getArgs)
 import Walk (walkZork)
 
 main :: IO ()

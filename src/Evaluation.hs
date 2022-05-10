@@ -1,11 +1,12 @@
 
 module Evaluation (theEffect) where
 
+import Prelude hiding (Word)
 import Data.Bits ((.&.),shiftR)
 import Decode (makeTarget)
 import Eff (Eff(..),Bin(..))
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
-import Numbers (Addr,addrOfPackedWord,Value,Byte,valueToByte,valueOfByte,valueOfWord,valueToAddr,valueToWord,valueOfInt)
+import Numbers -- (Byte,Word,Addr,addrOfPackedWord,Value,byteOfValue,valueOfByte,valueOfWord,addrOfValue,wordOfValue,valueOfInt)
 import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Instruction as I
@@ -39,50 +40,47 @@ eval = \case
 
   I.Get_child arg target label -> do
     let _ = undefined arg target label --TODO
-    Debug (show ("TODO:Get_child",arg,target,label))
+    Debug ("TODO:Get_child",arg,target,label)
     pure ()
 
   I.Get_parent arg target -> do
     let _ = undefined arg target --TODO
     let res = 999
-    Debug (show ("TODO:Get_parent(HACK res)",arg,target,res))
+    Debug ("TODO:Get_parent(HACK res)",arg,target,res)
     setTarget target res
     pure ()
 
   I.Get_prop arg1 arg2 target -> do
     let _ = undefined arg1 arg2 target --TODO
     let res = 19102
-    Debug (show ("TODO:Get_prop(HACK fixed res)",arg1,arg2,target,res))
+    Debug ("TODO:Get_prop(HACK fixed res)",arg1,arg2,target,res)
     setTarget target res
     pure ()
 
   I.Get_prop_addr arg1 arg2 target -> do
     let _ = undefined arg1 arg2 target --TODO
-    Debug (show ("TODO:Get_prop_addr",arg1,arg2,target))
+    Debug ("TODO:Get_prop_addr",arg1,arg2,target)
     pure ()
 
   I.Get_prop_len arg target -> do undefined arg target
 
   I.Get_sibling arg target label -> do
     let _ = undefined arg target label --TODO
-    Debug (show ("TODO:Get_sibling",arg,target,label))
+    Debug ("TODO:Get_sibling",arg,target,label)
     pure ()
 
   I.Inc arg -> do undefined arg
 
   I.Inc_check arg1 arg2 label -> do
-    v0 <- evalArg arg1
-    let target :: Target = makeTarget (valueToByte v0)
-    --let v1 = v0
+    target <- makeValueTarget <$> evalArg arg1
     v1 <- evalTarget target
     v2 <- evalArg arg2
-    --Debug (show ("inc-check",v1,v2,(v1 >= v2)))
     setTarget target (v1 + 1)
     branchMaybe label (v1 >= v2)
 
   I.Insert_obj arg1 arg2 -> do
     let _ = undefined arg1 arg2 --TODO
-    Debug (show ("TODO:Insert_obj",arg1,arg2))
+    Debug ("TODO:Insert_obj",arg1,arg2)
     pure ()
 
   I.Je (Args args) label -> do
@@ -95,7 +93,7 @@ eval = \case
 
   I.Jin arg1 arg2 label -> do
     let _ = undefined arg1 arg2 label --TODO
-    Debug (show ("TODO: Jin",arg1,arg2,label))
+    Debug ("TODO: Jin",arg1,arg2,label)
     pure ()
 
   I.Jl arg1 arg2 label -> do undefined arg1 arg2 label
@@ -104,16 +102,16 @@ eval = \case
   I.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
 
   I.Load_byte arg1 arg2 target -> do
-    v1 <- evalArg arg1
-    v2 <- evalArg arg2
-    b <- GetByte (fromIntegral (v1 + 2*v2))
-    setTarget target (valueOfByte b)
+    base <- evalArg arg1
+    offset <- evalArg arg2
+    b <- GetByte (fromIntegral (base + 2*offset))
+    setTarget target (fromIntegral b)
 
   I.Load_word arg1 arg2 target -> do
-    v1 <- evalArg arg1
-    v2 <- evalArg arg2
-    w <- getWord (fromIntegral (v1 + 2*v2))
-    setTarget target (valueOfWord w)
+    base <- evalArg arg1
+    offset <- evalArg arg2
+    w <- getWord (fromIntegral (base + 2*offset))
+    setTarget target (fromIntegral w)
 
   I.Mul arg1 arg2 target -> do undefined arg1 arg2 target
 
@@ -125,7 +123,7 @@ eval = \case
   I.Print_char arg -> do
     v <- evalArg arg
     let c :: Char = Char.chr (fromIntegral v)
-    -- todo -- check char in bound!
+    -- TODO -- check char in bound!
     GamePrint [c]
 
   I.Print_num arg -> do evalArg arg >>= GamePrint . show
@@ -139,10 +137,8 @@ eval = \case
   I.Print_ret string -> do undefined string
 
   I.Pull arg -> do
-    v0 <- evalArg arg
-    let target :: Target = makeTarget (valueToByte v0)
+    target <- makeValueTarget <$> evalArg arg
     v1 <- PopStack
-    --Debug (show ("pull",v0,target,v1))
     setTarget target v1
 
 
@@ -150,7 +146,7 @@ eval = \case
 
   I.Put_prop arg1 arg2 arg3 -> do
     let _ = undefined arg1 arg2 arg3 --TODO
-    Debug (show ("TODO: Put_prop",arg1,arg2,arg3))
+    Debug ("TODO: Put_prop",arg1,arg2,arg3)
     pure ()
 
   I.Random arg target -> do undefined arg target
@@ -165,20 +161,18 @@ eval = \case
 
   I.Set_attr arg1 arg2 -> do
     let _ = undefined arg1 arg2 --TODO
-    Debug (show ("TODO: Set_attr",arg1,arg2))
+    Debug ("TODO: Set_attr",arg1,arg2)
     pure ()
 
   I.Sread arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     typed <- ReadInputFromUser
-    Debug (show ("Sread",(arg1,v1),(arg2,v2),"-->",typed))
+    Debug ("Sread",(arg1,v1),(arg2,v2),"-->",typed)
 
   I.Store arg1 arg2 -> do
-    v1 <- evalArg arg1
-    let target :: Target = makeTarget (valueToByte v1)
+    target <- makeValueTarget <$> evalArg arg1
     v2 <- evalArg arg2
-    --Debug (show ("Store",(arg1,v1,target),(arg2,v2)))
     case target of
       Sp{} -> undefined (do _ <- PopStack; pure ()) -- from niz
       _ -> pure ()
@@ -188,13 +182,11 @@ eval = \case
   I.Storeb arg1 arg2 arg3 -> do undefined arg1 arg2 arg3
 
   I.Storew arg1 arg2 arg3 -> do
-    v1 <- evalArg arg1
-    v2 <- evalArg arg2
-    v3 <- evalArg arg3
-    let w1 = valueToAddr v1
-    let w2 = valueToAddr v2
-    let w3 = valueToWord v3
-    let a = w1 + 2*w2
+    base <- evalArg arg1
+    offset <- evalArg arg2
+    value <- evalArg arg3
+    let a :: Addr = fromIntegral (base + 2 * offset)
+    let w3 :: Word = fromIntegral value
     setWord a w3
 
   I.Sub arg1 arg2 target -> do evalBin BSub arg1 arg2 target
@@ -203,18 +195,21 @@ eval = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     let res = v1 .&. v2 == v2
-    --Debug (show ("Test",(arg1,v1),(arg2,v2),label))
     branchMaybe label res
 
   I.Test_attr arg1 arg2 label -> do
     let _ = undefined arg1 arg2 label --TODO
     let res = False
-    Debug (show ("TODO:Test_attr(hack res=FALSE)",arg1,arg2,label))
+    Debug ("TODO:Test_attr(hack res=FALSE)",arg1,arg2,label)
     branchMaybe label res
 
 getObjShortName :: Value -> Eff String
 getObjShortName v = do
   pure $ printf "object<%s>" (show v) --TODO
+
+
+makeValueTarget :: Value -> Target
+makeValueTarget = makeTarget . byteOfValue
 
 
 evalBin :: Bin -> Arg -> Arg -> Target -> Eff ()
@@ -242,13 +237,12 @@ evalFunc = \case
   Floc a -> pure a
   Fvar var -> do
     v <- evalTarget var
-    let a = addrOfPackedWord (valueToWord v)
-    --Debug(show("evalFunc(Fvar)",var,v,a))
-    pure a
+    let w :: Word = fromIntegral v
+    pure $ addrOfPackedWord w
 
 evalArg :: Arg -> Eff Value
 evalArg = \case
-  Con x -> pure $ valueOfInt x
+  Con x -> pure x
   Var v -> evalTarget v
 
 evalTarget :: Target -> Eff Value
@@ -258,9 +252,7 @@ evalTarget = \case
   Global b -> do
     a <- globalAddr b
     w <- getWord a
-    let v = valueOfWord w
-    --Print (show ("valueOfWord:",w,v))
-    pure v
+    pure $ fromIntegral w
 
 returnValue :: Value -> Eff ()
 returnValue v = do
@@ -279,7 +271,7 @@ setTarget' var v = case var of
   Local n -> SetLocal n v
   Global b -> do
     a <- globalAddr b
-    let w = valueToWord v
+    let w :: Word = fromIntegral v
     setWord a w
 
 globalAddr :: Byte -> Eff Addr

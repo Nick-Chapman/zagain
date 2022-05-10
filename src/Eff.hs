@@ -14,8 +14,9 @@ data Eff a where
   Ret :: a -> Eff a
   Bind :: Eff a -> (a -> Eff b) -> Eff b
 
+  Debug :: Show a => a -> Eff ()
+
   GamePrint :: String -> Eff ()
-  Debug :: String -> Eff ()
   ReadInputFromUser :: Eff String
 
   FetchI :: Eff Instruction

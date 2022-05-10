@@ -13,7 +13,8 @@ module Instruction
   ) where
 
 import Data.List (intercalate)
-import Numbers (Byte,Addr)
+import Numbers (Byte,Addr,Value)
+import Prelude hiding (Word)
 import Text.Printf (printf)
 
 data Instruction -- TODO: check naming matches spec
@@ -95,7 +96,7 @@ instance Show Args where
 data Func = Floc Addr | Fvar Target
   deriving Show
 
-data Arg = Con Int | Var Target -- TODO: perhaps Con should carry a (signed) Value
+data Arg = Con Value | Var Target
   deriving Show
 
 data Target = Sp | Local Byte | Global Byte

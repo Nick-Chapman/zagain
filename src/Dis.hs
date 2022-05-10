@@ -1,27 +1,23 @@
 
 module Dis (disZork,runFetch) where
 
-import Prelude hiding (Word)
-
 import Data.List (sortBy)
 import Data.Ord (comparing)
 import Data.Set as Set
-import Data.Word (Word16)
 import Decode (fetchInstruction,fetchRoutineHeader)
 import Fetch (Fetch(..))
 import Instruction (Instruction,pretty,RoutineHeader)
-import Numbers (Addr)
+import Numbers (Addr,Word)
+import Prelude hiding (Word)
 import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
 import qualified Instruction as I
-
-type Word = Word16
 
 disZork :: IO ()
 disZork = do
   let filename = "story/zork1.88-840726.z3" -- TODO: try other stories!
   story <- loadStory filename
-  let a0 :: Addr = fromIntegral (readStoryWord story 0x6) - 1 -- back 1 for the header
+  let a0 :: Addr = fromIntegral (readStoryWord story 0x6 - 1) -- back 1 for the header
   -- extra places not picked up by reachability...
   let extra = [] -- [20076,20386,20688,21700]
   let startingPoints = [a0] ++ extra

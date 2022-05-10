@@ -1,4 +1,3 @@
-[release/serial: 88/840726, z-version: .z3}
 (Decode 0 20229 (Call (Floc 21618) ((Con 32784) (Con 65535)) Sp))
 (Decode 1 21625 (Call (Floc 21638) ((Var (Local 1))) (Local 3)))
 (Decode 2 21649 (Add (Var (Global 132)) (Con 180) (Local 3)))
@@ -221,7 +220,3 @@
 (Decode 219 36569 (Get_parent (Var (Local 1)) Sp))
 (Decode 220 36572 (Je ((Var (Global 111)) (Var (Local 1)) (Var Sp)) (Branch false (Dloc 36584))))
 (Decode 221 36584 (Jz (Var (Local 4)) (Branch false (Dloc 36590))))
-(Decode 222 36590 (Je ((Var (Local 4)) (Var (Local 7))) (Branch false (Dloc 36600))))
-(Decode 223 36600 (Je ((Var (Local 4)) (Var (Global 111))) (Branch false (Dloc 36607))))
-(Decode 224 36604 (Jump 36670))
-(Decode 225 36670 (Get_sibling (Var (Local 4)) (Local 4) (Branch true (Dloc 36674))))
