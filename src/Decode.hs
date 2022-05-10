@@ -5,12 +5,11 @@ module Decode
   , makeTarget
   ) where
 
-import Data.Array (Array,(!),listArray)
+import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
-import Numbers (Byte,Word,Addr,addrOfPackedWord)
-import Prelude hiding (Word)
+import Numbers (Byte,Addr,Value,addrOfPackedWord)
 import Text.Printf (printf)
 import qualified Instruction as I
 
@@ -147,7 +146,7 @@ target = makeTarget <$> Fetch.NextByte
 arg :: RandType -> Fetch Arg
 arg = \case
   ByteConst -> (Con . fromIntegral) <$> Fetch.NextByte
-  WordConst -> (Con . fromIntegral) <$> fetchNextWord
+  WordConst -> Con <$> fetchNextWord
   ByteVariable -> (Var . makeTarget) <$> Fetch.NextByte
 
 makeTarget :: Byte -> Target
@@ -186,9 +185,9 @@ jumpLocation :: Fetch Addr
 jumpLocation = do
   here <- Fetch.Here
   w <- fetchNextWord
-  pure $ fromIntegral (here + fromIntegral w)
+  pure (here + fromIntegral w)
 
-fetchNextWord :: Fetch Word
+fetchNextWord :: Fetch Value
 fetchNextWord = do
   hi <- Fetch.NextByte
   lo <- Fetch.NextByte
@@ -200,7 +199,7 @@ fetchRoutineHeader = do
   n <- Fetch.NextByte
   if n > 15 then Fetch.Err "fetchRoutineHeader, n>15" else do
     ws <- sequence (take (fromIntegral n) (repeat fetchNextWord))
-    pure (RoutineHeader (map fromIntegral ws))
+    pure (RoutineHeader ws)
 
 ----------------------------------------------------------------------
 data Alpha = A0 | A1 | A2
@@ -211,22 +210,22 @@ shiftUp = \case A0 -> A1; A1 -> A2; A2 -> A0
 shiftDown :: Alpha -> Alpha
 shiftDown = \case A0 -> A2; A1 -> A0; A2 -> A1
 
-deco :: Alpha -> Word -> Char
+deco :: Alpha -> Value -> Char
 deco alpha i = if i <0 || i > 25 then error (show ("deco",i)) else a ! i
   where
     a = case alpha of A0 -> a0; A1 -> a1; A2 -> a2
-    a0 :: Array Word Char = listArray (0,25) "abcdefghijklmnopqrstuvwxyz"
-    a1 :: Array Word Char = listArray (0,25) "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    a2 :: Array Word Char = listArray (0,25) " \n0123456789.,!?_#'\"/\\-:()"
+    a0 = listArray (0,25) "abcdefghijklmnopqrstuvwxyz"
+    a1 = listArray (0,25) "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    a2 = listArray (0,25) " \n0123456789.,!?_#'\"/\\-:()"
     --a2':: Array Word Char = listArray (0,25) " 0123456789.,!?_#'\"/\\<-:()" -- Z1
 
-abbrev :: Word -> Fetch String
+abbrev :: Value -> Fetch String
 abbrev n = do
   baseAbbrev :: Addr <- fromIntegral <$> getWord 0x18 -- should we avoid the repeated fetch?
   thisAbbrev :: Addr <- addrOfPackedWord <$> getWord (baseAbbrev + fromIntegral (2 * n))
   WithPC thisAbbrev ztext
 
-getWord :: Addr -> Fetch Word
+getWord :: Addr -> Fetch Value
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
@@ -235,7 +234,7 @@ getWord a = do
 ztext :: Fetch String
 ztext = loop [] A0 A0 []
   where
-    loop :: [Word] -> Alpha -> Alpha -> [Char] -> Fetch String
+    loop :: [Value] -> Alpha -> Alpha -> [Char] -> Fetch String
     loop delayedZs alpha lock acc = do
       x <- fetchNextWord
       let stop = (x `testBit` 15)
@@ -244,7 +243,7 @@ ztext = loop [] A0 A0 []
       let z3 = x .&. 0x1f
       inner alpha lock stop acc (delayedZs ++ [z1,z2,z3])
 
-    inner :: Alpha -> Alpha -> Bool -> [Char] -> [Word] -> Fetch String
+    inner :: Alpha -> Alpha -> Bool -> [Char] -> [Value] -> Fetch String
     inner alpha lock stop acc = \case
       [] ->
         if stop then pure (reverse acc) else loop [] alpha lock acc

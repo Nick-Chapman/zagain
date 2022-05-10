@@ -1,12 +1,11 @@
 
 module Evaluation (theEffect) where
 
-import Prelude hiding (Word)
 import Data.Bits ((.&.),shiftR)
 import Decode (makeTarget)
 import Eff (Eff(..),Bin(..))
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
-import Numbers -- (Byte,Word,Addr,addrOfPackedWord,Value,byteOfValue,valueOfByte,valueOfWord,addrOfValue,wordOfValue,valueOfInt)
+import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
 import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Instruction as I
@@ -111,7 +110,7 @@ eval = \case
     base <- evalArg arg1
     offset <- evalArg arg2
     w <- getWord (fromIntegral (base + 2*offset))
-    setTarget target (fromIntegral w)
+    setTarget target w
 
   I.Mul arg1 arg2 target -> do undefined arg1 arg2 target
 
@@ -186,8 +185,7 @@ eval = \case
     offset <- evalArg arg2
     value <- evalArg arg3
     let a :: Addr = fromIntegral (base + 2 * offset)
-    let w3 :: Word = fromIntegral value
-    setWord a w3
+    setWord a value
 
   I.Sub arg1 arg2 target -> do evalBin BSub arg1 arg2 target
 
@@ -237,8 +235,7 @@ evalFunc = \case
   Floc a -> pure a
   Fvar var -> do
     v <- evalTarget var
-    let w :: Word = fromIntegral v
-    pure $ addrOfPackedWord w
+    pure $ addrOfPackedWord v
 
 evalArg :: Arg -> Eff Value
 evalArg = \case
@@ -251,8 +248,7 @@ evalTarget = \case
   Local n -> GetLocal n
   Global b -> do
     a <- globalAddr b
-    w <- getWord a
-    pure $ fromIntegral w
+    getWord a
 
 returnValue :: Value -> Eff ()
 returnValue v = do
@@ -271,26 +267,25 @@ setTarget' var v = case var of
   Local n -> SetLocal n v
   Global b -> do
     a <- globalAddr b
-    let w :: Word = fromIntegral v
-    setWord a w
+    setWord a v
 
 globalAddr :: Byte -> Eff Addr
 globalAddr b = do
-  globalBase :: Word <- getWord 0xC
+  globalBase :: Value <- getWord 0xC
   pure $ fromIntegral (globalBase + 2 * fromIntegral b)
 
 setLocals :: RoutineHeader -> [Value] -> Eff ()
 setLocals (I.RoutineHeader defs) actuals = do
-  sequence_ [ SetLocal n (fromIntegral v) | (n,v) <- zip [1..] defs ]
+  sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
   sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
 
-getWord :: Addr -> Eff Word
+getWord :: Addr -> Eff Value
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
   pure (256 * fromIntegral hi + fromIntegral lo)
 
-setWord :: Addr -> Word -> Eff ()
+setWord :: Addr -> Value -> Eff ()
 setWord a w = do
   let hi = fromIntegral (w `shiftR` 8) --TODO: should be an effect?
   let lo = fromIntegral (w .&. 0xff)

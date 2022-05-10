@@ -14,7 +14,6 @@ module Instruction
 
 import Data.List (intercalate)
 import Numbers (Byte,Addr,Value)
-import Prelude hiding (Word)
 import Text.Printf (printf)
 
 data Instruction -- TODO: check naming matches spec

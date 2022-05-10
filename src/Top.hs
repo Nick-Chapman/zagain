@@ -2,7 +2,6 @@
 module Top (main)  where
 
 import Dis (disZork)
-import Prelude hiding (Word)
 import System.Environment (getArgs)
 import Walk (walkZork)
 

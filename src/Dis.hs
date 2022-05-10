@@ -7,8 +7,7 @@ import Data.Set as Set
 import Decode (fetchInstruction,fetchRoutineHeader)
 import Fetch (Fetch(..))
 import Instruction (Instruction,pretty,RoutineHeader)
-import Numbers (Addr,Word)
-import Prelude hiding (Word)
+import Numbers (Addr,Value)
 import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
 import qualified Instruction as I
@@ -25,7 +24,7 @@ disZork = do
   printf "Found %d reachable routines:\n" (length rs)
   mapM_ dumpRoutine rs
 
-readStoryWord :: Story -> Addr -> Word
+readStoryWord :: Story -> Addr -> Value
 readStoryWord story a = do
   let hi = readStoryByte story a
   let lo = readStoryByte story (a+1)
