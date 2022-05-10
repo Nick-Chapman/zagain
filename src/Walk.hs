@@ -1,10 +1,10 @@
 
-module Walk (walkZork) where
+module Walk (walkZork,dumpZorkObjects) where
 
 import Control.Monad (when)
 import Data.Bits ((.&.))
 import Data.Map (Map)
-import Decode (fetchInstruction,fetchRoutineHeader)
+import Decode (fetchInstruction,fetchRoutineHeader,ztext)
 import Dis (runFetch)
 import Eff (Eff(..),Bin(..))
 import Evaluation (theEffect)
@@ -14,6 +14,7 @@ import Story (Story,loadStory,readStoryByte)
 import Text.Printf (printf)
 import qualified Data.Map as Map
 import qualified Instruction as I
+import qualified Objects (dump)
 
 walkZork :: IO ()
 walkZork = do
@@ -22,6 +23,18 @@ walkZork = do
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let e = theEffect
+  let s :: State = initState story
+  let i :: Inter = runEff maxSteps s e
+  runInter debug i
+
+dumpZorkObjects :: IO ()
+dumpZorkObjects = do
+  let debug = True
+  let maxSteps = 1000
+  putStrLn "*dumpZorkObjects*"
+  let filename = "story/zork1.88-840726.z3"
+  story <- loadStory filename
+  let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
   runInter debug i
@@ -71,6 +84,14 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
       Debug a -> I_Debug (show a) (k s ())
 
       ReadInputFromUser -> do I_Input $ \response -> k s response
+
+      GetText a -> do
+        let State{story} = s
+        let (text,_) =
+              case (runFetch a story ztext) of
+                Left e -> error (show ("GetText",e))
+                Right x -> x
+        k s text
 
       FetchI -> do
        --I_Output (show s) $ do

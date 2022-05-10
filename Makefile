@@ -1,5 +1,9 @@
 
-top: dis-regression dev
+top: dis-regression dev object-dump-regression
+
+object-dump-regression: src/*.hs Makefile .gen
+	stack run dump > gen/zork.objects
+	git diff gen/zork.objects
 
 dis-regression: src/*.hs Makefile .gen
 	stack run dis-zork > gen/zork.dis

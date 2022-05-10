@@ -12,7 +12,7 @@ import GHC.Ix (Ix)
 import Text.Printf (printf)
 
 matchNizFormat :: Bool
-matchNizFormat = True -- False for better debug/dev experience
+matchNizFormat = True
 
 newtype Byte = EightBits Word8
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits)

@@ -3,6 +3,7 @@ module Decode
   ( fetchInstruction
   , fetchRoutineHeader
   , makeTarget
+  , ztext
   ) where
 
 import Data.Array ((!),listArray)

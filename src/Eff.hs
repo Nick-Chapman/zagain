@@ -19,6 +19,8 @@ data Eff a where
   GamePrint :: String -> Eff ()
   ReadInputFromUser :: Eff String
 
+  GetText :: Addr -> Eff String
+
   FetchI :: Eff Instruction
   FetchHeader :: Eff RoutineHeader
 
