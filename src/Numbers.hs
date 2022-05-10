@@ -20,7 +20,7 @@ instance Show Byte where
 
 --[address: index into story file]------------------------------------
 
-newtype Addr = Addr Int
+newtype Addr = Addr Word
   deriving (Ord,Eq,Num,Integral,Real,Enum)
 
 addrOfPackedWord :: Word -> Addr
