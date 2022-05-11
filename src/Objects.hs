@@ -1,6 +1,13 @@
 
-module Objects (dump) where
+module Objects
+  ( dump
+  , insertObj
+  , getParent
+  , getSibling
+  , getChild
+  ) where
 
+import Control.Monad (when)
 import Text.Printf (printf)
 import Data.Bits (testBit,(.&.),shiftR)
 import Numbers (Byte,Addr)
@@ -11,9 +18,139 @@ dump = do
   let os = [1..248]
   zv <- getZversion
   base <- objectTableBase
-  _objects <- mapM (getObject base zv) os
-  mapM_ Debug _objects
+  objects <- mapM (getObject base zv) os
+  mapM_ Debug objects
   pure ()
+
+insertObj :: Int -> Int -> Eff ()
+insertObj o dest = do
+  zv <- getZversion
+  base <- objectTableBase
+  assertWellFormed
+  sizeBefore <- sizeObjectTree
+  --Debug (sizeBefore)
+  oldP <- getParent o
+  if oldP /= 0 then error "need to unlimk" else do
+    setParent base zv o (byteOfInt dest)
+    oldChild <- getChild dest
+    setSibling base zv o (byteOfInt oldChild)
+    setChild base zv dest (byteOfInt o)
+    assertWellFormed
+    sizeAfter <- sizeObjectTree
+    --Debug (sizeAfter)
+    when (sizeAfter /= sizeBefore) $ error (show ("size of object tree has changed",sizeBefore,sizeAfter))
+
+byteOfInt :: Int -> Byte
+byteOfInt i = do
+  if i < 0 || i > 255 then error (show ("byteOfInt",i)) else fromIntegral i
+
+sizeObjectTree :: Eff Int
+sizeObjectTree = do
+  roots <- objectRoots
+  forest <- mapM getTree roots
+  pure $ sizeForest forest
+
+objectRoots :: Eff [Int]
+objectRoots = do
+  let os = [1::Int ..248]
+  ops <- sequence [ do p <- getParent o; pure (o,p) | o <- os ]
+  pure [ o | (o,p) <- ops, p == 0 ]
+
+data Tree = Tree Int [Tree] deriving Show
+
+getTree :: Int -> Eff Tree
+getTree x = do
+  xs <- children x
+  subs <- mapM getTree xs
+  pure $ Tree x subs
+
+sizeTree :: Tree -> Int
+sizeTree (Tree _ subs) = 1 + sizeForest subs
+
+sizeForest :: [Tree] -> Int
+sizeForest xs = sum (map sizeTree xs)
+
+_prettyForest :: [Tree] -> Eff ()
+_prettyForest = mapM_ (prettyTree 0)
+  where
+    prettyTree i (Tree x subs) = do
+      Debug (tab i ++ show x)
+      mapM_ (prettyTree (i+2)) subs
+
+    tab :: Int -> String
+    tab n = take n (repeat ' ')
+
+
+setParent :: Addr -> Zversion -> Int -> Byte -> Eff ()
+setParent base zv x p = do
+  a <- objectAddr base zv x
+  SetByte (a+4) p
+
+setSibling :: Addr -> Zversion -> Int -> Byte -> Eff ()
+setSibling base zv x p = do
+  a <- objectAddr base zv x
+  SetByte (a+5) p
+
+setChild :: Addr -> Zversion -> Int -> Byte -> Eff ()
+setChild base zv x p = do
+  a <- objectAddr base zv x
+  SetByte (a+6) p
+
+
+assertWellFormed :: Eff ()
+assertWellFormed = do
+  wf <- wellFormed
+  if wf then pure () else error "not well formed"
+
+wellFormed :: Eff Bool
+wellFormed = do
+  let os = [1::Int ..248]
+  xs <- sequence [ do
+                     cs <- children o
+                     ps <- sequence [getParent c | c <- cs]
+                     let ws = [ p == o | p <- ps ]
+                     pure (o,cs,ps,ws,all Prelude.id ws)
+                 | o <- os ]
+  --mapM_ Debug xs
+  let wf = all Prelude.id [ b | (_,_,_,_,b) <- xs ]
+  pure wf
+
+children :: Int -> Eff [Int]
+children p = do
+  getChild p >>= sibList
+
+sibList :: Int -> Eff [Int]
+sibList x = do
+  if x == 0 then pure [] else do
+    y <- getSibling x
+    ys <- sibList y
+    pure (x:ys)
+
+getParent :: Int -> Eff Int
+getParent o = do
+  zv <- getZversion
+  base <- objectTableBase
+  ob <- getObject base zv o
+  let Object{parent} = ob
+  pure parent
+
+getChild :: Int -> Eff Int
+getChild o = do
+  zv <- getZversion
+  base <- objectTableBase
+  ob <- getObject base zv o
+  let Object{child} = ob
+  pure child
+
+getSibling :: Int -> Eff Int
+getSibling o = do
+  zv <- getZversion
+  base <- objectTableBase
+  ob <- getObject base zv o
+  let Object{sibling} = ob
+  pure sibling
+
+
 
 getZversion :: Eff Zversion
 getZversion = versionOfByte <$> GetByte 0

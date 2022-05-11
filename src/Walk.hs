@@ -18,8 +18,8 @@ import qualified Objects (dump)
 
 walkZork :: IO ()
 walkZork = do
-  let debug = False
-  let maxSteps = 221 -- TODO: we diverge at 222
+  let debug = True
+  let maxSteps = 233 -- TODO: we diverge at 234
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let e = theEffect

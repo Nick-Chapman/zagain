@@ -9,6 +9,7 @@ import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
 import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Instruction as I
+import qualified Objects
 
 theEffect :: Eff ()
 theEffect = loop
@@ -38,35 +39,33 @@ eval = \case
   I.Div arg1 arg2 target -> do undefined arg1 arg2 target
 
   I.Get_child arg target label -> do
-    let _ = undefined arg target label --TODO
-    Debug ("TODO:Get_child",arg,target,label)
-    pure ()
+    v <- evalArg arg
+    res <- Objects.getChild (fromIntegral v)
+    setTarget target (fromIntegral res)
+    branchMaybe label (v /= 0)
 
   I.Get_parent arg target -> do
-    let _ = undefined arg target --TODO
-    let res = 999
-    Debug ("TODO:Get_parent(HACK res)",arg,target,res)
-    setTarget target res
-    pure ()
+    v <- evalArg arg
+    res <- Objects.getParent (fromIntegral v)
+    setTarget target (fromIntegral res)
 
   I.Get_prop arg1 arg2 target -> do
-    let _ = undefined arg1 arg2 target --TODO
     let res = 19102
-    Debug ("TODO:Get_prop(HACK fixed res)",arg1,arg2,target,res)
+    let _ = Debug ("TODO:Get_prop(HACK fixed res)",arg1,arg2,target,res)
     setTarget target res
     pure ()
 
   I.Get_prop_addr arg1 arg2 target -> do
-    let _ = undefined arg1 arg2 target --TODO
-    Debug ("TODO:Get_prop_addr",arg1,arg2,target)
+    let _ = Debug ("TODO:Get_prop_addr",arg1,arg2,target)
     pure ()
 
   I.Get_prop_len arg target -> do undefined arg target
 
   I.Get_sibling arg target label -> do
-    let _ = undefined arg target label --TODO
-    Debug ("TODO:Get_sibling",arg,target,label)
-    pure ()
+    v <- evalArg arg
+    res <- Objects.getSibling (fromIntegral v)
+    setTarget target (fromIntegral res)
+    branchMaybe label (v /= 0)
 
   I.Inc arg -> do undefined arg
 
@@ -78,8 +77,9 @@ eval = \case
     branchMaybe label (v1 >= v2)
 
   I.Insert_obj arg1 arg2 -> do
-    let _ = undefined arg1 arg2 --TODO
-    Debug ("TODO:Insert_obj",arg1,arg2)
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    Objects.insertObj (fromIntegral v1) (fromIntegral v2)
     pure ()
 
   I.Je (Args args) label -> do
@@ -91,8 +91,7 @@ eval = \case
     branchMaybe label (v1 > v2)
 
   I.Jin arg1 arg2 label -> do
-    let _ = undefined arg1 arg2 label --TODO
-    Debug ("TODO: Jin",arg1,arg2,label)
+    let _ = Debug ("TODO: Jin",arg1,arg2,label)
     pure ()
 
   I.Jl arg1 arg2 label -> do undefined arg1 arg2 label
@@ -144,8 +143,7 @@ eval = \case
   I.Push arg -> do evalArg arg >>= PushStack
 
   I.Put_prop arg1 arg2 arg3 -> do
-    let _ = undefined arg1 arg2 arg3 --TODO
-    Debug ("TODO: Put_prop",arg1,arg2,arg3)
+    let _ = Debug ("TODO: Put_prop",arg1,arg2,arg3)
     pure ()
 
   I.Random arg target -> do undefined arg target
@@ -159,8 +157,7 @@ eval = \case
   I.Rtrue -> do returnValue 1
 
   I.Set_attr arg1 arg2 -> do
-    let _ = undefined arg1 arg2 --TODO
-    Debug ("TODO: Set_attr",arg1,arg2)
+    let _ = Debug ("TODO: Set_attr",arg1,arg2)
     pure ()
 
   I.Sread arg1 arg2 -> do
@@ -196,9 +193,8 @@ eval = \case
     branchMaybe label res
 
   I.Test_attr arg1 arg2 label -> do
-    let _ = undefined arg1 arg2 label --TODO
     let res = False
-    Debug ("TODO:Test_attr(hack res=FALSE)",arg1,arg2,label)
+    let _ = Debug ("TODO:Test_attr(hack res=FALSE)",arg1,arg2,label)
     branchMaybe label res
 
 getObjShortName :: Value -> Eff String
@@ -287,7 +283,7 @@ getWord a = do
 
 setWord :: Addr -> Value -> Eff ()
 setWord a w = do
-  let hi = fromIntegral (w `shiftR` 8) --TODO: should be an effect?
+  let hi = fromIntegral (w `shiftR` 8)
   let lo = fromIntegral (w .&. 0xff)
   SetByte a hi
   SetByte (a+1) lo
