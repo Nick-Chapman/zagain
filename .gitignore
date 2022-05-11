@@ -4,3 +4,5 @@
 stack.yaml.lock
 .markdown-preview.html
 c/_build
+run.expected
+run.out

@@ -19,7 +19,7 @@ import qualified Objects (dump)
 traceExecution :: Story -> [String] -> IO ()
 traceExecution story inputs = do
   let debug = True
-  let maxSteps = 1000
+  let maxSteps = 395
   let e = theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
