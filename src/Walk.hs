@@ -16,14 +16,14 @@ import qualified Data.Map as Map
 import qualified Instruction as I
 import qualified Objects (dump)
 
-traceExecution :: Story -> IO ()
-traceExecution story = do
+traceExecution :: Story -> [String] -> IO ()
+traceExecution story inputs = do
   let debug = True
   let maxSteps = 1000
   let e = theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  runInter debug i
+  runInter debug inputs i
 
 dumpObjects :: Story -> IO ()
 dumpObjects story = do
@@ -32,31 +32,36 @@ dumpObjects story = do
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  runInter debug i
+  runInter debug [] i
 
 --[run interaction as IO]---------------------------------------------
 
-runInter :: Bool -> Inter -> IO ()
-runInter debug = loop []
+runInter :: Bool -> [String] -> Inter -> IO ()
+runInter debug xs = loop xs []
   where
-    loop :: [String] -> Inter -> IO ()
-    loop buf = \case
+    loop :: [String] -> [String] -> Inter -> IO ()
+    loop xs buf = \case
       I_Trace _n a instruction next -> do
         printf "(Decode %d %s %s)\n" _n (show a) (I.pretty instruction)
         --printf "(Decode XXX %s %s)\n" (show a) (I.pretty instruction)
-        loop buf next
+        loop xs buf next
       I_Output text next -> do
         --printf "OUTPUT:[%s]\n" text
-        loop (text:buf) next
+        loop xs (text:buf) next
       I_Debug s next -> do
         when (debug) $ putStrLn ("Debug: " ++ s)
-        loop buf next
-      I_Input count _f -> do
+        loop xs buf next
+      I_Input count f -> do
         printf "\n[executed: %d instructions]\n" count
         mapM_ putStr (reverse buf)
         putStrLn ""
-        --loop buf (_f "text from user") -- TODO: get text from user
-        pure ()
+        case xs of
+          [] -> do
+            putStrLn "[no more input]"
+            pure ()
+          input:xs -> do
+            putStrLn input
+            loop xs buf (f input)
       I_Stop -> do
         pure ()
 

@@ -18,13 +18,14 @@ parseCommandLine = \case
   ["dis"] -> Dis
   ["objects"] -> Objects
   ["trace"] -> Trace
-  [] -> Trace
+  [] -> Dev
   args -> error (show ("parse",args))
 
-data Config = Dis | Objects | Trace
+data Config = Dis | Objects | Trace | Dev
 
 run :: Story -> Config -> IO ()
 run story = \case
   Dis -> disassemble story
   Objects -> dumpObjects story
-  Trace -> traceExecution story
+  Trace -> traceExecution story []
+  Dev -> traceExecution story ["open mailbox"]
