@@ -1,7 +1,10 @@
 
 module Objects
   ( dump
+  , getShortName
   , getProp
+  , testAttr
+  , setAttr
   , insertObj
   , getParent
   , getSibling
@@ -9,10 +12,10 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Text.Printf (printf)
-import Data.Bits (testBit,(.&.),shiftR)
-import Numbers (Byte,Addr,Value)
+import Data.Bits (testBit,(.&.),shiftR,setBit)
 import Eff (Eff(..))
+import Numbers (Byte,Addr,Value)
+import Text.Printf (printf)
 
 dump :: Eff ()
 dump = do
@@ -23,39 +26,92 @@ dump = do
   mapM_ Debug objects
   pure ()
 
+getShortName :: Int -> Eff String
+getShortName o = do
+  zv <- getZversion
+  base <- objectTableBase
+  ob <- getObject base zv o
+  let Object{propTable=PropTable{shortName}} = ob
+  pure shortName
+
+getParent :: Int -> Eff Int
+getParent o = do
+  res <- getParentQ o
+  --Debug ("getParent",o,"->",res)
+  pure res
+
+getSibling :: Int -> Eff Int
+getSibling o = do
+  res <- getSiblingQ o
+  --Debug ("getSibling",o,"->",res)
+  pure res
+
+getChild :: Int -> Eff Int
+getChild o = do
+  res <- getChildQ o
+  --Debug ("getChild",o,"->",res)
+  pure res
+
+testAttr :: Int -> Int -> Eff Bool
+testAttr o n = do
+  zv <- getZversion
+  base <- objectTableBase
+  --Debug ("testAttr",o,n)
+  let f = formatOfVersion zv
+  let maxAttNum = numByesForAttribute f * 8
+  when (n >= maxAttNum) $ error (show ("attribute number too big",n))
+  ob <- getObject base zv o
+  let Object{atts=Attributes bools} = ob
+  when (length bools /= maxAttNum) $ error "unexpected attribute bools"
+  pure $ head (drop n bools)
+
+setAttr :: Int -> Int -> Eff ()
+setAttr o n = do
+  zv <- getZversion
+  base <- objectTableBase
+  a <- objectAddr base zv o
+  let d = n `div` 8
+  let m = n `mod` 8
+  let aa = a + fromIntegral d
+  old <- GetByte aa
+  let new = old `setBit` (7-m)
+  SetByte aa new
+  pure ()
+
 getProp :: Int -> Int -> Eff Value
 getProp o n = do
   --Debug ("getProp",o,n)
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
-  --Debug ob
   let Object{propTable=PropTable{props}} = ob
   let xs = [ dataBytes | Prop{number,dataBytes} <- props, number == n ]
-  let defaultValue = 0 -- TODO
-  let x =
-        case xs of
-          [x] -> x
-          [] -> [defaultValue]
-          _ -> error "multi prop match"
-  --Debug (x)
+  x <-
+    case xs of
+      [x] -> pure x
+      [] -> do
+        let defaultValue = 0 -- TODO
+        --Debug ("getProp(USE DEFAULT)",o,n,defaultValue)
+        pure [defaultValue]
+      _ ->
+        error "multi prop match"
   case x of
     [hi,lo] -> pure (256 * fromIntegral hi + fromIntegral lo)
     [b] -> pure $ fromIntegral b
     _ -> error "expected 1 or 2 bytes for prop value"
 
-
 insertObj :: Int -> Int -> Eff ()
 insertObj o dest = do
+  --Debug ("insertObj",o,dest)
   zv <- getZversion
   base <- objectTableBase
   assertWellFormed
   sizeBefore <- sizeObjectTree
   --Debug (sizeBefore)
-  oldP <- getParent o
-  if oldP /= 0 then error "need to unlimk" else do
+  oldP <- getParentQ o
+  if oldP /= 0 then error "TODO: unlink" else do
     setParent base zv o (byteOfInt dest)
-    oldChild <- getChild dest
+    oldChild <- getChildQ dest
     setSibling base zv o (byteOfInt oldChild)
     setChild base zv dest (byteOfInt o)
     assertWellFormed
@@ -76,7 +132,7 @@ sizeObjectTree = do
 objectRoots :: Eff [Int]
 objectRoots = do
   let os = [1::Int ..248]
-  ops <- sequence [ do p <- getParent o; pure (o,p) | o <- os ]
+  ops <- sequence [ do p <- getParentQ o; pure (o,p) | o <- os ]
   pure [ o | (o,p) <- ops, p == 0 ]
 
 data Tree = Tree Int [Tree] deriving Show
@@ -93,32 +149,23 @@ sizeTree (Tree _ subs) = 1 + sizeForest subs
 sizeForest :: [Tree] -> Int
 sizeForest xs = sum (map sizeTree xs)
 
-_prettyForest :: [Tree] -> Eff ()
-_prettyForest = mapM_ (prettyTree 0)
-  where
-    prettyTree i (Tree x subs) = do
-      Debug (tab i ++ show x)
-      mapM_ (prettyTree (i+2)) subs
-
-    tab :: Int -> String
-    tab n = take n (repeat ' ')
-
-
 setParent :: Addr -> Zversion -> Int -> Byte -> Eff ()
 setParent base zv x p = do
+  --Debug ("setParent",x,p)
   a <- objectAddr base zv x
   SetByte (a+4) p
 
 setSibling :: Addr -> Zversion -> Int -> Byte -> Eff ()
 setSibling base zv x p = do
+  --Debug ("setSibling",x,p)
   a <- objectAddr base zv x
   SetByte (a+5) p
 
 setChild :: Addr -> Zversion -> Int -> Byte -> Eff ()
 setChild base zv x p = do
+  --Debug ("setChild",x,p)
   a <- objectAddr base zv x
   SetByte (a+6) p
-
 
 assertWellFormed :: Eff ()
 assertWellFormed = do
@@ -130,7 +177,7 @@ wellFormed = do
   let os = [1::Int ..248]
   xs <- sequence [ do
                      cs <- children o
-                     ps <- sequence [getParent c | c <- cs]
+                     ps <- sequence [getParentQ c | c <- cs]
                      let ws = [ p == o | p <- ps ]
                      pure (o,cs,ps,ws,all Prelude.id ws)
                  | o <- os ]
@@ -140,40 +187,38 @@ wellFormed = do
 
 children :: Int -> Eff [Int]
 children p = do
-  getChild p >>= sibList
+  getChildQ p >>= sibList
 
 sibList :: Int -> Eff [Int]
 sibList x = do
   if x == 0 then pure [] else do
-    y <- getSibling x
+    y <- getSiblingQ x
     ys <- sibList y
     pure (x:ys)
 
-getParent :: Int -> Eff Int
-getParent o = do
+getParentQ :: Int -> Eff Int
+getParentQ o = do
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
   let Object{parent} = ob
   pure parent
 
-getChild :: Int -> Eff Int
-getChild o = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
-  let Object{child} = ob
-  pure child
-
-getSibling :: Int -> Eff Int
-getSibling o = do
+getSiblingQ :: Int -> Eff Int
+getSiblingQ o = do
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
   let Object{sibling} = ob
   pure sibling
 
-
+getChildQ :: Int -> Eff Int
+getChildQ o = do
+  zv <- getZversion
+  base <- objectTableBase
+  ob <- getObject base zv o
+  let Object{child} = ob
+  pure child
 
 getZversion :: Eff Zversion
 getZversion = versionOfByte <$> GetByte 0

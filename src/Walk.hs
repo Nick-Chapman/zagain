@@ -19,7 +19,7 @@ import qualified Objects (dump)
 walkZork :: IO ()
 walkZork = do
   let debug = True
-  let maxSteps = 261 -- where we diverge
+  let maxSteps = 1000
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let e = theEffect
@@ -48,6 +48,7 @@ runInter debug = loop []
     loop buf = \case
       I_Trace _n a instruction next -> do
         printf "(Decode %d %s %s)\n" _n (show a) (I.pretty instruction)
+        --printf "(Decode XXX %s %s)\n" (show a) (I.pretty instruction)
         loop buf next
       I_Output text next -> do
         loop (text:buf) next

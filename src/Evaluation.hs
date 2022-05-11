@@ -6,7 +6,6 @@ import Decode (makeTarget)
 import Eff (Eff(..),Bin(..))
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
-import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Instruction as I
 import qualified Objects
@@ -28,10 +27,11 @@ eval = \case
 
   I.Call func (Args args) target -> do
     funcAddress <- evalFunc func
-    PushFrame funcAddress target
-    rh <- FetchHeader
-    actuals <- mapM evalArg args
-    setLocals rh actuals
+    if funcAddress == 0 then setTarget target 0 else do
+      PushFrame funcAddress target
+      rh <- FetchHeader
+      actuals <- mapM evalArg args
+      setLocals rh actuals
 
   I.Clear_attr arg1 arg2 -> do undefined arg1 arg2
   I.Dec arg -> do undefined arg
@@ -42,7 +42,7 @@ eval = \case
     v <- evalArg arg
     res <- Objects.getChild (fromIntegral v)
     setTarget target (fromIntegral res)
-    branchMaybe label (v /= 0)
+    branchMaybe label (res /= 0)
 
   I.Get_parent arg target -> do
     v <- evalArg arg
@@ -54,11 +54,10 @@ eval = \case
     v2 <- evalArg arg2
     res <- Objects.getProp (fromIntegral v1) (fromIntegral v2)
     setTarget target res
-    pure ()
 
   I.Get_prop_addr arg1 arg2 target -> do
     Debug ("TODO:Get_prop_addr",arg1,arg2,target)
-    pure ()
+    undefined
 
   I.Get_prop_len arg target -> do undefined arg target
 
@@ -66,9 +65,13 @@ eval = \case
     v <- evalArg arg
     res <- Objects.getSibling (fromIntegral v)
     setTarget target (fromIntegral res)
-    branchMaybe label (v /= 0)
+    let bFix = (res /= 0)
+    branchMaybe label bFix
 
-  I.Inc arg -> do undefined arg
+  I.Inc arg -> do
+    target <- makeValueTarget <$> evalArg arg
+    v <- evalTarget target
+    setTarget target (v + 1)
 
   I.Inc_check arg1 arg2 label -> do
     target <- makeValueTarget <$> evalArg arg1
@@ -92,10 +95,15 @@ eval = \case
     branchMaybe label (v1 > v2)
 
   I.Jin arg1 arg2 label -> do
-    let _ = Debug ("TODO: Jin",arg1,arg2,label)
-    pure ()
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    p <- fromIntegral <$> Objects.getParent (fromIntegral v1)
+    branchMaybe label (v2 == p)
 
-  I.Jl arg1 arg2 label -> do undefined arg1 arg2 label
+  I.Jl arg1 arg2 label -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    branchMaybe label (v1 < v2)
 
   I.Jump addr -> do SetPC addr
   I.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
@@ -121,25 +129,27 @@ eval = \case
 
   I.Print_char arg -> do
     v <- evalArg arg
-    let c :: Char = Char.chr (fromIntegral v)
-    -- TODO -- check char in bound!
+    let c :: Char = Char.chr (fromIntegral v) -- TODO -- check char in bound!
     GamePrint [c]
 
   I.Print_num arg -> do evalArg arg >>= GamePrint . show
 
   I.Print_obj arg -> do
     v <- evalArg arg
-    shortName <- getObjShortName v
+    shortName <- Objects.getShortName (fromIntegral v)
     GamePrint shortName
 
-  I.Print_paddr arg -> do undefined arg
-  I.Print_ret string -> do undefined string
+  I.Print_paddr arg -> do
+    v <- evalArg arg
+    Debug ("TODO:Print_paddr",v)
+    undefined $ GamePrint "<blah>"
+
+  I.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
 
   I.Pull arg -> do
     target <- makeValueTarget <$> evalArg arg
     v1 <- PopStack
     setTarget target v1
-
 
   I.Push arg -> do evalArg arg >>= PushStack
 
@@ -163,8 +173,7 @@ eval = \case
   I.Set_attr arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    let _ = Debug ("TODO: Set_attr",v1,v2)
-    pure ()
+    Objects.setAttr (fromIntegral v1) (fromIntegral v2)
 
   I.Sread arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -179,7 +188,6 @@ eval = \case
       Sp{} -> undefined (do _ <- PopStack; pure ()) -- from niz
       _ -> pure ()
     setTarget target v2
-    pure ()
 
   I.Storeb arg1 arg2 arg3 -> do undefined arg1 arg2 arg3
 
@@ -199,13 +207,10 @@ eval = \case
     branchMaybe label res
 
   I.Test_attr arg1 arg2 label -> do
-    let res = False
-    let _ = Debug ("TODO:Test_attr(hack res=FALSE)",arg1,arg2,label)
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    res <- Objects.testAttr (fromIntegral v1) (fromIntegral v2)
     branchMaybe label res
-
-getObjShortName :: Value -> Eff String
-getObjShortName v = do
-  pure $ printf "object<%s>" (show v) --TODO
 
 
 makeValueTarget :: Value -> Target
@@ -259,12 +264,7 @@ returnValue v = do
 
 
 setTarget :: Target -> Value -> Eff ()
-setTarget var v = do
-  --Debug (show ("setTarget",var,v))
-  setTarget' var v
-
-setTarget' :: Target -> Value -> Eff ()
-setTarget' var v = case var of
+setTarget var v = case var of
   Sp -> PushStack v
   Local n -> SetLocal n v
   Global b -> do
