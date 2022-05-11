@@ -10,16 +10,17 @@ main = getArgs >>= (run . parseCommandLine)
 
 parseCommandLine :: [String] -> Config
 parseCommandLine = \case
-  ["dis-zork"] -> DisZork
-  ["dump"] -> DumpZorkObjects
-  [] -> WalkZork
-  args ->
-    error (show ("parse",args))
+  ["dis"] -> Dis
+  ["objects"] -> Objects
+  ["trace"] -> Trace
+  [] -> Dev
+  args -> error (show ("parse",args))
 
-data Config = DisZork | WalkZork | DumpZorkObjects
+data Config = Dis | Objects | Trace | Dev
 
 run :: Config -> IO ()
 run = \case
-  DisZork -> disZork
-  WalkZork -> walkZork
-  DumpZorkObjects -> dumpZorkObjects
+  Dis -> disZork
+  Objects -> dumpZorkObjects
+  Trace -> walkZork
+  Dev -> walkZork
