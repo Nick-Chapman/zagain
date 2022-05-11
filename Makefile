@@ -1,5 +1,5 @@
 
-top: dev
+top: reg dev
 
 reg: dis-regression object-dump-regression
 

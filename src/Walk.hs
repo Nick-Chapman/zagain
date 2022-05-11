@@ -51,11 +51,13 @@ runInter debug = loop []
         --printf "(Decode XXX %s %s)\n" (show a) (I.pretty instruction)
         loop buf next
       I_Output text next -> do
+        --printf "OUTPUT:[%s]\n" text
         loop (text:buf) next
       I_Debug s next -> do
         when (debug) $ putStrLn ("Debug: " ++ s)
         loop buf next
-      I_Input _f -> do
+      I_Input count _f -> do
+        printf "\n[executed: %d instructions]\n" count
         mapM_ putStr (reverse buf)
         putStrLn ""
         --loop buf (_f "text from user") -- TODO: get text from user
@@ -69,7 +71,7 @@ data Inter
   = I_Trace Int Addr Instruction Inter
   | I_Output String Inter
   | I_Debug String Inter
-  | I_Input (String -> Inter) --TODO: make use of this!
+  | I_Input Int (String -> Inter)
   | I_Stop
 
 --[interpreter for execution effect]----------------------------------
@@ -84,7 +86,9 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
       GamePrint mes -> I_Output mes (k s ())
       Debug a -> I_Debug (show a) (k s ())
 
-      ReadInputFromUser -> do I_Input $ \response -> k s response
+      ReadInputFromUser -> do
+        let State{count} = s
+        I_Input count $ \response -> k s response
 
       GetText a -> do
         let State{story} = s

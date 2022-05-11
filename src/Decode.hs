@@ -12,6 +12,7 @@ import Fetch (Fetch(..))
 import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
 import Numbers (Byte,Addr,Value,addrOfPackedWord)
 import Text.Printf (printf)
+import qualified Data.Char as Char
 import qualified Instruction as I
 
 data Op = Op Byte [RandType]
@@ -203,7 +204,7 @@ fetchRoutineHeader = do
     pure (RoutineHeader ws)
 
 ----------------------------------------------------------------------
-data Alpha = A0 | A1 | A2
+data Alpha = A0 | A1 | A2 deriving Eq
 
 shiftUp :: Alpha -> Alpha
 shiftUp = \case A0 -> A1; A1 -> A2; A2 -> A0
@@ -250,25 +251,36 @@ ztext = loop [] A0 A0 []
         if stop then pure (reverse acc) else loop [] alpha lock acc
       0:zs ->
         inner alpha lock stop (' ' : acc) zs
-      [z@1] -> do
-        loop [z] alpha lock acc
+
+      [z@1] -> do loop [z] alpha lock acc
+      [z@2] -> do loop [z] alpha lock acc
+      [z@3] -> do loop [z] alpha lock acc
+
       1:z:zs -> do
         expansion <- abbrev z
-        inner alpha lock stop (reverse expansion ++ acc) zs
-      [z@2] -> do
-        loop [z] alpha lock acc
+        inner lock lock stop (reverse expansion ++ acc) zs
       2:z:zs -> do
         expansion <- abbrev (z + 32)
-        inner alpha lock stop (reverse expansion ++ acc) zs
-      [z@3] -> do
-        loop [z] alpha lock acc
+        inner lock lock stop (reverse expansion ++ acc) zs
       3:z:zs -> do
         expansion <- abbrev (z + 64)
-        inner alpha lock stop (reverse expansion ++ acc) zs
+        inner lock lock stop (reverse expansion ++ acc) zs
       4:zs ->
         inner (shiftUp alpha) lock stop acc zs
       5:zs ->
         inner (shiftDown alpha) lock stop acc zs
+
+      6:a:b:zs -> do
+        if (alpha == A2) then do
+          let i :: Int = fromIntegral a * 32 + fromIntegral b
+          let c :: Char = Char.chr i
+          inner lock lock stop (c : acc) (zs)
+          else inner lock lock stop (deco alpha 0 : acc) (a:b:zs)
+
+      6:zs -> do
+        if (alpha == A2)
+        then loop (6:zs) alpha lock acc
+        else inner lock lock stop (deco alpha (6 - 6) : acc) zs
+
       z:zs ->
-        -- revert to pre-lock
         inner lock lock stop (deco alpha (z - 6) : acc) zs

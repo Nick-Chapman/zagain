@@ -111,7 +111,7 @@ eval = \case
   I.Load_byte arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
-    b <- GetByte (fromIntegral (base + 2*offset))
+    b <- GetByte (fromIntegral (base + offset))
     setTarget target (fromIntegral b)
 
   I.Load_word arg1 arg2 target -> do

@@ -389,7 +389,7 @@ Found 61 reachable routines:
 [22781] (Call (Floc 27746) ((Var (Global 0))) (Global 66))
 [22787] (Jz (Var (Global 70)) (Branch false (Dloc 22791)))
 [22790] New_line
-[22791] (Print " cannot ")
+[22791] (Print ">")
 [22796] (Sread (Var (Global 109)) (Var (Global 110)))
 [22800] (Load_byte (Var (Global 110)) (Con 1) (Global 113))
 [22804] (Jz (Var (Global 113)) (Branch false (Dloc 22822)))

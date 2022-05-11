@@ -383,7 +383,7 @@
 (Decode 382 27850 (Return (Var (Local 4))))
 (Decode 383 22787 (Jz (Var (Global 70)) (Branch false (Dloc 22791))))
 (Decode 384 22790 New_line)
-(Decode 385 22791 (Print >))
+(Decode 385 22791 (Print ">"))
 (Decode 386 22796 (Sread (Var (Global 109)) (Var (Global 110))))
 
 [executed: 387 instructions]
@@ -393,9 +393,7 @@ ZORK is a registered trademark of Infocom, Inc.
 Revision 88 / Serial number 840726
 
 West of House
-You are standing in an open field west of a white house, with a boarded 
-front door.
+You are standing in an open field west of a white house, with a boarded front door.
 There is a small mailbox here.
 
-[status: room:180, score=0; turns=0]
 >
