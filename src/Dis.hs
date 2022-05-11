@@ -1,21 +1,19 @@
 
-module Dis (disZork,runFetch) where
+module Dis (disassemble) where
 
 import Data.List (sortBy)
 import Data.Ord (comparing)
 import Data.Set as Set
 import Decode (fetchInstruction,fetchRoutineHeader)
-import Fetch (Fetch(..))
+import Fetch (runFetch)
 import Instruction (Instruction,pretty,RoutineHeader)
 import Numbers (Addr,Value)
-import Story (Story,loadStory,readStoryByte)
+import Story (Story,readStoryByte)
 import Text.Printf (printf)
 import qualified Instruction as I
 
-disZork :: IO ()
-disZork = do
-  let filename = "story/zork1.88-840726.z3" -- TODO: try other stories!
-  story <- loadStory filename
+disassemble :: Story -> IO ()
+disassemble story = do
   let a0 :: Addr = fromIntegral (readStoryWord story 0x6 - 1) -- back 1 for the header
   -- extra places not picked up by reachability...
   let extra = [] -- [20076,20386,20688,21700]
@@ -54,21 +52,17 @@ collectRoutines as story = loop Set.empty [] as
           loop done' (r:acc) todo'
 
 collectRoutine :: Addr -> Story -> Routine
-collectRoutine start story =
-  case runFetch start story fetchRoutineHeader of
-    Left{} -> undefined
-    Right (header,a0) -> do
-      let (body,finish) = loop Set.empty [] a0
-      Routine { start, header, body, finish }
+collectRoutine start story = do
+  let (header,a0) = runFetch start story fetchRoutineHeader
+  let (body,finish) = loop Set.empty [] a0
+  Routine { start, header, body, finish }
   where
     loop :: Set Addr -> [(Addr,Instruction)] -> Addr -> ([(Addr,Instruction)], Addr)
     loop bps acc a = do
-      case runFetch a story fetchInstruction of
-        Left s -> (reverse ((a,I.Bad s):acc), a)
-        Right (i,a') -> do
-          let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOfI i)
-          let continue = not (isStoppingI i) || a' `Set.member` bps
-          if continue then loop bps' ((a,i):acc) a' else (reverse((a,i):acc),a')
+      let (i,a') = runFetch a story fetchInstruction
+      let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOfI i)
+      let continue = not (isStoppingI i) || a' `Set.member` bps
+      if continue then loop bps' ((a,i):acc) a' else (reverse((a,i):acc),a')
 
 callAddresses :: Routine -> [Addr]
 callAddresses Routine{body=xs} = do
@@ -109,17 +103,3 @@ data Routine = Routine
   , body :: [(Addr,Instruction)]
   , finish :: Addr
   }
-
-----------------------------------------------------------------------
-runFetch :: Addr -> Story -> Fetch a -> Either String (a, Addr)
-runFetch pc0 story eff = loop pc0 eff $ \pc x -> Right (x,pc)
-  where
-    loop :: Addr -> Fetch a -> (Addr -> a -> Either String r) -> Either String r
-    loop pc eff0 k = case eff0 of
-      Ret a -> k pc a
-      Bind e f -> loop pc e $ \pc a -> loop pc (f a) k
-      NextByte -> k (pc+1) (readStoryByte story pc)
-      Here -> k pc pc
-      Err s -> Left s
-      GetByte a -> k pc (readStoryByte story a)
-      WithPC pc' e -> loop pc' e $ \_ a -> k pc a

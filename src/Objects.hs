@@ -172,7 +172,7 @@ assertWellFormed = do
   wf <- wellFormed
   if wf then pure () else error "not well formed"
 
-wellFormed :: Eff Bool
+wellFormed :: Eff Bool -- TODO: flesh out well-formed to detect more problem cases
 wellFormed = do
   let os = [1::Int ..248]
   xs <- sequence [ do
@@ -196,7 +196,7 @@ sibList x = do
     ys <- sibList y
     pure (x:ys)
 
-getParentQ :: Int -> Eff Int
+getParentQ :: Int -> Eff Int -- TODO: capture common pattern for parent/sibling/child
 getParentQ o = do
   zv <- getZversion
   base <- objectTableBase
@@ -221,7 +221,7 @@ getChildQ o = do
   pure child
 
 getZversion :: Eff Zversion
-getZversion = versionOfByte <$> GetByte 0
+getZversion = versionOfByte <$> GetByte 0  -- TODO: share via header
   where
     versionOfByte = \case
       1 -> Z1
@@ -232,7 +232,7 @@ getZversion = versionOfByte <$> GetByte 0
       n -> error (printf "unsupported z-machine version: %s" (show n))
 
 objectTableBase :: Eff Addr
-objectTableBase = getAddress 0xA
+objectTableBase = getAddress 0xA -- TODO: share via header
 
 data Object = Object
   { id :: Int
@@ -258,11 +258,11 @@ data Prop = Prop { number :: Int, dataBytes :: [Byte] }
 instance Show Attributes where
   show (Attributes bs) = [ if b then '1' else '0' | b <- bs ]
 
-getObject :: Addr -> Zversion -> Int -> Eff Object
+getObject :: Addr -> Zversion -> Int -> Eff Object -- TODO: avoid calling this so often
 getObject base zv id = do
   a <- objectAddr base zv id
   atts <- getAttributes zv a
-  parent <- fromIntegral <$> GetByte (a+4)
+  parent <- fromIntegral <$> GetByte (a+4) -- TODO: capture 4/5/6 from Relation
   sibling <- fromIntegral <$> GetByte (a+5)
   child <- fromIntegral <$> GetByte (a+6)
   a' <- getAddress (a+7)
@@ -311,7 +311,7 @@ getAddress a = do
   lo <- GetByte (a+1)
   pure (256 * fromIntegral hi + fromIntegral lo)
 
-data Zversion = Z1 | Z2 | Z3 | Z4 | Z5
+data Zversion = Z1 | Z2 | Z3 | Z4 | Z5 -- TODO: move to new Header module
   deriving Show
 
 data ObjectTableFormat = Small | Large

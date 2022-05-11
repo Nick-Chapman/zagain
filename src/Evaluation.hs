@@ -20,7 +20,6 @@ theEffect = loop
 
 eval :: Instruction -> Eff ()
 eval = \case
-  I.Bad s -> do error (show ("Bad",s))
 
   I.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
   I.And_ arg1 arg2 target -> do evalBin BAnd arg1 arg2 target

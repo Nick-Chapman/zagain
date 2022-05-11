@@ -1,39 +1,34 @@
 
-module Walk (walkZork,dumpZorkObjects) where
+module Walk (traceExecution,dumpObjects) where
 
 import Control.Monad (when)
 import Data.Bits ((.&.))
 import Data.Map (Map)
 import Decode (fetchInstruction,fetchRoutineHeader,ztext)
-import Dis (runFetch)
 import Eff (Eff(..),Bin(..))
 import Evaluation (theEffect)
-import Instruction (Instruction,RoutineHeader,Target)
+import Fetch (runFetch)
+import Instruction (Instruction,Target)
 import Numbers (Byte,Addr,Value)
-import Story (Story,loadStory,readStoryByte)
+import Story (Story,readStoryByte)
 import Text.Printf (printf)
 import qualified Data.Map as Map
 import qualified Instruction as I
 import qualified Objects (dump)
 
-walkZork :: IO ()
-walkZork = do
+traceExecution :: Story -> IO ()
+traceExecution story = do
   let debug = True
   let maxSteps = 1000
-  let filename = "story/zork1.88-840726.z3"
-  story <- loadStory filename
   let e = theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
   runInter debug i
 
-dumpZorkObjects :: IO ()
-dumpZorkObjects = do
+dumpObjects :: Story -> IO ()
+dumpObjects story = do
   let debug = True
   let maxSteps = 1000
-  putStrLn "*dumpZorkObjects*"
-  let filename = "story/zork1.88-840726.z3"
-  story <- loadStory filename
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
@@ -92,22 +87,19 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
 
       GetText a -> do
         let State{story} = s
-        let (text,_) =
-              case (runFetch a story ztext) of
-                Left e -> error (show ("GetText",e))
-                Right x -> x
+        let (text,_) = runFetch a story ztext
         k s text
 
       FetchI -> do
        --I_Output (show s) $ do
         let State{story,pc,count} = s
-        let (ins,pc') = fetchI pc story
+        let (ins,pc') = runFetch pc story fetchInstruction
         if count >= maxSteps then I_Stop else
           I_Trace count pc ins (k s { pc = pc', count = count + 1 } ins)
 
       FetchHeader{} -> do
         let State{story,pc} = s
-        let (rh,pc') = fetchH pc story
+        let (rh,pc') = runFetch pc story fetchRoutineHeader
         k s { pc = pc' } rh
 
       PushFrame addr target -> do
@@ -178,19 +170,6 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
           [] -> error "PopStack: []"
           v:stack -> do
             k s { stack } v
-
-fetchI :: Addr -> Story -> (Instruction,Addr) --TODO: inline
-fetchI a story =
-  case (runFetch a story fetchInstruction) of
-    Left e -> error (show ("fetchI",e))
-    Right x -> x
-
-fetchH :: Addr -> Story -> (RoutineHeader,Addr) --TODO: inline
-fetchH a story =
-  case (runFetch a story fetchRoutineHeader) of
-    Left e -> error (show ("fetchH",e))
-    Right x -> x
-
 
 --[interpreter state]-------------------------------------------------
 

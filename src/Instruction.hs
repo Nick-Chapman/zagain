@@ -6,7 +6,7 @@ module Instruction
   , Arg(..)
   , Target(..)
   , Label(..)
-  , Boolean(..)
+  , Sense(..)
   , Dest(..)
   , pretty
   , RoutineHeader(..)
@@ -16,8 +16,7 @@ import Data.List (intercalate)
 import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
-data Instruction -- TODO: check naming matches spec
-  = Bad String
+data Instruction -- TODO: check naming matches spec (will change trace output / regression)
 
   -- This instructions are not yet decoded
   -- | Aread Arg Arg Target
@@ -35,7 +34,7 @@ data Instruction -- TODO: check naming matches spec
   -- | Save_lab Label
   -- | Show_status
   -- | Verify Label
-  | Add Arg Arg Target
+  = Add Arg Arg Target
   | And_ Arg Arg Target
   | Call Func Args Target
   | Clear_attr Arg Arg
@@ -101,15 +100,15 @@ data Arg = Con Value | Var Target
 data Target = Sp | Local Byte | Global Byte
   deriving Show
 
-data Label = Branch Boolean Dest -- TODO: prefer Sense to Boolean
+data Label = Branch Sense Dest
   deriving Show
 
 data Dest = Dfalse | Dtrue | Dloc Addr
   deriving Show
 
-data Boolean = T | F -- TODO: deprecate (changes regression)
+data Sense = T | F
 
-instance Show Boolean where show = \case T -> "true"; F -> "false"
+instance Show Sense where show = \case T -> "true"; F -> "false"
 
 pretty :: Instruction -> String
 pretty i = bracket i (show i)

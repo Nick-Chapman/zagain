@@ -9,7 +9,7 @@ module Decode
 import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
-import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Boolean(T,F),RoutineHeader(..))
+import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Numbers (Byte,Addr,Value,addrOfPackedWord)
 import Text.Printf (printf)
 import qualified Data.Char as Char
@@ -23,7 +23,6 @@ data RandType = ByteConst | WordConst | ByteVariable
 
 fetchInstruction :: Fetch Instruction
 fetchInstruction = fetchOp >>= \case
-  -- TODO: Haskell extension for: Op (1|193) ?
   Op 1 ts -> I.Je <$> args ts <*> label
   Op 193 ts -> I.Je <$> args ts <*> label
   Op 2 [t1,t2] -> I.Jl <$> arg t1 <*> arg t2 <*> label
@@ -78,8 +77,7 @@ fetchInstruction = fetchOp >>= \case
   Op 231 [t] -> I.Random <$> arg t <*> target
   Op 232 [t] -> I.Push <$> arg t
   Op 233 [t] -> I.Pull <$> arg t
-  op ->
-    Fetch.Err (printf "illegal: %s" (show op))
+  op -> error (printf "unknown instruction: %s" (show op))
 
 data Form = LongForm | ShortForm | VarForm
 
@@ -135,7 +133,7 @@ decodeLongRandType x a =
 
 func :: RandType -> Fetch Func
 func = \case
-  ByteConst -> Fetch.Err "func, ByteConst"
+  ByteConst -> error "func, ByteConst"
   WordConst -> (Floc . addrOfPackedWord) <$> fetchNextWord
   ByteVariable -> (Fvar . makeTarget) <$> Fetch.NextByte
 
@@ -199,38 +197,17 @@ fetchNextWord = do
 fetchRoutineHeader :: Fetch RoutineHeader
 fetchRoutineHeader = do
   n <- Fetch.NextByte
-  if n > 15 then Fetch.Err "fetchRoutineHeader, n>15" else do
+  if n > 15 then error "fetchRoutineHeader, n>15" else do
     ws <- sequence (take (fromIntegral n) (repeat fetchNextWord))
     pure (RoutineHeader ws)
 
 ----------------------------------------------------------------------
-data Alpha = A0 | A1 | A2 deriving Eq
-
-shiftUp :: Alpha -> Alpha
-shiftUp = \case A0 -> A1; A1 -> A2; A2 -> A0
-
-shiftDown :: Alpha -> Alpha
-shiftDown = \case A0 -> A2; A1 -> A0; A2 -> A1
-
-deco :: Alpha -> Value -> Char
-deco alpha i = if i <0 || i > 25 then error (show ("deco",i)) else a ! i
-  where
-    a = case alpha of A0 -> a0; A1 -> a1; A2 -> a2
-    a0 = listArray (0,25) "abcdefghijklmnopqrstuvwxyz"
-    a1 = listArray (0,25) "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    a2 = listArray (0,25) " \n0123456789.,!?_#'\"/\\-:()"
-    --a2':: Array Word Char = listArray (0,25) " 0123456789.,!?_#'\"/\\<-:()" -- Z1
-
-abbrev :: Value -> Fetch String
-abbrev n = do
-  baseAbbrev :: Addr <- fromIntegral <$> getWord 0x18 -- should we avoid the repeated fetch?
-  thisAbbrev :: Addr <- addrOfPackedWord <$> getWord (baseAbbrev + fromIntegral (2 * n))
-  WithPC thisAbbrev ztext
 
 getWord :: Addr -> Fetch Value
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
+  -- TODO: share various instances of lo/hi composition
   pure (256 * fromIntegral hi + fromIntegral lo)
 
 ztext :: Fetch String
@@ -247,40 +224,53 @@ ztext = loop [] A0 A0 []
 
     inner :: Alpha -> Alpha -> Bool -> [Char] -> [Value] -> Fetch String
     inner alpha lock stop acc = \case
-      [] ->
-        if stop then pure (reverse acc) else loop [] alpha lock acc
+      []
+        | stop -> pure (reverse acc)
+        | otherwise -> loop [] alpha lock acc
+
       0:zs ->
         inner alpha lock stop (' ' : acc) zs
 
-      [z@1] -> do loop [z] alpha lock acc
-      [z@2] -> do loop [z] alpha lock acc
-      [z@3] -> do loop [z] alpha lock acc
+      [z] | z `elem` [1,2,3] -> loop [z] alpha lock acc
 
-      1:z:zs -> do
-        expansion <- abbrev z
+      n:z:zs | n `elem` [1,2,3] -> do
+        expansion <- decodeAbbrev (z + (n-1) * 32)
         inner lock lock stop (reverse expansion ++ acc) zs
-      2:z:zs -> do
-        expansion <- abbrev (z + 32)
-        inner lock lock stop (reverse expansion ++ acc) zs
-      3:z:zs -> do
-        expansion <- abbrev (z + 64)
-        inner lock lock stop (reverse expansion ++ acc) zs
-      4:zs ->
-        inner (shiftUp alpha) lock stop acc zs
-      5:zs ->
-        inner (shiftDown alpha) lock stop acc zs
 
-      6:a:b:zs -> do
-        if (alpha == A2) then do
-          let i :: Int = fromIntegral a * 32 + fromIntegral b
-          let c :: Char = Char.chr i
-          inner lock lock stop (c : acc) (zs)
-          else inner lock lock stop (deco alpha 0 : acc) (a:b:zs)
+      4:zs -> inner (shiftUp alpha) lock stop acc zs
+      5:zs -> inner (shiftDown alpha) lock stop acc zs
 
-      6:zs -> do
-        if (alpha == A2)
-        then loop (6:zs) alpha lock acc
-        else inner lock lock stop (deco alpha (6 - 6) : acc) zs
+      6:a:b:zs | (alpha == A2) -> do
+        let c = Char.chr (fromIntegral a * 32 + fromIntegral b)
+        inner lock lock stop (c : acc) (zs)
 
-      z:zs ->
-        inner lock lock stop (deco alpha (z - 6) : acc) zs
+      zs@(6:_) | (alpha == A2) -> loop zs alpha lock acc
+
+      z:zs -> inner lock lock stop (decodeAlphabet alpha (z - 6) : acc) zs
+
+
+decodeAbbrev :: Value -> Fetch String
+decodeAbbrev n = do
+  baseAbbrev :: Addr <- fromIntegral <$> getWord 0x18 -- TODO: get from header
+  thisAbbrev :: Addr <- addrOfPackedWord <$> getWord (baseAbbrev + fromIntegral (2 * n))
+  WithPC thisAbbrev ztext
+
+
+data Alpha = A0 | A1 | A2 deriving Eq
+
+shiftUp :: Alpha -> Alpha
+shiftUp = \case A0 -> A1; A1 -> A2; A2 -> A0
+
+shiftDown :: Alpha -> Alpha
+shiftDown = \case A0 -> A2; A1 -> A0; A2 -> A1
+
+decodeAlphabet :: Alpha -> Value -> Char
+decodeAlphabet alpha i = if
+  | (i < 0 || i > 25) -> error (show ("decodeAlphabet",i))
+  | otherwise -> a ! i
+  where
+    a = case alpha of A0 -> a0; A1 -> a1; A2 -> a2
+    a0 = listArray (0,25) "abcdefghijklmnopqrstuvwxyz"
+    a1 = listArray (0,25) "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    a2 = listArray (0,25) " \n0123456789.,!?_#'\"/\\-:()"
+    --a2':: Array Word Char = listArray (0,25) " 0123456789.,!?_#'\"/\\<-:()" -- Z1
