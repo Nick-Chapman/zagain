@@ -19,7 +19,7 @@ import qualified Objects (dump)
 walkZork :: IO ()
 walkZork = do
   let debug = True
-  let maxSteps = 233 -- TODO: we diverge at 234
+  let maxSteps = 261 -- where we diverge
   let filename = "story/zork1.88-840726.z3"
   story <- loadStory filename
   let e = theEffect
@@ -97,7 +97,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
        --I_Output (show s) $ do
         let State{story,pc,count} = s
         let (ins,pc') = fetchI pc story
-        if count > maxSteps then I_Stop else
+        if count >= maxSteps then I_Stop else
           I_Trace count pc ins (k s { pc = pc', count = count + 1 } ins)
 
       FetchHeader{} -> do

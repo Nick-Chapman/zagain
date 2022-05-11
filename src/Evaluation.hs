@@ -50,13 +50,14 @@ eval = \case
     setTarget target (fromIntegral res)
 
   I.Get_prop arg1 arg2 target -> do
-    let res = 19102
-    let _ = Debug ("TODO:Get_prop(HACK fixed res)",arg1,arg2,target,res)
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    res <- Objects.getProp (fromIntegral v1) (fromIntegral v2)
     setTarget target res
     pure ()
 
   I.Get_prop_addr arg1 arg2 target -> do
-    let _ = Debug ("TODO:Get_prop_addr",arg1,arg2,target)
+    Debug ("TODO:Get_prop_addr",arg1,arg2,target)
     pure ()
 
   I.Get_prop_len arg target -> do undefined arg target
@@ -143,7 +144,10 @@ eval = \case
   I.Push arg -> do evalArg arg >>= PushStack
 
   I.Put_prop arg1 arg2 arg3 -> do
-    let _ = Debug ("TODO: Put_prop",arg1,arg2,arg3)
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    v3 <- evalArg arg3
+    let _ = Debug ("TODO: Put_prop",v1,v2,v3)
     pure ()
 
   I.Random arg target -> do undefined arg target
@@ -157,7 +161,9 @@ eval = \case
   I.Rtrue -> do returnValue 1
 
   I.Set_attr arg1 arg2 -> do
-    let _ = Debug ("TODO: Set_attr",arg1,arg2)
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    let _ = Debug ("TODO: Set_attr",v1,v2)
     pure ()
 
   I.Sread arg1 arg2 -> do

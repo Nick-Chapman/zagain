@@ -1,6 +1,7 @@
 
 module Objects
   ( dump
+  , getProp
   , insertObj
   , getParent
   , getSibling
@@ -10,7 +11,7 @@ module Objects
 import Control.Monad (when)
 import Text.Printf (printf)
 import Data.Bits (testBit,(.&.),shiftR)
-import Numbers (Byte,Addr)
+import Numbers (Byte,Addr,Value)
 import Eff (Eff(..))
 
 dump :: Eff ()
@@ -21,6 +22,28 @@ dump = do
   objects <- mapM (getObject base zv) os
   mapM_ Debug objects
   pure ()
+
+getProp :: Int -> Int -> Eff Value
+getProp o n = do
+  --Debug ("getProp",o,n)
+  zv <- getZversion
+  base <- objectTableBase
+  ob <- getObject base zv o
+  --Debug ob
+  let Object{propTable=PropTable{props}} = ob
+  let xs = [ dataBytes | Prop{number,dataBytes} <- props, number == n ]
+  let defaultValue = 0 -- TODO
+  let x =
+        case xs of
+          [x] -> x
+          [] -> [defaultValue]
+          _ -> error "multi prop match"
+  --Debug (x)
+  case x of
+    [hi,lo] -> pure (256 * fromIntegral hi + fromIntegral lo)
+    [b] -> pure $ fromIntegral b
+    _ -> error "expected 1 or 2 bytes for prop value"
+
 
 insertObj :: Int -> Int -> Eff ()
 insertObj o dest = do
