@@ -5,7 +5,7 @@ import Dis (disassemble)
 import Story (Story,loadStory)
 import System.Environment (getArgs)
 import Walk (traceExecution,dumpObjects)
-import qualified Walk (Conf(..))
+import qualified Interaction (Conf(..))
 
 main :: IO ()
 main = do
@@ -31,8 +31,8 @@ run story = \case
   Objects ->
     dumpObjects story
   Trace -> do
-    let conf = Walk.Conf { debug = True, seeStats = False }
+    let conf = Interaction.Conf { debug = True, seeStats = False }
     traceExecution conf story []
   Dev -> do
-    let conf = Walk.Conf { debug = True, seeStats = True }
+    let conf = Interaction.Conf { debug = True, seeStats = True }
     traceExecution conf story ["open mailbox"]

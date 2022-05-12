@@ -1,27 +1,21 @@
 
-module Walk (Conf(..),traceExecution,dumpObjects) where
+module Walk (traceExecution,dumpObjects) where
 
-import Control.Monad (when)
 import Data.Bits ((.&.))
 import Data.Map (Map)
 import Decode (fetchInstruction,fetchRoutineHeader,ztext)
 import Eff (Eff(..),Bin(..))
 import Evaluation (theEffect)
 import Fetch (runFetch)
-import Instruction (Instruction,Target)
+import Instruction (Target)
+import Interaction (Inter(..),Stats(..),runInter)
 import Numbers (Byte,Addr,Value)
 import Story (Story,readStoryByte)
-import Text.Printf (printf)
 import qualified Data.Map as Map
-import qualified Instruction as I
+import qualified Interaction (Conf(..))
 import qualified Objects (dump)
 
-data Conf = Conf
-  { debug :: Bool
-  , seeStats :: Bool
-  }
-
-traceExecution :: Conf -> Story -> [String] -> IO ()
+traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
 traceExecution conf story inputs = do
   let maxSteps = 395
   let e = theEffect
@@ -35,48 +29,8 @@ dumpObjects story = do
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  let conf = Conf { debug = True, seeStats = False }
+  let conf = Interaction.Conf { debug = True, seeStats = False }
   runInter conf [] i
-
---[run interaction as IO]---------------------------------------------
-
-runInter :: Conf -> [String] -> Inter -> IO ()
-runInter Conf{seeStats,debug} xs = loop xs []
-  where
-    loop :: [String] -> [String] -> Inter -> IO ()
-    loop xs buf = \case
-      I_Trace stats n a instruction next -> do
-        let sd = if seeStats then show stats ++ " " else ""
-        printf "%s(Decode %d %s %s)\n" sd n (show a) (I.pretty instruction)
-        loop xs buf next
-      I_Output text next -> do
-        --printf "OUTPUT:[%s]\n" text
-        loop xs (text:buf) next
-      I_Debug s next -> do
-        when (debug) $ putStrLn ("Debug: " ++ s)
-        loop xs buf next
-      I_Input count f -> do
-        printf "\n[executed: %d instructions]\n" count
-        mapM_ putStr (reverse buf)
-        putStrLn ""
-        case xs of
-          [] -> do
-            putStrLn "[no more input]"
-            pure ()
-          input:xs -> do
-            putStrLn input
-            loop xs buf (f input)
-      I_Stop -> do
-        pure ()
-
---[interaction type]--------------------------------------------------
-
-data Inter -- TODO: pull this separate file
-  = I_Trace Stats Int Addr Instruction Inter
-  | I_Output String Inter
-  | I_Debug String Inter
-  | I_Input Int (String -> Inter)
-  | I_Stop
 
 --[interpreter for execution effect]----------------------------------
 
@@ -228,12 +182,3 @@ data Frame = Frame
   , locals :: Map Byte Value
   }
   deriving Show
-
---[static/dynamic GetByte stats]-------------------------------------
-data Stats = Stats
-  { ct :: Int -- story byte fetches (which dont depend on the state)
-  , rt :: Int -- run-time story/override byte fetches
-  }
-
-instance Show Stats where
-  show Stats{ct,rt} = printf "[%d/%d]" ct rt
