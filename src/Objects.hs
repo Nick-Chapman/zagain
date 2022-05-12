@@ -5,6 +5,7 @@ module Objects
   , getProp
   , testAttr
   , setAttr
+  , clearAttr
   , insertObj
   , getParent
   , getSibling
@@ -12,13 +13,14 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Data.Bits (testBit,(.&.),shiftR,setBit)
+import Data.Bits (testBit,(.&.),shiftR,setBit,clearBit)
 import Eff (Eff(..))
 import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
+-- TODO: code unlink so can reinstate checking
 checking :: Bool
-checking = True -- enable the well-formedness and tree-size checks (and pay for it -- see stats!)
+checking = False -- enable the well-formedness and tree-size checks (and pay for it -- see stats!)
 
 dump :: Eff ()
 dump = do
@@ -81,6 +83,19 @@ setAttr o n = do
   SetByte aa new
   pure ()
 
+clearAttr :: Int -> Int -> Eff ()
+clearAttr o n = do
+  zv <- getZversion
+  base <- objectTableBase
+  a <- objectAddr base zv o
+  let d = n `div` 8
+  let m = n `mod` 8
+  let aa = a + fromIntegral d
+  old <- GetByte aa
+  let new = old `clearBit` (7-m)
+  SetByte aa new
+  pure ()
+
 getProp :: Int -> Int -> Eff Value
 getProp o n = do
   --Debug ("getProp",o,n)
@@ -111,16 +126,17 @@ insertObj o dest = do
   assertWellFormed
   sizeBefore <- sizeObjectTree
   --Debug (sizeBefore)
-  oldP <- getParentQ o
-  if oldP /= 0 then error "TODO: unlink" else do
-    setParent base zv o (byteOfInt dest)
-    oldChild <- getChildQ dest
-    setSibling base zv o (byteOfInt oldChild)
-    setChild base zv dest (byteOfInt o)
-    assertWellFormed
-    sizeAfter <- sizeObjectTree
-    --Debug (sizeAfter)
-    when (sizeAfter /= sizeBefore) $ error (show ("size of object tree has changed",sizeBefore,sizeAfter))
+  _oldP <- getParentQ o
+  --when (_oldP /= 0) $ error "TODO: unlink"
+  --when (_oldP /= 0) $ Debug "TODO: unlink"
+  setParent base zv o (byteOfInt dest)
+  oldChild <- getChildQ dest
+  setSibling base zv o (byteOfInt oldChild)
+  setChild base zv dest (byteOfInt o)
+  assertWellFormed
+  sizeAfter <- sizeObjectTree
+  --Debug (sizeAfter)
+  when (sizeAfter /= sizeBefore) $ error (show ("size of object tree has changed",sizeBefore,sizeAfter))
 
 byteOfInt :: Int -> Byte
 byteOfInt i = do

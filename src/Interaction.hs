@@ -9,6 +9,7 @@ import qualified Instruction as I (pretty)
 
 data Conf = Conf
   { debug :: Bool
+  , seeTrace :: Bool
   , seeStats :: Bool
   }
 
@@ -24,13 +25,14 @@ data Inter
 --[run interaction as IO]---------------------------------------------
 
 runInter :: Conf -> [String] -> Inter -> IO ()
-runInter Conf{seeStats,debug} xs = loop xs []
+runInter Conf{seeStats,seeTrace,debug} xs = loop xs []
   where
     loop :: [String] -> [String] -> Inter -> IO ()
     loop xs buf = \case
       I_Trace stats n a instruction next -> do
-        let sd = if seeStats then show stats ++ " " else ""
-        printf "%s(Decode %d %s %s)\n" sd n (show a) (I.pretty instruction)
+        when seeTrace $ do
+          let sd = if seeStats then show stats ++ " " else ""
+          printf "%s(Decode %d %s %s)\n" sd n (show a) (I.pretty instruction)
         loop xs buf next
       I_Output text next -> do
         --printf "OUTPUT:[%s]\n" text
@@ -41,14 +43,13 @@ runInter Conf{seeStats,debug} xs = loop xs []
       I_Input count f -> do
         printf "\n[executed: %d instructions]\n" count
         mapM_ putStr (reverse buf)
-        putStrLn ""
         case xs of
           [] -> do
-            putStrLn "[no more input]"
+            putStrLn "\n[no more input]"
             pure ()
           input:xs -> do
             putStrLn input
-            loop xs buf (f input)
+            loop xs [] (f input)
       I_Stop -> do
         pure ()
 

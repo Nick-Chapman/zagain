@@ -4,6 +4,7 @@ module Walk (State,initState,runEff) where -- TODO: rename Interpreter
 import Data.Bits ((.&.))
 import Data.Map (Map)
 import Decode (fetchInstruction,fetchRoutineHeader,ztext)
+import Dictionary (fetchDict)
 import Eff (Eff(..),Bin(..))
 import Fetch (runFetch)
 import Instruction (Target)
@@ -25,8 +26,8 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
       Debug a -> I_Debug (show a) (k s ())
 
       ReadInputFromUser -> do
-        let State{count} = s
-        I_Input count $ \response -> k s response
+        let State{count,lastCount} = s
+        I_Input (count-lastCount) $ \response -> k s { lastCount = count } response
 
       GetText a -> do
         let State{story,stats} = s
@@ -46,12 +47,19 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
                      }
           I_Trace stats count pc ins (k s' ins)
 
-      FetchHeader{} -> do
+      FetchHeader -> do
         let State{story,pc,stats} = s
         let (rh,pc',readCount) = runFetch pc story fetchRoutineHeader
         let Stats{ct} = stats
         let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
         k s' rh
+
+      FetchDict -> do -- TODO: share code common to all Fetch* ops
+        let State{story,pc,stats} = s
+        let (dict,pc',readCount) = runFetch pc story fetchDict
+        let Stats{ct} = stats
+        let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
+        k s' dict
 
       PushFrame addr target -> do
         let State{pc,stack,locals,frames} = s
@@ -81,6 +89,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
             case vs of
               [v1,v2] -> v1==v2
               [v1,v2,v3] -> v1==v2 || v1==v3
+              [v1,v2,v3,v4] -> v1==v2 || v1==v3 || v1==v4
               vs -> error (show ("EqualAny",vs))
         k s res
 
@@ -92,6 +101,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
         let res = case bin of
               BAdd -> v1 + v2
               BSub -> v1 - v2
+              BMul -> v1 * v2
               BAnd -> v1 .&. v2
         k s res
 
@@ -124,6 +134,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
 data State = State
   { story :: Story
   , pc :: Addr
+  , lastCount :: Int
   , count :: Int
   , stack :: [Value]
   , locals :: Map Byte Value
@@ -140,6 +151,7 @@ initState story = do
   let pc :: Addr = fromIntegral (readStoryWord story 0x6)
   State { story
         , pc
+        , lastCount = 0
         , count = 0
         , stack = []
         , locals = Map.empty

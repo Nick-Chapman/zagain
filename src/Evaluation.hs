@@ -3,10 +3,11 @@ module Evaluation (theEffect) where
 
 import Data.Bits ((.&.),shiftR)
 import Decode (makeTarget)
+import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
 import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
-import qualified Data.Char as Char
+import qualified Data.Char as Char (chr,ord)
 import qualified Instruction as I
 import qualified Objects
 
@@ -26,15 +27,35 @@ eval = \case
 
   I.Call func (Args args) target -> do
     funcAddress <- evalFunc func
+    --Debug ("Call",funcAddress)
     if funcAddress == 0 then setTarget target 0 else do
       PushFrame funcAddress target
       rh <- FetchHeader
       actuals <- mapM evalArg args
       setLocals rh actuals
 
-  I.Clear_attr arg1 arg2 -> do undefined arg1 arg2
-  I.Dec arg -> do undefined arg
-  I.Dec_check arg1 arg2 label -> do undefined arg1 arg2 label
+  I.Clear_attr arg1 arg2 -> do
+    let _ = undefined arg1 arg2
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    --let _ = Debug ("TODO: Clear_attr", v1, v2)
+    Objects.clearAttr (fromIntegral v1) (fromIntegral v2)
+    pure ()
+
+  I.Dec arg -> do
+    target <- makeValueTarget <$> evalArg arg
+    v <- evalTarget target
+    setTarget target (v - 1)
+
+  I.Dec_check arg1 arg2 label -> do
+    target <- makeValueTarget <$> evalArg arg1
+    v1 <- evalTarget target
+    v2 <- evalArg arg2
+    let res = (v1 <= v2)
+    --Debug ("Dec_check",(arg1,v1),(arg2,v2),target,label,res)
+    setTarget target (v1 - 1)
+    branchMaybe label res
+
   I.Div arg1 arg2 target -> do undefined arg1 arg2 target
 
   I.Get_child arg target label -> do
@@ -55,7 +76,9 @@ eval = \case
     setTarget target res
 
   I.Get_prop_addr arg1 arg2 target -> do
-    Debug ("TODO:Get_prop_addr",arg1,arg2,target)
+    Debug ("TODO:Get_prop_addr(HACK)",arg1,arg2,target)
+    let res = 0
+    setTarget target res
     undefined
 
   I.Get_prop_len arg target -> do undefined arg target
@@ -119,7 +142,7 @@ eval = \case
     w <- getWord (fromIntegral (base + 2*offset))
     setTarget target w
 
-  I.Mul arg1 arg2 target -> do undefined arg1 arg2 target
+  I.Mul arg1 arg2 target -> do evalBin BMul arg1 arg2 target
 
   I.New_line -> do GamePrint "\n"
   I.Print string -> do GamePrint string
@@ -140,8 +163,11 @@ eval = \case
 
   I.Print_paddr arg -> do
     v <- evalArg arg
-    Debug ("TODO:Print_paddr",v)
-    undefined $ GamePrint "<blah>"
+    let a :: Addr = fromIntegral v
+    Debug ("TODO:Print_paddr",v,a)
+    s <- GetText a
+    Debug ("TODO:Print_paddr",v,a,s)
+    undefined $ GamePrint s
 
   I.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
 
@@ -159,7 +185,13 @@ eval = \case
     let _ = Debug ("TODO: Put_prop",v1,v2,v3)
     pure ()
 
-  I.Random arg target -> do undefined arg target
+  I.Random arg target -> do
+    v1 <- evalArg arg
+    let res = 0
+    Debug("TODO:Random",v1,"--(fixed)-->",res)
+    setTarget target res
+    undefined
+
   I.Ret_popped -> do PopStack >>= returnValue
   I.Return arg -> do
     v <- evalArg arg
@@ -175,10 +207,25 @@ eval = \case
     Objects.setAttr (fromIntegral v1) (fromIntegral v2)
 
   I.Sread arg1 arg2 -> do
-    v1 <- evalArg arg1
-    v2 <- evalArg arg2
+    t_buf :: Addr <- fromIntegral <$> evalArg arg1
+    p_buf :: Addr <- fromIntegral <$> evalArg arg2
     typed <- ReadInputFromUser
-    Debug ("Sread",(arg1,v1),(arg2,v2),"-->",typed)
+    let _ = Debug ("Sread",(arg1,t_buf),(arg2,p_buf),"-->",typed)
+    Dict{seps,entryLength} <- FetchDict
+    dictBase :: Addr <- fromIntegral <$> getWord 0x8 -- TODO header
+    let baseEntries :: Addr = -- 4 : #seps byte, entryLength byte, #entries word
+          dictBase + fromIntegral (length seps + 4)
+    --let (word,i) = ("jump",323)
+    let (word,i) = ("invent",314) -- TODO: get from typed; handle multi words
+    --Debug(word,i)
+    writeBytesFromString (t_buf+1) word -- (word ++ "\0") -- TODO
+    let dictAddr :: Addr = baseEntries + fromIntegral ((i-1) * entryLength)
+    let (hi,lo) = splitWord (fromIntegral dictAddr)
+    let offsetInText = 1
+    let bs :: [Byte] = [ 1, hi, lo, fromIntegral (length word), offsetInText ]
+    --Debug bs
+    writeBytes (fromIntegral (p_buf + 1)) bs
+    pure ()
 
   I.Store arg1 arg2 -> do
     target <- makeValueTarget <$> evalArg arg1
@@ -188,7 +235,13 @@ eval = \case
       _ -> pure ()
     setTarget target v2
 
-  I.Storeb arg1 arg2 arg3 -> do undefined arg1 arg2 arg3
+  I.Storeb arg1 arg2 arg3 -> do
+    base <- evalArg arg1
+    offset <- evalArg arg2
+    value <- byteOfValue <$> evalArg arg3
+    --Debug ("xx",base,offset,value)
+    let a :: Addr = fromIntegral (base + offset)
+    SetByte a value
 
   I.Storew arg1 arg2 arg3 -> do
     base <- evalArg arg1
@@ -211,6 +264,12 @@ eval = \case
     res <- Objects.testAttr (fromIntegral v1) (fromIntegral v2)
     branchMaybe label res
 
+
+writeBytesFromString :: Addr -> String -> Eff ()
+writeBytesFromString a str = writeBytes a [ fromIntegral (Char.ord c) | c <- str ]
+
+writeBytes :: Addr -> [Byte] -> Eff ()
+writeBytes a bs = sequence_ [ SetByte (a+i) b | (i,b) <- zip [0..] bs ]
 
 makeValueTarget :: Value -> Target
 makeValueTarget = makeTarget . byteOfValue
@@ -241,7 +300,9 @@ evalFunc = \case
   Floc a -> pure a
   Fvar var -> do
     v <- evalTarget var
-    pure $ addrOfPackedWord v
+    let a = addrOfPackedWord v
+    --Debug ("evalFunc/var",v,a)
+    pure $ a
 
 evalArg :: Arg -> Eff Value
 evalArg = \case
@@ -288,7 +349,12 @@ getWord a = do
 
 setWord :: Addr -> Value -> Eff ()
 setWord a w = do
-  let hi = fromIntegral (w `shiftR` 8)
-  let lo = fromIntegral (w .&. 0xff)
+  let (hi,lo) = splitWord w
   SetByte a hi
   SetByte (a+1) lo
+
+splitWord :: Value -> (Byte,Byte)
+splitWord w = do
+  let hi = fromIntegral (w `shiftR` 8)
+  let lo = fromIntegral (w .&. 0xff)
+  (hi,lo)

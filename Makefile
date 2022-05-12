@@ -23,8 +23,11 @@ reg-trace: src/*.hs Makefile .gen
 dev: run.out run.expected Makefile
 	git diff --color --no-index run.expected run.out
 
+run.expected.full: make-run-expected.sh
+	echo invent | ./make-run-expected.sh
+
 run.expected: run.expected.full Makefile
-	cat run.expected.full | tail +2 | head -410 > run.expected
+	cat run.expected.full | tail +2 | head -1000 > run.expected
 
 run.out: src/*.hs Makefile
 	stack build

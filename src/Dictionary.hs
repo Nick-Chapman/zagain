@@ -1,5 +1,5 @@
 
-module Dictionary (Dict,fetchDict) where
+module Dictionary (Dict(..),fetchDict) where
 
 import Decode (ztext)
 import Fetch (Fetch(..))

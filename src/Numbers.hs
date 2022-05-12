@@ -30,7 +30,9 @@ newtype Addr = StoryIndex Int
   deriving (Ord,Eq,Num,Integral,Real,Enum)
 
 addrOfPackedWord :: Value -> Addr
-addrOfPackedWord w = StoryIndex (2 * fromIntegral w)
+addrOfPackedWord v = if
+  | v < 0 -> StoryIndex (2 * (0x10000 + fromIntegral v))
+  | otherwise -> StoryIndex (2 * fromIntegral v)
 
 instance Show Addr where
   show (StoryIndex i) = if

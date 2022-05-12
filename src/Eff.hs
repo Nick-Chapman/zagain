@@ -5,6 +5,7 @@ module Eff (Eff(..),Bin(..)) where
 import Control.Monad (ap,liftM)
 import Instruction (Instruction,Target,RoutineHeader)
 import Numbers (Byte,Addr,Value)
+import Dictionary (Dict)
 
 instance Functor Eff where fmap = liftM
 instance Applicative Eff where pure = return; (<*>) = ap
@@ -23,6 +24,7 @@ data Eff a where
 
   FetchI :: Eff Instruction
   FetchHeader :: Eff RoutineHeader
+  FetchDict :: Eff Dict
 
   PushFrame :: Addr -> Target -> Eff ()
   PopFrame :: Eff Target
@@ -41,5 +43,5 @@ data Eff a where
   PushStack :: Value -> Eff ()
   PopStack :: Eff Value
 
-data Bin = BAdd | BSub | BAnd
+data Bin = BAdd | BSub | BMul | BAnd
   deriving Show

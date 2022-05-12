@@ -23,13 +23,13 @@ parseCommandLine :: [String] -> Config
 parseCommandLine = \case
   ["dis"] -> Dis
   ["objects"] -> Objects
-  ["trace"] -> Trace
   ["dict"] -> Dictionary
+  ["trace"] -> Trace
   ["dev"] -> Dev
-  [] -> Dev
+  [] -> Walk
   args -> error (show ("parse",args))
 
-data Config = Dis | Objects | Trace | Dev | Dictionary
+data Config = Dis | Objects | Dictionary | Trace | Walk | Dev
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -37,20 +37,23 @@ run story = \case
     disassemble story
   Objects ->
     dumpObjects story
-  Trace -> do
-    let conf = Interaction.Conf { debug = True, seeStats = False }
-    traceExecution conf story []
-  Dev -> do
-    let conf = Interaction.Conf { debug = True, seeStats = False }
-    traceExecution conf story ["open mailbox"]
   Dictionary -> do
     let (dict,_,_) = runFetch 0 story fetchDict
     print dict
+  Trace -> do -- for regression
+    let conf = Interaction.Conf { debug = False, seeTrace = True, seeStats = False }
+    traceExecution conf story []
+  Walk -> do -- hide instruction trace
+    let conf = Interaction.Conf { debug = True, seeTrace = False, seeStats = False }
+    traceExecution conf story ["invent"]
+  Dev -> do -- for ongoing dev
+    let conf = Interaction.Conf { debug = True, seeTrace = True, seeStats = False }
+    traceExecution conf story ["invent"] -- TODO: read from file
 
 
 traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
 traceExecution conf story inputs = do
-  let maxSteps = 395
+  let maxSteps = 10000
   let e = Evaluation.theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
@@ -58,9 +61,9 @@ traceExecution conf story inputs = do
 
 dumpObjects :: Story -> IO ()
 dumpObjects story = do
-  let maxSteps = 1000
+  let maxSteps = 10000
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  let conf = Interaction.Conf { debug = True, seeStats = False }
+  let conf = Interaction.Conf { debug = True, seeTrace = False, seeStats = False }
   runInter conf [] i
