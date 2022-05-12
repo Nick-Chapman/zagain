@@ -53,13 +53,13 @@ collectRoutines as story = loop Set.empty [] as
 
 collectRoutine :: Addr -> Story -> Routine
 collectRoutine start story = do
-  let (header,a0) = runFetch start story fetchRoutineHeader
+  let (header,a0,_) = runFetch start story fetchRoutineHeader
   let (body,finish) = loop Set.empty [] a0
   Routine { start, header, body, finish }
   where
     loop :: Set Addr -> [(Addr,Instruction)] -> Addr -> ([(Addr,Instruction)], Addr)
     loop bps acc a = do
-      let (i,a') = runFetch a story fetchInstruction
+      let (i,a',_) = runFetch a story fetchInstruction
       let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOfI i)
       let continue = not (isStoppingI i) || a' `Set.member` bps
       if continue then loop bps' ((a,i):acc) a' else (reverse((a,i):acc),a')

@@ -19,31 +19,33 @@ import qualified Objects (dump)
 traceExecution :: Story -> [String] -> IO ()
 traceExecution story inputs = do
   let debug = True
+  let seeStats = False -- TODO: pass in from caller
   let maxSteps = 395
   let e = theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  runInter debug inputs i
+  runInter seeStats debug inputs i
 
 dumpObjects :: Story -> IO ()
 dumpObjects story = do
   let debug = True
+  let seeStats = False
   let maxSteps = 1000
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  runInter debug [] i
+  runInter seeStats debug [] i
 
 --[run interaction as IO]---------------------------------------------
 
-runInter :: Bool -> [String] -> Inter -> IO ()
-runInter debug xs = loop xs []
+runInter :: Bool -> Bool -> [String] -> Inter -> IO ()
+runInter seeStats debug xs = loop xs []
   where
     loop :: [String] -> [String] -> Inter -> IO ()
     loop xs buf = \case
-      I_Trace _n a instruction next -> do
-        printf "(Decode %d %s %s)\n" _n (show a) (I.pretty instruction)
-        --printf "(Decode XXX %s %s)\n" (show a) (I.pretty instruction)
+      I_Trace stats n a instruction next -> do
+        let sd = if seeStats then show stats ++ " " else ""
+        printf "%s(Decode %d %s %s)\n" sd n (show a) (I.pretty instruction)
         loop xs buf next
       I_Output text next -> do
         --printf "OUTPUT:[%s]\n" text
@@ -67,8 +69,8 @@ runInter debug xs = loop xs []
 
 --[interaction type]--------------------------------------------------
 
-data Inter
-  = I_Trace Int Addr Instruction Inter
+data Inter -- TODO: pull this separate file
+  = I_Trace Stats Int Addr Instruction Inter
   | I_Output String Inter
   | I_Debug String Inter
   | I_Input Int (String -> Inter)
@@ -91,21 +93,30 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
         I_Input count $ \response -> k s response
 
       GetText a -> do
-        let State{story} = s
-        let (text,_) = runFetch a story ztext
-        k s text
+        let State{story,stats} = s
+        let (text,_,readCount) = runFetch a story ztext
+        let Stats{ct} = stats
+        let s' = s { stats = stats { ct = ct + readCount }}
+        k s' text
 
       FetchI -> do
        --I_Output (show s) $ do
-        let State{story,pc,count} = s
-        let (ins,pc') = runFetch pc story fetchInstruction
-        if count >= maxSteps then I_Stop else
-          I_Trace count pc ins (k s { pc = pc', count = count + 1 } ins)
+        let State{story,pc,count,stats} = s
+        let (ins,pc',readCount) = runFetch pc story fetchInstruction
+        if count >= maxSteps then I_Stop else do
+          let Stats{ct} = stats
+          let s' = s { pc = pc'
+                     , count = count + 1
+                     , stats = stats { ct = ct + readCount }
+                     }
+          I_Trace stats count pc ins (k s' ins)
 
       FetchHeader{} -> do
-        let State{story,pc} = s
-        let (rh,pc') = runFetch pc story fetchRoutineHeader
-        k s { pc = pc' } rh
+        let State{story,pc,stats} = s
+        let (rh,pc',readCount) = runFetch pc story fetchRoutineHeader
+        let Stats{ct} = stats
+        let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
+        k s' rh
 
       PushFrame addr target -> do
         let State{pc,stack,locals,frames} = s
@@ -127,8 +138,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
 
       SetLocal n v -> do
         let State{locals} = s
-        let _debug = id --I_Debug (show ("SetLocal",n,v))
-        _debug $ k s { locals = Map.insert n v locals } ()
+        k s { locals = Map.insert n v locals } ()
 
       EqualAny vs -> do
         let
@@ -137,33 +147,31 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
               [v1,v2] -> v1==v2
               [v1,v2,v3] -> v1==v2 || v1==v3
               vs -> error (show ("EqualAny",vs))
-        let _debug = id --I_Debug (show ("EqualAny",vs,res))
-        _debug $ k s res
+        k s res
+
       IsZero value -> do
         let res = (value == 0)
-        let _debug = id --I_Debug (show ("IsZero",value,res))
-        _debug $ k s res
+        k s res
+
       BinOp bin v1 v2 -> do
         let res = case bin of
               BAdd -> v1 + v2
               BSub -> v1 - v2
               BAnd -> v1 .&. v2
-        let _debug = id --I_Debug (show ("BinOp",bin,v1,v2,res))
-        _debug $ k s res
+        k s res
 
       GetByte a -> do
-        let State{story,overrides} = s
+        let State{story,overrides,stats} = s
         let (_over,b) =
               case Map.lookup a overrides of
                 Just b -> (True,b)
                 Nothing -> (False,readStoryByte story a)
-        let _debug = id --I_Debug (show ("GetByte",a,_over,b))
-        _debug $ k s b
+        let Stats{rt} = stats
+        k s { stats = stats { rt = rt + 1}} b
 
       SetByte a b -> do
         let State{overrides} = s
-        let _debug = id --I_Debug (show ("SetByte",a,b))
-        _debug $ k s { overrides = Map.insert a b overrides } ()
+        k s { overrides = Map.insert a b overrides } ()
 
       PushStack v -> do
         let State{stack} = s
@@ -186,6 +194,7 @@ data State = State
   , locals :: Map Byte Value
   , frames :: [Frame]
   , overrides :: Map Addr Byte
+  , stats :: Stats
   }
 
 instance Show State where
@@ -201,6 +210,7 @@ initState story = do
         , locals = Map.empty
         , frames = []
         , overrides = Map.empty
+        , stats = Stats { ct = 0, rt = 0 }
         }
 
 readStoryWord :: Story -> Addr -> Word
@@ -216,3 +226,12 @@ data Frame = Frame
   , locals :: Map Byte Value
   }
   deriving Show
+
+--[static/dynamic GetByte stats]-------------------------------------
+data Stats = Stats
+  { ct :: Int -- story byte fetches (which dont depend on the state)
+  , rt :: Int -- run-time story/override byte fetches
+  }
+
+instance Show Stats where
+  show Stats{ct,rt} = printf "[%d/%d]" ct rt

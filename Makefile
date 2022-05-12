@@ -16,10 +16,6 @@ reg-trace: src/*.hs Makefile .gen
 	stack run trace > gen/zork.trace
 	git diff gen/zork.trace
 
-reg-trace1: src/*.hs Makefile .gen
-	stack run > gen/zork.trace1
-	git diff gen/zork.trace1
-
 .gen:
 	mkdir -p gen
 
