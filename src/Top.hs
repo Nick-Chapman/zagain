@@ -5,6 +5,7 @@ import Dis (disassemble)
 import Story (Story,loadStory)
 import System.Environment (getArgs)
 import Walk (traceExecution,dumpObjects)
+import qualified Walk (Conf(..))
 
 main :: IO ()
 main = do
@@ -25,7 +26,13 @@ data Config = Dis | Objects | Trace | Dev
 
 run :: Story -> Config -> IO ()
 run story = \case
-  Dis -> disassemble story
-  Objects -> dumpObjects story
-  Trace -> traceExecution story []
-  Dev -> traceExecution story ["open mailbox"]
+  Dis ->
+    disassemble story
+  Objects ->
+    dumpObjects story
+  Trace -> do
+    let conf = Walk.Conf { debug = True, seeStats = False }
+    traceExecution conf story []
+  Dev -> do
+    let conf = Walk.Conf { debug = True, seeStats = True }
+    traceExecution conf story ["open mailbox"]

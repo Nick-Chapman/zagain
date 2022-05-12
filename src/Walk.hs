@@ -1,5 +1,5 @@
 
-module Walk (traceExecution,dumpObjects) where
+module Walk (Conf(..),traceExecution,dumpObjects) where
 
 import Control.Monad (when)
 import Data.Bits ((.&.))
@@ -16,30 +16,32 @@ import qualified Data.Map as Map
 import qualified Instruction as I
 import qualified Objects (dump)
 
-traceExecution :: Story -> [String] -> IO ()
-traceExecution story inputs = do
-  let debug = True
-  let seeStats = False -- TODO: pass in from caller
+data Conf = Conf
+  { debug :: Bool
+  , seeStats :: Bool
+  }
+
+traceExecution :: Conf -> Story -> [String] -> IO ()
+traceExecution conf story inputs = do
   let maxSteps = 395
   let e = theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  runInter seeStats debug inputs i
+  runInter conf inputs i
 
 dumpObjects :: Story -> IO ()
 dumpObjects story = do
-  let debug = True
-  let seeStats = False
   let maxSteps = 1000
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  runInter seeStats debug [] i
+  let conf = Conf { debug = True, seeStats = False }
+  runInter conf [] i
 
 --[run interaction as IO]---------------------------------------------
 
-runInter :: Bool -> Bool -> [String] -> Inter -> IO ()
-runInter seeStats debug xs = loop xs []
+runInter :: Conf -> [String] -> Inter -> IO ()
+runInter Conf{seeStats,debug} xs = loop xs []
   where
     loop :: [String] -> [String] -> Inter -> IO ()
     loop xs buf = \case
