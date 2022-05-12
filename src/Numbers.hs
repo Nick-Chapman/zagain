@@ -12,7 +12,7 @@ import GHC.Ix (Ix)
 import Text.Printf (printf)
 
 matchNizFormat :: Bool
-matchNizFormat = True
+matchNizFormat = True -- need True for regression pass -- TODO: can this be dynamic?
 
 newtype Byte = EightBits Word8
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits)

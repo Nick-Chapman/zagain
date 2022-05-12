@@ -28,4 +28,4 @@ run.expected: run.expected.full Makefile
 
 run.out: src/*.hs Makefile
 	stack build
-	( stack run > run.out 2>&1  ) || true
+	( stack run dev > run.out 2>&1  ) || true

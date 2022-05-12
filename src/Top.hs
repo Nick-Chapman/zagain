@@ -1,7 +1,9 @@
 
 module Top (main)  where
 
+import Dictionary (fetchDict)
 import Dis (disassemble)
+import Fetch (runFetch)
 import Interaction (Inter,runInter)
 import Story (Story,loadStory)
 import System.Environment (getArgs)
@@ -22,10 +24,12 @@ parseCommandLine = \case
   ["dis"] -> Dis
   ["objects"] -> Objects
   ["trace"] -> Trace
+  ["dict"] -> Dictionary
+  ["dev"] -> Dev
   [] -> Dev
   args -> error (show ("parse",args))
 
-data Config = Dis | Objects | Trace | Dev
+data Config = Dis | Objects | Trace | Dev | Dictionary
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -37,8 +41,11 @@ run story = \case
     let conf = Interaction.Conf { debug = True, seeStats = False }
     traceExecution conf story []
   Dev -> do
-    let conf = Interaction.Conf { debug = True, seeStats = True }
+    let conf = Interaction.Conf { debug = True, seeStats = False }
     traceExecution conf story ["open mailbox"]
+  Dictionary -> do
+    let (dict,_,_) = runFetch 0 story fetchDict
+    print dict
 
 
 traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
