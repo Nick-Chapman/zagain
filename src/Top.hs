@@ -2,11 +2,11 @@
 module Top (main)  where
 
 import Dis (disassemble)
-import Evaluation (theEffect)
 import Interaction (Inter,runInter)
 import Story (Story,loadStory)
 import System.Environment (getArgs)
 import Walk (State,initState,runEff)
+import qualified Evaluation (theEffect)
 import qualified Interaction (Conf(..))
 import qualified Objects (dump)
 
@@ -44,7 +44,7 @@ run story = \case
 traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
 traceExecution conf story inputs = do
   let maxSteps = 395
-  let e = theEffect
+  let e = Evaluation.theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
   runInter conf inputs i

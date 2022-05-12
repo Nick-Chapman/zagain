@@ -1,5 +1,5 @@
 
-module Walk (State,initState,runEff) where
+module Walk (State,initState,runEff) where -- TODO: rename Interpreter
 
 import Data.Bits ((.&.))
 import Data.Map (Map)

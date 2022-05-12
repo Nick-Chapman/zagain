@@ -17,6 +17,9 @@ import Eff (Eff(..))
 import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
+checking :: Bool
+checking = True -- enable the well-formedness and tree-size checks (and pay for it -- see stats!)
+
 dump :: Eff ()
 dump = do
   let os = [1..248]
@@ -124,7 +127,7 @@ byteOfInt i = do
   if i < 0 || i > 255 then error (show ("byteOfInt",i)) else fromIntegral i
 
 sizeObjectTree :: Eff Int
-sizeObjectTree = do
+sizeObjectTree = if not checking then pure 0 else do
   roots <- objectRoots
   forest <- mapM getTree roots
   pure $ sizeForest forest
@@ -168,7 +171,7 @@ setChild base zv x p = do
   SetByte (a+6) p
 
 assertWellFormed :: Eff ()
-assertWellFormed = do
+assertWellFormed = if not checking then pure () else do
   wf <- wellFormed
   if wf then pure () else error "not well formed"
 
