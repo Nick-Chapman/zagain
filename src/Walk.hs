@@ -1,38 +1,18 @@
 
-module Walk (traceExecution,dumpObjects) where
+module Walk (State,initState,runEff) where
 
 import Data.Bits ((.&.))
 import Data.Map (Map)
 import Decode (fetchInstruction,fetchRoutineHeader,ztext)
 import Eff (Eff(..),Bin(..))
-import Evaluation (theEffect)
 import Fetch (runFetch)
 import Instruction (Target)
-import Interaction (Inter(..),Stats(..),runInter)
+import Interaction (Inter(..),Stats(..))
 import Numbers (Byte,Addr,Value)
 import Story (Story,readStoryByte)
 import qualified Data.Map as Map
-import qualified Interaction (Conf(..))
-import qualified Objects (dump)
 
-traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
-traceExecution conf story inputs = do
-  let maxSteps = 395
-  let e = theEffect
-  let s :: State = initState story
-  let i :: Inter = runEff maxSteps s e
-  runInter conf inputs i
-
-dumpObjects :: Story -> IO ()
-dumpObjects story = do
-  let maxSteps = 1000
-  let e = Objects.dump
-  let s :: State = initState story
-  let i :: Inter = runEff maxSteps s e
-  let conf = Interaction.Conf { debug = True, seeStats = False }
-  runInter conf [] i
-
---[interpreter for execution effect]----------------------------------
+--[interpreter for execution effects]----------------------------------
 
 runEff :: Int -> State -> Eff () -> Inter
 runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
@@ -56,7 +36,6 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
         k s' text
 
       FetchI -> do
-       --I_Output (show s) $ do
         let State{story,pc,count,stats} = s
         let (ins,pc',readCount) = runFetch pc story fetchInstruction
         if count >= maxSteps then I_Stop else do

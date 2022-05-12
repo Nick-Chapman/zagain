@@ -1,5 +1,5 @@
 
-module Interaction where --(Conf(..),Inter(..),runInter) where
+module Interaction (Conf(..),Inter(..),Stats(..),runInter) where
 
 import Control.Monad (when)
 import Instruction (Instruction)

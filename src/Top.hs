@@ -2,10 +2,13 @@
 module Top (main)  where
 
 import Dis (disassemble)
+import Evaluation (theEffect)
+import Interaction (Inter,runInter)
 import Story (Story,loadStory)
 import System.Environment (getArgs)
-import Walk (traceExecution,dumpObjects)
+import Walk (State,initState,runEff)
 import qualified Interaction (Conf(..))
+import qualified Objects (dump)
 
 main :: IO ()
 main = do
@@ -36,3 +39,21 @@ run story = \case
   Dev -> do
     let conf = Interaction.Conf { debug = True, seeStats = True }
     traceExecution conf story ["open mailbox"]
+
+
+traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
+traceExecution conf story inputs = do
+  let maxSteps = 395
+  let e = theEffect
+  let s :: State = initState story
+  let i :: Inter = runEff maxSteps s e
+  runInter conf inputs i
+
+dumpObjects :: Story -> IO ()
+dumpObjects story = do
+  let maxSteps = 1000
+  let e = Objects.dump
+  let s :: State = initState story
+  let i :: Inter = runEff maxSteps s e
+  let conf = Interaction.Conf { debug = True, seeStats = False }
+  runInter conf [] i
