@@ -1,5 +1,5 @@
 
-top: reg
+top: reg dev
 
 # regression
 reg: reg-objects reg-dis reg-trace

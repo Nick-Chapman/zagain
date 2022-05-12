@@ -26,10 +26,11 @@ parseCommandLine = \case
   ["dict"] -> Dictionary
   ["trace"] -> Trace
   ["dev"] -> Dev
-  [] -> Walk
+  [] -> Walk "invent"
+  [w] -> Walk w
   args -> error (show ("parse",args))
 
-data Config = Dis | Objects | Dictionary | Trace | Walk | Dev
+data Config = Dis | Objects | Dictionary | Trace | Walk String | Dev
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -43,9 +44,9 @@ run story = \case
   Trace -> do -- for regression
     let conf = Interaction.Conf { debug = False, seeTrace = True, seeStats = False }
     traceExecution conf story []
-  Walk -> do -- hide instruction trace
+  Walk word -> do -- single user word; hide instruction trace
     let conf = Interaction.Conf { debug = True, seeTrace = False, seeStats = False }
-    traceExecution conf story ["invent"]
+    traceExecution conf story [word]
   Dev -> do -- for ongoing dev
     let conf = Interaction.Conf { debug = True, seeTrace = True, seeStats = False }
     traceExecution conf story ["invent"] -- TODO: read from file

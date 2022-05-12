@@ -1,7 +1,9 @@
 
 module Evaluation (theEffect) where
 
+import Control.Monad (when)
 import Data.Bits ((.&.),shiftR)
+import Data.List.Split (splitOn)
 import Decode (makeTarget)
 import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
@@ -210,16 +212,28 @@ eval = \case
     t_buf :: Addr <- fromIntegral <$> evalArg arg1
     p_buf :: Addr <- fromIntegral <$> evalArg arg2
     typed <- ReadInputFromUser
-    let _ = Debug ("Sread",(arg1,t_buf),(arg2,p_buf),"-->",typed)
-    Dict{seps,entryLength} <- FetchDict
+    --Debug ("Sread",(arg1,t_buf),(arg2,p_buf),"-->",typed)
+    writeBytesFromString (t_buf+1) typed -- (word ++ "\0") -- TODO
+    let words = splitOn " " typed
+    --Debug words
+    when (length words /= 1) $ error "only handle single word for now"
+    let [word] = words
+    Dict{seps,entryLength,strings} <- FetchDict
     dictBase :: Addr <- fromIntegral <$> getWord 0x8 -- TODO header
-    let baseEntries :: Addr = -- 4 : #seps byte, entryLength byte, #entries word
-          dictBase + fromIntegral (length seps + 4)
-    --let (word,i) = ("jump",323)
-    let (word,i) = ("invent",314) -- TODO: get from typed; handle multi words
-    --Debug(word,i)
-    writeBytesFromString (t_buf+1) word -- (word ++ "\0") -- TODO
-    let dictAddr :: Addr = baseEntries + fromIntegral ((i-1) * entryLength)
+    -- +4 : #seps byte, entryLength byte, #entries word
+    let baseEntries :: Addr = dictBase + fromIntegral (length seps + 4)
+    let
+      iopt :: Maybe Int =
+        case [ i | (i,s) <- zip [1..] strings, s == word ] of
+          [] -> Nothing
+          xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
+          [i] -> Just i
+    --Debug(word,iopt)
+    let dictAddr :: Addr =
+          case iopt of
+            Just i -> baseEntries + fromIntegral ((i-1) * entryLength)
+            Nothing -> 0
+    --Debug("dictAddr",dictAddr)
     let (hi,lo) = splitWord (fromIntegral dictAddr)
     let offsetInText = 1
     let bs :: [Byte] = [ 1, hi, lo, fromIntegral (length word), offsetInText ]
