@@ -43,5 +43,5 @@ data Eff a where
   PushStack :: Value -> Eff ()
   PopStack :: Eff Value
 
-data Bin = BAdd | BSub | BMul | BAnd
+data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

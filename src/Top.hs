@@ -25,12 +25,15 @@ parseCommandLine = \case
   ["objects"] -> Objects
   ["dict"] -> Dictionary
   ["trace"] -> Trace
-  ["dev"] -> Dev
+  ["dev"] -> Dev "invent"
+  ["dev",s] -> Dev s
+  ["dev",s1,s2] -> Dev (s1 ++ " " ++ s2)
   [] -> Walk "invent"
-  [w] -> Walk w
+  [s] -> Walk s
+  [s1,s2] -> Walk (s1 ++ " " ++ s2)
   args -> error (show ("parse",args))
 
-data Config = Dis | Objects | Dictionary | Trace | Walk String | Dev
+data Config = Dis | Objects | Dictionary | Trace | Walk String | Dev String
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -47,14 +50,14 @@ run story = \case
   Walk word -> do -- single user word; hide instruction trace
     let conf = Interaction.Conf { debug = True, seeTrace = False, seeStats = False }
     traceExecution conf story [word]
-  Dev -> do -- for ongoing dev
+  Dev word -> do -- for ongoing dev
     let conf = Interaction.Conf { debug = True, seeTrace = True, seeStats = False }
-    traceExecution conf story ["invent"] -- TODO: read from file
+    traceExecution conf story [word]
 
 
 traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
 traceExecution conf story inputs = do
-  let maxSteps = 10000
+  let maxSteps = 100000
   let e = Evaluation.theEffect
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
@@ -62,7 +65,7 @@ traceExecution conf story inputs = do
 
 dumpObjects :: Story -> IO ()
 dumpObjects story = do
-  let maxSteps = 10000
+  let maxSteps = 100000
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e

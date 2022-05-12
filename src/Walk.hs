@@ -102,6 +102,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
               BAdd -> v1 + v2
               BSub -> v1 - v2
               BMul -> v1 * v2
+              BDiv -> v1 `div` v2
               BAnd -> v1 .&. v2
         k s res
 

@@ -58,7 +58,7 @@ eval = \case
     setTarget target (v1 - 1)
     branchMaybe label res
 
-  I.Div arg1 arg2 target -> do undefined arg1 arg2 target
+  I.Div arg1 arg2 target -> do evalBin BDiv arg1 arg2 target
 
   I.Get_child arg target label -> do
     v <- evalArg arg
@@ -78,12 +78,19 @@ eval = \case
     setTarget target res
 
   I.Get_prop_addr arg1 arg2 target -> do
-    Debug ("TODO:Get_prop_addr(HACK)",arg1,arg2,target)
-    let res = 0
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    let res = 777
+    Debug ("TODO:Get_prop_addr",v1,v2,res)
     setTarget target res
-    undefined
+    --undefined
 
-  I.Get_prop_len arg target -> do undefined arg target
+  I.Get_prop_len arg target -> do
+    v1 <- evalArg arg
+    let res = 888
+    Debug ("TODO:Get_prop_len",v1,res)
+    setTarget target res
+    --undefined
 
   I.Get_sibling arg target label -> do
     v <- evalArg arg
@@ -165,11 +172,11 @@ eval = \case
 
   I.Print_paddr arg -> do
     v <- evalArg arg
-    let a :: Addr = fromIntegral v
-    Debug ("TODO:Print_paddr",v,a)
+    let a :: Addr = addrOfPackedWord v
+    --Debug ("TODO:Print_paddr",v,a)
     s <- GetText a
-    Debug ("TODO:Print_paddr",v,a,s)
-    undefined $ GamePrint s
+    --Debug ("TODO:Print_paddr",v,a,s)
+    GamePrint s
 
   I.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
 
@@ -189,10 +196,10 @@ eval = \case
 
   I.Random arg target -> do
     v1 <- evalArg arg
-    let res = 0
+    let res = (v1 - 1)
     Debug("TODO:Random",v1,"--(fixed)-->",res)
     setTarget target res
-    undefined
+    --undefined
 
   I.Ret_popped -> do PopStack >>= returnValue
   I.Return arg -> do
