@@ -24,16 +24,20 @@ parseCommandLine = \case
   ["dis"] -> Dis
   ["objects"] -> Objects
   ["dict"] -> Dictionary
-  ["trace"] -> Trace
-  ["dev"] -> Dev "invent"
-  ["dev",s] -> Dev s
-  ["dev",s1,s2] -> Dev (s1 ++ " " ++ s2)
-  [] -> Walk "invent"
-  [s] -> Walk s
-  [s1,s2] -> Walk (s1 ++ " " ++ s2)
+
+  -- For regression, match the commad line of old niz
+  -- (temp: with user commands also passed on command line)
+  ["reg","-trace",_storyIgnored] -> RegTrace []
+  ["reg","-trace",_storyIgnored,"invent"] -> RegTrace ["invent"]
+
+  [] -> Walk ["invent","jump"]
+
   args -> error (show ("parse",args))
 
-data Config = Dis | Objects | Dictionary | Trace | Walk String | Dev String
+data Config
+  = Dis | Objects | Dictionary
+  | RegTrace [String] -- regression traces
+  | Walk [String]
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -44,15 +48,19 @@ run story = \case
   Dictionary -> do
     let (dict,_,_) = runFetch 0 story fetchDict
     print dict
-  Trace -> do -- for regression
-    let conf = Interaction.Conf { debug = False, seeTrace = True, seeStats = False }
-    traceExecution conf story []
-  Walk word -> do -- single user word; hide instruction trace
-    let conf = Interaction.Conf { debug = True, seeTrace = False, seeStats = False }
-    traceExecution conf story [word]
-  Dev word -> do -- for ongoing dev
-    let conf = Interaction.Conf { debug = True, seeTrace = True, seeStats = False }
-    traceExecution conf story [word]
+
+  RegTrace ws -> do
+    traceExecution conf story ws
+      where
+        conf = Interaction.Conf { debug = False
+                                , seeTrace = True
+                                , seeStats = False }
+  Walk ws -> do
+    traceExecution conf story ws
+      where
+        conf = Interaction.Conf { debug = True
+                                , seeTrace = False
+                                , seeStats = False }
 
 
 traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()

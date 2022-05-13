@@ -1,34 +1,24 @@
 
-top: reg dev
+top: reg
 
-# regression
-reg: reg-objects reg-dis reg-trace
+# regression tests...
 
-reg-objects: src/*.hs Makefile .gen
-	stack run objects > gen/zork.objects
-	git diff gen/zork.objects
+reg: gen/zork.dis gen/zork.objects trace
 
-reg-dis: src/*.hs Makefile .gen
-	stack run dis > gen/zork.dis
-	git diff gen/zork.dis
+gen/zork.dis: src/*.hs Makefile .gen
+	stack run dis > $@
 
-reg-trace: src/*.hs Makefile .gen
-	stack run trace > gen/zork.trace
-	git diff gen/zork.trace
+gen/zork.objects: src/*.hs Makefile .gen
+	stack run objects > $@
+
+
+trace: gen/zork.trace gen/zork.trace.invent
+
+gen/zork.trace: story/zork1.88-840726.z3 run.sh src/*.hs Makefile .gen
+	cat /dev/null | ./run.sh -trace $< > $@
+
+gen/zork.trace.invent: story/zork1.88-840726.z3 run.sh src/*.hs Makefile .gen
+	echo invent | ./run.sh -trace $< > $@
 
 .gen:
 	mkdir -p gen
-
-# ongoing dev...
-dev: run.out run.expected Makefile
-	git diff --color --no-index run.expected run.out
-
-run.expected.full: make-run-expected.sh
-	echo invent | ./make-run-expected.sh
-
-run.expected: run.expected.full Makefile
-	cat run.expected.full | tail +2 | head -1000 > run.expected
-
-run.out: src/*.hs Makefile
-	stack build
-	( stack run dev > run.out 2>&1  ) || true
