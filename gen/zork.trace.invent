@@ -1,3 +1,4 @@
+[release/serial: 88/840726, z-version: .z3}
 (Decode 0 20229 (Call (Floc 21618) ((Con 32784) (Con 65535)) Sp))
 (Decode 1 21625 (Call (Floc 21638) ((Var (Local 1))) (Local 3)))
 (Decode 2 21649 (Add (Var (Global 132)) (Con 180) (Local 3)))

@@ -7,7 +7,6 @@ stack run -- reg "$@" $(cat -); exit
 
 # old
 (niz -no-line-wrap "$@" ; echo '[no more input]') \
-    | tail +2 \
     | sed 's/ *  (/ (/g' \
     | sed 's/Print *"/Print "/' \
     | sed 's/Print \./Print "."/' \

@@ -30,17 +30,17 @@ parseCommandLine = \case
   ["reg","-trace",_storyIgnored] -> RegTrace []
   ["reg","-trace",_storyIgnored,w1] -> RegTrace [w1]
 
-  ["reg",_storyIgnored] -> Walk []
-  ["reg",_storyIgnored,w1] -> Walk [w1]
+  "reg":_storyIgnored:ws -> RegWalk ws
 
-  [] -> Walk ["jump"]
+  [] -> Latest
 
   args -> error (show ("parse",args))
 
 data Config
   = Dis | Objects | Dictionary
   | RegTrace [String] -- regression traces
-  | Walk [String]
+  | RegWalk [String]
+  | Latest
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -53,13 +53,21 @@ run story = \case
     print dict
 
   RegTrace ws -> do
+    putStrLn "[release/serial: 88/840726, z-version: .z3}" -- TODO: hack
     traceExecution conf story ws
       where
         conf = Interaction.Conf { debug = False
                                 , seeTrace = True
                                 , seeStats = False }
-  Walk ws -> do
+  RegWalk ws -> do
     traceExecution conf story ws
+      where
+        conf = Interaction.Conf { debug = False
+                                , seeTrace = False
+                                , seeStats = False }
+  Latest -> do
+    print "**latest dev**"
+    traceExecution conf story ["jump"]
       where
         conf = Interaction.Conf { debug = True
                                 , seeTrace = False

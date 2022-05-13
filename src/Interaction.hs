@@ -41,7 +41,8 @@ runInter Conf{seeStats,seeTrace,debug} xs = loop xs []
         when (debug) $ putStrLn ("Debug: " ++ s)
         loop xs buf next
       I_Input count f -> do
-        printf "\n[executed: %d instructions]\n" count
+        when seeTrace $ do
+          printf "\n[executed: %d instructions]\n" count
         mapM_ putStr (reverse buf)
         case xs of
           [] -> do
