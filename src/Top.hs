@@ -28,9 +28,12 @@ parseCommandLine = \case
   -- For regression, match the commad line of old niz
   -- (temp: with user commands also passed on command line)
   ["reg","-trace",_storyIgnored] -> RegTrace []
-  ["reg","-trace",_storyIgnored,"invent"] -> RegTrace ["invent"]
+  ["reg","-trace",_storyIgnored,w1] -> RegTrace [w1]
 
-  [] -> Walk ["invent","jump"]
+  ["reg",_storyIgnored] -> Walk []
+  ["reg",_storyIgnored,w1] -> Walk [w1]
+
+  [] -> Walk ["jump"]
 
   args -> error (show ("parse",args))
 

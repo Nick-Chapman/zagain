@@ -196,7 +196,7 @@ eval = \case
 
   I.Random arg target -> do
     v1 <- evalArg arg
-    let res = (v1 - 1)
+    let res = 1
     Debug("TODO:Random",v1,"--(fixed)-->",res)
     setTarget target res
     --undefined
