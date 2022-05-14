@@ -1,8 +1,8 @@
 
 module Evaluation (theEffect) where
 
-import Control.Monad (when)
 import Data.Bits ((.&.),shiftR)
+import Data.List (intercalate)
 import Data.List.Split (splitOn)
 import Decode (makeTarget)
 import Dictionary (Dict(..))
@@ -193,13 +193,14 @@ eval = \case
     v3 <- evalArg arg3
     let _ = Debug ("TODO: Put_prop",v1,v2,v3)
     pure ()
+    --undefined
 
   I.Random arg target -> do
     v1 <- evalArg arg
     let res = 1
     Debug("TODO:Random",v1,"--(fixed)-->",res)
     setTarget target res
-    --undefined
+    undefined
 
   I.Ret_popped -> do PopStack >>= returnValue
   I.Return arg -> do
@@ -216,35 +217,62 @@ eval = \case
     Objects.setAttr (fromIntegral v1) (fromIntegral v2)
 
   I.Sread arg1 arg2 -> do
+    rawTyped <- ReadInputFromUser
+
     t_buf :: Addr <- fromIntegral <$> evalArg arg1
     p_buf :: Addr <- fromIntegral <$> evalArg arg2
-    typed <- ReadInputFromUser
-    --Debug ("Sread",(arg1,t_buf),(arg2,p_buf),"-->",typed)
-    writeBytesFromString (t_buf+1) typed -- (word ++ "\0") -- TODO
-    let words = splitOn " " typed
-    --Debug words
-    when (length words /= 1) $ error "only handle single word for now"
-    let [word] = words
-    Dict{seps,entryLength,strings} <- FetchDict
+
+    --Debug ("Sread",(arg1,t_buf),(arg2,p_buf),"-->",rawTyped)
+
     dictBase :: Addr <- fromIntegral <$> getWord 0x8 -- TODO header
+    Dict{seps,entryLength,strings} <- FetchDict
     -- +4 : #seps byte, entryLength byte, #entries word
     let baseEntries :: Addr = dictBase + fromIntegral (length seps + 4)
+
     let
-      iopt :: Maybe Int =
-        case [ i | (i,s) <- zip [1..] strings, s == word ] of
-          [] -> Nothing
-          xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
-          [i] -> Just i
-    --Debug(word,iopt)
-    let dictAddr :: Addr =
-          case iopt of
-            Just i -> baseEntries + fromIntegral ((i-1) * entryLength)
-            Nothing -> 0
-    --Debug("dictAddr",dictAddr)
-    let (hi,lo) = splitWord (fromIntegral dictAddr)
-    let offsetInText = 1
-    let bs :: [Byte] = [ 1, hi, lo, fromIntegral (length word), offsetInText ]
-    --Debug bs
+      mkQuad :: Int -> String -> [Byte]
+      mkQuad offsetInText word = do
+        let
+          iopt :: Maybe Int = do
+            let key = take 6 word
+            case [ i | (i,s) <- zip [1..] strings, s == key ] of
+              [] -> Nothing
+              xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
+              [i] -> Just i
+        let dictAddr :: Addr =
+              case iopt of
+                Just i -> baseEntries + fromIntegral ((i-1) * entryLength)
+                Nothing -> 0
+        let (hi,lo) = splitWord (fromIntegral dictAddr)
+        let quad1 :: [Byte] = [ hi, lo, fromIntegral (length word), (fromIntegral offsetInText) ]
+        quad1
+
+    let words = [ w | w <- splitOn " " rawTyped, w /= "" ]
+    --Debug words
+
+    let
+      offsets = do
+        let lens = [ length w | w <- words ]
+        let
+          f :: (Int,[Int]) -> Int -> (Int,[Int])
+          f (off,xs) i = (off+i+1, off : xs) --
+        let z = (1,[])
+        let (_,offsetsR) = foldl f z lens
+        reverse offsetsR
+
+    --Debug offsets
+
+    let canoicalizedTyped = intercalate " " words  -- (word ++ "\0") -- TODO
+    --Debug ("canoicalizedTyped",canoicalizedTyped)
+
+    let positionedWords = zip offsets words
+    --Debug positionedWords
+
+    let quads = [ mkQuad pos word | (pos,word) <- positionedWords ]
+    let bs :: [Byte] = fromIntegral (length quads) : concat quads
+    --Debug (length bs, bs)
+
+    writeBytesFromString (t_buf+1) canoicalizedTyped
     writeBytes (fromIntegral (p_buf + 1)) bs
     pure ()
 
