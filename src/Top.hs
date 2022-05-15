@@ -33,9 +33,11 @@ parseCommandLine = \case
   "reg":_storyIgnored:ws -> RegWalk ws
   "debug":_storyIgnored:ws -> DebugWalk ws
 
+  "trace":ws -> Trace ws
   [] -> Latest
+  ws -> Walk ws
 
-  args -> error (show ("parse",args))
+  --args -> error (show ("parse",args))
 
 data Config
   = Dis | Objects | Dictionary
@@ -43,6 +45,8 @@ data Config
   | RegWalk [String]
   | DebugWalk [String]
   | Latest
+  | Trace [String]
+  | Walk [String]
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -75,7 +79,20 @@ run story = \case
                                 , seeStats = False }
   Latest -> do
     print "**latest dev**"
-    traceExecution conf story ["jump"]
+    traceExecution conf story ["open mailbox"]
+      where
+        conf = Interaction.Conf { debug = True
+                                , seeTrace = True
+                                , seeStats = False }
+  Trace ws -> do
+    putStrLn "[release/serial: 88/840726, z-version: .z3}" -- hack
+    traceExecution conf story ws
+      where
+        conf = Interaction.Conf { debug = True
+                                , seeTrace = True
+                                , seeStats = False }
+  Walk ws -> do
+    traceExecution conf story ws
       where
         conf = Interaction.Conf { debug = True
                                 , seeTrace = False

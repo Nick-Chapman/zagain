@@ -10,6 +10,7 @@ stack run -- reg "$@" $(cat -); exit
     | sed 's/ *  (/ (/g' \
     | sed 's/Print *"/Print "/' \
     | sed 's/Print \./Print "."/' \
+    | sed 's/Print_ret \./Print_ret "."/' \
     | sed 's/Print >/Print ">"/' \
     | sed 's/\\ *\\n/\\n/' \
     | cat

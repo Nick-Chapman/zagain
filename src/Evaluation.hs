@@ -40,9 +40,7 @@ eval = \case
     let _ = undefined arg1 arg2
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    --let _ = Debug ("TODO: Clear_attr", v1, v2)
     Objects.clearAttr (fromIntegral v1) (fromIntegral v2)
-    pure ()
 
   I.Dec arg -> do
     target <- makeValueTarget <$> evalArg arg
@@ -80,17 +78,15 @@ eval = \case
   I.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    let res = 777
-    Debug ("TODO:Get_prop_addr",v1,v2,res)
+    res <- Objects.getPropAddr (fromIntegral v1) (fromIntegral v2)
+    --Debug ("Get_prop_addr",v1,"-->",res)
     setTarget target res
-    --undefined
 
   I.Get_prop_len arg target -> do
     v1 <- evalArg arg
-    let res = 888
-    Debug ("TODO:Get_prop_len",v1,res)
+    res <- Objects.getPropLen v1
+    --Debug ("Get_prop_len",v1,"-->",res)
     setTarget target res
-    --undefined
 
   I.Get_sibling arg target label -> do
     v <- evalArg arg
@@ -108,6 +104,7 @@ eval = \case
     target <- makeValueTarget <$> evalArg arg1
     v1 <- evalTarget target
     v2 <- evalArg arg2
+    --Debug("Inc_check",v1,v2)
     setTarget target (v1 + 1)
     branchMaybe label (v1 >= v2)
 
@@ -173,10 +170,10 @@ eval = \case
   I.Print_paddr arg -> do
     v <- evalArg arg
     let a :: Addr = addrOfPackedWord v
-    --Debug ("TODO:Print_paddr",v,a)
     s <- GetText a
-    --Debug ("TODO:Print_paddr",v,a,s)
+    Debug ("TODO: GamePrint")
     GamePrint s
+    undefined
 
   I.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
 
@@ -191,9 +188,8 @@ eval = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v3 <- evalArg arg3
-    let _ = Debug ("TODO: Put_prop",v1,v2,v3)
-    pure ()
-    --undefined
+    Debug ("TODO: Put_prop",v1,v2,v3)
+    Objects.putProp (fromIntegral v1) (fromIntegral v2) v3
 
   I.Random arg target -> do
     v1 <- evalArg arg
@@ -262,7 +258,7 @@ eval = \case
 
     --Debug offsets
 
-    let canoicalizedTyped = intercalate " " words  -- (word ++ "\0") -- TODO
+    let canoicalizedTyped = intercalate " " words  ++ "\0"
     --Debug ("canoicalizedTyped",canoicalizedTyped)
 
     let positionedWords = zip offsets words
