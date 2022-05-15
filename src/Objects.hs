@@ -156,7 +156,7 @@ getPropLen a = do
   --Debug ("getPropLen",a)
   if a == 0 then pure 0 else do
     --Debug("getPropLen,a=",a)
-    b <- GetByte (fromIntegral a) -- TODO: ** bug here ** -- need "-1"
+    b <- GetByte (fromIntegral a - 1) -- TODO: ** bug here ** -- need "-1"
     --Debug("getPropLen,b=",b)
     let numBytes :: Int = 1 + fromIntegral ((b `shiftR` 5) .&. 0x7) -- copied from getProps -- TODO: Is this +1 correct???
     let res = fromIntegral numBytes
