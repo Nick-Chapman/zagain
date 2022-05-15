@@ -29,6 +29,7 @@ parseCommandLine = \case
   -- (temp: with user commands also passed on command line)
   ["reg","-trace",_storyIgnored] -> RegTrace []
   ["reg","-trace",_storyIgnored,w1] -> RegTrace [w1]
+  ["reg","-trace",_storyIgnored,w1,w2] -> RegTrace [w1,w2]
 
   "reg":_storyIgnored:ws -> RegWalk ws
   "debug":_storyIgnored:ws -> DebugWalk ws
