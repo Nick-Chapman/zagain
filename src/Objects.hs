@@ -107,11 +107,11 @@ getProp o n = do
 
 putProp :: Int -> Int -> Value -> Eff ()
 putProp o n v = do
-  Debug ("puttProp",o,n,v)
+  --Debug ("puttProp",o,n,v)
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
-  Debug(ob)
+  --Debug(ob)
   let Object{propTable=PropTable{props}} = ob
   let xs = [ pr | pr@Prop{number} <- props, number == n ]
   pr <-
@@ -130,12 +130,12 @@ putProp o n v = do
       pure ()
     1 -> undefined
     _ -> error "expected 1 or 2 bytes for prop value"
-  ob <- getObject base zv o
-  Debug(ob)
+  --ob <- getObject base zv o
+  --Debug(ob)
 
 setByte :: Addr -> Byte -> Eff ()
 setByte a b = do
-  Debug ("SetByte",a,b)
+  --Debug ("SetByte",a,b)
   SetByte a b
 
 
@@ -155,27 +155,31 @@ getPropLen :: Value -> Eff Value
 getPropLen a = do
   --Debug ("getPropLen",a)
   if a == 0 then pure 0 else do
-    b <- GetByte (fromIntegral a)
-    let numBytes :: Int = 1 + fromIntegral (b `shiftR` 5) -- copied from getProps
-    pure (fromIntegral numBytes)
+    --Debug("getPropLen,a=",a)
+    b <- GetByte (fromIntegral a) -- TODO: ** bug here ** -- need "-1"
+    --Debug("getPropLen,b=",b)
+    let numBytes :: Int = 1 + fromIntegral ((b `shiftR` 5) .&. 0x7) -- copied from getProps -- TODO: Is this +1 correct???
+    let res = fromIntegral numBytes
+    --Debug("getPropLen,res=",res)
+    pure res
 
 unlink :: Int -> Eff ()
 unlink this = do
-  Debug("unlink, this=",this)
+  --Debug("unlink, this=",this)
   oldP <- getParentQ this
-  Debug("old-parent",oldP)
+  --Debug("old-parent",oldP)
   when (oldP /= 0) $ do
-    Debug ("old-parent not zero, so must unlink")
-    seeObjRels oldP
+    --Debug ("old-parent not zero, so must unlink")
+    --seeObjRels oldP
     child <- getChildQ oldP
-    Debug ("first child is:",child)
+    --Debug ("first child is:",child)
     case child == this of
       True -> do
-        Debug "special case for unlink first child"
+        --Debug "special case for unlink first child"
         thisSib <- getSibling this
-        Debug ("relinking oldP's child to:", thisSib)
+        --Debug ("relinking oldP's child to:", thisSib)
         setChild oldP (byteOfInt thisSib)
-        seeObjRels oldP
+        --seeObjRels oldP
       False -> do
         Debug ("not the first child, so beginning unlink loop")
         _ <- undefined
@@ -198,9 +202,9 @@ unlink this = do
 
 insertObj :: Int -> Int -> Eff ()
 insertObj o dest = do
-  Debug ("insertObj",o,dest)
-  seeObjRels o
-  seeObjRels dest
+  --Debug ("insertObj",o,dest)
+  --seeObjRels o
+  --seeObjRels dest
   assertWellFormed
   sizeBefore <- sizeObjectTree
   --Debug (sizeBefore)
@@ -210,9 +214,9 @@ insertObj o dest = do
   --when (_oldP == 0) $ do
   unlink o
   assertWellFormed
-  seeObjRels o
-  seeObjRels dest
-  Debug ("unlink has preserve well formedness, so now insert obj into new pos")
+  --seeObjRels o
+  --seeObjRels dest
+  --Debug ("unlink has preserve well formedness, so now insert obj into new pos")
   do
     setParent o (byteOfInt dest)
     oldChild <- getChildQ dest
@@ -222,8 +226,8 @@ insertObj o dest = do
     sizeAfter <- sizeObjectTree
     --Debug (sizeAfter)
     when (sizeAfter /= sizeBefore) $ error (show ("size of object tree has changed",sizeBefore,sizeAfter))
-    seeObjRels o
-    seeObjRels dest
+    --seeObjRels o
+    --seeObjRels dest
 
 
 byteOfInt :: Int -> Byte
@@ -258,7 +262,7 @@ sizeForest xs = sum (map sizeTree xs)
 
 setParent :: Int -> Byte -> Eff ()
 setParent x p = do
-  Debug ("setParent",x,p)
+  --Debug ("setParent",x,p)
   zv <- getZversion
   base <- objectTableBase
   a <- objectAddr base zv x
@@ -266,7 +270,7 @@ setParent x p = do
 
 setSibling :: Int -> Byte -> Eff ()
 setSibling x p = do
-  Debug ("setSibling",x,p)
+  --Debug ("setSibling",x,p)
   zv <- getZversion
   base <- objectTableBase
   a <- objectAddr base zv x
@@ -274,7 +278,7 @@ setSibling x p = do
 
 setChild :: Int -> Byte -> Eff () -- TODO: dont pass base/z
 setChild x p = do
-  Debug ("setChild",x,p)
+  --Debug ("setChild",x,p)
   zv <- getZversion
   base <- objectTableBase
   a <- objectAddr base zv x
@@ -310,8 +314,8 @@ sibList x = do
     pure (x:ys)
 
 
-seeObjRels :: Int -> Eff ()
-seeObjRels ob = do
+_seeObjRels :: Int -> Eff ()
+_seeObjRels ob = do
   p <- getParentQ ob
   s <- getSiblingQ ob
   c <- getChildQ ob

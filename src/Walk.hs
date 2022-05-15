@@ -12,6 +12,7 @@ import Interaction (Inter(..),Stats(..))
 import Numbers (Byte,Addr,Value)
 import Story (Story,readStoryByte)
 import qualified Data.Map as Map
+import Text.Printf (printf)
 
 --[interpreter for execution effects]----------------------------------
 
@@ -45,7 +46,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
                      , count = count + 1
                      , stats = stats { ct = ct + readCount }
                      }
-          I_Trace stats count pc ins (k s' ins)
+          I_Trace (show s) stats count pc ins (k s' ins)
 
       FetchHeader -> do
         let State{story,pc,stats} = s
@@ -63,7 +64,11 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
 
       PushFrame addr target -> do
         let State{pc,stack,locals,frames} = s
-        k s { pc = addr, frames = Frame { pc, target, stack, locals } : frames } ()
+        k s { pc = addr
+            , frames = Frame { pc, target, stack, locals } : frames
+            , stack = []
+            , locals = Map.empty
+            } ()
 
       PopFrame -> do
         let State{frames} = s
@@ -144,8 +149,24 @@ data State = State
   , stats :: Stats
   }
 
+--instance Show State where
+--  show State{pc,stack,locals,frames} = show (pc,stack,locals,frames)
+
 instance Show State where
-  show State{pc,stack,locals,frames} = show (pc,stack,locals,frames)
+  show State{pc,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pc) num x depth y
+    where
+      x = concat
+        [ " " ++ printf "%05s" (show v)
+        | i <- [1.. fromIntegral num]
+        , let v::Value = maybe 11111 id $ Map.lookup i locals
+        ]
+      y = concat
+        [ " " ++ printf "%05s" (show v)
+        | v <- stack
+        ]
+      num::Int =
+        fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
+      depth = length stack
 
 initState :: Story -> State
 initState story = do

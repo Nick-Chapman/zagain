@@ -11,12 +11,14 @@ data Conf = Conf
   { debug :: Bool
   , seeTrace :: Bool
   , seeStats :: Bool
+  , mojo :: Bool
+  , bufferOutput :: Bool
   }
 
 --[interaction type]--------------------------------------------------
 
 data Inter
-  = I_Trace Stats Int Addr Instruction Inter
+  = I_Trace String Stats Int Addr Instruction Inter
   | I_Output String Inter
   | I_Debug String Inter
   | I_Input Int (String -> Inter)
@@ -25,18 +27,21 @@ data Inter
 --[run interaction as IO]---------------------------------------------
 
 runInter :: Conf -> [String] -> Inter -> IO ()
-runInter Conf{seeStats,seeTrace,debug} xs = loop xs []
+runInter Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
   where
     loop :: [String] -> [String] -> Inter -> IO ()
     loop xs buf = \case
-      I_Trace stats n a instruction next -> do
+      I_Trace stateString stats n a instruction next -> do
+        when mojo $ do
+          printf "%d %s\n" n stateString-- (I.pretty instruction)
         when seeTrace $ do
           let sd = if seeStats then show stats ++ " " else ""
           printf "%s(Decode %d %s %s)\n" sd n (show a) (I.pretty instruction)
         loop xs buf next
       I_Output text next -> do
-        --printf "OUTPUT:[%s]\n" text
-        loop xs (text:buf) next
+        --when (not bufferOutput) $ printf "OUTPUT:[%s]\n" text
+        when (not bufferOutput) $ putStr text
+        loop xs (if bufferOutput then text:buf else buf) next
       I_Debug s next -> do
         when (debug) $ putStrLn ("Debug: " ++ s)
         loop xs buf next

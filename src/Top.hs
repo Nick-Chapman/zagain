@@ -9,7 +9,7 @@ import Story (Story,loadStory)
 import System.Environment (getArgs)
 import Walk (State,initState,runEff)
 import qualified Evaluation (theEffect)
-import qualified Interaction (Conf(..))
+import Interaction (Conf(..))
 import qualified Objects (dump)
 
 main :: IO ()
@@ -34,7 +34,7 @@ parseCommandLine = \case
   "debug":_storyIgnored:ws -> DebugWalk ws
 
   "trace":ws -> Trace ws
-  [] -> Latest
+  [] -> CompareWithMojo
   ws -> Walk ws
 
   --args -> error (show ("parse",args))
@@ -44,9 +44,9 @@ data Config
   | RegTrace [String] -- regression traces
   | RegWalk [String]
   | DebugWalk [String]
-  | Latest
   | Trace [String]
   | Walk [String]
+  | CompareWithMojo
 
 run :: Story -> Config -> IO ()
 run story = \case
@@ -60,44 +60,21 @@ run story = \case
 
   RegTrace ws -> do
     putStrLn "[release/serial: 88/840726, z-version: .z3}" -- hack
-    traceExecution conf story ws
-      where
-        conf = Interaction.Conf { debug = False
-                                , seeTrace = True
-                                , seeStats = False }
+    traceExecution confD { debug = False, seeTrace = True } story ws
   RegWalk ws -> do
-    traceExecution conf story ws
-      where
-        conf = Interaction.Conf { debug = False
-                                , seeTrace = False
-                                , seeStats = False }
+    traceExecution confD { debug = False } story ws
   DebugWalk ws -> do
-    traceExecution conf story ws
-      where
-        conf = Interaction.Conf { debug = True
-                                , seeTrace = False
-                                , seeStats = False }
-  Latest -> do
-    print "**latest dev**"
-    traceExecution conf story ["open mailbox"]
-      where
-        conf = Interaction.Conf { debug = True
-                                , seeTrace = True
-                                , seeStats = False }
+    traceExecution confD story ws
   Trace ws -> do
     putStrLn "[release/serial: 88/840726, z-version: .z3}" -- hack
-    traceExecution conf story ws
-      where
-        conf = Interaction.Conf { debug = True
-                                , seeTrace = True
-                                , seeStats = False }
+    traceExecution confD { seeTrace = True } story ws
   Walk ws -> do
-    traceExecution conf story ws
-      where
-        conf = Interaction.Conf { debug = True
-                                , seeTrace = False
-                                , seeStats = False }
+    traceExecution confD story ws
 
+  CompareWithMojo -> do
+    print "**for comp with mojo**"
+    traceExecution confD { mojo = True, bufferOutput = False } story
+      ["open mailbox", "read leaflet"]
 
 traceExecution :: Interaction.Conf -> Story -> [String] -> IO ()
 traceExecution conf story inputs = do
@@ -113,5 +90,13 @@ dumpObjects story = do
   let e = Objects.dump
   let s :: State = initState story
   let i :: Inter = runEff maxSteps s e
-  let conf = Interaction.Conf { debug = True, seeTrace = False, seeStats = False }
-  runInter conf [] i
+  runInter confD [] i
+
+confD :: Interaction.Conf
+confD = Interaction.Conf
+  { debug = True
+  , seeTrace = False
+  , seeStats = False
+  , mojo = False
+  , bufferOutput = True
+  }

@@ -31,9 +31,9 @@ eval = \case
     funcAddress <- evalFunc func
     --Debug ("Call",funcAddress)
     if funcAddress == 0 then setTarget target 0 else do
+      actuals <- mapM evalArg args
       PushFrame funcAddress target
       rh <- FetchHeader
-      actuals <- mapM evalArg args
       setLocals rh actuals
 
   I.Clear_attr arg1 arg2 -> do
@@ -73,6 +73,7 @@ eval = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     res <- Objects.getProp (fromIntegral v1) (fromIntegral v2)
+    --Debug ("Get_prop",v1,v2,"-->",res)
     setTarget target res
 
   I.Get_prop_addr arg1 arg2 target -> do
@@ -139,6 +140,7 @@ eval = \case
   I.Load_byte arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
+    --Debug ("Load_byte",base,offset) -- TODO: GetByte(0,1) differs from mojo
     b <- GetByte (fromIntegral (base + offset))
     setTarget target (fromIntegral b)
 
@@ -171,9 +173,9 @@ eval = \case
     v <- evalArg arg
     let a :: Addr = addrOfPackedWord v
     s <- GetText a
-    Debug ("TODO: GamePrint")
+    --Debug ("TODO: Print_paddr")
     GamePrint s
-    undefined
+    --undefined
 
   I.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
 
@@ -188,7 +190,7 @@ eval = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v3 <- evalArg arg3
-    Debug ("TODO: Put_prop",v1,v2,v3)
+    --Debug ("TODO: Put_prop",v1,v2,v3)
     Objects.putProp (fromIntegral v1) (fromIntegral v2) v3
 
   I.Random arg target -> do
