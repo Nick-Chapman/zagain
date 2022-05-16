@@ -5,6 +5,7 @@ module Semantics (theEffect) where
 import Data.Bits ((.&.),shiftR)
 import Data.List (intercalate)
 import Data.List.Split (splitOn)
+import Data.List.Extra (lower)
 import Decode (makeTarget)
 import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
@@ -239,7 +240,7 @@ eval = \case
       mkQuad offsetInText word = do
         let
           iopt :: Maybe Int = do
-            let key = take 6 word
+            let key = lower (take 6 word)
             case [ i | (i,s) <- zip [1..] strings, s == key ] of
               [] -> Nothing
               xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
