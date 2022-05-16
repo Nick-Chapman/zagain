@@ -77,9 +77,8 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       disassemble story
     Objects -> do
       story <- loadStory storyFile
-      let maxSteps = 100000
-      let i = Interpreter.run maxSteps story Objects.dump
-      runAction iconf [] i
+      let a = Interpreter.run story Objects.dump
+      runAction iconf [] a
     Dictionary -> do
       story <- loadStory storyFile
       let (dict,_,_) = runFetch 0 story fetchDict
@@ -87,6 +86,5 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
     Run -> do
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
-      let maxSteps = 100000
-      let i = Interpreter.run maxSteps story Semantics.theEffect
-      runAction iconf inputs i
+      let a = Interpreter.run story Semantics.theEffect
+      runAction iconf inputs a

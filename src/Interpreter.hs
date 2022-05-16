@@ -18,8 +18,8 @@ import qualified Data.Map as Map
 
 --[interpreter for execution effects]----------------------------------
 
-run :: Int -> Story -> Eff () -> Action
-run maxSteps story e0 = loop s0 e0 k0 -- TODO: kill maxSteps?
+run :: Story -> Eff () -> Action
+run story e0 = loop s0 e0 k0
   where
     s0 :: State
     s0 = initState story
@@ -45,15 +45,14 @@ run maxSteps story e0 = loop s0 e0 k0 -- TODO: kill maxSteps?
         k s' text
 
       FetchI -> do
-        let State{story,pc,count,lastCount,stats} = s
+        let State{story,pc,count,stats} = s
         let (ins,pc',readCount) = runFetch pc story fetchOperation
-        if count >= maxSteps then A.Stop (count-lastCount) else do
-          let Stats{ct} = stats
-          let s' = s { pc = pc'
-                     , count = count + 1
-                     , stats = stats { ct = ct + readCount }
-                     }
-          A.Trace (show s) stats count pc ins (k s' ins)
+        let Stats{ct} = stats
+        let s' = s { pc = pc'
+                   , count = count + 1
+                   , stats = stats { ct = ct + readCount }
+                   }
+        A.Trace (show s) stats count pc ins (k s' ins)
 
       FetchHeader -> do
         let State{story,pc,stats} = s
