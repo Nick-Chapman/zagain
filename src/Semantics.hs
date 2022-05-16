@@ -1,5 +1,6 @@
 
-module Evaluation (theEffect) where
+-- | Semantics of the z-machine op-codes
+module Semantics (theEffect) where
 
 import Data.Bits ((.&.),shiftR)
 import Data.List (intercalate)

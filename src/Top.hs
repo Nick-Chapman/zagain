@@ -9,8 +9,8 @@ import Interaction (Conf(..),runInter)
 import Story (loadStory)
 import System.Environment (getArgs)
 import Walk (initState,runEff)
-import qualified Evaluation (theEffect)
 import qualified Objects (dump)
+import qualified Semantics (theEffect)
 
 main :: IO ()
 main = do
@@ -87,5 +87,5 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       let maxSteps = 100000
-      let i = runEff maxSteps (initState story) Evaluation.theEffect
+      let i = runEff maxSteps (initState story) Semantics.theEffect
       runInter iconf inputs i
