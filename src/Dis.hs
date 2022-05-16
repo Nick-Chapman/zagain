@@ -1,16 +1,18 @@
 
+-- | Disassemble statically reachable z-code routines from a stroy file.
 module Dis (disassemble) where
 
 import Data.List (sortBy)
 import Data.Ord (comparing)
-import Data.Set as Set
-import Decode (fetchInstruction,fetchRoutineHeader)
+import Data.Set (Set)
+import Decode (fetchOperation,fetchRoutineHeader)
 import Fetch (runFetch)
-import Instruction (Instruction,pretty,RoutineHeader)
 import Numbers (Addr,Value)
+import Operation (Operation,RoutineHeader)
 import Story (Story,readStoryByte)
 import Text.Printf (printf)
-import qualified Instruction as I
+import qualified Data.Set as Set
+import qualified Operation as Op
 
 disassemble :: Story -> IO ()
 disassemble story = do
@@ -36,7 +38,7 @@ dumpRoutine Routine{start,header,body=xs,finish=_} = do
   mapM_ pr xs
   --printf "[%s]\n" (show finish)
   where
-    pr (a,i) = printf "[%s] %s\n" (show a) (Instruction.pretty i)
+    pr (a,i) = printf "[%s] %s\n" (show a) (Op.pretty i)
 
 collectRoutines :: [Addr] -> Story -> [Routine]
 collectRoutines as story = loop Set.empty [] as
@@ -57,9 +59,9 @@ collectRoutine start story = do
   let (body,finish) = loop Set.empty [] a0
   Routine { start, header, body, finish }
   where
-    loop :: Set Addr -> [(Addr,Instruction)] -> Addr -> ([(Addr,Instruction)], Addr)
+    loop :: Set Addr -> [(Addr,Operation)] -> Addr -> ([(Addr,Operation)], Addr)
     loop bps acc a = do
-      let (i,a',_) = runFetch a story fetchInstruction
+      let (i,a',_) = runFetch a story fetchOperation
       let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOfI i)
       let continue = not (isStoppingI i) || a' `Set.member` bps
       if continue then loop bps' ((a,i):acc) a' else (reverse((a,i):acc),a')
@@ -68,38 +70,38 @@ callAddresses :: Routine -> [Addr]
 callAddresses Routine{body=xs} = do
   [ a | (_,i) <- xs, a <- callsOfI i ]
 
-callsOfI :: Instruction -> [Addr]
+callsOfI :: Operation -> [Addr]
 callsOfI = \case
-  I.Call (I.Floc a) _ _ -> [a]
+  Op.Call (Op.Floc a) _ _ -> [a]
   _ -> []
 
-branchesOfI :: Instruction -> [Addr]
+branchesOfI :: Operation -> [Addr]
 branchesOfI = \case
-  I.Dec_check _ _ (I.Branch _ (I.Dloc a)) -> [a]
-  I.Inc_check _ _ (I.Branch _ (I.Dloc a)) -> [a]
-  I.Je _ (I.Branch _ (I.Dloc a)) -> [a]
-  I.Jg _ _ (I.Branch _ (I.Dloc a)) -> [a]
-  I.Jl _ _ (I.Branch _ (I.Dloc a)) -> [a]
-  I.Jump a -> [a]
-  I.Jz _ (I.Branch _ (I.Dloc a)) -> [a]
-  I.Test _ _ (I.Branch _ (I.Dloc a)) -> [a]
-  I.Test_attr _ _ (I.Branch _ (I.Dloc a)) -> [a]
+  Op.Dec_check _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Inc_check _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Je _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Jg _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Jl _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Jump a -> [a]
+  Op.Jz _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Test _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Test_attr _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
   _ -> []
 
-isStoppingI :: Instruction -> Bool
+isStoppingI :: Operation -> Bool
 isStoppingI = \case
-  I.Jump{} -> True
-  I.Print_ret{} -> True
-  I.Ret_popped -> True
-  I.Return{} -> True
-  I.Rfalse{} -> True
-  I.Rtrue{} -> True
+  Op.Jump{} -> True
+  Op.Print_ret{} -> True
+  Op.Ret_popped -> True
+  Op.Return{} -> True
+  Op.Rfalse{} -> True
+  Op.Rtrue{} -> True
   _ -> False
 
 
 data Routine = Routine
   { start :: Addr
   , header :: RoutineHeader
-  , body :: [(Addr,Instruction)]
+  , body :: [(Addr,Operation)]
   , finish :: Addr
   }

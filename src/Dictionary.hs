@@ -1,4 +1,5 @@
 
+-- | Decode the z-machine dictionary contained in a story-file.
 module Dictionary (Dict(..),fetchDict) where
 
 import Decode (ztext)

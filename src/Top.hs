@@ -1,4 +1,5 @@
 
+-- | Entry point for all z-machine code: Command like parsing and dispatch.
 module Top (main)  where
 
 import Control.Monad (when)

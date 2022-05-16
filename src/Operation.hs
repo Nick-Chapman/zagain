@@ -1,6 +1,7 @@
 
-module Instruction
-  ( Instruction(..)
+-- | Decoded z-machine operations.
+module Operation
+  ( Operation(..)
   , Func(..)
   , Args(..)
   , Arg(..)
@@ -16,7 +17,7 @@ import Data.List (intercalate)
 import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
-data Instruction -- TODO: check naming matches spec (will change trace output / regression)
+data Operation -- TODO: check naming matches spec (will change trace output / regression)
 
   -- This instructions are not yet decoded
   -- | Aread Arg Arg Target
@@ -110,10 +111,10 @@ data Sense = T | F
 
 instance Show Sense where show = \case T -> "true"; F -> "false"
 
-pretty :: Instruction -> String
+pretty :: Operation -> String
 pretty i = bracket i (show i)
 
-bracket :: Instruction -> String -> String
+bracket :: Operation -> String -> String
 bracket i = if needBracket i then printf "(%s)" else id
   where
     needBracket = \case -- TODO: deprecate (changes regression)

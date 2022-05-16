@@ -1,11 +1,12 @@
 
+-- | The interation of z-machine execution with input/output.
 module Interaction (Conf(..),Inter(..),Stats(..),runInter) where
 
 import Control.Monad (when)
-import Instruction (Instruction)
 import Numbers (Addr)
+import Operation (Operation)
 import Text.Printf (printf)
-import qualified Instruction as I (pretty)
+import qualified Operation as Op (pretty)
 
 data Conf = Conf
   { debug :: Bool
@@ -18,7 +19,7 @@ data Conf = Conf
 --[interaction type]--------------------------------------------------
 
 data Inter
-  = I_Trace String Stats Int Addr Instruction Inter
+  = I_Trace String Stats Int Addr Operation Inter
   | I_Output String Inter
   | I_Debug String Inter
   | I_Input Int (String -> Inter)
@@ -36,7 +37,7 @@ runInter Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
           printf "%d %s\n" n stateString
         when seeTrace $ do
           let sd = if seeStats then show stats ++ " " else ""
-          printf "%s(Decode %d %s %s)\n" sd n (show a) (I.pretty instruction)
+          printf "%s(Decode %d %s %s)\n" sd n (show a) (Op.pretty instruction)
         loop xs buf next
       I_Output text next -> do
         when (not bufferOutput) $ putStr text

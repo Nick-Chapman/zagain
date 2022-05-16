@@ -1,5 +1,5 @@
 
--- | Semantics of the z-machine op-codes
+-- | Semantics of z-machine operations.
 module Semantics (theEffect) where
 
 import Data.Bits ((.&.),shiftR)
@@ -8,11 +8,11 @@ import Data.List.Split (splitOn)
 import Decode (makeTarget)
 import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
-import Instruction (Instruction,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
+import Operation (Operation,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import qualified Data.Char as Char (chr,ord)
-import qualified Instruction as I
 import qualified Objects
+import qualified Operation as Op
 
 theEffect :: Eff ()
 theEffect = loop
@@ -22,13 +22,13 @@ theEffect = loop
       eval i
       loop
 
-eval :: Instruction -> Eff ()
+eval :: Operation -> Eff ()
 eval = \case
 
-  I.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
-  I.And_ arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
+  Op.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
+  Op.And_ arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
 
-  I.Call func (Args args) target -> do
+  Op.Call func (Args args) target -> do
     funcAddress <- evalFunc func
     --Debug ("Call",funcAddress)
     if funcAddress == 0 then setTarget target 0 else do
@@ -37,18 +37,18 @@ eval = \case
       rh <- FetchHeader
       setLocals rh actuals
 
-  I.Clear_attr arg1 arg2 -> do
+  Op.Clear_attr arg1 arg2 -> do
     let _ = undefined arg1 arg2
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     Objects.clearAttr (fromIntegral v1) (fromIntegral v2)
 
-  I.Dec arg -> do
+  Op.Dec arg -> do
     target <- makeValueTarget <$> evalArg arg
     v <- evalTarget target
     setTarget target (v - 1)
 
-  I.Dec_check arg1 arg2 label -> do
+  Op.Dec_check arg1 arg2 label -> do
     target <- makeValueTarget <$> evalArg arg1
     v1 <- evalTarget target
     v2 <- evalArg arg2
@@ -57,55 +57,55 @@ eval = \case
     setTarget target (v1 - 1)
     branchMaybe label res
 
-  I.Div arg1 arg2 target -> do evalBin BDiv arg1 arg2 target
+  Op.Div arg1 arg2 target -> do evalBin BDiv arg1 arg2 target
 
-  I.Get_child arg target label -> do
+  Op.Get_child arg target label -> do
     v <- evalArg arg
     res <- Objects.getChild (fromIntegral v)
     setTarget target (fromIntegral res)
     branchMaybe label (res /= 0)
 
-  I.Get_next_prop arg1 arg2 target -> do
+  Op.Get_next_prop arg1 arg2 target -> do
     undefined arg1 arg2 target
 
-  I.Get_parent arg target -> do
+  Op.Get_parent arg target -> do
     v <- evalArg arg
     res <- Objects.getParent (fromIntegral v)
     setTarget target (fromIntegral res)
 
-  I.Get_prop arg1 arg2 target -> do
+  Op.Get_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     res <- Objects.getProp (fromIntegral v1) (fromIntegral v2)
     --Debug ("Get_prop",v1,v2,"-->",res)
     setTarget target res
 
-  I.Get_prop_addr arg1 arg2 target -> do
+  Op.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     res <- Objects.getPropAddr (fromIntegral v1) (fromIntegral v2)
     --Debug ("Get_prop_addr",v1,"-->",res)
     setTarget target res
 
-  I.Get_prop_len arg target -> do
+  Op.Get_prop_len arg target -> do
     v1 <- evalArg arg
     res <- Objects.getPropLen v1
     --Debug ("Get_prop_len",v1,"-->",res)
     setTarget target res
 
-  I.Get_sibling arg target label -> do
+  Op.Get_sibling arg target label -> do
     v <- evalArg arg
     res <- Objects.getSibling (fromIntegral v)
     setTarget target (fromIntegral res)
     let bFix = (res /= 0)
     branchMaybe label bFix
 
-  I.Inc arg -> do
+  Op.Inc arg -> do
     target <- makeValueTarget <$> evalArg arg
     v <- evalTarget target
     setTarget target (v + 1)
 
-  I.Inc_check arg1 arg2 label -> do
+  Op.Inc_check arg1 arg2 label -> do
     target <- makeValueTarget <$> evalArg arg1
     v1 <- evalTarget target
     v2 <- evalArg arg2
@@ -113,113 +113,113 @@ eval = \case
     setTarget target (v1 + 1)
     branchMaybe label (v1 >= v2)
 
-  I.Insert_obj arg1 arg2 -> do
+  Op.Insert_obj arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     Objects.insertObj (fromIntegral v1) (fromIntegral v2)
     pure ()
 
-  I.Je (Args args) label -> do
+  Op.Je (Args args) label -> do
     mapM evalArg args >>= EqualAny >>= branchMaybe label
 
-  I.Jg arg1 arg2 label -> do
+  Op.Jg arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     branchMaybe label (v1 > v2)
 
-  I.Jin arg1 arg2 label -> do
+  Op.Jin arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     p <- fromIntegral <$> Objects.getParent (fromIntegral v1)
     branchMaybe label (v2 == p)
 
-  I.Jl arg1 arg2 label -> do
+  Op.Jl arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     branchMaybe label (v1 < v2)
 
-  I.Jump addr -> do SetPC addr
-  I.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
+  Op.Jump addr -> do SetPC addr
+  Op.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
 
-  I.Load_byte arg1 arg2 target -> do
+  Op.Load_byte arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
     --Debug ("Load_byte",base,offset) -- TODO: GetByte(0,1) differs from mojo
     b <- GetByte (fromIntegral (base + offset))
     setTarget target (fromIntegral b)
 
-  I.Load_word arg1 arg2 target -> do
+  Op.Load_word arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
     w <- getWord (fromIntegral (base + 2*offset))
     setTarget target w
 
-  I.Mul arg1 arg2 target -> do evalBin BMul arg1 arg2 target
+  Op.Mul arg1 arg2 target -> do evalBin BMul arg1 arg2 target
 
-  I.New_line -> do GamePrint "\n"
-  I.Print string -> do GamePrint string
+  Op.New_line -> do GamePrint "\n"
+  Op.Print string -> do GamePrint string
 
-  I.Print_addr arg -> do
+  Op.Print_addr arg -> do
     v <- evalArg arg
     let a :: Addr = fromIntegral v
     s <- GetText a
     GamePrint s
 
-  I.Print_char arg -> do
+  Op.Print_char arg -> do
     v <- evalArg arg
     let c :: Char = Char.chr (fromIntegral v) -- TODO -- check char in bound!
     GamePrint [c]
 
-  I.Print_num arg -> do evalArg arg >>= GamePrint . show
+  Op.Print_num arg -> do evalArg arg >>= GamePrint . show
 
-  I.Print_obj arg -> do
+  Op.Print_obj arg -> do
     v <- evalArg arg
     shortName <- Objects.getShortName (fromIntegral v)
     GamePrint shortName
 
-  I.Print_paddr arg -> do
+  Op.Print_paddr arg -> do
     v <- evalArg arg
     let a :: Addr = addrOfPackedWord v
     s <- GetText a
     GamePrint s
 
-  I.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
+  Op.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
 
-  I.Pull arg -> do
+  Op.Pull arg -> do
     target <- makeValueTarget <$> evalArg arg
     v1 <- PopStack
     setTarget target v1
 
-  I.Push arg -> do evalArg arg >>= PushStack
+  Op.Push arg -> do evalArg arg >>= PushStack
 
-  I.Put_prop arg1 arg2 arg3 -> do
+  Op.Put_prop arg1 arg2 arg3 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v3 <- evalArg arg3
     --Debug ("TODO: Put_prop",v1,v2,v3)
     Objects.putProp (fromIntegral v1) (fromIntegral v2) v3
 
-  I.Random arg target -> do
+  Op.Random arg target -> do
     v1 <- evalArg arg
     let res = 1
     Debug("TODO:Random",v1,"--(fixed)-->",res)
     setTarget target res
 
-  I.Ret_popped -> do PopStack >>= returnValue
-  I.Return arg -> do
+  Op.Ret_popped -> do PopStack >>= returnValue
+  Op.Return arg -> do
     v <- evalArg arg
     target <- PopFrame
     setTarget target v
 
-  I.Rfalse -> do returnValue 0
-  I.Rtrue -> do returnValue 1
+  Op.Rfalse -> do returnValue 0
+  Op.Rtrue -> do returnValue 1
 
-  I.Set_attr arg1 arg2 -> do
+  Op.Set_attr arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     Objects.setAttr (fromIntegral v1) (fromIntegral v2)
 
-  I.Sread arg1 arg2 -> do
+  Op.Sread arg1 arg2 -> do
     rawTyped <- ReadInputFromUser
 
     t_buf :: Addr <- fromIntegral <$> evalArg arg1
@@ -279,7 +279,7 @@ eval = \case
     writeBytes (fromIntegral (p_buf + 1)) bs
     pure ()
 
-  I.Store arg1 arg2 -> do
+  Op.Store arg1 arg2 -> do
     target <- makeValueTarget <$> evalArg arg1
     v2 <- evalArg arg2
     case target of
@@ -287,7 +287,7 @@ eval = \case
       _ -> pure ()
     setTarget target v2
 
-  I.Storeb arg1 arg2 arg3 -> do
+  Op.Storeb arg1 arg2 arg3 -> do
     base <- evalArg arg1
     offset <- evalArg arg2
     value <- byteOfValue <$> evalArg arg3
@@ -295,22 +295,22 @@ eval = \case
     let a :: Addr = fromIntegral (base + offset)
     SetByte a value
 
-  I.Storew arg1 arg2 arg3 -> do
+  Op.Storew arg1 arg2 arg3 -> do
     base <- evalArg arg1
     offset <- evalArg arg2
     value <- evalArg arg3
     let a :: Addr = fromIntegral (base + 2 * offset)
     setWord a value
 
-  I.Sub arg1 arg2 target -> do evalBin BSub arg1 arg2 target
+  Op.Sub arg1 arg2 target -> do evalBin BSub arg1 arg2 target
 
-  I.Test arg1 arg2 label -> do
+  Op.Test arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     let res = v1 .&. v2 == v2
     branchMaybe label res
 
-  I.Test_attr arg1 arg2 label -> do
+  Op.Test_attr arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     res <- Objects.testAttr (fromIntegral v1) (fromIntegral v2)
@@ -336,10 +336,10 @@ evalBin bin arg1 arg2 target = do
 
 branchMaybe :: Label -> Bool -> Eff ()
 branchMaybe (Branch sense dest) b = case (sense,b) of
-  (I.T,False) -> pure ()
-  (I.F,True) -> pure ()
-  (I.T,True) -> gotoDest dest
-  (I.F,False) -> gotoDest dest
+  (Op.T,False) -> pure ()
+  (Op.F,True) -> pure ()
+  (Op.T,True) -> gotoDest dest
+  (Op.F,False) -> gotoDest dest
 
 gotoDest :: Dest -> Eff ()
 gotoDest = \case
@@ -389,7 +389,7 @@ globalAddr b = do
   pure $ fromIntegral (globalBase + 2 * fromIntegral b)
 
 setLocals :: RoutineHeader -> [Value] -> Eff ()
-setLocals (I.RoutineHeader defs) actuals = do
+setLocals (Op.RoutineHeader defs) actuals = do
   sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
   sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
 

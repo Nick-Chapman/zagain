@@ -3,16 +3,16 @@ module Walk (State,initState,runEff) where -- TODO: rename Interpreter
 
 import Data.Bits ((.&.))
 import Data.Map (Map)
-import Decode (fetchInstruction,fetchRoutineHeader,ztext)
+import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
 import Eff (Eff(..),Bin(..))
 import Fetch (runFetch)
-import Instruction (Target)
 import Interaction (Inter(..),Stats(..))
 import Numbers (Byte,Addr,Value)
+import Operation (Target)
 import Story (Story,readStoryByte)
-import qualified Data.Map as Map
 import Text.Printf (printf)
+import qualified Data.Map as Map
 
 --[interpreter for execution effects]----------------------------------
 
@@ -39,7 +39,7 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \State{count,lastCount} () -> I_Stop (count
 
       FetchI -> do
         let State{story,pc,count,lastCount,stats} = s
-        let (ins,pc',readCount) = runFetch pc story fetchInstruction
+        let (ins,pc',readCount) = runFetch pc story fetchOperation
         if count >= maxSteps then I_Stop (count-lastCount) else do
           let Stats{ct} = stats
           let s' = s { pc = pc'

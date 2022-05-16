@@ -1,4 +1,5 @@
 
+-- | Various types of numbers used by the z-machine.
 module Numbers
   ( Byte, byteOfValue
   , Addr, addrOfPackedWord

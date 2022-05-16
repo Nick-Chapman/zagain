@@ -1,4 +1,5 @@
 
+-- | The effect of decoding elements of a z-machine story-file.
 module Fetch (Fetch(..),runFetch) where
 
 import Control.Monad (ap,liftM)

@@ -1,11 +1,11 @@
 
--- The effect of evaluation on a z-machine
+-- | The computation effect of z-machine execution.
 module Eff (Eff(..),Bin(..)) where
 
 import Control.Monad (ap,liftM)
-import Instruction (Instruction,Target,RoutineHeader)
-import Numbers (Byte,Addr,Value)
 import Dictionary (Dict)
+import Numbers (Byte,Addr,Value)
+import Operation (Operation,Target,RoutineHeader)
 
 instance Functor Eff where fmap = liftM
 instance Applicative Eff where pure = return; (<*>) = ap
@@ -22,7 +22,7 @@ data Eff a where
 
   GetText :: Addr -> Eff String
 
-  FetchI :: Eff Instruction
+  FetchI :: Eff Operation
   FetchHeader :: Eff RoutineHeader
   FetchDict :: Eff Dict
 

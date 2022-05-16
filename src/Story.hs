@@ -1,4 +1,5 @@
 
+-- | A z-machine story-file.
 module Story (Story,loadStory,readStoryByte) where
 
 import Data.Array (Array,(!),listArray)

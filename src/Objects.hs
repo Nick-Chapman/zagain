@@ -1,4 +1,5 @@
 
+-- | Semantics of z-machine object-table operations.
 module Objects
   ( dump
   , getShortName

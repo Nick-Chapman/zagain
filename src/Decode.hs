@@ -1,6 +1,7 @@
 
+-- | Decode z-machine instructions, routine-headers, and z-text from a story-file.
 module Decode
-  ( fetchInstruction
+  ( fetchOperation
   , fetchRoutineHeader
   , makeTarget
   , ztext
@@ -9,95 +10,95 @@ module Decode
 import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
-import Instruction (Instruction,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Numbers (Byte,Addr,Value,addrOfPackedWord)
+import Operation (Operation,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Data.Char as Char
-import qualified Instruction as I
+import qualified Operation as Op
 
-data Op = Op Byte [RandType]
+data OpCodeAndArgs = Code Byte [RandType]
   deriving Show
 
 data RandType = ByteConst | WordConst | ByteVariable
   deriving Show
 
-fetchInstruction :: Fetch Instruction
-fetchInstruction = fetchOp >>= \case
-  Op 1 ts -> I.Je <$> args ts <*> label
-  Op 193 ts -> I.Je <$> args ts <*> label
-  Op 2 [t1,t2] -> I.Jl <$> arg t1 <*> arg t2 <*> label
-  Op 3 [t1,t2] -> I.Jg <$> arg t1 <*> arg t2 <*> label
-  Op 195 [t1,t2] -> I.Jg <$> arg t1 <*> arg t2 <*> label
-  Op 4 [t1,t2] -> I.Dec_check <$> arg t1 <*> arg t2 <*> label
-  Op 5 [t1,t2] -> I.Inc_check <$> arg t1 <*> arg t2 <*> label
-  Op 6 [t1,t2] -> I.Jin <$> arg t1 <*> arg t2 <*> label
-  Op 7 [t1,t2] -> I.Test <$> arg t1 <*> arg t2 <*> label
-  Op 9 [t1,t2] -> I.And_ <$> arg t1 <*> arg t2 <*> target
-  Op 201 [t1,t2] -> I.And_ <$> arg t1 <*> arg t2 <*> target
-  Op 10 [t1,t2] -> I.Test_attr <$> arg t1 <*> arg t2 <*> label
-  Op 11 [t1,t2] -> I.Set_attr <$> arg t1 <*> arg t2
-  Op 12 [t1,t2] -> I.Clear_attr <$> arg t1 <*> arg t2
-  Op 13 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
-  Op 205 [t1,t2] -> I.Store <$> arg t1 <*> arg t2
-  Op 14 [t1,t2] -> I.Insert_obj <$> arg t1 <*> arg t2
-  Op 15 [t1,t2] -> I.Load_word <$> arg t1 <*> arg t2 <*> target
-  Op 16 [t1,t2] -> I.Load_byte <$> arg t1 <*> arg t2 <*> target
-  Op 17 [t1,t2] -> I.Get_prop <$> arg t1 <*> arg t2 <*> target
-  Op 18 [t1,t2] -> I.Get_prop_addr <$> arg t1 <*> arg t2 <*> target
-  Op 19 [t1,t2] -> I.Get_next_prop <$> arg t1 <*> arg t2 <*> target
-  Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
-  Op 21 [t1,t2] -> I.Sub <$> arg t1 <*> arg t2 <*> target
-  Op 22 [t1,t2] -> I.Mul <$> arg t1 <*> arg t2 <*> target
-  Op 23 [t1,t2] -> I.Div <$> arg t1 <*> arg t2 <*> target
-  Op 128 [t] -> I.Jz <$> arg t <*> label
-  Op 129 [t] -> I.Get_sibling <$> arg t <*> target <*> label
-  Op 130 [t] -> I.Get_child <$> arg t <*> target <*> label
-  Op 131 [t] -> I.Get_parent <$> arg t <*> target
-  Op 132 [t] -> I.Get_prop_len <$> arg t <*> target
-  Op 133 [t] -> I.Inc <$> arg t
-  Op 134 [t] -> I.Dec <$> arg t
-  Op 135 [t] -> I.Print_addr <$> arg t
-  Op 138 [t] -> I.Print_obj <$> arg t
-  Op 139 [t] -> I.Return <$> arg t
-  Op 140 [WordConst] -> I.Jump <$> jumpLocation
-  Op 141 [t] -> I.Print_paddr <$> arg t
-  Op 176 [] -> pure I.Rtrue
-  Op 177 [] -> pure I.Rfalse
-  Op 184 [] -> pure I.Ret_popped
-  Op 178 [] -> I.Print <$> ztext
-  Op 179 [] -> I.Print_ret <$> ztext
-  Op 187 [] -> pure I.New_line
-  Op 197 [t1,t2] -> I.Inc_check <$> arg t1 <*> arg t2 <*> label
-  Op 224 (t1:ts) -> I.Call <$> func t1 <*> args ts <*> target
-  Op 225 [t1,t2,t3] -> I.Storew <$> arg t1 <*> arg t2 <*> arg t3
-  Op 226 [t1,t2,t3] -> I.Storeb <$> arg t1 <*> arg t2 <*> arg t3
-  Op 228 [t1,t2] -> I.Sread <$> arg t1 <*> arg t2
-  Op 227 [t1,t2,t3] -> I.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
-  Op 229 [t] -> I.Print_char <$> arg t
-  Op 230 [t] -> I.Print_num <$> arg t
-  Op 231 [t] -> I.Random <$> arg t <*> target
-  Op 232 [t] -> I.Push <$> arg t
-  Op 233 [t] -> I.Pull <$> arg t
-  op -> error (printf "unknown instruction: %s" (show op))
+fetchOperation :: Fetch Operation
+fetchOperation = fetchOpCodeAndArgs >>= \case
+  Code 1 ts -> Op.Je <$> args ts <*> label
+  Code 193 ts -> Op.Je <$> args ts <*> label
+  Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
+  Code 3 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
+  Code 195 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
+  Code 4 [t1,t2] -> Op.Dec_check <$> arg t1 <*> arg t2 <*> label
+  Code 5 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label
+  Code 6 [t1,t2] -> Op.Jin <$> arg t1 <*> arg t2 <*> label
+  Code 7 [t1,t2] -> Op.Test <$> arg t1 <*> arg t2 <*> label
+  Code 9 [t1,t2] -> Op.And_ <$> arg t1 <*> arg t2 <*> target
+  Code 201 [t1,t2] -> Op.And_ <$> arg t1 <*> arg t2 <*> target
+  Code 10 [t1,t2] -> Op.Test_attr <$> arg t1 <*> arg t2 <*> label
+  Code 11 [t1,t2] -> Op.Set_attr <$> arg t1 <*> arg t2
+  Code 12 [t1,t2] -> Op.Clear_attr <$> arg t1 <*> arg t2
+  Code 13 [t1,t2] -> Op.Store <$> arg t1 <*> arg t2
+  Code 205 [t1,t2] -> Op.Store <$> arg t1 <*> arg t2
+  Code 14 [t1,t2] -> Op.Insert_obj <$> arg t1 <*> arg t2
+  Code 15 [t1,t2] -> Op.Load_word <$> arg t1 <*> arg t2 <*> target
+  Code 16 [t1,t2] -> Op.Load_byte <$> arg t1 <*> arg t2 <*> target
+  Code 17 [t1,t2] -> Op.Get_prop <$> arg t1 <*> arg t2 <*> target
+  Code 18 [t1,t2] -> Op.Get_prop_addr <$> arg t1 <*> arg t2 <*> target
+  Code 19 [t1,t2] -> Op.Get_next_prop <$> arg t1 <*> arg t2 <*> target
+  Code 20 [t1,t2] -> Op.Add <$> arg t1 <*> arg t2 <*> target
+  Code 21 [t1,t2] -> Op.Sub <$> arg t1 <*> arg t2 <*> target
+  Code 22 [t1,t2] -> Op.Mul <$> arg t1 <*> arg t2 <*> target
+  Code 23 [t1,t2] -> Op.Div <$> arg t1 <*> arg t2 <*> target
+  Code 128 [t] -> Op.Jz <$> arg t <*> label
+  Code 129 [t] -> Op.Get_sibling <$> arg t <*> target <*> label
+  Code 130 [t] -> Op.Get_child <$> arg t <*> target <*> label
+  Code 131 [t] -> Op.Get_parent <$> arg t <*> target
+  Code 132 [t] -> Op.Get_prop_len <$> arg t <*> target
+  Code 133 [t] -> Op.Inc <$> arg t
+  Code 134 [t] -> Op.Dec <$> arg t
+  Code 135 [t] -> Op.Print_addr <$> arg t
+  Code 138 [t] -> Op.Print_obj <$> arg t
+  Code 139 [t] -> Op.Return <$> arg t
+  Code 140 [WordConst] -> Op.Jump <$> jumpLocation
+  Code 141 [t] -> Op.Print_paddr <$> arg t
+  Code 176 [] -> pure Op.Rtrue
+  Code 177 [] -> pure Op.Rfalse
+  Code 184 [] -> pure Op.Ret_popped
+  Code 178 [] -> Op.Print <$> ztext
+  Code 179 [] -> Op.Print_ret <$> ztext
+  Code 187 [] -> pure Op.New_line
+  Code 197 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label
+  Code 224 (t1:ts) -> Op.Call <$> func t1 <*> args ts <*> target
+  Code 225 [t1,t2,t3] -> Op.Storew <$> arg t1 <*> arg t2 <*> arg t3
+  Code 226 [t1,t2,t3] -> Op.Storeb <$> arg t1 <*> arg t2 <*> arg t3
+  Code 228 [t1,t2] -> Op.Sread <$> arg t1 <*> arg t2
+  Code 227 [t1,t2,t3] -> Op.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
+  Code 229 [t] -> Op.Print_char <$> arg t
+  Code 230 [t] -> Op.Print_num <$> arg t
+  Code 231 [t] -> Op.Random <$> arg t <*> target
+  Code 232 [t] -> Op.Push <$> arg t
+  Code 233 [t] -> Op.Pull <$> arg t
+  x -> error (printf "unknown op-code and args: %s" (show x))
 
 data Form = LongForm | ShortForm | VarForm
 
-fetchOp :: Fetch Op
-fetchOp = do
+fetchOpCodeAndArgs :: Fetch OpCodeAndArgs
+fetchOpCodeAndArgs = do
   x <- Fetch.NextByte
   case decodeForm x of
     LongForm -> do
       let t1 = decodeLongRandType x 6
       let t2 = decodeLongRandType x 5
-      pure (Op (x .&. 0x1F) [t1,t2])
+      pure (Code (x .&. 0x1F) [t1,t2])
     ShortForm -> do
       case decodeRandType x (5,4) of
-        Nothing -> pure (Op x [])
-        Just ty -> pure (Op (x .&. 0xCF) [ty])
+        Nothing -> pure (Code x [])
+        Just ty -> pure (Code (x .&. 0xCF) [ty])
     VarForm -> do
       x2 <- Fetch.NextByte
       let tys = decodeRandTypes x2
-      pure (Op x tys)
+      pure (Code x tys)
 
 decodeForm :: Byte -> Form
 decodeForm b = case b `testBit` 7 of
