@@ -22,11 +22,10 @@ import Eff (Eff(..))
 import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
--- TODO: code unlink so can reinstate checking
 checking :: Bool
-checking = True -- enable the well-formedness and tree-size checks (and pay for it -- see stats!)
+checking = True -- TODO: remove expensive runtime wellformedness checking
 
-dump :: Eff ()
+dump :: Eff () -- TODO: remove
 dump = do
   let os = [1..248]
   zv <- getZversion
@@ -34,7 +33,7 @@ dump = do
   objects <- mapM (getObject base zv) os
   mapM_ (GamePrint . printf "%s\n" . show) objects
 
-getShortName :: Int -> Eff String
+getShortName :: Int -> Eff String -- TODO: take Value instead of Int (everywhere)
 getShortName o = do
   zv <- getZversion
   base <- objectTableBase
@@ -42,12 +41,10 @@ getShortName o = do
   let Object{propTable=PropTable{shortName}} = ob
   pure shortName
 
-
 testAttr :: Int -> Int -> Eff Bool
 testAttr o n = do
   zv <- getZversion
   base <- objectTableBase
-  --Debug ("testAttr",o,n)
   let f = formatOfVersion zv
   let maxAttNum = numByesForAttribute f * 8
   when (n >= maxAttNum) $ error (show ("attribute number too big",n))
@@ -84,7 +81,6 @@ clearAttr o n = do
 
 getProp :: Int -> Int -> Eff Value
 getProp o n = do
-  --Debug ("getProp",o,n)
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
@@ -94,8 +90,7 @@ getProp o n = do
     case xs of
       [x] -> pure x
       [] -> do
-        let defaultValue = 0 -- TODO
-        --Debug ("getProp(USE DEFAULT)",o,n,defaultValue)
+        let defaultValue = 0 -- TODO: get from defaults table
         pure [defaultValue]
       _ ->
         error "multi prop match"
@@ -104,14 +99,11 @@ getProp o n = do
     [b] -> pure $ fromIntegral b
     _ -> error "expected 1 or 2 bytes for prop value"
 
-
 putProp :: Int -> Int -> Value -> Eff ()
 putProp o n v = do
-  --Debug ("puttProp",o,n,v)
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
-  --Debug(ob)
   let Object{propTable=PropTable{props}} = ob
   let xs = [ pr | pr@Prop{number} <- props, number == n ]
   pr <-
@@ -125,23 +117,14 @@ putProp o n v = do
     2 -> do
       let hi :: Byte = fromIntegral (v `shiftR` 8)
       let lo :: Byte = fromIntegral (v .&. 0xff)
-      setByte (fromIntegral a) hi
-      setByte (fromIntegral (a+1)) lo
+      SetByte (fromIntegral a) hi
+      SetByte (fromIntegral (a+1)) lo
       pure ()
     1 -> undefined
     _ -> error "expected 1 or 2 bytes for prop value"
-  --ob <- getObject base zv o
-  --Debug(ob)
-
-setByte :: Addr -> Byte -> Eff ()
-setByte a b = do
-  --Debug ("SetByte",a,b)
-  SetByte a b
-
 
 getPropAddr :: Int -> Int -> Eff Value
 getPropAddr o n = do
-  --Debug ("getPropAddr",o,n)
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
@@ -153,81 +136,47 @@ getPropAddr o n = do
 
 getPropLen :: Value -> Eff Value
 getPropLen a = do
-  --Debug ("getPropLen",a)
   if a == 0 then pure 0 else do
-    --Debug("getPropLen,a=",a)
-    b <- GetByte (fromIntegral a - 1) -- TODO: ** bug here ** -- need "-1"
-    --Debug("getPropLen,b=",b)
-    let numBytes :: Int = 1 + fromIntegral ((b `shiftR` 5) .&. 0x7) -- copied from getProps -- TODO: Is this +1 correct???
-    let res = fromIntegral numBytes
-    --Debug("getPropLen,res=",res)
-    pure res
+    b <- GetByte (fromIntegral a - 1)
+    let numBytes :: Value = 1 + fromIntegral ((b `shiftR` 5) .&. 0x7)
+    pure numBytes
 
 unlink :: Int -> Eff ()
 unlink this = do
-  --Debug("unlink, this=",this)
-  oldP <- getParentQ this
-  --Debug("old-parent",oldP)
+  oldP <- getParent this
   when (oldP /= 0) $ do
-    --Debug ("old-parent not zero, so must unlink")
-    --seeObjRels oldP
-    child <- getChildQ oldP
-    --Debug ("first child is:",child)
+    child <- getChild oldP
     case child == this of
       True -> do
-        --Debug "special case for unlink first child"
         thisSib <- getSibling this
-        --Debug ("relinking oldP's child to:", thisSib)
         setChild oldP (byteOfInt thisSib)
-        --seeObjRels oldP
       False -> do
-        --Debug ("not the first child, so beginning unlink loop")
         loop child
       where
         loop :: Int -> Eff ()
         loop x = do
-          --Debug ("unlink loop, child=",x)
           when (x == 0) $ error "unlink loop, failed to find unlinkee"
           sib <- getSibling x
-          --Debug ("sib=",sib)
           case  sib == this of
             False -> loop sib
             True -> do
-              --Debug ("unlink loop, found it!, relinking s's sib to:")
               thisSib <- getSibling this
-              --Debug ("relinking x's sib to:", thisSib)
               setSibling x (byteOfInt thisSib)
-
 
 insertObj :: Int -> Int -> Eff ()
 insertObj o dest = do
-  --Debug ("insertObj",o,dest)
-  --seeObjRels o
-  --seeObjRels dest
   assertWellFormed
   sizeBefore <- sizeObjectTree
-  --Debug (sizeBefore)
-  --_oldP <- getParentQ o
-  --Debug("old-parent",_oldP)
-  --when (_oldP /= 0) $ Debug "TODO: need to unlink non-zero-parent"
-  --when (_oldP == 0) $ do
   unlink o
   assertWellFormed
-  --seeObjRels o
-  --seeObjRels dest
-  --Debug ("unlink has preserve well formedness, so now insert obj into new pos")
   do
     setParent o (byteOfInt dest)
-    oldChild <- getChildQ dest
+    oldChild <- getChild dest
     setSibling o (byteOfInt oldChild)
     setChild dest (byteOfInt o)
     assertWellFormed
     sizeAfter <- sizeObjectTree
-    --Debug (sizeAfter)
     when (sizeAfter /= sizeBefore) $ error (show ("size of object tree has changed",sizeBefore,sizeAfter))
-    --seeObjRels o
-    --seeObjRels dest
-
 
 byteOfInt :: Int -> Byte
 byteOfInt i = do
@@ -242,7 +191,7 @@ sizeObjectTree = if not checking then pure 0 else do
 objectRoots :: Eff [Int]
 objectRoots = do
   let os = [1::Int ..248]
-  ops <- sequence [ do p <- getParentQ o; pure (o,p) | o <- os ]
+  ops <- sequence [ do p <- getParent o; pure (o,p) | o <- os ]
   pure [ o | (o,p) <- ops, p == 0 ]
 
 data Tree = Tree Int [Tree] deriving Show
@@ -261,7 +210,6 @@ sizeForest xs = sum (map sizeTree xs)
 
 setParent :: Int -> Byte -> Eff ()
 setParent x p = do
-  --Debug ("setParent",x,p)
   zv <- getZversion
   base <- objectTableBase
   a <- objectAddr base zv x
@@ -269,15 +217,13 @@ setParent x p = do
 
 setSibling :: Int -> Byte -> Eff ()
 setSibling x p = do
-  --Debug ("setSibling",x,p)
   zv <- getZversion
   base <- objectTableBase
   a <- objectAddr base zv x
   SetByte (a+5) p
 
-setChild :: Int -> Byte -> Eff () -- TODO: dont pass base/z
+setChild :: Int -> Byte -> Eff ()
 setChild x p = do
-  --Debug ("setChild",x,p)
   zv <- getZversion
   base <- objectTableBase
   a <- objectAddr base zv x
@@ -293,69 +239,42 @@ wellFormed = do
   let os = [1::Int ..248]
   xs <- sequence [ do
                      cs <- children o
-                     ps <- sequence [getParentQ c | c <- cs]
+                     ps <- sequence [getParent c | c <- cs]
                      let ws = [ p == o | p <- ps ]
                      pure (o,cs,ps,ws,all Prelude.id ws)
                  | o <- os ]
-  --mapM_ Debug xs
   let wf = all Prelude.id [ b | (_,_,_,_,b) <- xs ]
   pure wf
 
 children :: Int -> Eff [Int]
 children p = do
-  getChildQ p >>= sibList
+  getChild p >>= sibList
 
 sibList :: Int -> Eff [Int]
 sibList x = do
   if x == 0 then pure [] else do
-    y <- getSiblingQ x
+    y <- getSibling x
     ys <- sibList y
     pure (x:ys)
 
-
-_seeObjRels :: Int -> Eff ()
-_seeObjRels ob = do
-  p <- getParentQ ob
-  s <- getSiblingQ ob
-  c <- getChildQ ob
-  Debug ("**SEE OB RELS: ob=",ob, "parent=",p,"sib=",s,"child=",c)
-
-getParent :: Int -> Eff Int
+getParent :: Int -> Eff Int -- TODO: capture common pattern for parent/sibling/child
 getParent o = do
-  res <- getParentQ o
-  --Debug ("getParent",o,"->",res)
-  pure res
-
-getSibling :: Int -> Eff Int
-getSibling o = do
-  res <- getSiblingQ o
-  --Debug ("getSibling",o,"->",res)
-  pure res
-
-getChild :: Int -> Eff Int
-getChild o = do
-  res <- getChildQ o
-  --Debug ("getChild",o,"->",res)
-  pure res
-
-getParentQ :: Int -> Eff Int -- TODO: capture common pattern for parent/sibling/child
-getParentQ o = do
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
   let Object{parent} = ob
   pure parent
 
-getSiblingQ :: Int -> Eff Int
-getSiblingQ o = do
+getSibling :: Int -> Eff Int
+getSibling o = do
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
   let Object{sibling} = ob
   pure sibling
 
-getChildQ :: Int -> Eff Int
-getChildQ o = do
+getChild :: Int -> Eff Int
+getChild o = do
   zv <- getZversion
   base <- objectTableBase
   ob <- getObject base zv o
@@ -384,7 +303,6 @@ data Object = Object
   , child :: Int
   , propTable :: PropTable
   }
---  deriving Show
 
 instance Show Object where
   show  Object{id,propTable=PropTable{shortName}}  =
@@ -404,7 +322,7 @@ data Prop = Prop { number :: Int, dataAddr :: Value, dataBytes :: [Byte] }
 instance Show Attributes where
   show (Attributes bs) = [ if b then '1' else '0' | b <- bs ]
 
-getObject :: Addr -> Zversion -> Int -> Eff Object -- TODO: avoid calling this so often
+getObject :: Addr -> Zversion -> Int -> Eff Object -- TODO: avoid calling this when implementing z-machine operations
 getObject base zv id = do
   a <- objectAddr base zv id
   atts <- getAttributes zv a
