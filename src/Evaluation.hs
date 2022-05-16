@@ -198,7 +198,6 @@ eval = \case
     let res = 1
     Debug("TODO:Random",v1,"--(fixed)-->",res)
     setTarget target res
-    undefined
 
   I.Ret_popped -> do PopStack >>= returnValue
   I.Return arg -> do
