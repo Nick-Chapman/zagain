@@ -80,8 +80,10 @@ getProp o n = do
     case xs of
       [x] -> pure x
       [] -> do
-        let defaultValue = 0 -- TODO: get from defaults table
-        pure [defaultValue]
+        -- get property default
+        hi <- GetByte (base + fromIntegral (2 * (n-1)))
+        lo <- GetByte (base + fromIntegral (2 * (n-1) + 1))
+        pure [hi,lo]
       _ ->
         error "multi prop match"
   case x of
