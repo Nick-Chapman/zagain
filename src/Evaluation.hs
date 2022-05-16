@@ -64,6 +64,9 @@ eval = \case
     setTarget target (fromIntegral res)
     branchMaybe label (res /= 0)
 
+  I.Get_next_prop arg1 arg2 target -> do
+    undefined arg1 arg2 target
+
   I.Get_parent arg target -> do
     v <- evalArg arg
     res <- Objects.getParent (fromIntegral v)
@@ -349,7 +352,7 @@ evalFunc = \case
   Fvar var -> do
     v <- evalTarget var
     let a = addrOfPackedWord v
-    --Debug ("evalFunc/var",v,a)
+    --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
     pure $ a
 
 evalArg :: Arg -> Eff Value

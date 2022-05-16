@@ -21,7 +21,6 @@ data Instruction -- TODO: check naming matches spec (will change trace output / 
   -- This instructions are not yet decoded
   -- | Aread Arg Arg Target
   -- | CallN Func Args
-  -- | Get_next_prop Arg Arg Target
   -- | Input_Stream Arg
   -- | Load Arg Target
   -- | Mod_ Arg Arg Target
@@ -42,6 +41,7 @@ data Instruction -- TODO: check naming matches spec (will change trace output / 
   | Dec_check Arg Arg Label
   | Div Arg Arg Target
   | Get_child Arg Target Label
+  | Get_next_prop Arg Arg Target
   | Get_parent Arg Target
   | Get_prop Arg Arg Target
   | Get_prop_addr Arg Arg Target

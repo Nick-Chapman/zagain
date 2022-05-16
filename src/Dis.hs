@@ -16,7 +16,7 @@ disassemble :: Story -> IO ()
 disassemble story = do
   let a0 :: Addr = fromIntegral (readStoryWord story 0x6 - 1) -- back 1 for the header
   -- extra places not picked up by reachability...
-  let extra = [] -- [20076,20386,20688,21700]
+  let extra = [65784] -- [20076,20386,20688,21700]
   let startingPoints = [a0] ++ extra
   let rs = sortBy (comparing start) $ collectRoutines startingPoints story
   printf "Found %d reachable routines:\n" (length rs)

@@ -44,6 +44,7 @@ fetchInstruction = fetchOp >>= \case
   Op 16 [t1,t2] -> I.Load_byte <$> arg t1 <*> arg t2 <*> target
   Op 17 [t1,t2] -> I.Get_prop <$> arg t1 <*> arg t2 <*> target
   Op 18 [t1,t2] -> I.Get_prop_addr <$> arg t1 <*> arg t2 <*> target
+  Op 19 [t1,t2] -> I.Get_next_prop <$> arg t1 <*> arg t2 <*> target
   Op 20 [t1,t2] -> I.Add <$> arg t1 <*> arg t2 <*> target
   Op 21 [t1,t2] -> I.Sub <$> arg t1 <*> arg t2 <*> target
   Op 22 [t1,t2] -> I.Mul <$> arg t1 <*> arg t2 <*> target

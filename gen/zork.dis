@@ -1,4 +1,4 @@
-Found 61 reachable routines:
+Found 63 reachable routines:
 --------------------------------------------------
 [20076] ((var_initializations (0 0 0 0 0 0)))
 [20089] (Load_word (Var (Local 1)) (Con 0) (Local 2))
@@ -1909,3 +1909,46 @@ Found 61 reachable routines:
 [38195] (Store (Con 123) (Var (Local 1)))
 [38198] (Store (Con 122) (Var (Global 0)))
 [38201] (Return (Var (Global 106)))
+--------------------------------------------------
+[65784] ((var_initializations (0 0 0 0 0 0)))
+[65797] (Call (Floc 21638) ((Con 32892)) (Local 1))
+[65804] (Get_prop (Con 110) (Con 12) (Local 2))
+[65808] (Jin (Con 110) (Con 4) (Branch false (Dloc 65983)))
+[65813] (Call (Floc 65990) ((Var (Global 0))) Sp)
+[65819] (Jz (Var Sp) (Branch true (Dloc 65828)))
+[65822] (Store (Con 3) (Con 2))
+[65825] (Jump 65878)
+[65828] (Store (Con 4) (Con 0))
+[65831] (Get_next_prop (Var (Global 0)) (Var (Local 4)) (Local 4))
+[65835] (Jz (Var (Local 4)) (Branch false (Dloc 65841)))
+[65838] (Jump 65878)
+[65841] (Jl (Var (Local 4)) (Var (Global 152)) (Branch true (Dloc 65831)))
+[65846] (Get_prop_addr (Var (Global 0)) (Var (Local 4)) (Local 5))
+[65850] (Get_prop_len (Var (Local 5)) (Local 6))
+[65853] (Je ((Var (Local 6)) (Con 1) (Con 4) (Con 5)) (Branch false (Dloc 65831)))
+[65861] (Load_byte (Var (Local 5)) (Con 0) Sp)
+[65865] (Call (Floc 65990) ((Var Sp)) Sp)
+[65871] (Jz (Var Sp) (Branch true (Dloc 65831)))
+[65875] (Store (Con 3) (Con 1))
+[65878] (Je ((Var (Local 3)) (Var (Local 2))) (Branch true Dfalse))
+[65882] (Je ((Var (Local 3)) (Con 2)) (Branch false (Dloc 65917)))
+[65886] (Print "Your sword has begun to glow very brightly.")
+[65913] New_line
+[65914] (Jump 65977)
+[65917] (Je ((Var (Local 3)) (Con 1)) (Branch false (Dloc 65952)))
+[65921] (Print "Your sword is glowing with a faint blue glow.")
+[65948] New_line
+[65949] (Jump 65977)
+[65952] (Jz (Var (Local 3)) (Branch false (Dloc 65977)))
+[65955] (Print "Your sword is no longer glowing.")
+[65976] New_line
+[65977] (Put_prop (Con 110) (Con 12) (Var (Local 3)))
+[65982] Rtrue
+--------------------------------------------------
+[65990] ((var_initializations (0 0)))
+[65995] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 65999)))
+[65999] (Jz (Var (Local 2)) (Branch true Dfalse))
+[66002] (Test_attr (Var (Local 2)) (Con 30) (Branch false (Dloc 66010)))
+[66006] (Test_attr (Var (Local 2)) (Con 7) (Branch false Dtrue))
+[66010] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 65999)))
+[66015] Rfalse
