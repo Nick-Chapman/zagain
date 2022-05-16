@@ -41,6 +41,7 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   | Jl Arg Arg Label
   | Jump Addr
   | Jz Arg Label
+  | Load Arg Target
   | Load_byte Arg Arg Target
   | Load_word Arg Arg Target
   | Mul Arg Arg Target
@@ -74,7 +75,6 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   -- | Aread Arg Arg Target
   -- | CallN Func Args
   -- | Input_Stream Arg
-  -- | Load Arg Target
   -- | Mod_ Arg Arg Target
   -- | Or_ Arg Arg Target
   -- | Output_Stream Arg (Maybe Arg)

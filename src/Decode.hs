@@ -63,6 +63,7 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 139 [t] -> Op.Return <$> arg t
   Code 140 [WordConst] -> Op.Jump <$> jumpLocation
   Code 141 [t] -> Op.Print_paddr <$> arg t
+  Code 142 [t] -> Op.Load <$> arg t <*> target
   Code 176 [] -> pure Op.Rtrue
   Code 177 [] -> pure Op.Rfalse
   Code 184 [] -> pure Op.Ret_popped

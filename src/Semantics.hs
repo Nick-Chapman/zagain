@@ -136,6 +136,14 @@ eval = \case
   Op.Jump addr -> do SetPC addr
   Op.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
 
+  Op.Load arg target -> do
+    var <- makeValueTarget <$> evalArg arg
+    v <- evalTarget var
+    case var of
+      Sp{} -> error "TODO: re-push value on stack!"
+      _ -> pure ()
+    setTarget target v
+
   Op.Load_byte arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
