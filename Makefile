@@ -17,7 +17,7 @@ mojo.walk: .mojo z.script Makefile
 
 
 
-reg: gen/zork.dis gen/zork.objects gen/zork.trace gen/zork.trace.invent gen/zork.trace.2 gen/zork.out1 gen/zork.out2
+reg: gen/zork.dis gen/zork.objects gen/zork.trace gen/zork.trace.invent gen/zork.trace.2 gen/zork.out1 gen/zork.out2 gen/zork.walk
 	git diff gen
 
 gen/zork.dis: $(exe) src/*.hs Makefile .gen
@@ -40,6 +40,10 @@ gen/zork.out1: $(exe) src/*.hs Makefile .gen
 
 gen/zork.out2: $(exe) src/*.hs Makefile .gen
 	$(exe) -walk inputs2 > $@
+
+# run the zork script as far as we can before crashing
+gen/zork.walk: $(exe) z.script src/*.hs Makefile .gen
+	bash -c '$(exe) -walk <(tail +2 z.script | head -30) > $@'
 
 
 .gen:
