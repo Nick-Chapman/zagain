@@ -182,7 +182,6 @@ unlink this = do
         --seeObjRels oldP
       False -> do
         Debug ("not the first child, so beginning unlink loop")
-        _ <- undefined
         loop child
       where
         loop :: Int -> Eff ()
