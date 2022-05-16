@@ -6,6 +6,7 @@ module Objects
   , getProp
   , getPropAddr
   , getPropLen
+  , getNextProp
   , testAttr
   , setAttr
   , clearAttr
@@ -129,6 +130,17 @@ getPropLen a = do
     let numBytes :: Value = 1 + fromIntegral ((b `shiftR` 5) .&. 0x7)
     pure numBytes
 
+getNextProp :: Int -> Int -> Eff Int
+getNextProp o p = do
+  zv <- getZversion
+  base <- objectTableBase
+  ob <- getObject base zv o
+  let Object{propTable=PropTable{props}} = ob
+  let bigger = [ n | Prop{number=n} <- props, n > p ]
+  case bigger of
+    [] -> pure 0
+    _ -> pure $ minimum bigger
+
 unlink :: Int -> Eff ()
 unlink this = do
   oldP <- getParent this
@@ -230,10 +242,7 @@ data Object = Object -- TODO: remove
   , child :: Int
   , propTable :: PropTable
   }
-
-instance Show Object where
-  show  Object{id,propTable=PropTable{shortName}}  =
-    printf "%d: %s" id shortName
+  deriving Show
 
 data Attributes = Attributes [Bool]
 

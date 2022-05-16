@@ -63,7 +63,10 @@ eval = \case
     branchMaybe label (res /= 0)
 
   Op.Get_next_prop arg1 arg2 target -> do
-    undefined arg1 arg2 target -- TODO: **NEXT**
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    res <- Objects.getNextProp (fromIntegral v1) (fromIntegral v2)
+    setTarget target (fromIntegral res)
 
   Op.Get_parent arg target -> do
     v <- evalArg arg
