@@ -9,7 +9,6 @@ import Dis (disassemble)
 import Fetch (runFetch)
 import Story (loadStory)
 import System.Environment (getArgs)
-import qualified Objects (dump)
 import qualified Semantics (theEffect)
 import qualified Interpreter (run)
 
@@ -26,7 +25,7 @@ data Config = Config
   , inputs :: [String]
   }
 
-data Mode = Run | Dis | Objects | Dictionary
+data Mode = Run | Dis | Dictionary
 
 config0 :: Config
 config0 = Config
@@ -48,26 +47,19 @@ parseCommandLine = loop config0
   where
     loop c@Config{iconf,inputs} = \case
       [] -> pure c
-
       "dis":more -> loop c { mode = Dis } more
-      "objects":more -> loop c { mode = Objects } more
       "dict":more -> loop c { mode = Dictionary } more
-
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-stats":more -> loop c { iconf = iconf { seeStats = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
-
       "-type":line:more -> loop c { inputs = inputs ++ [line] } more
-
       "-walk":path:more -> do
         xs <- Prelude.lines <$> readFile path
         loop c { inputs = inputs ++ xs } more
-
       storyFile:more ->
         loop c { storyFile } more
-
 
 run :: Config -> IO ()
 run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
@@ -75,10 +67,6 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
     Dis -> do
       story <- loadStory storyFile
       disassemble story
-    Objects -> do
-      story <- loadStory storyFile
-      let a = Interpreter.run story Objects.dump
-      runAction iconf [] a
     Dictionary -> do
       story <- loadStory storyFile
       let (dict,_,_) = runFetch 0 story fetchDict

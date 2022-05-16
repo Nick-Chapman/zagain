@@ -24,9 +24,6 @@ reg: .gen gen/zork.dis gen/zork.objects gen/zork.trace gen/zork.walk
 gen/zork.dis: $(exe) src/*.hs Makefile
 	$(exe) dis > $@
 
-gen/zork.objects: $(exe) src/*.hs Makefile
-	$(exe) objects > $@
-
 # trace just the first 2 steps of the zork walk-though
 gen/zork.trace: $(exe) z.script src/*.hs Makefile
 	bash -c '$(exe) -walk <(tail +2 z.script | head -2) -trace > $@'

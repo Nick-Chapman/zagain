@@ -1,8 +1,7 @@
 
 -- | Semantics of z-machine object-table operations.
 module Objects
-  ( dump
-  , getShortName
+  ( getShortName
   , putProp
   , getProp
   , getPropAddr
@@ -24,14 +23,6 @@ import Text.Printf (printf)
 
 checking :: Bool
 checking = True -- TODO: remove expensive runtime wellformedness checking
-
-dump :: Eff () -- TODO: remove
-dump = do
-  let os = [1..248]
-  zv <- getZversion
-  base <- objectTableBase
-  objects <- mapM (getObject base zv) os
-  mapM_ (GamePrint . printf "%s\n" . show) objects
 
 getShortName :: Int -> Eff String -- TODO: take Value instead of Int (everywhere)
 getShortName o = do
