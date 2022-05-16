@@ -1,6 +1,6 @@
 
--- | The interation of z-machine execution with input/output.
-module Interaction (Conf(..),Inter(..),Stats(..),runInter) where
+-- | The (inter)action of z-machine execution with input/output.
+module Action (Conf(..),Action(..),Stats(..),runAction) where
 
 import Control.Monad (when)
 import Numbers (Addr)
@@ -18,34 +18,34 @@ data Conf = Conf
 
 --[interaction type]--------------------------------------------------
 
-data Inter
-  = I_Trace String Stats Int Addr Operation Inter
-  | I_Output String Inter
-  | I_Debug String Inter
-  | I_Input Int (String -> Inter)
-  | I_Stop Int
+data Action
+  = Trace String Stats Int Addr Operation Action
+  | Output String Action
+  | Debug String Action
+  | Input Int (String -> Action)
+  | Stop Int
 
 --[run interaction as IO]---------------------------------------------
 
-runInter :: Conf -> [String] -> Inter -> IO ()
-runInter Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
+runAction :: Conf -> [String] -> Action -> IO ()
+runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
   where
-    loop :: [String] -> [String] -> Inter -> IO ()
+    loop :: [String] -> [String] -> Action -> IO ()
     loop xs buf = \case
-      I_Trace stateString stats n a instruction next -> do
+      Trace stateString stats n a instruction next -> do
         when mojo $ do
           printf "%d %s\n" n stateString
         when seeTrace $ do
           let sd = if seeStats then show stats ++ " " else ""
           printf "%s(Decode %d %s %s)\n" sd n (show a) (Op.pretty instruction)
         loop xs buf next
-      I_Output text next -> do
+      Output text next -> do
         when (not bufferOutput) $ putStr text
         loop xs (if bufferOutput then text:buf else buf) next
-      I_Debug s next -> do
+      Debug s next -> do
         when (debug) $ putStrLn ("Debug: " ++ s)
         loop xs buf next
-      I_Input count f -> do
+      Input count f -> do
         flushBuffer count buf
         case xs of
           [] -> do
@@ -54,7 +54,7 @@ runInter Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
           input:xs -> do
             putStrLn input
             loop xs [] (f input)
-      I_Stop count -> do
+      Stop count -> do
         flushBuffer count buf
 
     flushBuffer :: Int -> [String] -> IO ()

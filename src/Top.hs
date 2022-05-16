@@ -2,11 +2,11 @@
 -- | Entry point for all z-machine code: Command like parsing and dispatch.
 module Top (main)  where
 
+import Action (Conf(..),runAction)
 import Control.Monad (when)
 import Dictionary (fetchDict)
 import Dis (disassemble)
 import Fetch (runFetch)
-import Interaction (Conf(..),runInter)
 import Story (loadStory)
 import System.Environment (getArgs)
 import Walk (initState,runEff)
@@ -22,7 +22,7 @@ main = do
 data Config = Config
   { mode :: Mode
   , storyFile :: FilePath
-  , iconf :: Interaction.Conf
+  , iconf :: Action.Conf
   , inputs :: [String]
   }
 
@@ -35,7 +35,7 @@ config0 = Config
   , iconf = iconf0
   , inputs = []
   } where
-  iconf0 = Interaction.Conf
+  iconf0 = Action.Conf
     { debug = True
     , seeTrace = False
     , seeStats = False
@@ -79,7 +79,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       story <- loadStory storyFile
       let maxSteps = 100000
       let i = runEff maxSteps (initState story) Objects.dump
-      runInter iconf [] i
+      runAction iconf [] i
     Dictionary -> do
       story <- loadStory storyFile
       let (dict,_,_) = runFetch 0 story fetchDict
@@ -89,4 +89,4 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       let maxSteps = 100000
       let i = runEff maxSteps (initState story) Semantics.theEffect
-      runInter iconf inputs i
+      runAction iconf inputs i

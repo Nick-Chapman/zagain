@@ -1,34 +1,35 @@
 
 module Walk (State,initState,runEff) where -- TODO: rename Interpreter
 
+import Action (Action,Stats(..))
 import Data.Bits ((.&.))
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
 import Eff (Eff(..),Bin(..))
 import Fetch (runFetch)
-import Interaction (Inter(..),Stats(..))
 import Numbers (Byte,Addr,Value)
 import Operation (Target)
 import Story (Story,readStoryByte)
 import Text.Printf (printf)
+import qualified Action as A (Action(..))
 import qualified Data.Map as Map
 
 --[interpreter for execution effects]----------------------------------
 
-runEff :: Int -> State -> Eff () -> Inter
-runEff maxSteps s0 e0 = loop s0 e0 $ \State{count,lastCount} () -> I_Stop (count-lastCount) -- TODO: kill maxSteps?
+runEff :: Int -> State -> Eff () -> Action
+runEff maxSteps s0 e0 = loop s0 e0 $ \State{count,lastCount} () -> A.Stop (count-lastCount) -- TODO: kill maxSteps?
   where
-    loop :: State -> Eff a -> (State -> a -> Inter) -> Inter
+    loop :: State -> Eff a -> (State -> a -> Action) -> Action
     loop s e k = case e of
       Ret x -> k s x
       Bind e f -> loop s e $ \s a -> loop s (f a) k
-      GamePrint mes -> I_Output mes (k s ())
-      Debug a -> I_Debug (show a) (k s ())
+      GamePrint mes -> A.Output mes (k s ())
+      Debug a -> A.Debug (show a) (k s ())
 
       ReadInputFromUser -> do
         let State{count,lastCount} = s
-        I_Input (count-lastCount) $ \response -> k s { lastCount = count } response
+        A.Input (count-lastCount) $ \response -> k s { lastCount = count } response
 
       GetText a -> do
         let State{story,stats} = s
@@ -40,13 +41,13 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \State{count,lastCount} () -> I_Stop (count
       FetchI -> do
         let State{story,pc,count,lastCount,stats} = s
         let (ins,pc',readCount) = runFetch pc story fetchOperation
-        if count >= maxSteps then I_Stop (count-lastCount) else do
+        if count >= maxSteps then A.Stop (count-lastCount) else do
           let Stats{ct} = stats
           let s' = s { pc = pc'
                      , count = count + 1
                      , stats = stats { ct = ct + readCount }
                      }
-          I_Trace (show s) stats count pc ins (k s' ins)
+          A.Trace (show s) stats count pc ins (k s' ins)
 
       FetchHeader -> do
         let State{story,pc,stats} = s
