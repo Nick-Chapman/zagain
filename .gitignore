@@ -4,3 +4,5 @@
 stack.yaml.lock
 .markdown-preview.html
 c/_build
+my.walk
+mojo.walk
