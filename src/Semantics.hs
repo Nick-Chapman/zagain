@@ -30,7 +30,6 @@ eval = \case
 
   Op.Call func (Args args) target -> do
     funcAddress <- evalFunc func
-    --Debug ("Call",funcAddress)
     if funcAddress == 0 then setTarget target 0 else do
       actuals <- mapM evalArg args
       PushFrame funcAddress target
@@ -38,7 +37,6 @@ eval = \case
       setLocals rh actuals
 
   Op.Clear_attr arg1 arg2 -> do
-    let _ = undefined arg1 arg2
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     Objects.clearAttr (fromIntegral v1) (fromIntegral v2)
@@ -53,7 +51,6 @@ eval = \case
     v1 <- evalTarget target
     v2 <- evalArg arg2
     let res = (v1 <= v2)
-    --Debug ("Dec_check",(arg1,v1),(arg2,v2),target,label,res)
     setTarget target (v1 - 1)
     branchMaybe label res
 
@@ -66,7 +63,7 @@ eval = \case
     branchMaybe label (res /= 0)
 
   Op.Get_next_prop arg1 arg2 target -> do
-    undefined arg1 arg2 target
+    undefined arg1 arg2 target -- TODO: **NEXT**
 
   Op.Get_parent arg target -> do
     v <- evalArg arg
@@ -77,20 +74,17 @@ eval = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     res <- Objects.getProp (fromIntegral v1) (fromIntegral v2)
-    --Debug ("Get_prop",v1,v2,"-->",res)
     setTarget target res
 
   Op.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     res <- Objects.getPropAddr (fromIntegral v1) (fromIntegral v2)
-    --Debug ("Get_prop_addr",v1,"-->",res)
     setTarget target res
 
   Op.Get_prop_len arg target -> do
     v1 <- evalArg arg
     res <- Objects.getPropLen v1
-    --Debug ("Get_prop_len",v1,"-->",res)
     setTarget target res
 
   Op.Get_sibling arg target label -> do
@@ -109,7 +103,6 @@ eval = \case
     target <- makeValueTarget <$> evalArg arg1
     v1 <- evalTarget target
     v2 <- evalArg arg2
-    --Debug("Inc_check",v1,v2)
     setTarget target (v1 + 1)
     branchMaybe label (v1 >= v2)
 
@@ -117,7 +110,6 @@ eval = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     Objects.insertObj (fromIntegral v1) (fromIntegral v2)
-    pure ()
 
   Op.Je (Args args) label -> do
     mapM evalArg args >>= EqualAny >>= branchMaybe label
@@ -196,7 +188,6 @@ eval = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v3 <- evalArg arg3
-    --Debug ("TODO: Put_prop",v1,v2,v3)
     Objects.putProp (fromIntegral v1) (fromIntegral v2) v3
 
   Op.Random arg target -> do
@@ -221,17 +212,13 @@ eval = \case
 
   Op.Sread arg1 arg2 -> do
     rawTyped <- ReadInputFromUser
-
     t_buf :: Addr <- fromIntegral <$> evalArg arg1
     p_buf :: Addr <- fromIntegral <$> evalArg arg2
-
-    --Debug ("Sread",(arg1,t_buf),(arg2,p_buf),"-->",rawTyped)
-
-    dictBase :: Addr <- fromIntegral <$> getWord 0x8 -- TODO header
+    dictBase :: Addr <- fromIntegral <$> getWord 0x8 -- TODO move to header
     Dict{seps,entryLength,strings} <- FetchDict
     -- +4 : #seps byte, entryLength byte, #entries word
     let baseEntries :: Addr = dictBase + fromIntegral (length seps + 4)
-
+    -- TODO: move this lexing code out of Semantics
     let
       mkQuad :: Int -> String -> [Byte]
       mkQuad offsetInText word = do
@@ -249,10 +236,7 @@ eval = \case
         let (hi,lo) = splitWord (fromIntegral dictAddr)
         let quad1 :: [Byte] = [ hi, lo, fromIntegral (length word), (fromIntegral offsetInText) ]
         quad1
-
     let words = [ w | w <- splitOn " " rawTyped, w /= "" ]
-    --Debug words
-
     let
       offsets = do
         let lens = [ length w | w <- words ]
@@ -262,28 +246,18 @@ eval = \case
         let z = (1,[])
         let (_,offsetsR) = foldl f z lens
         reverse offsetsR
-
-    --Debug offsets
-
     let canoicalizedTyped = intercalate " " words  ++ "\0"
-    --Debug ("canoicalizedTyped",canoicalizedTyped)
-
     let positionedWords = zip offsets words
-    --Debug positionedWords
-
     let quads = [ mkQuad pos word | (pos,word) <- positionedWords ]
     let bs :: [Byte] = fromIntegral (length quads) : concat quads
-    --Debug (length bs, bs)
-
     writeBytesFromString (t_buf+1) canoicalizedTyped
     writeBytes (fromIntegral (p_buf + 1)) bs
-    pure ()
 
   Op.Store arg1 arg2 -> do
     target <- makeValueTarget <$> evalArg arg1
     v2 <- evalArg arg2
     case target of
-      Sp{} -> undefined (do _ <- PopStack; pure ()) -- from niz
+      Sp{} -> undefined (do _ <- PopStack; pure ()) -- TODO: (from niz) enable code when hit
       _ -> pure ()
     setTarget target v2
 
@@ -291,7 +265,6 @@ eval = \case
     base <- evalArg arg1
     offset <- evalArg arg2
     value <- byteOfValue <$> evalArg arg3
-    --Debug ("xx",base,offset,value)
     let a :: Addr = fromIntegral (base + offset)
     SetByte a value
 
@@ -316,7 +289,6 @@ eval = \case
     res <- Objects.testAttr (fromIntegral v1) (fromIntegral v2)
     branchMaybe label res
 
-
 writeBytesFromString :: Addr -> String -> Eff ()
 writeBytesFromString a str = writeBytes a [ fromIntegral (Char.ord c) | c <- str ]
 
@@ -325,7 +297,6 @@ writeBytes a bs = sequence_ [ SetByte (a+i) b | (i,b) <- zip [0..] bs ]
 
 makeValueTarget :: Value -> Target
 makeValueTarget = makeTarget . byteOfValue
-
 
 evalBin :: Bin -> Arg -> Arg -> Target -> Eff ()
 evalBin bin arg1 arg2 target = do
@@ -354,7 +325,7 @@ evalFunc = \case
     v <- evalTarget var
     let a = addrOfPackedWord v
     --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
-    pure $ a
+    pure a
 
 evalArg :: Arg -> Eff Value
 evalArg = \case
@@ -373,7 +344,6 @@ returnValue :: Value -> Eff ()
 returnValue v = do
   target <- PopFrame
   setTarget target v
-
 
 setTarget :: Target -> Value -> Eff ()
 setTarget var v = case var of

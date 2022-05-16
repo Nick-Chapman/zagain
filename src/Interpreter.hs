@@ -44,7 +44,7 @@ run story e0 = loop s0 e0 k0
         let s' = s { stats = stats { ct = ct + readCount }}
         k s' text
 
-      FetchI -> do
+      FetchI -> do -- TODO: share code common to all Fetch* ops
         let State{story,pc,count,stats} = s
         let (ins,pc',readCount) = runFetch pc story fetchOperation
         let Stats{ct} = stats
@@ -54,14 +54,14 @@ run story e0 = loop s0 e0 k0
                    }
         A.Trace (show s) stats count pc ins (k s' ins)
 
-      FetchHeader -> do
+      FetchHeader -> do -- TODO: share code common to all Fetch* ops
         let State{story,pc,stats} = s
         let (rh,pc',readCount) = runFetch pc story fetchRoutineHeader
         let Stats{ct} = stats
         let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
         k s' rh
 
-      FetchDict -> do -- TODO: share code common to all Fetch* ops
+      FetchDict -> do -- TODO: fetch dict only once!
         let State{story,pc,stats} = s
         let (dict,pc',readCount) = runFetch pc story fetchDict
         let Stats{ct} = stats
