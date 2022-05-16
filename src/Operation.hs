@@ -18,22 +18,6 @@ import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
 data Operation -- TODO: check naming matches spec (will change trace output / regression)
-
-  -- This instructions are not yet decoded
-  -- | Aread Arg Arg Target
-  -- | CallN Func Args
-  -- | Input_Stream Arg
-  -- | Load Arg Target
-  -- | Mod_ Arg Arg Target
-  -- | Or_ Arg Arg Target
-  -- | Output_Stream Arg (Maybe Arg)
-  -- | Quit
-  -- | Remove_obj Arg
-  -- | Restart
-  -- | Restore_lab Label
-  -- | Save_lab Label
-  -- | Show_status
-  -- | Verify Label
   = Add Arg Arg Target
   | And_ Arg Arg Target
   | Call Func Args Target
@@ -72,6 +56,7 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   | Push Arg
   | Put_prop Arg Arg Arg
   | Random Arg Target
+  | Remove_obj Arg
   | Ret_popped
   | Return Arg
   | Rfalse
@@ -84,6 +69,21 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   | Sub Arg Arg Target
   | Test Arg Arg Label
   | Test_attr Arg Arg Label
+
+  -- This instructions are not yet decoded
+  -- | Aread Arg Arg Target
+  -- | CallN Func Args
+  -- | Input_Stream Arg
+  -- | Load Arg Target
+  -- | Mod_ Arg Arg Target
+  -- | Or_ Arg Arg Target
+  -- | Output_Stream Arg (Maybe Arg)
+  -- | Quit
+  -- | Restart
+  -- | Restore_lab Label
+  -- | Save_lab Label
+  -- | Show_status
+  -- | Verify Label
 
   deriving Show
 

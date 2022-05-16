@@ -198,7 +198,11 @@ eval = \case
     res <- Random (fromIntegral v1)
     setTarget target (fromIntegral res)
 
+  Op.Remove_obj arg -> do
+    undefined arg
+
   Op.Ret_popped -> do PopStack >>= returnValue
+
   Op.Return arg -> do
     v <- evalArg arg
     target <- PopFrame

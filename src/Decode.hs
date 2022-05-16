@@ -58,6 +58,7 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 133 [t] -> Op.Inc <$> arg t
   Code 134 [t] -> Op.Dec <$> arg t
   Code 135 [t] -> Op.Print_addr <$> arg t
+  Code 137 [t] -> Op.Remove_obj <$> arg t
   Code 138 [t] -> Op.Print_obj <$> arg t
   Code 139 [t] -> Op.Return <$> arg t
   Code 140 [WordConst] -> Op.Jump <$> jumpLocation
