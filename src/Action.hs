@@ -28,23 +28,23 @@ data Action
 --[run interaction as IO]---------------------------------------------
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
+runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
   where
-    loop :: [String] -> [String] -> Action -> IO ()
-    loop xs buf = \case
+    loop :: Int -> [String] -> [String] -> Action -> IO ()
+    loop nInput xs buf = \case
       Trace stateString stats n a instruction next -> do
         when mojo $ do
           printf "%d %s\n" n stateString
         when seeTrace $ do
           let sd = if seeStats then show stats ++ " " else ""
           printf "%s(Decode %d %s %s)\n" sd n (show a) (Op.pretty instruction)
-        loop xs buf next
+        loop nInput xs buf next
       Output text next -> do
         when (not bufferOutput) $ putStr text
-        loop xs (if bufferOutput then text:buf else buf) next
+        loop nInput xs (if bufferOutput then text:buf else buf) next
       Debug s next -> do
         when (debug) $ putStrLn ("Debug: " ++ s)
-        loop xs buf next
+        loop nInput xs buf next
       Input count f -> do
         flushBuffer count buf
         case xs of
@@ -52,8 +52,9 @@ runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
             putStrLn "\n[no more input]"
             pure ()
           input:xs -> do
+            let _ = when debug $ putStr (printf "[%d]" nInput) -- how far through the walkthrough we are?
             putStrLn input
-            loop xs [] (f input)
+            loop (nInput+1) xs [] (f input)
       Stop count -> do
         flushBuffer count buf
 

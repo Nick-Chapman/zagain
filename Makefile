@@ -26,7 +26,7 @@ gen/zork.dis: $(exe) src/*.hs Makefile
 
 # trace just the first 2 steps of the zork walk-though
 gen/zork.trace: $(exe) z.script src/*.hs Makefile
-	bash -c '$(exe) -walk <(tail +2 z.script | head -2) -trace > $@'
+	bash -c '$(exe) -nodebug -trace -walk <(tail +2 z.script | head -2) > $@'
 
 # run the zork walk-though as far as we can before crashing
 gen/zork.walk: $(exe) z.script src/*.hs Makefile

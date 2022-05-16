@@ -11,6 +11,7 @@ module Objects
   , setAttr
   , clearAttr
   , insertObj
+  , removeObj
   , getParent
   , getSibling
   , getChild
@@ -170,6 +171,11 @@ insertObj o dest = do
   oldChild <- getChild dest
   setSibling o (byteOfInt oldChild)
   setChild dest (byteOfInt o)
+
+removeObj :: Int -> Eff ()
+removeObj o = do
+  unlink o
+  setParent o 0
 
 byteOfInt :: Int -> Byte
 byteOfInt i = do

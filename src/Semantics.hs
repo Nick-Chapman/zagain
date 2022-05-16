@@ -199,7 +199,8 @@ eval = \case
     setTarget target (fromIntegral res)
 
   Op.Remove_obj arg -> do
-    undefined arg
+    v <- evalArg arg
+    Objects.removeObj (fromIntegral v)
 
   Op.Ret_popped -> do PopStack >>= returnValue
 
