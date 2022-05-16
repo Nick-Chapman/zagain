@@ -19,10 +19,9 @@ import qualified Data.Map as Map
 --[interpreter for execution effects]----------------------------------
 
 run :: Story -> Eff () -> Action
-run story e0 = loop s0 e0 k0
+run story e0 = loop (initState pc0) e0 k0
   where
-    s0 :: State
-    s0 = initState story
+    pc0 :: Addr = fromIntegral (readStoryWord story 0x6)
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
@@ -38,14 +37,14 @@ run story e0 = loop s0 e0 k0
         A.Input (count-lastCount) $ \response -> k s { lastCount = count } response
 
       GetText a -> do
-        let State{story,stats} = s
+        let State{stats} = s
         let (text,_,readCount) = runFetch a story ztext
         let Stats{ct} = stats
         let s' = s { stats = stats { ct = ct + readCount }}
         k s' text
 
       FetchI -> do -- TODO: share code common to all Fetch* ops
-        let State{story,pc,count,stats} = s
+        let State{pc,count,stats} = s
         let (ins,pc',readCount) = runFetch pc story fetchOperation
         let Stats{ct} = stats
         let s' = s { pc = pc'
@@ -55,14 +54,14 @@ run story e0 = loop s0 e0 k0
         A.Trace (show s) stats count pc ins (k s' ins)
 
       FetchHeader -> do -- TODO: share code common to all Fetch* ops
-        let State{story,pc,stats} = s
+        let State{pc,stats} = s
         let (rh,pc',readCount) = runFetch pc story fetchRoutineHeader
         let Stats{ct} = stats
         let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
         k s' rh
 
       FetchDict -> do -- TODO: fetch dict only once!
-        let State{story,pc,stats} = s
+        let State{pc,stats} = s
         let (dict,pc',readCount) = runFetch pc story fetchDict
         let Stats{ct} = stats
         let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
@@ -118,7 +117,7 @@ run story e0 = loop s0 e0 k0
         k s res
 
       GetByte a -> do
-        let State{story,overrides,stats} = s
+        let State{overrides,stats} = s
         let (_over,b) =
               case Map.lookup a overrides of
                 Just b -> (True,b)
@@ -144,8 +143,7 @@ run story e0 = loop s0 e0 k0
 --[interpreter state]-------------------------------------------------
 
 data State = State
-  { story :: Story
-  , pc :: Addr
+  { pc :: Addr
   , lastCount :: Int
   , count :: Int
   , stack :: [Value]
@@ -154,9 +152,6 @@ data State = State
   , overrides :: Map Addr Byte
   , stats :: Stats
   }
-
---instance Show State where
---  show State{pc,stack,locals,frames} = show (pc,stack,locals,frames)
 
 instance Show State where
   show State{pc,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pc) num x depth y
@@ -174,11 +169,9 @@ instance Show State where
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack
 
-initState :: Story -> State
-initState story = do
-  let pc :: Addr = fromIntegral (readStoryWord story 0x6)
-  State { story -- TODO: remove story from State
-        , pc
+initState :: Addr -> State
+initState pc = do
+  State { pc
         , lastCount = 0
         , count = 0
         , stack = []
