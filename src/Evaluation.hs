@@ -155,7 +155,11 @@ eval = \case
   I.New_line -> do GamePrint "\n"
   I.Print string -> do GamePrint string
 
-  I.Print_addr arg -> do undefined arg
+  I.Print_addr arg -> do
+    v <- evalArg arg
+    let a :: Addr = fromIntegral v
+    s <- GetText a
+    GamePrint s
 
   I.Print_char arg -> do
     v <- evalArg arg
@@ -173,9 +177,7 @@ eval = \case
     v <- evalArg arg
     let a :: Addr = addrOfPackedWord v
     s <- GetText a
-    --Debug ("TODO: Print_paddr")
     GamePrint s
-    --undefined
 
   I.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
 
