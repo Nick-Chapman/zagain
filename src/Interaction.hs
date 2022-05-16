@@ -22,7 +22,7 @@ data Inter
   | I_Output String Inter
   | I_Debug String Inter
   | I_Input Int (String -> Inter)
-  | I_Stop
+  | I_Stop Int
 
 --[run interaction as IO]---------------------------------------------
 
@@ -33,22 +33,19 @@ runInter Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
     loop xs buf = \case
       I_Trace stateString stats n a instruction next -> do
         when mojo $ do
-          printf "%d %s\n" n stateString-- (I.pretty instruction)
+          printf "%d %s\n" n stateString
         when seeTrace $ do
           let sd = if seeStats then show stats ++ " " else ""
           printf "%s(Decode %d %s %s)\n" sd n (show a) (I.pretty instruction)
         loop xs buf next
       I_Output text next -> do
-        --when (not bufferOutput) $ printf "OUTPUT:[%s]\n" text
         when (not bufferOutput) $ putStr text
         loop xs (if bufferOutput then text:buf else buf) next
       I_Debug s next -> do
         when (debug) $ putStrLn ("Debug: " ++ s)
         loop xs buf next
       I_Input count f -> do
-        when seeTrace $ do
-          printf "\n[executed: %d instructions]\n" count
-        mapM_ putStr (reverse buf)
+        flushBuffer count buf
         case xs of
           [] -> do
             putStrLn "\n[no more input]"
@@ -56,8 +53,14 @@ runInter Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop xs []
           input:xs -> do
             putStrLn input
             loop xs [] (f input)
-      I_Stop -> do
-        pure ()
+      I_Stop count -> do
+        flushBuffer count buf
+
+    flushBuffer :: Int -> [String] -> IO ()
+    flushBuffer count buf = do
+      when seeTrace $ do
+        printf "\n[executed: %d instructions]\n" count
+      mapM_ putStr (reverse buf)
 
 
 --[static/dynamic GetByte stats]-------------------------------------

@@ -31,8 +31,7 @@ dump = do
   zv <- getZversion
   base <- objectTableBase
   objects <- mapM (getObject base zv) os
-  mapM_ Debug objects
-  pure ()
+  mapM_ (GamePrint . printf "%s\n" . show) objects
 
 getShortName :: Int -> Eff String
 getShortName o = do
@@ -384,7 +383,11 @@ data Object = Object
   , child :: Int
   , propTable :: PropTable
   }
-  deriving Show
+--  deriving Show
+
+instance Show Object where
+  show  Object{id,propTable=PropTable{shortName}}  =
+    printf "%d: %s" id shortName
 
 data Attributes = Attributes [Bool]
 

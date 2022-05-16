@@ -17,7 +17,7 @@ import Text.Printf (printf)
 --[interpreter for execution effects]----------------------------------
 
 runEff :: Int -> State -> Eff () -> Inter
-runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
+runEff maxSteps s0 e0 = loop s0 e0 $ \State{count,lastCount} () -> I_Stop (count-lastCount) -- TODO: kill maxSteps?
   where
     loop :: State -> Eff a -> (State -> a -> Inter) -> Inter
     loop s e k = case e of
@@ -38,9 +38,9 @@ runEff maxSteps s0 e0 = loop s0 e0 $ \_ () -> I_Stop
         k s' text
 
       FetchI -> do
-        let State{story,pc,count,stats} = s
+        let State{story,pc,count,lastCount,stats} = s
         let (ins,pc',readCount) = runFetch pc story fetchInstruction
-        if count >= maxSteps then I_Stop else do
+        if count >= maxSteps then I_Stop (count-lastCount) else do
           let Stats{ct} = stats
           let s' = s { pc = pc'
                      , count = count + 1
