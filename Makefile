@@ -30,7 +30,7 @@ gen/zork.trace: $(exe) z.script src/*.hs Makefile
 
 # run the zork walk-though as far as we can before crashing
 gen/zork.walk: $(exe) z.script src/*.hs Makefile
-	bash -c '$(exe) -nodebug -walk <(tail +2 z.script | head -30) > $@'
+	bash -c '$(exe) -nodebug -walk <(tail +2 z.script) > $@'
 
 
 .gen:
