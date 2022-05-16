@@ -27,6 +27,7 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 1 ts -> Op.Je <$> args ts <*> label
   Code 193 ts -> Op.Je <$> args ts <*> label
   Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
+  Code 194 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
   Code 3 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
   Code 195 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
   Code 4 [t1,t2] -> Op.Dec_check <$> arg t1 <*> arg t2 <*> label
