@@ -33,6 +33,7 @@ data Eff a where
   SetByte :: Addr -> Byte -> Eff ()
   PushStack :: Value -> Eff ()
   PopStack :: Eff Value
+  Random :: Int -> Eff Int
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

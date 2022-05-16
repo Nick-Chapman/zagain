@@ -195,9 +195,8 @@ eval = \case
 
   Op.Random arg target -> do
     v1 <- evalArg arg
-    let res = 1
-    Debug("TODO:Random",v1,"--(fixed)-->",res)
-    setTarget target res
+    res <- Random (fromIntegral v1)
+    setTarget target (fromIntegral res)
 
   Op.Ret_popped -> do PopStack >>= returnValue
   Op.Return arg -> do
