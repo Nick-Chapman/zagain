@@ -25,6 +25,8 @@ run story e0 = loop (initState pc0) e0 k0
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
+    (dict,_,_) = runFetch 0 story fetchDict
+
     loop :: State -> Eff a -> (State -> a -> Action) -> Action
     loop s e k = case e of
       Ret x -> k s x
@@ -63,12 +65,8 @@ run story e0 = loop (initState pc0) e0 k0
         let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
         k s' rh
 
-      FetchDict -> do -- TODO: fetch dict only once!
-        let State{pc,stats} = s
-        let (dict,pc',readCount) = runFetch pc story fetchDict
-        let Stats{ct} = stats
-        let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
-        k s' dict
+      FetchDict -> do
+        k s dict
 
       PushFrame addr target -> do
         let State{pc,stack,locals,frames} = s
