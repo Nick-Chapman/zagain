@@ -19,7 +19,7 @@ data Conf = Conf
 --[interaction type]--------------------------------------------------
 
 data Action
-  = Trace String Stats Int Addr Operation Action
+  = TraceInstruction String (Stats,Stats) Int Addr Operation Action
   | Output String Action
   | Debug String Action
   | Input Int (String -> Action)
@@ -32,11 +32,11 @@ runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
   where
     loop :: Int -> [String] -> [String] -> Action -> IO ()
     loop nInput xs buf = \case
-      Trace stateString stats n a instruction next -> do
+      TraceInstruction stateString (statsInc,stats) n a instruction next -> do
         when mojo $ do
           printf "%d %s\n" n stateString
         when seeTrace $ do
-          let sd = if seeStats then show stats ++ " " else ""
+          let sd = if seeStats then show statsInc ++ " " ++ show stats ++ " " else ""
           printf "%s(Decode %d %s %s)\n" sd n (show a) (Op.pretty instruction)
         loop nInput xs buf next
       Output text next -> do

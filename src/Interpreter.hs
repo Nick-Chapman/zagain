@@ -44,14 +44,17 @@ run story e0 = loop (initState pc0) e0 k0
         k s' text
 
       FetchI -> do -- TODO: share code common to all Fetch* ops
-        let State{pc,count,stats} = s
+        let State{pc,count,stats=stats0,lastStats} = s
         let (ins,pc',readCount) = runFetch pc story fetchOperation
-        let Stats{ct} = stats
+        let Stats{ct} = stats0
+        let stats = stats0 { ct = ct + readCount }
         let s' = s { pc = pc'
                    , count = count + 1
-                   , stats = stats { ct = ct + readCount }
+                   , stats
+                   , lastStats = stats
                    }
-        A.Trace (show s) stats count pc ins (k s' ins)
+        let statsInc = diffStats stats lastStats
+        A.TraceInstruction (show s) (statsInc,stats) count pc ins (k s' ins)
 
       FetchHeader -> do -- TODO: share code common to all Fetch* ops
         let State{pc,stats} = s
@@ -162,9 +165,14 @@ data State = State
   , locals :: Map Byte Value
   , frames :: [Frame]
   , overrides :: Map Addr Byte
+  , lastStats :: Stats
   , stats :: Stats
   , oracle :: [(Int,Int)]
   }
+
+diffStats :: Stats -> Stats -> Stats
+diffStats Stats{ct=ct1,rt=rt1} Stats{ct=ct2,rt=rt2} =
+  Stats { ct = ct1-ct2, rt = rt1-rt2 }
 
 instance Show State where
   show State{pc,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pc) num x depth y
@@ -191,6 +199,7 @@ initState pc = do
         , locals = Map.empty
         , frames = []
         , overrides = Map.empty
+        , lastStats = Stats { ct = 0, rt = 0 }
         , stats = Stats { ct = 0, rt = 0 }
         , oracle = oracle0
         }
