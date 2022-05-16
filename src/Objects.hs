@@ -21,9 +21,6 @@ import Eff (Eff(..))
 import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
-checking :: Bool
-checking = True -- TODO: remove expensive runtime wellformedness checking
-
 getShortName :: Int -> Eff String -- TODO: take Value instead of Int (everywhere)
 getShortName o = do
   zv <- getZversion
@@ -156,48 +153,15 @@ unlink this = do
 
 insertObj :: Int -> Int -> Eff ()
 insertObj o dest = do
-  assertWellFormed
-  sizeBefore <- sizeObjectTree
   unlink o
-  assertWellFormed
-  do
-    setParent o (byteOfInt dest)
-    oldChild <- getChild dest
-    setSibling o (byteOfInt oldChild)
-    setChild dest (byteOfInt o)
-    assertWellFormed
-    sizeAfter <- sizeObjectTree
-    when (sizeAfter /= sizeBefore) $ error (show ("size of object tree has changed",sizeBefore,sizeAfter))
+  setParent o (byteOfInt dest)
+  oldChild <- getChild dest
+  setSibling o (byteOfInt oldChild)
+  setChild dest (byteOfInt o)
 
 byteOfInt :: Int -> Byte
 byteOfInt i = do
   if i < 0 || i > 255 then error (show ("byteOfInt",i)) else fromIntegral i
-
-sizeObjectTree :: Eff Int
-sizeObjectTree = if not checking then pure 0 else do
-  roots <- objectRoots
-  forest <- mapM getTree roots
-  pure $ sizeForest forest
-
-objectRoots :: Eff [Int]
-objectRoots = do
-  let os = [1::Int ..248]
-  ops <- sequence [ do p <- getParent o; pure (o,p) | o <- os ]
-  pure [ o | (o,p) <- ops, p == 0 ]
-
-data Tree = Tree Int [Tree] deriving Show
-
-getTree :: Int -> Eff Tree
-getTree x = do
-  xs <- children x
-  subs <- mapM getTree xs
-  pure $ Tree x subs
-
-sizeTree :: Tree -> Int
-sizeTree (Tree _ subs) = 1 + sizeForest subs
-
-sizeForest :: [Tree] -> Int
-sizeForest xs = sum (map sizeTree xs)
 
 setParent :: Int -> Byte -> Eff ()
 setParent x p = do
@@ -219,34 +183,6 @@ setChild x p = do
   base <- objectTableBase
   a <- objectAddr base zv x
   SetByte (a+6) p
-
-assertWellFormed :: Eff ()
-assertWellFormed = if not checking then pure () else do
-  wf <- wellFormed
-  if wf then pure () else error "not well formed"
-
-wellFormed :: Eff Bool -- TODO: flesh out well-formed to detect more problem cases
-wellFormed = do
-  let os = [1::Int ..248]
-  xs <- sequence [ do
-                     cs <- children o
-                     ps <- sequence [getParent c | c <- cs]
-                     let ws = [ p == o | p <- ps ]
-                     pure (o,cs,ps,ws,all Prelude.id ws)
-                 | o <- os ]
-  let wf = all Prelude.id [ b | (_,_,_,_,b) <- xs ]
-  pure wf
-
-children :: Int -> Eff [Int]
-children p = do
-  getChild p >>= sibList
-
-sibList :: Int -> Eff [Int]
-sibList x = do
-  if x == 0 then pure [] else do
-    y <- getSibling x
-    ys <- sibList y
-    pure (x:ys)
 
 getParent :: Int -> Eff Int -- TODO: capture common pattern for parent/sibling/child
 getParent o = do
@@ -286,7 +222,7 @@ getZversion = versionOfByte <$> GetByte 0  -- TODO: share via header
 objectTableBase :: Eff Addr
 objectTableBase = getAddress 0xA -- TODO: share via header
 
-data Object = Object
+data Object = Object -- TODO: remove
   { id :: Int
   , atts :: Attributes
   , parent :: Int
