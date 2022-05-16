@@ -181,21 +181,21 @@ unlink this = do
         setChild oldP (byteOfInt thisSib)
         --seeObjRels oldP
       False -> do
-        Debug ("not the first child, so beginning unlink loop")
+        --Debug ("not the first child, so beginning unlink loop")
         loop child
       where
         loop :: Int -> Eff ()
         loop x = do
-          Debug ("unlink loop, child=",x)
+          --Debug ("unlink loop, child=",x)
           when (x == 0) $ error "unlink loop, failed to find unlinkee"
           sib <- getSibling x
-          Debug ("sib=",sib)
+          --Debug ("sib=",sib)
           case  sib == this of
             False -> loop sib
             True -> do
-              Debug ("unlink loop, found it!, relinking s's sib to:")
+              --Debug ("unlink loop, found it!, relinking s's sib to:")
               thisSib <- getSibling this
-              Debug ("relinking x's sib to:", thisSib)
+              --Debug ("relinking x's sib to:", thisSib)
               setSibling x (byteOfInt thisSib)
 
 
