@@ -25,13 +25,11 @@ North of House
 You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
 
 >go north
-Debug: ("TODO:Random",100,"--(fixed)-->",1)
 Forest Path
 This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
 You hear in the distance the chirping of a song bird.
 
 >climb tree
-Debug: ("TODO:Random",100,"--(fixed)-->",1)
 Up a Tree
 You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.
 Beside you on the branch is a small bird's nest.
@@ -39,12 +37,10 @@ In the bird's nest is a large egg encrusted with precious jewels, apparently sca
 You hear in the distance the chirping of a song bird.
 
 >take egg
-Debug: ("TODO:Random",100,"--(fixed)-->",1)
 Taken.
 You hear in the distance the chirping of a song bird.
 
 >climb down
-Debug: ("TODO:Random",100,"--(fixed)-->",1)
 (down the tree)
 Forest Path
 You hear in the distance the chirping of a song bird.
