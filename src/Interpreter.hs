@@ -1,5 +1,6 @@
 
-module Walk (State,initState,runEff) where -- TODO: rename Interpreter
+-- | Interpreter for z-machine effects.
+module Interpreter (State,run) where
 
 import Action (Action,Stats(..))
 import Data.Bits ((.&.))
@@ -17,9 +18,14 @@ import qualified Data.Map as Map
 
 --[interpreter for execution effects]----------------------------------
 
-runEff :: Int -> State -> Eff () -> Action
-runEff maxSteps s0 e0 = loop s0 e0 $ \State{count,lastCount} () -> A.Stop (count-lastCount) -- TODO: kill maxSteps?
+run :: Int -> Story -> Eff () -> Action
+run maxSteps story e0 = loop s0 e0 k0 -- TODO: kill maxSteps?
   where
+    s0 :: State
+    s0 = initState story
+
+    k0 State{count,lastCount} () = A.Stop (count-lastCount)
+
     loop :: State -> Eff a -> (State -> a -> Action) -> Action
     loop s e k = case e of
       Ret x -> k s x

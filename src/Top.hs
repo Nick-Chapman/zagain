@@ -9,9 +9,9 @@ import Dis (disassemble)
 import Fetch (runFetch)
 import Story (loadStory)
 import System.Environment (getArgs)
-import Walk (initState,runEff)
 import qualified Objects (dump)
 import qualified Semantics (theEffect)
+import qualified Interpreter (run)
 
 main :: IO ()
 main = do
@@ -78,7 +78,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
     Objects -> do
       story <- loadStory storyFile
       let maxSteps = 100000
-      let i = runEff maxSteps (initState story) Objects.dump
+      let i = Interpreter.run maxSteps story Objects.dump
       runAction iconf [] i
     Dictionary -> do
       story <- loadStory storyFile
@@ -88,5 +88,5 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       let maxSteps = 100000
-      let i = runEff maxSteps (initState story) Semantics.theEffect
+      let i = Interpreter.run maxSteps story Semantics.theEffect
       runAction iconf inputs i
