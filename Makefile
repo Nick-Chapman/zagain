@@ -1,5 +1,5 @@
 
-top: dev
+top: reg dev
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
@@ -16,33 +16,23 @@ mojo.walk: .mojo z.script Makefile
 	(cd ~/code/other/mojozork; make)
 
 
+# regression...
 
-reg: gen/zork.dis gen/zork.objects gen/zork.trace gen/zork.trace.invent gen/zork.trace.2 gen/zork.out1 gen/zork.out2 gen/zork.walk
+reg: .gen gen/zork.dis gen/zork.objects gen/zork.trace gen/zork.walk
 	git diff gen
 
-gen/zork.dis: $(exe) src/*.hs Makefile .gen
+gen/zork.dis: $(exe) src/*.hs Makefile
 	$(exe) dis > $@
 
-gen/zork.objects: $(exe) src/*.hs Makefile .gen
+gen/zork.objects: $(exe) src/*.hs Makefile
 	$(exe) objects > $@
 
-gen/zork.trace:  src/*.hs $(exe) Makefile .gen
-	$(exe) -trace > $@
+# trace just the first 2 steps of the zork walk-though
+gen/zork.trace: $(exe) z.script src/*.hs Makefile
+	bash -c '$(exe) -walk <(tail +2 z.script | head -2) -trace > $@'
 
-gen/zork.trace.invent: $(exe) src/*.hs Makefile .gen
-	$(exe) -type invent -trace > $@
-
-gen/zork.trace.2: $(exe) src/*.hs Makefile .gen
-	$(exe) -walk inputs2 -trace > $@
-
-gen/zork.out1: $(exe) src/*.hs Makefile .gen
-	$(exe) -walk inputs1 > $@
-
-gen/zork.out2: $(exe) src/*.hs Makefile .gen
-	$(exe) -walk inputs2 > $@
-
-# run the zork script as far as we can before crashing
-gen/zork.walk: $(exe) z.script src/*.hs Makefile .gen
+# run the zork walk-though as far as we can before crashing
+gen/zork.walk: $(exe) z.script src/*.hs Makefile
 	bash -c '$(exe) -walk <(tail +2 z.script | head -30) > $@'
 
 
