@@ -56,6 +56,7 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   | Pull Arg
   | Push Arg
   | Put_prop Arg Arg Arg
+  | Quit
   | Random Arg Target
   | Remove_obj Arg
   | Ret_popped
@@ -78,7 +79,6 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   -- | Mod_ Arg Arg Target
   -- | Or_ Arg Arg Target
   -- | Output_Stream Arg (Maybe Arg)
-  -- | Quit
   -- | Restart
   -- | Restore_lab Label
   -- | Save_lab Label

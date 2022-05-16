@@ -34,6 +34,7 @@ data Eff a where
   PushStack :: Value -> Eff ()
   PopStack :: Eff Value
   Random :: Int -> Eff Int
+  Quit :: Eff ()
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

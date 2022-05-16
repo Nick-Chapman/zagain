@@ -202,6 +202,9 @@ eval = \case
     v3 <- evalArg arg3
     Objects.putProp (fromIntegral v1) (fromIntegral v2) v3
 
+  Op.Quit -> do
+    Quit
+
   Op.Random arg target -> do
     v1 <- evalArg arg
     res <- Random (fromIntegral v1)

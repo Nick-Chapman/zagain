@@ -148,6 +148,10 @@ run story e0 = loop (initState pc0) e0 k0
             | (range /= x) -> error (show ("unexpected random range",range,x))
             | otherwise -> k s { oracle } result
 
+      Quit -> do
+        -- dont call "k" but instead "k0"
+        k0 s ()
+
 --[interpreter state]-------------------------------------------------
 
 data State = State
