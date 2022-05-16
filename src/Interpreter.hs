@@ -177,7 +177,7 @@ instance Show State where
 initState :: Story -> State
 initState story = do
   let pc :: Addr = fromIntegral (readStoryWord story 0x6)
-  State { story
+  State { story -- TODO: remove story from State
         , pc
         , lastCount = 0
         , count = 0

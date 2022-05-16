@@ -15,7 +15,7 @@ data Fetch a where
   Bind :: Fetch a -> (a -> Fetch b) -> Fetch b
   NextByte :: Fetch Byte
   Here :: Fetch Addr
-  --GetByte :: Addr -> Fetch Byte
+  --GetByte :: Addr -> Fetch Byte -- TODO: reinstate
   WithPC :: Addr -> Fetch a -> Fetch a
 
 runFetch :: Addr -> Story -> Fetch a -> (a, Addr, Int)
