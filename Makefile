@@ -18,7 +18,7 @@ mojo.walk: .mojo z.script Makefile
 
 # regression...
 
-reg: .gen gen/zork.dis gen/zork.objects gen/zork.trace gen/zork.walk
+reg: .gen gen/zork.dis gen/zork.trace gen/zork.walk
 	git diff gen
 
 gen/zork.dis: $(exe) src/*.hs Makefile
