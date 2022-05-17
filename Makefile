@@ -3,16 +3,16 @@ top: reg dev
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
-dev: my.walk mojo.walk Makefile
+dev: my.walk mojo.walk
 	git diff --no-index my.walk mojo.walk
 
-my.walk: $(exe) z.script Makefile
+my.walk: $(exe) z.script
 	bash -c '($(exe) -mojo -walk <(tail +2 z.script) -nobuf > my.walk 2>&1) || true'
 
-mojo.walk: .mojo z.script Makefile
+mojo.walk: ~/code/other/mojozork/mojozork.exe z.script
 	~/code/other/mojozork/mojozork.exe ./story/zork1.88-840726.z3 z.script > mojo.walk
 
-.mojo: Makefile
+~/code/other/mojozork/mojozork.exe: ~/code/other/mojozork/mojozork.c
 	(cd ~/code/other/mojozork; make)
 
 
@@ -21,15 +21,15 @@ mojo.walk: .mojo z.script Makefile
 reg: .gen gen/zork.dis gen/zork.trace gen/zork.walk
 	git diff gen
 
-gen/zork.dis: $(exe) src/*.hs Makefile
+gen/zork.dis: $(exe) src/*.hs
 	$(exe) dis > $@
 
 # trace just the first 2 steps of the zork walk-though
-gen/zork.trace: $(exe) z.script src/*.hs Makefile
+gen/zork.trace: $(exe) z.script src/*.hs
 	bash -c '$(exe) -nodebug -trace -walk <(tail +2 z.script | head -2) > $@'
 
 # run the zork walk-though as far as we can before crashing
-gen/zork.walk: $(exe) z.script src/*.hs Makefile
+gen/zork.walk: $(exe) z.script src/*.hs
 	bash -c '$(exe) -nodebug -walk <(tail +2 z.script) > $@'
 
 
