@@ -19,12 +19,31 @@ disassemble :: Story -> IO ()
 disassemble story = do
   let Header{initialPC} = Story.header story
   let a0 :: Addr = initialPC - 1
-  -- extra places not picked up by reachability...
-  let extra = [65784] -- [20076,20386,20688,21700]
   let startingPoints = [a0] ++ extra
   let rs = sortBy (comparing start) $ collectRoutines startingPoints story
   printf "Found %d reachable routines:\n" (length rs)
   mapM_ dumpRoutine rs
+
+-- Extra roots determined by logging indirect routine calls whilst
+-- running full zork walk-through.  Reachable routines: 61 --> 224.
+extra :: [Addr]
+extra =
+  [ 20154, 20206, 28080, 28894, 29114, 29220
+  , 29336, 29550, 30338, 30448, 30464, 31796, 31876, 32296
+  , 32536, 32744, 32900, 33276, 33402, 33418, 33736, 33786
+  , 34740, 34880, 35014, 35396, 35454, 35492, 38204, 38292
+  , 38798, 39766, 40050, 40432, 40752, 40950, 41540, 41580
+  , 41994, 42150, 42308, 42360, 42448, 42490, 42926, 43006
+  , 44336, 44478, 44640, 44966, 45324, 45416, 45548, 45896
+  , 46092, 46334, 47332, 47366, 47854, 48424, 48588, 49422
+  , 49916, 50170, 51620, 52070, 52708, 54184, 55654, 55752
+  , 56098, 56334, 56420, 56616, 56642, 56972, 57174, 57674
+  , 57766, 57858, 58086, 58204, 58270, 58504, 58672, 58930
+  , 58992, 59038, 59286, 59432, 59874, 59976, 60648, 60818
+  , 60870, 60954, 61296, 61758, 62120, 62184, 62348, 62864
+  , 65492, 65568, 65784, 66016, 68024, 68034, 68204, 68356
+  ]
+
 
 dumpRoutine :: Routine -> IO ()
 dumpRoutine Routine{start,header,body=xs,finish=_} = do

@@ -71,6 +71,8 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 184 [] -> pure Op.Ret_popped
   Code 178 [] -> Op.Print <$> ztext
   Code 179 [] -> Op.Print_ret <$> ztext
+  Code 181 [] -> Op.Save_lab <$> label
+  Code 182 [] -> Op.Restore_lab <$> label
   Code 186 [] -> pure Op.Quit
   Code 187 [] -> pure Op.New_line
   Code 197 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label

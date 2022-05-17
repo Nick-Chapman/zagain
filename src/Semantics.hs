@@ -309,6 +309,9 @@ eval = \case
     res <- Objects.testAttr (fromIntegral v1) (fromIntegral v2)
     branchMaybe label res
 
+  Op.Save_lab{} -> undefined
+  Op.Restore_lab{} -> undefined
+
 writeBytesFromString :: Addr -> String -> Eff ()
 writeBytesFromString a str = writeBytes a [ fromIntegral (Char.ord c) | c <- str ]
 

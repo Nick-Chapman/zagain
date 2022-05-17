@@ -80,8 +80,8 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   -- | Or_ Arg Arg Target
   -- | Output_Stream Arg (Maybe Arg)
   -- | Restart
-  -- | Restore_lab Label
-  -- | Save_lab Label
+  | Restore_lab Label
+  | Save_lab Label
   -- | Show_status
   -- | Verify Label
 
