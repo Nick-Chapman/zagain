@@ -139,10 +139,10 @@ getNextProp o p = do
   base <- objectTableBase
   ob <- getObject base zv o
   let Object{propTable=PropTable{props}} = ob
-  let bigger = [ n | Prop{number=n} <- props, n > p ]
+  let bigger = [ n | Prop{number=n} <- props, p == 0 || n < p ]
   case bigger of
     [] -> pure 0
-    _ -> pure $ minimum bigger
+    _ -> pure $ maximum bigger
 
 unlink :: Int -> Eff ()
 unlink this = do

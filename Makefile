@@ -7,7 +7,7 @@ dev: my.walk mojo.walk Makefile
 	git diff --no-index my.walk mojo.walk
 
 my.walk: $(exe) z.script Makefile
-	bash -c '($(exe) -walk <(tail +2 z.script) -nobuf > my.walk 2>&1) || true'
+	bash -c '($(exe) -mojo -walk <(tail +2 z.script) -nobuf > my.walk 2>&1) || true'
 
 mojo.walk: .mojo z.script Makefile
 	~/code/other/mojozork/mojozork.exe ./story/zork1.88-840726.z3 z.script > mojo.walk

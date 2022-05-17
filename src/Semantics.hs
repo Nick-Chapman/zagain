@@ -148,7 +148,6 @@ eval = \case
   Op.Load_byte arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
-    --Debug ("Load_byte",base,offset) -- TODO: GetByte(0,1) differs from mojo
     b <- GetByte (fromIntegral (base + offset))
     setTarget target (fromIntegral b)
 
