@@ -7,28 +7,24 @@ import Data.Ord (comparing)
 import Data.Set (Set)
 import Decode (fetchOperation,fetchRoutineHeader)
 import Fetch (runFetch)
-import Numbers (Addr,Value)
+import Header (Header(..))
+import Numbers (Addr)
 import Operation (Operation,RoutineHeader)
-import Story (Story,readStoryByte)
+import Story (Story(header))
 import Text.Printf (printf)
 import qualified Data.Set as Set
 import qualified Operation as Op
 
 disassemble :: Story -> IO ()
 disassemble story = do
-  let a0 :: Addr = fromIntegral (readStoryWord story 0x6 - 1) -- back 1 for the header
+  let Header{initialPC} = Story.header story
+  let a0 :: Addr = initialPC - 1
   -- extra places not picked up by reachability...
   let extra = [65784] -- [20076,20386,20688,21700]
   let startingPoints = [a0] ++ extra
   let rs = sortBy (comparing start) $ collectRoutines startingPoints story
   printf "Found %d reachable routines:\n" (length rs)
   mapM_ dumpRoutine rs
-
-readStoryWord :: Story -> Addr -> Value
-readStoryWord story a = do
-  let hi = readStoryByte story a
-  let lo = readStoryByte story (a+1)
-  256 * fromIntegral hi + fromIntegral lo
 
 dumpRoutine :: Routine -> IO ()
 dumpRoutine Routine{start,header,body=xs,finish=_} = do

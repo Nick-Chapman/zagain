@@ -10,6 +10,7 @@ module Decode
 import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
+import Header (Header(..))
 import Numbers (Byte,Addr,Value,addrOfPackedWord)
 import Operation (Operation,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
@@ -261,8 +262,8 @@ ztext = loop [] A0 A0 []
 
 decodeAbbrev :: Value -> Fetch String
 decodeAbbrev n = do
-  baseAbbrev :: Addr <- fromIntegral <$> getWord 0x18 -- TODO: get from header
-  thisAbbrev :: Addr <- addrOfPackedWord <$> getWord (baseAbbrev + fromIntegral (2 * n))
+  Header{abbrevTable} <- StoryHeader
+  thisAbbrev :: Addr <- addrOfPackedWord <$> getWord (abbrevTable + fromIntegral (2 * n))
   WithPC thisAbbrev ztext
 
 

@@ -4,6 +4,7 @@ module Eff (Eff(..),Bin(..)) where
 
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
+import Header (Header)
 import Numbers (Byte,Addr,Value)
 import Operation (Operation,Target,RoutineHeader)
 
@@ -19,7 +20,7 @@ data Eff a where
   ReadInputFromUser :: Eff String
   GetText :: Addr -> Eff String
   FetchI :: Eff Operation
-  FetchHeader :: Eff RoutineHeader
+  FetchRoutineHeader :: Eff RoutineHeader
   FetchDict :: Eff Dict
   PushFrame :: Addr -> Target -> Eff ()
   PopFrame :: Eff Target
@@ -35,6 +36,7 @@ data Eff a where
   PopStack :: Eff Value
   Random :: Int -> Eff Int
   Quit :: Eff ()
+  StoryHeader :: Eff Header
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

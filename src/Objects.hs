@@ -20,34 +20,29 @@ module Objects
 import Control.Monad (when)
 import Data.Bits (testBit,(.&.),shiftR,setBit,clearBit)
 import Eff (Eff(..))
+import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value)
-import Text.Printf (printf)
 
 getShortName :: Int -> Eff String -- TODO: take Value instead of Int (everywhere)
 getShortName o = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{propTable=PropTable{shortName}} = ob
   pure shortName
 
 testAttr :: Int -> Int -> Eff Bool
 testAttr o n = do
-  zv <- getZversion
-  base <- objectTableBase
+  Header{zv} <- StoryHeader
   let f = formatOfVersion zv
   let maxAttNum = numByesForAttribute f * 8
   when (n >= maxAttNum) $ error (show ("attribute number too big",n))
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{atts=Attributes bools} = ob
   when (length bools /= maxAttNum) $ error "unexpected attribute bools"
   pure $ head (drop n bools)
 
 setAttr :: Int -> Int -> Eff ()
 setAttr o n = do
-  zv <- getZversion
-  base <- objectTableBase
-  a <- objectAddr base zv o
+  a <- objectAddr o
   let d = n `div` 8
   let m = n `mod` 8
   let aa = a + fromIntegral d
@@ -58,9 +53,7 @@ setAttr o n = do
 
 clearAttr :: Int -> Int -> Eff ()
 clearAttr o n = do
-  zv <- getZversion
-  base <- objectTableBase
-  a <- objectAddr base zv o
+  a <- objectAddr o
   let d = n `div` 8
   let m = n `mod` 8
   let aa = a + fromIntegral d
@@ -71,9 +64,8 @@ clearAttr o n = do
 
 getProp :: Int -> Int -> Eff Value
 getProp o n = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  Header{objectTable=base} <- StoryHeader
+  ob <- getObject o
   let Object{propTable=PropTable{props}} = ob
   let xs = [ dataBytes | Prop{number,dataBytes} <- props, number == n ]
   x <-
@@ -93,9 +85,7 @@ getProp o n = do
 
 putProp :: Int -> Int -> Value -> Eff ()
 putProp o n v = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{propTable=PropTable{props}} = ob
   let xs = [ pr | pr@Prop{number} <- props, number == n ]
   pr <-
@@ -117,9 +107,7 @@ putProp o n v = do
 
 getPropAddr :: Int -> Int -> Eff Value
 getPropAddr o n = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{propTable=PropTable{props}} = ob
   case [ dataAddr | Prop{number,dataAddr} <- props, number == n ] of
     [a] -> pure a
@@ -135,9 +123,7 @@ getPropLen a = do
 
 getNextProp :: Int -> Int -> Eff Int
 getNextProp o p = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{propTable=PropTable{props}} = ob
   let bigger = [ n | Prop{number=n} <- props, p == 0 || n < p ]
   case bigger of
@@ -185,62 +171,36 @@ byteOfInt i = do
 
 setParent :: Int -> Byte -> Eff ()
 setParent x p = do
-  zv <- getZversion
-  base <- objectTableBase
-  a <- objectAddr base zv x
+  a <- objectAddr x
   SetByte (a+4) p
 
 setSibling :: Int -> Byte -> Eff ()
 setSibling x p = do
-  zv <- getZversion
-  base <- objectTableBase
-  a <- objectAddr base zv x
+  a <- objectAddr x
   SetByte (a+5) p
 
 setChild :: Int -> Byte -> Eff ()
 setChild x p = do
-  zv <- getZversion
-  base <- objectTableBase
-  a <- objectAddr base zv x
+  a <- objectAddr x
   SetByte (a+6) p
 
 getParent :: Int -> Eff Int -- TODO: capture common pattern for parent/sibling/child
 getParent o = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{parent} = ob
   pure parent
 
 getSibling :: Int -> Eff Int
 getSibling o = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{sibling} = ob
   pure sibling
 
 getChild :: Int -> Eff Int
 getChild o = do
-  zv <- getZversion
-  base <- objectTableBase
-  ob <- getObject base zv o
+  ob <- getObject o
   let Object{child} = ob
   pure child
-
-getZversion :: Eff Zversion
-getZversion = versionOfByte <$> GetByte 0  -- TODO: share via header
-  where
-    versionOfByte = \case
-      1 -> Z1
-      2 -> Z2
-      3 -> Z3
-      4 -> Z4
-      5 -> Z5
-      n -> error (printf "unsupported z-machine version: %s" (show n))
-
-objectTableBase :: Eff Addr
-objectTableBase = getAddress 0xA -- TODO: share via header
 
 data Object = Object -- TODO: remove
   { id :: Int
@@ -266,10 +226,10 @@ data Prop = Prop { number :: Int, dataAddr :: Value, dataBytes :: [Byte] }
 instance Show Attributes where
   show (Attributes bs) = [ if b then '1' else '0' | b <- bs ]
 
-getObject :: Addr -> Zversion -> Int -> Eff Object -- TODO: avoid calling this when implementing z-machine operations
-getObject base zv id = do
-  a <- objectAddr base zv id
-  atts <- getAttributes zv a
+getObject :: Int -> Eff Object -- TODO: avoid calling this when implementing z-machine operations
+getObject id = do
+  a <- objectAddr id
+  atts <- getAttributes a
   parent <- fromIntegral <$> GetByte (a+4) -- TODO: capture 4/5/6 from Relation
   sibling <- fromIntegral <$> GetByte (a+5)
   child <- fromIntegral <$> GetByte (a+6)
@@ -277,15 +237,17 @@ getObject base zv id = do
   propTable <- getPropertyTable a'
   pure $ Object { id, atts, parent, sibling, child, propTable }
 
-objectAddr :: Addr -> Zversion -> Int -> Eff Addr
-objectAddr base zv o = do
+objectAddr :: Int -> Eff Addr
+objectAddr o = do
+  Header{zv,objectTable=base} <- StoryHeader
   let f = formatOfVersion zv
   let objectEntrySize = numByesForAttribute f + (3 * objectIdSize f) + 2
   let propDefaultsSize = 2 * numProps f
   pure (base + fromIntegral (propDefaultsSize + (o-1) * objectEntrySize))
 
-getAttributes :: Zversion -> Addr -> Eff Attributes
-getAttributes zv a = do
+getAttributes :: Addr -> Eff Attributes
+getAttributes a = do
+  Header{zv} <- StoryHeader
   let f = formatOfVersion zv
   let n = numByesForAttribute f
   xs <- getBytes a n
@@ -319,9 +281,6 @@ getAddress a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
   pure (256 * fromIntegral hi + fromIntegral lo)
-
-data Zversion = Z1 | Z2 | Z3 | Z4 | Z5 -- TODO: move to new Header module
-  deriving Show
 
 data ObjectTableFormat = Small | Large
 

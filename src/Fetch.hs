@@ -3,8 +3,9 @@
 module Fetch (Fetch(..),runFetch) where
 
 import Control.Monad (ap,liftM)
+import Header (Header)
 import Numbers (Byte,Addr)
-import Story (Story,readStoryByte)
+import Story (Story(header),readStoryByte)
 
 instance Functor Fetch where fmap = liftM
 instance Applicative Fetch where pure = return; (<*>) = ap
@@ -17,6 +18,7 @@ data Fetch a where
   Here :: Fetch Addr
   --GetByte :: Addr -> Fetch Byte -- TODO: reinstate
   WithPC :: Addr -> Fetch a -> Fetch a
+  StoryHeader :: Fetch Header
 
 runFetch :: Addr -> Story -> Fetch a -> (a, Addr, Int)
 runFetch pc0 story eff = loop s0 eff $ \State{pc,readCount} x -> (x,pc,readCount)
@@ -31,6 +33,6 @@ runFetch pc0 story eff = loop s0 eff $ \State{pc,readCount} x -> (x,pc,readCount
       Here -> k s here
       --GetByte a -> k s (readStoryByte story a)
       WithPC there e -> loop s { pc = there } e $ \s a -> k s {pc = here} a
-
+      StoryHeader -> k s (Story.header story)
 
 data State = State { pc :: Addr, readCount :: Int }

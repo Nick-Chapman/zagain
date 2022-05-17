@@ -4,6 +4,7 @@ module Dictionary (Dict(..),fetchDict) where
 
 import Decode (ztext)
 import Fetch (Fetch(..))
+import Header (Header(..))
 import Numbers (Byte,Addr,Value)
 import qualified Data.Char as Char (chr)
 
@@ -17,7 +18,7 @@ data Dict = Dict
 
 fetchDict :: Fetch Dict
 fetchDict = do
-  base <- dictBase
+  Header{dictionary=base} <- StoryHeader
   WithPC base $ do
     n <- fromIntegral <$> NextByte
     bs <- sequence $ take n (repeat NextByte)
@@ -38,15 +39,3 @@ fetchWord = do
 
 charOfByte :: Byte -> Char
 charOfByte b = Char.chr (fromIntegral b)
-
-dictBase :: Fetch Addr
-dictBase = getAddress 0x8 -- TODO: share via header
-
-getAddress :: Addr -> Fetch Addr
-getAddress a = do
-  hi <- getByte a
-  lo <- getByte (a+1)
-  pure (256 * fromIntegral hi + fromIntegral lo)
-
-getByte :: Addr -> Fetch Byte
-getByte a = WithPC a NextByte

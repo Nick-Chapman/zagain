@@ -9,9 +9,10 @@ import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
 import Eff (Eff(..),Bin(..))
 import Fetch (runFetch)
+import Header (Header(..))
 import Numbers (Byte,Addr,Value)
 import Operation (Target)
-import Story (Story,readStoryByte)
+import Story (Story(header),readStoryByte)
 import Text.Printf (printf)
 import qualified Action as A (Action(..))
 import qualified Data.Map as Map
@@ -21,7 +22,7 @@ import qualified Data.Map as Map
 run :: Story -> Eff () -> Action
 run story e0 = loop (initState pc0) e0 k0
   where
-    pc0 :: Addr = fromIntegral (readStoryWord story 0x6)
+    header@Header{initialPC=pc0} = Story.header story
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
@@ -58,7 +59,7 @@ run story e0 = loop (initState pc0) e0 k0
         let statsInc = diffStats stats lastStats
         A.TraceInstruction (show s) (statsInc,stats) count pc ins (k s' ins)
 
-      FetchHeader -> do -- TODO: share code common to all Fetch* ops
+      FetchRoutineHeader -> do -- TODO: share code common to all Fetch* ops
         let State{pc,stats} = s
         let (rh,pc',readCount) = runFetch pc story fetchRoutineHeader
         let Stats{ct} = stats
@@ -153,6 +154,9 @@ run story e0 = loop (initState pc0) e0 k0
         -- dont call "k" but instead "k0"
         k0 s ()
 
+      StoryHeader -> do
+        k s header
+
 --[interpreter state]-------------------------------------------------
 
 data State = State
@@ -201,12 +205,6 @@ initState pc = do
         , stats = Stats { ct = 0, rt = 0 }
         , oracle = oracle0
         }
-
-readStoryWord :: Story -> Addr -> Word
-readStoryWord story a = do
-  let hi = readStoryByte story a
-  let lo = readStoryByte story (a+1)
-  256 * fromIntegral hi + fromIntegral lo
 
 data Frame = Frame
   { pc :: Addr

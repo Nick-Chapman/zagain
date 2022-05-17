@@ -4,11 +4,12 @@ module Semantics (theEffect) where
 
 import Data.Bits ((.&.),shiftR)
 import Data.List (intercalate)
-import Data.List.Split (splitOn)
 import Data.List.Extra (lower)
+import Data.List.Split (splitOn)
 import Decode (makeTarget)
 import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
+import Header (Header(..))
 import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
 import Operation (Operation,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import qualified Data.Char as Char (chr,ord)
@@ -34,7 +35,7 @@ eval = \case
     if funcAddress == 0 then setTarget target 0 else do
       actuals <- mapM evalArg args
       PushFrame funcAddress target
-      rh <- FetchHeader
+      rh <- FetchRoutineHeader
       setLocals rh actuals
 
   Op.Clear_attr arg1 arg2 -> do
@@ -232,7 +233,7 @@ eval = \case
     rawTyped <- ReadInputFromUser
     t_buf :: Addr <- fromIntegral <$> evalArg arg1
     p_buf :: Addr <- fromIntegral <$> evalArg arg2
-    dictBase :: Addr <- fromIntegral <$> getWord 0x8 -- TODO move to header
+    Header{dictionary=dictBase} <- StoryHeader
     Dict{seps,entryLength,strings} <- FetchDict
     -- +4 : #seps byte, entryLength byte, #entries word
     let baseEntries :: Addr = dictBase + fromIntegral (length seps + 4)
@@ -373,8 +374,8 @@ setTarget var v = case var of
 
 globalAddr :: Byte -> Eff Addr
 globalAddr b = do
-  globalBase :: Value <- getWord 0xC
-  pure $ fromIntegral (globalBase + 2 * fromIntegral b)
+  Header{globalVars} <- StoryHeader
+  pure (globalVars + 2 * fromIntegral b)
 
 setLocals :: RoutineHeader -> [Value] -> Eff ()
 setLocals (Op.RoutineHeader defs) actuals = do
