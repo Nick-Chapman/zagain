@@ -2,19 +2,10 @@
 -- | Semantics of z-machine object-table operations.
 module Objects
   ( getShortName
-  , putProp
-  , getProp
-  , getPropAddr
-  , getPropLen
-  , getNextProp
-  , testAttr
-  , setAttr
-  , clearAttr
-  , insertObj
-  , removeObj
-  , getParent
-  , getSibling
-  , getChild
+  , testAttr, setAttr, clearAttr
+  , FamilyMember(Parent,Sibling,Child), getFM
+  , insertObj, removeObj
+  , getProp, putProp, getPropAddr, getPropLen, getNextProp
   ) where
 
 import Control.Monad (when)
@@ -23,50 +14,119 @@ import Eff (Eff(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value)
 
+
+objectAddr :: Int -> Eff Addr -- TODO: move static calcs to header?
+objectAddr o = do
+  Header{zv,objectTable=base} <- StoryHeader
+  let f = formatOfVersion zv
+  let objectEntrySize = numByesForAttribute f + (3 * objectIdSize f) + 2
+  let propDefaultsSize = 2 * numProps f
+  pure (base + fromIntegral (propDefaultsSize + (o-1) * objectEntrySize))
+
 getShortName :: Int -> Eff String -- TODO: take Value instead of Int (everywhere)
-getShortName o = do
-  ob <- getObject o
-  let Object{propTable=PropTable{shortName}} = ob
-  pure shortName
+getShortName x = do
+  a <- objectAddr x
+  a' <- getAddress (a+7)
+  shortNameLen <- GetByte a'
+  if shortNameLen == 0 then pure "" else GetText (a'+1)
+
+--[attributes]--------------------------------------------------------
 
 testAttr :: Int -> Int -> Eff Bool
-testAttr o n = do
-  Header{zv} <- StoryHeader
-  let f = formatOfVersion zv
-  let maxAttNum = numByesForAttribute f * 8
-  when (n >= maxAttNum) $ error (show ("attribute number too big",n))
-  ob <- getObject o
-  let Object{atts=Attributes bools} = ob
-  when (length bools /= maxAttNum) $ error "unexpected attribute bools"
-  pure $ head (drop n bools)
+testAttr x n = do
+  a <- objectAddr x
+  let d = n `div` 8
+  let m = n `mod` 8
+  let aa = a + fromIntegral d
+  b <- GetByte aa
+  pure $ b `testBit` (7-m)
 
 setAttr :: Int -> Int -> Eff ()
-setAttr o n = do
-  a <- objectAddr o
+setAttr x n = do
+  a <- objectAddr x
   let d = n `div` 8
   let m = n `mod` 8
   let aa = a + fromIntegral d
   old <- GetByte aa
   let new = old `setBit` (7-m)
   SetByte aa new
-  pure ()
 
 clearAttr :: Int -> Int -> Eff ()
-clearAttr o n = do
-  a <- objectAddr o
+clearAttr x n = do
+  a <- objectAddr x
   let d = n `div` 8
   let m = n `mod` 8
   let aa = a + fromIntegral d
   old <- GetByte aa
   let new = old `clearBit` (7-m)
   SetByte aa new
-  pure ()
+
+--[object containment hierarchy]--------------------------------------
+
+data FamilyMember = Parent | Sibling | Child
+
+offsetFM :: FamilyMember -> Int
+offsetFM = \case
+  Parent -> 4
+  Sibling -> 5
+  Child -> 6
+
+getFM :: FamilyMember -> Int -> Eff Int
+getFM fm x = do
+  a <- objectAddr x
+  fromIntegral <$> GetByte (a + fromIntegral (offsetFM fm))
+
+setFM :: FamilyMember -> Int -> Int -> Eff ()
+setFM fm x y = do
+  a <- objectAddr x
+  SetByte (a + fromIntegral (offsetFM fm)) (byteOfInt y)
+
+byteOfInt :: Int -> Byte
+byteOfInt i = do
+  if i < 0 || i > 255 then error (show ("byteOfInt",i)) else fromIntegral i
+
+
+insertObj :: Int -> Int -> Eff ()
+insertObj x dest = do
+  unlink x
+  setFM Parent x dest
+  oldChild <- getFM Child dest
+  setFM Sibling x oldChild
+  setFM Child dest x
+
+removeObj :: Int -> Eff ()
+removeObj x = do
+  unlink x
+  setFM Parent x 0
+
+unlink :: Int -> Eff ()
+unlink this = do
+  oldP <- getFM Parent this
+  when (oldP /= 0) $ do
+    child <- getFM Child oldP
+    case child == this of
+      True -> do
+        thisSib <- getFM Sibling this
+        setFM Child oldP thisSib
+      False -> do
+        loop child
+      where
+        loop :: Int -> Eff ()
+        loop x = do
+          when (x == 0) $ error "unlink loop, failed to find unlinkee"
+          sib <- getFM Sibling x
+          case  sib == this of
+            False -> loop sib
+            True -> do
+              thisSib <- getFM Sibling this
+              setFM Sibling x thisSib
+
+--[properties]--------------------------------------------------------
 
 getProp :: Int -> Int -> Eff Value
-getProp o n = do
+getProp x n = do
   Header{objectTable=base} <- StoryHeader
-  ob <- getObject o
-  let Object{propTable=PropTable{props}} = ob
+  props <- getPropertyTable x
   let xs = [ dataBytes | Prop{number,dataBytes} <- props, number == n ]
   x <-
     case xs of
@@ -84,9 +144,8 @@ getProp o n = do
     _ -> error "expected 1 or 2 bytes for prop value"
 
 putProp :: Int -> Int -> Value -> Eff ()
-putProp o n v = do
-  ob <- getObject o
-  let Object{propTable=PropTable{props}} = ob
+putProp x n v = do
+  props <- getPropertyTable x
   let xs = [ pr | pr@Prop{number} <- props, number == n ]
   pr <-
     case xs of
@@ -106,9 +165,8 @@ putProp o n v = do
     _ -> error "expected 1 or 2 bytes for prop value"
 
 getPropAddr :: Int -> Int -> Eff Value
-getPropAddr o n = do
-  ob <- getObject o
-  let Object{propTable=PropTable{props}} = ob
+getPropAddr x n = do
+  props <- getPropertyTable x
   case [ dataAddr | Prop{number,dataAddr} <- props, number == n ] of
     [a] -> pure a
     [] -> pure 0
@@ -122,147 +180,25 @@ getPropLen a = do
     pure numBytes
 
 getNextProp :: Int -> Int -> Eff Int
-getNextProp o p = do
-  ob <- getObject o
-  let Object{propTable=PropTable{props}} = ob
+getNextProp x p = do
+  props <- getPropertyTable x
   let bigger = [ n | Prop{number=n} <- props, p == 0 || n < p ]
   case bigger of
     [] -> pure 0
     _ -> pure $ maximum bigger
 
-unlink :: Int -> Eff ()
-unlink this = do
-  oldP <- getParent this
-  when (oldP /= 0) $ do
-    child <- getChild oldP
-    case child == this of
-      True -> do
-        thisSib <- getSibling this
-        setChild oldP (byteOfInt thisSib)
-      False -> do
-        loop child
-      where
-        loop :: Int -> Eff ()
-        loop x = do
-          when (x == 0) $ error "unlink loop, failed to find unlinkee"
-          sib <- getSibling x
-          case  sib == this of
-            False -> loop sib
-            True -> do
-              thisSib <- getSibling this
-              setSibling x (byteOfInt thisSib)
-
-insertObj :: Int -> Int -> Eff ()
-insertObj o dest = do
-  unlink o
-  setParent o (byteOfInt dest)
-  oldChild <- getChild dest
-  setSibling o (byteOfInt oldChild)
-  setChild dest (byteOfInt o)
-
-removeObj :: Int -> Eff ()
-removeObj o = do
-  unlink o
-  setParent o 0
-
-byteOfInt :: Int -> Byte
-byteOfInt i = do
-  if i < 0 || i > 255 then error (show ("byteOfInt",i)) else fromIntegral i
-
-setParent :: Int -> Byte -> Eff ()
-setParent x p = do
+getPropertyTable :: Int -> Eff [Prop]
+getPropertyTable x = do
   a <- objectAddr x
-  SetByte (a+4) p
-
-setSibling :: Int -> Byte -> Eff ()
-setSibling x p = do
-  a <- objectAddr x
-  SetByte (a+5) p
-
-setChild :: Int -> Byte -> Eff ()
-setChild x p = do
-  a <- objectAddr x
-  SetByte (a+6) p
-
-getParent :: Int -> Eff Int -- TODO: capture common pattern for parent/sibling/child
-getParent o = do
-  ob <- getObject o
-  let Object{parent} = ob
-  pure parent
-
-getSibling :: Int -> Eff Int
-getSibling o = do
-  ob <- getObject o
-  let Object{sibling} = ob
-  pure sibling
-
-getChild :: Int -> Eff Int
-getChild o = do
-  ob <- getObject o
-  let Object{child} = ob
-  pure child
-
-data Object = Object -- TODO: remove
-  { id :: Int
-  , atts :: Attributes
-  , parent :: Int
-  , sibling :: Int
-  , child :: Int
-  , propTable :: PropTable
-  }
-  deriving Show
-
-data Attributes = Attributes [Bool]
-
-data PropTable = PropTable
-  { shortName :: String
-  , props :: [Prop]
-  }
-  deriving Show
+  a' <- getAddress (a+7)
+  shortNameLen <- GetByte a'
+  props <- getPropsA (a' + 1 + fromIntegral (2 * shortNameLen))
+  pure props
 
 data Prop = Prop { number :: Int, dataAddr :: Value, dataBytes :: [Byte] }
-  deriving Show
 
-instance Show Attributes where
-  show (Attributes bs) = [ if b then '1' else '0' | b <- bs ]
-
-getObject :: Int -> Eff Object -- TODO: avoid calling this when implementing z-machine operations
-getObject id = do
-  a <- objectAddr id
-  atts <- getAttributes a
-  parent <- fromIntegral <$> GetByte (a+4) -- TODO: capture 4/5/6 from Relation
-  sibling <- fromIntegral <$> GetByte (a+5)
-  child <- fromIntegral <$> GetByte (a+6)
-  a' <- getAddress (a+7)
-  propTable <- getPropertyTable a'
-  pure $ Object { id, atts, parent, sibling, child, propTable }
-
-objectAddr :: Int -> Eff Addr
-objectAddr o = do
-  Header{zv,objectTable=base} <- StoryHeader
-  let f = formatOfVersion zv
-  let objectEntrySize = numByesForAttribute f + (3 * objectIdSize f) + 2
-  let propDefaultsSize = 2 * numProps f
-  pure (base + fromIntegral (propDefaultsSize + (o-1) * objectEntrySize))
-
-getAttributes :: Addr -> Eff Attributes
-getAttributes a = do
-  Header{zv} <- StoryHeader
-  let f = formatOfVersion zv
-  let n = numByesForAttribute f
-  xs <- getBytes a n
-  let bs = [ x `testBit` i | x <- xs, i <- reverse [0..7] ]
-  pure $ Attributes bs
-
-getPropertyTable :: Addr -> Eff PropTable
-getPropertyTable a = do
-  shortNameLen <- GetByte a
-  shortName <- if shortNameLen == 0 then pure "" else GetText (a+1)
-  props <- getProps (a + 1 + fromIntegral (2 * shortNameLen))
-  pure $ PropTable {shortName,props}
-
-getProps :: Addr -> Eff [Prop]
-getProps a = do
+getPropsA :: Addr -> Eff [Prop]
+getPropsA a = do
   b <- GetByte a
   if b == 0 then pure [] else do
     let number = fromIntegral (b .&. 0x1f)
@@ -270,13 +206,15 @@ getProps a = do
     let dataAddr = fromIntegral (a + 1)
     dataBytes <- getBytes (a+1) numBytes
     let p1 = Prop {number,dataAddr,dataBytes}
-    more <- getProps (a + fromIntegral (numBytes + 1))
+    more <- getPropsA (a + fromIntegral (numBytes + 1))
     pure (p1:more)
+
+--[odds and sods]-----------------------------------------------------
 
 getBytes :: Addr -> Int -> Eff [Byte]
 getBytes a n = sequence [GetByte (a+i) | i <- [0..fromIntegral n - 1]]
 
-getAddress :: Addr -> Eff Addr
+getAddress :: Addr -> Eff Addr -- TODO: consider GetWord primitive
 getAddress a = do
   hi <- GetByte a
   lo <- GetByte (a+1)

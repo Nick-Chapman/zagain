@@ -11,6 +11,7 @@ import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
 import Header (Header(..))
 import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
+import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import qualified Data.Char as Char (chr,ord)
 import qualified Objects
@@ -60,7 +61,7 @@ eval = \case
 
   Op.Get_child arg target label -> do
     v <- evalArg arg
-    res <- Objects.getChild (fromIntegral v)
+    res <- Objects.getFM Child (fromIntegral v)
     setTarget target (fromIntegral res)
     branchMaybe label (res /= 0)
 
@@ -72,7 +73,7 @@ eval = \case
 
   Op.Get_parent arg target -> do
     v <- evalArg arg
-    res <- Objects.getParent (fromIntegral v)
+    res <- Objects.getFM Parent (fromIntegral v)
     setTarget target (fromIntegral res)
 
   Op.Get_prop arg1 arg2 target -> do
@@ -94,7 +95,7 @@ eval = \case
 
   Op.Get_sibling arg target label -> do
     v <- evalArg arg
-    res <- Objects.getSibling (fromIntegral v)
+    res <- Objects.getFM Sibling (fromIntegral v)
     setTarget target (fromIntegral res)
     let bFix = (res /= 0)
     branchMaybe label bFix
@@ -127,7 +128,7 @@ eval = \case
   Op.Jin arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    p <- fromIntegral <$> Objects.getParent (fromIntegral v1)
+    p <- fromIntegral <$> Objects.getFM Parent (fromIntegral v1)
     branchMaybe label (v2 == p)
 
   Op.Jl arg1 arg2 label -> do
