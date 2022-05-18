@@ -24,6 +24,7 @@ data Eff a where
   FetchDict :: Eff Dict
   PushFrame :: Addr -> Target -> Eff ()
   PopFrame :: Eff Target
+  GetPC :: Eff Addr
   SetPC :: Addr -> Eff ()
   GetLocal :: Byte -> Eff Value
   SetLocal :: Byte -> Value -> Eff ()

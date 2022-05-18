@@ -18,7 +18,9 @@ import Numbers (Byte,Addr,Value)
 import Text.Printf (printf)
 
 data Operation -- TODO: check naming matches spec (will change trace output / regression)
-  = Add Arg Arg Target
+  = BadOperation String
+
+  | Add Arg Arg Target
   | And_ Arg Arg Target
   | Call Func Args Target
   | Clear_attr Arg Arg
@@ -92,7 +94,7 @@ newtype Args = Args [Arg] -- TODO: deprecate (changes regression)
 instance Show Args where
   show (Args xs) = printf "(%s)" (intercalate " " (map (printf "(%s)" . show) xs))
 
-data Func = Floc Addr | Fvar Target
+data Func = Floc Addr | Fvar Target | BadFunc
   deriving Show
 
 data Arg = Con Value | Var Target
@@ -124,9 +126,10 @@ bracket i = if needBracket i then printf "(%s)" else id
       Rtrue -> False
       _ -> True
 
-data RoutineHeader = RoutineHeader [Value]
+data RoutineHeader = BadRoutineHeader | RoutineHeader [Value]
 
 instance Show RoutineHeader where
-  show (RoutineHeader xs) =
-    printf "((var_initializations (%s)))" (intercalate " " (map show xs))
-
+  show = \case
+    BadRoutineHeader -> "(bad routine header: n>15)"
+    RoutineHeader xs ->
+      printf "((var_initializations (%s)))" (intercalate " " (map show xs))

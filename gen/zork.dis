@@ -1,4 +1,113 @@
 Found 224 reachable routines:
+Found 549 candidate routines:
+Found 572 combined routines:
+--------------------------------------------------
+[12202] ((var_initializations ()))
+[12203] (Jump 12460)
+--------------------------------------------------
+[12210] ((var_initializations ()))
+[12211] (Jump 12222)
+--------------------------------------------------
+[12236] ((var_initializations ()))
+[12237] (Return (Con 511))
+--------------------------------------------------
+[15665] ((var_initializations (32769 30 59085 11841 63744 7910 58117 8937 30 60058 1345 40192 7914)))
+[15692] (Return (Con 45))
+--------------------------------------------------
+[15871] ((var_initializations ()))
+[15872] (Je ((Con 166) (Var (Global 191))) (Branch false (Dloc 09028)))
+[15877] (Print_ret " The drwhich eto c ")
+--------------------------------------------------
+[15969] ((var_initializations ()))
+[15970] (Jl (Con 52) (Var (Global 146)) (Branch false (Dloc 23175)))
+[15975] (Return (Con 34))
+--------------------------------------------------
+[15996] ((var_initializations (34)))
+[15999] (Return (Con 44499))
+--------------------------------------------------
+[16115] ((var_initializations (35)))
+[16118] (Div (Var (Global 209)) (Con 69) (Global 49))
+[16122] (Return (Con 0))
+--------------------------------------------------
+[16151] ((var_initializations ()))
+[16152] (Dec_check (Con 210) (Var (Global 137)) (Branch true (Dloc 18780)))
+[16157] (Print_paddr (Con 0))
+[16159] (Dec_check (Con 210) (Var (Global 188)) (Branch true (Dloc 09315)))
+[16164] (Return (Con 0))
+--------------------------------------------------
+[16627] ((var_initializations ()))
+[16628] (Store (Con 209) (Var (Global 180)))
+[16631] (Inc (Var (Global 49)))
+[16633] (Return (Var Sp))
+--------------------------------------------------
+[16837] ((var_initializations ()))
+[16838] (Load_word (Con 72) (Var (Global 176)) (Global 149))
+[16842] (Je ((Var (Global 139)) (Con 0)) (Branch false (Dloc 12566)))
+[16847] Rfalse
+--------------------------------------------------
+[16879] ((var_initializations ()))
+[16880] (Load_byte (Con 217) (Var (Global 152)) (Global 149))
+[16884] (Jz (Con 256) (Branch false (Dloc 13008)))
+[16889] (Return (Var (Local 5)))
+--------------------------------------------------
+[17005] ((var_initializations ()))
+[17006] (Get_prop_addr (Con 230) (Var (Global 213)) (Global 195))
+[17010] (Jz (Con 256) (Branch false (Dloc 13663)))
+[17015] (Return (Con 10))
+--------------------------------------------------
+[17159] ((var_initializations ()))
+[17160] (Sub (Con 201) (Var (Global 152)) (Global 149))
+[17164] (Je ((Var (Global 199)) (Con 0)) (Branch false (Dloc 14561)))
+[17169] (Get_prop_len (Con 165) (Global 112))
+[17172] (Je ((Con 0) (Con 53)) (Branch true (Dloc 17199)))
+[17176] (Get_prop_len (Con 165) (Global 49))
+[17179] (Jump 17234)
+--------------------------------------------------
+[17418] ((var_initializations ()))
+[17419] (Je ((Var (Global 193)) (Con 196)) (Branch true (Dloc 10575)))
+[17424] Ret_popped
+--------------------------------------------------
+[17677] ((var_initializations ()))
+[17678] (Test (Var (Global 55)) (Con 221) (Branch true (Dloc 17688)))
+[17682] (Je ((Var (Global 180)) (Con 0)) (Branch false (Dloc 17691)))
+[17686] (Get_next_prop (Var (Global 145)) (Con 165) (Global 112))
+[17690] (Je ((Con 0) (Con 71)) (Branch false (Dloc 17711)))
+[17694] (Print_ret ".   c lurkin")
+--------------------------------------------------
+[17865] ((var_initializations (74)))
+[17868] (Return (Con 168))
+--------------------------------------------------
+[17873] ((var_initializations ()))
+[17874] (Set_attr (Var (Global 66)) (Con 158))
+[17877] (Test_attr (Con 65) (Var (Global 185)) (Branch false (Dloc 17955)))
+[17882] (Div (Var (Global 149)) (Con 87) (Global 49))
+[17886] Ret_popped
+--------------------------------------------------
+[18797] ((var_initializations ()))
+[18798] (Je ((Var (Global 54)) (Var (Global 226))) (Branch true (Dloc 24723)))
+[18803] (Print_ret " probably mbeumleading c ")
+--------------------------------------------------
+[18881] ((var_initializations ()))
+[18882] (Je ((Var (Global 158)) (Var (Global 212))) (Branch true (Dloc 12038)))
+[18887] (Return (Con 0))
+--------------------------------------------------
+[18965] ((var_initializations ()))
+[18966] (Jl (Var (Global 10)) (Var (Global 182)) (Branch false (Dloc 12185)))
+[18971] (Je ((Con 0) (Con 98)) (Branch false (Dloc 12494)))
+[18976] (Inc (Var (Global 112)))
+[18978] (Je ((Con 0) (Con 98)) (Branch false (Dloc 12573)))
+[18983] (Inc (Var (Global 49)))
+[18985] Ret_popped
+--------------------------------------------------
+[19546] ((var_initializations ()))
+[19547] (Jin (Var (Global 214)) (Var (Global 197)) (Branch false (Dloc 16606)))
+[19552] (Je ((Con 0) (Con 102)) (Branch true (Dloc 19596)))
+[19556] (Return (Con 26))
+--------------------------------------------------
+[20024] ((var_initializations (0)))
+[20027] (Print "a ")
+[20030] (Print_obj (Var (Local 1)))
+[20032] Rtrue
 --------------------------------------------------
 [20034] ((var_initializations (0)))
 [20037] (Jz (Var (Global 60)) (Branch true (Dloc 20049)))
@@ -38,6 +147,18 @@ Found 224 reachable routines:
 [20155] (Je ((Var (Global 120)) (Con 43)) (Branch false Dfalse))
 [20159] (Call (Floc 37050) ((Con 163)) Sp)
 [20165] Rfalse
+--------------------------------------------------
+[20166] ((var_initializations ()))
+[20167] (Jz (Var (Global 46)) (Branch true (Dloc 20193)))
+[20170] (Test_attr (Con 174) (Con 11) (Branch false (Dloc 20176)))
+[20174] (Return (Con 57))
+[20176] (Print "The grating is closed!")
+[20185] New_line
+[20186] (Call (Floc 38192) ((Con 174)) Sp)
+[20192] Rfalse
+[20193] (Print "You can't go that way.")
+[20204] New_line
+[20205] Rfalse
 --------------------------------------------------
 [20206] ((var_initializations (0)))
 [20209] (Je ((Var (Local 1)) (Con 1)) (Branch false Dfalse))
@@ -101,6 +222,36 @@ Found 224 reachable routines:
 [20490] (Call (Floc 20626) ((Var (Local 2))) Sp)
 [20496] (Print_ret " here!\"")
 --------------------------------------------------
+[20504] ((var_initializations (0 0 0 0)))
+[20513] (Call (Floc 26748) ((Var (Local 1))) (Local 3))
+[20519] (Jg (Var (Local 3)) (Con 1) (Branch false (Dloc 20540)))
+[20523] (Load_word (Var (Local 1)) (Con 1) Sp)
+[20527] (Get_prop (Var Sp) (Con 5) (Local 4))
+[20531] (Jz (Var (Local 4)) (Branch true (Dloc 20540)))
+[20534] (Store (Con 3) (Con 1))
+[20537] (Store (Con 92) (Var (Local 4)))
+[20540] (Je ((Con 1) (Var (Local 3))) (Branch false (Dloc 20555)))
+[20544] (Jz (Var (Local 2)) (Branch true (Dloc 20551)))
+[20547] (Store (Con 134) (Var (Global 76)))
+[20550] Rfalse
+[20551] (Store (Con 135) (Var (Global 76)))
+[20554] Rfalse
+[20555] (Jz (Var (Local 2)) (Branch false (Dloc 20584)))
+[20558] (Print "You wouldn't find any")
+[20573] (Call (Floc 20626) ((Var (Local 2))) Sp)
+[20579] (Print_ret " there.")
+[20584] (Return (Con 11))
+--------------------------------------------------
+[20586] ((var_initializations (0)))
+[20589] (Store (Con 124) (Con 0))
+[20592] (Store (Con 112) (Con 0))
+[20595] (Print "You can't see any")
+[20604] (Je ((Var (Local 1)) (Var (Global 118))) (Branch false (Dloc 20616)))
+[20608] (Call (Floc 27852) () Sp)
+[20613] (Jump 20621)
+[20616] (Call (Floc 27892) () Sp)
+[20621] (Print_ret " here.")
+--------------------------------------------------
 [20626] ((var_initializations (0 0)))
 [20631] (Jz (Var (Global 105)) (Branch true (Dloc 20651)))
 [20634] (Jz (Var (Global 74)) (Branch true (Dloc 20642)))
@@ -122,6 +273,83 @@ Found 224 reachable routines:
 --------------------------------------------------
 [20688] ((var_initializations (0 0)))
 [20693] Rfalse
+--------------------------------------------------
+[20694] ((var_initializations ()))
+[20695] (Je ((Var (Global 120)) (Con 34)) (Branch false Dfalse))
+[20699] (Print_ret "You should say whether you want to go up or down.")
+--------------------------------------------------
+[20775] ((var_initializations ()))
+[20776] (Jz (Var Sp) (Branch false (Dloc 20806)))
+[20779] (Print_ret "I think that phrase is getting a bit worn out.")
+[20806] (Print_ret "Nothing happens here.")
+--------------------------------------------------
+[20822] ((var_initializations ()))
+[20823] (Je ((Var (Global 120)) (Con 50) (Con 18)) (Branch false (Dloc 20841)))
+[20829] (Je ((Var (Global 119)) (Con 8)) (Branch false (Dloc 20841)))
+[20833] (Call (Floc 22396) ((Con 49) (Var (Global 118))) Sp)
+[20840] Rtrue
+[20841] (Je ((Var (Global 0)) (Con 126)) (Branch false (Dloc 20851)))
+[20845] (Call (Floc 60870) () Sp)
+[20850] Ret_popped
+[20851] (Je ((Var (Global 120)) (Con 44)) (Branch false Dfalse))
+[20855] (Print_ret "The ground is too hard for digging here.")
+--------------------------------------------------
+[20874] ((var_initializations ()))
+[20875] (Je ((Var (Global 120)) (Con 56)) (Branch false (Dloc 21049)))
+[20880] (Print_ret "The grue is a sinister, lurking presence in the dark places of the earth. Its favorite diet is adventurers, but its insatiable appetite is tempered by its fear of light. No grue has ever been seen by the light of day, and few have survived its fearsome jaws to tell the tale.")
+[21049] (Je ((Var (Global 120)) (Con 60)) (Branch false (Dloc 21133)))
+[21054] (Print_ret "There is no grue here, but I'm sure there is at least one lurking in the darkness nearby. I wouldn't let my light go out if I were you!")
+[21133] (Je ((Var (Global 120)) (Con 77)) (Branch false Dfalse))
+[21137] (Print_ret "It makes no sound but is always lurking in the darkness nearby.")
+--------------------------------------------------
+[21176] ((var_initializations (0)))
+[21179] (Je ((Var (Global 120)) (Con 111)) (Branch false (Dloc 21236)))
+[21183] (Store (Con 124) (Con 0))
+[21186] (Store (Con 112) (Con 0))
+[21189] (Print_ret "Talking to yourself is said to be a sign of impending mental collapse.")
+[21236] (Je ((Var (Global 120)) (Con 63)) (Branch false (Dloc 21252)))
+[21240] (Je ((Var (Global 119)) (Con 5)) (Branch false (Dloc 21252)))
+[21244] (Call (Floc 22396) ((Con 93) (Var (Global 118))) Sp)
+[21251] Rtrue
+[21252] (Je ((Var (Global 120)) (Con 86)) (Branch false (Dloc 21269)))
+[21256] (Print_ret "Only you can do that.")
+[21269] (Je ((Var (Global 120)) (Con 45)) (Branch false (Dloc 21294)))
+[21273] (Print_ret "You'll have to do that on your own.")
+[21294] (Je ((Var (Global 120)) (Con 51)) (Branch false (Dloc 21321)))
+[21298] (Print_ret "Auto-cannibalism is not the answer.")
+[21321] (Je ((Var (Global 120)) (Con 42) (Con 19)) (Branch false (Dloc 21359)))
+[21327] (Jz (Var (Global 119)) (Branch true (Dloc 21342)))
+[21330] (Test_attr (Var (Global 119)) (Con 29) (Branch false (Dloc 21342)))
+[21334] (Call (Floc 67174) ((Con 39481)) Sp)
+[21341] Ret_popped
+[21342] (Print_ret "Suicide is not the answer.")
+[21359] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 21374)))
+[21363] (Print_ret "How romantic!")
+[21374] (Je ((Var (Global 120)) (Con 56)) (Branch false Dfalse))
+[21378] (Get_parent (Con 151) (Local 1))
+[21381] (Get_parent (Con 153) Sp)
+[21384] (Je ((Var (Global 0)) (Var (Local 1)) (Var Sp)) (Branch false (Dloc 21413)))
+[21390] (Print_ret "Your image in the mirror looks tired.")
+[21413] (Print_ret "That's difficult unless your eyes are prehensile.")
+--------------------------------------------------
+[21446] ((var_initializations ()))
+[21447] (Je ((Var (Global 120)) (Con 61) (Con 93)) (Branch false (Dloc 21476)))
+[21453] (Print_ret "You must specify a direction to go.")
+[21476] (Je ((Var (Global 120)) (Con 60)) (Branch false (Dloc 21497)))
+[21480] (Print_ret "I can't help you there....")
+[21497] (Je ((Var (Global 120)) (Con 44)) (Branch false Dfalse))
+[21501] (Print_ret "Not a chance.")
+--------------------------------------------------
+[21512] ((var_initializations ()))
+[21513] (Je ((Var (Global 120)) (Con 56)) (Branch false (Dloc 21556)))
+[21517] (Print_ret "The zorkmid is the unit of currency of the Great Underground Empire.")
+[21556] (Je ((Var (Global 120)) (Con 60)) (Branch false Dfalse))
+[21560] (Print_ret "The best way to find zorkmids is to go out and look for them.")
+--------------------------------------------------
+[21596] ((var_initializations (0 0 0)))
+[21603] (Call (Floc 21638) ((Var (Local 1)) (Con 1)) (Local 3))
+[21610] (Storew (Var (Local 3)) (Con 1) (Var (Local 2)))
+[21615] (Return (Var (Local 3)))
 --------------------------------------------------
 [21618] ((var_initializations (0 0 0)))
 [21625] (Call (Floc 21638) ((Var (Local 1))) (Local 3))
@@ -808,6 +1036,11 @@ Found 224 reachable routines:
 [24487] (Storew (Var (Global 100)) (Var (Local 1)) (Var Sp))
 [24492] (Jump 24475)
 --------------------------------------------------
+[24495] ((var_initializations ()))
+[24496] (Je ((Con 0) (Con 0)) (Branch false (Dloc 24513)))
+[24500] (Get_next_prop (Var Sp) (Var Sp) (Global 209))
+[24504] (Return (Con 116))
+--------------------------------------------------
 [24496] ((var_initializations (0)))
 [24499] (Load_word (Var (Global 99)) (Con 0) Sp)
 [24503] (Storew (Var (Global 100)) (Con 0) (Var Sp))
@@ -819,6 +1052,24 @@ Found 224 reachable routines:
 [24530] (Store (Con 113) (Con 2))
 [24533] (Store (Con 119) (Con 0))
 [24536] Rtrue
+--------------------------------------------------
+[24507] ((var_initializations ()))
+[24508] (Store (Con 130) (Var (Global 99)))
+[24511] (Add (Var (Global 103)) (Con 1) Sp)
+[24515] (Call (Floc 25502) ((Var (Global 103)) (Var Sp) (Var (Local 1))) Sp)
+[24523] (Load_word (Var (Global 99)) (Con 8) Sp)
+[24527] (Jz (Var Sp) (Branch true (Dloc 24533)))
+[24530] (Store (Con 113) (Con 2))
+[24533] (Store (Con 119) (Con 0))
+[24536] Rtrue
+--------------------------------------------------
+[24537] ((var_initializations ()))
+[24538] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[24543] (Dec_check (Con 1) (Con 0) (Branch true Dtrue))
+[24547] (Load_byte (Var (Global 109)) (Var (Local 2)) Sp)
+[24551] (Print_char (Var Sp))
+[24554] (Inc (Con 2))
+[24556] (Jump 24543)
 --------------------------------------------------
 [24538] ((var_initializations (0 0)))
 [24543] (Dec_check (Con 1) (Con 0) (Branch true Dtrue))
@@ -1022,6 +1273,18 @@ Found 224 reachable routines:
 [25428] (Store (Con 6) (Con 0))
 [25431] (Add (Var (Local 1)) (Con 4) (Local 1))
 [25435] (Jump 25343)
+--------------------------------------------------
+[25438] ((var_initializations (0 0)))
+[25443] (Load_byte (Var (Local 1)) (Con 3) Sp)
+[25447] (Load_byte (Var (Global 109)) (Var Sp) Sp)
+[25451] (Sub (Var Sp) (Con 32) Sp)
+[25455] (Print_char (Var Sp))
+[25458] (Load_byte (Var (Local 1)) (Con 2) Sp)
+[25462] (Sub (Var Sp) (Con 1) (Local 2))
+[25466] (Load_byte (Var (Local 1)) (Con 3) Sp)
+[25470] (Add (Var Sp) (Con 1) Sp)
+[25474] (Call (Floc 24538) ((Var (Local 2)) (Var Sp)) Sp)
+[25481] Ret_popped
 --------------------------------------------------
 [25482] ((var_initializations (0 0)))
 [25487] (Jz (Var (Local 1)) (Branch true Dfalse))
@@ -1340,6 +1603,30 @@ Found 224 reachable routines:
 [26744] (Store (Con 105) (Con 0))
 [26747] Rtrue
 --------------------------------------------------
+[26748] ((var_initializations (0 0 0)))
+[26755] (Store (Con 108) (Con 65535))
+[26760] (Store (Con 106) (Var (Global 75)))
+[26763] (Store (Con 105) (Var (Global 74)))
+[26766] (Storew (Var (Local 1)) (Var (Global 81)) (Con 0))
+[26771] (Get_child (Con 82) (Local 2) (Branch true (Dloc 26775)))
+[26775] (Jz (Var (Local 2)) (Branch false (Dloc 26781)))
+[26778] (Jump 26796)
+[26781] (Call (Floc 27218) ((Var (Local 2)) (Var (Local 1)) (Con 1)) Sp)
+[26789] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 26793)))
+[26793] (Jump 26775)
+[26796] (Load_word (Var (Local 1)) (Var (Global 81)) (Local 3))
+[26800] (Jz (Var (Local 3)) (Branch false (Dloc 26811)))
+[26803] (Call (Floc 27166) ((Con 249) (Con 1) (Con 1)) Sp)
+[26811] (Load_word (Var (Local 1)) (Var (Global 81)) (Local 3))
+[26815] (Jz (Var (Local 3)) (Branch false (Dloc 26826)))
+[26818] (Call (Floc 27166) ((Con 82) (Con 1) (Con 1)) Sp)
+[26826] (Load_word (Var (Local 1)) (Var (Global 81)) (Local 3))
+[26830] (Je ((Var (Local 3)) (Con 1)) (Branch false (Dloc 26838)))
+[26834] (Load_word (Var (Local 1)) (Con 1) (Global 76))
+[26838] (Store (Con 106) (Con 0))
+[26841] (Store (Con 105) (Con 0))
+[26844] (Return (Var (Local 3)))
+--------------------------------------------------
 [26846] ((var_initializations (0 0 0 0 0)))
 [26857] (Store (Con 5) (Var (Local 2)))
 [26860] (Print "Which")
@@ -1586,6 +1873,30 @@ Found 224 reachable routines:
 [27847] (Store (Con 107) (Con 0))
 [27850] (Return (Var (Local 4)))
 --------------------------------------------------
+[27852] ((var_initializations (0)))
+[27855] (Jz (Var (Global 104)) (Branch false (Dloc 27872)))
+[27858] (Load_word (Var (Global 100)) (Con 6) (Local 1))
+[27862] (Load_word (Var (Local 1)) (Con 0) Sp)
+[27866] (Je ((Var Sp) (Con 17356)) (Branch false (Dloc 27878)))
+[27872] (Print " ")
+[27875] (Print_obj (Var (Global 118)))
+[27877] Rtrue
+[27878] (Load_word (Var (Global 100)) (Con 7) Sp)
+[27882] (Call (Floc 25326) ((Var (Local 1)) (Var Sp) (Con 0)) Sp)
+[27890] Ret_popped
+--------------------------------------------------
+[27891] ((var_initializations ()))
+[27892] (Je ((Con 0) (Con 0)) (Branch true (Dloc 19823)))
+[27897] (Load_byte (Var (Global 63)) (Con 116) (Local 8))
+[27901] (Je ((Con 79) (Con 1)) (Branch false Dfalse))
+[27906] (Je ((Var Sp) (Con 17356)) (Branch false (Dloc 27918)))
+[27912] (Print " ")
+[27915] (Print_obj (Var (Global 118)))
+[27917] Rtrue
+[27918] (Load_word (Var (Global 100)) (Con 9) Sp)
+[27922] (Call (Floc 25326) ((Var (Local 1)) (Var Sp) (Con 0)) Sp)
+[27930] Ret_popped
+--------------------------------------------------
 [27932] ((var_initializations (0 0 0 0)))
 [27941] (Test_attr (Var (Local 1)) (Con 7) (Branch true Dfalse))
 [27945] (Jz (Var (Global 90)) (Branch true (Dloc 27974)))
@@ -1606,10 +1917,38 @@ Found 224 reachable routines:
 [28005] (Test_attr (Var (Local 1)) (Var (Global 91)) (Branch true Dtrue))
 [28009] Rfalse
 --------------------------------------------------
+[28010] ((var_initializations ()))
+[28011] (Store (Con 87) (Con 1))
+[28014] (Store (Con 86) (Con 0))
+[28017] (Print_ret "Maximum verbosity.")
+--------------------------------------------------
+[28032] ((var_initializations ()))
+[28033] (Store (Con 87) (Con 0))
+[28036] (Store (Con 86) (Con 0))
+[28039] (Print_ret "Brief descriptions.")
+--------------------------------------------------
+[28054] ((var_initializations ()))
+[28055] (Store (Con 86) (Con 1))
+[28058] (Print_ret "Super-brief descriptions.")
+--------------------------------------------------
 [28080] ((var_initializations ()))
 [28081] (Get_child (Var (Global 111)) Sp (Branch false (Dloc 28092)))
 [28085] (Call (Floc 36522) ((Var (Global 111))) Sp)
 [28091] Ret_popped
+--------------------------------------------------
+[28093] ((var_initializations (16697 21079 15895 36122)))
+[28102] (And_ (Var (Global 25)) (Var (Global 21)) (Global 184))
+[28106] (Inc (Var Sp))
+[28108] (Jl (Con 0) (Con 1) (Branch false Dfalse))
+[28113] (Call (Floc 66946) () Sp)
+[28118] (Jz (Var (Local 1)) (Branch true (Dloc 28164)))
+[28121] (Print "Do you wish to leave the game? (Y is affirmative): ")
+[28156] (Call (Floc 37084) () Sp)
+[28161] (Jz (Var Sp) (Branch false (Dloc 28167)))
+[28164] (Jz (Var (Local 1)) (Branch false (Dloc 28169)))
+[28167] (Quit)
+[28168] Rtrue
+[28169] (Print_ret "Ok.")
 --------------------------------------------------
 [28108] ((var_initializations (1 0)))
 [28113] (Call (Floc 66946) () Sp)
@@ -1633,6 +1972,23 @@ Found 224 reachable routines:
 [28265] (Save_lab (Branch false (Dloc 28272)))
 [28267] (Print_ret "Ok.")
 --------------------------------------------------
+[28281] ((var_initializations (8 72 1 225 23296 2048 45585 43613 16413 19514 30720 49254 58959 2141 54628)))
+[28312] (Je ((Con 41) (Con 211)) (Branch false (Dloc 28351)))
+[28316] (Div (Var (Global 9)) (Con 25) (Global 40))
+[28320] (Get_prop_addr (Var (Global 97)) (Con 217) (Global 164))
+[28324] (Inc (Var (Global 171)))
+[28326] (Call (Floc 28384) () Sp)
+[28331] Rtrue
+--------------------------------------------------
+[28332] ((var_initializations ()))
+[28333] (Print "Here ends a transcript of interaction with")
+[28362] New_line
+[28363] (Call (Floc 28384) () Sp)
+[28368] (Load_word (Con 0) (Con 8) Sp)
+[28372] (And_ (Var Sp) (Con 65534) Sp)
+[28378] (Storew (Con 0) (Con 8) (Var Sp))
+[28383] Rtrue
+--------------------------------------------------
 [28384] ((var_initializations (17)))
 [28387] (Print "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. ")
 [28456] (Print "All rights reserved.")
@@ -1655,6 +2011,55 @@ Found 224 reachable routines:
 [28597] New_line
 [28598] Rtrue
 --------------------------------------------------
+[28656] ((var_initializations ()))
+[28657] (Print_ret "A hollow voice says \"Fool.\"")
+--------------------------------------------------
+[28680] ((var_initializations (0)))
+[28683] (Je ((Var (Global 126)) (Con 137)) (Branch false (Dloc 28695)))
+[28687] (Call (Floc 22396) ((Var (Global 126)) (Var (Global 125))) Sp)
+[28694] Ret_popped
+[28695] (Jz (Var (Global 125)) (Branch true (Dloc 28711)))
+[28698] (Get_parent (Var (Global 125)) Sp)
+[28701] (Jz (Var Sp) (Branch true (Dloc 28708)))
+[28704] (Test_attr (Var (Global 125)) (Con 7) (Branch false (Dloc 28711)))
+[28708] (Store (Con 1) (Var (Global 125)))
+[28711] (Jz (Var (Global 124)) (Branch true (Dloc 28727)))
+[28714] (Get_parent (Var (Global 124)) Sp)
+[28717] (Jz (Var Sp) (Branch true (Dloc 28724)))
+[28720] (Test_attr (Var (Global 124)) (Con 7) (Branch false (Dloc 28727)))
+[28724] (Store (Con 1) (Var (Global 124)))
+[28727] (Jz (Var (Local 1)) (Branch true (Dloc 28759)))
+[28730] (Je ((Var (Local 1)) (Con 13) (Con 82)) (Branch true (Dloc 28759)))
+[28736] (Print "You can't see the ")
+[28745] (Print_obj (Var (Local 1)))
+[28747] (Print " anymore.")
+[28756] New_line
+[28757] (Return (Con 2))
+[28759] (Call (Floc 22396) ((Var (Global 126)) (Var (Global 125)) (Var (Global 124))) Sp)
+[28767] Ret_popped
+--------------------------------------------------
+[28768] ((var_initializations ()))
+[28769] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 28843)))
+[28774] (Get_prop (Var (Global 118)) (Con 7) Sp)
+[28778] (Jl (Var Sp) (Con 0) (Branch false (Dloc 28810)))
+[28782] (Print "The ")
+[28785] (Print_obj (Var (Global 118)))
+[28787] (Print " is rudely awakened.")
+[28802] New_line
+[28803] (Call (Floc 65752) ((Var (Global 118))) Sp)
+[28809] Ret_popped
+[28810] (Print_ret "He's wide awake, or haven't you noticed...")
+[28843] (Print "The ")
+[28846] (Print_obj (Var (Global 118)))
+[28848] (Print_ret " isn't sleeping.")
+--------------------------------------------------
+[28862] ((var_initializations ()))
+[28863] (Print "Nobody seems to be awaiting your answer.")
+[28886] New_line
+[28887] (Store (Con 124) (Con 0))
+[28890] (Store (Con 112) (Con 0))
+[28893] Rtrue
+--------------------------------------------------
 [28894] ((var_initializations ()))
 [28895] (Test_attr (Var (Global 118)) (Con 30) (Branch true (Dloc 28933)))
 [28899] (Print "I've known strange people, but fighting a ")
@@ -1670,6 +2075,23 @@ Found 224 reachable routines:
 [28999] (Print_obj (Var (Global 119)))
 [29001] (Print_ret ".")
 --------------------------------------------------
+[29014] ((var_initializations (11481)))
+[29017] (Dec_check (Var (Global 184)) (Var (Global 48)) (Branch false (Dloc 29404)))
+[29022] (Inc (Var (Global 154)))
+[29024] (Dec (Con 45568))
+[29027] (Store (Con 152) (Var (Local 5)))
+[29030] (Print_obj (Var (Global 119)))
+[29032] (Print_ret " is suicidal.")
+--------------------------------------------------
+[29047] ((var_initializations ()))
+[29048] Ret_popped
+--------------------------------------------------
+[29050] ((var_initializations ()))
+[29051] (Print_ret "Sorry, my memory is poor. Please give a direction.")
+--------------------------------------------------
+[29088] ((var_initializations ()))
+[29089] (Print_ret "You can't blast anything by using words.")
+--------------------------------------------------
 [29114] ((var_initializations (0)))
 [29117] (Get_parent (Var (Global 111)) (Local 1))
 [29120] (Call (Floc 20688) () Sp)
@@ -1682,6 +2104,28 @@ Found 224 reachable routines:
 [29160] New_line
 [29161] (Return (Con 2))
 --------------------------------------------------
+[29164] ((var_initializations (6976)))
+[29167] (Print "You are already in the ")
+[29176] (Print_obj (Var (Local 1)))
+[29178] (Print "!")
+[29181] New_line
+[29182] (Return (Con 2))
+--------------------------------------------------
+[29204] ((var_initializations (43654 45572 29994 60698 47254)))
+[29215] (Inc (Var (Global 171)))
+[29217] (Return (Con 2))
+--------------------------------------------------
+[29219] ((var_initializations ()))
+[29220] (Je ((Con 0) (Con 0)) (Branch true (Dloc 25643)))
+[29225] (Je ((Var (Global 42)) (Con 116)) (Branch false (Dloc 29275)))
+[29229] (Je ((Con 220) (Con 32)) (Branch true (Dloc 23734)))
+[29234] (Print ".")
+[29237] New_line
+[29238] (Insert_obj (Var (Global 111)) (Var (Global 118)))
+[29241] (Get_prop (Var (Global 118)) (Con 17) Sp)
+[29245] (Call (Fvar Sp) ((Con 2)) Sp)
+[29250] Rtrue
+--------------------------------------------------
 [29220] ((var_initializations (0)))
 [29223] (Print "You are now in the ")
 [29232] (Print_obj (Var (Global 118)))
@@ -1692,12 +2136,62 @@ Found 224 reachable routines:
 [29245] (Call (Fvar Sp) ((Con 2)) Sp)
 [29250] Rtrue
 --------------------------------------------------
+[29252] ((var_initializations ()))
+[29253] (Call (Floc 22396) ((Con 23) (Var (Global 118)) (Con 6)) Sp)
+[29261] Ret_popped
+--------------------------------------------------
+[29262] ((var_initializations ()))
+[29263] (Print_ret "If you wish, but heaven only knows why.")
+--------------------------------------------------
+[29290] ((var_initializations ()))
+[29291] (Print_ret "Bug? Not in a flawless program like this! (Cough, cough).")
+--------------------------------------------------
 [29336] ((var_initializations ()))
 [29337] (Test_attr (Var (Global 119)) (Con 25) (Branch false (Dloc 29345)))
 [29341] (Test_attr (Var (Global 119)) (Con 20) (Branch true Dfalse))
 [29345] (Print "With a ")
 [29352] (Print_obj (Var (Global 119)))
 [29354] (Print_ret "??!?")
+--------------------------------------------------
+[29362] ((var_initializations ()))
+[29363] (Call (Floc 20688) () Sp)
+[29368] (Jz (Var Sp) (Branch false Dfalse))
+[29371] (Test_attr (Var (Global 118)) (Con 26) (Branch false (Dloc 29471)))
+[29376] (Jin (Var (Global 118)) (Var (Global 111)) (Branch true (Dloc 29384)))
+[29380] (Jin (Var (Global 111)) (Var (Global 118)) (Branch false (Dloc 29439)))
+[29384] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[29390] (Print "The ")
+[29393] (Print_obj (Var (Global 118)))
+[29395] (Print " catches fire. Unfortunately, you were ")
+[29414] (Jin (Var (Global 111)) (Var (Global 118)) (Branch false (Dloc 29424)))
+[29418] (Print "in")
+[29421] (Jump 29431)
+--------------------------------------------------
+[29432] ((var_initializations (33587 39495 184 57391 15453 34304 45700 9642 34483 262 25869 11008 11735 10241 6181)))
+[29463] (Jl (Con 147) (Var (Global 83)) (Branch false (Dloc 29483)))
+[29467] (And_ (Con 37) (Var (Global 184)) (Global 149))
+[29471] (Print "You can't burn a ")
+[29480] (Print_obj (Var (Global 118)))
+[29482] (Print_ret ".")
+--------------------------------------------------
+[29486] ((var_initializations ()))
+[29487] (Print_ret "Preposterous!")
+--------------------------------------------------
+[29498] ((var_initializations ()))
+[29499] (Call (Floc 29550) ((Con 22) (Var (Global 118))) Sp)
+[29506] Ret_popped
+--------------------------------------------------
+[29508] ((var_initializations ()))
+[29509] (Call (Floc 29550) ((Con 23) (Var (Global 118))) Sp)
+[29516] Ret_popped
+--------------------------------------------------
+[29518] ((var_initializations ()))
+[29519] (Test_attr (Var (Global 118)) (Con 27) (Branch false (Dloc 29531)))
+[29523] (Call (Floc 22396) ((Con 25) (Var (Global 118))) Sp)
+[29530] Rtrue
+[29531] (Print "You can't climb onto the ")
+[29544] (Print_obj (Var (Global 118)))
+[29546] (Print_ret ".")
 --------------------------------------------------
 [29550] ((var_initializations (23 0 0 0 0)))
 [29561] (Jz (Var (Local 2)) (Branch false (Dloc 29570)))
@@ -1735,6 +2229,95 @@ Found 224 reachable routines:
 [29698] (Print_ret "Climbing the walls is to no avail.")
 [29721] (Print_ret "You can't do that!")
 --------------------------------------------------
+[29730] ((var_initializations ()))
+[29731] (Test_attr (Var (Global 118)) (Con 19) (Branch true (Dloc 29767)))
+[29735] (Test_attr (Var (Global 118)) (Con 23) (Branch true (Dloc 29767)))
+[29739] (Print "You must tell me how to do that to a ")
+[29762] (Print_obj (Var (Global 118)))
+[29764] (Print_ret ".")
+[29767] (Test_attr (Var (Global 118)) (Con 10) (Branch true (Dloc 29829)))
+[29771] (Get_prop (Var (Global 118)) (Con 10) Sp)
+[29775] (Jz (Var Sp) (Branch true (Dloc 29829)))
+[29778] (Test_attr (Var (Global 118)) (Con 11) (Branch false (Dloc 29820)))
+[29782] (Clear_attr (Var (Global 118)) (Con 11))
+[29785] (Print "Closed.")
+[29792] New_line
+[29793] (Jz (Var (Global 66)) (Branch true Dtrue))
+[29796] (Call (Floc 27746) ((Var (Global 0))) (Global 66))
+[29802] (Jz (Var (Global 66)) (Branch false Dtrue))
+[29805] (Print_ret "It is now pitch black.")
+[29820] (Print_ret "It is already closed.")
+[29829] (Test_attr (Var (Global 118)) (Con 23) (Branch false (Dloc 29863)))
+[29833] (Test_attr (Var (Global 118)) (Con 11) (Branch false (Dloc 29854)))
+[29837] (Clear_attr (Var (Global 118)) (Con 11))
+[29840] (Print "The ")
+[29843] (Print_obj (Var (Global 118)))
+[29845] (Print_ret " is now closed.")
+[29854] (Print_ret "It is already closed.")
+[29863] (Print_ret "You cannot close that.")
+--------------------------------------------------
+[29874] ((var_initializations ()))
+[29875] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 29899)))
+[29879] (Print "The ")
+[29882] (Print_obj (Var (Global 118)))
+[29884] (Print_ret " pays no attention.")
+[29899] (Print_ret "You cannot talk to that!")
+--------------------------------------------------
+[29910] ((var_initializations ()))
+[29911] (Je ((Var (Global 118)) (Con 10)) (Branch false (Dloc 29942)))
+[29915] (Print_ret "Well, for one, you are playing Zork...")
+[29942] (Print_ret "You have lost your mind.")
+--------------------------------------------------
+[29956] ((var_initializations ()))
+[29957] (Print_ret "You can't cross that!")
+--------------------------------------------------
+[29968] ((var_initializations ()))
+[29969] (Jz (Var (Global 118)) (Branch true (Dloc 30010)))
+[29972] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 29999)))
+[29976] (Print_ret "Insults of this nature won't help you.")
+[29999] (Print_ret "What a loony!")
+[30010] (Print_ret "Such language in a high-class establishment like this!")
+--------------------------------------------------
+[30050] ((var_initializations ()))
+[30051] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 30064)))
+[30055] (Call (Floc 22396) ((Con 19) (Var (Global 118)) (Var (Global 119))) Sp)
+[30063] Ret_popped
+[30064] (Test_attr (Var (Global 118)) (Con 26) (Branch false (Dloc 30170)))
+[30069] (Test_attr (Var (Global 119)) (Con 29) (Branch false (Dloc 30170)))
+[30074] (Jin (Var (Global 111)) (Var (Global 118)) (Branch false (Dloc 30113)))
+[30078] (Print_ret "Not a bright idea, especially since you're in it.")
+--------------------------------------------------
+[30118] ((var_initializations ()))
+[30119] (Print "Your skillful ")
+[30128] (Print_obj (Var (Global 119)))
+[30130] (Print "smanship slices the ")
+[30143] (Print_obj (Var (Global 118)))
+[30145] (Print_ret " into innumerable slivers which blow away.")
+--------------------------------------------------
+[30187] ((var_initializations ()))
+[30188] (Test_attr (Con 152) (Var (Local 5)) (Branch true (Dloc 24694)))
+[30193] (Print_ret " is hardly adequate.")
+--------------------------------------------------
+[30226] ((var_initializations (32933)))
+[30229] (Print_obj (Var (Global 118)))
+[30231] (Print_ret "....")
+--------------------------------------------------
+[30238] ((var_initializations ()))
+[30239] (Print_ret "Come on, now!")
+--------------------------------------------------
+[30250] ((var_initializations ()))
+[30251] (Jz (Var (Global 119)) (Branch false (Dloc 30257)))
+[30254] (Store (Con 135) (Con 1))
+[30257] (Je ((Var (Global 119)) (Con 121)) (Branch false (Dloc 30284)))
+[30261] (Print_ret "There's no reason to be digging here.")
+[30284] (Test_attr (Var (Global 119)) (Con 28) (Branch false (Dloc 30316)))
+[30288] (Print "Digging with the ")
+[30299] (Print_obj (Var (Global 119)))
+[30301] (Print_ret " is slow and tedious.")
+[30316] (Print "Digging with a ")
+[30327] (Print_obj (Var (Global 119)))
+[30329] (Print_ret " is silly.")
+--------------------------------------------------
 [30338] ((var_initializations ()))
 [30339] (Get_parent (Var (Global 111)) Sp)
 [30342] (Je ((Var Sp) (Var (Global 118))) (Branch true (Dloc 30358)))
@@ -1750,6 +2333,16 @@ Found 224 reachable routines:
 [30411] New_line
 [30412] (Return (Con 2))
 --------------------------------------------------
+[30414] ((var_initializations ()))
+[30415] (Print_ret "Nothing happens.")
+--------------------------------------------------
+[30428] ((var_initializations ()))
+[30429] (Call (Floc 30482) () Sp)
+[30434] Ret_popped
+--------------------------------------------------
+[30436] ((var_initializations ()))
+[30437] (Print_ret "How peculiar!")
+--------------------------------------------------
 [30448] ((var_initializations ()))
 [30449] (Get_parent (Var (Global 111)) Sp)
 [30452] (Je ((Var (Global 118)) (Var Sp)) (Branch false Dfalse))
@@ -1760,6 +2353,47 @@ Found 224 reachable routines:
 [30465] (Call (Floc 37334) () Sp)
 [30470] (Jz (Var Sp) (Branch true Dfalse))
 [30473] (Print_ret "Dropped.")
+--------------------------------------------------
+[30482] ((var_initializations (0 0 0)))
+[30489] (Test_attr (Var (Global 118)) (Con 21) (Branch true (Dloc 30499)))
+[30493] (Push (Con 0))
+[30496] (Jump 30502)
+[30499] (Push (Con 1))
+[30502] (Store (Con 1) (Var Sp))
+[30505] (Jz (Var (Local 1)) (Branch true (Dloc 30596)))
+[30509] (Jin (Var (Global 118)) (Var (Global 111)) (Branch true (Dloc 30537)))
+[30513] (Get_parent (Var (Global 118)) Sp)
+[30516] (Jin (Var Sp) (Var (Global 111)) (Branch true (Dloc 30537)))
+[30520] (Print "You're not holding that.")
+[30533] New_line
+[30534] (Jump 30594)
+--------------------------------------------------
+[30571] ((var_initializations (1410 4842 6705 30733 3873 789 21285 51365 57391 15453 34304 48048 19078)))
+[30598] (Mul (Con 0) (Con 104) (Local 13))
+[30602] (Jl (Con 1) (Con 163) (Branch true (Dloc 32144)))
+[30607] (Jin (Var (Global 118)) (Con 247) (Branch true (Dloc 30619)))
+[30611] (Jin (Var (Global 118)) (Con 249) (Branch true (Dloc 30619)))
+[30615] (Je ((Var (Global 118)) (Con 13)) (Branch false (Dloc 30625)))
+[30619] (Call (Floc 30734) () Sp)
+[30624] Ret_popped
+[30625] (Jz (Var (Local 3)) (Branch false (Dloc 30643)))
+[30628] (Print_ret "You don't have any to drink.")
+[30643] (Jin (Var (Local 3)) (Var (Global 111)) (Branch true (Dloc 30669)))
+[30647] (Print "You have to be holding the ")
+[30660] (Print_obj (Var (Local 3)))
+[30662] (Print_ret " first.")
+--------------------------------------------------
+[30670] ((var_initializations (3034 45587 54376)))
+[30677] Ret_popped
+--------------------------------------------------
+[30701] ((var_initializations ()))
+[30702] Ret_popped
+--------------------------------------------------
+[30734] ((var_initializations ()))
+[30735] (Print "Thank you very much. I was rather thirsty (from all this talking, probably).")
+[30784] New_line
+[30785] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[30791] Ret_popped
 --------------------------------------------------
 [30792] ((var_initializations (0 0 0 0 0)))
 [30803] (Load_byte (Var (Global 110)) (Con 1) Sp)
@@ -1784,6 +2418,11 @@ Found 224 reachable routines:
 [30877] (Jump 30840)
 [30880] (Print_ret "echo echo ...")
 --------------------------------------------------
+[30894] ((var_initializations ()))
+[30895] (Call (Floc 20688) () Sp)
+[30900] (Call (Floc 30414) () Sp)
+[30905] Ret_popped
+--------------------------------------------------
 [30906] ((var_initializations (0 0)))
 [30911] (Je ((Var (Local 1)) (Var (Global 107))) (Branch false (Dloc 30921)))
 [30915] (Store (Con 123) (Con 0))
@@ -1795,12 +2434,173 @@ Found 224 reachable routines:
 [30935] (Je ((Var (Local 2)) (Var (Global 66))) (Branch true Dtrue))
 [30939] (Print_ret "You are left in the dark...")
 --------------------------------------------------
+[30956] ((var_initializations ()))
+[30957] (Call (Floc 38000) ((Con 21)) Sp)
+[30963] Ret_popped
+--------------------------------------------------
+[30964] ((var_initializations ()))
+[30965] (Get_prop (Var (Global 118)) (Con 8) Sp)
+[30969] (Jz (Var Sp) (Branch true (Dloc 30980)))
+[30972] (Get_prop (Var (Global 118)) (Con 8) Sp)
+[30976] (Print_paddr (Var Sp))
+[30978] New_line
+[30979] Rtrue
+[30980] (Test_attr (Var (Global 118)) (Con 19) (Branch true (Dloc 30988)))
+[30984] (Test_attr (Var (Global 118)) (Con 23) (Branch false (Dloc 30994)))
+[30988] (Call (Floc 32296) () Sp)
+[30993] Ret_popped
+[30994] (Print "There's nothing special about the ")
+[31011] (Print_obj (Var (Global 118)))
+[31013] (Print_ret ".")
+--------------------------------------------------
+[31016] ((var_initializations ()))
+[31017] (Call (Floc 38000) ((Con 20)) Sp)
+[31023] Ret_popped
+--------------------------------------------------
+[31024] ((var_initializations ()))
+[31025] (Print_ret "What a bizarre concept!")
+--------------------------------------------------
+[31044] ((var_initializations (0)))
+[31047] (Jz (Var (Global 119)) (Branch false (Dloc 31094)))
+[31050] (Get_prop_addr (Var (Global 0)) (Con 5) (Local 1))
+[31054] (Jz (Var (Local 1)) (Branch true (Dloc 31094)))
+[31057] (Get_prop_len (Var (Local 1)) Sp)
+[31060] (Sub (Var Sp) (Con 1) Sp)
+[31064] (Call (Floc 27722) ((Con 238) (Var (Local 1)) (Var Sp)) Sp)
+[31072] (Jz (Var Sp) (Branch true (Dloc 31079)))
+[31075] (Store (Con 135) (Con 238))
+[31078] Rfalse
+[31079] (Print_ret "There is nothing to fill it with.")
+[31094] (Je ((Var (Global 119)) (Con 238)) (Branch true Dfalse))
+[31098] (Call (Floc 22396) ((Con 18) (Var (Global 119)) (Var (Global 118))) Sp)
+[31106] Rtrue
+--------------------------------------------------
+[31108] ((var_initializations ()))
+[31109] (Jz (Var (Global 119)) (Branch false (Dloc 31166)))
+[31112] (Call (Floc 38048) ((Con 238) (Var (Global 0))) Sp)
+[31119] (Jz (Var Sp) (Branch true (Dloc 31131)))
+[31122] (Call (Floc 22396) ((Con 59) (Var (Global 118)) (Con 238)) Sp)
+[31130] Rtrue
+[31131] (Get_parent (Var (Global 111)) Sp)
+[31134] (Jin (Con 237) (Var Sp) (Branch false (Dloc 31147)))
+[31138] (Call (Floc 22396) ((Con 59) (Var (Global 118)) (Con 237)) Sp)
+[31146] Rtrue
+--------------------------------------------------
+[31153] ((var_initializations (25643 11729)))
+[31158] (Dec_check (Var (Local 3)) (Con 103) (Branch true (Dloc 34846)))
+[31163] (Inc (Var (Global 184)))
+[31165] (Inc (Var (Global 163)))
+[31167] (Dec_check (Con 82) (Con 27) (Branch true Dfalse))
+[31171] (Jl (Var (Global 100)) (Con 112) (Branch false (Dloc 34585)))
+[31176] (Jz (Con 1385) (Branch false (Dloc 31194)))
+[31180] (Jg (Con 28) (Con 35) (Branch false (Dloc 33553)))
+[31185] (Store (Var (Global 36)) (Var (Global 60)))
+[31188] Ret_popped
+--------------------------------------------------
+[31192] ((var_initializations (0)))
+[31195] (Get_parent (Var (Global 118)) (Local 1))
+[31198] (Je ((Var (Global 118)) (Con 1) (Con 6)) (Branch false (Dloc 31247)))
+[31204] (Print_ret "Within six feet of your head, assuming you haven't left that somewhere.")
+[31247] (Je ((Var (Global 118)) (Con 5)) (Branch false (Dloc 31270)))
+[31251] (Print_ret "You're around here somewhere...")
+[31270] (Je ((Var (Local 1)) (Con 247)) (Branch false (Dloc 31283)))
+[31274] (Print_ret "You find it.")
+[31283] (Jin (Var (Global 118)) (Var (Global 111)) (Branch false (Dloc 31294)))
+[31287] (Print_ret "You have it.")
+--------------------------------------------------
+[31304] ((var_initializations ()))
+[31305] (Jz (Var Sp) (Branch false (Dloc 31312)))
+[31308] (Je ((Var (Global 118)) (Con 13)) (Branch false (Dloc 31321)))
+[31312] (Print_ret "It's right here.")
+[31321] (Test_attr (Var (Local 1)) (Con 30) (Branch false (Dloc 31337)))
+[31325] (Print "The ")
+[31328] (Print_obj (Var (Local 1)))
+[31330] (Print_ret " has it.")
+[31337] (Test_attr (Var (Local 1)) (Con 10) (Branch false (Dloc 31351)))
+[31341] (Print "It's on the ")
+[31346] (Print_obj (Var (Local 1)))
+[31348] (Print_ret ".")
+[31351] (Test_attr (Var (Local 1)) (Con 19) (Branch false (Dloc 31365)))
+[31355] (Print "It's in the ")
+[31360] (Print_obj (Var (Local 1)))
+[31362] (Print_ret ".")
+[31365] (Print_ret "Beats me.")
+--------------------------------------------------
+[31374] ((var_initializations ()))
+[31375] (Print_ret "You're nuts!")
+--------------------------------------------------
+[31382] ((var_initializations ()))
+[31383] (Print_ret "The FROBOZZ Corporation created, owns, and operates this dungeon.")
+--------------------------------------------------
 [31428] ((var_initializations ()))
 [31429] (Call (Floc 38124) ((Var (Global 118))) Sp)
 [31435] (Jz (Var Sp) (Branch false Dfalse))
 [31438] (Print "That's easy for you to say since you don't even have the ")
 [31469] (Print_obj (Var (Global 118)))
 [31471] (Print_ret ".")
+--------------------------------------------------
+[31474] ((var_initializations ()))
+[31475] (Test_attr (Var (Global 119)) (Con 30) (Branch true (Dloc 31500)))
+[31479] (Print "You can't give a ")
+[31488] (Print_obj (Var (Global 118)))
+[31490] (Print " to a ")
+[31495] (Print_obj (Var (Global 119)))
+[31497] (Print_ret "!")
+[31500] (Print "The ")
+[31503] (Print_obj (Var (Global 119)))
+[31505] (Print_ret " refuses it politely.")
+--------------------------------------------------
+[31520] ((var_initializations ()))
+[31521] (Print_ret "Bizarre!")
+--------------------------------------------------
+[31530] ((var_initializations ()))
+[31531] (Jz (Var (Global 118)) (Branch true (Dloc 31613)))
+[31535] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 31565)))
+[31539] (Print "The ")
+[31542] (Print_obj (Var (Global 118)))
+[31544] (Print_ret " bows his head to you in greeting.")
+[31565] (Print "It's a well known fact that only schizophrenics say \"Hello\" to a ")
+[31608] (Print_obj (Var (Global 118)))
+[31610] (Print_ret ".")
+[31613] (Call (Floc 20076) ((Var (Global 54))) Sp)
+[31619] (Print_paddr (Var Sp))
+[31621] New_line
+[31622] Rtrue
+--------------------------------------------------
+[31624] ((var_initializations ()))
+[31625] (Print "The incantation echoes back faintly, but nothing else happens.")
+[31662] New_line
+[31663] (Store (Con 112) (Con 0))
+[31666] (Store (Con 124) (Con 0))
+[31669] Rtrue
+--------------------------------------------------
+[31670] ((var_initializations ()))
+[31671] (Print_ret "How can you inflate that?")
+--------------------------------------------------
+[31686] ((var_initializations ()))
+[31687] (Jin (Var (Global 118)) (Var (Global 119)) (Branch false (Dloc 31721)))
+[31691] (Print "Yes, it is ")
+[31700] (Test_attr (Var (Global 119)) (Con 10) (Branch false (Dloc 31710)))
+[31704] (Print "on")
+[31707] (Jump 31713)
+[31710] (Print "in")
+[31713] (Print " the ")
+[31716] (Print_obj (Var (Global 119)))
+[31718] (Print_ret ".")
+--------------------------------------------------
+[31724] ((var_initializations (25445 55372 47332 45568)))
+[31733] (Call (Floc 37468) ((Con 39500)) Sp)
+[31740] Ret_popped
+--------------------------------------------------
+[31742] ((var_initializations ()))
+[31743] (Print_ret "I'd sooner kiss a pig.")
+--------------------------------------------------
+[31762] ((var_initializations ()))
+[31763] (Test_attr (Var (Global 118)) (Con 23) (Branch false (Dloc 31780)))
+[31767] (Print_ret "Nobody's home.")
+[31780] (Print "Why knock on a ")
+[31791] (Print_obj (Var (Global 118)))
+[31793] (Print_ret "?")
 --------------------------------------------------
 [31796] ((var_initializations ()))
 [31797] (Test_attr (Var (Global 118)) (Con 31) (Branch false (Dloc 31862)))
@@ -1835,11 +2635,70 @@ Found 224 reachable routines:
 [31927] Rtrue
 [31928] (Print_ret "You can't turn that on.")
 --------------------------------------------------
+[31942] ((var_initializations ()))
+[31943] (Test_attr (Var (Global 118)) (Con 27) (Branch false (Dloc 31972)))
+[31947] (Print_ret "You can't launch that by saying \"launch\"!")
+[31972] (Print_ret "That's pretty weird.")
+--------------------------------------------------
+[31990] ((var_initializations ()))
+[31991] (Print_ret "Getting tired?")
+--------------------------------------------------
+[32004] ((var_initializations (0 0)))
+[32009] (Jz (Var (Global 118)) (Branch true (Dloc 32065)))
+[32012] (Jin (Var (Global 118)) (Var (Global 0)) (Branch false (Dloc 32048)))
+[32016] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 32042)))
+[32020] (Print "The ")
+[32023] (Print_obj (Var (Global 118)))
+[32025] (Print_ret " is too big to jump over.")
+[32042] (Call (Floc 34340) () Sp)
+[32047] Ret_popped
+--------------------------------------------------
+[32053] ((var_initializations (25124 49202 37924 6493 51392 45650 4118 416 384)))
+[32072] (Print_paddr (Con 41985))
+[32075] (Jl (Con 65) (Con 2) (Branch false (Dloc 32798)))
+[32080] (Je ((Var (Local 2)) (Con 4)) (Branch false (Dloc 32137)))
+[32084] (Load_byte (Var (Local 1)) (Con 1) Sp)
+[32088] (Load (Var Sp) Sp)
+[32091] (Jz (Var Sp) (Branch false (Dloc 32137)))
+[32094] (Print "This was not a very safe place to try jumping.")
+[32123] New_line
+[32124] (Call (Floc 20076) ((Var (Global 68))) Sp)
+[32130] (Call (Floc 67174) ((Var Sp)) Sp)
+[32136] Ret_popped
+[32137] (Je ((Var (Global 0)) (Con 88)) (Branch false (Dloc 32206)))
+[32142] (Print "In a feat of unaccustomed daring, you manage to land on your feet without killing yourself.")
+[32197] New_line
+[32198] New_line
+[32199] (Call (Floc 38000) ((Con 22)) Sp)
+[32205] Rtrue
+[32206] (Call (Floc 34340) () Sp)
+[32211] Ret_popped
+--------------------------------------------------
+[32216] ((var_initializations ()))
+[32217] Ret_popped
+--------------------------------------------------
+[32218] ((var_initializations ()))
+[32219] (Call (Floc 38000) ((Con 20)) Sp)
+[32225] Ret_popped
+--------------------------------------------------
+[32226] ((var_initializations ()))
+[32227] (Print "The ")
+[32230] (Print_obj (Var (Global 118)))
+[32232] (Print_ret " makes no sound.")
+--------------------------------------------------
+[32246] ((var_initializations ()))
+[32247] (Print_ret "It doesn't seem to work.")
+--------------------------------------------------
 [32260] ((var_initializations ()))
 [32261] (Call (Floc 35994) ((Con 1)) Sp)
 [32267] (Jz (Var Sp) (Branch true Dfalse))
 [32270] (Call (Floc 36174) ((Con 1)) Sp)
 [32276] Ret_popped
+--------------------------------------------------
+[32278] ((var_initializations ()))
+[32279] (Print "There is nothing behind the ")
+[32290] (Print_obj (Var (Global 118)))
+[32292] (Print_ret ".")
 --------------------------------------------------
 [32296] ((var_initializations ()))
 [32297] (Test_attr (Var (Global 118)) (Con 23) (Branch false (Dloc 32354)))
@@ -1871,10 +2730,66 @@ Found 224 reachable routines:
 [32441] (Print_obj (Var (Global 118)))
 [32443] (Print_ret ".")
 --------------------------------------------------
+[32446] ((var_initializations ()))
+[32447] (Test_attr (Var (Global 118)) (Con 10) (Branch false (Dloc 32459)))
+[32451] (Call (Floc 22396) ((Con 57) (Var (Global 118))) Sp)
+[32458] Rtrue
+[32459] (Print "Look on a ")
+[32468] (Print_obj (Var (Global 118)))
+[32470] (Print_ret "???")
+--------------------------------------------------
+[32476] ((var_initializations ()))
+[32477] (Print_ret "There is nothing but dust there.")
+--------------------------------------------------
+[32490] ((var_initializations ()))
+[32491] (Call (Floc 37468) ((Con 39534)) Sp)
+[32498] Ret_popped
+--------------------------------------------------
+[32500] ((var_initializations ()))
+[32501] (Print_ret "You can't do that.")
+--------------------------------------------------
+[32510] ((var_initializations ()))
+[32511] (Print "It's not clear that a ")
+[32522] (Print_obj (Var (Global 118)))
+[32524] (Print_ret " can be melted.")
+--------------------------------------------------
 [32536] ((var_initializations ()))
 [32537] (Call (Floc 38124) ((Var (Global 118))) Sp)
 [32543] (Jz (Var Sp) (Branch true Dfalse))
 [32546] (Print_ret "You aren't an accomplished enough juggler.")
+--------------------------------------------------
+[32576] ((var_initializations ()))
+[32577] (Test_attr (Var (Global 118)) (Con 17) (Branch false (Dloc 32605)))
+[32581] (Print "Moving the ")
+[32590] (Print_obj (Var (Global 118)))
+[32592] (Print_ret " reveals nothing.")
+[32605] (Print "You can't move the ")
+[32614] (Print_obj (Var (Global 118)))
+[32616] (Print_ret ".")
+--------------------------------------------------
+[32620] ((var_initializations ()))
+[32621] (Print_ret "You'll have to speak up if you expect me to hear you!")
+--------------------------------------------------
+[32656] ((var_initializations ()))
+[32657] (Call (Floc 20688) () Sp)
+[32662] (Jz (Var Sp) (Branch false Dtrue))
+[32665] (Jz (Var (Global 119)) (Branch true (Dloc 32672)))
+[32668] (Test_attr (Var (Global 119)) (Con 29) (Branch true Dfalse))
+[32672] (Print "Trying to destroy the ")
+[32687] (Print_obj (Var (Global 118)))
+[32689] (Print " with ")
+[32692] (Jz (Var (Global 119)) (Branch false (Dloc 32707)))
+[32695] (Print "your bare hands")
+[32704] (Jump 32712)
+[32707] (Print "a ")
+[32710] (Print_obj (Var (Global 119)))
+[32712] (Print_ret " is futile.")
+--------------------------------------------------
+[32722] ((var_initializations ()))
+[32723] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 32735)))
+[32727] (Call (Floc 22396) ((Con 19) (Var (Global 118))) Sp)
+[32734] Rtrue
+[32735] (Print_ret "Nice try.")
 --------------------------------------------------
 [32744] ((var_initializations ()))
 [32745] (Je ((Var (Global 0)) (Con 185)) (Branch false (Dloc 32857)))
@@ -1890,6 +2805,9 @@ Found 224 reachable routines:
 [32850] (Call (Floc 30906) ((Con 186)) Sp)
 [32856] Ret_popped
 [32857] (Print_ret "Wasn't he a sailor?")
+--------------------------------------------------
+[32874] ((var_initializations ()))
+[32875] (Print_ret "You probably put spinach in your gas tank, too.")
 --------------------------------------------------
 [32900] ((var_initializations (0 0)))
 [32905] (Test_attr (Var (Global 118)) (Con 19) (Branch false (Dloc 33015)))
@@ -1932,17 +2850,95 @@ Found 224 reachable routines:
 [33072] (Print_obj (Var (Global 118)))
 [33074] (Print_ret ".")
 --------------------------------------------------
+[33077] ((var_initializations ()))
+[33078] (Je ((Con 0) (Con 0)) (Branch false Dtrue))
+[33082] (Print_addr (Con 63600))
+[33085] (Get_parent (Var (Global 111)) (Local 1))
+[33088] (Test_attr (Var (Local 1)) (Con 27) (Branch false (Dloc 33118)))
+[33092] (Get_parent (Var (Local 1)) Sp)
+[33095] (Insert_obj (Var (Global 118)) (Var Sp))
+[33098] (Print "Ahoy -- ")
+[33107] (Print_obj (Var (Global 118)))
+[33109] (Print_ret " overboard!")
+[33118] (Print_ret "You're not in anything!")
+--------------------------------------------------
+[33136] ((var_initializations ()))
+[33137] (Print_ret "You can't pick that.")
+--------------------------------------------------
+[33148] ((var_initializations ()))
+[33149] (Print_ret "That's silly!")
+--------------------------------------------------
+[33162] ((var_initializations ()))
+[33163] (Print_ret "This has no effect.")
+--------------------------------------------------
+[33174] ((var_initializations ()))
+[33175] (Je ((Var (Global 118)) (Con 237)) (Branch false (Dloc 33252)))
+[33180] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[33186] (Test_attr (Var (Global 119)) (Con 25) (Branch false (Dloc 33220)))
+[33190] (Test_attr (Var (Global 119)) (Con 20) (Branch false (Dloc 33220)))
+[33194] (Print "The ")
+[33197] (Print_obj (Var (Global 119)))
+[33199] (Print " is extinguished.")
+[33212] New_line
+[33213] (Clear_attr (Var (Global 119)) (Con 20))
+[33216] (Clear_attr (Var (Global 119)) (Con 25))
+[33219] Rtrue
+[33220] (Print "The water spills over the ")
+[33231] (Print_obj (Var (Global 119)))
+[33233] (Print_ret ", to the floor, and evaporates.")
+[33252] (Je ((Var (Global 118)) (Con 98)) (Branch false (Dloc 33265)))
+[33256] (Call (Floc 22396) ((Con 18) (Con 98) (Var (Global 119))) Sp)
+[33264] Ret_popped
+[33265] (Print_ret "You can't pour that.")
+--------------------------------------------------
 [33276] ((var_initializations ()))
 [33277] (Je ((Var (Global 0)) (Con 212)) (Branch false (Dloc 33288)))
 [33281] (Call (Floc 37558) ((Con 78)) Sp)
 [33287] Ret_popped
 [33288] (Print_ret "If you pray enough, your prayers may be answered.")
 --------------------------------------------------
+[33320] ((var_initializations ()))
+[33321] (Jz (Var (Global 119)) (Branch true (Dloc 33344)))
+[33324] (Je ((Var (Global 119)) (Con 173)) (Branch true (Dloc 33344)))
+[33328] (Print "Pump it up with a ")
+[33339] (Print_obj (Var (Global 119)))
+[33341] (Print_ret "?")
+[33344] (Jin (Con 173) (Var (Global 111)) (Branch false (Dloc 33357)))
+[33348] (Call (Floc 22396) ((Con 23) (Var (Global 118)) (Con 173)) Sp)
+[33356] Ret_popped
+--------------------------------------------------
+[33364] ((var_initializations (59461 18012 3411 34248 42240 57359 18734 39541 184 0)))
+[33385] (Print_ret "You can't push things to that.")
+--------------------------------------------------
 [33402] ((var_initializations ()))
 [33403] (Call (Floc 20688) () Sp)
 [33408] (Jz (Var Sp) (Branch false Dfalse))
 [33411] (Call (Floc 31428) () Sp)
 [33416] Ret_popped
+--------------------------------------------------
+[33417] ((var_initializations ()))
+[33418] (Je ((Con 0) (Con 0)) (Branch false (Dloc 33430)))
+[33422] (Print_addr (Con 3034))
+[33425] (Test_attr (Var (Global 119)) (Con 23) (Branch true (Dloc 33433)))
+[33429] (Test_attr (Var (Global 119)) (Con 19) (Branch true (Dloc 33449)))
+[33433] (Test_attr (Var (Global 119)) (Con 27) (Branch false (Dloc 33440)))
+[33437] (Jump 33449)
+[33440] (Print_ret "You can't do that.")
+[33449] (Test_attr (Var (Global 119)) (Con 11) (Branch true (Dloc 33477)))
+[33453] (Print "The ")
+[33456] (Print_obj (Var (Global 119)))
+[33458] (Print " isn't open.")
+[33469] New_line
+[33470] (Call (Floc 38192) ((Var (Global 119))) Sp)
+[33476] Ret_popped
+[33477] (Je ((Var (Global 119)) (Var (Global 118))) (Branch false (Dloc 33494)))
+[33481] (Print_ret "How can you do that?")
+[33494] (Jin (Var (Global 118)) (Var (Global 119)) (Branch false (Dloc 33515)))
+[33498] (Print "The ")
+[33501] (Print_obj (Var (Global 118)))
+[33503] (Print " is already in the ")
+[33510] (Print_obj (Var (Global 119)))
+[33512] (Print_ret ".")
 --------------------------------------------------
 [33418] ((var_initializations (0)))
 [33421] (Test_attr (Var (Global 119)) (Con 11) (Branch true (Dloc 33449)))
@@ -1967,6 +2963,53 @@ Found 224 reachable routines:
 [33510] (Print_obj (Var (Global 119)))
 [33512] (Print_ret ".")
 --------------------------------------------------
+[33520] ((var_initializations (57391)))
+[33523] (And_ (Var (Global 6)) (Con 134) Sp)
+[33527] (Add (Var (Local 1)) (Var Sp) (Local 1))
+[33531] (Get_prop (Var (Global 119)) (Con 15) Sp)
+[33535] (Sub (Var (Local 1)) (Var Sp) (Local 1))
+[33539] (Get_prop (Var (Global 119)) (Con 10) Sp)
+[33543] (Jg (Var (Local 1)) (Var Sp) (Branch false (Dloc 33558)))
+[33547] (Print_ret "There's no room.")
+[33558] (Call (Floc 38124) ((Var (Global 118))) Sp)
+[33564] (Jz (Var Sp) (Branch false (Dloc 33583)))
+[33567] (Test_attr (Var (Global 118)) (Con 13) (Branch false (Dloc 33583)))
+[33571] (Print "You don't have the ")
+[33578] (Print_obj (Var (Global 118)))
+[33580] (Print_ret ".")
+[33583] (Call (Floc 38124) ((Var (Global 118))) Sp)
+[33589] (Jz (Var Sp) (Branch false (Dloc 33600)))
+[33592] (Call (Floc 37108) () Sp)
+[33597] (Jz (Var Sp) (Branch true Dtrue))
+[33600] (Insert_obj (Var (Global 118)) (Var (Global 119)))
+[33603] (Set_attr (Var (Global 118)) (Con 3))
+[33606] (Call (Floc 37050) ((Var (Global 118))) Sp)
+[33612] (Print_ret "Done.")
+--------------------------------------------------
+[33620] ((var_initializations ()))
+[33621] (Print_ret "That hiding place is too obvious.")
+--------------------------------------------------
+[33644] ((var_initializations ()))
+[33645] (Je ((Var (Global 119)) (Con 8)) (Branch false (Dloc 33657)))
+[33649] (Call (Floc 22396) ((Con 49) (Var (Global 118))) Sp)
+[33656] Rtrue
+[33657] (Test_attr (Var (Global 119)) (Con 10) (Branch false (Dloc 33667)))
+[33661] (Call (Floc 33418) () Sp)
+[33666] Ret_popped
+[33667] (Print "There's no good surface on the ")
+[33688] (Print_obj (Var (Global 119)))
+[33690] (Print_ret ".")
+--------------------------------------------------
+[33694] ((var_initializations ()))
+[33695] (Print_ret "You can't do that.")
+--------------------------------------------------
+[33704] ((var_initializations ()))
+[33705] (Call (Floc 32490) () Sp)
+[33710] Ret_popped
+--------------------------------------------------
+[33712] ((var_initializations ()))
+[33713] (Print_ret "What a (ahem!) strange idea.")
+--------------------------------------------------
 [33736] ((var_initializations ()))
 [33737] (Jz (Var (Global 66)) (Branch false (Dloc 33757)))
 [33740] (Print_ret "It is impossible to read in the dark.")
@@ -1986,11 +3029,213 @@ Found 224 reachable routines:
 [33817] New_line
 [33818] Rtrue
 --------------------------------------------------
+[33820] ((var_initializations ()))
+[33821] (Call (Floc 22396) ((Con 83) (Var (Global 118))) Sp)
+[33828] Rtrue
+--------------------------------------------------
+[33830] ((var_initializations ()))
+[33831] (Print_ret "It could very well be too late!")
+--------------------------------------------------
+[33852] ((var_initializations ()))
+[33853] (Print "It is hardly likely that the ")
+[33870] (Print_obj (Var (Global 118)))
+[33872] (Print " is interested.")
+[33883] New_line
+[33884] (Store (Con 124) (Con 0))
+[33887] (Store (Con 112) (Con 0))
+[33890] Rtrue
+--------------------------------------------------
+[33892] ((var_initializations ()))
+[33893] (Print_ret "How, exactly, can you ring that?")
+--------------------------------------------------
+[33914] ((var_initializations ()))
+[33915] (Call (Floc 37468) ((Con 39545)) Sp)
+[33922] Ret_popped
+--------------------------------------------------
+[33923] ((var_initializations ()))
+[33924] (Je ((Con 0) (Con 0)) (Branch true (Dloc 25859)))
+[33929] (Set_attr (Var (Global 163)) (Con 19))
+[33932] (Jin (Con 120) (Con 28) (Branch false (Dloc 31080)))
+[33937] (Dec (Con 165))
+[33939] (Store (Con 112) (Con 0))
+[33942] Rtrue
+--------------------------------------------------
+[33963] ((var_initializations ()))
+[33964] (Get_prop_len (Con 1450) (Local 1))
+[33968] (Print " directly.")
+[33977] New_line
+[33978] (Store (Con 112) (Con 0))
+[33981] (Store (Con 124) (Con 0))
+[33984] (Return (Var (Global 108)))
+--------------------------------------------------
+[33989] ((var_initializations ()))
+[33990] (Je ((Var Sp) (Con 17118)) (Branch false (Dloc 34000)))
+[33996] (Store (Con 112) (Con 0))
+[33999] Rtrue
+[34000] (Store (Con 112) (Con 0))
+[34003] (Store (Con 124) (Con 0))
+[34006] (Print_ret "Talking to yourself is a sign of impending mental collapse.")
+--------------------------------------------------
+[34048] ((var_initializations ()))
+[34049] (Print_ret "You find nothing unusual.")
+--------------------------------------------------
+[34062] ((var_initializations ()))
+[34063] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 34085)))
+[34067] (Print "Why would you send for the ")
+[34080] (Print_obj (Var (Global 118)))
+[34082] (Print_ret "?")
+[34085] (Print_ret "That doesn't make sends.")
+--------------------------------------------------
+[34100] ((var_initializations ()))
+[34101] (Call (Floc 22396) ((Con 63) (Var (Global 119)) (Var (Global 118))) Sp)
+[34109] Rtrue
+--------------------------------------------------
+[34110] ((var_initializations ()))
+[34111] (Print_ret "Foo!")
+--------------------------------------------------
+[34116] ((var_initializations ()))
+[34117] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 34136)))
+[34121] (Print_ret "This seems to have no effect.")
+[34136] (Test_attr (Var (Global 118)) (Con 17) (Branch true (Dloc 34165)))
+[34140] (Print_ret "You can't take it; thus, you can't shake it!")
+[34165] (Test_attr (Var (Global 118)) (Con 19) (Branch false (Dloc 34293)))
+[34170] (Test_attr (Var (Global 118)) (Con 11) (Branch false (Dloc 34241)))
+[34175] (Get_child (Var (Global 118)) Sp (Branch false (Dloc 34234)))
+[34179] (Call (Floc 34300) () Sp)
+[34184] (Print "The contents of the ")
+[34195] (Print_obj (Var (Global 118)))
+[34197] (Print " spills ")
+[34204] (Test_attr (Var (Global 0)) (Con 6) (Branch true (Dloc 34222)))
+[34208] (Print "out and disappears")
+[34219] (Jump 34231)
+[34222] (Print "to the ground")
+[34231] (Print_ret ".")
+--------------------------------------------------
+[34269] ((var_initializations (32933)))
+[34272] (Print_obj (Var (Global 118)))
+[34274] (Print_ret ".")
+--------------------------------------------------
+[34300] ((var_initializations (0)))
+[34303] (Get_child (Var (Global 118)) (Local 1) (Branch false Dtrue))
+[34307] (Set_attr (Var (Local 1)) (Con 3))
+[34310] (Je ((Var (Global 0)) (Con 88)) (Branch false (Dloc 34320)))
+[34314] (Push (Con 75))
+[34317] (Jump 34333)
+[34320] (Test_attr (Var (Global 0)) (Con 6) (Branch true (Dloc 34330)))
+[34324] (Push (Con 13))
+[34327] (Jump 34333)
+[34330] (Push (Var (Global 0)))
+[34333] (Insert_obj (Var (Local 1)) (Var Sp))
+[34336] (Jump 34303)
+--------------------------------------------------
+[34340] ((var_initializations ()))
+[34341] (Call (Floc 20076) ((Var (Global 67))) Sp)
+[34347] (Print_paddr (Var Sp))
+[34349] New_line
+[34350] Rtrue
+--------------------------------------------------
+[34352] ((var_initializations ()))
+[34353] (Print "It smells like a ")
+[34366] (Print_obj (Var (Global 118)))
+[34368] (Print_ret ".")
+--------------------------------------------------
+[34372] ((var_initializations ()))
+[34373] (Print_ret "You can't spin that!")
+--------------------------------------------------
+[34382] ((var_initializations ()))
+[34383] (Call (Floc 34390) () Sp)
+[34388] Ret_popped
+--------------------------------------------------
+[34390] ((var_initializations ()))
+[34391] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 34420)))
+[34395] (Print "The ")
+[34398] (Print_obj (Var (Global 118)))
+[34400] (Print " does not understand this.")
+[34417] (Jump 34439)
+[34420] (Print "How singularly useless.")
+[34439] New_line
+[34440] Rtrue
+--------------------------------------------------
+[34442] ((var_initializations ()))
+[34443] (Call (Floc 22396) ((Con 119) (Var (Global 119)) (Var (Global 118))) Sp)
+[34451] Ret_popped
+--------------------------------------------------
+[34452] ((var_initializations (0)))
+[34455] (Call (Floc 64236) ((Var (Global 111))) (Local 1))
+[34461] (Jz (Var (Local 1)) (Branch true (Dloc 34473)))
+[34464] (Call (Floc 22396) ((Con 19) (Var (Global 118)) (Var (Local 1))) Sp)
+[34472] Rtrue
+[34473] (Print "No doubt you propose to stab the ")
+[34494] (Print_obj (Var (Global 118)))
+[34496] (Print_ret " with your pinky?")
+--------------------------------------------------
+[34506] ((var_initializations ()))
+[34507] (Get_parent (Var (Global 111)) Sp)
+[34510] (Test_attr (Var Sp) (Con 27) (Branch false (Dloc 34525)))
+[34514] (Get_parent (Var (Global 111)) Sp)
+[34517] (Call (Floc 22396) ((Con 45) (Var Sp)) Sp)
+[34524] Rtrue
+[34525] (Print_ret "You are already standing, I think.")
+--------------------------------------------------
+[34544] ((var_initializations ()))
+[34545] (Print_ret "You will be lost without me!")
+--------------------------------------------------
+[34562] ((var_initializations ()))
+[34563] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 34630)))
+[34568] (Print "Since you aren't versed in hand-to-hand combat, you'd better attack the ")
+[34617] (Print_obj (Var (Global 118)))
+[34619] (Print_ret " with a weapon.")
+[34630] (Call (Floc 22396) ((Con 14) (Var (Global 118))) Sp)
+[34637] Rtrue
+--------------------------------------------------
+[34638] ((var_initializations ()))
+[34639] (Call (Floc 38048) ((Con 238) (Var (Global 0))) Sp)
+[34646] (Jz (Var Sp) (Branch true (Dloc 34696)))
+[34649] (Print "Swimming isn't usually allowed in the ")
+[34676] (Jz (Var (Global 118)) (Branch true (Dloc 34687)))
+[34679] (Print_obj (Var (Global 118)))
+[34681] (Print ".")
+[34684] (Jump 34694)
+[34687] (Print "dungeon.")
+[34694] New_line
+[34695] Rtrue
+[34696] (Call (Floc 20688) () Sp)
+[34701] (Jz (Var Sp) (Branch false Dfalse))
+[34704] (Print_ret "Go jump in a lake!")
+--------------------------------------------------
+[34720] ((var_initializations ()))
+[34721] (Jz (Var (Global 119)) (Branch false (Dloc 34731)))
+[34724] (Print_ret "Whoosh!")
+[34731] (Call (Floc 22396) ((Con 19) (Var (Global 119)) (Var (Global 118))) Sp)
+[34739] Ret_popped
+--------------------------------------------------
 [34740] ((var_initializations ()))
 [34741] (Jin (Var (Global 118)) (Var (Global 111)) (Branch false (Dloc 34771)))
 [34745] (Test_attr (Var (Global 118)) (Con 0) (Branch false (Dloc 34762)))
 [34749] (Print_ret "You are already wearing it.")
 [34762] (Print_ret "You already have that!")
+--------------------------------------------------
+[34773] ((var_initializations ()))
+[34774] (Test_attr (Var Sp) (Con 19) (Branch false (Dloc 34820)))
+[34778] (Get_parent (Var (Global 118)) Sp)
+[34781] (Test_attr (Var Sp) (Con 11) (Branch true (Dloc 34820)))
+[34785] (Print_ret "You can't reach something that's inside a closed container.")
+[34820] (Jz (Var (Global 119)) (Branch true (Dloc 34861)))
+[34823] (Je ((Var (Global 119)) (Con 8)) (Branch false (Dloc 34831)))
+[34827] (Store (Con 135) (Con 0))
+[34830] Rfalse
+[34831] (Get_parent (Var (Global 118)) Sp)
+[34834] (Je ((Var (Global 119)) (Var Sp)) (Branch true (Dloc 34857)))
+[34838] (Print "The ")
+[34841] (Print_obj (Var (Global 118)))
+[34843] (Print " isn't in the ")
+[34852] (Print_obj (Var (Global 119)))
+[34854] (Print_ret ".")
+[34857] (Store (Con 135) (Con 0))
+[34860] Rfalse
+[34861] (Get_parent (Var (Global 111)) Sp)
+[34864] (Je ((Var (Global 118)) (Var Sp)) (Branch false Dfalse))
+[34868] (Print_ret "You're inside of it!")
 --------------------------------------------------
 [34880] ((var_initializations ()))
 [34881] (Call (Floc 37108) () Sp)
@@ -2000,6 +3245,23 @@ Found 224 reachable routines:
 [34907] (Print_obj (Var (Global 118)))
 [34909] (Print_ret ".")
 [34912] (Print_ret "Taken.")
+--------------------------------------------------
+[34920] ((var_initializations ()))
+[34921] (Test_attr (Var (Global 118)) (Con 30) (Branch false (Dloc 34989)))
+[34926] (Jz (Var (Global 108)) (Branch true (Dloc 34937)))
+[34929] (Store (Con 127) (Var (Global 118)))
+[34932] (Get_parent (Var (Global 111)) (Global 0))
+[34935] (Return (Var (Global 0)))
+[34937] (Print "The ")
+[34940] (Print_obj (Var (Global 118)))
+[34942] (Print_ret " pauses for a moment, perhaps thinking that you should re-read the manual.")
+[34989] (Print "You can't talk to the ")
+[35000] (Print_obj (Var (Global 118)))
+[35002] (Print "!")
+[35005] New_line
+[35006] (Store (Con 112) (Con 0))
+[35009] (Store (Con 124) (Con 0))
+[35012] (Return (Con 2))
 --------------------------------------------------
 [35014] ((var_initializations (0 0)))
 [35019] (Test_attr (Var (Global 118)) (Con 23) (Branch false (Dloc 35036)))
@@ -2028,9 +3290,62 @@ Found 224 reachable routines:
 [35140] (Jin (Var (Global 118)) (Var (Global 111)) (Branch false (Dloc 35169)))
 [35144] (Print_ret "That would involve quite a contortion!")
 --------------------------------------------------
+[35174] ((var_initializations ()))
+[35175] (Print_paddr (Var Sp))
+[35177] New_line
+[35178] Rtrue
+--------------------------------------------------
+[35180] ((var_initializations ()))
+[35181] (Call (Floc 37334) () Sp)
+[35186] (Jz (Var Sp) (Branch true Dfalse))
+[35189] (Je ((Var (Global 119)) (Con 5)) (Branch false (Dloc 35218)))
+[35193] (Print "A terrific throw! The ")
+[35208] (Print_obj (Var (Global 118)))
+[35210] (Call (Floc 67174) ((Con 39590)) Sp)
+[35217] Ret_popped
+[35218] (Test_attr (Var (Global 119)) (Con 30) (Branch false (Dloc 35261)))
+[35222] (Print "The ")
+[35225] (Print_obj (Var (Global 119)))
+[35227] (Print " ducks as the ")
+[35236] (Print_obj (Var (Global 118)))
+[35238] (Print_ret " flies by and crashes to the ground.")
+[35261] (Print_ret "Thrown.")
+--------------------------------------------------
+[35268] ((var_initializations ()))
+[35269] (Print_ret "You can't throw anything off of that!")
+--------------------------------------------------
+[35290] ((var_initializations ()))
+[35291] (Je ((Var (Global 119)) (Var (Global 111))) (Branch false (Dloc 35316)))
+[35295] (Print_ret "You can't tie anything to yourself.")
+[35316] (Print "You can't tie the ")
+[35325] (Print_obj (Var (Global 118)))
+[35327] (Print_ret " to that.")
+--------------------------------------------------
+[35334] ((var_initializations ()))
+[35335] (Print_ret "You could certainly never tie it with that!")
+--------------------------------------------------
+[35360] ((var_initializations ()))
+[35361] (Je ((Var (Global 0)) (Con 220)) (Branch false (Dloc 35372)))
+[35365] (Call (Floc 37558) ((Con 190)) Sp)
+[35371] Ret_popped
+[35372] (Je ((Var (Global 0)) (Con 190)) (Branch false (Dloc 35383)))
+[35376] (Call (Floc 37558) ((Con 220)) Sp)
+[35382] Ret_popped
+[35383] (Print_ret "Nothing happens.")
+--------------------------------------------------
 [35396] ((var_initializations ()))
 [35397] (Test_attr (Var (Global 118)) (Con 15) (Branch true Dfalse))
 [35401] (Print_ret "You can't turn that!")
+--------------------------------------------------
+[35412] ((var_initializations ()))
+[35413] (Print_ret "This has no effect.")
+--------------------------------------------------
+[35424] ((var_initializations ()))
+[35425] (Call (Floc 32246) () Sp)
+[35430] Ret_popped
+--------------------------------------------------
+[35432] ((var_initializations ()))
+[35433] (Print_ret "This cannot be tied, so it cannot be untied!")
 --------------------------------------------------
 [35454] ((var_initializations (3)))
 [35457] (Print "Time passes...")
@@ -2114,6 +3429,45 @@ Found 224 reachable routines:
 [35773] (Print "You can't go that way.")
 [35784] New_line
 [35785] (Return (Con 2))
+--------------------------------------------------
+[35788] ((var_initializations ()))
+[35789] (Print_ret "Use compass directions for movement.")
+--------------------------------------------------
+[35814] ((var_initializations ()))
+[35815] (Jin (Var (Global 118)) (Var (Global 0)) (Branch true (Dloc 35829)))
+[35819] (Call (Floc 38048) ((Var (Global 118)) (Var (Global 0))) Sp)
+[35826] (Jz (Var Sp) (Branch true (Dloc 35834)))
+[35829] (Print_ret "It's here!")
+[35834] (Print_ret "You should supply a direction!")
+--------------------------------------------------
+[35856] ((var_initializations ()))
+[35857] (Call (Floc 37468) ((Con 39678)) Sp)
+[35864] Ret_popped
+--------------------------------------------------
+[35866] ((var_initializations ()))
+[35867] (Test_attr (Var (Global 118)) (Con 0) (Branch true (Dloc 35885)))
+[35871] (Print "You can't wear the ")
+[35880] (Print_obj (Var (Global 118)))
+[35882] (Print_ret ".")
+[35885] (Call (Floc 22396) ((Con 93) (Var (Global 118))) Sp)
+[35892] Rtrue
+--------------------------------------------------
+[35894] ((var_initializations ()))
+[35895] (Print_ret "Naturally!")
+--------------------------------------------------
+[35904] ((var_initializations ()))
+[35905] (Print "You cannot wind up a ")
+[35916] (Print_obj (Var (Global 118)))
+[35918] (Print_ret ".")
+--------------------------------------------------
+[35922] ((var_initializations ()))
+[35923] (Print_ret "With luck, your wish will come true.")
+--------------------------------------------------
+[35948] ((var_initializations ()))
+[35949] (Print_ret "Aaaarrrrgggghhhh!")
+--------------------------------------------------
+[35964] ((var_initializations ()))
+[35965] (Print_ret "At your service!")
 --------------------------------------------------
 [35976] ((var_initializations ()))
 [35977] (Call (Floc 35994) () Sp)
@@ -2327,6 +3681,28 @@ Found 224 reachable routines:
 [36819] (Jz (Var (Local 6)) (Branch true Dtrue))
 [36822] Rfalse
 --------------------------------------------------
+[36823] ((var_initializations ()))
+[36824] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[36829] (Je ((Var (Local 1)) (Con 194)) (Branch false (Dloc 36860)))
+[36833] (Print_ret "Your collection of treasures consists of:")
+[36860] (Je ((Var (Local 1)) (Var (Global 111))) (Branch false (Dloc 36875)))
+[36864] (Print_ret "You are carrying:")
+[36875] (Jin (Var (Local 1)) (Con 82) (Branch true Dfalse))
+[36879] (Jg (Var (Local 2)) (Con 0) (Branch false (Dloc 36889)))
+[36883] (Load_word (Var (Global 57)) (Var (Local 2)) Sp)
+[36887] (Print_paddr (Var Sp))
+[36889] (Test_attr (Var (Local 1)) (Con 10) (Branch false (Dloc 36911)))
+[36893] (Print "Sitting on the ")
+[36904] (Print_obj (Var (Local 1)))
+[36906] (Print_ret " is: ")
+[36911] (Test_attr (Var (Local 1)) (Con 30) (Branch false (Dloc 36931)))
+[36915] (Print "The ")
+[36918] (Print_obj (Var (Local 1)))
+[36920] (Print_ret " is holding: ")
+[36931] (Print "The ")
+[36934] (Print_obj (Var (Local 1)))
+[36936] (Print_ret " contains:")
+--------------------------------------------------
 [36824] ((var_initializations (0 0)))
 [36829] (Je ((Var (Local 1)) (Con 194)) (Branch false (Dloc 36860)))
 [36833] (Print_ret "Your collection of treasures consists of:")
@@ -2440,6 +3816,17 @@ Found 224 reachable routines:
 [37362] New_line
 [37363] Rfalse
 --------------------------------------------------
+[37370] ((var_initializations ()))
+[37371] (Test_attr (Var Sp) (Con 11) (Branch true (Dloc 37389)))
+[37375] (Print "The ")
+[37378] (Print_obj (Var (Global 118)))
+[37380] (Print " is closed.")
+[37387] New_line
+[37388] Rfalse
+[37389] (Get_parent (Var (Global 111)) Sp)
+[37392] (Insert_obj (Var (Global 118)) (Var Sp))
+[37395] Rtrue
+--------------------------------------------------
 [37396] ((var_initializations (0 0 0)))
 [37403] (Get_child (Var (Local 1)) (Local 3) (Branch false (Dloc 37418)))
 [37407] (Test_attr (Var (Local 3)) (Con 0) (Branch true (Dloc 37413)))
@@ -2459,6 +3846,19 @@ Found 224 reachable routines:
 [37459] (Get_prop (Var (Local 1)) (Con 15) Sp)
 [37463] (Add (Var (Local 3)) (Var Sp) Sp)
 [37467] Ret_popped
+--------------------------------------------------
+[37468] ((var_initializations (0)))
+[37471] (Jin (Var (Global 118)) (Con 247) (Branch false (Dloc 37496)))
+[37475] (Je ((Var (Global 120)) (Con 84) (Con 105) (Con 140)) (Branch false (Dloc 37496)))
+[37482] (Print "The ")
+[37485] (Print_obj (Var (Global 118)))
+[37487] (Print_ret " isn't here!")
+[37496] (Print_paddr (Var (Local 1)))
+[37498] (Print_obj (Var (Global 118)))
+[37500] (Call (Floc 20076) ((Var (Global 56))) Sp)
+[37506] (Print_paddr (Var Sp))
+[37508] New_line
+[37509] Rtrue
 --------------------------------------------------
 [37510] ((var_initializations (0 0)))
 [37515] (Jz (Var (Local 1)) (Branch true (Dloc 37537)))
@@ -2551,6 +3951,14 @@ Found 224 reachable routines:
 [37927] (Call (Floc 35976) () Sp)
 [37932] Rtrue
 --------------------------------------------------
+[37933] ((var_initializations ()))
+[37934] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[37939] (Call (Floc 37960) ((Var (Global 0)) (Var (Local 1))) (Local 2))
+[37946] (Jz (Var (Local 2)) (Branch true Dfalse))
+[37949] (Call (Floc 37558) ((Var (Local 2))) Sp)
+[37955] (Jz (Var Sp) (Branch false Dtrue))
+[37958] (Return (Con 2))
+--------------------------------------------------
 [37934] ((var_initializations (0 0)))
 [37939] (Call (Floc 37960) ((Var (Global 0)) (Var (Local 1))) (Local 2))
 [37946] (Jz (Var (Local 2)) (Branch true Dfalse))
@@ -2573,6 +3981,14 @@ Found 224 reachable routines:
 [38006] (Call (Floc 22396) ((Con 137) (Var (Local 1))) Sp)
 [38013] Ret_popped
 --------------------------------------------------
+[38014] ((var_initializations (0 0 0 0)))
+[38023] (Get_prop_addr (Var (Local 1)) (Con 18) (Local 3))
+[38027] (Get_prop_len (Var (Local 3)) Sp)
+[38030] (Div (Var Sp) (Con 2) Sp)
+[38034] (Sub (Var Sp) (Con 1) Sp)
+[38038] (Call (Floc 27682) ((Var (Local 2)) (Var (Local 3)) (Var Sp)) Sp)
+[38046] Ret_popped
+--------------------------------------------------
 [38048] ((var_initializations (0 0 0)))
 [38055] (Get_prop_addr (Var (Local 2)) (Con 5) (Local 3))
 [38059] (Jz (Var (Local 3)) (Branch true Dfalse))
@@ -2580,6 +3996,26 @@ Found 224 reachable routines:
 [38065] (Sub (Var Sp) (Con 1) Sp)
 [38069] (Call (Floc 27722) ((Var (Local 1)) (Var (Local 3)) (Var Sp)) Sp)
 [38077] Ret_popped
+--------------------------------------------------
+[38078] ((var_initializations (0 0 0)))
+[38085] (Get_child (Var (Local 1)) (Local 3) (Branch true (Dloc 38089)))
+[38089] (Jz (Var (Local 3)) (Branch true Dfalse))
+[38092] (Test_attr (Var (Local 3)) (Var (Local 2)) (Branch false (Dloc 38102)))
+[38096] (Je ((Var (Local 3)) (Con 4)) (Branch true (Dloc 38102)))
+[38100] (Return (Var (Local 3)))
+[38102] (Get_sibling (Var (Local 3)) (Local 3) (Branch true (Dloc 38092)))
+[38107] Rfalse
+--------------------------------------------------
+[38108] ((var_initializations (0)))
+[38111] (Jin (Var (Local 1)) (Var (Global 0)) (Branch true Dtrue))
+[38115] (Call (Floc 38048) ((Var (Local 1)) (Var (Global 0))) Sp)
+[38122] Ret_popped
+--------------------------------------------------
+[38123] ((var_initializations ()))
+[38124] (Je ((Con 0) (Con 0)) (Branch true (Dloc 30704)))
+[38129] (Je ((Con 160) (Con 1)) (Branch true Dfalse))
+[38133] (Je ((Var (Local 1)) (Var (Global 111))) (Branch false (Dloc 38127)))
+[38138] Rtrue
 --------------------------------------------------
 [38124] ((var_initializations (0)))
 [38127] (Get_parent (Var (Local 1)) (Local 1))
@@ -2596,6 +4032,11 @@ Found 224 reachable routines:
 [38167] (Load_byte (Var (Local 3)) (Con 1) Sp)
 [38171] (Je ((Var Sp) (Var (Local 1))) (Branch false (Dloc 38147)))
 [38176] (Return (Var (Local 2)))
+--------------------------------------------------
+[38178] ((var_initializations (0 0)))
+[38183] (Set_attr (Var (Local 1)) (Con 18))
+[38186] (Put_prop (Var (Local 1)) (Con 11) (Var (Local 2)))
+[38191] Rtrue
 --------------------------------------------------
 [38192] ((var_initializations (0)))
 [38195] (Store (Con 123) (Var (Local 1)))
@@ -2640,6 +4081,45 @@ Found 224 reachable routines:
 [38451] New_line
 [38452] Rtrue
 --------------------------------------------------
+[38454] ((var_initializations ()))
+[38455] (Je ((Var (Global 120)) (Con 56) (Con 93)) (Branch false Dfalse))
+[38461] (Print_ret "The boards are securely fastened.")
+--------------------------------------------------
+[38482] ((var_initializations ()))
+[38483] (Je ((Var (Global 120)) (Con 26)) (Branch false Dfalse))
+[38487] (Je ((Var (Global 118)) (Con 248)) (Branch false Dfalse))
+[38491] (Je ((Var (Global 119)) (Con 98)) (Branch false (Dloc 38507)))
+[38495] (Jin (Var (Global 119)) (Var (Global 111)) (Branch false (Dloc 38507)))
+[38499] (Call (Floc 67174) ((Con 39799)) Sp)
+[38506] Ret_popped
+[38507] (Jz (Var (Global 119)) (Branch false (Dloc 38567)))
+[38510] (Print_ret "Dental hygiene is highly recommended, but I'm not sure what you want to brush them with.")
+[38567] (Print "A nice idea, but with a ")
+[38582] (Print_obj (Var (Global 119)))
+[38584] (Print_ret "?")
+--------------------------------------------------
+[38588] ((var_initializations ()))
+[38589] (Je ((Var (Global 0)) (Con 220)) (Branch false (Dloc 38616)))
+[38593] (Je ((Var (Global 120)) (Con 60)) (Branch false Dfalse))
+[38597] (Print_ret "The west wall is solid granite here.")
+[38616] (Je ((Var (Global 0)) (Con 190)) (Branch false (Dloc 38643)))
+[38620] (Je ((Var (Global 120)) (Con 60)) (Branch false Dfalse))
+[38624] (Print_ret "The east wall is solid granite here.")
+[38643] (Je ((Var (Global 0)) (Con 15)) (Branch false (Dloc 38693)))
+[38647] (Je ((Var (Global 120)) (Con 83) (Con 60)) (Branch false (Dloc 38678)))
+[38653] (Print_ret "It only SAYS \"Granite Wall\".")
+[38678] (Print_ret "The wall isn't granite.")
+[38693] (Print_ret "There is no granite wall here.")
+--------------------------------------------------
+[38708] ((var_initializations ()))
+[38709] (Je ((Var (Global 120)) (Con 93) (Con 60)) (Branch false (Dloc 38738)))
+[38715] (Print_ret "The songbird is not here but is probably nearby.")
+[38738] (Je ((Var (Global 120)) (Con 77)) (Branch false (Dloc 38761)))
+[38742] (Print_ret "You can't hear the songbird now.")
+[38761] (Je ((Var (Global 120)) (Con 61)) (Branch false (Dloc 38778)))
+[38765] (Print_ret "It can't be followed.")
+[38778] (Print_ret "You can't see any songbird here.")
+--------------------------------------------------
 [38798] ((var_initializations ()))
 [38799] (Je ((Var (Global 0)) (Con 203) (Con 193) (Con 201)) (Branch false (Dloc 38838)))
 [38806] (Je ((Var (Global 120)) (Con 60)) (Branch false (Dloc 38827)))
@@ -2674,6 +4154,121 @@ Found 224 reachable routines:
 [39094] (Je ((Var (Global 120)) (Con 28)) (Branch false Dfalse))
 [39098] (Print_ret "You must be joking.")
 --------------------------------------------------
+[39112] ((var_initializations ()))
+[39113] (Je ((Var (Global 120)) (Con 139)) (Branch false (Dloc 39124)))
+[39117] (Call (Floc 37934) ((Var (Global 137))) Sp)
+[39123] Ret_popped
+[39124] (Je ((Var (Global 120)) (Con 45)) (Branch false (Dloc 39151)))
+[39128] (Print_ret "You will have to specify a direction.")
+[39151] (Je ((Var (Global 120)) (Con 60)) (Branch false (Dloc 39176)))
+[39155] (Print_ret "You cannot see the forest for the trees.")
+[39176] (Je ((Var (Global 120)) (Con 77)) (Branch false Dfalse))
+[39180] (Print_ret "The pines and the hemlocks seem to be murmuring.")
+--------------------------------------------------
+[39210] ((var_initializations ()))
+[39211] (Je ((Var (Global 120)) (Con 32) (Con 31) (Con 30)) (Branch false Dfalse))
+[39218] (Print_ret "Don't you believe me? The mountains are impassable!")
+--------------------------------------------------
+[39254] ((var_initializations (0 0 0)))
+[39261] (Je ((Var (Global 120)) (Con 64)) (Branch true Dfalse))
+[39265] (Je ((Var (Global 120)) (Con 34)) (Branch false (Dloc 39279)))
+[39269] (Call (Floc 20076) ((Var (Global 55))) Sp)
+[39275] (Print_paddr (Var Sp))
+[39277] New_line
+[39278] Rtrue
+[39279] (Je ((Var (Global 120)) (Con 59)) (Branch false (Dloc 39301)))
+[39283] (Store (Con 2) (Var (Global 119)))
+[39286] (Store (Con 136) (Con 18))
+[39289] (Store (Con 135) (Var (Global 118)))
+[39292] (Store (Con 134) (Var (Local 2)))
+[39295] (Store (Con 3) (Con 0))
+[39298] (Jump 39327)
+[39301] (Je ((Var (Global 118)) (Con 238)) (Branch true (Dloc 39309)))
+[39305] (Je ((Var (Global 118)) (Con 237)) (Branch false (Dloc 39318)))
+[39309] (Store (Con 2) (Var (Global 118)))
+[39312] (Store (Con 3) (Con 0))
+[39315] (Jump 39327)
+[39318] (Store (Con 2) (Var (Global 119)))
+[39321] (Jz (Var (Local 2)) (Branch true (Dloc 39327)))
+[39324] (Store (Con 3) (Con 1))
+[39327] (Je ((Var (Local 2)) (Con 238)) (Branch false (Dloc 39346)))
+[39331] (Store (Con 2) (Con 237))
+[39334] (Je ((Var (Global 120)) (Con 18) (Con 93)) (Branch false (Dloc 39346)))
+[39340] (Call (Floc 30906) ((Var (Local 2))) Sp)
+[39346] (Jz (Var (Local 3)) (Branch true (Dloc 39355)))
+[39349] (Store (Con 135) (Var (Local 2)))
+[39352] (Jump 39358)
+[39355] (Store (Con 134) (Var (Local 2)))
+[39358] (Get_parent (Var (Global 111)) (Local 1))
+[39361] (Test_attr (Var (Local 1)) (Con 27) (Branch true (Dloc 39368)))
+[39365] (Store (Con 1) (Con 0))
+[39368] (Je ((Var (Global 120)) (Con 18) (Con 93)) (Branch false (Dloc 39617)))
+[39375] (Jz (Var (Local 3)) (Branch false (Dloc 39617)))
+[39379] (Jz (Var (Local 1)) (Branch true (Dloc 39432)))
+[39382] (Je ((Var (Local 1)) (Var (Global 119))) (Branch true (Dloc 39393)))
+[39386] (Jz (Var (Global 119)) (Branch false (Dloc 39432)))
+[39389] (Jin (Var (Local 2)) (Var (Local 1)) (Branch true (Dloc 39432)))
+[39393] (Print "There is now a puddle in the bottom of the ")
+[39416] (Print_obj (Var (Local 1)))
+[39418] (Print ".")
+[39421] New_line
+[39422] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[39428] (Insert_obj (Var (Global 118)) (Var (Local 1)))
+[39431] Rtrue
+[39432] (Jz (Var (Global 119)) (Branch true (Dloc 39481)))
+[39435] (Je ((Var (Global 119)) (Con 236)) (Branch true (Dloc 39481)))
+[39439] (Print "The water leaks out of the ")
+[39452] (Print_obj (Var (Global 119)))
+[39454] (Print " and evaporates immediately.")
+[39473] New_line
+[39474] (Call (Floc 30906) ((Var (Local 2))) Sp)
+[39480] Ret_popped
+[39481] (Jin (Con 236) (Var (Global 111)) (Branch false (Dloc 39554)))
+[39486] (Test_attr (Con 236) (Con 11) (Branch true (Dloc 39509)))
+[39490] (Print "The bottle is closed.")
+[39501] New_line
+[39502] (Call (Floc 38192) ((Con 236)) Sp)
+[39508] Ret_popped
+[39509] (Get_child (Con 236) Sp (Branch true (Dloc 39537)))
+[39513] (Insert_obj (Con 237) (Con 236))
+[39516] (Print_ret "The bottle is now full of water.")
+--------------------------------------------------
+[39538] ((var_initializations (8551 4410 47104 13572)))
+[39547] (Return (Con 14956))
+--------------------------------------------------
+[39574] ((var_initializations (33877 22324 54624 287 3411)))
+[39585] (Get_prop (Var (Global 20)) (Con 25) (Global 10))
+[39589] (Test_attr (Con 0) (Con 103) (Branch false (Dloc 40059)))
+[39594] (Jg (Var (Global 26)) (Var (Global 9)) (Branch false (Dloc 32885)))
+[39599] (Inc (Var (Global 163)))
+[39601] (Dec_check (Con 33) (Con 103) (Branch false (Dloc 44014)))
+[39606] Ret_popped
+--------------------------------------------------
+[39607] ((var_initializations ()))
+[39608] (Sub (Con 4) (Var (Global 123)) (Global 42))
+[39612] (Clear_attr (Var (Global 26)) (Var (Global 232)))
+[39615] (Dec (Con 69))
+[39617] (Jz (Var (Local 3)) (Branch true (Dloc 39629)))
+[39620] (Print_ret "Nice try.")
+[39629] (Je ((Var (Global 120)) (Con 63) (Con 49)) (Branch false (Dloc 39719)))
+[39636] (Call (Floc 30906) ((Con 237)) Sp)
+[39642] (Jz (Var (Local 1)) (Branch true (Dloc 39678)))
+[39645] (Print "There is now a puddle in the bottom of the ")
+[39668] (Print_obj (Var (Local 1)))
+[39670] (Print ".")
+[39673] New_line
+[39674] (Insert_obj (Con 237) (Var (Local 1)))
+[39677] Rtrue
+[39678] (Print "The water spills to the floor and evaporates immediately.")
+[39711] New_line
+[39712] (Call (Floc 30906) ((Con 237)) Sp)
+[39718] Ret_popped
+[39719] (Je ((Var (Global 120)) (Con 127)) (Branch false Dfalse))
+[39723] (Print "The water splashes on the walls and evaporates immediately.")
+[39758] New_line
+[39759] (Call (Floc 30906) ((Con 237)) Sp)
+[39765] Ret_popped
+--------------------------------------------------
 [39766] ((var_initializations ()))
 [39767] (Je ((Var (Global 120)) (Con 35) (Con 43)) (Branch false (Dloc 39787)))
 [39773] (Store (Con 67) (Con 1))
@@ -2693,6 +4288,19 @@ Found 224 reachable routines:
 [39867] (Je ((Var (Global 0)) (Con 203)) (Branch false (Dloc 39894)))
 [39871] (Print_ret "a clear area leading towards a forest.")
 [39894] (Print_ret "what appears to be a kitchen.")
+--------------------------------------------------
+[39912] ((var_initializations ()))
+[39913] (Je ((Var (Global 120)) (Con 111)) (Branch false (Dloc 39948)))
+[39917] (Print "The spirits jeer loudly and ignore you.")
+[39942] New_line
+[39943] (Store (Con 124) (Con 0))
+[39946] (Return (Var (Global 108)))
+[39948] (Je ((Var (Global 120)) (Con 58)) (Branch false (Dloc 39979)))
+[39952] (Print_ret "Only the ceremony itself has any effect.")
+[39979] (Je ((Var (Global 120)) (Con 42) (Con 19)) (Branch false (Dloc 40020)))
+[39985] (Je ((Var (Global 118)) (Con 233)) (Branch false (Dloc 40020)))
+[39989] (Print_ret "How can you attack a spirit with material objects?")
+[40020] (Print_ret "You seem unable to interact with these spirits.")
 --------------------------------------------------
 [40050] ((var_initializations ()))
 [40051] (Je ((Var (Global 120)) (Con 105)) (Branch false (Dloc 40110)))
@@ -2731,6 +4339,18 @@ Found 224 reachable routines:
 [40237] (Je ((Var (Global 118)) (Con 227) (Con 229)) (Branch false Dfalse))
 [40243] (Print_ret "The cage is securely fastened to the iron chain.")
 --------------------------------------------------
+[40272] ((var_initializations ()))
+[40273] (Je ((Var (Global 120)) (Con 111)) (Branch false (Dloc 40288)))
+[40277] (Call (Floc 40406) ((Con 6)) Sp)
+[40283] (Store (Con 124) (Con 0))
+[40286] (Return (Var (Global 108)))
+[40288] (Je ((Var (Global 120)) (Con 42) (Con 19) (Con 93)) (Branch false Dfalse))
+[40295] (Get_parent (Con 189) Sp)
+[40298] (Je ((Var Sp) (Var (Global 111)) (Var (Global 0))) (Branch false (Dloc 40331)))
+[40304] (Print_ret "You can't reach him; he's on the ceiling.")
+[40331] (Call (Floc 40338) () Sp)
+[40336] Ret_popped
+--------------------------------------------------
 [40338] ((var_initializations ()))
 [40339] (Call (Floc 40406) ((Con 4)) Sp)
 [40345] New_line
@@ -2756,6 +4376,46 @@ Found 224 reachable routines:
 [40437] (Je ((Var (Global 0)) (Con 23167)) (Branch false (Dloc 40446)))
 [40443] (Jz (Var (Global 145)) (Branch true Dfalse))
 [40446] (Print_ret "Ding, dong.")
+--------------------------------------------------
+[40458] ((var_initializations ()))
+[40459] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 40486)))
+[40463] (Print_ret "The bell is very hot and cannot be taken.")
+[40486] (Je ((Var (Global 120)) (Con 110)) (Branch true (Dloc 40499)))
+[40490] (Je ((Var (Global 120)) (Con 109)) (Branch false (Dloc 40573)))
+[40495] (Jz (Var (Global 119)) (Branch true (Dloc 40573)))
+[40499] (Test_attr (Var (Global 119)) (Con 26) (Branch false (Dloc 40531)))
+[40503] (Print "The ")
+[40506] (Print_obj (Var (Global 119)))
+[40508] (Print " burns and is consumed.")
+[40523] New_line
+[40524] (Call (Floc 30906) ((Var (Global 119))) Sp)
+[40530] Ret_popped
+[40531] (Je ((Var (Global 119)) (Con 1)) (Branch false (Dloc 40552)))
+[40535] (Print_ret "The bell is too hot to touch.")
+[40552] (Print_ret "The heat from the bell is too intense.")
+[40573] (Je ((Var (Global 120)) (Con 97)) (Branch false (Dloc 40621)))
+[40577] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[40583] (Print "The water cools the bell and is evaporated.")
+[40606] New_line
+[40607] (Call (Floc 21618) ((Con 23666) (Con 0)) Sp)
+[40615] (Call (Floc 47332) () Sp)
+[40620] Ret_popped
+[40621] (Je ((Var (Global 120)) (Con 109)) (Branch false Dfalse))
+[40625] (Print_ret "The bell is too hot to reach.")
+--------------------------------------------------
+[40642] ((var_initializations ()))
+[40643] (Je ((Var (Global 120)) (Con 43)) (Branch false (Dloc 40672)))
+[40647] (Print_ret "The windows are boarded and can't be opened.")
+[40672] (Je ((Var (Global 120)) (Con 42)) (Branch false Dfalse))
+[40676] (Print_ret "You can't break the windows open.")
+--------------------------------------------------
+[40696] ((var_initializations ()))
+[40697] (Je ((Var (Global 120)) (Con 93)) (Branch false Dfalse))
+[40701] (Print_ret "The nails, deeply imbedded in the door, cannot be removed.")
+--------------------------------------------------
+[40734] ((var_initializations ()))
+[40735] (Je ((Var (Global 120)) (Con 34)) (Branch false Dfalse))
+[40739] (Print_ret "You can't fit through the crack.")
 --------------------------------------------------
 [40752] ((var_initializations (0)))
 [40755] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 40905)))
@@ -2790,6 +4450,15 @@ Found 224 reachable routines:
 [41502] New_line
 [41503] (Call (Floc 28108) ((Con 0)) Sp)
 [41509] Ret_popped
+--------------------------------------------------
+[41510] ((var_initializations ()))
+[41511] (Je ((Var (Global 120)) (Con 35) (Con 43)) (Branch false Dfalse))
+[41517] (Print_ret "The door is too heavy.")
+--------------------------------------------------
+[41528] ((var_initializations ()))
+[41529] (Je ((Var (Global 120)) (Con 34)) (Branch false Dfalse))
+[41533] (Call (Floc 38000) ((Con 29)) Sp)
+[41539] Ret_popped
 --------------------------------------------------
 [41540] ((var_initializations ()))
 [41541] (Je ((Var (Global 120)) (Con 93)) (Branch false Dfalse))
@@ -2828,6 +4497,16 @@ Found 224 reachable routines:
 [41908] (Add (Var (Global 63)) (Var Sp) (Global 1))
 [41912] (Call (Floc 36962) ((Con 0)) Sp)
 [41918] Rfalse
+--------------------------------------------------
+[41919] ((var_initializations ()))
+[41920] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[41925] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 41929)))
+[41929] (Jz (Var (Local 2)) (Branch true Dtrue))
+[41932] (Set_attr (Var (Local 2)) (Con 3))
+[41935] (Get_child (Var (Local 2)) Sp (Branch false (Dloc 41945)))
+[41939] (Call (Floc 41920) ((Var (Local 2))) Sp)
+[41945] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 41949)))
+[41949] (Jump 41929)
 --------------------------------------------------
 [41920] ((var_initializations (0 0)))
 [41925] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 41929)))
@@ -2905,6 +4584,22 @@ Found 224 reachable routines:
 [42394] New_line
 [42395] Rfalse
 --------------------------------------------------
+[42397] ((var_initializations (326)))
+[42400] (Get_sibling (Var (Local 1)) Sp (Branch true (Dloc 42419)))
+[42404] (Jin (Con 164) (Var (Global 111)) (Branch false (Dloc 42419)))
+[42408] (Test_attr (Con 183) (Con 11) (Branch true (Dloc 42417)))
+[42412] (Clear_attr (Con 183) (Con 3))
+[42415] (Return (Con 203))
+[42417] (Return (Con 203))
+--------------------------------------------------
+[42439] ((var_initializations (24318 14956 38469 48049 160 16603)))
+[42452] (Test_attr (Con 183) (Con 11) (Branch false (Dloc 42458)))
+[42456] (Return (Con 72))
+[42458] (Print "The trap door is closed.")
+[42469] New_line
+[42470] (Call (Floc 38192) ((Con 183)) Sp)
+[42476] Rfalse
+--------------------------------------------------
 [42448] ((var_initializations ()))
 [42449] (Jz (Var (Global 48)) (Branch true (Dloc 42477)))
 [42452] (Test_attr (Con 183) (Con 11) (Branch false (Dloc 42458)))
@@ -2916,6 +4611,33 @@ Found 224 reachable routines:
 [42477] (Print "You can't go that way.")
 [42488] New_line
 [42489] Rfalse
+--------------------------------------------------
+[42484] ((var_initializations (34552 45755 45312)))
+[42491] (Je ((Var (Global 120)) (Con 105)) (Branch false (Dloc 42562)))
+[42496] (Print "The rug is too heavy to lift")
+[42513] (Jz (Var (Global 48)) (Branch true (Dloc 42519)))
+[42516] (Print_ret ".")
+[42519] (Print_ret ", but in trying to take it you have noticed an irregularity beneath it.")
+[42562] (Je ((Var (Global 120)) (Con 101) (Con 88)) (Branch false (Dloc 42695)))
+[42569] (Jz (Var (Global 48)) (Branch true (Dloc 42615)))
+[42572] (Print_ret "Having moved the carpet previously, you find it impossible to move it again.")
+[42615] (Print "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.")
+[42680] New_line
+[42681] (Clear_attr (Con 183) (Con 7))
+[42684] (Call (Floc 38192) ((Con 183)) Sp)
+[42690] (Store (Con 64) (Con 1))
+[42693] (Return (Var (Global 48)))
+[42695] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 42726)))
+[42699] (Print_ret "The rug is extremely heavy and cannot be carried.")
+[42726] (Je ((Var (Global 120)) (Con 81)) (Branch false (Dloc 42811)))
+[42731] (Jz (Var (Global 48)) (Branch false (Dloc 42811)))
+[42735] (Test_attr (Con 183) (Con 11) (Branch true (Dloc 42811)))
+[42740] (Print_ret "Underneath the rug is a closed trap door. As you drop the corner of the rug, the trap door is once again concealed from view.")
+[42811] (Je ((Var (Global 120)) (Con 33)) (Branch false Dfalse))
+[42815] (Jz (Var (Global 48)) (Branch false (Dloc 42889)))
+[42819] (Test_attr (Con 183) (Con 11) (Branch true (Dloc 42889)))
+[42824] (Print_ret "As you sit, you notice an irregularity underneath it. Rather than be uncomfortable, you stand up again.")
+[42889] (Print_ret "I suppose you think it's a magic carpet?")
 --------------------------------------------------
 [42490] ((var_initializations ()))
 [42491] (Je ((Var (Global 120)) (Con 105)) (Branch false (Dloc 42562)))
@@ -2944,9 +4666,23 @@ Found 224 reachable routines:
 [42824] (Print_ret "As you sit, you notice an irregularity underneath it. Rather than be uncomfortable, you stand up again.")
 [42889] (Print_ret "I suppose you think it's a magic carpet?")
 --------------------------------------------------
+[42914] ((var_initializations ()))
+[42915] (Jz (Var (Global 141)) (Branch false Dfalse))
+[42918] (Call (Floc 42936) ((Con 218) (Con 217)) Sp)
+[42925] Ret_popped
+--------------------------------------------------
 [42926] ((var_initializations ()))
 [42927] (Call (Floc 42936) ((Con 113) (Con 114)) Sp)
 [42934] Ret_popped
+--------------------------------------------------
+[42935] ((var_initializations ()))
+[42936] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[42941] (Jin (Var (Local 2)) (Var (Global 0)) (Branch false Dfalse))
+[42945] (Je ((Var (Global 120)) (Con 93)) (Branch false Dfalse))
+[42949] (Jin (Var (Local 1)) (Var (Local 2)) (Branch false (Dloc 42975)))
+[42953] (Print "The ")
+[42956] (Print_obj (Var (Local 2)))
+[42958] (Print_ret " swings it out of your reach.")
 --------------------------------------------------
 [42936] ((var_initializations (0 0)))
 [42941] (Jin (Var (Local 2)) (Var (Global 0)) (Branch false Dfalse))
@@ -2955,6 +4691,15 @@ Found 224 reachable routines:
 [42953] (Print "The ")
 [42956] (Print_obj (Var (Local 2)))
 [42958] (Print_ret " swings it out of your reach.")
+--------------------------------------------------
+[42979] ((var_initializations (45568)))
+[42982] (Jin (Var (Global 97)) (Con 174) (Branch false (Dloc 43021)))
+[42986] (Inc_check (Var (Global 97)) (Con 180) (Branch false (Dloc 43024)))
+[42990] (Clear_attr (Con 4) (Var (Global 49)))
+[42993] (Inc_check (Con 180) (Var (Global 53)) (Branch false (Dloc 34814)))
+[42998] (Je ((Var (Global 29)) (Con 217)) (Branch true (Dloc 48702)))
+[43003] New_line
+[43004] Rtrue
 --------------------------------------------------
 [43006] ((var_initializations (0)))
 [43009] (Je ((Var (Global 120)) (Con 111)) (Branch false (Dloc 43046)))
@@ -3002,6 +4747,119 @@ Found 224 reachable routines:
 [43310] (Jin (Con 218) (Con 217) (Branch false (Dloc 43323)))
 [43314] (Put_prop (Con 217) (Con 11) (Con 39972))
 [43320] (Jump 43351)
+--------------------------------------------------
+[43323] ((var_initializations (55910 21515 55822 3290 7438 56025)))
+[43336] (Put_prop (Con 217) (Con 11) (Con 39972))
+[43342] (Jump 43351)
+--------------------------------------------------
+[43348] ((var_initializations (39995 3485 171 40257 261 20967 32612 35 8448 16395 55554)))
+[43371] (Store (Con 124) (Con 0))
+[43374] Rtrue
+--------------------------------------------------
+[43385] ((var_initializations ()))
+[43386] (Print_paddr (Var Sp))
+[43388] New_line
+[43389] Rtrue
+--------------------------------------------------
+[43409] ((var_initializations (9184 8064)))
+[43414] (Clear_attr (Var (Global 201)) (Var Sp))
+[43417] (Je ((Var (Global 120)) (Con 63) (Con 127)) (Branch false (Dloc 43866)))
+[43424] (Je ((Var (Global 118)) (Con 218)) (Branch false (Dloc 43477)))
+[43428] (Jin (Con 218) (Var (Global 111)) (Branch false (Dloc 43477)))
+[43432] (Print "The troll scratches his head in confusion, then takes the axe.")
+[43469] New_line
+[43470] (Set_attr (Con 217) (Con 2))
+[43473] (Insert_obj (Con 218) (Con 217))
+[43476] Rtrue
+[43477] (Je ((Var (Global 118)) (Con 217) (Con 218)) (Branch false (Dloc 43515)))
+[43483] (Print "You would have to get the ")
+[43494] (Print_obj (Var (Global 118)))
+[43496] (Print_ret " first, and that seems unlikely.")
+[43515] (Je ((Var (Global 120)) (Con 127)) (Branch false (Dloc 43559)))
+[43519] (Print "The troll, who is remarkably coordinated, catches the ")
+[43554] (Print_obj (Var (Global 118)))
+[43556] (Jump 43598)
+[43559] (Print "The troll, who is not overly proud, graciously accepts the gift")
+[43598] (Random (Con 100) Sp)
+[43602] (Jg (Con 20) (Var Sp) (Branch false (Dloc 43715)))
+[43607] (Je ((Var (Global 118)) (Con 169) (Con 110) (Con 218)) (Branch false (Dloc 43715)))
+[43615] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[43621] (Print " and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.")
+[43694] New_line
+[43695] (Call (Floc 30906) ((Con 217)) Sp)
+[43701] (Get_prop (Con 217) (Con 17) Sp)
+[43705] (Call (Fvar Sp) ((Con 2)) Sp)
+[43710] (Store (Con 157) (Con 1))
+[43713] (Return (Var (Global 141)))
+[43715] (Je ((Var (Global 118)) (Con 169) (Con 110) (Con 218)) (Branch false (Dloc 43815)))
+[43723] (Insert_obj (Var (Global 118)) (Var (Global 0)))
+[43726] (Print " and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the ")
+[43777] (Print_obj (Var (Global 118)))
+[43779] (Print " falls to the floor. He does not look pleased.")
+[43810] New_line
+[43811] (Set_attr (Con 217) (Con 2))
+[43814] Rtrue
+[43815] (Print " and not having the most discriminating tastes, gleefully eats it.")
+[43858] New_line
+[43859] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[43865] Ret_popped
+[43866] (Je ((Var (Global 120)) (Con 88) (Con 93)) (Branch false (Dloc 43931)))
+[43872] (Print_ret "The troll spits in your face, grunting \"Better luck next time\" in a rather barbarous accent.")
+[43931] (Je ((Var (Global 120)) (Con 42)) (Branch false Dfalse))
+[43935] (Print_ret "The troll laughs at your puny gesture.")
+--------------------------------------------------
+[43999] ((var_initializations (19563 14698 58948 6482 27753 17864 42400 40384)))
+[44016] (Je ((Var (Global 120)) (Con 66)) (Branch false Dfalse))
+[44020] (Print_ret "Unfortunately, the troll can't hear you.")
+--------------------------------------------------
+[44036] ((var_initializations ()))
+[44037] (Test_attr (Con 174) (Con 11) (Branch true Dfalse))
+[44041] (Jz (Var (Global 46)) (Branch false Dfalse))
+[44044] (Je ((Var (Global 120)) (Con 93) (Con 88)) (Branch false (Dloc 44087)))
+[44050] (Print "In disturbing the pile of leaves, a grating is revealed.")
+[44083] New_line
+[44084] (Jump 44115)
+[44087] (Print "With the leaves moved, a grating is revealed.")
+[44114] New_line
+[44115] (Clear_attr (Con 174) (Con 7))
+[44118] (Store (Con 62) (Con 1))
+[44121] Rfalse
+--------------------------------------------------
+[44122] ((var_initializations ()))
+[44123] (Je ((Var (Global 120)) (Con 37)) (Branch false (Dloc 44148)))
+[44127] (Print_ret "There are 69,105 leaves here.")
+[44148] (Je ((Var (Global 120)) (Con 28)) (Branch false (Dloc 44186)))
+[44152] (Call (Floc 44036) () Sp)
+[44157] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[44163] (Jin (Var (Global 118)) (Var (Global 0)) (Branch false (Dloc 44178)))
+[44167] (Print_ret "The leaves burn.")
+--------------------------------------------------
+[44184] ((var_initializations ()))
+[44185] Ret_popped
+--------------------------------------------------
+[44228] ((var_initializations ()))
+[44229] Rtrue
+--------------------------------------------------
+[44255] ((var_initializations ()))
+[44256] (Je ((Var (Global 120)) (Con 93)) (Branch false Dtrue))
+[44260] Rfalse
+--------------------------------------------------
+[44318] ((var_initializations (204 6199 8851 8518 17737 51 28106 61618 1 0)))
+[44339] (Je ((Var (Local 1)) (Con 2)) (Branch false (Dloc 44350)))
+[44343] (Jz (Var (Global 46)) (Branch false Dfalse))
+[44346] (Set_attr (Con 174) (Con 7))
+[44349] Rtrue
+[44350] (Je ((Var (Local 1)) (Con 3)) (Branch false Dfalse))
+[44354] (Print "You are in a clearing, with a forest surrounding you on all sides. A path leads south.")
+[44405] (Test_attr (Con 174) (Con 11) (Branch false (Dloc 44444)))
+[44409] New_line
+[44410] (Print "There is an open grating, descending into darkness.")
+[44441] (Jump 44475)
+[44444] (Jz (Var (Global 46)) (Branch true (Dloc 44475)))
+[44447] New_line
+[44448] (Print "There is a grating securely fastened into the ground.")
+[44475] New_line
+[44476] Rtrue
 --------------------------------------------------
 [44336] ((var_initializations (0)))
 [44339] (Je ((Var (Local 1)) (Con 2)) (Branch false (Dloc 44350)))
@@ -3104,6 +4962,36 @@ Found 224 reachable routines:
 [45038] (Je ((Var (Global 0)) (Con 56)) (Branch false Dfalse))
 [45042] (Return (Con 167))
 --------------------------------------------------
+[45044] ((var_initializations ()))
+[45045] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 45111)))
+[45050] (Jin (Con 110) (Var (Global 111)) (Branch false Dfalse))
+[45054] (Print "As you touch the rusty knife, your sword gives a single pulse of blinding blue light.")
+[45109] New_line
+[45110] Rfalse
+[45111] (Je ((Var (Global 119)) (Con 128)) (Branch false (Dloc 45119)))
+[45115] (Je ((Var (Global 120)) (Con 19)) (Branch true (Dloc 45130)))
+[45119] (Je ((Var (Global 120)) (Con 126)) (Branch false Dfalse))
+[45123] (Je ((Var (Global 118)) (Con 128)) (Branch false Dfalse))
+[45127] (Jz (Var (Global 119)) (Branch true Dfalse))
+[45130] (Call (Floc 30906) ((Con 128)) Sp)
+[45136] (Call (Floc 67174) ((Con 40025)) Sp)
+[45143] Ret_popped
+--------------------------------------------------
+[45144] ((var_initializations ()))
+[45145] (Je ((Var (Global 120)) (Con 93)) (Branch false Dfalse))
+[45149] (Clear_attr (Con 202) (Con 14))
+[45152] Rfalse
+--------------------------------------------------
+[45154] ((var_initializations ()))
+[45155] (Je ((Var (Global 120)) (Con 88) (Con 110) (Con 93)) (Branch true (Dloc 45176)))
+[45162] (Je ((Var (Global 120)) (Con 84) (Con 105) (Con 101)) (Branch true (Dloc 45176)))
+[45169] (Je ((Var (Global 120)) (Con 72) (Con 70) (Con 19)) (Branch false Dfalse))
+[45176] (Print "A ghost appears in the room and is appalled at your desecration of the remains of a fellow adventurer. He casts a curse on your valuables and banishes them to the Land of the Living Dead. The ghost leaves, muttering obscenities.")
+[45307] New_line
+[45308] (Call (Floc 66488) ((Var (Global 0)) (Con 230) (Con 100)) Sp)
+[45316] (Call (Floc 66488) ((Con 4) (Con 230)) Sp)
+[45323] Rtrue
+--------------------------------------------------
 [45324] ((var_initializations ()))
 [45325] (Je ((Var (Global 120)) (Con 56)) (Branch false (Dloc 45344)))
 [45329] (Print_ret "The torch is burning.")
@@ -3187,6 +5075,15 @@ Found 224 reachable routines:
 [46325] (Call (Floc 67174) ((Con 40087)) Sp)
 [46332] Ret_popped
 --------------------------------------------------
+[46333] ((var_initializations ()))
+[46334] (Je ((Con 0) (Con 0)) (Branch false Dtrue))
+[46338] (Je ((Con 3) (Con 0)) (Branch true (Dloc 46365)))
+[46342] (Print "You are outside a large gateway, on which is inscribed\n\n  Abandon every hope all ye who enter here!\n\nThe gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.")
+[46501] New_line
+[46502] (Jz (Var (Global 145)) (Branch false Dfalse))
+[46505] (Jz (Var (Global 62)) (Branch false Dfalse))
+[46508] (Print_ret "The way through the gate is barred by evil spirits, who jeer at your attempts to pass.")
+--------------------------------------------------
 [46334] ((var_initializations (0)))
 [46337] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 46557)))
 [46342] (Print "You are outside a large gateway, on which is inscribed\n\n  Abandon every hope all ye who enter here!\n\nThe gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.")
@@ -3201,6 +5098,67 @@ Found 224 reachable routines:
 [46573] (Jin (Con 211) (Var (Global 111)) (Branch false (Dloc 46600)))
 [46577] (Jin (Con 147) (Var (Global 111)) (Branch false (Dloc 46600)))
 [46581] (Print_ret "You must perform the ceremony.")
+--------------------------------------------------
+[46558] ((var_initializations (258)))
+[46561] (Jin (Con 65) (Con 136) (Branch false (Dloc 45151)))
+[46566] (Jz (Var (Global 145)) (Branch false Dfalse))
+[46569] (Jin (Con 221) (Var (Global 111)) (Branch false (Dloc 46600)))
+[46573] (Jin (Con 211) (Var (Global 111)) (Branch false (Dloc 46600)))
+[46577] (Jin (Con 147) (Var (Global 111)) (Branch false (Dloc 46600)))
+[46581] (Print_ret "You must perform the ceremony.")
+--------------------------------------------------
+[46615] ((var_initializations (19062 38689 55496 45728 41216 64321 34925 246 16774 56576 61709 14849 57375 15453 56576)))
+[46646] (Call (Floc 38192) ((Con 219)) Sp)
+[46652] (Insert_obj (Con 219) (Var (Global 0)))
+[46655] (Print "The bell suddenly becomes red hot and falls to the ground. The wraiths, as if paralyzed, stop their jeering and slowly turn to face you. On their ashen faces, the expression of a long-forgotten terror takes shape.")
+[46790] New_line
+[46791] (Jin (Con 147) (Var (Global 111)) (Branch false (Dloc 46849)))
+[46795] (Print "In your confusion, the candles drop to the ground (and they are out).")
+[46830] New_line
+[46831] (Insert_obj (Con 147) (Var (Global 0)))
+[46834] (Clear_attr (Con 147) (Con 20))
+[46837] (Call (Floc 21638) ((Con 28522)) Sp)
+[46844] (Storew (Var Sp) (Con 0) (Con 0))
+[46849] (Call (Floc 21618) ((Con 23614) (Con 6)) Sp)
+[46857] (Storew (Var Sp) (Con 0) (Con 1))
+[46862] (Call (Floc 21618) ((Con 23666) (Con 20)) Sp)
+[46870] (Storew (Var Sp) (Con 0) (Con 1))
+[46875] Rtrue
+--------------------------------------------------
+[47043] ((var_initializations (27461 18944 13572 7194)))
+[47052] (Get_prop (Con 224) (Var (Global 162)) (Global 171))
+[47056] (Call (Floc 30906) ((Con 233)) Sp)
+[47062] (Store (Con 161) (Con 1))
+[47065] (Call (Floc 21638) ((Con 23661)) Sp)
+[47072] (Storew (Var Sp) (Con 0) (Con 0))
+[47077] Rtrue
+--------------------------------------------------
+[47079] ((var_initializations (1600)))
+[47082] (Jz (Var (Global 42)) (Branch true Dfalse))
+[47085] (Jin (Con 147) (Var (Global 111)) (Branch false Dfalse))
+[47089] (Test_attr (Con 147) (Con 20) (Branch false Dfalse))
+[47093] (Jz (Var (Global 41)) (Branch false Dfalse))
+[47096] (Store (Con 57) (Con 1))
+[47099] (Print "The flames flicker wildly and appear to dance. The earth beneath your feet trembles, and your legs nearly buckle beneath you. The spirits cower at your unearthly power.")
+[47200] New_line
+[47201] (Call (Floc 21638) ((Con 23614)) Sp)
+[47208] (Storew (Var Sp) (Con 0) (Con 0))
+[47213] (Call (Floc 21618) ((Con 23661) (Con 3)) Sp)
+[47221] (Storew (Var Sp) (Con 0) (Con 1))
+[47226] Rtrue
+--------------------------------------------------
+[47228] ((var_initializations ()))
+[47229] (Jz (Var (Global 41)) (Branch false (Dloc 47316)))
+[47233] (Je ((Var (Global 0)) (Con 232)) (Branch false (Dloc 47316)))
+[47238] (Print "The tension of this ceremony is broken, and the wraiths, amused but shaken at your clumsy attempt, resume their hideous jeering.")
+[47315] New_line
+[47316] (Store (Con 58) (Con 0))
+[47319] (Return (Var (Global 42)))
+--------------------------------------------------
+[47322] ((var_initializations ()))
+[47323] (Store (Con 57) (Con 0))
+[47326] (Call (Floc 47228) () Sp)
+[47331] Ret_popped
 --------------------------------------------------
 [47332] ((var_initializations ()))
 [47333] (Call (Floc 30906) ((Con 219)) Sp)
@@ -3265,8 +5223,38 @@ Found 224 reachable routines:
 [48068] (Je ((Var (Global 120)) (Con 85)) (Branch false Dfalse))
 [48072] (Print_ret "Hmm. It appears the tube contained glue, not oil. Turning the bolt won't get any easier....")
 --------------------------------------------------
+[48128] ((var_initializations ()))
+[48129] (Je ((Var (Global 120)) (Con 93)) (Branch false Dfalse))
+[48133] (Call (Floc 48140) () Sp)
+[48138] Ret_popped
+--------------------------------------------------
 [48140] ((var_initializations ()))
 [48141] (Print_ret "It is an integral part of the control panel.")
+--------------------------------------------------
+[48168] ((var_initializations ()))
+[48169] (Set_attr (Con 100) (Con 4))
+[48172] (Clear_attr (Con 100) (Con 6))
+[48175] (Clear_attr (Con 40) (Con 3))
+[48178] (Clear_attr (Con 138) (Con 3))
+[48181] (Jin (Con 101) (Con 100) (Branch false (Dloc 48188)))
+[48185] (Set_attr (Con 101) (Con 7))
+[48188] (Store (Con 160) (Con 0))
+[48191] (Je ((Var (Global 0)) (Con 100)) (Branch false (Dloc 48253)))
+[48195] (Get_parent (Var (Global 111)) Sp)
+[48198] (Test_attr (Var Sp) (Con 27) (Branch false (Dloc 48245)))
+[48202] (Print_ret "The boat lifts gently out of the mud and is now floating on the reservoir.")
+[48245] (Call (Floc 67174) ((Con 40103)) Sp)
+[48252] Rtrue
+[48253] (Je ((Var (Global 0)) (Con 40)) (Branch false (Dloc 48296)))
+[48257] (Print_ret "A sound, like that of flowing water, starts to come from below.")
+[48296] (Je ((Var (Global 0)) (Con 138)) (Branch false (Dloc 48380)))
+[48301] (Print "All of a sudden, an alarmingly loud roaring sound fills the room. Filled with fear, you scramble away.")
+[48366] New_line
+[48367] (Call (Floc 20076) ((Var (Global 38))) Sp)
+[48373] (Call (Floc 37558) ((Var Sp)) Sp)
+[48379] Rtrue
+[48380] (Je ((Var (Global 0)) (Con 172) (Con 50)) (Branch false Dtrue))
+[48386] (Print_ret "You notice that the water level has risen to the point that it is impossible to cross.")
 --------------------------------------------------
 [48424] ((var_initializations ()))
 [48425] (Set_attr (Con 100) (Con 6))
@@ -3313,6 +5301,92 @@ Found 224 reachable routines:
 [48801] (Clear_attr (Con 215) (Con 3))
 [48804] (Store (Con 56) (Con 1))
 [48807] (Print_ret "Click.")
+--------------------------------------------------
+[48814] ((var_initializations ()))
+[48815] (Je ((Var (Global 120)) (Con 56)) (Branch false (Dloc 48836)))
+[48819] (Print_ret "The chests are all empty.")
+[48836] (Je ((Var (Global 120)) (Con 18) (Con 43) (Con 93)) (Branch false (Dloc 48894)))
+[48843] (Call (Floc 30906) ((Con 200)) Sp)
+[48849] (Print_ret "The chests are so rusty and corroded that they crumble when you touch them.")
+[48894] (Je ((Var (Global 120)) (Con 43)) (Branch false Dfalse))
+[48898] (Print_ret "The chests are already open.")
+--------------------------------------------------
+[48914] ((var_initializations (0)))
+[48917] (Je ((Var (Global 0)) (Con 199)) (Branch true (Dloc 48927)))
+[48921] (Push (Con 0))
+[48924] (Jump 48930)
+[48927] (Push (Con 1))
+[48930] (Store (Con 1) (Var Sp))
+[48933] (Jz (Var (Local 1)) (Branch true (Dloc 48958)))
+[48936] (Print "The water level here is now ")
+[48947] (Div (Var (Global 36)) (Con 2) Sp)
+[48951] (Load_word (Var (Global 37)) (Var Sp) Sp)
+[48955] (Print_paddr (Var Sp))
+[48957] New_line
+[48958] (Inc (Con 52))
+[48960] (Jl (Var (Global 36)) (Con 14) (Branch true (Dloc 48991)))
+[48964] (Call (Floc 38178) ((Con 199) (Con 40244)) Sp)
+[48972] (Call (Floc 21618) ((Con 24457) (Con 0)) Sp)
+[48980] (Jz (Var (Local 1)) (Branch true Dtrue))
+[48983] (Call (Floc 67174) ((Con 40255)) Sp)
+[48990] Rtrue
+[48991] (Jin (Var (Global 111)) (Con 156) (Branch false Dtrue))
+[48995] (Je ((Var (Global 0)) (Con 199) (Con 215) (Con 154)) (Branch false Dtrue))
+[49002] (Call (Floc 67174) ((Con 40269)) Sp)
+[49009] Rtrue
+--------------------------------------------------
+[49010] ((var_initializations ()))
+[49011] (Jg (Var (Global 36)) (Con 0) (Branch false Dfalse))
+[49015] (Je ((Var (Global 120)) (Con 50) (Con 18)) (Branch false (Dloc 49031)))
+[49021] (Je ((Var (Global 118)) (Con 98)) (Branch false (Dloc 49031)))
+[49025] (Call (Floc 49052) () Sp)
+[49030] Ret_popped
+[49031] (Je ((Var (Global 120)) (Con 95)) (Branch false Dfalse))
+[49035] (Je ((Var (Global 119)) (Con 98)) (Branch false (Dloc 49045)))
+[49039] (Call (Floc 49052) () Sp)
+[49044] Ret_popped
+[49045] (Call (Floc 49406) ((Var (Global 119))) Sp)
+[49051] Ret_popped
+--------------------------------------------------
+[49052] ((var_initializations ()))
+[49053] (Store (Con 52) (Con 65535))
+[49058] (Call (Floc 21618) ((Con 24457) (Con 0)) Sp)
+[49066] (Print_ret "By some miracle of Zorkian technology, you have managed to stop the leak in the dam.")
+--------------------------------------------------
+[49118] ((var_initializations ()))
+[49119] (Je ((Var (Global 120)) (Con 85)) (Branch false (Dloc 49127)))
+[49123] (Je ((Var (Global 119)) (Con 98)) (Branch true (Dloc 49135)))
+[49127] (Je ((Var (Global 120)) (Con 18)) (Branch false Dfalse))
+[49131] (Je ((Var (Global 118)) (Con 98)) (Branch false Dfalse))
+[49135] (Print_ret "The all-purpose gunk isn't a lubricant.")
+--------------------------------------------------
+[49164] ((var_initializations ()))
+[49165] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 49196)))
+[49169] (Je ((Var (Global 119)) (Con 99)) (Branch false (Dloc 49196)))
+[49173] (Print_ret "The tube refuses to accept anything.")
+[49196] (Je ((Var (Global 120)) (Con 121)) (Branch false Dfalse))
+[49200] (Test_attr (Var (Global 118)) (Con 11) (Branch false (Dloc 49236)))
+[49204] (Jin (Con 98) (Var (Global 118)) (Branch false (Dloc 49236)))
+[49208] (Insert_obj (Con 98) (Var (Global 111)))
+[49211] (Print_ret "The viscous material oozes into your hand.")
+[49236] (Test_attr (Var (Global 118)) (Con 11) (Branch false (Dloc 49259)))
+[49240] (Print_ret "The tube is apparently empty.")
+[49259] (Print_ret "The tube is closed.")
+--------------------------------------------------
+[49268] ((var_initializations ()))
+[49269] (Je ((Var (Global 120)) (Con 35) (Con 43)) (Branch false (Dloc 49300)))
+[49275] (Print_ret "Sounds reasonable, but this isn't how.")
+[49300] (Je ((Var (Global 120)) (Con 95)) (Branch false Dfalse))
+[49304] (Je ((Var (Global 119)) (Con 1)) (Branch false (Dloc 49349)))
+[49308] (Print_ret "Are you the little Dutch boy, then? Sorry, this is a big dam.")
+[49349] (Print "With a ")
+[49356] (Print_obj (Var (Global 119)))
+[49358] (Print_ret "? Do you know how big this dam is? You could only stop a tiny leak with that.")
+--------------------------------------------------
+[49406] ((var_initializations (0)))
+[49409] (Print "With a ")
+[49416] (Print_obj (Var (Local 1)))
+[49418] (Print_ret "?")
 --------------------------------------------------
 [49422] ((var_initializations (0)))
 [49425] (Je ((Var (Local 1)) (Con 3)) (Branch false Dfalse))
@@ -3361,6 +5435,135 @@ Found 224 reachable routines:
 [50459] New_line
 [50460] (Print_ret "There is a slimy stairway leaving the room to the north.")
 --------------------------------------------------
+[50492] ((var_initializations (0)))
+[50495] (Je ((Var (Global 120)) (Con 127)) (Branch false (Dloc 50541)))
+[50499] (Je ((Var (Global 118)) (Con 236)) (Branch false (Dloc 50541)))
+[50503] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[50509] (Store (Con 1) (Con 1))
+[50512] (Print "The bottle hits the far wall and shatters.")
+[50537] New_line
+[50538] (Jump 50602)
+[50541] (Je ((Var (Global 120)) (Con 42)) (Branch false (Dloc 50587)))
+[50545] (Store (Con 1) (Con 1))
+[50548] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[50554] (Print "A brilliant maneuver destroys the bottle.")
+[50583] New_line
+[50584] (Jump 50602)
+[50587] (Je ((Var (Global 120)) (Con 115)) (Branch false (Dloc 50602)))
+[50591] (Test_attr (Var (Global 118)) (Con 11) (Branch false (Dloc 50602)))
+[50595] (Jin (Con 237) (Var (Global 118)) (Branch false (Dloc 50602)))
+[50599] (Store (Con 1) (Con 1))
+[50602] (Jz (Var (Local 1)) (Branch true (Dloc 50642)))
+[50605] (Jin (Con 237) (Var (Global 118)) (Branch false (Dloc 50642)))
+[50609] (Print "The water spills to the floor and evaporates.")
+[50634] New_line
+[50635] (Call (Floc 30906) ((Con 237)) Sp)
+[50641] Rtrue
+[50642] (Jz (Var (Local 1)) (Branch true Dfalse))
+[50645] Rtrue
+--------------------------------------------------
+[50646] ((var_initializations (0)))
+[50649] (Store (Con 1) (Var (Global 35)))
+[50652] (Je ((Var (Global 111)) (Con 186)) (Branch false (Dloc 50734)))
+[50657] (Jz (Var (Global 149)) (Branch true (Dloc 50691)))
+[50660] (Print_ret "No use talking to him. He's fast asleep.")
+[50691] (Je ((Var (Global 120)) (Con 91)) (Branch false (Dloc 50705)))
+[50695] (Store (Con 127) (Con 4))
+[50698] (Call (Floc 22396) ((Con 91)) Sp)
+[50704] Rtrue
+[50705] (Print_ret "The cyclops prefers eating to making conversation.")
+[50734] (Jz (Var (Global 149)) (Branch true (Dloc 50845)))
+[50738] (Je ((Var (Global 120)) (Con 56)) (Branch false (Dloc 50777)))
+[50742] (Print_ret "The cyclops is sleeping like a baby, albeit a very ugly one.")
+[50777] (Je ((Var (Global 120)) (Con 19) (Con 70) (Con 136)) (Branch true (Dloc 50790)))
+[50784] (Je ((Var (Global 120)) (Con 42) (Con 28)) (Branch false Dfalse))
+[50790] (Print "The cyclops yawns and stares at the thing that woke him up.")
+[50823] New_line
+[50824] (Store (Con 165) (Con 0))
+[50827] (Set_attr (Con 186) (Con 2))
+[50830] (Jl (Var (Local 1)) (Con 0) (Branch false (Dloc 50840)))
+[50834] (Sub (Con 0) (Var (Local 1)) (Global 35))
+[50838] (Return (Var (Global 35)))
+[50840] (Store (Con 51) (Var (Local 1)))
+[50843] (Return (Var (Global 35)))
+[50845] (Je ((Var (Global 120)) (Con 56)) (Branch false (Dloc 50880)))
+[50849] (Print_ret "A hungry cyclops is standing at the foot of the stairs.")
+[50880] (Je ((Var (Global 120)) (Con 63)) (Branch false (Dloc 51313)))
+[50885] (Je ((Var (Global 119)) (Con 186)) (Branch false (Dloc 51313)))
+[50890] (Je ((Var (Global 118)) (Con 225)) (Branch false (Dloc 51057)))
+[50895] (Jl (Var (Local 1)) (Con 0) (Branch true (Dloc 51042)))
+[50900] (Call (Floc 30906) ((Con 225)) Sp)
+[50906] (Print "The cyclops says \"Mmm Mmm. I love hot peppers! But oh, could I use a drink. Perhaps I could drink the blood of that thing.\"  From the gleam in his eye, it could be surmised that you are \"that thing\".")
+[51029] New_line
+[51030] (Sub (Con 0) (Var (Local 1)) Sp)
+[51034] (Call (Floc 57160) ((Con 65535) (Var Sp)) (Global 35))
+[51042] (Call (Floc 21618) ((Con 25759) (Con 65535)) Sp)
+[51051] (Storew (Var Sp) (Con 0) (Con 1))
+[51056] Rtrue
+[51057] (Je ((Var (Global 118)) (Con 237)) (Branch true (Dloc 51071)))
+[51061] (Je ((Var (Global 118)) (Con 236)) (Branch false (Dloc 51259)))
+[51066] (Jin (Con 237) (Con 236) (Branch false (Dloc 51259)))
+[51071] (Jl (Var (Local 1)) (Con 0) (Branch false (Dloc 51220)))
+[51076] (Call (Floc 30906) ((Con 237)) Sp)
+[51082] (Insert_obj (Con 236) (Var (Global 0)))
+[51085] (Set_attr (Con 236) (Con 11))
+[51088] (Clear_attr (Con 186) (Con 2))
+[51091] (Print "The cyclops takes the bottle, checks that it's open, and drinks the water. A moment later, he lets out a yawn that nearly blows you over, and then falls fast asleep (what did you put in that drink, anyway?).")
+[51214] New_line
+[51215] (Store (Con 165) (Con 1))
+[51218] (Return (Var (Global 149)))
+[51220] (Print_ret "The cyclops apparently is not thirsty and refuses your generous offer.")
+[51259] (Je ((Var (Global 118)) (Con 189)) (Branch false (Dloc 51286)))
+[51263] (Print_ret "The cyclops may be hungry, but there is a limit.")
+[51286] (Print_ret "The cyclops is not so stupid as to eat THAT!")
+[51313] (Je ((Var (Global 120)) (Con 42) (Con 19) (Con 127)) (Branch false (Dloc 51428)))
+[51321] (Call (Floc 21618) ((Con 25759) (Con 65535)) Sp)
+[51330] (Storew (Var Sp) (Con 0) (Con 1))
+[51335] (Je ((Var (Global 120)) (Con 42)) (Branch false (Dloc 51384)))
+[51339] (Print_ret "\"Do you think I'm as stupid as my father was?\", he says, dodging.")
+[51384] (Print "The cyclops shrugs but otherwise ignores your pitiful attempt.")
+[51419] New_line
+[51420] (Je ((Var (Global 120)) (Con 127)) (Branch false Dtrue))
+[51424] (Insert_obj (Var (Global 118)) (Var (Global 0)))
+[51427] Rtrue
+[51428] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 51457)))
+[51432] (Print_ret "The cyclops doesn't take kindly to being grabbed.")
+[51457] (Je ((Var (Global 120)) (Con 130)) (Branch false (Dloc 51492)))
+[51461] (Print_ret "You cannot tie the cyclops, though he is fit to be tied.")
+[51492] (Je ((Var (Global 120)) (Con 77)) (Branch false Dfalse))
+[51496] (Print_ret "You can hear his stomach rumbling.")
+--------------------------------------------------
+[51518] ((var_initializations ()))
+[51519] (Jz (Var (Global 149)) (Branch false Dtrue))
+[51522] (Jz (Var (Global 62)) (Branch false Dtrue))
+[51525] (Je ((Var (Global 0)) (Con 185)) (Branch true (Dloc 51542)))
+[51529] (Call (Floc 21638) ((Con 25759)) Sp)
+[51536] (Storew (Var Sp) (Con 0) (Con 0))
+[51541] Rtrue
+[51542] (Jl (Var (Global 35)) (Con 0) (Branch false (Dloc 51553)))
+[51546] (Sub (Con 0) (Var (Global 35)) Sp)
+[51550] (Jump 51556)
+[51553] (Push (Var (Global 35)))
+[51556] (Jg (Var Sp) (Con 5) (Branch false (Dloc 51580)))
+[51560] (Call (Floc 21638) ((Con 25759)) Sp)
+[51567] (Storew (Var Sp) (Con 0) (Con 0))
+[51572] (Call (Floc 67174) ((Con 40294)) Sp)
+[51579] Ret_popped
+[51580] (Jl (Var (Global 35)) (Con 0) (Branch false (Dloc 51589)))
+[51584] (Dec (Con 51))
+[51586] (Jump 51591)
+[51589] (Inc (Con 51))
+[51591] (Jz (Var (Global 149)) (Branch false Dfalse))
+[51594] (Jl (Var (Global 35)) (Con 0) (Branch false (Dloc 51605)))
+[51598] (Sub (Con 0) (Var (Global 35)) Sp)
+[51602] (Jump 51608)
+[51605] (Push (Var (Global 35)))
+[51608] (Sub (Var Sp) (Con 1) Sp)
+[51612] (Load_word (Var (Global 34)) (Var Sp) Sp)
+[51616] (Print_paddr (Var Sp))
+[51618] New_line
+[51619] Rtrue
+--------------------------------------------------
 [51620] ((var_initializations (0)))
 [51623] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 52049)))
 [51628] (Print "This room has an exit on the northwest, and a staircase leading up.")
@@ -3381,6 +5584,84 @@ Found 224 reachable routines:
 [52056] (Call (Floc 21638) ((Con 25759)) Sp)
 [52063] (Storew (Var Sp) (Con 0) (Con 1))
 [52068] Rtrue
+--------------------------------------------------
+[52069] ((var_initializations ()))
+[52070] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[52075] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 52273)))
+[52080] (Print "This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward.")
+[52147] (Jz (Var (Global 33)) (Branch false (Dloc 52156)))
+[52150] (Jz (Var (Global 39)) (Branch false (Dloc 52182)))
+[52153] (Jz (Var (Global 144)) (Branch true (Dloc 52182)))
+[52156] (Print " The room is eerie in its quietness.")
+[52179] (Jump 52271)
+[52182] (Print " The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.")
+[52271] New_line
+[52272] Rtrue
+[52273] (Je ((Var (Local 1)) (Con 6)) (Branch false (Dloc 52412)))
+[52278] (Jz (Var (Global 39)) (Branch true (Dloc 52412)))
+[52282] (Jz (Var (Global 144)) (Branch false (Dloc 52412)))
+[52286] (Print "It is unbearably loud here, with an ear-splitting roar seeming to come from all around you. There is a pounding in your head which won't stop. With a tremendous effort, you scramble out of the room.")
+[52397] New_line
+[52398] New_line
+[52399] (Call (Floc 20076) ((Var (Global 38))) Sp)
+[52405] (Call (Floc 37558) ((Var Sp)) Sp)
+[52411] Rfalse
+[52412] (Je ((Var (Local 1)) (Con 2)) (Branch false Dfalse))
+[52416] (Jz (Var (Global 33)) (Branch false Dfalse))
+[52419] (Jz (Var (Global 39)) (Branch false (Dloc 52425)))
+[52422] (Jz (Var (Global 144)) (Branch false Dfalse))
+[52425] (Jz (Var (Global 39)) (Branch true (Dloc 52431)))
+[52428] (Jz (Var (Global 144)) (Branch true Dfalse))
+[52431] (Call (Floc 35976) () Sp)
+[52436] (Jz (Var (Global 108)) (Branch true (Dloc 52474)))
+[52439] (Print "The rest of your commands have been lost in the noise.")
+[52470] New_line
+[52471] (Store (Con 124) (Con 0))
+[52474] New_line
+[52475] (Print ">")
+[52480] (Sread (Var (Global 109)) (Var (Global 110)))
+[52484] (Load_byte (Var (Global 110)) (Con 1) Sp)
+[52488] (Jz (Var Sp) (Branch false (Dloc 52508)))
+[52491] (Print "I beg your pardon?")
+[52504] New_line
+[52505] (Jump 52474)
+[52508] (Load_word (Var (Global 110)) (Con 1) (Local 2))
+[52512] (Je ((Var (Local 2)) (Con 16950) (Con 19806) (Con 18658)) (Branch false (Dloc 52529)))
+[52522] (Load_word (Var (Global 110)) (Con 3) (Local 2))
+[52526] (Jump 52539)
+[52529] (Je ((Var (Local 2)) (Con 18721)) (Branch false (Dloc 52539)))
+[52535] (Load_word (Var (Global 110)) (Con 5) (Local 2))
+[52539] (Je ((Var (Local 2)) (Con 18714)) (Branch false (Dloc 52553)))
+[52545] (Call (Floc 28264) () Sp)
+[52550] (Jump 52474)
+[52553] (Je ((Var (Local 2)) (Con 18588)) (Branch false (Dloc 52567)))
+[52559] (Call (Floc 28242) () Sp)
+[52564] (Jump 52474)
+[52567] (Je ((Var (Local 2)) (Con 18434) (Con 18448)) (Branch false (Dloc 52583)))
+[52575] (Call (Floc 28108) () Sp)
+[52580] (Jump 52474)
+[52583] (Je ((Var (Local 2)) (Con 19778) (Con 19848)) (Branch false (Dloc 52599)))
+[52591] (Call (Floc 37558) ((Con 107)) Sp)
+[52597] (Return (Var Sp))
+[52599] (Je ((Var (Local 2)) (Con 16362) (Con 16369)) (Branch false (Dloc 52615)))
+[52607] (Call (Floc 37558) ((Con 39)) Sp)
+[52613] (Return (Var Sp))
+[52615] (Je ((Var (Local 2)) (Con 19631) (Con 19708)) (Branch false (Dloc 52631)))
+[52623] (Call (Floc 37558) ((Con 40)) Sp)
+[52629] (Return (Var Sp))
+[52631] (Je ((Var (Local 2)) (Con 15732)) (Branch false (Dloc 52660)))
+[52637] (Print "That's only your opinion.")
+[52656] New_line
+[52657] (Jump 52474)
+[52660] (Je ((Var (Local 2)) (Con 16383)) (Branch false (Dloc 52700)))
+[52666] (Store (Con 49) (Con 1))
+[52669] (Clear_attr (Con 139) (Con 9))
+[52672] (Print "The acoustics of the room change subtly.")
+[52697] New_line
+[52698] New_line
+[52699] Rtrue
+[52700] (Call (Floc 30792) () Sp)
+[52705] (Jump 52474)
 --------------------------------------------------
 [52070] ((var_initializations (0 0)))
 [52075] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 52273)))
@@ -3489,6 +5770,99 @@ Found 224 reachable routines:
 [53029] (Store (Con 47) (Con 1))
 [53032] Rtrue
 --------------------------------------------------
+[53097] ((var_initializations ()))
+[53098] (Add (Con 28) (Var (Global 188)) Sp)
+[53102] (Div (Con 82) (Var (Global 90)) (Local 1))
+[53106] (Get_sibling (Var (Global 8)) (Global 22) (Branch false (Dloc 59277)))
+[53111] (Inc_check (Var (Global 193)) (Var (Global 27)) (Branch false (Dloc 45222)))
+[53116] (Div (Con 4) (Var (Global 4)) (Global 85))
+[53120] (Print_obj (Var (Global 204)))
+[53122] (Print "door j hkc the N")
+[53131] (Test_attr (Con 114) (Con 2) (Branch false (Dloc 53276)))
+[53136] (Call (Floc 65412) ((Con 114)) Sp)
+[53142] (Jz (Var Sp) (Branch false (Dloc 53276)))
+[53146] (Print "Your opponent, determining discretion to be the better part of valor, decides to terminate this little contretemps. With a rueful nod of his head, he steps backward into the gloom and disappears.")
+[53263] New_line
+[53264] (Set_attr (Con 114) (Con 7))
+[53267] (Clear_attr (Con 114) (Con 2))
+[53270] (Call (Floc 66364) () Sp)
+[53275] Rtrue
+[53276] (Jz (Var (Local 1)) (Branch true (Dloc 53291)))
+[53279] (Test_attr (Con 114) (Con 2) (Branch false (Dloc 53291)))
+[53283] (Random (Con 100) Sp)
+[53287] (Jg (Con 90) (Var Sp) (Branch true Dfalse))
+[53291] (Jz (Var (Local 1)) (Branch true (Dloc 53358)))
+[53295] (Random (Con 100) Sp)
+[53299] (Jg (Con 30) (Var Sp) (Branch false (Dloc 53358)))
+[53303] (Print "The holder of the large bag just left, looking disgusted. Fortunately, he took nothing.")
+[53348] New_line
+[53349] (Set_attr (Con 114) (Con 7))
+[53352] (Call (Floc 66364) () Sp)
+[53357] Rtrue
+[53358] (Random (Con 100) Sp)
+[53362] (Jg (Con 70) (Var Sp) (Branch true Dfalse))
+[53366] (Jz (Var (Global 62)) (Branch false Dfalse))
+[53369] (Call (Floc 66488) ((Var (Global 0)) (Con 114) (Con 100)) Sp)
+[53377] (Jz (Var Sp) (Branch true (Dloc 53386)))
+[53380] (Store (Con 2) (Con 1))
+[53383] (Jump 53402)
+[53386] (Call (Floc 66488) ((Var (Global 111)) (Con 114)) Sp)
+[53393] (Jz (Var Sp) (Branch true (Dloc 53402)))
+[53396] (Store (Con 2) (Con 1))
+[53399] (Store (Con 3) (Con 1))
+[53402] (Store (Con 47) (Con 1))
+[53405] (Jz (Var (Local 2)) (Branch true (Dloc 53549)))
+[53409] (Jz (Var (Local 1)) (Branch false (Dloc 53549)))
+[53413] (Print "A seedy-looking individual with a large bag just wandered through the room. On the way through, he quietly abstracted some valuables from the room and from your possession, mumbling something about \"Doing unto others before...\"")
+[53542] New_line
+[53543] (Call (Floc 53932) () Sp)
+[53548] Rfalse
+[53549] (Jz (Var (Local 1)) (Branch true (Dloc 53699)))
+[53553] (Call (Floc 66364) () Sp)
+[53558] (Jz (Var (Local 2)) (Branch true (Dloc 53660)))
+[53562] (Print "The thief just left, still carrying his large bag. You may not have noticed that he ")
+[53605] (Jz (Var (Local 3)) (Branch true (Dloc 53628)))
+[53608] (Print "robbed you blind first.")
+[53625] (Jump 53651)
+[53628] (Print "appropriated the valuables in the room.")
+[53651] New_line
+[53652] (Call (Floc 53932) () Sp)
+[53657] (Jump 53692)
+[53660] (Print "The thief, finding nothing of value, left disgusted.")
+[53691] New_line
+[53692] (Set_attr (Con 114) (Con 7))
+[53695] (Store (Con 1) (Con 0))
+[53698] Rtrue
+[53699] (Print_ret "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled.")
+--------------------------------------------------
+[53780] ((var_initializations ()))
+[53781] (Jg (Con 30) (Var Sp) (Branch false Dfalse))
+[53785] (Call (Floc 66488) ((Var (Global 0)) (Con 114) (Con 100)) Sp)
+[53793] (Pull (Con 4))
+[53796] (Jz (Var (Local 4)) (Branch true (Dloc 53805)))
+[53799] (Push (Var (Local 4)))
+[53802] (Jump 53812)
+[53805] (Call (Floc 66488) ((Var (Global 111)) (Con 114)) Sp)
+[53812] (Pull (Con 2))
+[53815] (Jz (Var (Local 2)) (Branch true (Dloc 53887)))
+[53819] (Print "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.")
+[53878] New_line
+[53879] (Call (Floc 53932) () Sp)
+[53884] (Jump 53919)
+[53887] (Print "The thief, finding nothing of value, left disgusted.")
+[53918] New_line
+[53919] (Set_attr (Con 114) (Con 7))
+[53922] (Store (Con 1) (Con 0))
+[53925] (Call (Floc 66364) () Sp)
+[53930] Rfalse
+--------------------------------------------------
+[53932] ((var_initializations (0)))
+[53935] (Store (Con 1) (Var (Global 66)))
+[53938] (Call (Floc 27746) ((Var (Global 0))) (Global 66))
+[53944] (Jz (Var (Global 66)) (Branch false Dtrue))
+[53947] (Jz (Var (Local 1)) (Branch true Dtrue))
+[53950] (Print_ret "The thief seems to have left you in the dark.")
+--------------------------------------------------
 [53970] ((var_initializations (0)))
 [53973] (Call (Floc 66364) () Sp)
 [53978] (Set_attr (Con 114) (Con 7))
@@ -3558,6 +5932,123 @@ Found 224 reachable routines:
 [54394] (Print ", but the contents of his bag fall on the floor.")
 [54421] (Jump 54427)
 --------------------------------------------------
+[54515] ((var_initializations (34407 10826 47510 17851)))
+[54524] (Set_attr (Con 114) (Con 2))
+[54527] Rtrue
+--------------------------------------------------
+[54551] ((var_initializations (66 0 73 4466 1792 13568 0)))
+[54566] (Put_prop (Con 114) (Con 7) (Var Sp))
+[54571] (Call (Floc 21638) ((Con 33008)) Sp)
+[54578] (Storew (Var Sp) (Con 0) (Con 1))
+[54583] (Call (Floc 66364) () Sp)
+[54588] (Put_prop (Con 114) (Con 11) (Var (Global 29)))
+[54593] (Print "Your proposed victim suddenly recovers consciousness.")
+[54628] New_line
+[54629] (Insert_obj (Var (Global 118)) (Con 114))
+[54632] (Get_prop (Var (Global 118)) (Con 12) Sp)
+[54636] (Jg (Var Sp) (Con 0) (Branch false (Dloc 54708)))
+[54641] (Store (Con 46) (Con 1))
+[54644] (Print "The thief is taken aback by your unexpected generosity, but accepts the ")
+[54685] (Print_obj (Var (Global 118)))
+[54687] (Print_ret " and stops to admire its beauty.")
+[54708] (Print "The thief places the ")
+[54719] (Print_obj (Var (Global 118)))
+[54721] (Print_ret " in his bag and thanks you politely.")
+--------------------------------------------------
+[54776] ((var_initializations ()))
+[54777] (Return (Con 179))
+--------------------------------------------------
+[54938] ((var_initializations (1659 78 39221 54064 8987 4 57664 22301 19020 2898 61978 12664 3663 14161 14881)))
+[54969] (And_ (Var (Global 134)) (Con 69) (Global 49))
+[54973] (Je ((Con 1) (Con 0)) (Branch false (Dloc 54989)))
+[54977] (Jin (Con 113) (Con 114) (Branch true Dfalse))
+[54981] (Get_parent (Con 114) Sp)
+[54984] (Jin (Con 113) (Var Sp) (Branch false Dfalse))
+[54988] (Insert_obj (Con 113) (Con 114))
+[54991] (Set_attr (Con 113) (Con 14))
+[54994] (Jin (Con 114) (Var (Global 0)) (Branch false Dtrue))
+[54998] (Print "The robber, somewhat surprised at this turn of events, nimbly retrieves his stiletto.")
+[55051] New_line
+[55052] Rtrue
+--------------------------------------------------
+[55054] ((var_initializations (512)))
+[55057] New_line
+[55058] (Insert_obj (Con 113) (Var (Global 0)))
+[55061] (Clear_attr (Con 113) (Con 14))
+[55064] (Call (Floc 53998) ((Var (Global 0))) (Local 3))
+[55070] (Je ((Var (Global 0)) (Con 190)) (Branch false (Dloc 55211)))
+[55075] (Get_child (Var (Global 0)) (Local 3) (Branch true (Dloc 55079)))
+[55079] (Jz (Var (Local 3)) (Branch false (Dloc 55107)))
+[55082] (Print "The chalice is now safe to take.")
+[55103] New_line
+[55104] (Jump 55230)
+[55107] (Je ((Var (Local 3)) (Con 191) (Con 114) (Con 4)) (Branch true (Dloc 55204)))
+[55115] (Clear_attr (Var (Local 3)) (Con 7))
+[55118] (Jz (Var (Local 2)) (Branch false (Dloc 55172)))
+[55121] (Store (Con 2) (Con 1))
+[55124] (Print "As the thief dies, the power of his magic decreases, and his treasures reappear:")
+[55171] New_line
+[55172] (Print "  A ")
+[55177] (Print_obj (Var (Local 3)))
+[55179] (Get_child (Var (Local 3)) Sp (Branch false (Dloc 55203)))
+[55183] (Call (Floc 36946) ((Var (Local 3))) Sp)
+[55189] (Jz (Var Sp) (Branch true (Dloc 55203)))
+[55192] (Print ", with ")
+[55197] (Call (Floc 36440) ((Var (Local 3))) Sp)
+[55203] New_line
+[55204] (Get_sibling (Var (Local 3)) (Local 3) (Branch true (Dloc 55208)))
+[55208] (Jump 55079)
+[55211] (Jz (Var (Local 3)) (Branch true (Dloc 55230)))
+[55214] (Print "His booty remains.")
+[55229] New_line
+[55230] (Call (Floc 21638) ((Con 33008)) Sp)
+[55237] (Storew (Var Sp) (Con 0) (Con 0))
+[55242] Rtrue
+--------------------------------------------------
+[55244] ((var_initializations (1368)))
+[55247] (Jz (Var (Global 31)) (Branch true Dfalse))
+[55250] (Test_attr (Con 114) (Con 7) (Branch true Dfalse))
+[55254] (Random (Con 100) Sp)
+[55258] (Jg (Con 20) (Var Sp) (Branch false Dfalse))
+[55262] (Set_attr (Con 114) (Con 2))
+[55265] (Store (Con 124) (Con 0))
+[55268] Rtrue
+--------------------------------------------------
+[55270] ((var_initializations (861)))
+[55273] (Call (Floc 21638) ((Con 33008)) Sp)
+[55280] (Storew (Var Sp) (Con 0) (Con 0))
+[55285] (Clear_attr (Con 114) (Con 2))
+[55288] (Insert_obj (Con 113) (Var (Global 0)))
+[55291] (Clear_attr (Con 113) (Con 14))
+[55294] (Put_prop (Con 114) (Con 11) (Var (Global 28)))
+[55299] Rtrue
+--------------------------------------------------
+[55301] ((var_initializations (1088)))
+[55304] (Get_parent (Con 114) Sp)
+[55307] (Je ((Var Sp) (Var (Global 0))) (Branch false (Dloc 55393)))
+[55312] (Set_attr (Con 114) (Con 2))
+[55315] (Print "The robber revives, briefly feigning continued unconsciousness, and, when he sees his moment, scrambles away from you.")
+[55392] New_line
+[55393] (Call (Floc 21638) ((Con 33008)) Sp)
+[55400] (Storew (Var Sp) (Con 0) (Con 1))
+[55405] (Put_prop (Con 114) (Con 11) (Var (Global 29)))
+[55410] (Call (Floc 66364) () Sp)
+[55415] Ret_popped
+--------------------------------------------------
+[55416] ((var_initializations ()))
+[55417] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 55508)))
+[55422] (Get_prop (Con 114) (Con 11) Sp)
+[55426] (Je ((Var Sp) (Var (Global 28))) (Branch false (Dloc 55483)))
+[55430] (Print_ret "Sadly for you, the robber collapsed on top of the bag. Trying to take it would wake him.")
+[55483] (Print_ret "The bag will be taken over his dead body.")
+[55508] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 55531)))
+[55512] (Je ((Var (Global 119)) (Con 115)) (Branch false (Dloc 55531)))
+[55516] (Print_ret "It would be a good trick.")
+[55531] (Je ((Var (Global 120)) (Con 35) (Con 43)) (Branch false (Dloc 55566)))
+[55537] (Print_ret "Getting close enough would be a good trick.")
+[55566] (Je ((Var (Global 120)) (Con 57) (Con 56)) (Branch false Dfalse))
+[55572] (Print_ret "The bag is underneath the thief, so one can't say what, if anything, is inside.")
+--------------------------------------------------
 [55622] ((var_initializations (0 0 0 0)))
 [55631] (Get_child (Var (Local 1)) (Local 3) (Branch false Dfalse))
 [55635] (Jz (Var (Local 3)) (Branch true Dtrue))
@@ -3591,6 +6082,50 @@ Found 224 reachable routines:
 [55781] (Jin (Con 114) (Var (Global 0)) (Branch true (Dloc 55791)))
 [55785] (Push (Con 1))
 [55788] (Jump 55794)
+--------------------------------------------------
+[55793] ((var_initializations ()))
+[55794] (Store (Con 2) (Var Sp))
+[55797] (Jz (Var (Local 2)) (Branch true (Dloc 55889)))
+[55801] (Print "You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.")
+[55876] New_line
+[55877] (Insert_obj (Con 114) (Var (Global 0)))
+[55880] (Set_attr (Con 114) (Con 2))
+[55883] (Clear_attr (Con 114) (Con 7))
+[55886] (Jump 55892)
+[55889] (Set_attr (Con 114) (Con 2))
+[55892] (Call (Floc 55898) () Sp)
+[55897] Ret_popped
+--------------------------------------------------
+[55898] ((var_initializations (0 0)))
+[55903] (Get_child (Var (Global 0)) (Local 1) (Branch true (Dloc 55907)))
+[55907] (Jz (Var (Local 1)) (Branch true (Dloc 55961)))
+[55910] (Get_sibling (Var (Local 1)) Sp (Branch false (Dloc 55961)))
+[55914] (Print "The thief gestures mysteriously, and the treasures in the room suddenly vanish.")
+[55959] New_line
+[55960] New_line
+[55961] (Jz (Var (Local 1)) (Branch true Dtrue))
+[55964] (Je ((Var (Local 1)) (Con 191)) (Branch true (Dloc 55975)))
+[55968] (Je ((Var (Local 1)) (Con 114)) (Branch true (Dloc 55975)))
+[55972] (Set_attr (Var (Local 1)) (Con 7))
+[55975] (Get_sibling (Var (Local 1)) (Local 1) (Branch true (Dloc 55979)))
+[55979] (Jump 55961)
+--------------------------------------------------
+[55982] ((var_initializations ()))
+[55983] (Je ((Var (Global 120)) (Con 43)) (Branch false (Dloc 56000)))
+[55987] (Print_ret "The door cannot be opened.")
+[56000] (Je ((Var (Global 120)) (Con 28)) (Branch false (Dloc 56017)))
+[56004] (Print_ret "You cannot burn this door.")
+[56017] (Je ((Var (Global 120)) (Con 42)) (Branch false (Dloc 56040)))
+[56021] (Print_ret "You can't seem to damage the door.")
+[56040] (Je ((Var (Global 120)) (Con 82)) (Branch false Dfalse))
+[56044] (Print_ret "It won't open.")
+--------------------------------------------------
+[56054] ((var_initializations ()))
+[56055] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 56084)))
+[56059] (Print_ret "A force keeps you from taking the bodies.")
+[56084] (Je ((Var (Global 120)) (Con 28) (Con 42)) (Branch false Dfalse))
+[56090] (Call (Floc 67174) ((Con 40495)) Sp)
+[56097] Ret_popped
 --------------------------------------------------
 [56098] ((var_initializations ()))
 [56099] (Je ((Var (Global 120)) (Con 43)) (Branch false (Dloc 56126)))
@@ -3711,6 +6246,48 @@ Found 224 reachable routines:
 [56992] (Clear_attr (Con 155) (Con 20))
 [56995] (Call (Floc 27746) ((Var (Global 0))) (Global 66))
 [57001] Rtrue
+--------------------------------------------------
+[57002] ((var_initializations (0 0)))
+[57007] (Load (Con 43) (Local 2))
+[57010] (Load_word (Var (Local 2)) (Con 0) (Local 1))
+[57014] (Call (Floc 21618) ((Con 28501) (Var (Local 1))) Sp)
+[57022] (Storew (Var Sp) (Con 0) (Con 1))
+[57027] (Call (Floc 57090) ((Con 164) (Var (Local 2)) (Var (Local 1))) Sp)
+[57035] (Jz (Var (Local 1)) (Branch true Dfalse))
+[57038] (Add (Var (Local 2)) (Con 4) (Global 27))
+[57042] (Return (Var (Global 27)))
+--------------------------------------------------
+[57044] ((var_initializations (0 0)))
+[57049] (Load (Con 41) (Local 2))
+[57052] (Set_attr (Con 147) (Con 3))
+[57055] (Load_word (Var (Local 2)) (Con 0) (Local 1))
+[57059] (Call (Floc 21618) ((Con 28522) (Var (Local 1))) Sp)
+[57067] (Storew (Var Sp) (Con 0) (Con 1))
+[57072] (Call (Floc 57090) ((Con 147) (Var (Local 2)) (Var (Local 1))) Sp)
+[57080] (Jz (Var (Local 1)) (Branch true Dfalse))
+[57083] (Add (Var (Local 2)) (Con 4) (Global 25))
+[57087] (Return (Var (Global 25)))
+--------------------------------------------------
+[57090] ((var_initializations (0 0 0)))
+[57097] (Jz (Var (Local 3)) (Branch false (Dloc 57106)))
+[57100] (Clear_attr (Var (Local 1)) (Con 20))
+[57103] (Set_attr (Var (Local 1)) (Con 18))
+[57106] (Call (Floc 38124) ((Var (Local 1))) Sp)
+[57112] (Jz (Var Sp) (Branch false (Dloc 57119)))
+[57115] (Jin (Var (Local 1)) (Var (Global 0)) (Branch false Dfalse))
+[57119] (Jz (Var (Local 3)) (Branch false (Dloc 57152)))
+[57122] (Print "You'd better have more light than from the ")
+[57147] (Print_obj (Var (Local 1)))
+[57149] (Print_ret ".")
+[57152] (Load_word (Var (Local 2)) (Con 1) Sp)
+[57156] (Print_paddr (Var Sp))
+[57158] New_line
+[57159] Rtrue
+--------------------------------------------------
+[57160] ((var_initializations (0 0)))
+[57165] (Jl (Var (Local 1)) (Var (Local 2)) (Branch false (Dloc 57171)))
+[57169] (Return (Var (Local 1)))
+[57171] (Return (Var (Local 2)))
 --------------------------------------------------
 [57174] ((var_initializations ()))
 [57175] (Test_attr (Con 147) (Con 3) (Branch true (Dloc 57191)))
@@ -3872,6 +6449,23 @@ Found 224 reachable routines:
 [58574] (Set_attr (Con 158) (Con 11))
 [58577] Rtrue
 --------------------------------------------------
+[58579] ((var_initializations (12601 8274 43599 1480)))
+[58588] (Inc (Var (Global 171)))
+[58590] (Set_attr (Con 158) (Con 11))
+[58593] Rtrue
+--------------------------------------------------
+[58603] ((var_initializations (12601 8226 13409 22678)))
+[58612] (Inc_check (Var (Global 171)) (Con 12) (Branch true (Dloc 66306)))
+[58617] Rtrue
+--------------------------------------------------
+[58623] ((var_initializations ()))
+[58624] (Print_paddr (Var Sp))
+[58626] New_line
+[58627] Rtrue
+--------------------------------------------------
+[58669] ((var_initializations ()))
+[58670] Rtrue
+--------------------------------------------------
 [58672] ((var_initializations (0)))
 [58675] (Je ((Var (Global 120)) (Con 89)) (Branch false Dfalse))
 [58679] (Je ((Var (Global 119)) (Con 123)) (Branch false (Dloc 58842)))
@@ -3883,6 +6477,13 @@ Found 224 reachable routines:
 [58815] (Call (Floc 30906) ((Con 119)) Sp)
 [58821] (Insert_obj (Con 171) (Con 158))
 [58824] Rtrue
+--------------------------------------------------
+[58834] ((var_initializations ()))
+[58835] (Jump 58825)
+--------------------------------------------------
+[58880] ((var_initializations ()))
+[58881] (Call (Floc 30906) ((Con 146)) Sp)
+[58887] (Print_ret "The slag was rather insubstantial, and crumbles into dust at your touch.")
 --------------------------------------------------
 [58930] ((var_initializations (0 0)))
 [58935] (Je ((Var (Local 1)) (Con 1)) (Branch false Dfalse))
@@ -3907,6 +6508,16 @@ Found 224 reachable routines:
 [58999] (Jin (Con 208) (Var (Global 111)) (Branch true (Dloc 59009)))
 [59003] (Push (Con 1))
 [59006] (Jump 59012)
+--------------------------------------------------
+[59011] ((var_initializations ()))
+[59012] (Store (Con 155) (Var Sp))
+[59015] Rfalse
+--------------------------------------------------
+[59016] ((var_initializations (0)))
+[59019] (Je ((Var (Local 1)) (Con 6)) (Branch false Dfalse))
+[59023] (Jin (Con 156) (Var (Global 111)) (Branch false (Dloc 59032)))
+[59027] (Store (Con 164) (Con 0))
+[59030] (Return (Var (Global 148)))
 --------------------------------------------------
 [59038] ((var_initializations ()))
 [59039] (Je ((Var (Global 120)) (Con 105) (Con 140)) (Branch false Dfalse))
@@ -3960,6 +6571,48 @@ Found 224 reachable routines:
 [59518] (Je ((Var (Global 120)) (Con 81)) (Branch false Dfalse))
 [59522] (Print_ret "The Frigid River flows under the rainbow.")
 --------------------------------------------------
+[59548] ((var_initializations ()))
+[59549] (Je ((Var (Global 120)) (Con 50) (Con 18)) (Branch false (Dloc 59565)))
+[59555] (Je ((Var (Global 118)) (Con 98)) (Branch false (Dloc 59565)))
+[59559] (Call (Floc 59620) () Sp)
+[59564] Ret_popped
+[59565] (Je ((Var (Global 120)) (Con 59) (Con 23)) (Branch false (Dloc 59598)))
+[59571] (Print_ret "No chance. Some moron punctured it.")
+[59598] (Je ((Var (Global 120)) (Con 95)) (Branch false Dfalse))
+[59602] (Je ((Var (Global 119)) (Con 98)) (Branch false (Dloc 59612)))
+[59606] (Call (Floc 59620) () Sp)
+[59611] Ret_popped
+[59612] (Call (Floc 49406) ((Var (Global 119))) Sp)
+[59618] Ret_popped
+--------------------------------------------------
+[59620] ((var_initializations ()))
+[59621] (Print "Well done. The boat is repaired.")
+[59644] New_line
+[59645] (Get_parent (Con 142) Sp)
+[59648] (Insert_obj (Con 141) (Var Sp))
+[59651] (Call (Floc 30906) ((Con 142)) Sp)
+[59657] Ret_popped
+--------------------------------------------------
+[59658] ((var_initializations ()))
+[59659] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 59785)))
+[59664] (Je ((Var (Global 119)) (Con 131)) (Branch false Dfalse))
+[59668] (Je ((Var (Global 118)) (Con 5)) (Branch false (Dloc 59680)))
+[59672] (Call (Floc 67174) ((Con 40690)) Sp)
+[59679] Ret_popped
+[59680] (Je ((Var (Global 118)) (Con 156)) (Branch false (Dloc 59711)))
+[59684] (Print_ret "You should get in the boat then launch it.")
+[59711] (Test_attr (Var (Global 118)) (Con 26) (Branch false (Dloc 59749)))
+[59715] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[59721] (Print "The ")
+[59724] (Print_obj (Var (Global 118)))
+[59726] (Print_ret " floats for a moment, then sinks.")
+[59749] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[59755] (Print "The ")
+[59758] (Print_obj (Var (Global 118)))
+[59760] (Print_ret " splashes into the water and is gone forever.")
+[59785] (Je ((Var (Global 120)) (Con 34) (Con 69)) (Branch false Dfalse))
+[59791] (Print_ret "A look before leaping reveals that the river is wide and dangerous, with swift currents and large, half-hidden rocks. You decide to forgo your swim.")
+--------------------------------------------------
 [59874] ((var_initializations (0)))
 [59877] (Je ((Var (Global 0)) (Con 36) (Con 35) (Con 34)) (Branch true (Dloc 59903)))
 [59884] (Je ((Var (Global 0)) (Con 130) (Con 31)) (Branch true (Dloc 59903)))
@@ -3978,6 +6631,86 @@ Found 224 reachable routines:
 [59966] Rtrue
 [59967] (Call (Floc 67174) ((Con 40711)) Sp)
 [59974] Ret_popped
+--------------------------------------------------
+[59975] ((var_initializations ()))
+[59976] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[59981] (Je ((Var (Local 1)) (Con 2) (Con 6) (Con 3)) (Branch true Dfalse))
+[59988] (Je ((Var (Local 1)) (Con 1)) (Branch false (Dloc 60380)))
+[59993] (Je ((Var (Global 120)) (Con 137)) (Branch false (Dloc 60051)))
+[59997] (Je ((Var (Global 118)) (Con 19) (Con 30) (Con 29)) (Branch true Dfalse))
+[60004] (Je ((Var (Global 0)) (Con 100)) (Branch false (Dloc 60014)))
+[60008] (Je ((Var (Global 118)) (Con 31) (Con 28)) (Branch true Dfalse))
+[60014] (Je ((Var (Global 0)) (Con 48)) (Branch false (Dloc 60022)))
+[60018] (Je ((Var (Global 118)) (Con 28)) (Branch true Dfalse))
+[60022] (Print_ret "Read the label for the boat's instructions.")
+[60051] (Je ((Var (Global 120)) (Con 74)) (Branch false (Dloc 60171)))
+[60056] (Je ((Var (Global 0)) (Con 36) (Con 35) (Con 34)) (Branch true (Dloc 60070)))
+[60063] (Je ((Var (Global 0)) (Con 130) (Con 100) (Con 48)) (Branch false (Dloc 60123)))
+[60070] (Print "You are on the ")
+[60077] (Je ((Var (Global 0)) (Con 100)) (Branch false (Dloc 60091)))
+[60081] (Print "reservoir")
+[60088] (Jump 60108)
+[60091] (Je ((Var (Global 0)) (Con 48)) (Branch false (Dloc 60103)))
+[60095] (Print "stream")
+[60100] (Jump 60108)
+[60103] (Print "river")
+[60108] (Print_ret ", or have you forgotten?")
+[60123] (Call (Floc 37934) ((Var (Global 21))) (Local 2))
+[60129] (Je ((Var (Local 2)) (Con 1)) (Branch false (Dloc 60154)))
+[60133] (Call (Floc 37960) ((Var (Global 0)) (Var (Global 23))) Sp)
+[60140] (Call (Floc 21618) ((Con 29937) (Var Sp)) Sp)
+[60148] (Storew (Var Sp) (Con 0) (Con 1))
+[60153] Rtrue
+[60154] (Je ((Var (Local 2)) (Con 2)) (Branch true Dtrue))
+[60158] (Print_ret "You can't launch it here.")
+[60171] (Je ((Var (Global 120)) (Con 49)) (Branch false (Dloc 60179)))
+[60175] (Test_attr (Var (Global 118)) (Con 29) (Branch true (Dloc 60203)))
+[60179] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 60191)))
+[60183] (Test_attr (Var (Global 118)) (Con 29) (Branch false (Dloc 60191)))
+[60187] (Je ((Var (Global 119)) (Con 156)) (Branch true (Dloc 60203)))
+[60191] (Je ((Var (Global 120)) (Con 42) (Con 19)) (Branch false (Dloc 60365)))
+[60198] (Test_attr (Var (Global 119)) (Con 29) (Branch false (Dloc 60365)))
+[60203] (Call (Floc 30906) ((Con 156)) Sp)
+[60209] (Insert_obj (Con 142) (Var (Global 0)))
+[60212] (Call (Floc 66488) ((Con 156) (Var (Global 0))) Sp)
+[60219] (Insert_obj (Var (Global 111)) (Var (Global 0)))
+[60222] (Print "It seems that the ")
+[60229] (Je ((Var (Global 120)) (Con 18) (Con 49)) (Branch false (Dloc 60240)))
+[60235] (Print_obj (Var (Global 118)))
+[60237] (Jump 60242)
+[60240] (Print_obj (Var (Global 119)))
+[60242] (Print " didn't agree with the boat, as evidenced by the loud hissing noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.")
+[60337] New_line
+[60338] (Test_attr (Var (Global 0)) (Con 4) (Branch false Dtrue))
+[60342] New_line
+[60343] (Je ((Var (Global 0)) (Con 100) (Con 48)) (Branch false (Dloc 60357)))
+[60349] (Call (Floc 67174) ((Con 40749)) Sp)
+[60356] Rtrue
+[60357] (Call (Floc 67174) ((Con 40768)) Sp)
+[60364] Rtrue
+[60365] (Je ((Var (Global 120)) (Con 74)) (Branch false Dfalse))
+[60369] (Print_ret "You're not in the boat!")
+[60380] (Je ((Var (Global 120)) (Con 25)) (Branch false (Dloc 60507)))
+[60385] (Jin (Con 209) (Var (Global 111)) (Branch true (Dloc 60409)))
+[60389] (Jin (Con 169) (Var (Global 111)) (Branch true (Dloc 60409)))
+[60393] (Jin (Con 110) (Var (Global 111)) (Branch true (Dloc 60409)))
+[60397] (Jin (Con 128) (Var (Global 111)) (Branch true (Dloc 60409)))
+[60401] (Jin (Con 218) (Var (Global 111)) (Branch true (Dloc 60409)))
+[60405] (Jin (Con 113) (Var (Global 111)) (Branch false Dfalse))
+[60409] (Print "Oops! Something sharp seems to have slipped and punctured the boat. The boat deflates to the sounds of hissing, sputtering, and cursing.")
+[60490] New_line
+[60491] (Call (Floc 30906) ((Con 156)) Sp)
+[60497] (Insert_obj (Con 142) (Var (Global 0)))
+[60500] (Call (Floc 38192) ((Con 142)) Sp)
+[60506] Rtrue
+[60507] (Je ((Var (Global 120)) (Con 59) (Con 23)) (Branch false (Dloc 60538)))
+[60513] (Print_ret "Inflating it further would probably burst it.")
+[60538] (Je ((Var (Global 120)) (Con 41)) (Branch false Dfalse))
+[60542] (Get_parent (Var (Global 111)) Sp)
+[60545] (Je ((Var Sp) (Con 156)) (Branch false (Dloc 60576)))
+[60549] (Print_ret "You can't deflate the boat while you're in it.")
+[60576] (Jin (Con 156) (Var (Global 0)) (Branch true (Dloc 60605)))
+[60580] (Print_ret "The boat must be on the ground to be deflated.")
 --------------------------------------------------
 [59976] ((var_initializations (0 0)))
 [59981] (Je ((Var (Local 1)) (Con 2) (Con 6) (Con 3)) (Branch true Dfalse))
@@ -4058,10 +6791,30 @@ Found 224 reachable routines:
 [60576] (Jin (Con 156) (Var (Global 0)) (Branch true (Dloc 60605)))
 [60580] (Print_ret "The boat must be on the ground to be deflated.")
 --------------------------------------------------
+[60610] ((var_initializations (10798)))
+[60613] (Jin (Con 101) (Var (Global 72)) (Branch true (Dloc 66317)))
+[60618] New_line
+[60619] (Store (Con 164) (Con 1))
+[60622] (Call (Floc 30906) ((Con 156)) Sp)
+[60628] (Insert_obj (Con 141) (Var (Global 0)))
+[60631] (Call (Floc 38192) ((Con 141)) Sp)
+[60637] Ret_popped
+--------------------------------------------------
+[60638] ((var_initializations ()))
+[60639] (Call (Floc 22396) ((Con 23) (Var (Global 118)) (Con 6)) Sp)
+[60647] Ret_popped
+--------------------------------------------------
 [60648] ((var_initializations ()))
 [60649] (Je ((Var (Global 120)) (Con 59) (Con 23)) (Branch false Dfalse))
 [60655] (Jin (Con 141) (Var (Global 0)) (Branch true (Dloc 60684)))
 [60659] (Print_ret "The boat must be on the ground to be inflated.")
+--------------------------------------------------
+[60718] ((var_initializations (47375 20760 59972 278 15930 27649 54113 51496 256 62491 9672 42427)))
+[60743] (Store (Con 164) (Con 0))
+[60746] (Call (Floc 30906) ((Con 141)) Sp)
+[60752] (Insert_obj (Con 156) (Var (Global 0)))
+[60755] (Call (Floc 38192) ((Con 156)) Sp)
+[60761] Ret_popped
 --------------------------------------------------
 [60818] ((var_initializations (0)))
 [60821] (Je ((Var (Local 1)) (Con 6)) (Branch false Dfalse))
@@ -4093,6 +6846,54 @@ Found 224 reachable routines:
 [60949] (Print_paddr (Var Sp))
 [60951] New_line
 [60952] Rtrue
+--------------------------------------------------
+[60953] ((var_initializations ()))
+[60954] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[60959] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 61068)))
+[60964] (Print "You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.")
+[61031] New_line
+[61032] (Get_child (Con 75) (Local 2) (Branch false Dfalse))
+[61036] (Get_sibling (Var (Local 2)) Sp (Branch false Dfalse))
+[61040] (Print "On the ground below you can see:  ")
+[61059] (Call (Floc 36440) ((Con 75)) Sp)
+[61065] (Print_ret ".")
+[61068] (Je ((Var (Local 1)) (Con 1)) (Branch false (Dloc 61276)))
+[61073] (Je ((Var (Global 120)) (Con 31)) (Branch false (Dloc 61088)))
+[61077] (Je ((Var (Global 118)) (Con 241)) (Branch false (Dloc 61088)))
+[61081] (Call (Floc 38000) ((Con 22)) Sp)
+[61087] Ret_popped
+[61088] (Je ((Var (Global 120)) (Con 32) (Con 30)) (Branch false (Dloc 61105)))
+[61094] (Je ((Var (Global 118)) (Con 241)) (Branch false (Dloc 61105)))
+[61098] (Call (Floc 38000) ((Con 23)) Sp)
+[61104] Ret_popped
+[61105] (Je ((Var (Global 120)) (Con 49)) (Branch false Dfalse))
+[61109] (Call (Floc 37334) () Sp)
+[61114] (Jz (Var Sp) (Branch true Dtrue))
+[61117] (Je ((Var (Global 118)) (Con 89)) (Branch false (Dloc 61184)))
+[61122] (Jin (Con 87) (Con 89) (Branch false (Dloc 61184)))
+[61126] (Print "The nest falls to the ground, and the egg spills out of it, seriously damaged.")
+[61173] New_line
+[61174] (Call (Floc 30906) ((Con 87)) Sp)
+[61180] (Insert_obj (Con 86) (Con 75))
+[61183] Rtrue
+[61184] (Je ((Var (Global 118)) (Con 87)) (Branch false (Dloc 61235)))
+[61188] (Print "The egg falls to the ground and springs open, seriously damaged.")
+[61225] (Insert_obj (Con 87) (Con 75))
+[61228] (Call (Floc 61720) () Sp)
+[61233] New_line
+[61234] Rtrue
+[61235] (Je ((Var (Global 118)) (Var (Global 111)) (Con 241)) (Branch true (Dloc 61264)))
+[61241] (Insert_obj (Var (Global 118)) (Con 75))
+[61244] (Print "The ")
+[61247] (Print_obj (Var (Global 118)))
+[61249] (Print_ret " falls to the ground.")
+[61264] (Je ((Var (Global 120)) (Con 69)) (Branch false Dfalse))
+[61268] (Call (Floc 67174) ((Con 40866)) Sp)
+[61275] Ret_popped
+[61276] (Je ((Var (Local 1)) (Con 2)) (Branch false Dfalse))
+[61280] (Call (Floc 21618) ((Con 31060) (Con 65535)) Sp)
+[61289] (Storew (Var Sp) (Con 0) (Con 1))
+[61294] Rtrue
 --------------------------------------------------
 [60954] ((var_initializations (0 0)))
 [60959] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 61068)))
@@ -4187,6 +6988,12 @@ Found 224 reachable routines:
 [61734] (Print_paddr (Var Sp))
 [61736] (Jump 61745)
 --------------------------------------------------
+[61744] ((var_initializations ()))
+[61745] (Get_parent (Con 87) Sp)
+[61748] (Insert_obj (Con 86) (Var Sp))
+[61751] (Call (Floc 30906) ((Con 87)) Sp)
+[61757] Rtrue
+--------------------------------------------------
 [61758] ((var_initializations ()))
 [61759] (Je ((Var (Global 120)) (Con 142)) (Branch false Dfalse))
 [61763] (Je ((Var (Global 118)) (Con 84)) (Branch false (Dloc 62068)))
@@ -4220,6 +7027,14 @@ Found 224 reachable routines:
 [62146] (Jg (Con 15) (Var Sp) (Branch false Dfalse))
 [62150] (Print_ret "You hear in the distance the chirping of a song bird.")
 --------------------------------------------------
+[62183] ((var_initializations ()))
+[62184] (Je ((Con 0) (Con 0)) (Branch false Dtrue))
+[62188] (Je ((Con 2) (Con 81)) (Branch true (Dloc 62222)))
+[62192] (Jg (Con 42) (Con 57) (Branch false (Dloc 62251)))
+[62196] (Add (Var (Global 239)) (Con 255) Sp)
+[62200] (Storew (Var Sp) (Con 0) (Con 1))
+[62205] Rtrue
+--------------------------------------------------
 [62184] ((var_initializations (0)))
 [62187] (Je ((Var (Local 1)) (Con 2)) (Branch false (Dloc 62206)))
 [62191] (Call (Floc 21618) ((Con 31060) (Con 65535)) Sp)
@@ -4230,6 +7045,30 @@ Found 224 reachable routines:
 [62216] (Je ((Var (Global 118)) (Con 241)) (Branch false Dfalse))
 [62220] (Call (Floc 38000) ((Con 23)) Sp)
 [62226] Ret_popped
+--------------------------------------------------
+[62207] ((var_initializations (320)))
+[62210] (Je ((Var (Global 120)) (Con 30) (Con 32)) (Branch false Dfalse))
+[62216] (Je ((Var (Global 118)) (Con 241)) (Branch false Dfalse))
+[62220] (Call (Floc 38000) ((Con 23)) Sp)
+[62226] Ret_popped
+--------------------------------------------------
+[62228] ((var_initializations ()))
+[62229] (Je ((Var (Global 120)) (Con 32) (Con 31) (Con 30)) (Branch false Dfalse))
+[62236] (Print_ret "The cliff is too steep for climbing.")
+--------------------------------------------------
+[62258] ((var_initializations ()))
+[62259] (Je ((Var (Global 120)) (Con 69)) (Branch true (Dloc 62271)))
+[62263] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 62302)))
+[62267] (Je ((Var (Global 118)) (Con 5)) (Branch false (Dloc 62302)))
+[62271] (Print_ret "That would be very unwise. Perhaps even fatal.")
+[62302] (Je ((Var (Global 119)) (Con 93)) (Branch false Dfalse))
+[62306] (Je ((Var (Global 120)) (Con 129) (Con 18)) (Branch false Dfalse))
+[62312] (Print "The ")
+[62315] (Print_obj (Var (Global 118)))
+[62317] (Print " tumbles into the river and is seen no more.")
+[62340] New_line
+[62341] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[62347] Ret_popped
 --------------------------------------------------
 [62348] ((var_initializations (0)))
 [62351] (Je ((Var (Global 0)) (Con 133)) (Branch true (Dloc 62377)))
@@ -4285,10 +7124,157 @@ Found 224 reachable routines:
 [62676] (Jz (Var (Global 147)) (Branch true Dfalse))
 [62679] (Print_ret "The rope is tied to the railing.")
 --------------------------------------------------
+[62698] ((var_initializations ()))
+[62699] (Je ((Var (Global 118)) (Con 129)) (Branch false (Dloc 62718)))
+[62703] (Jz (Var (Global 147)) (Branch true (Dloc 62718)))
+[62706] (Je ((Var (Global 119)) (Con 134)) (Branch false (Dloc 62718)))
+[62710] (Call (Floc 22396) ((Con 134) (Var (Global 118))) Sp)
+[62717] Ret_popped
+[62718] (Print_ret "It's not attached to that!")
+--------------------------------------------------
+[62734] ((var_initializations ()))
+[62735] (Je ((Var (Global 120)) (Con 31) (Con 30) (Con 34)) (Branch true (Dloc 62746)))
+[62742] (Je ((Var (Global 120)) (Con 32)) (Branch true (Dloc 62754)))
+[62746] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 62794)))
+[62750] (Je ((Var (Global 118)) (Con 5)) (Branch false (Dloc 62794)))
+[62754] (Je ((Var (Global 0)) (Con 72)) (Branch false (Dloc 62765)))
+[62758] (Call (Floc 38000) ((Con 29)) Sp)
+[62764] Rtrue
+[62765] (Print "You tumble down the slide....")
+[62786] New_line
+[62787] (Call (Floc 37558) ((Con 72)) Sp)
+[62793] Ret_popped
+[62794] (Je ((Var (Global 120)) (Con 18)) (Branch false Dfalse))
+[62798] (Call (Floc 62806) ((Var (Global 118))) Sp)
+[62804] Ret_popped
+--------------------------------------------------
+[62806] ((var_initializations (0)))
+[62809] (Test_attr (Var (Local 1)) (Con 17) (Branch false (Dloc 62853)))
+[62813] (Print "The ")
+[62816] (Print_obj (Var (Local 1)))
+[62818] (Print " falls into the slide and is gone.")
+[62837] New_line
+[62838] (Je ((Var (Local 1)) (Con 237)) (Branch false (Dloc 62849)))
+[62842] (Call (Floc 30906) ((Var (Local 1))) Sp)
+[62848] Ret_popped
+[62849] (Insert_obj (Var (Local 1)) (Con 72))
+[62852] Rtrue
+[62853] (Call (Floc 20076) ((Var (Global 53))) Sp)
+[62859] (Print_paddr (Var Sp))
+[62861] New_line
+[62862] Rtrue
+--------------------------------------------------
 [62864] ((var_initializations ()))
 [62865] (Je ((Var (Global 120)) (Con 117)) (Branch false Dfalse))
 [62869] (Jin (Con 225) (Var (Global 118)) (Branch false Dfalse))
 [62873] (Print_ret "It smells of hot peppers.")
+--------------------------------------------------
+[62890] ((var_initializations (0 0)))
+[62895] (Je ((Var (Global 120)) (Con 137)) (Branch false (Dloc 62926)))
+[62899] (Je ((Var (Global 0)) (Con 206)) (Branch false Dfalse))
+[62903] (Je ((Var (Global 118)) (Con 29)) (Branch false Dfalse))
+[62907] (Print_ret "You cannot enter in your condition.")
+[62926] (Je ((Var (Global 120)) (Con 2) (Con 0) (Con 1)) (Branch true Dfalse))
+[62933] (Je ((Var (Global 120)) (Con 8) (Con 15) (Con 12)) (Branch true Dfalse))
+[62940] (Je ((Var (Global 120)) (Con 6) (Con 5) (Con 7)) (Branch true Dfalse))
+[62947] (Je ((Var (Global 120)) (Con 136) (Con 42) (Con 19)) (Branch true (Dloc 62958)))
+[62954] (Je ((Var (Global 120)) (Con 126)) (Branch false (Dloc 62985)))
+[62958] (Print_ret "All such attacks are vain in your condition.")
+[62985] (Je ((Var (Global 120)) (Con 51) (Con 35) (Con 43)) (Branch true (Dloc 63012)))
+[62992] (Je ((Var (Global 120)) (Con 41) (Con 23) (Con 47)) (Branch true (Dloc 63012)))
+[62999] (Je ((Var (Global 120)) (Con 130) (Con 28) (Con 89)) (Branch true (Dloc 63012)))
+[63006] (Je ((Var (Global 120)) (Con 110) (Con 134)) (Branch false (Dloc 63043)))
+[63012] (Print_ret "Even such an action is beyond your capabilities.")
+[63043] (Je ((Var (Global 120)) (Con 135)) (Branch false (Dloc 63076)))
+[63047] (Print_ret "Might as well. You've got an eternity.")
+[63076] (Je ((Var (Global 120)) (Con 14)) (Branch false (Dloc 63101)))
+[63080] (Print_ret "You need no light to guide you.")
+[63101] (Je ((Var (Global 120)) (Con 9)) (Branch false (Dloc 63128)))
+[63105] (Print_ret "You're dead! How can you think of your score?")
+[63128] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 63151)))
+[63132] (Print_ret "Your hand passes through its object.")
+[63151] (Je ((Var (Global 120)) (Con 4) (Con 127) (Con 49)) (Branch false (Dloc 63173)))
+[63158] (Print_ret "You have no possessions.")
+[63173] (Je ((Var (Global 120)) (Con 3)) (Branch false (Dloc 63186)))
+[63177] (Print_ret "You are dead.")
+[63186] (Je ((Var (Global 120)) (Con 79)) (Branch false (Dloc 63286)))
+[63191] (Print "The room looks strange and unearthly")
+[63212] (Get_child (Var (Global 0)) Sp (Branch true (Dloc 63222)))
+[63216] (Print ".")
+[63219] (Jump 63243)
+--------------------------------------------------
+[63230] ((var_initializations (22186 6880 14953 15129 14952 58546)))
+[63243] New_line
+[63244] (Test_attr (Var (Global 0)) (Con 20) (Branch true (Dloc 63284)))
+[63248] (Print "Although there is no light, the room seems dimly illuminated.")
+[63283] New_line
+[63284] New_line
+[63285] Rfalse
+--------------------------------------------------
+[63298] ((var_initializations (58263 32529 13 35072 3416 13 19968)))
+[63313] (Jin (Con 217) (Con 102) (Branch false (Dloc 63320)))
+[63317] (Store (Con 157) (Con 0))
+[63320] (Print "From the distance the sound of a lone trumpet is heard. The room becomes very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.")
+[63495] New_line
+[63496] New_line
+[63497] (Call (Floc 37558) ((Con 78)) Sp)
+[63503] Ret_popped
+--------------------------------------------------
+[63533] ((var_initializations (31744 39682 160 41177 45843 8544 47200 606 23073 41028 53288 4393 30998)))
+[63560] (Inc_check (Var (Global 56)) (Con 178) (Branch true (Dloc 69264)))
+[63565] (Je ((Var (Global 120)) (Con 38)) (Branch false (Dloc 63582)))
+[63569] (Print_ret "It's too wide to cross.")
+[63582] (Je ((Var (Global 120)) (Con 34)) (Branch false Dfalse))
+[63586] (Print_ret "You can't swim in this lake.")
+--------------------------------------------------
+[63602] ((var_initializations ()))
+[63603] (Je ((Var (Global 120)) (Con 34) (Con 125)) (Branch false (Dloc 63624)))
+[63609] (Print_ret "You can't swim in the stream.")
+[63624] (Je ((Var (Global 120)) (Con 38)) (Branch false Dfalse))
+[63628] (Print_ret "The other side is a sheer rock cliff.")
+--------------------------------------------------
+[63652] ((var_initializations ()))
+[63653] (Je ((Var (Global 120)) (Con 69)) (Branch true (Dloc 63665)))
+[63657] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 63700)))
+[63661] (Je ((Var (Global 118)) (Con 5)) (Branch false (Dloc 63700)))
+[63665] (Print_ret "You look before leaping, and realize that you would never survive.")
+[63700] (Je ((Var (Global 120)) (Con 38)) (Branch false (Dloc 63729)))
+[63704] (Print_ret "It's too far to jump, and there's no bridge.")
+[63729] (Je ((Var (Global 120)) (Con 129) (Con 18)) (Branch false Dfalse))
+[63735] (Je ((Var (Global 119)) (Con 13)) (Branch false Dfalse))
+[63739] (Print "The ")
+[63742] (Print_obj (Var (Global 118)))
+[63744] (Print " drops out of sight into the chasm.")
+[63765] New_line
+[63766] (Call (Floc 30906) ((Var (Global 118))) Sp)
+[63772] Ret_popped
+--------------------------------------------------
+[63774] ((var_initializations ()))
+[63775] (Je ((Var (Global 120)) (Con 72)) (Branch false Dfalse))
+[63779] (Print_ret "No.")
+--------------------------------------------------
+[63784] ((var_initializations ()))
+[63785] (Je ((Var (Global 120)) (Con 34)) (Branch false (Dloc 63796)))
+[63789] (Call (Floc 38000) ((Con 21)) Sp)
+[63795] Rtrue
+[63796] (Print_ret "The gate is protected by an invisible force. It makes your teeth ache to touch it.")
+--------------------------------------------------
+[63848] ((var_initializations ()))
+[63849] (Je ((Var (Global 120)) (Con 35) (Con 43)) (Branch false (Dloc 63866)))
+[63855] (Print_ret "The door won't budge.")
+[63866] (Je ((Var (Global 120)) (Con 34)) (Branch false Dfalse))
+[63870] (Call (Floc 38000) ((Con 28)) Sp)
+[63876] Ret_popped
+--------------------------------------------------
+[63878] ((var_initializations ()))
+[63879] (Je ((Var (Global 120)) (Con 42)) (Branch false Dfalse))
+[63883] (Print_ret "Some paint chips away, revealing more paint.")
+--------------------------------------------------
+[63916] ((var_initializations ()))
+[63917] (Je ((Var (Global 120)) (Con 24)) (Branch false (Dloc 63942)))
+[63921] (Print_ret "There is too much gas to blow away.")
+[63942] (Je ((Var (Global 120)) (Con 117)) (Branch false Dfalse))
+[63946] (Print_ret "It smells like coal gas in here.")
 --------------------------------------------------
 [63968] ((var_initializations (0 0 0 0 0 0)))
 [63981] (Store (Con 2) (Con 0))
@@ -4334,6 +7320,18 @@ Found 224 reachable routines:
 [64123] New_line
 [64124] Rtrue
 --------------------------------------------------
+[64125] ((var_initializations ()))
+[64126] (Jl (Con 0) (Con 1) (Branch false Dfalse))
+[64131] (Sub (Con 7) (Con 2) Sp)
+[64135] (Div (Var (Global 151)) (Var Sp) Sp)
+[64139] (Div (Var (Global 1)) (Var Sp) Sp)
+[64143] (Add (Con 2) (Var Sp) (Local 2))
+[64147] (Jz (Var (Local 1)) (Branch true (Dloc 64159)))
+[64150] (Get_prop (Var (Global 111)) (Con 7) Sp)
+[64154] (Add (Var (Local 2)) (Var Sp) Sp)
+[64158] Ret_popped
+[64159] (Return (Var (Local 2)))
+--------------------------------------------------
 [64126] ((var_initializations (1 0)))
 [64131] (Sub (Con 7) (Con 2) Sp)
 [64135] (Div (Var (Global 151)) (Var Sp) Sp)
@@ -4364,6 +7362,16 @@ Found 224 reachable routines:
 [64227] (Store (Con 4) (Con 1))
 [64230] (Store (Con 3) (Var (Local 4)))
 [64233] (Return (Var (Local 3)))
+--------------------------------------------------
+[64235] ((var_initializations ()))
+[64236] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[64241] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 64245)))
+[64245] (Jz (Var (Local 2)) (Branch true Dfalse))
+[64248] (Je ((Var (Local 2)) (Con 113) (Con 218) (Con 110)) (Branch true (Dloc 64261)))
+[64255] (Je ((Var (Local 2)) (Con 169) (Con 128)) (Branch false (Dloc 64263)))
+[64261] (Return (Var (Local 2)))
+[64263] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 64248)))
+[64268] Rfalse
 --------------------------------------------------
 [64236] ((var_initializations (0 0)))
 [64241] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 64245)))
@@ -4470,6 +7478,118 @@ Found 224 reachable routines:
 [64659] (Call (Floc 65178) ((Var (Local 7)) (Var (Local 11)) (Var (Local 9))) Sp)
 [64667] Ret_popped
 --------------------------------------------------
+[64668] ((var_initializations (0 0 0 0 0 0 0 0 0 0 0 0 0)))
+[64695] (Load_word (Var (Global 3)) (Con 0) (Local 13))
+[64699] (Inc (Con 7))
+[64701] (Je ((Var (Local 7)) (Var (Local 13))) (Branch false (Dloc 64708)))
+[64705] (Jump 64721)
+[64708] (Load_word (Var (Global 3)) (Var (Local 7)) (Local 1))
+[64712] (Load_word (Var (Local 1)) (Con 0) Sp)
+[64716] (Je ((Var Sp) (Var (Global 118))) (Branch false (Dloc 64699)))
+[64721] (Set_attr (Var (Global 118)) (Con 2))
+[64724] (Test_attr (Var (Global 111)) (Con 1) (Branch false (Dloc 64778)))
+[64728] (Print "You are still recovering from that last blow, so your attack is ineffective.")
+[64773] New_line
+[64774] (Clear_attr (Var (Global 111)) (Con 1))
+[64777] Rtrue
+[64778] (Call (Floc 64126) () (Local 5))
+[64783] (Jl (Var (Local 5)) (Con 1) (Branch false (Dloc 64790)))
+[64787] (Store (Con 5) (Con 1))
+[64790] (Store (Con 8) (Var (Local 5)))
+[64793] (Load_word (Var (Local 1)) (Con 0) (Local 2))
+[64797] (Call (Floc 64162) ((Var (Local 1))) Sp)
+[64803] (Store (Con 6) (Var Sp))
+[64806] (Store (Con 9) (Con 1))
+[64809] (Jz (Var (Local 9)) (Branch false (Dloc 64848)))
+[64812] (Je ((Var (Global 118)) (Var (Global 111))) (Branch false (Dloc 64824)))
+[64816] (Call (Floc 67174) ((Con 40877)) Sp)
+[64823] Ret_popped
+[64824] (Print "Attacking the ")
+[64835] (Print_obj (Var (Local 2)))
+[64837] (Print_ret " is pointless.")
+[64848] (Call (Floc 64236) ((Var (Local 2))) (Local 4))
+[64854] (Jz (Var (Local 4)) (Branch true (Dloc 64861)))
+[64857] (Jl (Var (Local 6)) (Con 0) (Branch false (Dloc 64919)))
+[64861] (Print "The ")
+[64864] (Jz (Var (Local 4)) (Branch false (Dloc 64877)))
+[64867] (Print "unarmed")
+[64874] (Jump 64886)
+[64877] (Print "unconscious")
+[64886] (Print " ")
+[64889] (Print_obj (Var (Local 2)))
+[64891] (Print " cannot defend himself: He dies.")
+[64912] New_line
+[64913] (Store (Con 11) (Con 3))
+[64916] (Jump 65068)
+[64919] (Je ((Var (Local 6)) (Con 1)) (Branch false (Dloc 64941)))
+[64923] (Jg (Var (Local 5)) (Con 2) (Branch false (Dloc 64930)))
+[64927] (Store (Con 5) (Con 3))
+[64930] (Sub (Var (Local 5)) (Con 1) Sp)
+[64934] (Load_word (Var (Global 10)) (Var Sp) (Local 10))
+[64938] (Jump 65000)
+[64941] (Je ((Var (Local 6)) (Con 2)) (Branch false (Dloc 64963)))
+[64945] (Jg (Var (Local 5)) (Con 3) (Branch false (Dloc 64952)))
+[64949] (Store (Con 5) (Con 4))
+[64952] (Sub (Var (Local 5)) (Con 1) Sp)
+[64956] (Load_word (Var (Global 9)) (Var Sp) (Local 10))
+[64960] (Jump 65000)
+[64963] (Jg (Var (Local 6)) (Con 2) (Branch false (Dloc 65000)))
+[64967] (Sub (Var (Local 5)) (Var (Local 6)) (Local 5))
+[64971] (Jl (Var (Local 5)) (Con 65535) (Branch false (Dloc 64985)))
+[64977] (Store (Con 5) (Con 65534))
+[64982] (Jump 64992)
+[64985] (Jg (Var (Local 5)) (Con 1) (Branch false (Dloc 64992)))
+[64989] (Store (Con 5) (Con 2))
+[64992] (Add (Var (Local 5)) (Con 2) Sp)
+[64996] (Load_word (Var (Global 8)) (Var Sp) (Local 10))
+[65000] (Random (Con 9) Sp)
+[65004] (Sub (Var Sp) (Con 1) Sp)
+[65008] (Load_word (Var (Local 10)) (Var Sp) (Local 11))
+[65012] (Jz (Var (Local 3)) (Branch true (Dloc 65028)))
+[65015] (Je ((Var (Local 11)) (Con 6)) (Branch false (Dloc 65025)))
+[65019] (Store (Con 11) (Con 8))
+[65022] (Jump 65028)
+[65025] (Store (Con 11) (Con 9))
+[65028] (Je ((Var (Local 11)) (Con 6)) (Branch false (Dloc 65046)))
+[65032] (Jz (Var (Local 4)) (Branch true (Dloc 65046)))
+[65035] (Random (Con 100) Sp)
+[65039] (Jg (Con 25) (Var Sp) (Branch false (Dloc 65046)))
+[65043] (Store (Con 11) (Con 7))
+[65046] (Sub (Var (Local 11)) (Con 1) Sp)
+[65050] (Load_word (Var (Global 7)) (Var Sp) Sp)
+[65054] (Call (Floc 20060) ((Var Sp)) Sp)
+[65060] (Call (Floc 64072) ((Var Sp) (Var (Global 118)) (Var (Global 119))) Sp)
+[65068] (Je ((Var (Local 11)) (Con 1)) (Branch true (Dloc 65168)))
+[65073] (Je ((Var (Local 11)) (Con 8)) (Branch false (Dloc 65080)))
+[65077] (Jump 65168)
+[65080] (Je ((Var (Local 11)) (Con 2)) (Branch false (Dloc 65091)))
+[65084] (Sub (Con 0) (Var (Local 6)) (Local 6))
+[65088] (Jump 65168)
+[65091] (Je ((Var (Local 11)) (Con 3)) (Branch true (Dloc 65099)))
+[65095] (Je ((Var (Local 11)) (Con 9)) (Branch false (Dloc 65105)))
+[65099] (Store (Con 6) (Con 0))
+[65102] (Jump 65168)
+[65105] (Je ((Var (Local 11)) (Con 4)) (Branch false (Dloc 65121)))
+[65109] (Dec (Con 6))
+[65111] (Jl (Var (Local 6)) (Con 0) (Branch false (Dloc 65168)))
+[65115] (Store (Con 6) (Con 0))
+[65118] (Jump 65168)
+[65121] (Je ((Var (Local 11)) (Con 5)) (Branch false (Dloc 65139)))
+[65125] (Sub (Var (Local 6)) (Con 2) (Local 6))
+[65129] (Jl (Var (Local 6)) (Con 0) (Branch false (Dloc 65168)))
+[65133] (Store (Con 6) (Con 0))
+[65136] (Jump 65168)
+[65139] (Je ((Var (Local 11)) (Con 6)) (Branch false (Dloc 65149)))
+[65143] (Set_attr (Var (Global 118)) (Con 1))
+[65146] (Jump 65168)
+[65149] (Je ((Var (Local 11)) (Con 7)) (Branch false (Dloc 65153)))
+[65153] (Clear_attr (Var (Local 4)) (Con 14))
+[65156] (Set_attr (Var (Local 4)) (Con 29))
+[65159] (Insert_obj (Var (Local 4)) (Var (Global 0)))
+[65162] (Call (Floc 38192) ((Var (Local 4))) Sp)
+[65168] (Call (Floc 65264) ((Var (Global 118)) (Var (Local 6)) (Var (Local 11))) Sp)
+[65176] Ret_popped
+--------------------------------------------------
 [65178] ((var_initializations (0 0 0)))
 [65185] (Jz (Var (Local 1)) (Branch false (Dloc 65195)))
 [65188] (Push (Con 55536))
@@ -4489,6 +7609,48 @@ Found 224 reachable routines:
 [65253] (Call (Floc 67174) ((Con 40895)) Sp)
 [65260] Rfalse
 [65261] (Return (Var (Local 2)))
+--------------------------------------------------
+[65264] ((var_initializations (0 0 0)))
+[65271] (Put_prop (Var (Local 1)) (Con 7) (Var (Local 2)))
+[65276] (Jz (Var (Local 2)) (Branch false (Dloc 65395)))
+[65280] (Clear_attr (Var (Local 1)) (Con 2))
+[65283] (Print "Almost as soon as the ")
+[65298] (Print_obj (Var (Local 1)))
+[65300] (Print " breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.")
+[65377] New_line
+[65378] (Call (Floc 30906) ((Var (Local 1))) Sp)
+[65384] (Get_prop (Var (Local 1)) (Con 17) Sp)
+[65388] (Call (Fvar Sp) ((Con 2)) Sp)
+[65393] (Return (Var (Local 3)))
+[65395] (Je ((Var (Local 3)) (Con 2)) (Branch false (Dloc 65410)))
+[65399] (Get_prop (Var (Local 1)) (Con 17) Sp)
+[65403] (Call (Fvar Sp) ((Con 3)) Sp)
+[65408] (Return (Var (Local 3)))
+[65410] (Return (Var (Local 3)))
+--------------------------------------------------
+[65412] ((var_initializations (0 0 0)))
+[65419] (Get_prop (Var (Local 1)) (Con 7) (Local 2))
+[65423] (Call (Floc 64126) () Sp)
+[65428] (Sub (Var (Local 2)) (Var Sp) (Local 3))
+[65432] (Jg (Var (Local 3)) (Con 3) (Branch false (Dloc 65445)))
+[65436] (Random (Con 100) Sp)
+[65440] (Jg (Con 90) (Var Sp) (Branch true Dtrue))
+[65444] Rfalse
+[65445] (Jg (Var (Local 3)) (Con 0) (Branch false (Dloc 65458)))
+[65449] (Random (Con 100) Sp)
+[65453] (Jg (Con 75) (Var Sp) (Branch true Dtrue))
+[65457] Rfalse
+[65458] (Jz (Var (Local 3)) (Branch false (Dloc 65470)))
+[65461] (Random (Con 100) Sp)
+[65465] (Jg (Con 50) (Var Sp) (Branch true Dtrue))
+[65469] Rfalse
+[65470] (Jg (Var (Local 2)) (Con 1) (Branch false (Dloc 65483)))
+[65474] (Random (Con 100) Sp)
+[65478] (Jg (Con 25) (Var Sp) (Branch true Dtrue))
+[65482] Rfalse
+[65483] (Random (Con 100) Sp)
+[65487] (Jg (Con 10) (Var Sp) (Branch true Dtrue))
+[65491] Rfalse
 --------------------------------------------------
 [65492] ((var_initializations (0)))
 [65495] (Get_prop (Var (Global 111)) (Con 7) (Local 1))
@@ -4557,6 +7719,16 @@ Found 224 reachable routines:
 [65744] (Call (Floc 63968) ((Var (Local 2))) Sp)
 [65750] Ret_popped
 --------------------------------------------------
+[65751] ((var_initializations ()))
+[65752] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[65757] (Get_prop (Var (Local 1)) (Con 7) (Local 2))
+[65761] (Jl (Var (Local 2)) (Con 0) (Branch false Dtrue))
+[65765] (Sub (Con 0) (Var (Local 2)) Sp)
+[65769] (Put_prop (Var (Local 1)) (Con 7) (Var Sp))
+[65774] (Get_prop (Var (Local 1)) (Con 17) Sp)
+[65778] (Call (Fvar Sp) ((Con 4)) Sp)
+[65783] Rtrue
+--------------------------------------------------
 [65752] ((var_initializations (0 0)))
 [65757] (Get_prop (Var (Local 1)) (Con 7) (Local 2))
 [65761] (Jl (Var (Local 2)) (Con 0) (Branch false Dtrue))
@@ -4600,6 +7772,18 @@ Found 224 reachable routines:
 [65976] New_line
 [65977] (Put_prop (Con 110) (Con 12) (Var (Local 3)))
 [65982] Rtrue
+--------------------------------------------------
+[65985] ((var_initializations (0)))
+[65988] Rfalse
+--------------------------------------------------
+[65989] ((var_initializations ()))
+[65990] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[65995] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 65999)))
+[65999] (Jz (Var (Local 2)) (Branch true Dfalse))
+[66002] (Test_attr (Var (Local 2)) (Con 30) (Branch false (Dloc 66010)))
+[66006] (Test_attr (Var (Local 2)) (Con 7) (Branch false Dtrue))
+[66010] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 65999)))
+[66015] Rfalse
 --------------------------------------------------
 [65990] ((var_initializations (0 0)))
 [65995] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 65999)))
@@ -4741,6 +7925,66 @@ Found 224 reachable routines:
 [66557] (Store (Con 5) (Var (Local 4)))
 [66560] (Jump 66505)
 --------------------------------------------------
+[66564] ((var_initializations (0 0 0 0)))
+[66573] (Call (Floc 64126) ((Con 0)) (Local 1))
+[66579] (Get_prop (Var (Global 111)) (Con 7) (Local 2))
+[66583] (Add (Var (Local 1)) (Var (Local 2)) (Local 3))
+[66587] (Call (Floc 21638) ((Con 32746)) Sp)
+[66594] (Load_word (Var Sp) (Con 0) Sp)
+[66598] (Jz (Var Sp) (Branch false (Dloc 66607)))
+[66601] (Store (Con 2) (Con 0))
+[66604] (Jump 66611)
+[66607] (Sub (Con 0) (Var (Local 2)) (Local 2))
+[66611] (Jz (Var (Local 2)) (Branch false (Dloc 66634)))
+[66614] (Print "You are in perfect health.")
+[66631] (Jump 66714)
+[66634] (Print "You have ")
+[66639] (Je ((Var (Local 2)) (Con 1)) (Branch false (Dloc 66657)))
+[66643] (Print "a light wound,")
+[66654] (Jump 66714)
+[66657] (Je ((Var (Local 2)) (Con 2)) (Branch false (Dloc 66677)))
+[66661] (Print "a serious wound,")
+[66674] (Jump 66714)
+[66677] (Je ((Var (Local 2)) (Con 3)) (Branch false (Dloc 66697)))
+[66681] (Print "several wounds,")
+[66694] (Jump 66714)
+[66697] (Jg (Var (Local 2)) (Con 3) (Branch false (Dloc 66714)))
+[66701] (Print "serious wounds,")
+[66714] (Jz (Var (Local 2)) (Branch true (Dloc 66767)))
+[66717] (Print " which will be cured after ")
+[66734] (Sub (Var (Local 2)) (Con 1) Sp)
+[66738] (Mul (Con 30) (Var Sp) (Local 4))
+[66742] (Call (Floc 21638) ((Con 32746)) Sp)
+[66749] (Load_word (Var Sp) (Con 1) Sp)
+[66753] (Add (Var (Local 4)) (Var Sp) Sp)
+[66757] (Print_num (Var Sp))
+[66760] (Print " moves.")
+[66767] New_line
+[66768] (Print "You can ")
+[66773] (Jz (Var (Local 3)) (Branch false (Dloc 66792)))
+[66776] (Print "expect death soon")
+[66789] (Jump 66905)
+[66792] (Je ((Var (Local 3)) (Con 1)) (Branch false (Dloc 66822)))
+[66796] (Print "be killed by one more light wound")
+[66819] (Jump 66905)
+[66822] (Je ((Var (Local 3)) (Con 2)) (Branch false (Dloc 66848)))
+[66826] (Print "be killed by a serious wound")
+[66845] (Jump 66905)
+[66848] (Je ((Var (Local 3)) (Con 3)) (Branch false (Dloc 66874)))
+[66852] (Print "survive one serious wound")
+[66871] (Jump 66905)
+[66874] (Jg (Var (Local 3)) (Con 3) (Branch false (Dloc 66905)))
+[66878] (Print "strong enough to take several wounds.")
+[66905] (Print ".")
+[66908] New_line
+[66909] (Jz (Var (Global 61)) (Branch true Dfalse))
+[66912] (Print "You have been killed ")
+[66925] (Je ((Var (Global 61)) (Con 1)) (Branch false (Dloc 66937)))
+[66929] (Print "once")
+[66934] (Jump 66942)
+[66937] (Print "twice")
+[66942] (Print_ret ".")
+--------------------------------------------------
 [66946] ((var_initializations (1)))
 [66949] (Print "Your score is ")
 [66958] (Print_num (Var (Global 1)))
@@ -4777,6 +8021,50 @@ Found 224 reachable routines:
 [67167] (Print ".")
 [67170] New_line
 [67171] (Return (Var (Global 1)))
+--------------------------------------------------
+[67173] ((var_initializations ()))
+[67174] (Jl (Con 0) (Con 0) (Branch false Dfalse))
+[67179] (Jz (Var (Global 62)) (Branch true (Dloc 67290)))
+[67183] (Print "\nIt takes a talented person to be killed while already dead. YOU are such a talent. Unfortunately, it takes a talented person to deal with it. I am not such a talent. Sorry.")
+[67284] New_line
+[67285] (Call (Floc 37076) () Sp)
+[67290] (Print_paddr (Var (Local 1)))
+[67292] New_line
+[67293] (Jz (Var (Global 60)) (Branch false (Dloc 67310)))
+[67296] (Print "Bad luck, huh?")
+[67309] New_line
+[67310] (Call (Floc 36962) ((Con 65526)) Sp)
+[67317] (Print " \n   ****  You have died  **** \n\n")
+[67356] (Get_parent (Var (Global 111)) Sp)
+[67359] (Test_attr (Var Sp) (Con 27) (Branch false (Dloc 67366)))
+[67363] (Insert_obj (Var (Global 111)) (Var (Global 0)))
+[67366] (Jl (Var (Global 61)) (Con 2) (Branch true (Dloc 67511)))
+[67371] (Print "You clearly are a suicidal maniac. We don't allow psychotics in the cave, since they may harm other adventurers. Your remains will be installed in the Land of the Living Dead, where your fellow adventurers may gloat over them.")
+[67504] New_line
+[67505] (Call (Floc 37076) () Sp)
+[67510] Ret_popped
+[67511] (Inc (Con 77))
+[67513] (Insert_obj (Var (Global 111)) (Var (Global 0)))
+[67516] (Test_attr (Con 212) (Con 3) (Branch false (Dloc 67713)))
+[67521] (Print "As you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.")
+[67684] New_line
+[67685] New_line
+[67686] (Store (Con 78) (Con 1))
+[67689] (Store (Con 157) (Con 1))
+[67692] (Store (Con 137) (Con 1))
+[67695] (Store (Con 88) (Con 1))
+[67698] (Put_prop (Var (Global 111)) (Con 17) (Con 31445))
+[67704] (Call (Floc 37558) ((Con 232)) Sp)
+[67710] (Jump 67800)
+[67713] (Print "Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.")
+[67792] New_line
+[67793] New_line
+[67794] (Call (Floc 37558) ((Con 78)) Sp)
+[67800] (Clear_attr (Con 183) (Con 3))
+[67803] (Store (Con 124) (Con 0))
+[67806] (Call (Floc 67818) () Sp)
+[67811] (Call (Floc 67922) () Sp)
+[67816] Ret_popped
 --------------------------------------------------
 [67174] ((var_initializations (0 0)))
 [67179] (Jz (Var (Global 62)) (Branch true (Dloc 67290)))
@@ -4905,8 +8193,136 @@ Found 224 reachable routines:
 [68209] (Call (Floc 30906) ((Var (Global 118))) Sp)
 [68215] (Print_ret "What the heck! You won't make friends this way, but nobody around here is too friendly anyhow. Gulp!")
 --------------------------------------------------
+[68274] ((var_initializations ()))
+[68275] (Je ((Var (Global 120)) (Con 88) (Con 93)) (Branch false (Dloc 68294)))
+[68281] (Print_ret "The chain is secure.")
+[68294] (Je ((Var (Global 120)) (Con 84) (Con 105)) (Branch false (Dloc 68325)))
+[68300] (Print_ret "Perhaps you should do that to the basket.")
+[68325] (Je ((Var (Global 120)) (Con 56)) (Branch false Dfalse))
+[68329] (Print_ret "The chain secures a basket within the shaft.")
+--------------------------------------------------
 [68356] ((var_initializations (0)))
 [68359] (Je ((Var (Local 1)) (Con 2)) (Branch false Dfalse))
 [68363] (Jin (Con 217) (Var (Global 0)) (Branch false Dfalse))
 [68367] (Call (Floc 38192) ((Con 217)) Sp)
 [68373] Ret_popped
+--------------------------------------------------
+[69526] ((var_initializations ()))
+[69527] (Return (Con 4356))
+--------------------------------------------------
+[69928] ((var_initializations (9263 22890 59907 36422 8201 10077 52279 10844 45716 58638 57612 19716)))
+[69953] Ret_popped
+--------------------------------------------------
+[71075] ((var_initializations (17618 14956 820 23821 1138 6442 42 15220 24517 51365 4884)))
+[71098] (And_ (Var (Global 48)) (Con 51) (Global 62))
+[71102] (Inc_check (Con 71) (Var (Global 66)) (Branch true (Dloc 75297)))
+[71107] (Test_attr (Con 79) (Con 46) (Branch false (Dloc 71147)))
+[71111] (Test_attr (Con 36) (Var (Local 5)) (Branch false (Dloc 71149)))
+[71115] (Return (Con 18068))
+--------------------------------------------------
+[71610] ((var_initializations (36422 8270 39225 2560 20996 38713 36196 796 45590 17864 45580)))
+[71633] (Print_ret "asty-looking troll, brandishing a bloody axe, blocks all passages out of the room.")
+--------------------------------------------------
+[72238] ((var_initializations (24959 21307 27231 2656 8979 58448 38674 113 53572 5470)))
+[72259] (Return (Con 57))
+--------------------------------------------------
+[72390] ((var_initializations (19504 277 5229 22313 8197)))
+[72401] (Return (Var (Global 42)))
+--------------------------------------------------
+[72742] ((var_initializations ()))
+[72743] (Inc_check (Con 34) (Var (Global 234)) (Branch false (Dloc 72755)))
+[72747] Rfalse
+--------------------------------------------------
+[73122] ((var_initializations ()))
+[73123] (Div (Con 26) (Var (Global 33)) (Local 1))
+[73127] (Insert_obj (Con 93) (Var (Global 56)))
+[73130] (Inc_check (Var (Global 196)) (Var (Global 63)) (Branch false (Dloc 73437)))
+[73135] (Remove_obj (Con 80))
+[73137] (Je ((Con 1) (Con 70)) (Branch false (Dloc 73174)))
+[73141] (Je ((Con 12) (Var (Global 61))) (Branch false (Dloc 74873)))
+[73146] (Clear_attr (Con 73) (Var (Global 83)))
+[73149] (Get_next_prop (Var (Global 53)) (Con 204) (Global 39))
+[73153] (Inc_check (Con 200) (Var (Global 149)) (Branch false (Dloc 74437)))
+[73158] (Mul (Con 116) (Con 3) (Global 39))
+[73162] (And_ (Con 64) (Var (Local 7)) Sp)
+[73166] (Jg (Var (Global 62)) (Var (Global 84)) (Branch true (Dloc 73175)))
+[73170] (Inc_check (Var (Global 48)) (Con 10) (Branch false (Dloc 73212)))
+[73174] (Inc_check (Var (Global 194)) (Con 29) (Branch true (Dloc 73195)))
+[73178] Rtrue
+--------------------------------------------------
+[74077] ((var_initializations (19648)))
+[74080] (Store (Con 215) (Var (Global 26)))
+[74083] Rfalse
+--------------------------------------------------
+[76160] ((var_initializations (12614 37963 24 62573 16388 57624 11012 4946 63796 11268 9072 24324)))
+[76185] (Return (Var (Global 54)))
+--------------------------------------------------
+[77350] ((var_initializations ()))
+[77351] (Div (Con 6) (Var (Global 86)) (Global 14))
+[77355] (Return (Con 40))
+--------------------------------------------------
+[77744] ((var_initializations ()))
+[77745] (Return (Con 17625))
+--------------------------------------------------
+[79298] ((var_initializations ()))
+[79299] (Jump 103178)
+--------------------------------------------------
+[79400] ((var_initializations (55372)))
+[79403] Ret_popped
+--------------------------------------------------
+[79410] ((var_initializations (43590)))
+[79413] (Return (Var (Global 90)))
+--------------------------------------------------
+[79934] ((var_initializations (800 314 38186 26056)))
+[79943] (Inc (Var (Local 12)))
+[79945] (Print_ret "asty-looking troll, brandishing a bloody axe, blocks all passages out of the room.")
+--------------------------------------------------
+[80631] ((var_initializations (10257 14608 24578 2317 21176 1133 10264 7128 185 4690 18476 4602 25376)))
+[80658] (Inc_check (Var (Global 192)) (Con 40) (Branch false (Dloc 81759)))
+[80663] (Get_child (Con 3) (Global 72) (Branch false (Dloc 74810)))
+[80668] (Inc_check (Con 114) (Con 26) (Branch false (Dloc 83231)))
+[80673] Ret_popped
+--------------------------------------------------
+[80698] ((var_initializations (18018 37419 36123 8217)))
+[80707] (Load (Con 25817) (Global 25))
+[80711] (Inc_check (Con 200) (Var (Global 149)) (Branch false (Dloc 81772)))
+[80716] (Dec_check (Con 54) (Con 5) (Branch false (Dloc 80752)))
+[80720] (Inc_check (Con 138) (Var (Global 87)) (Branch false (Dloc 76192)))
+[80725] (Jz (Con 19095) (Branch false (Dloc 74590)))
+[80730] (Get_prop (Con 217) (Var (Global 11)) (Global 26))
+[80734] (Get_prop_len (Var (Global 162)) (Local 4))
+[80737] (Jl (Con 4) (Var (Global 21)) (Branch false (Dloc 80749)))
+[80741] (Return (Con 58))
+--------------------------------------------------
+[80747] ((var_initializations (8227 2882 20244)))
+[80754] (And_ (Var (Global 73)) (Con 53) (Global 195))
+[80758] Rtrue
+--------------------------------------------------
+[80798] ((var_initializations (23125 5193 54064 6220 51392 45572 8708 9546)))
+[80815] (Return (Con 58))
+--------------------------------------------------
+[81658] ((var_initializations (22569 20992 11017 10553)))
+[81667] (Jump 96624)
+--------------------------------------------------
+[81876] ((var_initializations (18484 55089 16652 19076)))
+[81885] (Inc_check (Con 1) (Con 250) (Branch false (Dloc 81897)))
+[81889] Ret_popped
+--------------------------------------------------
+[81932] ((var_initializations (19076 1280 9482 19560 55204 45580 44114 35075 6494 36904 8969 20068)))
+[81957] Ret_popped
+--------------------------------------------------
+[81987] ((var_initializations (19840 33797 64 9962 6737 6761 38469 33829 37 7385 25943 10528 2074 19732)))
+[82016] (Load_word (Var (Local 8)) (Con 58) (Global 138))
+[82020] (Jl (Var (Global 90)) (Var (Global 83)) (Branch false (Dloc 83503)))
+[82025] (Inc (Var (Local 12)))
+[82027] (Return (Var (Global 90)))
+--------------------------------------------------
+[82204] ((var_initializations (7261 55396 8969 20068)))
+[82213] Ret_popped
+--------------------------------------------------
+[83538] ((var_initializations (18524 55349 22528 63312 51553 51496 512 9269 18084)))
+[83557] (Print "You stagger back under a hail of axe strokes.")
+[83588] (Dec_check (Con 35) (Con 118) (Branch false (Dloc 83604)))
+[83592] (Get_prop (Con 185) (Var (Global 104)) (Local 7))
+[83596] (Jin (Var (Global 140)) (Con 1) (Branch false (Dloc 81377)))
+[83601] Ret_popped

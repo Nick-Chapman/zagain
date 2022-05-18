@@ -3,6 +3,7 @@
 module Dis (disassemble) where
 
 import Data.List (sortBy)
+import Data.List.Extra (nubSortBy)
 import Data.Ord (comparing)
 import Data.Set (Set)
 import Decode (fetchOperation,fetchRoutineHeader)
@@ -10,19 +11,30 @@ import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr)
 import Operation (Operation,RoutineHeader)
-import Story (Story(header))
+import Story (Story(header,size))
 import Text.Printf (printf)
 import qualified Data.Set as Set
 import qualified Operation as Op
 
 disassemble :: Story -> IO ()
 disassemble story = do
-  let Header{initialPC} = Story.header story
+  let Header{initialPC,staticMem} = Story.header story
   let a0 :: Addr = initialPC - 1
   let startingPoints = [a0] ++ extra
-  let rs = sortBy (comparing start) $ collectRoutines startingPoints story
-  printf "Found %d reachable routines:\n" (length rs)
+  let rs1 = sortBy (comparing start) $ collectRoutines startingPoints story
+  printf "Found %d reachable routines:\n" (length rs1)
+
+  -- TODO: make it work even when we go to the very end of the story file
+  let _end :: Addr = fromIntegral $ size story
+  let end = 84000
+  let rs2 = collectCandidateRoutinesInRange (staticMem, end) story
+  printf "Found %d candidate routines:\n" (length rs2)
+
+  let rs = nubSortBy (comparing start) $ (rs1 ++ rs2)
+  printf "Found %d combined routines:\n" (length rs)
+  -- TODO: show gaps (which might be negative)
   mapM_ dumpRoutine rs
+
 
 -- Extra roots determined by logging indirect routine calls whilst
 -- running full zork walk-through.  Reachable routines: 61 --> 224.
@@ -54,6 +66,33 @@ dumpRoutine Routine{start,header,body=xs,finish=_} = do
   --printf "[%s]\n" (show finish)
   where
     pr (a,i) = printf "[%s] %s\n" (show a) (Op.pretty i)
+
+
+--[candidate routines]------------------------------------------------
+
+collectCandidateRoutinesInRange :: (Addr,Addr) -> Story -> [Routine]
+collectCandidateRoutinesInRange (a0,a1) story = do
+  loop a0
+  where
+    loop a = do
+      if a >= a1 then [] else do
+        let r@Routine{finish} = collectRoutine a story
+        if isGoodR r then r : loop finish else loop (a+1)
+
+isGoodR :: Routine -> Bool
+isGoodR = \case
+  Routine{header=Op.BadRoutineHeader} -> False
+  Routine{body=xs} ->
+    all isGoodOp [ op | (_,op) <- xs ]
+
+isGoodOp :: Operation -> Bool
+isGoodOp = \case
+  Op.BadOperation{} -> False
+  Op.Call Op.BadFunc{} _ _ -> False
+  _ -> True
+
+
+--[reachable routines]------------------------------------------------
 
 collectRoutines :: [Addr] -> Story -> [Routine]
 collectRoutines as story = loop Set.empty [] as
@@ -120,3 +159,4 @@ data Routine = Routine
   , body :: [(Addr,Operation)]
   , finish :: Addr
   }
+

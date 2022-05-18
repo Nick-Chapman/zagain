@@ -13,6 +13,7 @@ import Header (Header(..))
 import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
+import Text.Printf (printf)
 import qualified Data.Char as Char (chr,ord)
 import qualified Objects
 import qualified Operation as Op
@@ -21,12 +22,16 @@ theEffect :: Eff ()
 theEffect = loop
   where
     loop = do
+      pc <- GetPC -- only in case we fail to decode
       i <- FetchI
-      eval i
+      eval pc i
       loop
 
-eval :: Operation -> Eff ()
-eval = \case
+eval :: Addr -> Operation -> Eff ()
+eval pc = \case
+
+  Op.BadOperation mes -> do
+    error (printf "At [%s] %s" (show pc) mes)
 
   Op.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
   Op.And_ arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
@@ -343,6 +348,7 @@ gotoDest = \case
 
 evalFunc :: Func -> Eff Addr
 evalFunc = \case
+  BadFunc -> error "failed to decode called function"
   Floc a -> pure a
   Fvar var -> do
     v <- evalTarget var
@@ -382,9 +388,12 @@ globalAddr b = do
   pure (globalVars + 2 * fromIntegral b)
 
 setLocals :: RoutineHeader -> [Value] -> Eff ()
-setLocals (Op.RoutineHeader defs) actuals = do
-  sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
-  sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
+setLocals rh actuals =
+  case rh of
+    Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
+    Op.RoutineHeader defs -> do
+      sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
+      sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
 
 getWord :: Addr -> Eff Value
 getWord a = do

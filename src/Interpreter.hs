@@ -84,6 +84,7 @@ run story e0 = loop (initState pc0) e0 k0
           Frame{pc,target,stack,locals}:frames -> do
             k s { pc, stack, locals, frames } target
 
+      GetPC -> let State{pc} = s in k s pc
       SetPC pc -> k s { pc } ()
 
       GetLocal n -> do

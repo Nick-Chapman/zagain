@@ -86,7 +86,7 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 231 [t] -> Op.Random <$> arg t <*> target
   Code 232 [t] -> Op.Push <$> arg t
   Code 233 [t] -> Op.Pull <$> arg t
-  x -> error (printf "unknown op-code and args: %s" (show x))
+  x -> pure $ Op.BadOperation (printf "unknown op-code and args: %s" (show x))
 
 data Form = LongForm | ShortForm | VarForm
 
@@ -142,7 +142,7 @@ decodeLongRandType x a =
 
 func :: RandType -> Fetch Func
 func = \case
-  ByteConst -> error "func, ByteConst"
+  ByteConst -> pure BadFunc
   WordConst -> (Floc . addrOfPackedWord) <$> fetchNextWord
   ByteVariable -> (Fvar . makeTarget) <$> Fetch.NextByte
 
@@ -206,7 +206,7 @@ fetchNextWord = do
 fetchRoutineHeader :: Fetch RoutineHeader
 fetchRoutineHeader = do
   n <- Fetch.NextByte
-  if n > 15 then error "fetchRoutineHeader, n>15" else do
+  if n > 15 then pure BadRoutineHeader else do
     ws <- sequence (take (fromIntegral n) (repeat fetchNextWord))
     pure (RoutineHeader ws)
 

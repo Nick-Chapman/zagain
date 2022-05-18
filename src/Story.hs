@@ -1,6 +1,6 @@
 
 -- | A z-machine story-file.
-module Story (Story(header),loadStory,readStoryByte) where
+module Story (Story(header,size),loadStory,readStoryByte) where
 
 import Data.Array (Array,(!),listArray)
 import Header (Header(..),Zversion(..))
@@ -28,7 +28,7 @@ loadBytes path = (map fromIntegral . BS.unpack) <$> BS.readFile path
 readStoryByte :: Story -> Addr -> Byte
 readStoryByte Story{size, bytesA} a =  if
   | i < size -> bytesA ! i
-  | otherwise -> error (show ("readStoryByte",a,size))
+  | otherwise -> 0xff --error (show ("readStoryByte",a,size)) -- TODO ??
     where i = fromIntegral a
 
 readHeader :: Story -> Header
