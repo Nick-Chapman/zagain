@@ -46,6 +46,7 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   | Load Arg Target
   | Load_byte Arg Arg Target
   | Load_word Arg Arg Target
+  | Mod Arg Arg Target
   | Mul Arg Arg Target
   | New_line
   | Print String
@@ -61,10 +62,12 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   | Quit
   | Random Arg Target
   | Remove_obj Arg
+  | Restore_lab Label
   | Ret_popped
   | Return Arg
   | Rfalse
   | Rtrue
+  | Save_lab Label
   | Set_attr Arg Arg
   | Sread Arg Arg
   | Store Arg Arg
@@ -78,14 +81,12 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   -- | Aread Arg Arg Target
   -- | CallN Func Args
   -- | Input_Stream Arg
-  -- | Mod_ Arg Arg Target
   -- | Or_ Arg Arg Target
   -- | Output_Stream Arg (Maybe Arg)
   -- | Restart
-  | Restore_lab Label
-  | Save_lab Label
-  -- | Show_status
   -- | Verify Label
+  -- | Show_status
+  -- | Restart
 
   deriving Show
 

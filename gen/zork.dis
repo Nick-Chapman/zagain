@@ -1,6 +1,6 @@
-Found 224 reachable routines:
-Found 549 candidate routines:
-Found 572 combined routines:
+Found 61 reachable routines:
+Found 553 candidate routines:
+Found 557 combined routines:
 --------------------------------------------------
 [12202] ((var_initializations ()))
 [12203] (Jump 12460)
@@ -62,6 +62,15 @@ Found 572 combined routines:
 [17172] (Je ((Con 0) (Con 53)) (Branch true (Dloc 17199)))
 [17176] (Get_prop_len (Con 165) (Global 49))
 [17179] (Jump 17234)
+--------------------------------------------------
+[17236] ((var_initializations ()))
+[17237] (Mod (Con 165) (Var (Global 132)) (Global 149))
+[17241] (Je ((Var (Global 110)) (Con 0)) (Branch false (Dloc 15599)))
+[17246] New_line
+[17247] (Test_attr (Con 65) (Var (Global 131)) (Branch false (Dloc 17308)))
+[17252] (Test (Var (Global 168)) (Con 234) (Branch false Dtrue))
+[17256] (Get_sibling (Var Sp) (Global 42) (Branch false (Dloc 17279)))
+[17260] (Return (Con 24))
 --------------------------------------------------
 [17418] ((var_initializations ()))
 [17419] (Je ((Var (Global 193)) (Con 196)) (Branch true (Dloc 10575)))
@@ -278,7 +287,14 @@ Found 572 combined routines:
 [20695] (Je ((Var (Global 120)) (Con 34)) (Branch false Dfalse))
 [20699] (Print_ret "You should say whether you want to go up or down.")
 --------------------------------------------------
-[20775] ((var_initializations ()))
+[20730] ((var_initializations ()))
+[20731] (Je ((Var (Global 120)) (Con 66)) (Branch false Dfalse))
+[20735] (Inc (Con 85))
+[20737] (Call (Floc 20688) () Sp)
+[20742] (Mod (Var (Global 69)) (Con 20) Sp)
+[20746] (Jz (Var Sp) (Branch false (Dloc 20772)))
+[20749] (Print_ret "You seem to be repeating yourself.")
+[20772] (Mod (Var (Global 69)) (Con 10) Sp)
 [20776] (Jz (Var Sp) (Branch false (Dloc 20806)))
 [20779] (Print_ret "I think that phrase is getting a bit worn out.")
 [20806] (Print_ret "Nothing happens here.")
@@ -1950,17 +1966,6 @@ Found 572 combined routines:
 [28168] Rtrue
 [28169] (Print_ret "Ok.")
 --------------------------------------------------
-[28108] ((var_initializations (1 0)))
-[28113] (Call (Floc 66946) () Sp)
-[28118] (Jz (Var (Local 1)) (Branch true (Dloc 28164)))
-[28121] (Print "Do you wish to leave the game? (Y is affirmative): ")
-[28156] (Call (Floc 37084) () Sp)
-[28161] (Jz (Var Sp) (Branch false (Dloc 28167)))
-[28164] (Jz (Var (Local 1)) (Branch false (Dloc 28169)))
-[28167] (Quit)
-[28168] Rtrue
-[28169] (Print_ret "Ok.")
---------------------------------------------------
 [28242] ((var_initializations ()))
 [28243] (Restore_lab (Branch false (Dloc 28257)))
 [28245] (Print "Ok.")
@@ -2119,16 +2124,6 @@ Found 572 combined routines:
 [29220] (Je ((Con 0) (Con 0)) (Branch true (Dloc 25643)))
 [29225] (Je ((Var (Global 42)) (Con 116)) (Branch false (Dloc 29275)))
 [29229] (Je ((Con 220) (Con 32)) (Branch true (Dloc 23734)))
-[29234] (Print ".")
-[29237] New_line
-[29238] (Insert_obj (Var (Global 111)) (Var (Global 118)))
-[29241] (Get_prop (Var (Global 118)) (Con 17) Sp)
-[29245] (Call (Fvar Sp) ((Con 2)) Sp)
-[29250] Rtrue
---------------------------------------------------
-[29220] ((var_initializations (0)))
-[29223] (Print "You are now in the ")
-[29232] (Print_obj (Var (Global 118)))
 [29234] (Print ".")
 [29237] New_line
 [29238] (Insert_obj (Var (Global 111)) (Var (Global 118)))
@@ -2919,29 +2914,6 @@ Found 572 combined routines:
 [33417] ((var_initializations ()))
 [33418] (Je ((Con 0) (Con 0)) (Branch false (Dloc 33430)))
 [33422] (Print_addr (Con 3034))
-[33425] (Test_attr (Var (Global 119)) (Con 23) (Branch true (Dloc 33433)))
-[33429] (Test_attr (Var (Global 119)) (Con 19) (Branch true (Dloc 33449)))
-[33433] (Test_attr (Var (Global 119)) (Con 27) (Branch false (Dloc 33440)))
-[33437] (Jump 33449)
-[33440] (Print_ret "You can't do that.")
-[33449] (Test_attr (Var (Global 119)) (Con 11) (Branch true (Dloc 33477)))
-[33453] (Print "The ")
-[33456] (Print_obj (Var (Global 119)))
-[33458] (Print " isn't open.")
-[33469] New_line
-[33470] (Call (Floc 38192) ((Var (Global 119))) Sp)
-[33476] Ret_popped
-[33477] (Je ((Var (Global 119)) (Var (Global 118))) (Branch false (Dloc 33494)))
-[33481] (Print_ret "How can you do that?")
-[33494] (Jin (Var (Global 118)) (Var (Global 119)) (Branch false (Dloc 33515)))
-[33498] (Print "The ")
-[33501] (Print_obj (Var (Global 118)))
-[33503] (Print " is already in the ")
-[33510] (Print_obj (Var (Global 119)))
-[33512] (Print_ret ".")
---------------------------------------------------
-[33418] ((var_initializations (0)))
-[33421] (Test_attr (Var (Global 119)) (Con 11) (Branch true (Dloc 33449)))
 [33425] (Test_attr (Var (Global 119)) (Con 23) (Branch true (Dloc 33433)))
 [33429] (Test_attr (Var (Global 119)) (Con 19) (Branch true (Dloc 33449)))
 [33433] (Test_attr (Var (Global 119)) (Con 27) (Branch false (Dloc 33440)))
@@ -3959,13 +3931,6 @@ Found 572 combined routines:
 [37955] (Jz (Var Sp) (Branch false Dtrue))
 [37958] (Return (Con 2))
 --------------------------------------------------
-[37934] ((var_initializations (0 0)))
-[37939] (Call (Floc 37960) ((Var (Global 0)) (Var (Local 1))) (Local 2))
-[37946] (Jz (Var (Local 2)) (Branch true Dfalse))
-[37949] (Call (Floc 37558) ((Var (Local 2))) Sp)
-[37955] (Jz (Var Sp) (Branch false Dtrue))
-[37958] (Return (Con 2))
---------------------------------------------------
 [37960] ((var_initializations (0 0 0 0)))
 [37969] (Load_word (Var (Local 2)) (Con 0) (Local 4))
 [37973] (Inc_check (Con 3) (Var (Local 4)) (Branch true Dfalse))
@@ -4508,15 +4473,6 @@ Found 572 combined routines:
 [41945] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 41949)))
 [41949] (Jump 41929)
 --------------------------------------------------
-[41920] ((var_initializations (0 0)))
-[41925] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 41929)))
-[41929] (Jz (Var (Local 2)) (Branch true Dtrue))
-[41932] (Set_attr (Var (Local 2)) (Con 3))
-[41935] (Get_child (Var (Local 2)) Sp (Branch false (Dloc 41945)))
-[41939] (Call (Floc 41920) ((Var (Local 2))) Sp)
-[41945] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 41949)))
-[41949] (Jump 41929)
---------------------------------------------------
 [41952] ((var_initializations (194 0 0)))
 [41959] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 41963)))
 [41963] (Jz (Var (Local 2)) (Branch false (Dloc 41968)))
@@ -4600,46 +4556,7 @@ Found 572 combined routines:
 [42470] (Call (Floc 38192) ((Con 183)) Sp)
 [42476] Rfalse
 --------------------------------------------------
-[42448] ((var_initializations ()))
-[42449] (Jz (Var (Global 48)) (Branch true (Dloc 42477)))
-[42452] (Test_attr (Con 183) (Con 11) (Branch false (Dloc 42458)))
-[42456] (Return (Con 72))
-[42458] (Print "The trap door is closed.")
-[42469] New_line
-[42470] (Call (Floc 38192) ((Con 183)) Sp)
-[42476] Rfalse
-[42477] (Print "You can't go that way.")
-[42488] New_line
-[42489] Rfalse
---------------------------------------------------
 [42484] ((var_initializations (34552 45755 45312)))
-[42491] (Je ((Var (Global 120)) (Con 105)) (Branch false (Dloc 42562)))
-[42496] (Print "The rug is too heavy to lift")
-[42513] (Jz (Var (Global 48)) (Branch true (Dloc 42519)))
-[42516] (Print_ret ".")
-[42519] (Print_ret ", but in trying to take it you have noticed an irregularity beneath it.")
-[42562] (Je ((Var (Global 120)) (Con 101) (Con 88)) (Branch false (Dloc 42695)))
-[42569] (Jz (Var (Global 48)) (Branch true (Dloc 42615)))
-[42572] (Print_ret "Having moved the carpet previously, you find it impossible to move it again.")
-[42615] (Print "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.")
-[42680] New_line
-[42681] (Clear_attr (Con 183) (Con 7))
-[42684] (Call (Floc 38192) ((Con 183)) Sp)
-[42690] (Store (Con 64) (Con 1))
-[42693] (Return (Var (Global 48)))
-[42695] (Je ((Var (Global 120)) (Con 93)) (Branch false (Dloc 42726)))
-[42699] (Print_ret "The rug is extremely heavy and cannot be carried.")
-[42726] (Je ((Var (Global 120)) (Con 81)) (Branch false (Dloc 42811)))
-[42731] (Jz (Var (Global 48)) (Branch false (Dloc 42811)))
-[42735] (Test_attr (Con 183) (Con 11) (Branch true (Dloc 42811)))
-[42740] (Print_ret "Underneath the rug is a closed trap door. As you drop the corner of the rug, the trap door is once again concealed from view.")
-[42811] (Je ((Var (Global 120)) (Con 33)) (Branch false Dfalse))
-[42815] (Jz (Var (Global 48)) (Branch false (Dloc 42889)))
-[42819] (Test_attr (Con 183) (Con 11) (Branch true (Dloc 42889)))
-[42824] (Print_ret "As you sit, you notice an irregularity underneath it. Rather than be uncomfortable, you stand up again.")
-[42889] (Print_ret "I suppose you think it's a magic carpet?")
---------------------------------------------------
-[42490] ((var_initializations ()))
 [42491] (Je ((Var (Global 120)) (Con 105)) (Branch false (Dloc 42562)))
 [42496] (Print "The rug is too heavy to lift")
 [42513] (Jz (Var (Global 48)) (Branch true (Dloc 42519)))
@@ -4677,14 +4594,6 @@ Found 572 combined routines:
 --------------------------------------------------
 [42935] ((var_initializations ()))
 [42936] (Jl (Con 0) (Con 0) (Branch false Dfalse))
-[42941] (Jin (Var (Local 2)) (Var (Global 0)) (Branch false Dfalse))
-[42945] (Je ((Var (Global 120)) (Con 93)) (Branch false Dfalse))
-[42949] (Jin (Var (Local 1)) (Var (Local 2)) (Branch false (Dloc 42975)))
-[42953] (Print "The ")
-[42956] (Print_obj (Var (Local 2)))
-[42958] (Print_ret " swings it out of your reach.")
---------------------------------------------------
-[42936] ((var_initializations (0 0)))
 [42941] (Jin (Var (Local 2)) (Var (Global 0)) (Branch false Dfalse))
 [42945] (Je ((Var (Global 120)) (Con 93)) (Branch false Dfalse))
 [42949] (Jin (Var (Local 1)) (Var (Local 2)) (Branch false (Dloc 42975)))
@@ -4756,13 +4665,9 @@ Found 572 combined routines:
 [43371] (Store (Con 124) (Con 0))
 [43374] Rtrue
 --------------------------------------------------
-[43385] ((var_initializations ()))
-[43386] (Print_paddr (Var Sp))
-[43388] New_line
-[43389] Rtrue
---------------------------------------------------
-[43409] ((var_initializations (9184 8064)))
-[43414] (Clear_attr (Var (Global 201)) (Var Sp))
+[43384] ((var_initializations (173 187 45249 38792 16255 18848 34502 16775 55754 49557 34858)))
+[43407] (Mod (Var (Global 77)) (Con 2) (Global 19))
+[43411] (Call (Floc 65752) ((Con 217)) Sp)
 [43417] (Je ((Var (Global 120)) (Con 63) (Con 127)) (Branch false (Dloc 43866)))
 [43424] (Je ((Var (Global 118)) (Con 218)) (Branch false (Dloc 43477)))
 [43428] (Jin (Con 218) (Var (Global 111)) (Branch false (Dloc 43477)))
@@ -4845,23 +4750,6 @@ Found 572 combined routines:
 [44260] Rfalse
 --------------------------------------------------
 [44318] ((var_initializations (204 6199 8851 8518 17737 51 28106 61618 1 0)))
-[44339] (Je ((Var (Local 1)) (Con 2)) (Branch false (Dloc 44350)))
-[44343] (Jz (Var (Global 46)) (Branch false Dfalse))
-[44346] (Set_attr (Con 174) (Con 7))
-[44349] Rtrue
-[44350] (Je ((Var (Local 1)) (Con 3)) (Branch false Dfalse))
-[44354] (Print "You are in a clearing, with a forest surrounding you on all sides. A path leads south.")
-[44405] (Test_attr (Con 174) (Con 11) (Branch false (Dloc 44444)))
-[44409] New_line
-[44410] (Print "There is an open grating, descending into darkness.")
-[44441] (Jump 44475)
-[44444] (Jz (Var (Global 46)) (Branch true (Dloc 44475)))
-[44447] New_line
-[44448] (Print "There is a grating securely fastened into the ground.")
-[44475] New_line
-[44476] Rtrue
---------------------------------------------------
-[44336] ((var_initializations (0)))
 [44339] (Je ((Var (Local 1)) (Con 2)) (Branch false (Dloc 44350)))
 [44343] (Jz (Var (Global 46)) (Branch false Dfalse))
 [44346] (Set_attr (Con 174) (Con 7))
@@ -5083,21 +4971,6 @@ Found 572 combined routines:
 [46502] (Jz (Var (Global 145)) (Branch false Dfalse))
 [46505] (Jz (Var (Global 62)) (Branch false Dfalse))
 [46508] (Print_ret "The way through the gate is barred by evil spirits, who jeer at your attempts to pass.")
---------------------------------------------------
-[46334] ((var_initializations (0)))
-[46337] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 46557)))
-[46342] (Print "You are outside a large gateway, on which is inscribed\n\n  Abandon every hope all ye who enter here!\n\nThe gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.")
-[46501] New_line
-[46502] (Jz (Var (Global 145)) (Branch false Dfalse))
-[46505] (Jz (Var (Global 62)) (Branch false Dfalse))
-[46508] (Print_ret "The way through the gate is barred by evil spirits, who jeer at your attempts to pass.")
-[46557] (Je ((Var (Local 1)) (Con 1)) (Branch false (Dloc 47078)))
-[46562] (Je ((Var (Global 120)) (Con 58)) (Branch false (Dloc 46623)))
-[46566] (Jz (Var (Global 145)) (Branch false Dfalse))
-[46569] (Jin (Con 221) (Var (Global 111)) (Branch false (Dloc 46600)))
-[46573] (Jin (Con 211) (Var (Global 111)) (Branch false (Dloc 46600)))
-[46577] (Jin (Con 147) (Var (Global 111)) (Branch false (Dloc 46600)))
-[46581] (Print_ret "You must perform the ceremony.")
 --------------------------------------------------
 [46558] ((var_initializations (258)))
 [46561] (Jin (Con 65) (Con 136) (Branch false (Dloc 45151)))
@@ -5663,83 +5536,6 @@ Found 572 combined routines:
 [52700] (Call (Floc 30792) () Sp)
 [52705] (Jump 52474)
 --------------------------------------------------
-[52070] ((var_initializations (0 0)))
-[52075] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 52273)))
-[52080] (Print "This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward.")
-[52147] (Jz (Var (Global 33)) (Branch false (Dloc 52156)))
-[52150] (Jz (Var (Global 39)) (Branch false (Dloc 52182)))
-[52153] (Jz (Var (Global 144)) (Branch true (Dloc 52182)))
-[52156] (Print " The room is eerie in its quietness.")
-[52179] (Jump 52271)
-[52182] (Print " The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.")
-[52271] New_line
-[52272] Rtrue
-[52273] (Je ((Var (Local 1)) (Con 6)) (Branch false (Dloc 52412)))
-[52278] (Jz (Var (Global 39)) (Branch true (Dloc 52412)))
-[52282] (Jz (Var (Global 144)) (Branch false (Dloc 52412)))
-[52286] (Print "It is unbearably loud here, with an ear-splitting roar seeming to come from all around you. There is a pounding in your head which won't stop. With a tremendous effort, you scramble out of the room.")
-[52397] New_line
-[52398] New_line
-[52399] (Call (Floc 20076) ((Var (Global 38))) Sp)
-[52405] (Call (Floc 37558) ((Var Sp)) Sp)
-[52411] Rfalse
-[52412] (Je ((Var (Local 1)) (Con 2)) (Branch false Dfalse))
-[52416] (Jz (Var (Global 33)) (Branch false Dfalse))
-[52419] (Jz (Var (Global 39)) (Branch false (Dloc 52425)))
-[52422] (Jz (Var (Global 144)) (Branch false Dfalse))
-[52425] (Jz (Var (Global 39)) (Branch true (Dloc 52431)))
-[52428] (Jz (Var (Global 144)) (Branch true Dfalse))
-[52431] (Call (Floc 35976) () Sp)
-[52436] (Jz (Var (Global 108)) (Branch true (Dloc 52474)))
-[52439] (Print "The rest of your commands have been lost in the noise.")
-[52470] New_line
-[52471] (Store (Con 124) (Con 0))
-[52474] New_line
-[52475] (Print ">")
-[52480] (Sread (Var (Global 109)) (Var (Global 110)))
-[52484] (Load_byte (Var (Global 110)) (Con 1) Sp)
-[52488] (Jz (Var Sp) (Branch false (Dloc 52508)))
-[52491] (Print "I beg your pardon?")
-[52504] New_line
-[52505] (Jump 52474)
-[52508] (Load_word (Var (Global 110)) (Con 1) (Local 2))
-[52512] (Je ((Var (Local 2)) (Con 16950) (Con 19806) (Con 18658)) (Branch false (Dloc 52529)))
-[52522] (Load_word (Var (Global 110)) (Con 3) (Local 2))
-[52526] (Jump 52539)
-[52529] (Je ((Var (Local 2)) (Con 18721)) (Branch false (Dloc 52539)))
-[52535] (Load_word (Var (Global 110)) (Con 5) (Local 2))
-[52539] (Je ((Var (Local 2)) (Con 18714)) (Branch false (Dloc 52553)))
-[52545] (Call (Floc 28264) () Sp)
-[52550] (Jump 52474)
-[52553] (Je ((Var (Local 2)) (Con 18588)) (Branch false (Dloc 52567)))
-[52559] (Call (Floc 28242) () Sp)
-[52564] (Jump 52474)
-[52567] (Je ((Var (Local 2)) (Con 18434) (Con 18448)) (Branch false (Dloc 52583)))
-[52575] (Call (Floc 28108) () Sp)
-[52580] (Jump 52474)
-[52583] (Je ((Var (Local 2)) (Con 19778) (Con 19848)) (Branch false (Dloc 52599)))
-[52591] (Call (Floc 37558) ((Con 107)) Sp)
-[52597] (Return (Var Sp))
-[52599] (Je ((Var (Local 2)) (Con 16362) (Con 16369)) (Branch false (Dloc 52615)))
-[52607] (Call (Floc 37558) ((Con 39)) Sp)
-[52613] (Return (Var Sp))
-[52615] (Je ((Var (Local 2)) (Con 19631) (Con 19708)) (Branch false (Dloc 52631)))
-[52623] (Call (Floc 37558) ((Con 40)) Sp)
-[52629] (Return (Var Sp))
-[52631] (Je ((Var (Local 2)) (Con 15732)) (Branch false (Dloc 52660)))
-[52637] (Print "That's only your opinion.")
-[52656] New_line
-[52657] (Jump 52474)
-[52660] (Je ((Var (Local 2)) (Con 16383)) (Branch false (Dloc 52700)))
-[52666] (Store (Con 49) (Con 1))
-[52669] (Clear_attr (Con 139) (Con 9))
-[52672] (Print "The acoustics of the room change subtly.")
-[52697] New_line
-[52698] New_line
-[52699] Rtrue
-[52700] (Call (Floc 30792) () Sp)
-[52705] (Jump 52474)
---------------------------------------------------
 [52708] ((var_initializations (0)))
 [52711] (Je ((Var (Local 1)) (Con 3)) (Branch false Dfalse))
 [52715] (Print "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down.")
@@ -5770,11 +5566,9 @@ Found 572 combined routines:
 [53029] (Store (Con 47) (Con 1))
 [53032] Rtrue
 --------------------------------------------------
-[53097] ((var_initializations ()))
-[53098] (Add (Con 28) (Var (Global 188)) Sp)
-[53102] (Div (Con 82) (Var (Global 90)) (Local 1))
-[53106] (Get_sibling (Var (Global 8)) (Global 22) (Branch false (Dloc 59277)))
-[53111] (Inc_check (Var (Global 193)) (Var (Global 27)) (Branch false (Dloc 45222)))
+[53086] ((var_initializations (14746 23872 13969 9683 12294 52 7372 55 21098 417 6182)))
+[53109] (Mod (Con 24) (Con 101) (Global 193))
+[53113] (Set_attr (Con 33) (Var (Global 28)))
 [53116] (Div (Con 4) (Var (Global 4)) (Global 85))
 [53120] (Print_obj (Var (Global 204)))
 [53122] (Print "door j hkc the N")
@@ -6481,6 +6275,11 @@ Found 572 combined routines:
 [58834] ((var_initializations ()))
 [58835] (Jump 58825)
 --------------------------------------------------
+[58838] ((var_initializations (37534 45216 34645 45828 16679 14942 24591 8500 9268 54055 1352 45718 17842 2178)))
+[58867] (Mod (Con 103) (Con 128) (Global 176))
+[58871] (Print_obj (Var (Global 119)))
+[58873] (Print_ret " won't do.")
+--------------------------------------------------
 [58880] ((var_initializations ()))
 [58881] (Call (Floc 30906) ((Con 146)) Sp)
 [58887] (Print_ret "The slag was rather insubstantial, and crumbles into dust at your touch.")
@@ -6712,88 +6511,8 @@ Found 572 combined routines:
 [60576] (Jin (Con 156) (Var (Global 0)) (Branch true (Dloc 60605)))
 [60580] (Print_ret "The boat must be on the ground to be deflated.")
 --------------------------------------------------
-[59976] ((var_initializations (0 0)))
-[59981] (Je ((Var (Local 1)) (Con 2) (Con 6) (Con 3)) (Branch true Dfalse))
-[59988] (Je ((Var (Local 1)) (Con 1)) (Branch false (Dloc 60380)))
-[59993] (Je ((Var (Global 120)) (Con 137)) (Branch false (Dloc 60051)))
-[59997] (Je ((Var (Global 118)) (Con 19) (Con 30) (Con 29)) (Branch true Dfalse))
-[60004] (Je ((Var (Global 0)) (Con 100)) (Branch false (Dloc 60014)))
-[60008] (Je ((Var (Global 118)) (Con 31) (Con 28)) (Branch true Dfalse))
-[60014] (Je ((Var (Global 0)) (Con 48)) (Branch false (Dloc 60022)))
-[60018] (Je ((Var (Global 118)) (Con 28)) (Branch true Dfalse))
-[60022] (Print_ret "Read the label for the boat's instructions.")
-[60051] (Je ((Var (Global 120)) (Con 74)) (Branch false (Dloc 60171)))
-[60056] (Je ((Var (Global 0)) (Con 36) (Con 35) (Con 34)) (Branch true (Dloc 60070)))
-[60063] (Je ((Var (Global 0)) (Con 130) (Con 100) (Con 48)) (Branch false (Dloc 60123)))
-[60070] (Print "You are on the ")
-[60077] (Je ((Var (Global 0)) (Con 100)) (Branch false (Dloc 60091)))
-[60081] (Print "reservoir")
-[60088] (Jump 60108)
-[60091] (Je ((Var (Global 0)) (Con 48)) (Branch false (Dloc 60103)))
-[60095] (Print "stream")
-[60100] (Jump 60108)
-[60103] (Print "river")
-[60108] (Print_ret ", or have you forgotten?")
-[60123] (Call (Floc 37934) ((Var (Global 21))) (Local 2))
-[60129] (Je ((Var (Local 2)) (Con 1)) (Branch false (Dloc 60154)))
-[60133] (Call (Floc 37960) ((Var (Global 0)) (Var (Global 23))) Sp)
-[60140] (Call (Floc 21618) ((Con 29937) (Var Sp)) Sp)
-[60148] (Storew (Var Sp) (Con 0) (Con 1))
-[60153] Rtrue
-[60154] (Je ((Var (Local 2)) (Con 2)) (Branch true Dtrue))
-[60158] (Print_ret "You can't launch it here.")
-[60171] (Je ((Var (Global 120)) (Con 49)) (Branch false (Dloc 60179)))
-[60175] (Test_attr (Var (Global 118)) (Con 29) (Branch true (Dloc 60203)))
-[60179] (Je ((Var (Global 120)) (Con 18)) (Branch false (Dloc 60191)))
-[60183] (Test_attr (Var (Global 118)) (Con 29) (Branch false (Dloc 60191)))
-[60187] (Je ((Var (Global 119)) (Con 156)) (Branch true (Dloc 60203)))
-[60191] (Je ((Var (Global 120)) (Con 42) (Con 19)) (Branch false (Dloc 60365)))
-[60198] (Test_attr (Var (Global 119)) (Con 29) (Branch false (Dloc 60365)))
-[60203] (Call (Floc 30906) ((Con 156)) Sp)
-[60209] (Insert_obj (Con 142) (Var (Global 0)))
-[60212] (Call (Floc 66488) ((Con 156) (Var (Global 0))) Sp)
-[60219] (Insert_obj (Var (Global 111)) (Var (Global 0)))
-[60222] (Print "It seems that the ")
-[60229] (Je ((Var (Global 120)) (Con 18) (Con 49)) (Branch false (Dloc 60240)))
-[60235] (Print_obj (Var (Global 118)))
-[60237] (Jump 60242)
-[60240] (Print_obj (Var (Global 119)))
-[60242] (Print " didn't agree with the boat, as evidenced by the loud hissing noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.")
-[60337] New_line
-[60338] (Test_attr (Var (Global 0)) (Con 4) (Branch false Dtrue))
-[60342] New_line
-[60343] (Je ((Var (Global 0)) (Con 100) (Con 48)) (Branch false (Dloc 60357)))
-[60349] (Call (Floc 67174) ((Con 40749)) Sp)
-[60356] Rtrue
-[60357] (Call (Floc 67174) ((Con 40768)) Sp)
-[60364] Rtrue
-[60365] (Je ((Var (Global 120)) (Con 74)) (Branch false Dfalse))
-[60369] (Print_ret "You're not in the boat!")
-[60380] (Je ((Var (Global 120)) (Con 25)) (Branch false (Dloc 60507)))
-[60385] (Jin (Con 209) (Var (Global 111)) (Branch true (Dloc 60409)))
-[60389] (Jin (Con 169) (Var (Global 111)) (Branch true (Dloc 60409)))
-[60393] (Jin (Con 110) (Var (Global 111)) (Branch true (Dloc 60409)))
-[60397] (Jin (Con 128) (Var (Global 111)) (Branch true (Dloc 60409)))
-[60401] (Jin (Con 218) (Var (Global 111)) (Branch true (Dloc 60409)))
-[60405] (Jin (Con 113) (Var (Global 111)) (Branch false Dfalse))
-[60409] (Print "Oops! Something sharp seems to have slipped and punctured the boat. The boat deflates to the sounds of hissing, sputtering, and cursing.")
-[60490] New_line
-[60491] (Call (Floc 30906) ((Con 156)) Sp)
-[60497] (Insert_obj (Con 142) (Var (Global 0)))
-[60500] (Call (Floc 38192) ((Con 142)) Sp)
-[60506] Rtrue
-[60507] (Je ((Var (Global 120)) (Con 59) (Con 23)) (Branch false (Dloc 60538)))
-[60513] (Print_ret "Inflating it further would probably burst it.")
-[60538] (Je ((Var (Global 120)) (Con 41)) (Branch false Dfalse))
-[60542] (Get_parent (Var (Global 111)) Sp)
-[60545] (Je ((Var Sp) (Con 156)) (Branch false (Dloc 60576)))
-[60549] (Print_ret "You can't deflate the boat while you're in it.")
-[60576] (Jin (Con 156) (Var (Global 0)) (Branch true (Dloc 60605)))
-[60580] (Print_ret "The boat must be on the ground to be deflated.")
---------------------------------------------------
-[60610] ((var_initializations (10798)))
-[60613] (Jin (Con 101) (Var (Global 72)) (Branch true (Dloc 66317)))
-[60618] New_line
+[60606] ((var_initializations (10064 55553 10798 9829)))
+[60615] (Mod (Var (Global 134)) (Con 69) (Global 171))
 [60619] (Store (Con 164) (Con 1))
 [60622] (Call (Floc 30906) ((Con 156)) Sp)
 [60628] (Insert_obj (Con 141) (Var (Global 0)))
@@ -6849,53 +6568,6 @@ Found 572 combined routines:
 --------------------------------------------------
 [60953] ((var_initializations ()))
 [60954] (Jl (Con 0) (Con 0) (Branch false Dfalse))
-[60959] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 61068)))
-[60964] (Print "You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.")
-[61031] New_line
-[61032] (Get_child (Con 75) (Local 2) (Branch false Dfalse))
-[61036] (Get_sibling (Var (Local 2)) Sp (Branch false Dfalse))
-[61040] (Print "On the ground below you can see:  ")
-[61059] (Call (Floc 36440) ((Con 75)) Sp)
-[61065] (Print_ret ".")
-[61068] (Je ((Var (Local 1)) (Con 1)) (Branch false (Dloc 61276)))
-[61073] (Je ((Var (Global 120)) (Con 31)) (Branch false (Dloc 61088)))
-[61077] (Je ((Var (Global 118)) (Con 241)) (Branch false (Dloc 61088)))
-[61081] (Call (Floc 38000) ((Con 22)) Sp)
-[61087] Ret_popped
-[61088] (Je ((Var (Global 120)) (Con 32) (Con 30)) (Branch false (Dloc 61105)))
-[61094] (Je ((Var (Global 118)) (Con 241)) (Branch false (Dloc 61105)))
-[61098] (Call (Floc 38000) ((Con 23)) Sp)
-[61104] Ret_popped
-[61105] (Je ((Var (Global 120)) (Con 49)) (Branch false Dfalse))
-[61109] (Call (Floc 37334) () Sp)
-[61114] (Jz (Var Sp) (Branch true Dtrue))
-[61117] (Je ((Var (Global 118)) (Con 89)) (Branch false (Dloc 61184)))
-[61122] (Jin (Con 87) (Con 89) (Branch false (Dloc 61184)))
-[61126] (Print "The nest falls to the ground, and the egg spills out of it, seriously damaged.")
-[61173] New_line
-[61174] (Call (Floc 30906) ((Con 87)) Sp)
-[61180] (Insert_obj (Con 86) (Con 75))
-[61183] Rtrue
-[61184] (Je ((Var (Global 118)) (Con 87)) (Branch false (Dloc 61235)))
-[61188] (Print "The egg falls to the ground and springs open, seriously damaged.")
-[61225] (Insert_obj (Con 87) (Con 75))
-[61228] (Call (Floc 61720) () Sp)
-[61233] New_line
-[61234] Rtrue
-[61235] (Je ((Var (Global 118)) (Var (Global 111)) (Con 241)) (Branch true (Dloc 61264)))
-[61241] (Insert_obj (Var (Global 118)) (Con 75))
-[61244] (Print "The ")
-[61247] (Print_obj (Var (Global 118)))
-[61249] (Print_ret " falls to the ground.")
-[61264] (Je ((Var (Global 120)) (Con 69)) (Branch false Dfalse))
-[61268] (Call (Floc 67174) ((Con 40866)) Sp)
-[61275] Ret_popped
-[61276] (Je ((Var (Local 1)) (Con 2)) (Branch false Dfalse))
-[61280] (Call (Floc 21618) ((Con 31060) (Con 65535)) Sp)
-[61289] (Storew (Var Sp) (Con 0) (Con 1))
-[61294] Rtrue
---------------------------------------------------
-[60954] ((var_initializations (0 0)))
 [60959] (Je ((Var (Local 1)) (Con 3)) (Branch false (Dloc 61068)))
 [60964] (Print "You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.")
 [61031] New_line
@@ -7034,17 +6706,6 @@ Found 572 combined routines:
 [62196] (Add (Var (Global 239)) (Con 255) Sp)
 [62200] (Storew (Var Sp) (Con 0) (Con 1))
 [62205] Rtrue
---------------------------------------------------
-[62184] ((var_initializations (0)))
-[62187] (Je ((Var (Local 1)) (Con 2)) (Branch false (Dloc 62206)))
-[62191] (Call (Floc 21618) ((Con 31060) (Con 65535)) Sp)
-[62200] (Storew (Var Sp) (Con 0) (Con 1))
-[62205] Rtrue
-[62206] (Je ((Var (Local 1)) (Con 1)) (Branch false Dfalse))
-[62210] (Je ((Var (Global 120)) (Con 30) (Con 32)) (Branch false Dfalse))
-[62216] (Je ((Var (Global 118)) (Con 241)) (Branch false Dfalse))
-[62220] (Call (Floc 38000) ((Con 23)) Sp)
-[62226] Ret_popped
 --------------------------------------------------
 [62207] ((var_initializations (320)))
 [62210] (Je ((Var (Global 120)) (Con 30) (Con 32)) (Branch false Dfalse))
@@ -7332,17 +6993,6 @@ Found 572 combined routines:
 [64158] Ret_popped
 [64159] (Return (Var (Local 2)))
 --------------------------------------------------
-[64126] ((var_initializations (1 0)))
-[64131] (Sub (Con 7) (Con 2) Sp)
-[64135] (Div (Var (Global 151)) (Var Sp) Sp)
-[64139] (Div (Var (Global 1)) (Var Sp) Sp)
-[64143] (Add (Con 2) (Var Sp) (Local 2))
-[64147] (Jz (Var (Local 1)) (Branch true (Dloc 64159)))
-[64150] (Get_prop (Var (Global 111)) (Con 7) Sp)
-[64154] (Add (Var (Local 2)) (Var Sp) Sp)
-[64158] Ret_popped
-[64159] (Return (Var (Local 2)))
---------------------------------------------------
 [64162] ((var_initializations (0 0 0 0)))
 [64171] (Load_word (Var (Local 1)) (Con 0) (Local 2))
 [64175] (Get_prop (Var (Local 2)) (Con 7) (Local 3))
@@ -7365,15 +7015,6 @@ Found 572 combined routines:
 --------------------------------------------------
 [64235] ((var_initializations ()))
 [64236] (Jl (Con 0) (Con 0) (Branch false Dfalse))
-[64241] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 64245)))
-[64245] (Jz (Var (Local 2)) (Branch true Dfalse))
-[64248] (Je ((Var (Local 2)) (Con 113) (Con 218) (Con 110)) (Branch true (Dloc 64261)))
-[64255] (Je ((Var (Local 2)) (Con 169) (Con 128)) (Branch false (Dloc 64263)))
-[64261] (Return (Var (Local 2)))
-[64263] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 64248)))
-[64268] Rfalse
---------------------------------------------------
-[64236] ((var_initializations (0 0)))
 [64241] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 64245)))
 [64245] (Jz (Var (Local 2)) (Branch true Dfalse))
 [64248] (Je ((Var (Local 2)) (Con 113) (Con 218) (Con 110)) (Branch true (Dloc 64261)))
@@ -7729,15 +7370,6 @@ Found 572 combined routines:
 [65778] (Call (Fvar Sp) ((Con 4)) Sp)
 [65783] Rtrue
 --------------------------------------------------
-[65752] ((var_initializations (0 0)))
-[65757] (Get_prop (Var (Local 1)) (Con 7) (Local 2))
-[65761] (Jl (Var (Local 2)) (Con 0) (Branch false Dtrue))
-[65765] (Sub (Con 0) (Var (Local 2)) Sp)
-[65769] (Put_prop (Var (Local 1)) (Con 7) (Var Sp))
-[65774] (Get_prop (Var (Local 1)) (Con 17) Sp)
-[65778] (Call (Fvar Sp) ((Con 4)) Sp)
-[65783] Rtrue
---------------------------------------------------
 [65784] ((var_initializations (0 0 0 0 0 0)))
 [65797] (Call (Floc 21638) ((Con 32892)) (Local 1))
 [65804] (Get_prop (Con 110) (Con 12) (Local 2))
@@ -7778,14 +7410,6 @@ Found 572 combined routines:
 --------------------------------------------------
 [65989] ((var_initializations ()))
 [65990] (Jl (Con 0) (Con 0) (Branch false Dfalse))
-[65995] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 65999)))
-[65999] (Jz (Var (Local 2)) (Branch true Dfalse))
-[66002] (Test_attr (Var (Local 2)) (Con 30) (Branch false (Dloc 66010)))
-[66006] (Test_attr (Var (Local 2)) (Con 7) (Branch false Dtrue))
-[66010] (Get_sibling (Var (Local 2)) (Local 2) (Branch true (Dloc 65999)))
-[66015] Rfalse
---------------------------------------------------
-[65990] ((var_initializations (0 0)))
 [65995] (Get_child (Var (Local 1)) (Local 2) (Branch true (Dloc 65999)))
 [65999] (Jz (Var (Local 2)) (Branch true Dfalse))
 [66002] (Test_attr (Var (Local 2)) (Con 30) (Branch false (Dloc 66010)))
@@ -8066,49 +7690,6 @@ Found 572 combined routines:
 [67811] (Call (Floc 67922) () Sp)
 [67816] Ret_popped
 --------------------------------------------------
-[67174] ((var_initializations (0 0)))
-[67179] (Jz (Var (Global 62)) (Branch true (Dloc 67290)))
-[67183] (Print "\nIt takes a talented person to be killed while already dead. YOU are such a talent. Unfortunately, it takes a talented person to deal with it. I am not such a talent. Sorry.")
-[67284] New_line
-[67285] (Call (Floc 37076) () Sp)
-[67290] (Print_paddr (Var (Local 1)))
-[67292] New_line
-[67293] (Jz (Var (Global 60)) (Branch false (Dloc 67310)))
-[67296] (Print "Bad luck, huh?")
-[67309] New_line
-[67310] (Call (Floc 36962) ((Con 65526)) Sp)
-[67317] (Print " \n   ****  You have died  **** \n\n")
-[67356] (Get_parent (Var (Global 111)) Sp)
-[67359] (Test_attr (Var Sp) (Con 27) (Branch false (Dloc 67366)))
-[67363] (Insert_obj (Var (Global 111)) (Var (Global 0)))
-[67366] (Jl (Var (Global 61)) (Con 2) (Branch true (Dloc 67511)))
-[67371] (Print "You clearly are a suicidal maniac. We don't allow psychotics in the cave, since they may harm other adventurers. Your remains will be installed in the Land of the Living Dead, where your fellow adventurers may gloat over them.")
-[67504] New_line
-[67505] (Call (Floc 37076) () Sp)
-[67510] Ret_popped
-[67511] (Inc (Con 77))
-[67513] (Insert_obj (Var (Global 111)) (Var (Global 0)))
-[67516] (Test_attr (Con 212) (Con 3) (Branch false (Dloc 67713)))
-[67521] (Print "As you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.")
-[67684] New_line
-[67685] New_line
-[67686] (Store (Con 78) (Con 1))
-[67689] (Store (Con 157) (Con 1))
-[67692] (Store (Con 137) (Con 1))
-[67695] (Store (Con 88) (Con 1))
-[67698] (Put_prop (Var (Global 111)) (Con 17) (Con 31445))
-[67704] (Call (Floc 37558) ((Con 232)) Sp)
-[67710] (Jump 67800)
-[67713] (Print "Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.")
-[67792] New_line
-[67793] New_line
-[67794] (Call (Floc 37558) ((Con 78)) Sp)
-[67800] (Clear_attr (Con 183) (Con 3))
-[67803] (Store (Con 124) (Con 0))
-[67806] (Call (Floc 67818) () Sp)
-[67811] (Call (Floc 67922) () Sp)
-[67816] Ret_popped
---------------------------------------------------
 [67818] ((var_initializations (0 0 0 0)))
 [67827] (Jin (Con 164) (Var (Global 111)) (Branch false (Dloc 67834)))
 [67831] (Insert_obj (Con 164) (Con 193))
@@ -8254,6 +7835,12 @@ Found 572 combined routines:
 [74080] (Store (Con 215) (Var (Global 26)))
 [74083] Rfalse
 --------------------------------------------------
+[74590] ((var_initializations (24860 11050 31018 58824 42244 16696 20996 3114 31047 49198)))
+[74611] (Add (Con 113) (Var (Global 195)) (Global 32))
+[74615] (Mod (Con 102) (Con 234) (Global 10))
+[74619] (Je ((Var (Global 32)) (Con 33)) (Branch false (Dloc 74663)))
+[74623] Ret_popped
+--------------------------------------------------
 [76160] ((var_initializations (12614 37963 24 62573 16388 57624 11012 4946 63796 11268 9072 24324)))
 [76185] (Return (Var (Global 54)))
 --------------------------------------------------
@@ -8272,6 +7859,18 @@ Found 572 combined routines:
 --------------------------------------------------
 [79410] ((var_initializations (43590)))
 [79413] (Return (Var (Global 90)))
+--------------------------------------------------
+[79824] ((var_initializations ()))
+[79825] (Jin (Con 34) (Var (Global 36)) (Branch false (Dloc 79860)))
+[79829] (Mod (Var (Global 134)) (Con 69) (Local 12))
+[79833] (Print_ret "asty-looking troll, brandishing a bloody axe, blocks all passages out of the room.")
+--------------------------------------------------
+[79895] ((var_initializations (5176)))
+[79898] (Dec (Con 69))
+[79900] (Load_byte (Con 211) (Con 3) (Global 67))
+[79904] (Jl (Con 147) (Var (Global 81)) (Branch false (Dloc 83574)))
+[79909] (Mod (Var Sp) (Con 88) (Local 4))
+[79913] Ret_popped
 --------------------------------------------------
 [79934] ((var_initializations (800 314 38186 26056)))
 [79943] (Inc (Var (Local 12)))

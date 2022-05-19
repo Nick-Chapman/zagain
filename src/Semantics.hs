@@ -214,6 +214,7 @@ eval pc = \case
   Op.Random arg target -> do
     v1 <- evalArg arg
     res <- Random (fromIntegral v1)
+    --Debug ("random",v1,"->",res)
     setTarget target (fromIntegral res)
 
   Op.Remove_obj arg -> do
@@ -316,6 +317,7 @@ eval pc = \case
 
   Op.Save_lab{} -> undefined
   Op.Restore_lab{} -> undefined
+  Op.Mod{} -> undefined
 
 writeBytesFromString :: Addr -> String -> Eff ()
 writeBytesFromString a str = writeBytes a [ fromIntegral (Char.ord c) | c <- str ]

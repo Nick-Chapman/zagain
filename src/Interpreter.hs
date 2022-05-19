@@ -144,6 +144,7 @@ run story e0 = loop (initState pc0) e0 k0
             k s { stack } v
 
       Random range -> do
+        --let v = (9 * range + 1) `div` 10 in k s v
         let State{oracle} = s
         case oracle of
           [] -> error "random oracle has run out!"

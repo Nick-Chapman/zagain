@@ -24,24 +24,22 @@ data RandType = ByteConst | WordConst | ByteVariable
   deriving Show
 
 fetchOperation :: Fetch Operation
-fetchOperation = fetchOpCodeAndArgs >>= \case
+fetchOperation = fetchOpCodeAndArgs >>= decode
+
+decode :: OpCodeAndArgs -> Fetch Operation
+decode = \case
   Code 1 ts -> Op.Je <$> args ts <*> label
-  Code 193 ts -> Op.Je <$> args ts <*> label
   Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
-  Code 194 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
   Code 3 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
-  Code 195 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
   Code 4 [t1,t2] -> Op.Dec_check <$> arg t1 <*> arg t2 <*> label
   Code 5 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label
   Code 6 [t1,t2] -> Op.Jin <$> arg t1 <*> arg t2 <*> label
   Code 7 [t1,t2] -> Op.Test <$> arg t1 <*> arg t2 <*> label
   Code 9 [t1,t2] -> Op.And_ <$> arg t1 <*> arg t2 <*> target
-  Code 201 [t1,t2] -> Op.And_ <$> arg t1 <*> arg t2 <*> target
   Code 10 [t1,t2] -> Op.Test_attr <$> arg t1 <*> arg t2 <*> label
   Code 11 [t1,t2] -> Op.Set_attr <$> arg t1 <*> arg t2
   Code 12 [t1,t2] -> Op.Clear_attr <$> arg t1 <*> arg t2
   Code 13 [t1,t2] -> Op.Store <$> arg t1 <*> arg t2
-  Code 205 [t1,t2] -> Op.Store <$> arg t1 <*> arg t2
   Code 14 [t1,t2] -> Op.Insert_obj <$> arg t1 <*> arg t2
   Code 15 [t1,t2] -> Op.Load_word <$> arg t1 <*> arg t2 <*> target
   Code 16 [t1,t2] -> Op.Load_byte <$> arg t1 <*> arg t2 <*> target
@@ -52,6 +50,7 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 21 [t1,t2] -> Op.Sub <$> arg t1 <*> arg t2 <*> target
   Code 22 [t1,t2] -> Op.Mul <$> arg t1 <*> arg t2 <*> target
   Code 23 [t1,t2] -> Op.Div <$> arg t1 <*> arg t2 <*> target
+  Code 24 [t1,t2] -> Op.Mod <$> arg t1 <*> arg t2 <*> target
   Code 128 [t] -> Op.Jz <$> arg t <*> label
   Code 129 [t] -> Op.Get_sibling <$> arg t <*> target <*> label
   Code 130 [t] -> Op.Get_child <$> arg t <*> target <*> label
@@ -68,11 +67,11 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 142 [t] -> Op.Load <$> arg t <*> target
   Code 176 [] -> pure Op.Rtrue
   Code 177 [] -> pure Op.Rfalse
-  Code 184 [] -> pure Op.Ret_popped
   Code 178 [] -> Op.Print <$> ztext
   Code 179 [] -> Op.Print_ret <$> ztext
   Code 181 [] -> Op.Save_lab <$> label
   Code 182 [] -> Op.Restore_lab <$> label
+  Code 184 [] -> pure Op.Ret_popped
   Code 186 [] -> pure Op.Quit
   Code 187 [] -> pure Op.New_line
   Code 197 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label
@@ -86,7 +85,14 @@ fetchOperation = fetchOpCodeAndArgs >>= \case
   Code 231 [t] -> Op.Random <$> arg t <*> target
   Code 232 [t] -> Op.Push <$> arg t
   Code 233 [t] -> Op.Pull <$> arg t
-  x -> pure $ Op.BadOperation (printf "unknown op-code and args: %s" (show x))
+
+  Code n ts | 32<=n && n<=127 -> decode (Code (n .&. 0x1f) ts)
+  Code n ts | 144<=n && n<=175 -> decode (Code (n .&. 0x8f) ts)
+  Code n ts | 192<=n && n<=223 -> decode (Code (n .&. 0x1f) ts)
+
+  x ->
+    pure $ Op.BadOperation (printf "unknown op-code and args: %s" (show x))
+    --error (printf "unknown op-code and args: %s" (show x))
 
 data Form = LongForm | ShortForm | VarForm
 
@@ -97,11 +103,11 @@ fetchOpCodeAndArgs = do
     LongForm -> do
       let t1 = decodeLongRandType x 6
       let t2 = decodeLongRandType x 5
-      pure (Code (x .&. 0x1F) [t1,t2])
+      pure (Code x [t1,t2])
     ShortForm -> do
       case decodeRandType x (5,4) of
         Nothing -> pure (Code x [])
-        Just ty -> pure (Code (x .&. 0xCF) [ty])
+        Just ty -> pure (Code x [ty])
     VarForm -> do
       x2 <- Fetch.NextByte
       let tys = decodeRandTypes x2
