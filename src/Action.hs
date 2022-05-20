@@ -52,7 +52,7 @@ runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
             putStrLn "\n[no more input]"
             pure ()
           input:xs -> do
-            when debug $ putStr (printf "[%d]" nInput)
+            putStr (printf "[%d]" nInput)
             putStrLn input
             loop (nInput+1) xs [] (f input)
       Stop count -> do

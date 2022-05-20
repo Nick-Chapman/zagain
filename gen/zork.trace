@@ -397,7 +397,7 @@ West of House
 You are standing in an open field west of a white house, with a boarded front door.
 There is a small mailbox here.
 
->open mailbox
+>[1]open mailbox
 (Decode 387 22800 (Load_byte (Var (Global 110)) (Con 1) (Global 113)))
 (Decode 388 22804 (Jz (Var (Global 113)) (Branch false (Dloc 22822))))
 (Decode 389 22822 (Store (Con 5) (Var (Global 113))))
@@ -1119,7 +1119,7 @@ There is a small mailbox here.
 [executed: 717 instructions]
 Opening the small mailbox reveals a leaflet.
 
->read leaflet
+>[2]read leaflet
 (Decode 1104 22800 (Load_byte (Var (Global 110)) (Con 1) (Global 113)))
 (Decode 1105 22804 (Jz (Var (Global 113)) (Branch false (Dloc 22822))))
 (Decode 1106 22822 (Store (Con 5) (Var (Global 113))))
