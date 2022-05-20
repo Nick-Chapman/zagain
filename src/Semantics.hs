@@ -47,8 +47,7 @@ eval pc = \case
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    -- TODO: reconsider and reduce uses of fromIntegral
-    Objects.clearAttr (fromIntegral v1) (fromIntegral v2)
+    Objects.clearAttr v1 v2
 
   Op.Dec arg -> do
     target <- makeValueTarget <$> evalArg arg
@@ -67,31 +66,31 @@ eval pc = \case
 
   Op.Get_child arg target label -> do
     v <- evalArg arg
-    res <- Objects.getFM Child (fromIntegral v)
-    setTarget target (fromIntegral res)
+    res <- Objects.getFM Child v
+    setTarget target res
     branchMaybe label (res /= 0)
 
   Op.Get_next_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getNextProp (fromIntegral v1) (fromIntegral v2)
-    setTarget target (fromIntegral res)
+    res <- Objects.getNextProp v1 v2
+    setTarget target res
 
   Op.Get_parent arg target -> do
     v <- evalArg arg
-    res <- Objects.getFM Parent (fromIntegral v)
-    setTarget target (fromIntegral res)
+    res <- Objects.getFM Parent v
+    setTarget target res
 
   Op.Get_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getProp (fromIntegral v1) (fromIntegral v2)
+    res <- Objects.getProp v1 v2
     setTarget target res
 
   Op.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getPropAddr (fromIntegral v1) (fromIntegral v2)
+    res <- Objects.getPropAddr v1 v2
     setTarget target res
 
   Op.Get_prop_len arg target -> do
@@ -101,10 +100,9 @@ eval pc = \case
 
   Op.Get_sibling arg target label -> do
     v <- evalArg arg
-    res <- Objects.getFM Sibling (fromIntegral v)
-    setTarget target (fromIntegral res)
-    let bFix = (res /= 0)
-    branchMaybe label bFix
+    res <- Objects.getFM Sibling v
+    setTarget target res
+    branchMaybe label (res /= 0)
 
   Op.Inc arg -> do
     target <- makeValueTarget <$> evalArg arg
@@ -121,7 +119,7 @@ eval pc = \case
   Op.Insert_obj arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    Objects.insertObj (fromIntegral v1) (fromIntegral v2)
+    Objects.insertObj v1 v2
 
   Op.Je args label -> do
     mapM evalArg args >>= EqualAny >>= branchMaybe label
@@ -134,7 +132,7 @@ eval pc = \case
   Op.Jin arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    p <- fromIntegral <$> Objects.getFM Parent (fromIntegral v1)
+    p <- Objects.getFM Parent v1
     branchMaybe label (v2 == p)
 
   Op.Jl arg1 arg2 label -> do
@@ -186,7 +184,7 @@ eval pc = \case
 
   Op.Print_obj arg -> do
     v <- evalArg arg
-    shortName <- Objects.getShortName (fromIntegral v)
+    shortName <- Objects.getShortName v
     GamePrint shortName
 
   Op.Print_paddr arg -> do
@@ -208,7 +206,7 @@ eval pc = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v3 <- evalArg arg3
-    Objects.putProp (fromIntegral v1) (fromIntegral v2) v3
+    Objects.putProp v1 v2 v3
 
   Op.Quit -> do
     Quit
@@ -221,7 +219,7 @@ eval pc = \case
 
   Op.Remove_obj arg -> do
     v <- evalArg arg
-    Objects.removeObj (fromIntegral v)
+    Objects.removeObj v
 
   Op.Ret_popped -> do PopStack >>= returnValue
 
@@ -236,7 +234,7 @@ eval pc = \case
   Op.Set_attr arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    Objects.setAttr (fromIntegral v1) (fromIntegral v2)
+    Objects.setAttr v1 v2
 
   Op.Sread arg1 arg2 -> do
     rawTyped <- ReadInputFromUser
@@ -314,7 +312,7 @@ eval pc = \case
   Op.Test_attr arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.testAttr (fromIntegral v1) (fromIntegral v2)
+    res <- Objects.testAttr v1 v2
     branchMaybe label res
 
   Op.Save_lab{} -> undefined
@@ -399,7 +397,7 @@ setLocals rh actuals =
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
 
-getWord :: Addr -> Eff Value
+getWord :: Addr -> Eff Value -- TODO: make primitive
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
