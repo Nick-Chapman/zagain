@@ -47,6 +47,7 @@ eval pc = \case
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
+    -- TODO: reconsider and reduce uses of fromIntegral
     Objects.clearAttr (fromIntegral v1) (fromIntegral v2)
 
   Op.Dec arg -> do

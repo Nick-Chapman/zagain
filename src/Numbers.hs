@@ -31,7 +31,7 @@ addrOfPackedWord v = if
   | otherwise -> StoryIndex (2 * fromIntegral v)
 
 instance Show Addr where
-  show (StoryIndex i) = printf "[%05i]" i
+  show (StoryIndex i) = printf "[%05x]" i
 
 newtype Value = Value Int16 -- 16 bit signed values used for z-machine computations
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits,Ix)
