@@ -1,4 +1,3 @@
-#random -2345
 open mailbox
 read leaflet
 drop leaflet
@@ -142,6 +141,7 @@ go south
 take skull
 go north
 go up
+extinguish candles
 go north
 rub mirror
 go north
@@ -318,7 +318,23 @@ kill thief with sword
 kill thief with sword
 kill thief with sword
 kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+kill thief with sword
+i
 take all
+i
 drop stiletto
 take chalice
 go down
@@ -367,3 +383,5 @@ go south
 go west
 go southwest
 go west
+quit
+Y

@@ -3,7 +3,7 @@
 module Interpreter (State,run) where
 
 import Action (Action,Stats(..))
-import Data.Bits ((.&.))
+import Data.Bits ((.&.),shiftL)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
@@ -144,13 +144,10 @@ run story e0 = loop (initState pc0) e0 k0
             k s { stack } v
 
       Random range -> do
-        --let v = (9 * range + 1) `div` 10 in k s v
-        let State{oracle} = s
-        case oracle of
-          [] -> error "random oracle has run out!"
-          (x,result):oracle -> if
-            | (range /= x) -> error (show ("unexpected random range",range,x))
-            | otherwise -> k s { oracle } result
+        let State{seed} = s
+        let x = stepRandom seed
+        let result = x `mod` (range+1) + 1
+        k s { seed = x } result
 
       Quit -> do
         -- dont call "k" but instead "k0"
@@ -171,7 +168,7 @@ data State = State
   , overrides :: Map Addr Byte
   , lastStats :: Stats
   , stats :: Stats
-  , oracle :: [(Int,Int)]
+  , seed :: Int
   }
 
 diffStats :: Stats -> Stats -> Stats
@@ -205,8 +202,16 @@ initState pc = do
         , overrides = Map.empty
         , lastStats = Stats { ct = 0, rt = 0 }
         , stats = Stats { ct = 0, rt = 0 }
-        , oracle = oracle0
+        , seed = 2345 --TODO: get seen from user or time
         }
+
+-- pulled from wikipedia "Linear congruential generator"
+stepRandom :: Int -> Int
+stepRandom x = (x * a  + c) `mod` m
+  where
+    a = 1103515245
+    c = 12345
+    m = 1 `shiftL` 31
 
 data Frame = Frame
   { pc :: Addr
@@ -215,24 +220,3 @@ data Frame = Frame
   , locals :: Map Byte Value
   }
   deriving Show
-
-----------------------------------------------------------------------
---[random oracle to match mojozork (useful during dev)]---------------
-
-oracle0 :: [(Int,Int)]
-oracle0 =
-  [ (100, 54), (100, 90), (100, 71), (100, 69), (100, 56)
-  , (9, 4), (100, 40), (5, 1), (9, 8), (3, 2), (100, 70), (100, 77), (100, 70)
-  , (100, 15), (100, 89), (100, 9), (100, 22), (100, 74), (100, 69), (100, 38), (100, 6)
-  , (100, 85), (100, 25), (100, 4), (100, 41), (100, 84), (100, 15), (100, 6), (100, 76)
-  , (100, 8), (100, 35), (100, 30), (100, 98), (100, 7), (100, 1), (100, 55), (100, 57)
-  , (100, 41), (100, 61), (100, 53), (100, 32), (100, 32), (100, 31), (100, 3), (100, 48)
-  , (100, 21), (100, 12), (100, 70), (100, 95), (100, 81), (100, 9), (100, 1), (100, 66)
-  , (100, 35), (100, 6), (100, 7), (100, 20), (100, 21), (100, 14), (100, 96), (100, 30)
-  , (100, 49), (100, 27), (100, 28), (100, 57), (100, 28), (100, 84), (100, 15), (100, 69)
-  , (100, 46), (100, 68), (100, 1), (100, 78), (100, 1), (100, 4), (100, 27), (9, 1)
-  , (4, 1), (9, 8), (4, 1), (9, 8), (4, 1), (9, 1), (6, 3), (9, 3)
-  , (4, 1), (9, 6), (4, 2), (9, 4), (4, 3), (9, 5), (4, 3), (9, 3)
-  , (4, 3), (9, 1), (6, 5), (9, 1), (4, 3), (9, 1), (6, 5), (9, 3)
-  , (4, 3), (9, 8), (3, 1), (100, 79), (100, 94), (100, 43), (100, 1), (100, 11)
-  ]
