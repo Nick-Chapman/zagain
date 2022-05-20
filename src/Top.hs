@@ -72,7 +72,8 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       let (dict,_,_) = runFetch 0 story fetchDict
       print dict
     Run -> do
+      let seed = 777
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
-      let a = Interpreter.run story Semantics.theEffect
+      let a = Interpreter.run seed story Semantics.theEffect
       runAction iconf inputs a

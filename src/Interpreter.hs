@@ -19,8 +19,8 @@ import qualified Data.Map as Map
 
 --[interpreter for execution effects]----------------------------------
 
-run :: Story -> Eff () -> Action
-run story e0 = loop (initState pc0) e0 k0
+run :: Word -> Story -> Eff () -> Action
+run seed story e0 = loop (initState seed pc0) e0 k0
   where
     header@Header{initialPC=pc0} = Story.header story
 
@@ -193,8 +193,8 @@ instance Show State where
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack
 
-initState :: Addr -> State
-initState pc = do
+initState :: Word -> Addr -> State
+initState seed pc = do
   State { pc
         , lastCount = 0
         , count = 0
@@ -204,7 +204,7 @@ initState pc = do
         , overrides = Map.empty
         , lastStats = Stats { ct = 0, rt = 0 }
         , stats = Stats { ct = 0, rt = 0 }
-        , seed = 777 --TODO: get seen from user or time
+        , seed
         }
 
 -- pulled from wikipedia "Linear congruential generator"
