@@ -204,7 +204,7 @@ initState pc = do
         , overrides = Map.empty
         , lastStats = Stats { ct = 0, rt = 0 }
         , stats = Stats { ct = 0, rt = 0 }
-        , seed = 2345 --TODO: get seen from user or time
+        , seed = 777 --TODO: get seen from user or time
         }
 
 -- pulled from wikipedia "Linear congruential generator"
