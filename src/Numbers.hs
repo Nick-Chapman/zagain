@@ -37,7 +37,7 @@ addrOfPackedWord v = if
 
 instance Show Addr where
   show (StoryIndex i) = if
-    | matchNizFormat -> printf "%05i" i
+    | matchNizFormat -> printf "[%05i]" i
     | otherwise -> printf "[%05i]" i
 
 newtype Value = Value Int16 -- 16 bit signed values used for z-machine computations

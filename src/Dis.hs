@@ -41,11 +41,11 @@ dumpRoutine :: Routine -> IO ()
 dumpRoutine Routine{start,header,body=xs,finish=_} = do
   -- TODO: show gap between routines
   printf "--------------------------------------------------\n"
-  printf "[%s] %s\n" (show start) (show header)
+  printf "%s %s\n" (show start) (show header)
   mapM_ pr xs
   --printf "[%s]\n" (show finish)
   where
-    pr (a,i) = printf "[%s] %s\n" (show a) (Op.pretty i)
+    pr (a,op) = printf "%s %s\n" (show a) (show op)
 
 
 --[candidate routines]------------------------------------------------

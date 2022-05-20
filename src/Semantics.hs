@@ -12,7 +12,7 @@ import Eff (Eff(..),Bin(..))
 import Header (Header(..))
 import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
 import Objects (FamilyMember(Parent,Sibling,Child))
-import Operation (Operation,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
+import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
 import Text.Printf (printf)
 import qualified Data.Char as Char (chr,ord)
 import qualified Objects
@@ -36,7 +36,7 @@ eval pc = \case
   Op.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
   Op.And_ arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
 
-  Op.Call func (Args args) target -> do
+  Op.Call func args target -> do
     funcAddress <- evalFunc func
     if funcAddress == 0 then setTarget target 0 else do
       actuals <- mapM evalArg args
@@ -122,7 +122,7 @@ eval pc = \case
     v2 <- evalArg arg2
     Objects.insertObj (fromIntegral v1) (fromIntegral v2)
 
-  Op.Je (Args args) label -> do
+  Op.Je args label -> do
     mapM evalArg args >>= EqualAny >>= branchMaybe label
 
   Op.Jg arg1 arg2 label -> do
@@ -161,11 +161,8 @@ eval pc = \case
   Op.Load_word arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
-    --let a = fromIntegral (base + 2*offset) -- TODO: bug here?
-    let a = (fromIntegral base + 2 * fromIntegral offset)
-    --Debug ("Load_word",base,"+",offset,"=",a,"-->")
+    let a = fromIntegral base + 2 * fromIntegral offset
     w <- getWord a
-    --Debug ("Load_word",base,"+",offset,"=",a,"-->",w)
     setTarget target w
 
   Op.Mul arg1 arg2 target -> do evalBin BMul arg1 arg2 target

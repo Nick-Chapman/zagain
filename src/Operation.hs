@@ -3,26 +3,22 @@
 module Operation
   ( Operation(..)
   , Func(..)
-  , Args(..)
   , Arg(..)
   , Target(..)
   , Label(..)
   , Sense(..)
   , Dest(..)
-  , pretty
   , RoutineHeader(..)
   ) where
 
-import Data.List (intercalate)
 import Numbers (Byte,Addr,Value)
-import Text.Printf (printf)
 
-data Operation -- TODO: check naming matches spec (will change trace output / regression)
+data Operation -- TODO: check naming matches spec
   = BadOperation String
 
   | Add Arg Arg Target
   | And_ Arg Arg Target
-  | Call Func Args Target
+  | Call Func [Arg] Target
   | Clear_attr Arg Arg
   | Dec Arg
   | Dec_check Arg Arg Label
@@ -37,7 +33,7 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
   | Inc Arg
   | Inc_check Arg Arg Label
   | Insert_obj Arg Arg
-  | Je Args Label
+  | Je [Arg] Label
   | Jg Arg Arg Label
   | Jin Arg Arg Label
   | Jl Arg Arg Label
@@ -90,11 +86,6 @@ data Operation -- TODO: check naming matches spec (will change trace output / re
 
   deriving Show
 
-newtype Args = Args [Arg] -- TODO: deprecate (changes regression)
-
-instance Show Args where
-  show (Args xs) = printf "(%s)" (intercalate " " (map (printf "(%s)" . show) xs))
-
 data Func = Floc Addr | Fvar Target | BadFunc
   deriving Show
 
@@ -111,26 +102,7 @@ data Dest = Dfalse | Dtrue | Dloc Addr
   deriving Show
 
 data Sense = T | F
-
-instance Show Sense where show = \case T -> "true"; F -> "false"
-
-pretty :: Operation -> String
-pretty i = bracket i (show i)
-
-bracket :: Operation -> String -> String
-bracket i = if needBracket i then printf "(%s)" else id
-  where
-    needBracket = \case -- TODO: deprecate (changes regression)
-      New_line -> False
-      Ret_popped -> False
-      Rfalse -> False
-      Rtrue -> False
-      _ -> True
+  deriving Show
 
 data RoutineHeader = BadRoutineHeader | RoutineHeader [Value]
-
-instance Show RoutineHeader where
-  show = \case
-    BadRoutineHeader -> "(bad routine header: n>15)"
-    RoutineHeader xs ->
-      printf "((var_initializations (%s)))" (intercalate " " (map show xs))
+  deriving Show

@@ -6,7 +6,6 @@ import Control.Monad (when)
 import Numbers (Addr)
 import Operation (Operation)
 import Text.Printf (printf)
-import qualified Operation as Op (pretty)
 
 data Conf = Conf
   { debug :: Bool
@@ -32,12 +31,12 @@ runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
   where
     loop :: Int -> [String] -> [String] -> Action -> IO ()
     loop nInput xs buf = \case
-      TraceInstruction stateString (statsInc,stats) n a instruction next -> do
+      TraceInstruction stateString (statsInc,stats) n a op next -> do
         when mojo $ do
           printf "%d %s\n" n stateString
         when seeTrace $ do
           let sd = if seeStats then show statsInc ++ " " ++ show stats ++ " " else ""
-          printf "%s(Decode %d %s %s)\n" sd n (show a) (Op.pretty instruction)
+          printf "%s%d %s %s\n" sd n (show a) (show op)
         loop nInput xs buf next
       Output text next -> do
         when (not bufferOutput) $ putStr text

@@ -12,7 +12,7 @@ import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
 import Header (Header(..))
 import Numbers (Byte,Addr,Value,addrOfPackedWord)
-import Operation (Operation,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
+import Operation (Operation,Func(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Operation as Op
@@ -27,8 +27,8 @@ fetchOperation :: Fetch Operation
 fetchOperation = fetchOpCodeAndArgs >>= decode
 
 decode :: OpCodeAndArgs -> Fetch Operation
-decode = \case
-  Code 1 ts -> Op.Je <$> args ts <*> label
+decode = \case -- TODO: fill in remaining z3 instructions
+  Code 1 ts -> Op.Je <$> mapM arg ts <*> label
   Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
   Code 3 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
   Code 4 [t1,t2] -> Op.Dec_check <$> arg t1 <*> arg t2 <*> label
@@ -75,7 +75,7 @@ decode = \case
   Code 186 [] -> pure Op.Quit
   Code 187 [] -> pure Op.New_line
   Code 197 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label
-  Code 224 (t1:ts) -> Op.Call <$> func t1 <*> args ts <*> target
+  Code 224 (t1:ts) -> Op.Call <$> func t1 <*> mapM arg ts <*> target
   Code 225 [t1,t2,t3] -> Op.Storew <$> arg t1 <*> arg t2 <*> arg t3
   Code 226 [t1,t2,t3] -> Op.Storeb <$> arg t1 <*> arg t2 <*> arg t3
   Code 228 [t1,t2] -> Op.Sread <$> arg t1 <*> arg t2
@@ -151,9 +151,6 @@ func = \case
   ByteConst -> pure BadFunc
   WordConst -> (Floc . addrOfPackedWord) <$> fetchNextWord
   ByteVariable -> (Fvar . makeTarget) <$> Fetch.NextByte
-
-args :: [RandType] -> Fetch Args
-args ts = Args <$> mapM arg ts
 
 target :: Fetch Target
 target = makeTarget <$> Fetch.NextByte
