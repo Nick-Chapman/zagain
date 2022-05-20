@@ -1178,47 +1178,39 @@ Your collection of treasures consists of:
     A gold coffin
     A painting
 
->[288]inventory
-You are carrying:
-  A large emerald
-  A beautiful jeweled scarab
-  A crystal trident
-  A trunk of jewels
-  A torch (providing light)
-
->[289]put emerald in case
+>[288]put emerald in case
 Done.
 
->[290]put scarab in case
+>[289]put scarab in case
 Done.
 
->[291]put trident in case
+>[290]put trident in case
 Done.
 
->[292]put jewels in case
+>[291]put jewels in case
 Done.
 
->[293]go down
+>[292]go down
 Cellar
 There is a ZORK owner's manual here.
 
->[294]go north
+>[293]go north
 The Troll Room
 There is a bloody axe here.
 
->[295]go west
+>[294]go west
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[296]go south
+>[295]go south
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[297]go east
+>[296]go east
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[298]go up
+>[297]go up
 Maze
 This is part of a maze of twisty little passages, all alike. A skeleton, probably the remains of a luckless adventurer, lies here.
 Beside the skeleton is a rusty knife.
@@ -1226,40 +1218,37 @@ The deceased adventurer's useless lantern is here.
 There is a skeleton key here.
 An old leather bag, bulging with coins, is here.
 
->[299]take coins
+>[298]take coins
 Taken.
 
->[300]take key
+>[299]take key
 Taken.
 
->[301]go southwest
+>[300]go southwest
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[302]go east
+>[301]go east
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[303]go south
+>[302]go south
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[304]go southeast
+>[303]go southeast
 Cyclops Room
 This room has an exit on the northwest, and a staircase leading up.
 A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.
 
->[305]Ulysses
+>[304]Ulysses
 The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down the wall on the east of the room.
 
->[306]go down
-You can't go that way.
-
->[307]go east
+>[305]go east
 Strange Passage
 This is a long passage. To the west is one entrance. On the east there is an old wooden door, with a large opening in it (about cyclops sized).
 
->[308]go east
+>[306]go east
 Living Room
 There is a brass lantern (battery-powered) here.
 There is a sword here.
@@ -1277,19 +1266,19 @@ Your collection of treasures consists of:
     A gold coffin
     A painting
 
->[309]put coins in case
+>[307]put coins in case
 Done.
 
->[310]take sword
+>[308]take sword
 Taken.
 
->[311]go west
+>[309]go west
 Strange Passage
 
->[312]go west
+>[310]go west
 Cyclops Room
 
->[313]go up
+>[311]go up
 You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
 The thief gestures mysteriously, and the treasures in the room suddenly vanish.
 
@@ -1300,42 +1289,42 @@ There is a silver chalice, intricately engraved, here.
 Your sword has begun to glow very brightly.
 A quick thrust pinks your left arm, and blood starts to trickle down.
 
->[314]kill thief with sword
+>[312]kill thief with sword
 Clang! Crash! The thief parries.
 The thief stabs nonchalantly with his stiletto and misses.
 
->[315]kill thief with sword
+>[313]kill thief with sword
 A quick stroke, but the thief is on guard.
 You dodge as the thief comes in low.
 
->[316]kill thief with sword
+>[314]kill thief with sword
 The force of your blow knocks the thief back, stunned.
 The thief slowly regains his feet.
 
->[317]kill thief with sword
+>[315]kill thief with sword
 Slash! Your blow lands! That one hit an artery, it could be serious!
 You parry a lightning thrust, and the thief salutes you with a grim nod.
 
->[318]kill thief with sword
+>[316]kill thief with sword
 The thief is momentarily disoriented and can't fight back.
 The thief slowly regains his feet.
 
->[319]kill thief with sword
+>[317]kill thief with sword
 The thief is struck on the arm; blood begins to trickle down.
 The butt of his stiletto cracks you on the skull, and you stagger back.
 
->[320]kill thief with sword
+>[318]kill thief with sword
 You are still recovering from that last blow, so your attack is ineffective.
 
 
->[321]kill thief with sword
+>[319]kill thief with sword
 The thief is confused and can't fight back.
 The thief slowly regains his feet.
 
->[322]kill thief with sword
+>[320]kill thief with sword
 The thief is battered into unconsciousness.
 
->[323]kill thief with sword
+>[321]kill thief with sword
 The unarmed thief cannot defend himself: He dies.
 Almost as soon as the thief breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 As the thief dies, the power of his magic decreases, and his treasures reappear:
@@ -1344,135 +1333,86 @@ As the thief dies, the power of his magic decreases, and his treasures reappear:
 The chalice is now safe to take.
 Your sword is no longer glowing.
 
->[324]kill thief with sword
-You can't see any thief here!
-
->[325]kill thief with sword
-You can't see any thief here!
-
->[326]kill thief with sword
-You can't see any thief here!
-
->[327]kill thief with sword
-You can't see any thief here!
-
->[328]kill thief with sword
-You can't see any thief here!
-
->[329]kill thief with sword
-You can't see any thief here!
-
->[330]kill thief with sword
-You can't see any thief here!
-
->[331]kill thief with sword
-You can't see any thief here!
-
->[332]kill thief with sword
-You can't see any thief here!
-
->[333]kill thief with sword
-You can't see any thief here!
-
->[334]kill thief with sword
-You can't see any thief here!
-
->[335]i
-You are carrying:
-  A sword
-  A skeleton key
-  A torch (providing light)
-
->[336]take all
+>[322]take all
 stiletto: Taken.
 jewel-encrusted egg: Taken.
 chalice: Your load is too heavy, especially in light of your condition.
 
->[337]i
-You are carrying:
-  A jewel-encrusted egg
-  The jewel-encrusted egg contains:
-    A golden clockwork canary
-  A stiletto
-  A sword
-  A skeleton key
-  A torch (providing light)
-
->[338]drop stiletto
+>[323]drop stiletto
 Dropped.
 
->[339]take chalice
+>[324]take chalice
 Taken.
 
->[340]go down
+>[325]go down
 Cyclops Room
 
->[341]go northwest
+>[326]go northwest
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[342]go south
+>[327]go south
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[343]go west
+>[328]go west
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[344]go up
+>[329]go up
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[345]go down
+>[330]go down
 You won't be able to get back up to the tunnel you are going through when it gets to the next room.
 
 Maze
 This is part of a maze of twisty little passages, all alike.
 
->[346]go northeast
+>[331]go northeast
 Grating Room
 You are in a small room near the maze. There are twisty passages in the immediate vicinity.
 Above you is a grating locked with a skull-and-crossbones lock.
 
->[347]unlock grate
+>[332]unlock grate
 (with the skeleton key)
 The grate is unlocked.
 
->[348]open grate
+>[333]open grate
 The grating opens to reveal trees above you.
 A pile of leaves falls onto your head and to the ground.
 
->[349]go up
+>[334]go up
 Clearing
 You are in a clearing, with a forest surrounding you on all sides. A path leads south.
 There is an open grating, descending into darkness.
 
->[350]go south
+>[335]go south
 Forest Path
 
->[351]climb tree
+>[336]climb tree
 Up a Tree
 Beside you on the branch is a small bird's nest.
 
->[352]wind up canary
+>[337]wind up canary
 The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmering in the grass. As the canary winds down, the songbird flies away.
 You hear in the distance the chirping of a song bird.
 
->[353]go down
+>[338]go down
 Forest Path
 There is a beautiful brass bauble here.
 
->[354]take bauble
+>[339]take bauble
 Taken.
 You hear in the distance the chirping of a song bird.
 
->[355]go south
+>[340]go south
 North of House
 
->[356]go east
+>[341]go east
 Behind House
 
->[357]enter house
+>[342]enter house
 Kitchen
 A bottle is sitting on the table.
 The glass bottle contains:
@@ -1481,7 +1421,7 @@ There is a brown sack here.
 The brown sack contains:
   A lunch
 
->[358]go west
+>[343]go west
 Living Room
 There is a brass lantern (battery-powered) here.
 Your collection of treasures consists of:
@@ -1499,64 +1439,64 @@ Your collection of treasures consists of:
     A gold coffin
     A painting
 
->[359]put bauble in case
+>[344]put bauble in case
 Done.
 
->[360]put chalice in case
+>[345]put chalice in case
 Done.
 
->[361]take canary from egg
+>[346]take canary from egg
 Taken.
 
->[362]put canary in case
+>[347]put canary in case
 Done.
 
->[363]put egg in case
+>[348]put egg in case
 Done.
 
->[364]go down
+>[349]go down
 Cellar
 There is a ZORK owner's manual here.
 
->[365]go north
+>[350]go north
 The Troll Room
 There is a bloody axe here.
 
->[366]go east
+>[351]go east
 East-West Passage
 
->[367]go east
+>[352]go east
 Round Room
 
->[368]go east
+>[353]go east
 Loud Room
 This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.
 On the ground is a large platinum bar.
 
->[369]echo
+>[354]echo
 The acoustics of the room change subtly.
 
 Loud Room
 On the ground is a large platinum bar.
 
->[370]take bar
+>[355]take bar
 Taken.
 
->[371]go west
+>[356]go west
 Round Room
 
->[372]go west
+>[357]go west
 East-West Passage
 
->[373]go west
+>[358]go west
 The Troll Room
 There is a bloody axe here.
 
->[374]go south
+>[359]go south
 Cellar
 There is a ZORK owner's manual here.
 
->[375]go up
+>[360]go up
 Living Room
 There is a brass lantern (battery-powered) here.
 Your collection of treasures consists of:
@@ -1578,20 +1518,20 @@ Your collection of treasures consists of:
     A gold coffin
     A painting
 
->[376]put bar in case
+>[361]put bar in case
 Done.
 
->[377]put torch in case
+>[362]put torch in case
 Done.
 An almost inaudible voice whispers in your ear, "Look to your treasures for the final secret."
 
->[378]take map
+>[363]take map
 Taken.
 
->[379]read map
+>[364]read map
 The map shows a forest with three clearings. The largest clearing contains a house. Three paths leave the large clearing. One of these paths, leading southwest, is marked "To Stone Barrow".
 
->[380]go east
+>[365]go east
 Kitchen
 A bottle is sitting on the table.
 The glass bottle contains:
@@ -1600,27 +1540,27 @@ There is a brown sack here.
 The brown sack contains:
   A lunch
 
->[381]go east
+>[366]go east
 Behind House
 
->[382]go south
+>[367]go south
 South of House
 You are facing the south side of a white house. There is no door here, and all the windows are boarded.
 
->[383]go west
+>[368]go west
 West of House
 You are standing in an open field west of a white house, with a boarded front door. A secret path leads southwest into the forest.
 A small leaflet is on the ground.
 There is a small mailbox here.
 
->[384]go southwest
+>[369]go southwest
 Stone Barrow
 You are standing in front of a massive barrow of stone. In the east face is a huge stone door which is open. You cannot see into the dark of the tomb.
 
->[385]go west
+>[370]go west
 Inside the Barrow
 As you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads:  All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered the first part of the ZORK trilogy. Those who pass over this bridge must be prepared to undertake an even greater adventure that will severely test your skill and bravery!
 
 The ZORK trilogy continues with "ZORK II: The Wizard of Frobozz" and is completed in "ZORK III: The Dungeon Master."
-Your score is 350 (total of 350 points), in 388 moves.
+Your score is 350 (total of 350 points), in 373 moves.
 This gives you the rank of Master Adventurer.

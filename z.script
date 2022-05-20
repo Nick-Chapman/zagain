@@ -285,7 +285,6 @@ go northwest
 go west
 enter house
 go west
-inventory
 put emerald in case
 put scarab in case
 put trident in case
@@ -303,7 +302,6 @@ go east
 go south
 go southeast
 Ulysses
-go down
 go east
 go east
 put coins in case
@@ -321,20 +319,7 @@ kill thief with sword
 kill thief with sword
 kill thief with sword
 kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-kill thief with sword
-i
 take all
-i
 drop stiletto
 take chalice
 go down
@@ -383,5 +368,3 @@ go south
 go west
 go southwest
 go west
-quit
-Y
