@@ -11,6 +11,7 @@ import Story (loadStory)
 import System.Environment (getArgs)
 import qualified Semantics (theEffect)
 import qualified Interpreter (run)
+import qualified Console
 
 main :: IO ()
 main = do
@@ -25,7 +26,7 @@ data Config = Config
   , inputs :: [String]
   }
 
-data Mode = Run | Dis | Dictionary
+data Mode = Run | Dis | Dictionary | Interact
 
 config0 :: Config
 config0 = Config
@@ -47,6 +48,7 @@ parseCommandLine = loop config0
   where
     loop c@Config{iconf,inputs} = \case
       [] -> pure c
+      "console":more -> loop c { mode = Interact } more
       "dis":more -> loop c { mode = Dis } more
       "dict":more -> loop c { mode = Dictionary } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
@@ -77,3 +79,9 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       let a = Interpreter.run seed story Semantics.theEffect
       runAction iconf inputs a
+    Interact -> do
+      let seed = 777
+      story <- loadStory storyFile
+      when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
+      let a = Interpreter.run seed story Semantics.theEffect
+      Console.runAction a --iconf inputs
