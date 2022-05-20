@@ -16,7 +16,7 @@ data Fetch a where
   Bind :: Fetch a -> (a -> Fetch b) -> Fetch b
   NextByte :: Fetch Byte
   Here :: Fetch Addr
-  --GetByte :: Addr -> Fetch Byte -- TODO: reinstate
+  GetByte :: Addr -> Fetch Byte
   WithPC :: Addr -> Fetch a -> Fetch a
   StoryHeader :: Fetch Header
 
@@ -31,7 +31,7 @@ runFetch pc0 story eff = loop s0 eff $ \State{pc,readCount} x -> (x,pc,readCount
       NextByte ->
         k s { pc = here+1, readCount = readCount + 1 } (readStoryByte story here)
       Here -> k s here
-      --GetByte a -> k s (readStoryByte story a)
+      GetByte a -> k s (readStoryByte story a)
       WithPC there e -> loop s { pc = there } e $ \s a -> k s {pc = here} a
       StoryHeader -> k s (Story.header story)
 

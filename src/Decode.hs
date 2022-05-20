@@ -220,14 +220,10 @@ fetchRoutineHeader = do
 
 getWord :: Addr -> Fetch Value
 getWord a = do
-  hi <- getByte a
-  lo <- getByte (a+1)
+  hi <- GetByte a
+  lo <- GetByte (a+1)
   -- TODO: share various instances of lo/hi composition
   pure (256 * fromIntegral hi + fromIntegral lo)
-
-getByte :: Addr -> Fetch Byte
---getByte = GetByte
-getByte a = WithPC a NextByte
 
 ztext :: Fetch String
 ztext = loop [] A0 A0 []
