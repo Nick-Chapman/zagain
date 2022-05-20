@@ -126,6 +126,8 @@ run story e0 = loop (initState pc0) e0 k0
                 Just b -> (True,b)
                 Nothing -> (False,readStoryByte story a)
         let Stats{rt} = stats
+
+        --A.Debug (show ("GetByte",a,"->",b)) $
         k s { stats = stats { rt = rt + 1}} b
 
       SetByte a b -> do
@@ -168,7 +170,7 @@ data State = State
   , overrides :: Map Addr Byte
   , lastStats :: Stats
   , stats :: Stats
-  , seed :: Int
+  , seed :: Word
   }
 
 diffStats :: Stats -> Stats -> Stats
@@ -206,7 +208,7 @@ initState pc = do
         }
 
 -- pulled from wikipedia "Linear congruential generator"
-stepRandom :: Int -> Int
+stepRandom :: Word -> Word
 stepRandom x = (x * a  + c) `mod` m
   where
     a = 1103515245

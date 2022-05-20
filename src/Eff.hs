@@ -35,7 +35,7 @@ data Eff a where
   SetByte :: Addr -> Byte -> Eff ()
   PushStack :: Value -> Eff ()
   PopStack :: Eff Value
-  Random :: Int -> Eff Int
+  Random :: Word -> Eff Word
   Quit :: Eff ()
   StoryHeader :: Eff Header
 

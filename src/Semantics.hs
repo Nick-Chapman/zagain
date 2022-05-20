@@ -161,7 +161,11 @@ eval pc = \case
   Op.Load_word arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
-    w <- getWord (fromIntegral (base + 2*offset))
+    --let a = fromIntegral (base + 2*offset) -- TODO: bug here?
+    let a = (fromIntegral base + 2 * fromIntegral offset)
+    --Debug ("Load_word",base,"+",offset,"=",a,"-->")
+    w <- getWord a
+    --Debug ("Load_word",base,"+",offset,"=",a,"-->",w)
     setTarget target w
 
   Op.Mul arg1 arg2 target -> do evalBin BMul arg1 arg2 target

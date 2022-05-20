@@ -27,8 +27,8 @@ loadBytes path = (map fromIntegral . BS.unpack) <$> BS.readFile path
 
 readStoryByte :: Story -> Addr -> Byte
 readStoryByte Story{size, bytesA} a =  if
-  | i < size -> bytesA ! i
-  | otherwise -> 0xff --error (show ("readStoryByte",a,size)) -- TODO ??
+  | i < size && i >= 0 -> bytesA ! i
+  | otherwise -> error (show ("readStoryByte",a,size)) -- TODO ??
     where i = fromIntegral a
 
 readHeader :: Story -> Header
