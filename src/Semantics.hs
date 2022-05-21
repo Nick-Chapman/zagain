@@ -237,7 +237,12 @@ eval pc = \case
     Objects.setAttr v1 v2
 
   Op.Sread arg1 arg2 -> do
-    rawTyped <- ReadInputFromUser
+    v0 <- evalGlobal 0
+    v1 <- evalGlobal 1
+    v2 <- evalGlobal 2
+    p1 <- Objects.getShortName v0
+    let p2 = printf "score:%s--turns:%s" (show v1) (show v2)
+    rawTyped <- ReadInputFromUser (p1,p2)
     t_buf :: Addr <- fromIntegral <$> evalArg arg1
     p_buf :: Addr <- fromIntegral <$> evalArg arg2
     Header{dictionary=dictBase} <- StoryHeader
@@ -367,9 +372,10 @@ evalTarget :: Target -> Eff Value
 evalTarget = \case
   Sp -> PopStack
   Local n -> GetLocal n
-  Global b -> do
-    a <- globalAddr b
-    getWord a
+  Global b -> evalGlobal b
+
+evalGlobal :: Byte -> Eff Value
+evalGlobal b = globalAddr b >>= getWord
 
 returnValue :: Value -> Eff ()
 returnValue v = do

@@ -33,7 +33,7 @@ replay = loop 1
             Output text next -> do
               when showOld $ (lift $ putStr (col AN.Cyan text))
               inner next
-            Input _ f -> do
+            Input _ _ f -> do
               lift $ printf "[%i] %s\n" n line
               loop (n+1) rest (f line)
       [] ->
@@ -49,17 +49,28 @@ repl = loop []
       TraceInstruction _ _ _ _ _ next -> do loop buf n next
       Debug _ next -> do loop buf n next
       Output text next -> do loop (text:buf) n next
-      Input _count f -> do
+      Input status _count f -> do
         let (text,prompt) = splitFinalPrompt (concat (reverse buf))
         let wrap = if doWrap then lineWrap else \_ -> id
         lift $ putStr (col AN.Cyan (wrap 80 text))
-        let xprompt = (col AN.Green $ printf "[%i]" n) ++ col AN.Cyan prompt
+        lift $ putStrLn (col AN.Magenta (makeStatusLine status))
+        let _numInputs = col AN.Green $ printf "[%i]" n
+        let xprompt = col AN.Cyan (prompt ++ " ")
         HL.getInputLine xprompt >>= \case
           Nothing -> pure () -- Ctr-D
           Just line -> do
             HL.modifyHistory (HL.addHistory line)
             HL.getHistory >>= lift . writeTranscript
             loop [] (n+1) (f line)
+
+makeStatusLine :: (String,String) -> String
+makeStatusLine (xs,ys) = do
+  let max = 80
+  let xs' = take 30 xs
+  let ys' = take 30 ys
+  let i = max - (length xs' + length ys' + 4)
+  let bar = take i (repeat '-')
+  "--" ++ xs' ++ bar ++ ys' ++ "--"
 
 splitFinalPrompt :: String -> (String,String)
 splitFinalPrompt s = do
@@ -72,7 +83,7 @@ lineWrap max text =
   where
     lineWrapOneLine = \case
       [] -> []
-      w1:ws -> loop [w1] 0 ws
+      w1:ws -> loop [w1] (length w1) ws
 
     loop :: [String] -> Int-> [String] -> String
     loop acc pos = \case

@@ -35,9 +35,9 @@ run seed story e0 = loop (initState seed pc0) e0 k0
       GamePrint mes -> A.Output mes (k s ())
       Debug a -> A.Debug (show a) (k s ())
 
-      ReadInputFromUser -> do
+      ReadInputFromUser (p1,p2) -> do
         let State{count,lastCount} = s
-        A.Input (count-lastCount) $ \response -> k s { lastCount = count } response
+        A.Input (p1,p2) (count-lastCount) $ \response -> k s { lastCount = count } response
 
       GetText a -> do
         let State{stats} = s

@@ -17,7 +17,7 @@ data Eff a where
   Bind :: Eff a -> (a -> Eff b) -> Eff b
   Debug :: Show a => a -> Eff ()
   GamePrint :: String -> Eff ()
-  ReadInputFromUser :: Eff String
+  ReadInputFromUser :: (String,String) -> Eff String
   GetText :: Addr -> Eff String
   FetchI :: Eff Operation
   FetchRoutineHeader :: Eff RoutineHeader

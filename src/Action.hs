@@ -21,7 +21,7 @@ data Action
   = TraceInstruction String (Stats,Stats) Int Addr Operation Action
   | Output String Action
   | Debug String Action
-  | Input Int (String -> Action)
+  | Input (String,String) Int (String -> Action)
   | Stop Int
 
 --[run interaction as IO]---------------------------------------------
@@ -44,7 +44,7 @@ runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
       Debug s next -> do
         when (debug) $ putStrLn ("Debug: " ++ s)
         loop nInput xs buf next
-      Input count f -> do
+      Input _ count f -> do -- TODO: show the status line?
         flushBuffer count buf
         case xs of
           [] -> do
