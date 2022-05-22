@@ -20,19 +20,19 @@ data Fetch a where
   WithPC :: Addr -> Fetch a -> Fetch a
   StoryHeader :: Fetch Header
 
-runFetch :: Addr -> Story -> Fetch a -> (a, Addr, Int)
-runFetch pc0 story eff = loop s0 eff $ \State{pc,readCount} x -> (x,pc,readCount)
+runFetch :: Addr -> Story -> Fetch a -> (a, Addr)
+runFetch pc0 story eff = loop s0 eff $ \State{pc} x -> (x,pc)
   where
-    s0 = State { pc = pc0, readCount = 0 }
+    s0 = State { pc = pc0 }
     loop :: State -> Fetch a -> (State -> a -> r) -> r
-    loop s@State{pc=here,readCount} eff0 k = case eff0 of
+    loop s@State{pc=here} eff0 k = case eff0 of
       Ret a -> k s a
       Bind e f -> loop s e $ \s a -> loop s (f a) k
       NextByte ->
-        k s { pc = here+1, readCount = readCount + 1 } (readStoryByte story here)
+        k s { pc = here+1 } (readStoryByte story here)
       Here -> k s here
       GetByte a -> k s (readStoryByte story a)
       WithPC there e -> loop s { pc = there } e $ \s a -> k s {pc = here} a
       StoryHeader -> k s (Story.header story)
 
-data State = State { pc :: Addr, readCount :: Int }
+data State = State { pc :: Addr }

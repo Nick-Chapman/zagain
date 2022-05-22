@@ -89,13 +89,13 @@ collectRoutines as story = loop Set.empty [] as
 
 collectRoutine :: Bool -> Addr -> Story -> Routine
 collectRoutine strict start story = do
-  let (header,a0,_) = runFetch start story fetchRoutineHeader
+  let (header,a0) = runFetch start story fetchRoutineHeader
   let (body,finish) = loop Set.empty [] a0
   Routine { start, header, body, finish }
   where
     loop :: Set Addr -> [(Addr,Operation)] -> Addr -> ([(Addr,Operation)], Addr)
     loop bps acc a = do
-      let (i,a',_) = runFetch a story fetchOperation
+      let (i,a') = runFetch a story fetchOperation
       when strict $
         case i of
           Op.BadOperation m -> error ("collect: " ++ m)

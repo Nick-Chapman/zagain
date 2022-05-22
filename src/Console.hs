@@ -28,7 +28,7 @@ replay = loop 1
         where
           inner = \case
             Stop{} -> do pure ()
-            TraceInstruction _ _ _ _ _ next -> do inner next
+            TraceInstruction _ _ _ _ next -> do inner next
             Debug _ next -> do inner next
             Output text next -> do
               when showOld $ (lift $ putStr (col AN.Cyan text))
@@ -46,7 +46,7 @@ repl = loop []
     loop :: [String] -> Int -> Action -> HL.InputT IO ()
     loop buf n = \case
       Stop{} -> do pure ()
-      TraceInstruction _ _ _ _ _ next -> do loop buf n next
+      TraceInstruction _ _ _ _ next -> do loop buf n next
       Debug _ next -> do loop buf n next
       Output text next -> do loop (text:buf) n next
       Input status _count f -> do

@@ -2,7 +2,7 @@
 -- | Interpreter for z-machine effects.
 module Interpreter (State,run) where
 
-import Action (Action,Stats(..))
+import Action (Action)
 import Data.Bits ((.&.),shiftL)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
@@ -26,7 +26,7 @@ run seed story e0 = loop (initState seed pc0) e0 k0
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
-    (dict,_,_) = runFetch 0 story fetchDict
+    (dict,_) = runFetch 0 story fetchDict
 
     loop :: State -> Eff a -> (State -> a -> Action) -> Action
     loop s e k = case e of
@@ -40,31 +40,21 @@ run seed story e0 = loop (initState seed pc0) e0 k0
         A.Input (p1,p2) (count-lastCount) $ \response -> k s { lastCount = count } response
 
       GetText a -> do
-        let State{stats} = s
-        let (text,_,readCount) = runFetch a story ztext
-        let Stats{ct} = stats
-        let s' = s { stats = stats { ct = ct + readCount }}
-        k s' text
+        let (text,_) = runFetch a story ztext
+        k s text
 
       FetchI -> do -- TODO: share code common to all Fetch* ops
-        let State{pc,count,stats=stats0,lastStats} = s
-        let (ins,pc',readCount) = runFetch pc story fetchOperation
-        let Stats{ct} = stats0
-        let stats = stats0 { ct = ct + readCount }
+        let State{pc,count} = s
+        let (ins,pc') = runFetch pc story fetchOperation
         let s' = s { pc = pc'
                    , count = count + 1
-                   , stats
-                   , lastStats = stats
                    }
-        let statsInc = diffStats stats lastStats
-        A.TraceInstruction (show s) (statsInc,stats) count pc ins (k s' ins)
+        A.TraceInstruction (show s) count pc ins (k s' ins)
 
       FetchRoutineHeader -> do -- TODO: share code common to all Fetch* ops
-        let State{pc,stats} = s
-        let (rh,pc',readCount) = runFetch pc story fetchRoutineHeader
-        let Stats{ct} = stats
-        let s' = s { pc = pc', stats = stats { ct = ct + readCount} }
-        k s' rh
+        let State{pc} = s
+        let (rh,pc') = runFetch pc story fetchRoutineHeader
+        k s { pc = pc' } rh
 
       FetchDict -> do
         k s dict
@@ -120,15 +110,13 @@ run seed story e0 = loop (initState seed pc0) e0 k0
         k s res
 
       GetByte a -> do
-        let State{overrides,stats} = s
+        let State{overrides} = s
         let (_over,b) =
               case Map.lookup a overrides of
                 Just b -> (True,b)
                 Nothing -> (False,readStoryByte story a)
-        let Stats{rt} = stats
-
         --A.Debug (show ("GetByte",a,"->",b)) $
-        k s { stats = stats { rt = rt + 1}} b
+        k s b
 
       SetByte a b -> do
         let State{overrides} = s
@@ -168,14 +156,8 @@ data State = State
   , locals :: Map Byte Value
   , frames :: [Frame]
   , overrides :: Map Addr Byte
-  , lastStats :: Stats
-  , stats :: Stats
   , seed :: Word
   }
-
-diffStats :: Stats -> Stats -> Stats
-diffStats Stats{ct=ct1,rt=rt1} Stats{ct=ct2,rt=rt2} =
-  Stats { ct = ct1-ct2, rt = rt1-rt2 }
 
 instance Show State where
   show State{pc,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pc) num x depth y
@@ -202,8 +184,6 @@ initState seed pc = do
         , locals = Map.empty
         , frames = []
         , overrides = Map.empty
-        , lastStats = Stats { ct = 0, rt = 0 }
-        , stats = Stats { ct = 0, rt = 0 }
         , seed
         }
 

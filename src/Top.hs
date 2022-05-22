@@ -38,7 +38,6 @@ config0 = Config
   iconf0 = Action.Conf
     { debug = True
     , seeTrace = False
-    , seeStats = False
     , mojo = False
     , bufferOutput = True
   }
@@ -53,7 +52,6 @@ parseCommandLine = loop config0
       "dict":more -> loop c { mode = Dictionary } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
-      "-stats":more -> loop c { iconf = iconf { seeStats = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
       "-type":line:more -> loop c { inputs = inputs ++ [line] } more
@@ -71,7 +69,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       disassemble story
     Dictionary -> do
       story <- loadStory storyFile
-      let (dict,_,_) = runFetch 0 story fetchDict
+      let (dict,_) = runFetch 0 story fetchDict
       print dict
     Run -> do
       let seed = 777

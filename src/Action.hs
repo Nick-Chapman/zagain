@@ -1,6 +1,6 @@
 
 -- | The (inter)action of z-machine execution with input/output.
-module Action (Conf(..),Action(..),Stats(..),runAction) where
+module Action (Conf(..),Action(..),runAction) where
 
 import Control.Monad (when)
 import Numbers (Addr)
@@ -10,7 +10,6 @@ import Text.Printf (printf)
 data Conf = Conf
   { debug :: Bool
   , seeTrace :: Bool
-  , seeStats :: Bool
   , mojo :: Bool
   , bufferOutput :: Bool
   }
@@ -18,7 +17,7 @@ data Conf = Conf
 --[interaction type]--------------------------------------------------
 
 data Action
-  = TraceInstruction String (Stats,Stats) Int Addr Operation Action
+  = TraceInstruction String Int Addr Operation Action
   | Output String Action
   | Debug String Action
   | Input (String,String) Int (String -> Action)
@@ -27,16 +26,15 @@ data Action
 --[run interaction as IO]---------------------------------------------
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
+runAction Conf{seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
   where
     loop :: Int -> [String] -> [String] -> Action -> IO ()
     loop nInput xs buf = \case
-      TraceInstruction stateString (statsInc,stats) n a op next -> do
+      TraceInstruction stateString n a op next -> do
         when mojo $ do
           printf "%d %s\n" n stateString
         when seeTrace $ do
-          let sd = if seeStats then show statsInc ++ " " ++ show stats ++ " " else ""
-          printf "%s%d %s %s\n" sd n (show a) (show op)
+          printf "%d %s %s\n" n (show a) (show op)
         loop nInput xs buf next
       Output text next -> do
         when (not bufferOutput) $ putStr text
@@ -62,14 +60,3 @@ runAction Conf{seeStats,seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
       when seeTrace $ do
         printf "\n[executed: %d instructions]\n" count
       mapM_ putStr (reverse buf)
-
-
---[static/dynamic GetByte stats]-------------------------------------
-
-data Stats = Stats
-  { ct :: Int -- story byte fetches (which dont depend on the state)
-  , rt :: Int -- run-time story/override byte fetches
-  }
-
-instance Show Stats where
-  show Stats{ct,rt} = printf "[%d/%d]" ct rt
