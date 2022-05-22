@@ -18,7 +18,7 @@ mojo.walk: ~/code/other/mojozork/mojozork.exe z.script
 
 # regression...
 
-reg: .gen gen/zork.dis gen/zork.trace gen/zork.walk
+reg: .gen gen/zork.dis gen/zork.trace gen/zork.walk gen/h.walk
 	git diff gen
 
 gen/zork.dis: $(exe) src/*.hs
@@ -28,9 +28,11 @@ gen/zork.dis: $(exe) src/*.hs
 gen/zork.trace: $(exe) z.script src/*.hs
 	bash -c '$(exe) -nodebug -trace -walk <(head -2 z.script) > $@'
 
-# run the zork walk-though as far as we can before crashing
 gen/zork.walk: $(exe) z.script src/*.hs
 	bash -c '$(exe) -nodebug -walk z.script > $@'
+
+gen/h.walk: $(exe) h.script src/*.hs
+	bash -c '$(exe) story/hitchhiker-r59-s851108.z3 -nodebug -walk h.script > $@'
 
 
 .gen:
