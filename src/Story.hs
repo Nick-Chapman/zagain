@@ -54,9 +54,10 @@ readHeader story = Header
 
 versionOfByte :: Byte -> Zversion
 versionOfByte = \case
-  1 -> Z1
-  2 -> Z2
+  1 -> undefined Z1
+  2 -> undefined Z2
   3 -> Z3
-  4 -> Z4
-  5 -> Z5
+  4 -> undefined Z4
+  5 -> undefined Z5
+  6 -> undefined Z6
   n -> error (printf "unsupported z-machine version: %s" (show n))

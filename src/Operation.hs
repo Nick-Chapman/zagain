@@ -13,15 +13,15 @@ module Operation
 
 import Numbers (Byte,Addr,Value)
 
-data Operation -- TODO: check naming matches spec
+data Operation
   = BadOperation String
 
   | Add Arg Arg Target
-  | And_ Arg Arg Target
+  | And Arg Arg Target
   | Call Func [Arg] Target
   | Clear_attr Arg Arg
   | Dec Arg
-  | Dec_check Arg Arg Label
+  | Dec_chk Arg Arg Label
   | Div Arg Arg Target
   | Get_child Arg Target Label
   | Get_next_prop Arg Arg Target
@@ -31,7 +31,8 @@ data Operation -- TODO: check naming matches spec
   | Get_prop_len Arg Target
   | Get_sibling Arg Target Label
   | Inc Arg
-  | Inc_check Arg Arg Label
+  | Inc_chk Arg Arg Label
+  | Input_stream Arg
   | Insert_obj Arg Arg
   | Je [Arg] Label
   | Jg Arg Arg Label
@@ -40,11 +41,15 @@ data Operation -- TODO: check naming matches spec
   | Jump Addr
   | Jz Arg Label
   | Load Arg Target
-  | Load_byte Arg Arg Target
-  | Load_word Arg Arg Target
+  | Loadb Arg Arg Target
+  | Loadw Arg Arg Target
   | Mod Arg Arg Target
   | Mul Arg Arg Target
   | New_line
+  | Nop
+  | Or Arg Arg Target
+  | Output_stream Arg
+  | Pop
   | Print String
   | Print_addr Arg
   | Print_char Arg
@@ -58,13 +63,17 @@ data Operation -- TODO: check naming matches spec
   | Quit
   | Random Arg Target
   | Remove_obj Arg
-  | Restore_lab Label
+  | Restart
+  | Restore Label
   | Ret_popped
-  | Return Arg
+  | Ret Arg
   | Rfalse
   | Rtrue
-  | Save_lab Label
+  | Save Label
   | Set_attr Arg Arg
+  | Set_window Arg
+  | Show_status
+  | Split_window Arg
   | Sread Arg Arg
   | Store Arg Arg
   | Storeb Arg Arg Arg
@@ -72,17 +81,7 @@ data Operation -- TODO: check naming matches spec
   | Sub Arg Arg Target
   | Test Arg Arg Label
   | Test_attr Arg Arg Label
-
-  -- This instructions are not yet decoded
-  -- | Aread Arg Arg Target
-  -- | CallN Func Args
-  -- | Input_Stream Arg
-  -- | Or_ Arg Arg Target
-  -- | Output_Stream Arg (Maybe Arg)
-  -- | Restart
-  -- | Verify Label
-  -- | Show_status
-  -- | Restart
+  | Verify Label
 
   deriving Show
 

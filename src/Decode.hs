@@ -10,7 +10,7 @@ module Decode
 import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
-import Header (Header(..))
+import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value,addrOfPackedWord)
 import Operation (Operation,Func(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
@@ -27,22 +27,30 @@ fetchOperation :: Fetch Operation
 fetchOperation = fetchOpCodeAndArgs >>= decode
 
 decode :: OpCodeAndArgs -> Fetch Operation
-decode = \case -- TODO: fill in remaining z3 instructions
+decode x = do
+ let
+    wrong :: [Zversion] -> Fetch Operation
+    wrong versions =
+      pure $ Op.BadOperation $ printf
+      "op-code and args: %s for unsupported version: %s"  (show x) (show versions)
+ case x of
+
   Code 1 ts -> Op.Je <$> mapM arg ts <*> label
   Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
   Code 3 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
-  Code 4 [t1,t2] -> Op.Dec_check <$> arg t1 <*> arg t2 <*> label
-  Code 5 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label
+  Code 4 [t1,t2] -> Op.Dec_chk <$> arg t1 <*> arg t2 <*> label
+  Code 5 [t1,t2] -> Op.Inc_chk <$> arg t1 <*> arg t2 <*> label
   Code 6 [t1,t2] -> Op.Jin <$> arg t1 <*> arg t2 <*> label
   Code 7 [t1,t2] -> Op.Test <$> arg t1 <*> arg t2 <*> label
-  Code 9 [t1,t2] -> Op.And_ <$> arg t1 <*> arg t2 <*> target
+  Code 8 [t1,t2] -> Op.Or <$> arg t1 <*> arg t2 <*> target
+  Code 9 [t1,t2] -> Op.And <$> arg t1 <*> arg t2 <*> target
   Code 10 [t1,t2] -> Op.Test_attr <$> arg t1 <*> arg t2 <*> label
   Code 11 [t1,t2] -> Op.Set_attr <$> arg t1 <*> arg t2
   Code 12 [t1,t2] -> Op.Clear_attr <$> arg t1 <*> arg t2
   Code 13 [t1,t2] -> Op.Store <$> arg t1 <*> arg t2
   Code 14 [t1,t2] -> Op.Insert_obj <$> arg t1 <*> arg t2
-  Code 15 [t1,t2] -> Op.Load_word <$> arg t1 <*> arg t2 <*> target
-  Code 16 [t1,t2] -> Op.Load_byte <$> arg t1 <*> arg t2 <*> target
+  Code 15 [t1,t2] -> Op.Loadw <$> arg t1 <*> arg t2 <*> target
+  Code 16 [t1,t2] -> Op.Loadb <$> arg t1 <*> arg t2 <*> target
   Code 17 [t1,t2] -> Op.Get_prop <$> arg t1 <*> arg t2 <*> target
   Code 18 [t1,t2] -> Op.Get_prop_addr <$> arg t1 <*> arg t2 <*> target
   Code 19 [t1,t2] -> Op.Get_next_prop <$> arg t1 <*> arg t2 <*> target
@@ -51,6 +59,16 @@ decode = \case -- TODO: fill in remaining z3 instructions
   Code 22 [t1,t2] -> Op.Mul <$> arg t1 <*> arg t2 <*> target
   Code 23 [t1,t2] -> Op.Div <$> arg t1 <*> arg t2 <*> target
   Code 24 [t1,t2] -> Op.Mod <$> arg t1 <*> arg t2 <*> target
+  Code 25 _ -> wrong [Z4]
+  Code 26 _ -> wrong [Z5]
+  Code 27 _ -> wrong [Z5,Z6]
+  Code 28 _ -> wrong [Z5,Z6]
+  Code 29 _ -> wrong []
+  Code 30 _ -> wrong []
+  Code 31 _ -> wrong []
+
+  Code n ts | 32<=n && n<=127 -> decode (Code (n .&. 0x1f) ts)
+
   Code 128 [t] -> Op.Jz <$> arg t <*> label
   Code 129 [t] -> Op.Get_sibling <$> arg t <*> target <*> label
   Code 130 [t] -> Op.Get_child <$> arg t <*> target <*> label
@@ -59,40 +77,52 @@ decode = \case -- TODO: fill in remaining z3 instructions
   Code 133 [t] -> Op.Inc <$> arg t
   Code 134 [t] -> Op.Dec <$> arg t
   Code 135 [t] -> Op.Print_addr <$> arg t
+  Code 136 _ -> wrong [Z4]
   Code 137 [t] -> Op.Remove_obj <$> arg t
   Code 138 [t] -> Op.Print_obj <$> arg t
-  Code 139 [t] -> Op.Return <$> arg t
+  Code 139 [t] -> Op.Ret <$> arg t
   Code 140 [WordConst] -> Op.Jump <$> jumpLocation
   Code 141 [t] -> Op.Print_paddr <$> arg t
   Code 142 [t] -> Op.Load <$> arg t <*> target
+  Code 143 _ -> wrong [Z1,Z4,Z5]
+
+  Code n ts | 144<=n && n<=175 -> decode (Code (n .&. 0x8f) ts)
+
   Code 176 [] -> pure Op.Rtrue
   Code 177 [] -> pure Op.Rfalse
   Code 178 [] -> Op.Print <$> ztext
   Code 179 [] -> Op.Print_ret <$> ztext
-  Code 181 [] -> Op.Save_lab <$> label
-  Code 182 [] -> Op.Restore_lab <$> label
+  Code 180 [] -> pure Op.Nop
+  Code 181 [] -> Op.Save <$> label -- changes in Z4/Z5
+  Code 182 [] -> Op.Restore <$> label -- changes in Z4/Z5
+  Code 183 [] -> pure Op.Restart
   Code 184 [] -> pure Op.Ret_popped
+  Code 185 [] -> pure Op.Pop -- changes in Z5/Z6
   Code 186 [] -> pure Op.Quit
   Code 187 [] -> pure Op.New_line
-  Code 197 [t1,t2] -> Op.Inc_check <$> arg t1 <*> arg t2 <*> label
-  Code 224 (t1:ts) -> Op.Call <$> func t1 <*> mapM arg ts <*> target
+  Code 188 [] -> pure Op.Show_status -- illegal from Z4
+  Code 189 [] -> Op.Verify <$> label
+  Code 190 _ -> wrong [Z5] -- code for extended opcodes
+  Code 191 _ -> wrong [Z5]
+
+  Code n ts | 192<=n && n<=223 -> decode (Code (n .&. 0x1f) ts)
+
+  Code 224 (t1:ts) -> Op.Call <$> func t1 <*> mapM arg ts <*> target -- changes in Z4
   Code 225 [t1,t2,t3] -> Op.Storew <$> arg t1 <*> arg t2 <*> arg t3
   Code 226 [t1,t2,t3] -> Op.Storeb <$> arg t1 <*> arg t2 <*> arg t3
-  Code 228 [t1,t2] -> Op.Sread <$> arg t1 <*> arg t2
   Code 227 [t1,t2,t3] -> Op.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
+  Code 228 [t1,t2] -> Op.Sread <$> arg t1 <*> arg t2 -- changes in Z4/Z5
   Code 229 [t] -> Op.Print_char <$> arg t
   Code 230 [t] -> Op.Print_num <$> arg t
   Code 231 [t] -> Op.Random <$> arg t <*> target
   Code 232 [t] -> Op.Push <$> arg t
-  Code 233 [t] -> Op.Pull <$> arg t
+  Code 233 [t] -> Op.Pull <$> arg t -- changes in Z6
+  Code 234 [t] -> Op.Split_window <$> arg t
+  Code 235 [t] -> Op.Set_window <$> arg t
+  Code 243 [t] -> Op.Output_stream <$> arg t
+  Code 243 [t] -> Op.Input_stream <$> arg t
+  _ -> wrong []
 
-  Code n ts | 32<=n && n<=127 -> decode (Code (n .&. 0x1f) ts)
-  Code n ts | 144<=n && n<=175 -> decode (Code (n .&. 0x8f) ts)
-  Code n ts | 192<=n && n<=223 -> decode (Code (n .&. 0x1f) ts)
-
-  x ->
-    pure $ Op.BadOperation (printf "unknown op-code and args: %s" (show x))
-    --error (printf "unknown op-code and args: %s" (show x))
 
 data Form = LongForm | ShortForm | VarForm
 

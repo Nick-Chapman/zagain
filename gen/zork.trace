@@ -8,16 +8,16 @@
 6 [054a1] Jz (Var (Local 0x02)) (Branch T (Dloc [054a8]))
 7 [054a8] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x05)
 8 [054ac] Storew (Var (Local 0x05)) (Con 2) (Var (Local 0x01))
-9 [054b1] Return (Var (Local 0x05))
+9 [054b1] Ret (Var (Local 0x05))
 10 [0547f] Storew (Var (Local 0x03)) (Con 1) (Var (Local 0x02))
-11 [05484] Return (Var (Local 0x03))
+11 [05484] Ret (Var (Local 0x03))
 12 [04f0e] Storew (Var Sp) (Con 0) (Con 1)
 13 [04f13] Call (Floc [05472]) [Con -32644,Con -1] Sp
 14 [05479] Call (Floc [05486]) [Var (Local 0x01)] (Local 0x03)
 15 [05491] Add (Var (Global 0x84)) (Con 180) (Local 0x03)
 16 [05495] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x04)
 17 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-18 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+18 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 19 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 20 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 21 [054c1] Jump [05499]
@@ -26,20 +26,20 @@
 24 [054a1] Jz (Var (Local 0x02)) (Branch T (Dloc [054a8]))
 25 [054a8] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x05)
 26 [054ac] Storew (Var (Local 0x05)) (Con 2) (Var (Local 0x01))
-27 [054b1] Return (Var (Local 0x05))
+27 [054b1] Ret (Var (Local 0x05))
 28 [0547f] Storew (Var (Local 0x03)) (Con 1) (Var (Local 0x02))
-29 [05484] Return (Var (Local 0x03))
+29 [05484] Ret (Var (Local 0x03))
 30 [04f1c] Call (Floc [05472]) [Con -32528,Con -1] Sp
 31 [05479] Call (Floc [05486]) [Var (Local 0x01)] (Local 0x03)
 32 [05491] Add (Var (Global 0x84)) (Con 180) (Local 0x03)
 33 [05495] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x04)
 34 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-35 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+35 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 36 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 37 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 38 [054c1] Jump [05499]
 39 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-40 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+40 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 41 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 42 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 43 [054c1] Jump [05499]
@@ -48,26 +48,26 @@
 46 [054a1] Jz (Var (Local 0x02)) (Branch T (Dloc [054a8]))
 47 [054a8] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x05)
 48 [054ac] Storew (Var (Local 0x05)) (Con 2) (Var (Local 0x01))
-49 [054b1] Return (Var (Local 0x05))
+49 [054b1] Ret (Var (Local 0x05))
 50 [0547f] Storew (Var (Local 0x03)) (Con 1) (Var (Local 0x02))
-51 [05484] Return (Var (Local 0x03))
+51 [05484] Ret (Var (Local 0x03))
 52 [04f25] Storew (Var Sp) (Con 0) (Con 1)
 53 [04f2a] Call (Floc [05472]) [Con 28522,Con 40] Sp
 54 [05479] Call (Floc [05486]) [Var (Local 0x01)] (Local 0x03)
 55 [05491] Add (Var (Global 0x84)) (Con 180) (Local 0x03)
 56 [05495] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x04)
 57 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-58 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+58 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 59 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 60 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 61 [054c1] Jump [05499]
 62 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-63 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+63 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 64 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 65 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 66 [054c1] Jump [05499]
 67 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-68 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+68 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 69 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 70 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 71 [054c1] Jump [05499]
@@ -76,30 +76,30 @@
 74 [054a1] Jz (Var (Local 0x02)) (Branch T (Dloc [054a8]))
 75 [054a8] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x05)
 76 [054ac] Storew (Var (Local 0x05)) (Con 2) (Var (Local 0x01))
-77 [054b1] Return (Var (Local 0x05))
+77 [054b1] Ret (Var (Local 0x05))
 78 [0547f] Storew (Var (Local 0x03)) (Con 1) (Var (Local 0x02))
-79 [05484] Return (Var (Local 0x03))
+79 [05484] Ret (Var (Local 0x03))
 80 [04f32] Call (Floc [05472]) [Con 28501,Con 200] Sp
 81 [05479] Call (Floc [05486]) [Var (Local 0x01)] (Local 0x03)
 82 [05491] Add (Var (Global 0x84)) (Con 180) (Local 0x03)
 83 [05495] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x04)
 84 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-85 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+85 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 86 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 87 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 88 [054c1] Jump [05499]
 89 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-90 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+90 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 91 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 92 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 93 [054c1] Jump [05499]
 94 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-95 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+95 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 96 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 97 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 98 [054c1] Jump [05499]
 99 [05499] Je [Var (Local 0x04),Var (Local 0x03)] (Branch F (Dloc [054b3]))
-100 [054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+100 [054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 101 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
 102 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 103 [054c1] Jump [05499]
@@ -108,9 +108,9 @@
 106 [054a1] Jz (Var (Local 0x02)) (Branch T (Dloc [054a8]))
 107 [054a8] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x05)
 108 [054ac] Storew (Var (Local 0x05)) (Con 2) (Var (Local 0x01))
-109 [054b1] Return (Var (Local 0x05))
+109 [054b1] Ret (Var (Local 0x05))
 110 [0547f] Storew (Var (Local 0x03)) (Con 1) (Var (Local 0x02))
-111 [05484] Return (Var (Local 0x03))
+111 [05484] Ret (Var (Local 0x03))
 112 [04f3a] Put_prop (Con 156) (Con 6) (Con 4)
 113 [04f3f] Add (Var (Global 0x10)) (Con 2) Sp
 114 [04f43] Storew (Var (Global 0x0a)) (Con 1) (Var Sp)
@@ -128,45 +128,45 @@
 126 [04f78] Call (Floc [09530]) [Con 160] Sp
 127 [09533] Store (Con 123) (Var (Local 0x01))
 128 [09536] Store (Con 122) (Var (Global 0x00))
-129 [09539] Return (Var (Global 0x6a))
+129 [09539] Ret (Var (Global 0x6a))
 130 [04f7e] Test_attr (Var (Global 0x00)) (Con 3) (Branch T (Dloc [04f88]))
 131 [04f82] Call (Floc [06ee0]) [] Sp
 132 [06ee3] Print "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. "
 133 [06f28] Print "All rights reserved."
 134 [06f39] New_line
-135 [06f3a] Load_byte (Con 0) (Con 1) Sp
-136 [06f3e] And_ (Var Sp) (Con 8) Sp
+135 [06f3a] Loadb (Con 0) (Con 1) Sp
+136 [06f3e] And (Var Sp) (Con 8) Sp
 137 [06f42] Jz (Var Sp) (Branch T (Dloc [06f5d]))
 138 [06f5d] Print "ZORK is a registered trademark of Infocom, Inc.\nRevision "
-139 [06f88] Load_word (Con 0) (Con 1) Sp
-140 [06f8c] And_ (Var Sp) (Con 2047) Sp
+139 [06f88] Loadw (Con 0) (Con 1) Sp
+140 [06f8c] And (Var Sp) (Con 2047) Sp
 141 [06f92] Print_num (Var Sp)
 142 [06f95] Print " / Serial number "
-143 [06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
-144 [06fab] Load_byte (Con 0) (Var (Local 0x01)) Sp
+143 [06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+144 [06fab] Loadb (Con 0) (Var (Local 0x01)) Sp
 145 [06faf] Print_char (Var Sp)
 146 [06fb2] Jump [06fa4]
-147 [06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
-148 [06fab] Load_byte (Con 0) (Var (Local 0x01)) Sp
+147 [06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+148 [06fab] Loadb (Con 0) (Var (Local 0x01)) Sp
 149 [06faf] Print_char (Var Sp)
 150 [06fb2] Jump [06fa4]
-151 [06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
-152 [06fab] Load_byte (Con 0) (Var (Local 0x01)) Sp
+151 [06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+152 [06fab] Loadb (Con 0) (Var (Local 0x01)) Sp
 153 [06faf] Print_char (Var Sp)
 154 [06fb2] Jump [06fa4]
-155 [06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
-156 [06fab] Load_byte (Con 0) (Var (Local 0x01)) Sp
+155 [06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+156 [06fab] Loadb (Con 0) (Var (Local 0x01)) Sp
 157 [06faf] Print_char (Var Sp)
 158 [06fb2] Jump [06fa4]
-159 [06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
-160 [06fab] Load_byte (Con 0) (Var (Local 0x01)) Sp
+159 [06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+160 [06fab] Loadb (Con 0) (Var (Local 0x01)) Sp
 161 [06faf] Print_char (Var Sp)
 162 [06fb2] Jump [06fa4]
-163 [06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
-164 [06fab] Load_byte (Con 0) (Var (Local 0x01)) Sp
+163 [06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+164 [06fab] Loadb (Con 0) (Var (Local 0x01)) Sp
 165 [06faf] Print_char (Var Sp)
 166 [06fb2] Jump [06fa4]
-167 [06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+167 [06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
 168 [06fa8] Jump [06fb5]
 169 [06fb5] New_line
 170 [06fb6] Rtrue
@@ -325,37 +325,37 @@
 323 [05542] Store (Con 5) (Con 0)
 324 [05545] Store (Con 8) (Con 1)
 325 [05548] Call (Floc [05880]) [] (Global 0x7f)
-326 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+326 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 327 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 328 [058a3] Jump [05897]
-329 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+329 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 330 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 331 [058a3] Jump [05897]
-332 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+332 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 333 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 334 [058a3] Jump [05897]
-335 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+335 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 336 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 337 [058a3] Jump [05897]
-338 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+338 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 339 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 340 [058a3] Jump [05897]
-341 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+341 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 342 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 343 [058a3] Jump [05897]
-344 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+344 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 345 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 346 [058a3] Jump [05897]
-347 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+347 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 348 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 349 [058a3] Jump [05897]
-350 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+350 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 351 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 352 [058a3] Jump [05897]
-353 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+353 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 354 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 355 [058a3] Jump [05897]
-356 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+356 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 357 [0589b] Jump [058a6]
 358 [058a6] Store (Con 104) (Con 0)
 359 [058a9] Store (Con 120) (Con 0)
@@ -381,7 +381,7 @@
 379 [06c85] Jump [06cc4]
 380 [06cc4] Store (Con 16) (Var (Local 0x03))
 381 [06cc7] Store (Con 107) (Con 0)
-382 [06cca] Return (Var (Local 0x04))
+382 [06cca] Ret (Var (Local 0x04))
 383 [05903] Jz (Var (Global 0x46)) (Branch F (Dloc [05907]))
 384 [05906] New_line
 385 [05907] Print ">"
@@ -398,30 +398,30 @@ You are standing in an open field west of a white house, with a boarded front do
 There is a small mailbox here.
 
 >[1]open mailbox
-387 [05910] Load_byte (Var (Global 0x6e)) (Con 1) (Global 0x71)
+387 [05910] Loadb (Var (Global 0x6e)) (Con 1) (Global 0x71)
 388 [05914] Jz (Var (Global 0x71)) (Branch F (Dloc [05926]))
 389 [05926] Store (Con 5) (Var (Global 0x71))
 390 [05929] Store (Con 128) (Con 0)
 391 [0592c] Store (Con 113) (Con 0)
 392 [0592f] Store (Con 96) (Con 0)
-393 [05932] Dec_check (Con 129) (Con 0) (Branch F (Dloc [0593c]))
-394 [0593c] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
+393 [05932] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [0593c]))
+394 [0593c] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
 395 [05940] Jz (Var (Local 0x02)) (Branch F (Dloc [0594d]))
 396 [0594d] Je [Var (Local 0x02),Con 19456] (Branch F (Dloc [0595f]))
 397 [0595f] Je [Var (Local 0x02),Con 19393] (Branch F (Dloc [0597a]))
 398 [0597a] Je [Var (Local 0x02),Con 19393,Con 15151] (Branch T (Dloc [05988]))
 399 [05982] Je [Var (Local 0x02),Con 15165] (Branch F (Dloc [059a9]))
 400 [059a9] Call (Floc [05baa]) [Var (Local 0x02),Con 16,Con 3] (Local 0x03)
-401 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+401 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 402 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 403 [059b1] Jz (Var (Local 0x03)) (Branch T (Dloc [05a18]))
 404 [05a18] Call (Floc [05baa]) [Var (Local 0x02),Con 64,Con 1] (Local 0x03)
-405 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+405 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 406 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 407 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
-408 [05bc1] And_ (Var (Local 0x05)) (Con 3) (Local 0x05)
+408 [05bc1] And (Var (Local 0x05)) (Con 3) (Local 0x05)
 409 [05bc5] Je [Var (Local 0x05),Var (Local 0x03)] (Branch T (Dloc [05bcb]))
-410 [05bcb] Load_byte (Var (Local 0x01)) (Var (Local 0x04)) Sp
+410 [05bcb] Loadb (Var (Local 0x01)) (Var (Local 0x04)) Sp
 411 [05bcf] Ret_popped
 412 [05a20] Jz (Var (Local 0x03)) (Branch T (Dloc [05a59]))
 413 [05a23] Jz (Var (Local 0x04)) (Branch F (Dloc [05a59]))
@@ -431,41 +431,41 @@ There is a small mailbox here.
 417 [05a33] Storew (Var (Global 0x62)) (Con 0) (Var (Local 0x02))
 418 [05a38] Mul (Var (Local 0x01)) (Con 2) Sp
 419 [05a3c] Add (Var Sp) (Con 2) (Local 0x09)
-420 [05a40] Load_byte (Var (Global 0x6e)) (Var (Local 0x09)) Sp
+420 [05a40] Loadb (Var (Global 0x6e)) (Var (Local 0x09)) Sp
 421 [05a44] Storeb (Var (Global 0x62)) (Con 2) (Var Sp)
 422 [05a49] Add (Var (Local 0x09)) (Con 1) Sp
-423 [05a4d] Load_byte (Var (Global 0x6e)) (Var Sp) Sp
+423 [05a4d] Loadb (Var (Global 0x6e)) (Var Sp) Sp
 424 [05a51] Storeb (Var (Global 0x62)) (Con 3) (Var Sp)
 425 [05a56] Jump [05b65]
 426 [05b65] Store (Con 8) (Var (Local 0x02))
 427 [05b68] Add (Var (Local 0x01)) (Con 2) (Local 0x01)
 428 [05b6c] Jump [05932]
-429 [05932] Dec_check (Con 129) (Con 0) (Branch F (Dloc [0593c]))
-430 [0593c] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
+429 [05932] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [0593c]))
+430 [0593c] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
 431 [05940] Jz (Var (Local 0x02)) (Branch F (Dloc [0594d]))
 432 [0594d] Je [Var (Local 0x02),Con 19456] (Branch F (Dloc [0595f]))
 433 [0595f] Je [Var (Local 0x02),Con 19393] (Branch F (Dloc [0597a]))
 434 [0597a] Je [Var (Local 0x02),Con 19393,Con 15151] (Branch T (Dloc [05988]))
 435 [05982] Je [Var (Local 0x02),Con 15165] (Branch F (Dloc [059a9]))
 436 [059a9] Call (Floc [05baa]) [Var (Local 0x02),Con 16,Con 3] (Local 0x03)
-437 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+437 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 438 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 439 [059b1] Jz (Var (Local 0x03)) (Branch T (Dloc [05a18]))
 440 [05a18] Call (Floc [05baa]) [Var (Local 0x02),Con 64,Con 1] (Local 0x03)
-441 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+441 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 442 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 443 [05a20] Jz (Var (Local 0x03)) (Branch T (Dloc [05a59]))
 444 [05a59] Call (Floc [05baa]) [Var (Local 0x02),Con 8,Con 0] (Local 0x03)
-445 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+445 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 446 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 447 [05a61] Jz (Var (Local 0x03)) (Branch F (Dloc [05a84]))
 448 [05a64] Je [Var (Local 0x02),Con 15228,Con 18042] (Branch T (Dloc [05a81]))
 449 [05a6c] Call (Floc [05baa]) [Var (Local 0x02),Con 32] Sp
-450 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+450 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 451 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 452 [05a73] Jz (Var Sp) (Branch F (Dloc [05a81]))
 453 [05a76] Call (Floc [05baa]) [Var (Local 0x02),Con 128] Sp
-454 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+454 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 455 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 456 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
 457 [05a7d] Jz (Var Sp) (Branch T (Dloc [05b05]))
@@ -484,10 +484,10 @@ There is a small mailbox here.
 470 [05c17] Mul (Var (Local 0x01)) (Con 2) Sp
 471 [05c1b] Add (Var (Global 0x6e)) (Var Sp) Sp
 472 [05c1f] Storew (Var (Global 0x64)) (Var (Local 0x05)) (Var Sp)
-473 [05c24] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) Sp
+473 [05c24] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) Sp
 474 [05c28] Je [Var Sp,Con 19379,Con 15172,Con 15242] (Branch F (Dloc [05c3f]))
-475 [05c3f] Dec_check (Con 129) (Con 0) (Branch F (Dloc [05c57]))
-476 [05c57] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x03)
+475 [05c3f] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [05c57]))
+476 [05c57] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x03)
 477 [05c5b] Jz (Var (Local 0x03)) (Branch F (Dloc [05c68]))
 478 [05c68] Jz (Var (Global 0x71)) (Branch F (Dloc [05c71]))
 479 [05c6b] Store (Con 8) (Con 0)
@@ -496,17 +496,17 @@ There is a small mailbox here.
 482 [05c87] Je [Var (Local 0x03),Con 15228,Con 18042] (Branch F (Dloc [05c9f]))
 483 [05c9f] Je [Var (Local 0x03),Con 19393,Con 15151] (Branch T (Dloc [05cbb]))
 484 [05ca7] Call (Floc [05baa]) [Var (Local 0x03),Con 8] Sp
-485 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+485 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 486 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 487 [05cae] Jz (Var Sp) (Branch T (Dloc [05cd4]))
 488 [05cd4] Call (Floc [05baa]) [Var (Local 0x03),Con 128] Sp
-489 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+489 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 490 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 491 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
 492 [05cdb] Jz (Var Sp) (Branch T (Dloc [05d3f]))
 493 [05cdf] Jg (Var (Global 0x71)) (Con 0) (Branch F (Dloc [05cf4]))
 494 [05cf4] Call (Floc [05baa]) [Var (Local 0x03),Con 32,Con 2] Sp
-495 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+495 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 496 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 497 [05cfc] Jz (Var Sp) (Branch T (Dloc [05d0f]))
 498 [05d0f] Jz (Var (Local 0x06)) (Branch F (Dloc [05d39]))
@@ -517,74 +517,74 @@ There is a small mailbox here.
 503 [05d2a] Mul (Var Sp) (Con 2) Sp
 504 [05d2e] Add (Var (Global 0x6e)) (Var Sp) Sp
 505 [05d32] Storew (Var (Global 0x64)) (Var (Local 0x0a)) (Var Sp)
-506 [05d37] Return (Var (Local 0x01))
+506 [05d37] Ret (Var (Local 0x01))
 507 [05af7] Jz (Var (Local 0x01)) (Branch T Dfalse)
 508 [05afa] Jl (Var (Local 0x01)) (Con 0) (Branch F (Dloc [05b65]))
 509 [05b65] Store (Con 8) (Var (Local 0x02))
 510 [05b68] Add (Var (Local 0x01)) (Con 2) (Local 0x01)
 511 [05b6c] Jump [05932]
-512 [05932] Dec_check (Con 129) (Con 0) (Branch F (Dloc [0593c]))
+512 [05932] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [0593c]))
 513 [05936] Store (Con 112) (Con 0)
 514 [05939] Jump [05b6f]
 515 [05b6f] Jz (Var (Local 0x06)) (Branch T (Dloc [05b7d]))
 516 [05b7d] Store (Con 111) (Con 0)
 517 [05b80] Jz (Var (Global 0x69)) (Branch T (Dloc [05b88]))
 518 [05b88] Call (Floc [060a0]) [] Sp
-519 [060b7] Load_word (Var (Global 0x64)) (Con 0) (Local 0x08)
+519 [060b7] Loadw (Var (Global 0x64)) (Con 0) (Local 0x08)
 520 [060bb] Jz (Var (Local 0x08)) (Branch F (Dloc [060d5]))
 521 [060d5] Sub (Con 255) (Var (Local 0x08)) Sp
-522 [060d9] Load_word (Var (Global 0x9d)) (Var Sp) (Local 0x01)
-523 [060dd] Load_byte (Var (Local 0x01)) (Con 0) (Local 0x02)
+522 [060d9] Loadw (Var (Global 0x9d)) (Var Sp) (Local 0x01)
+523 [060dd] Loadb (Var (Local 0x01)) (Con 0) (Local 0x02)
 524 [060e1] Add (Con 1) (Var (Local 0x01)) (Local 0x01)
-525 [060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-526 [060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+525 [060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+526 [060e9] And (Var Sp) (Con 3) (Local 0x03)
 527 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 528 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 529 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-530 [06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-531 [06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+530 [06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+531 [06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 532 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 533 [0611c] Je [Var (Local 0x03),Con 2] (Branch F (Dloc [0612a]))
 534 [06120] Je [Var (Global 0x61),Con 1] (Branch F (Dloc [0612a]))
 535 [06124] Store (Con 6) (Var (Local 0x01))
 536 [06127] Jump [0613d]
-537 [0613d] Dec_check (Con 2) (Con 1) (Branch F (Dloc [06167]))
+537 [0613d] Dec_chk (Con 2) (Con 1) (Branch F (Dloc [06167]))
 538 [06167] Add (Var (Local 0x01)) (Con 8) (Local 0x01)
 539 [0616b] Jump [060e5]
-540 [060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-541 [060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+540 [060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+541 [060e9] And (Var Sp) (Con 3) (Local 0x03)
 542 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 543 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 544 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-545 [06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-546 [06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+545 [06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+546 [06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 547 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
-548 [0613d] Dec_check (Con 2) (Con 1) (Branch F (Dloc [06167]))
+548 [0613d] Dec_chk (Con 2) (Con 1) (Branch F (Dloc [06167]))
 549 [06167] Add (Var (Local 0x01)) (Con 8) (Local 0x01)
 550 [0616b] Jump [060e5]
-551 [060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-552 [060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+551 [060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+552 [060e9] And (Var Sp) (Con 3) (Local 0x03)
 553 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 554 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 555 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-556 [06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-557 [06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+556 [06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+557 [06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 558 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 559 [0611c] Je [Var (Local 0x03),Con 2] (Branch F (Dloc [0612a]))
-560 [0612a] Load_byte (Var (Local 0x01)) (Con 2) (Local 0x0b)
-561 [0612e] Load_word (Var (Global 0x64)) (Con 4) Sp
+560 [0612a] Loadb (Var (Local 0x01)) (Con 2) (Local 0x0b)
+561 [0612e] Loadw (Var (Global 0x64)) (Con 4) Sp
 562 [06132] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 563 [06136] Call (Floc [0644a]) [Var (Local 0x01)] Sp
 564 [0644d] Store (Con 131) (Var (Local 0x01))
-565 [06450] Load_byte (Var (Local 0x01)) (Con 7) (Global 0x78)
-566 [06454] Return (Var (Global 0x78))
+565 [06450] Loadb (Var (Local 0x01)) (Con 7) (Global 0x78)
+566 [06454] Ret (Var (Global 0x78))
 567 [0613c] Rtrue
 568 [05b8d] Jz (Var Sp) (Branch T Dfalse)
 569 [05b90] Call (Floc [064ca]) [] Sp
-570 [064cd] Load_word (Var (Global 0x64)) (Con 6) (Local 0x01)
+570 [064cd] Loadw (Var (Global 0x64)) (Con 6) (Local 0x01)
 571 [064d1] Jz (Var (Local 0x01)) (Branch T (Dloc [064f4]))
-572 [064d4] Load_byte (Var (Global 0x73)) (Con 5) (Global 0x5c)
-573 [064d8] Load_word (Var (Global 0x64)) (Con 7) Sp
+572 [064d4] Loadb (Var (Global 0x73)) (Con 5) (Global 0x5c)
+573 [064d8] Loadw (Var (Global 0x64)) (Con 7) Sp
 574 [064dc] Call (Floc [0657a]) [Var (Local 0x01),Var Sp,Var (Global 0x56)] Sp
 575 [0658b] Store (Con 96) (Con 0)
 576 [0658e] Store (Con 95) (Var (Local 0x01))
@@ -592,30 +592,30 @@ There is a small mailbox here.
 578 [06594] Store (Con 93) (Con 0)
 579 [06597] Storew (Var (Global 0x54)) (Var (Global 0x51)) (Con 0)
 580 [0659c] Storew (Var (Local 0x03)) (Var (Global 0x51)) (Con 0)
-581 [065a1] Load_word (Var (Local 0x01)) (Con 0) (Local 0x07)
+581 [065a1] Loadw (Var (Local 0x01)) (Con 0) (Local 0x07)
 582 [065a5] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [065bd]))
-583 [065bd] Load_word (Var (Local 0x01)) (Con 2) (Local 0x08)
+583 [065bd] Loadw (Var (Local 0x01)) (Con 2) (Local 0x08)
 584 [065c1] Je [Var (Local 0x07),Con 15228] (Branch F (Dloc [065d8]))
 585 [065d8] Je [Var (Local 0x07),Con 15767,Con 16481] (Branch F (Dloc [06600]))
 586 [06600] Je [Var (Local 0x07),Con 15172,Con 18042] (Branch F (Dloc [0663a]))
 587 [0663a] Je [Var (Local 0x07),Con 15256,Con 15158] (Branch F (Dloc [06664]))
 588 [06664] Call (Floc [05baa]) [Var (Local 0x07),Con 4] Sp
-589 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+589 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 590 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 591 [0666b] Jz (Var Sp) (Branch T (Dloc [06671]))
 592 [06671] Je [Var (Local 0x07),Con 15256,Con 15158] (Branch F (Dloc [0667c]))
 593 [0667c] Je [Var (Local 0x07),Con 18000] (Branch F (Dloc [0668b]))
 594 [0668b] Call (Floc [05baa]) [Var (Local 0x07),Con 32,Con 2] (Local 0x06)
-595 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+595 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 596 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 597 [06693] Jz (Var (Local 0x06)) (Branch T (Dloc [066a2]))
 598 [066a2] Call (Floc [05baa]) [Var (Local 0x07),Con 128,Con 0] Sp
-599 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+599 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 600 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 601 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
-602 [05bc1] And_ (Var (Local 0x05)) (Con 3) (Local 0x05)
+602 [05bc1] And (Var (Local 0x05)) (Con 3) (Local 0x05)
 603 [05bc5] Je [Var (Local 0x05),Var (Local 0x03)] (Branch T (Dloc [05bcb]))
-604 [05bcb] Load_byte (Var (Local 0x01)) (Var (Local 0x04)) Sp
+604 [05bcb] Loadb (Var (Local 0x01)) (Var (Local 0x04)) Sp
 605 [05bcf] Ret_popped
 606 [066aa] Jz (Var Sp) (Branch T (Dloc [066b3]))
 607 [066ad] Store (Con 106) (Var (Local 0x07))
@@ -629,7 +629,7 @@ There is a small mailbox here.
 615 [065b2] Push (Var (Local 0x03))
 616 [065b5] Call (Floc [066c2]) [Var Sp] Sp
 617 [066d5] Store (Con 5) (Var (Global 0x5c))
-618 [066d8] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x06)
+618 [066d8] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x06)
 619 [066dc] Test (Var (Global 0x50)) (Con 4) (Branch T Dtrue)
 620 [066e0] Jz (Var (Global 0x5a)) (Branch F (Dloc [066f7]))
 621 [066f7] Jz (Var (Global 0x5a)) (Branch F (Dloc [06724]))
@@ -668,9 +668,9 @@ There is a small mailbox here.
 654 [06c2e] Jl (Var (Local 0x03)) (Con 0) (Branch T (Dloc [06c38]))
 655 [06c32] Store (Con 4) (Con 0)
 656 [06c35] Jump [06c3c]
-657 [06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+657 [06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 658 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
-659 [06c44] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
+659 [06c44] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
 660 [06c49] Rfalse
 661 [06d43] Jz (Var Sp) (Branch T Dfalse)
 662 [06a73] Jz (Var Sp) (Branch T (Dloc [06a7d]))
@@ -692,14 +692,14 @@ There is a small mailbox here.
 678 [06c2e] Jl (Var (Local 0x03)) (Con 0) (Branch T (Dloc [06c38]))
 679 [06c32] Store (Con 4) (Con 0)
 680 [06c35] Jump [06c3c]
-681 [06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+681 [06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 682 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
 683 [06d43] Jz (Var Sp) (Branch T Dfalse)
 684 [06d46] Jz (Var (Global 0x59)) (Branch T (Dloc [06d62]))
 685 [06d62] Jz (Var (Global 0x5b)) (Branch T Dtrue)
 686 [06a73] Jz (Var Sp) (Branch T (Dloc [06a7d]))
 687 [06a76] Call (Floc [06aba]) [Var (Local 0x01),Var (Local 0x02)] Sp
-688 [06ac1] Load_word (Var (Local 0x02)) (Var (Global 0x51)) (Local 0x03)
+688 [06ac1] Loadw (Var (Local 0x02)) (Var (Global 0x51)) (Local 0x03)
 689 [06ac5] Add (Var (Local 0x03)) (Con 1) Sp
 690 [06ac9] Storew (Var (Local 0x02)) (Var Sp) (Var (Local 0x01))
 691 [06ace] Add (Var (Local 0x03)) (Con 1) Sp
@@ -719,7 +719,7 @@ There is a small mailbox here.
 705 [06a2f] Call (Floc [06a52]) [Var (Local 0x01),Var (Global 0x75),Con 1] Sp
 706 [06a5d] Get_child (Var (Local 0x01)) (Local 0x01) (Branch F Dfalse)
 707 [06a37] Ret_popped
-708 [06758] Load_word (Var (Local 0x01)) (Var (Global 0x51)) Sp
+708 [06758] Loadw (Var (Local 0x01)) (Var (Global 0x51)) Sp
 709 [0675c] Sub (Var Sp) (Var (Local 0x06)) (Local 0x04)
 710 [06760] Test (Var (Global 0x50)) (Con 1) (Branch F (Dloc [06767]))
 711 [06767] Test (Var (Global 0x50)) (Con 2) (Branch F (Dloc [0679c]))
@@ -731,38 +731,38 @@ There is a small mailbox here.
 717 [06875] Store (Con 106) (Con 0)
 718 [06878] Store (Con 105) (Con 0)
 719 [0687b] Rtrue
-720 [065bb] Return (Var Sp)
+720 [065bb] Ret (Var Sp)
 721 [064e4] Jz (Var Sp) (Branch T Dfalse)
-722 [064e7] Load_word (Var (Global 0x54)) (Var (Global 0x51)) Sp
+722 [064e7] Loadw (Var (Global 0x54)) (Var (Global 0x51)) Sp
 723 [064eb] Jz (Var Sp) (Branch T (Dloc [064f4]))
-724 [064f4] Load_word (Var (Global 0x64)) (Con 8) (Local 0x01)
+724 [064f4] Loadw (Var (Global 0x64)) (Con 8) (Local 0x01)
 725 [064f8] Jz (Var (Local 0x01)) (Branch T Dtrue)
 726 [05b95] Jz (Var Sp) (Branch T Dfalse)
 727 [05b98] Call (Floc [06b98]) [] Sp
-728 [06b9f] Load_word (Var (Global 0x56)) (Var (Global 0x51)) Sp
+728 [06b9f] Loadw (Var (Global 0x56)) (Var (Global 0x51)) Sp
 729 [06ba3] Jg (Var Sp) (Con 1) (Branch F (Dloc [06bb5]))
-730 [06bb5] Load_word (Var (Global 0x55)) (Var (Global 0x51)) Sp
+730 [06bb5] Loadw (Var (Global 0x55)) (Var (Global 0x51)) Sp
 731 [06bb9] Jg (Var Sp) (Con 1) (Branch F (Dloc [06bc8]))
 732 [06bc8] Jz (Var (Local 0x01)) (Branch T Dtrue)
 733 [05b9d] Jz (Var Sp) (Branch T Dfalse)
 734 [05ba0] Call (Floc [06ad8]) [] Sp
-735 [06ad9] Load_byte (Var (Global 0x73)) (Con 5) Sp
+735 [06ad9] Loadb (Var (Global 0x73)) (Con 5) Sp
 736 [06add] Call (Floc [06af4]) [Var (Global 0x56),Var Sp] Sp
-737 [06aff] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+737 [06aff] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 738 [06b03] Jz (Var (Local 0x03)) (Branch T Dtrue)
 739 [06b06] Test (Var (Local 0x02)) (Con 2) (Branch T (Dloc [06b0e]))
 740 [06b0a] Test (Var (Local 0x02)) (Con 8) (Branch F Dtrue)
 741 [06ae4] Jz (Var Sp) (Branch T Dfalse)
-742 [06ae7] Load_byte (Var (Global 0x73)) (Con 6) Sp
+742 [06ae7] Loadb (Var (Global 0x73)) (Con 6) Sp
 743 [06aeb] Call (Floc [06af4]) [Var (Global 0x55),Var Sp] Sp
-744 [06aff] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+744 [06aff] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 745 [06b03] Jz (Var (Local 0x03)) (Branch T Dtrue)
 746 [06af2] Ret_popped
 747 [05ba5] Jz (Var Sp) (Branch T Dfalse)
 748 [05ba8] Rtrue
 749 [0554d] Jz (Var (Global 0x7f)) (Branch T (Dloc [0574b]))
-750 [05551] Load_word (Var (Global 0x55)) (Var (Global 0x51)) (Local 0x01)
-751 [05555] Load_word (Var (Global 0x56)) (Var (Global 0x51)) (Local 0x02)
+750 [05551] Loadw (Var (Global 0x55)) (Var (Global 0x51)) (Local 0x01)
+751 [05555] Loadw (Var (Global 0x56)) (Var (Global 0x51)) (Local 0x02)
 752 [05559] Jz (Var (Local 0x02)) (Branch F (Dloc [05562]))
 753 [05562] Jg (Var (Local 0x02)) (Con 1) (Branch F (Dloc [0557c]))
 754 [0557c] Jg (Var (Local 0x01)) (Con 1) (Branch F (Dloc [05590]))
@@ -776,9 +776,9 @@ There is a small mailbox here.
 762 [05603] Store (Con 139) (Con 0)
 763 [05606] Jg (Var (Local 0x03)) (Con 1) (Branch F (Dloc [0560d]))
 764 [0560d] Store (Con 10) (Con 0)
-765 [05610] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
+765 [05610] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
 766 [0566e] Jz (Var (Local 0x08)) (Branch T (Dloc [05678]))
-767 [05671] Load_word (Var (Global 0x56)) (Var (Local 0x04)) (Local 0x09)
+767 [05671] Loadw (Var (Global 0x56)) (Var (Local 0x04)) (Local 0x09)
 768 [05675] Jump [0567c]
 769 [0567c] Jz (Var (Local 0x08)) (Branch T (Dloc [05685]))
 770 [0567f] Push (Var (Local 0x09))
@@ -789,8 +789,8 @@ There is a small mailbox here.
 775 [05691] Jump [05697]
 776 [05697] Store (Con 135) (Var Sp)
 777 [0569a] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [056ad]))
-778 [0569e] Load_word (Var (Global 0x64)) (Con 6) Sp
-779 [056a2] Load_word (Var Sp) (Con 0) Sp
+778 [0569e] Loadw (Var (Global 0x64)) (Con 6) Sp
+779 [056a2] Loadw (Var Sp) (Con 0) Sp
 780 [056a6] Je [Var Sp,Con 15228] (Branch F (Dloc [05704]))
 781 [05704] Store (Con 10) (Con 1)
 782 [05707] Call (Floc [0577c]) [Var (Global 0x78),Var (Global 0x76),Var (Global 0x77)] (Local 0x07)
@@ -819,7 +819,7 @@ There is a small mailbox here.
 805 [0580c] Call (Fvar Sp) [Con 1] (Local 0x04)
 806 [0953f] Je [Var (Local 0x01),Con 3] (Branch F Dfalse)
 807 [05811] Jz (Var (Local 0x04)) (Branch T (Dloc [05817]))
-808 [05817] Load_word (Var (Global 0x9c)) (Var (Local 0x01)) Sp
+808 [05817] Loadw (Var (Global 0x9c)) (Var (Local 0x01)) Sp
 809 [0581b] Call (Fvar Sp) [] (Local 0x04)
 810 [0581f] Jz (Var (Local 0x04)) (Branch T (Dloc [05825]))
 811 [05825] Jz (Var (Local 0x03)) (Branch T (Dloc [05836]))
@@ -837,7 +837,7 @@ There is a small mailbox here.
 823 [0585f] Call (Fvar Sp) [] (Local 0x04)
 824 [0dd29] Je [Var (Global 0x78),Con 93] (Branch F Dfalse)
 825 [05863] Jz (Var (Local 0x04)) (Branch T (Dloc [05869]))
-826 [05869] Load_word (Var (Global 0x9b)) (Var (Local 0x01)) Sp
+826 [05869] Loadw (Var (Global 0x9b)) (Var (Local 0x01)) Sp
 827 [0586d] Call (Fvar Sp) [] (Local 0x04)
 828 [08089] Test_attr (Var (Global 0x76)) (Con 19) (Branch F (Dloc [080f7]))
 829 [0808e] Get_prop (Var (Global 0x76)) (Con 10) Sp
@@ -874,16 +874,16 @@ There is a small mailbox here.
 860 [08ea3] Call (Floc [09530]) [Var (Local 0x05)] Sp
 861 [09533] Store (Con 123) (Var (Local 0x01))
 862 [09536] Store (Con 122) (Var (Global 0x00))
-863 [09539] Return (Var (Global 0x6a))
+863 [09539] Ret (Var (Global 0x6a))
 864 [08ea9] Rtrue
 865 [080f4] Print_ret "."
 866 [05871] Jz (Var (Local 0x04)) (Branch T (Dloc [05874]))
 867 [05874] Store (Con 136) (Var (Local 0x05))
 868 [05877] Store (Con 134) (Var (Local 0x06))
 869 [0587a] Store (Con 135) (Var (Local 0x07))
-870 [0587d] Return (Var (Local 0x04))
+870 [0587d] Ret (Var (Local 0x04))
 871 [0570f] Je [Var (Local 0x07),Con 2] (Branch F (Dloc [05610]))
-872 [05610] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
+872 [05610] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
 873 [05615] Jg (Var (Global 0x7a)) (Con 0) (Branch F (Dloc [05655]))
 874 [05655] Jz (Var (Local 0x0a)) (Branch F (Dloc [05717]))
 875 [05717] Je [Var (Local 0x07),Con 2] (Branch T (Dloc [05727]))
@@ -910,24 +910,24 @@ There is a small mailbox here.
 896 [054e0] Add (Var (Global 0x84)) (Var Sp) (Local 0x01)
 897 [054e4] Add (Var (Global 0x84)) (Con 180) (Local 0x02)
 898 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-899 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+899 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 900 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
 901 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 902 [05527] Jump [054e8]
 903 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-904 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+904 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 905 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
 906 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 907 [05527] Jump [054e8]
 908 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-909 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+909 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 910 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
-911 [054fe] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+911 [054fe] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 912 [05502] Jz (Var (Local 0x03)) (Branch F (Dloc [05508]))
 913 [05508] Sub (Var (Local 0x03)) (Con 1) Sp
 914 [0550c] Storew (Var (Local 0x01)) (Con 1) (Var Sp)
 915 [05511] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [05523]))
-916 [05515] Load_word (Var (Local 0x01)) (Con 2) Sp
+916 [05515] Loadw (Var (Local 0x01)) (Con 2) Sp
 917 [05519] Call (Fvar Sp) [] Sp
 918 [101eb] Get_parent (Con 114) (Local 0x01)
 919 [101ee] Test_attr (Con 114) (Con 7) (Branch T (Dloc [101f8]))
@@ -987,33 +987,33 @@ There is a small mailbox here.
 973 [10335] Store (Con 2) (Var (Local 0x03))
 974 [10338] Jump [102d1]
 975 [102d1] Jz (Var (Local 0x02)) (Branch F (Dloc [102d6]))
-976 [102d4] Return (Var (Local 0x04))
-977 [102bf] Return (Var (Local 0x05))
+976 [102d4] Ret (Var (Local 0x04))
+977 [102bf] Ret (Var (Local 0x05))
 978 [0551d] Jz (Var Sp) (Branch T (Dloc [05523]))
 979 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 980 [05527] Jump [054e8]
 981 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-982 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+982 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 983 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
 984 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 985 [05527] Jump [054e8]
 986 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-987 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+987 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 988 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
-989 [054fe] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+989 [054fe] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 990 [05502] Jz (Var (Local 0x03)) (Branch F (Dloc [05508]))
 991 [05508] Sub (Var (Local 0x03)) (Con 1) Sp
 992 [0550c] Storew (Var (Local 0x01)) (Con 1) (Var Sp)
 993 [05511] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [05523]))
-994 [05515] Load_word (Var (Local 0x01)) (Con 2) Sp
+994 [05515] Loadw (Var (Local 0x01)) (Con 2) Sp
 995 [05519] Call (Fvar Sp) [] Sp
-996 [1002d] Load_word (Var (Global 0x03)) (Con 0) (Local 0x02)
+996 [1002d] Loadw (Var (Global 0x03)) (Con 0) (Local 0x02)
 997 [10031] Jz (Var (Global 0x3e)) (Branch F Dfalse)
 998 [10034] Store (Con 3) (Con 0)
 999 [10037] Inc (Con 3)
 1000 [10039] Je [Var (Local 0x03),Var (Local 0x02)] (Branch F (Dloc [10040]))
-1001 [10040] Load_word (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
-1002 [10044] Load_word (Var (Local 0x04)) (Con 0) (Local 0x05)
+1001 [10040] Loadw (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
+1002 [10044] Loadw (Var (Local 0x04)) (Con 0) (Local 0x05)
 1003 [10048] Jin (Var (Local 0x05)) (Var (Global 0x00)) (Branch F (Dloc [100a7]))
 1004 [100a7] Test_attr (Var (Local 0x05)) (Con 2) (Branch F (Dloc [100b4]))
 1005 [100b4] Je [Var (Local 0x05),Con 114] (Branch F (Dloc [100bb]))
@@ -1026,8 +1026,8 @@ There is a small mailbox here.
 1012 [100ca] Jump [10037]
 1013 [10037] Inc (Con 3)
 1014 [10039] Je [Var (Local 0x03),Var (Local 0x02)] (Branch F (Dloc [10040]))
-1015 [10040] Load_word (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
-1016 [10044] Load_word (Var (Local 0x04)) (Con 0) (Local 0x05)
+1015 [10040] Loadw (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
+1016 [10044] Loadw (Var (Local 0x04)) (Con 0) (Local 0x05)
 1017 [10048] Jin (Var (Local 0x05)) (Var (Global 0x00)) (Branch F (Dloc [100a7]))
 1018 [100a7] Test_attr (Var (Local 0x05)) (Con 2) (Branch F (Dloc [100b4]))
 1019 [100b4] Je [Var (Local 0x05),Con 114] (Branch F (Dloc [100bb]))
@@ -1047,44 +1047,44 @@ There is a small mailbox here.
 1033 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 1034 [05527] Jump [054e8]
 1035 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-1036 [054ec] Inc_check (Con 18) (Con 999) (Branch F (Dloc [054f5]))
-1037 [054f5] Return (Var (Local 0x04))
+1036 [054ec] Inc_chk (Con 18) (Con 999) (Branch F (Dloc [054f5]))
+1037 [054f5] Ret (Var (Local 0x04))
 1038 [05779] Jump [0553f]
 1039 [0553f] Store (Con 4) (Con 0)
 1040 [05542] Store (Con 5) (Con 0)
 1041 [05545] Store (Con 8) (Con 1)
 1042 [05548] Call (Floc [05880]) [] (Global 0x7f)
-1043 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1043 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1044 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1045 [058a3] Jump [05897]
-1046 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1046 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1047 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1048 [058a3] Jump [05897]
-1049 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1049 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1050 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1051 [058a3] Jump [05897]
-1052 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1052 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1053 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1054 [058a3] Jump [05897]
-1055 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1055 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1056 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1057 [058a3] Jump [05897]
-1058 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1058 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1059 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1060 [058a3] Jump [05897]
-1061 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1061 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1062 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1063 [058a3] Jump [05897]
-1064 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1064 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1065 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1066 [058a3] Jump [05897]
-1067 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1067 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1068 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1069 [058a3] Jump [05897]
-1070 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1070 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1071 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1072 [058a3] Jump [05897]
-1073 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1073 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1074 [0589b] Jump [058a6]
 1075 [058a6] Store (Con 104) (Con 0)
 1076 [058a9] Store (Con 120) (Con 0)
@@ -1110,7 +1110,7 @@ There is a small mailbox here.
 1096 [06c85] Jump [06cc4]
 1097 [06cc4] Store (Con 16) (Var (Local 0x03))
 1098 [06cc7] Store (Con 107) (Con 0)
-1099 [06cca] Return (Var (Local 0x04))
+1099 [06cca] Ret (Var (Local 0x04))
 1100 [05903] Jz (Var (Global 0x46)) (Branch F (Dloc [05907]))
 1101 [05906] New_line
 1102 [05907] Print ">"
@@ -1120,30 +1120,30 @@ There is a small mailbox here.
 Opening the small mailbox reveals a leaflet.
 
 >[2]read leaflet
-1104 [05910] Load_byte (Var (Global 0x6e)) (Con 1) (Global 0x71)
+1104 [05910] Loadb (Var (Global 0x6e)) (Con 1) (Global 0x71)
 1105 [05914] Jz (Var (Global 0x71)) (Branch F (Dloc [05926]))
 1106 [05926] Store (Con 5) (Var (Global 0x71))
 1107 [05929] Store (Con 128) (Con 0)
 1108 [0592c] Store (Con 113) (Con 0)
 1109 [0592f] Store (Con 96) (Con 0)
-1110 [05932] Dec_check (Con 129) (Con 0) (Branch F (Dloc [0593c]))
-1111 [0593c] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
+1110 [05932] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [0593c]))
+1111 [0593c] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
 1112 [05940] Jz (Var (Local 0x02)) (Branch F (Dloc [0594d]))
 1113 [0594d] Je [Var (Local 0x02),Con 19456] (Branch F (Dloc [0595f]))
 1114 [0595f] Je [Var (Local 0x02),Con 19393] (Branch F (Dloc [0597a]))
 1115 [0597a] Je [Var (Local 0x02),Con 19393,Con 15151] (Branch T (Dloc [05988]))
 1116 [05982] Je [Var (Local 0x02),Con 15165] (Branch F (Dloc [059a9]))
 1117 [059a9] Call (Floc [05baa]) [Var (Local 0x02),Con 16,Con 3] (Local 0x03)
-1118 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1118 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1119 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1120 [059b1] Jz (Var (Local 0x03)) (Branch T (Dloc [05a18]))
 1121 [05a18] Call (Floc [05baa]) [Var (Local 0x02),Con 64,Con 1] (Local 0x03)
-1122 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1122 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1123 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1124 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
-1125 [05bc1] And_ (Var (Local 0x05)) (Con 3) (Local 0x05)
+1125 [05bc1] And (Var (Local 0x05)) (Con 3) (Local 0x05)
 1126 [05bc5] Je [Var (Local 0x05),Var (Local 0x03)] (Branch T (Dloc [05bcb]))
-1127 [05bcb] Load_byte (Var (Local 0x01)) (Var (Local 0x04)) Sp
+1127 [05bcb] Loadb (Var (Local 0x01)) (Var (Local 0x04)) Sp
 1128 [05bcf] Ret_popped
 1129 [05a20] Jz (Var (Local 0x03)) (Branch T (Dloc [05a59]))
 1130 [05a23] Jz (Var (Local 0x04)) (Branch F (Dloc [05a59]))
@@ -1153,41 +1153,41 @@ Opening the small mailbox reveals a leaflet.
 1134 [05a33] Storew (Var (Global 0x62)) (Con 0) (Var (Local 0x02))
 1135 [05a38] Mul (Var (Local 0x01)) (Con 2) Sp
 1136 [05a3c] Add (Var Sp) (Con 2) (Local 0x09)
-1137 [05a40] Load_byte (Var (Global 0x6e)) (Var (Local 0x09)) Sp
+1137 [05a40] Loadb (Var (Global 0x6e)) (Var (Local 0x09)) Sp
 1138 [05a44] Storeb (Var (Global 0x62)) (Con 2) (Var Sp)
 1139 [05a49] Add (Var (Local 0x09)) (Con 1) Sp
-1140 [05a4d] Load_byte (Var (Global 0x6e)) (Var Sp) Sp
+1140 [05a4d] Loadb (Var (Global 0x6e)) (Var Sp) Sp
 1141 [05a51] Storeb (Var (Global 0x62)) (Con 3) (Var Sp)
 1142 [05a56] Jump [05b65]
 1143 [05b65] Store (Con 8) (Var (Local 0x02))
 1144 [05b68] Add (Var (Local 0x01)) (Con 2) (Local 0x01)
 1145 [05b6c] Jump [05932]
-1146 [05932] Dec_check (Con 129) (Con 0) (Branch F (Dloc [0593c]))
-1147 [0593c] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
+1146 [05932] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [0593c]))
+1147 [0593c] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
 1148 [05940] Jz (Var (Local 0x02)) (Branch F (Dloc [0594d]))
 1149 [0594d] Je [Var (Local 0x02),Con 19456] (Branch F (Dloc [0595f]))
 1150 [0595f] Je [Var (Local 0x02),Con 19393] (Branch F (Dloc [0597a]))
 1151 [0597a] Je [Var (Local 0x02),Con 19393,Con 15151] (Branch T (Dloc [05988]))
 1152 [05982] Je [Var (Local 0x02),Con 15165] (Branch F (Dloc [059a9]))
 1153 [059a9] Call (Floc [05baa]) [Var (Local 0x02),Con 16,Con 3] (Local 0x03)
-1154 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1154 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1155 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1156 [059b1] Jz (Var (Local 0x03)) (Branch T (Dloc [05a18]))
 1157 [05a18] Call (Floc [05baa]) [Var (Local 0x02),Con 64,Con 1] (Local 0x03)
-1158 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1158 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1159 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1160 [05a20] Jz (Var (Local 0x03)) (Branch T (Dloc [05a59]))
 1161 [05a59] Call (Floc [05baa]) [Var (Local 0x02),Con 8,Con 0] (Local 0x03)
-1162 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1162 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1163 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1164 [05a61] Jz (Var (Local 0x03)) (Branch F (Dloc [05a84]))
 1165 [05a64] Je [Var (Local 0x02),Con 15228,Con 18042] (Branch T (Dloc [05a81]))
 1166 [05a6c] Call (Floc [05baa]) [Var (Local 0x02),Con 32] Sp
-1167 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1167 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1168 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1169 [05a73] Jz (Var Sp) (Branch F (Dloc [05a81]))
 1170 [05a76] Call (Floc [05baa]) [Var (Local 0x02),Con 128] Sp
-1171 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1171 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1172 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1173 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
 1174 [05a7d] Jz (Var Sp) (Branch T (Dloc [05b05]))
@@ -1206,10 +1206,10 @@ Opening the small mailbox reveals a leaflet.
 1187 [05c17] Mul (Var (Local 0x01)) (Con 2) Sp
 1188 [05c1b] Add (Var (Global 0x6e)) (Var Sp) Sp
 1189 [05c1f] Storew (Var (Global 0x64)) (Var (Local 0x05)) (Var Sp)
-1190 [05c24] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) Sp
+1190 [05c24] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) Sp
 1191 [05c28] Je [Var Sp,Con 19379,Con 15172,Con 15242] (Branch F (Dloc [05c3f]))
-1192 [05c3f] Dec_check (Con 129) (Con 0) (Branch F (Dloc [05c57]))
-1193 [05c57] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x03)
+1192 [05c3f] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [05c57]))
+1193 [05c57] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x03)
 1194 [05c5b] Jz (Var (Local 0x03)) (Branch F (Dloc [05c68]))
 1195 [05c68] Jz (Var (Global 0x71)) (Branch F (Dloc [05c71]))
 1196 [05c6b] Store (Con 8) (Con 0)
@@ -1218,17 +1218,17 @@ Opening the small mailbox reveals a leaflet.
 1199 [05c87] Je [Var (Local 0x03),Con 15228,Con 18042] (Branch F (Dloc [05c9f]))
 1200 [05c9f] Je [Var (Local 0x03),Con 19393,Con 15151] (Branch T (Dloc [05cbb]))
 1201 [05ca7] Call (Floc [05baa]) [Var (Local 0x03),Con 8] Sp
-1202 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1202 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1203 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1204 [05cae] Jz (Var Sp) (Branch T (Dloc [05cd4]))
 1205 [05cd4] Call (Floc [05baa]) [Var (Local 0x03),Con 128] Sp
-1206 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1206 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1207 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1208 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
 1209 [05cdb] Jz (Var Sp) (Branch T (Dloc [05d3f]))
 1210 [05cdf] Jg (Var (Global 0x71)) (Con 0) (Branch F (Dloc [05cf4]))
 1211 [05cf4] Call (Floc [05baa]) [Var (Local 0x03),Con 32,Con 2] Sp
-1212 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1212 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1213 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1214 [05cfc] Jz (Var Sp) (Branch T (Dloc [05d0f]))
 1215 [05d0f] Jz (Var (Local 0x06)) (Branch F (Dloc [05d39]))
@@ -1239,89 +1239,89 @@ Opening the small mailbox reveals a leaflet.
 1220 [05d2a] Mul (Var Sp) (Con 2) Sp
 1221 [05d2e] Add (Var (Global 0x6e)) (Var Sp) Sp
 1222 [05d32] Storew (Var (Global 0x64)) (Var (Local 0x0a)) (Var Sp)
-1223 [05d37] Return (Var (Local 0x01))
+1223 [05d37] Ret (Var (Local 0x01))
 1224 [05af7] Jz (Var (Local 0x01)) (Branch T Dfalse)
 1225 [05afa] Jl (Var (Local 0x01)) (Con 0) (Branch F (Dloc [05b65]))
 1226 [05b65] Store (Con 8) (Var (Local 0x02))
 1227 [05b68] Add (Var (Local 0x01)) (Con 2) (Local 0x01)
 1228 [05b6c] Jump [05932]
-1229 [05932] Dec_check (Con 129) (Con 0) (Branch F (Dloc [0593c]))
+1229 [05932] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [0593c]))
 1230 [05936] Store (Con 112) (Con 0)
 1231 [05939] Jump [05b6f]
 1232 [05b6f] Jz (Var (Local 0x06)) (Branch T (Dloc [05b7d]))
 1233 [05b7d] Store (Con 111) (Con 0)
 1234 [05b80] Jz (Var (Global 0x69)) (Branch T (Dloc [05b88]))
 1235 [05b88] Call (Floc [060a0]) [] Sp
-1236 [060b7] Load_word (Var (Global 0x64)) (Con 0) (Local 0x08)
+1236 [060b7] Loadw (Var (Global 0x64)) (Con 0) (Local 0x08)
 1237 [060bb] Jz (Var (Local 0x08)) (Branch F (Dloc [060d5]))
 1238 [060d5] Sub (Con 255) (Var (Local 0x08)) Sp
-1239 [060d9] Load_word (Var (Global 0x9d)) (Var Sp) (Local 0x01)
-1240 [060dd] Load_byte (Var (Local 0x01)) (Con 0) (Local 0x02)
+1239 [060d9] Loadw (Var (Global 0x9d)) (Var Sp) (Local 0x01)
+1240 [060dd] Loadb (Var (Local 0x01)) (Con 0) (Local 0x02)
 1241 [060e1] Add (Con 1) (Var (Local 0x01)) (Local 0x01)
-1242 [060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-1243 [060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+1242 [060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+1243 [060e9] And (Var Sp) (Con 3) (Local 0x03)
 1244 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 1245 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 1246 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-1247 [06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-1248 [06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+1247 [06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+1248 [06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 1249 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 1250 [0611c] Je [Var (Local 0x03),Con 2] (Branch F (Dloc [0612a]))
 1251 [06120] Je [Var (Global 0x61),Con 1] (Branch F (Dloc [0612a]))
 1252 [06124] Store (Con 6) (Var (Local 0x01))
 1253 [06127] Jump [0613d]
-1254 [0613d] Dec_check (Con 2) (Con 1) (Branch F (Dloc [06167]))
+1254 [0613d] Dec_chk (Con 2) (Con 1) (Branch F (Dloc [06167]))
 1255 [06167] Add (Var (Local 0x01)) (Con 8) (Local 0x01)
 1256 [0616b] Jump [060e5]
-1257 [060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-1258 [060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+1257 [060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+1258 [060e9] And (Var Sp) (Con 3) (Local 0x03)
 1259 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 1260 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 1261 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-1262 [06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-1263 [06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+1262 [06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+1263 [06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 1264 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 1265 [0611c] Je [Var (Local 0x03),Con 2] (Branch F (Dloc [0612a]))
 1266 [06120] Je [Var (Global 0x61),Con 1] (Branch F (Dloc [0612a]))
 1267 [06124] Store (Con 6) (Var (Local 0x01))
 1268 [06127] Jump [0613d]
-1269 [0613d] Dec_check (Con 2) (Con 1) (Branch F (Dloc [06167]))
+1269 [0613d] Dec_chk (Con 2) (Con 1) (Branch F (Dloc [06167]))
 1270 [06167] Add (Var (Local 0x01)) (Con 8) (Local 0x01)
 1271 [0616b] Jump [060e5]
-1272 [060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-1273 [060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+1272 [060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+1273 [060e9] And (Var Sp) (Con 3) (Local 0x03)
 1274 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 1275 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 1276 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-1277 [06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-1278 [06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+1277 [06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+1278 [06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 1279 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
-1280 [0613d] Dec_check (Con 2) (Con 1) (Branch F (Dloc [06167]))
+1280 [0613d] Dec_chk (Con 2) (Con 1) (Branch F (Dloc [06167]))
 1281 [06167] Add (Var (Local 0x01)) (Con 8) (Local 0x01)
 1282 [0616b] Jump [060e5]
-1283 [060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-1284 [060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+1283 [060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+1284 [060e9] And (Var Sp) (Con 3) (Local 0x03)
 1285 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 1286 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 1287 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-1288 [06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-1289 [06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+1288 [06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+1289 [06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 1290 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 1291 [0611c] Je [Var (Local 0x03),Con 2] (Branch F (Dloc [0612a]))
-1292 [0612a] Load_byte (Var (Local 0x01)) (Con 2) (Local 0x0b)
-1293 [0612e] Load_word (Var (Global 0x64)) (Con 4) Sp
+1292 [0612a] Loadb (Var (Local 0x01)) (Con 2) (Local 0x0b)
+1293 [0612e] Loadw (Var (Global 0x64)) (Con 4) Sp
 1294 [06132] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 1295 [06136] Call (Floc [0644a]) [Var (Local 0x01)] Sp
 1296 [0644d] Store (Con 131) (Var (Local 0x01))
-1297 [06450] Load_byte (Var (Local 0x01)) (Con 7) (Global 0x78)
-1298 [06454] Return (Var (Global 0x78))
+1297 [06450] Loadb (Var (Local 0x01)) (Con 7) (Global 0x78)
+1298 [06454] Ret (Var (Global 0x78))
 1299 [0613c] Rtrue
 1300 [05b8d] Jz (Var Sp) (Branch T Dfalse)
 1301 [05b90] Call (Floc [064ca]) [] Sp
-1302 [064cd] Load_word (Var (Global 0x64)) (Con 6) (Local 0x01)
+1302 [064cd] Loadw (Var (Global 0x64)) (Con 6) (Local 0x01)
 1303 [064d1] Jz (Var (Local 0x01)) (Branch T (Dloc [064f4]))
-1304 [064d4] Load_byte (Var (Global 0x73)) (Con 5) (Global 0x5c)
-1305 [064d8] Load_word (Var (Global 0x64)) (Con 7) Sp
+1304 [064d4] Loadb (Var (Global 0x73)) (Con 5) (Global 0x5c)
+1305 [064d8] Loadw (Var (Global 0x64)) (Con 7) Sp
 1306 [064dc] Call (Floc [0657a]) [Var (Local 0x01),Var Sp,Var (Global 0x56)] Sp
 1307 [0658b] Store (Con 96) (Con 0)
 1308 [0658e] Store (Con 95) (Var (Local 0x01))
@@ -1329,30 +1329,30 @@ Opening the small mailbox reveals a leaflet.
 1310 [06594] Store (Con 93) (Con 0)
 1311 [06597] Storew (Var (Global 0x54)) (Var (Global 0x51)) (Con 0)
 1312 [0659c] Storew (Var (Local 0x03)) (Var (Global 0x51)) (Con 0)
-1313 [065a1] Load_word (Var (Local 0x01)) (Con 0) (Local 0x07)
+1313 [065a1] Loadw (Var (Local 0x01)) (Con 0) (Local 0x07)
 1314 [065a5] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [065bd]))
-1315 [065bd] Load_word (Var (Local 0x01)) (Con 2) (Local 0x08)
+1315 [065bd] Loadw (Var (Local 0x01)) (Con 2) (Local 0x08)
 1316 [065c1] Je [Var (Local 0x07),Con 15228] (Branch F (Dloc [065d8]))
 1317 [065d8] Je [Var (Local 0x07),Con 15767,Con 16481] (Branch F (Dloc [06600]))
 1318 [06600] Je [Var (Local 0x07),Con 15172,Con 18042] (Branch F (Dloc [0663a]))
 1319 [0663a] Je [Var (Local 0x07),Con 15256,Con 15158] (Branch F (Dloc [06664]))
 1320 [06664] Call (Floc [05baa]) [Var (Local 0x07),Con 4] Sp
-1321 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1321 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1322 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1323 [0666b] Jz (Var Sp) (Branch T (Dloc [06671]))
 1324 [06671] Je [Var (Local 0x07),Con 15256,Con 15158] (Branch F (Dloc [0667c]))
 1325 [0667c] Je [Var (Local 0x07),Con 18000] (Branch F (Dloc [0668b]))
 1326 [0668b] Call (Floc [05baa]) [Var (Local 0x07),Con 32,Con 2] (Local 0x06)
-1327 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1327 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1328 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1329 [06693] Jz (Var (Local 0x06)) (Branch T (Dloc [066a2]))
 1330 [066a2] Call (Floc [05baa]) [Var (Local 0x07),Con 128,Con 0] Sp
-1331 [05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+1331 [05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 1332 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 1333 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
-1334 [05bc1] And_ (Var (Local 0x05)) (Con 3) (Local 0x05)
+1334 [05bc1] And (Var (Local 0x05)) (Con 3) (Local 0x05)
 1335 [05bc5] Je [Var (Local 0x05),Var (Local 0x03)] (Branch T (Dloc [05bcb]))
-1336 [05bcb] Load_byte (Var (Local 0x01)) (Var (Local 0x04)) Sp
+1336 [05bcb] Loadb (Var (Local 0x01)) (Var (Local 0x04)) Sp
 1337 [05bcf] Ret_popped
 1338 [066aa] Jz (Var Sp) (Branch T (Dloc [066b3]))
 1339 [066ad] Store (Con 106) (Var (Local 0x07))
@@ -1366,7 +1366,7 @@ Opening the small mailbox reveals a leaflet.
 1347 [065b2] Push (Var (Local 0x03))
 1348 [065b5] Call (Floc [066c2]) [Var Sp] Sp
 1349 [066d5] Store (Con 5) (Var (Global 0x5c))
-1350 [066d8] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x06)
+1350 [066d8] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x06)
 1351 [066dc] Test (Var (Global 0x50)) (Con 4) (Branch T Dtrue)
 1352 [066e0] Jz (Var (Global 0x5a)) (Branch F (Dloc [066f7]))
 1353 [066f7] Jz (Var (Global 0x5a)) (Branch F (Dloc [06724]))
@@ -1405,9 +1405,9 @@ Opening the small mailbox reveals a leaflet.
 1386 [06c2e] Jl (Var (Local 0x03)) (Con 0) (Branch T (Dloc [06c38]))
 1387 [06c32] Store (Con 4) (Con 0)
 1388 [06c35] Jump [06c3c]
-1389 [06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+1389 [06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 1390 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
-1391 [06c44] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
+1391 [06c44] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
 1392 [06c49] Rfalse
 1393 [06d43] Jz (Var Sp) (Branch T Dfalse)
 1394 [06a73] Jz (Var Sp) (Branch T (Dloc [06a7d]))
@@ -1429,12 +1429,12 @@ Opening the small mailbox reveals a leaflet.
 1410 [06c2e] Jl (Var (Local 0x03)) (Con 0) (Branch T (Dloc [06c38]))
 1411 [06c32] Store (Con 4) (Con 0)
 1412 [06c35] Jump [06c3c]
-1413 [06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+1413 [06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 1414 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
-1415 [06c44] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
-1416 [06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+1415 [06c44] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
+1416 [06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 1417 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
-1418 [06c44] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
+1418 [06c44] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
 1419 [06c49] Rfalse
 1420 [06d43] Jz (Var Sp) (Branch T Dfalse)
 1421 [06a73] Jz (Var Sp) (Branch T (Dloc [06a7d]))
@@ -1461,17 +1461,17 @@ Opening the small mailbox reveals a leaflet.
 1442 [06c2e] Jl (Var (Local 0x03)) (Con 0) (Branch T (Dloc [06c38]))
 1443 [06c32] Store (Con 4) (Con 0)
 1444 [06c35] Jump [06c3c]
-1445 [06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+1445 [06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 1446 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
-1447 [06c44] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
-1448 [06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+1447 [06c44] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
+1448 [06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 1449 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
 1450 [06d43] Jz (Var Sp) (Branch T Dfalse)
 1451 [06d46] Jz (Var (Global 0x59)) (Branch T (Dloc [06d62]))
 1452 [06d62] Jz (Var (Global 0x5b)) (Branch T Dtrue)
 1453 [06a73] Jz (Var Sp) (Branch T (Dloc [06a7d]))
 1454 [06a76] Call (Floc [06aba]) [Var (Local 0x01),Var (Local 0x02)] Sp
-1455 [06ac1] Load_word (Var (Local 0x02)) (Var (Global 0x51)) (Local 0x03)
+1455 [06ac1] Loadw (Var (Local 0x02)) (Var (Global 0x51)) (Local 0x03)
 1456 [06ac5] Add (Var (Local 0x03)) (Con 1) Sp
 1457 [06ac9] Storew (Var (Local 0x02)) (Var Sp) (Var (Local 0x01))
 1458 [06ace] Add (Var (Local 0x03)) (Con 1) Sp
@@ -1492,7 +1492,7 @@ Opening the small mailbox reveals a leaflet.
 1473 [06a2f] Call (Floc [06a52]) [Var (Local 0x01),Var (Global 0x75),Con 1] Sp
 1474 [06a5d] Get_child (Var (Local 0x01)) (Local 0x01) (Branch F Dfalse)
 1475 [06a37] Ret_popped
-1476 [06758] Load_word (Var (Local 0x01)) (Var (Global 0x51)) Sp
+1476 [06758] Loadw (Var (Local 0x01)) (Var (Global 0x51)) Sp
 1477 [0675c] Sub (Var Sp) (Var (Local 0x06)) (Local 0x04)
 1478 [06760] Test (Var (Global 0x50)) (Con 1) (Branch F (Dloc [06767]))
 1479 [06767] Test (Var (Global 0x50)) (Con 2) (Branch F (Dloc [0679c]))
@@ -1504,30 +1504,30 @@ Opening the small mailbox reveals a leaflet.
 1485 [06875] Store (Con 106) (Con 0)
 1486 [06878] Store (Con 105) (Con 0)
 1487 [0687b] Rtrue
-1488 [065bb] Return (Var Sp)
+1488 [065bb] Ret (Var Sp)
 1489 [064e4] Jz (Var Sp) (Branch T Dfalse)
-1490 [064e7] Load_word (Var (Global 0x54)) (Var (Global 0x51)) Sp
+1490 [064e7] Loadw (Var (Global 0x54)) (Var (Global 0x51)) Sp
 1491 [064eb] Jz (Var Sp) (Branch T (Dloc [064f4]))
-1492 [064f4] Load_word (Var (Global 0x64)) (Con 8) (Local 0x01)
+1492 [064f4] Loadw (Var (Global 0x64)) (Con 8) (Local 0x01)
 1493 [064f8] Jz (Var (Local 0x01)) (Branch T Dtrue)
 1494 [05b95] Jz (Var Sp) (Branch T Dfalse)
 1495 [05b98] Call (Floc [06b98]) [] Sp
-1496 [06b9f] Load_word (Var (Global 0x56)) (Var (Global 0x51)) Sp
+1496 [06b9f] Loadw (Var (Global 0x56)) (Var (Global 0x51)) Sp
 1497 [06ba3] Jg (Var Sp) (Con 1) (Branch F (Dloc [06bb5]))
-1498 [06bb5] Load_word (Var (Global 0x55)) (Var (Global 0x51)) Sp
+1498 [06bb5] Loadw (Var (Global 0x55)) (Var (Global 0x51)) Sp
 1499 [06bb9] Jg (Var Sp) (Con 1) (Branch F (Dloc [06bc8]))
 1500 [06bc8] Jz (Var (Local 0x01)) (Branch T Dtrue)
 1501 [05b9d] Jz (Var Sp) (Branch T Dfalse)
 1502 [05ba0] Call (Floc [06ad8]) [] Sp
-1503 [06ad9] Load_byte (Var (Global 0x73)) (Con 5) Sp
+1503 [06ad9] Loadb (Var (Global 0x73)) (Con 5) Sp
 1504 [06add] Call (Floc [06af4]) [Var (Global 0x56),Var Sp] Sp
-1505 [06aff] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+1505 [06aff] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 1506 [06b03] Jz (Var (Local 0x03)) (Branch T Dtrue)
 1507 [06b06] Test (Var (Local 0x02)) (Con 2) (Branch T (Dloc [06b0e]))
 1508 [06b0a] Test (Var (Local 0x02)) (Con 8) (Branch F Dtrue)
-1509 [06b0e] Dec_check (Con 3) (Con 0) (Branch T Dtrue)
+1509 [06b0e] Dec_chk (Con 3) (Con 0) (Branch T Dtrue)
 1510 [06b12] Add (Var (Local 0x03)) (Con 1) Sp
-1511 [06b16] Load_word (Var (Local 0x01)) (Var Sp) (Local 0x04)
+1511 [06b16] Loadw (Var (Local 0x01)) (Var Sp) (Local 0x04)
 1512 [06b1a] Je [Var (Local 0x04),Con 12] (Branch F (Dloc [06b21]))
 1513 [06b21] Call (Floc [094ec]) [Var (Local 0x04)] Sp
 1514 [094ef] Get_parent (Var (Local 0x01)) (Local 0x01)
@@ -1589,18 +1589,18 @@ Opening the small mailbox reveals a leaflet.
 1570 [06b8b] Print "(Taken)"
 1571 [06b94] New_line
 1572 [06b95] Jump [06b0e]
-1573 [06b0e] Dec_check (Con 3) (Con 0) (Branch T Dtrue)
+1573 [06b0e] Dec_chk (Con 3) (Con 0) (Branch T Dtrue)
 1574 [06ae4] Jz (Var Sp) (Branch T Dfalse)
-1575 [06ae7] Load_byte (Var (Global 0x73)) (Con 6) Sp
+1575 [06ae7] Loadb (Var (Global 0x73)) (Con 6) Sp
 1576 [06aeb] Call (Floc [06af4]) [Var (Global 0x55),Var Sp] Sp
-1577 [06aff] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+1577 [06aff] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 1578 [06b03] Jz (Var (Local 0x03)) (Branch T Dtrue)
 1579 [06af2] Ret_popped
 1580 [05ba5] Jz (Var Sp) (Branch T Dfalse)
 1581 [05ba8] Rtrue
 1582 [0554d] Jz (Var (Global 0x7f)) (Branch T (Dloc [0574b]))
-1583 [05551] Load_word (Var (Global 0x55)) (Var (Global 0x51)) (Local 0x01)
-1584 [05555] Load_word (Var (Global 0x56)) (Var (Global 0x51)) (Local 0x02)
+1583 [05551] Loadw (Var (Global 0x55)) (Var (Global 0x51)) (Local 0x01)
+1584 [05555] Loadw (Var (Global 0x56)) (Var (Global 0x51)) (Local 0x02)
 1585 [05559] Jz (Var (Local 0x02)) (Branch F (Dloc [05562]))
 1586 [05562] Jg (Var (Local 0x02)) (Con 1) (Branch F (Dloc [0557c]))
 1587 [0557c] Jg (Var (Local 0x01)) (Con 1) (Branch F (Dloc [05590]))
@@ -1614,9 +1614,9 @@ Opening the small mailbox reveals a leaflet.
 1595 [05603] Store (Con 139) (Con 0)
 1596 [05606] Jg (Var (Local 0x03)) (Con 1) (Branch F (Dloc [0560d]))
 1597 [0560d] Store (Con 10) (Con 0)
-1598 [05610] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
+1598 [05610] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
 1599 [0566e] Jz (Var (Local 0x08)) (Branch T (Dloc [05678]))
-1600 [05671] Load_word (Var (Global 0x56)) (Var (Local 0x04)) (Local 0x09)
+1600 [05671] Loadw (Var (Global 0x56)) (Var (Local 0x04)) (Local 0x09)
 1601 [05675] Jump [0567c]
 1602 [0567c] Jz (Var (Local 0x08)) (Branch T (Dloc [05685]))
 1603 [0567f] Push (Var (Local 0x09))
@@ -1627,8 +1627,8 @@ Opening the small mailbox reveals a leaflet.
 1608 [05691] Jump [05697]
 1609 [05697] Store (Con 135) (Var Sp)
 1610 [0569a] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [056ad]))
-1611 [0569e] Load_word (Var (Global 0x64)) (Con 6) Sp
-1612 [056a2] Load_word (Var Sp) (Con 0) Sp
+1611 [0569e] Loadw (Var (Global 0x64)) (Con 6) Sp
+1612 [056a2] Loadw (Var Sp) (Con 0) Sp
 1613 [056a6] Je [Var Sp,Con 15228] (Branch F (Dloc [05704]))
 1614 [05704] Store (Con 10) (Con 1)
 1615 [05707] Call (Floc [0577c]) [Var (Global 0x78),Var (Global 0x76),Var (Global 0x77)] (Local 0x07)
@@ -1657,7 +1657,7 @@ Opening the small mailbox reveals a leaflet.
 1638 [0580c] Call (Fvar Sp) [Con 1] (Local 0x04)
 1639 [0953f] Je [Var (Local 0x01),Con 3] (Branch F Dfalse)
 1640 [05811] Jz (Var (Local 0x04)) (Branch T (Dloc [05817]))
-1641 [05817] Load_word (Var (Global 0x9c)) (Var (Local 0x01)) Sp
+1641 [05817] Loadw (Var (Global 0x9c)) (Var (Local 0x01)) Sp
 1642 [0581b] Call (Fvar Sp) [] (Local 0x04)
 1643 [083c9] Jz (Var (Global 0x42)) (Branch F (Dloc [083dd]))
 1644 [083dd] Jz (Var (Global 0x77)) (Branch T Dfalse)
@@ -1676,7 +1676,7 @@ Opening the small mailbox reveals a leaflet.
 1657 [0585b] Get_prop (Var (Local 0x02)) (Con 17) Sp
 1658 [0585f] Call (Fvar Sp) [] (Local 0x04)
 1659 [05863] Jz (Var (Local 0x04)) (Branch T (Dloc [05869]))
-1660 [05869] Load_word (Var (Global 0x9b)) (Var (Local 0x01)) Sp
+1660 [05869] Loadw (Var (Global 0x9b)) (Var (Local 0x01)) Sp
 1661 [0586d] Call (Fvar Sp) [] (Local 0x04)
 1662 [083fb] Test_attr (Var (Global 0x76)) (Con 16) (Branch T (Dloc [08413]))
 1663 [08413] Get_prop (Var (Global 0x76)) (Con 8) Sp
@@ -1687,9 +1687,9 @@ Opening the small mailbox reveals a leaflet.
 1668 [05874] Store (Con 136) (Var (Local 0x05))
 1669 [05877] Store (Con 134) (Var (Local 0x06))
 1670 [0587a] Store (Con 135) (Var (Local 0x07))
-1671 [0587d] Return (Var (Local 0x04))
+1671 [0587d] Ret (Var (Local 0x04))
 1672 [0570f] Je [Var (Local 0x07),Con 2] (Branch F (Dloc [05610]))
-1673 [05610] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
+1673 [05610] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
 1674 [05615] Jg (Var (Global 0x7a)) (Con 0) (Branch F (Dloc [05655]))
 1675 [05655] Jz (Var (Local 0x0a)) (Branch F (Dloc [05717]))
 1676 [05717] Je [Var (Local 0x07),Con 2] (Branch T (Dloc [05727]))
@@ -1716,24 +1716,24 @@ Opening the small mailbox reveals a leaflet.
 1697 [054e0] Add (Var (Global 0x84)) (Var Sp) (Local 0x01)
 1698 [054e4] Add (Var (Global 0x84)) (Con 180) (Local 0x02)
 1699 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-1700 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+1700 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 1701 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
 1702 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 1703 [05527] Jump [054e8]
 1704 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-1705 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+1705 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 1706 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
 1707 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 1708 [05527] Jump [054e8]
 1709 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-1710 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+1710 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 1711 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
-1712 [054fe] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+1712 [054fe] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 1713 [05502] Jz (Var (Local 0x03)) (Branch F (Dloc [05508]))
 1714 [05508] Sub (Var (Local 0x03)) (Con 1) Sp
 1715 [0550c] Storew (Var (Local 0x01)) (Con 1) (Var Sp)
 1716 [05511] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [05523]))
-1717 [05515] Load_word (Var (Local 0x01)) (Con 2) Sp
+1717 [05515] Loadw (Var (Local 0x01)) (Con 2) Sp
 1718 [05519] Call (Fvar Sp) [] Sp
 1719 [101eb] Get_parent (Con 114) (Local 0x01)
 1720 [101ee] Test_attr (Con 114) (Con 7) (Branch T (Dloc [101f8]))
@@ -1793,33 +1793,33 @@ Opening the small mailbox reveals a leaflet.
 1774 [10335] Store (Con 2) (Var (Local 0x03))
 1775 [10338] Jump [102d1]
 1776 [102d1] Jz (Var (Local 0x02)) (Branch F (Dloc [102d6]))
-1777 [102d4] Return (Var (Local 0x04))
-1778 [102bf] Return (Var (Local 0x05))
+1777 [102d4] Ret (Var (Local 0x04))
+1778 [102bf] Ret (Var (Local 0x05))
 1779 [0551d] Jz (Var Sp) (Branch T (Dloc [05523]))
 1780 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 1781 [05527] Jump [054e8]
 1782 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-1783 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+1783 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 1784 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
 1785 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 1786 [05527] Jump [054e8]
 1787 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-1788 [054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+1788 [054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 1789 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
-1790 [054fe] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+1790 [054fe] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 1791 [05502] Jz (Var (Local 0x03)) (Branch F (Dloc [05508]))
 1792 [05508] Sub (Var (Local 0x03)) (Con 1) Sp
 1793 [0550c] Storew (Var (Local 0x01)) (Con 1) (Var Sp)
 1794 [05511] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [05523]))
-1795 [05515] Load_word (Var (Local 0x01)) (Con 2) Sp
+1795 [05515] Loadw (Var (Local 0x01)) (Con 2) Sp
 1796 [05519] Call (Fvar Sp) [] Sp
-1797 [1002d] Load_word (Var (Global 0x03)) (Con 0) (Local 0x02)
+1797 [1002d] Loadw (Var (Global 0x03)) (Con 0) (Local 0x02)
 1798 [10031] Jz (Var (Global 0x3e)) (Branch F Dfalse)
 1799 [10034] Store (Con 3) (Con 0)
 1800 [10037] Inc (Con 3)
 1801 [10039] Je [Var (Local 0x03),Var (Local 0x02)] (Branch F (Dloc [10040]))
-1802 [10040] Load_word (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
-1803 [10044] Load_word (Var (Local 0x04)) (Con 0) (Local 0x05)
+1802 [10040] Loadw (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
+1803 [10044] Loadw (Var (Local 0x04)) (Con 0) (Local 0x05)
 1804 [10048] Jin (Var (Local 0x05)) (Var (Global 0x00)) (Branch F (Dloc [100a7]))
 1805 [100a7] Test_attr (Var (Local 0x05)) (Con 2) (Branch F (Dloc [100b4]))
 1806 [100b4] Je [Var (Local 0x05),Con 114] (Branch F (Dloc [100bb]))
@@ -1832,8 +1832,8 @@ Opening the small mailbox reveals a leaflet.
 1813 [100ca] Jump [10037]
 1814 [10037] Inc (Con 3)
 1815 [10039] Je [Var (Local 0x03),Var (Local 0x02)] (Branch F (Dloc [10040]))
-1816 [10040] Load_word (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
-1817 [10044] Load_word (Var (Local 0x04)) (Con 0) (Local 0x05)
+1816 [10040] Loadw (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
+1817 [10044] Loadw (Var (Local 0x04)) (Con 0) (Local 0x05)
 1818 [10048] Jin (Var (Local 0x05)) (Var (Global 0x00)) (Branch F (Dloc [100a7]))
 1819 [100a7] Test_attr (Var (Local 0x05)) (Con 2) (Branch F (Dloc [100b4]))
 1820 [100b4] Je [Var (Local 0x05),Con 114] (Branch F (Dloc [100bb]))
@@ -1853,44 +1853,44 @@ Opening the small mailbox reveals a leaflet.
 1834 [05523] Add (Var (Local 0x01)) (Con 6) (Local 0x01)
 1835 [05527] Jump [054e8]
 1836 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-1837 [054ec] Inc_check (Con 18) (Con 999) (Branch F (Dloc [054f5]))
-1838 [054f5] Return (Var (Local 0x04))
+1837 [054ec] Inc_chk (Con 18) (Con 999) (Branch F (Dloc [054f5]))
+1838 [054f5] Ret (Var (Local 0x04))
 1839 [05779] Jump [0553f]
 1840 [0553f] Store (Con 4) (Con 0)
 1841 [05542] Store (Con 5) (Con 0)
 1842 [05545] Store (Con 8) (Con 1)
 1843 [05548] Call (Floc [05880]) [] (Global 0x7f)
-1844 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1844 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1845 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1846 [058a3] Jump [05897]
-1847 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1847 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1848 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1849 [058a3] Jump [05897]
-1850 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1850 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1851 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1852 [058a3] Jump [05897]
-1853 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1853 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1854 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1855 [058a3] Jump [05897]
-1856 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1856 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1857 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1858 [058a3] Jump [05897]
-1859 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1859 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1860 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1861 [058a3] Jump [05897]
-1862 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1862 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1863 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1864 [058a3] Jump [05897]
-1865 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1865 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1866 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1867 [058a3] Jump [05897]
-1868 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1868 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1869 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1870 [058a3] Jump [05897]
-1871 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1871 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1872 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 1873 [058a3] Jump [05897]
-1874 [05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+1874 [05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 1875 [0589b] Jump [058a6]
 1876 [058a6] Store (Con 104) (Con 0)
 1877 [058a9] Store (Con 120) (Con 0)
@@ -1916,7 +1916,7 @@ Opening the small mailbox reveals a leaflet.
 1897 [06c85] Jump [06cc4]
 1898 [06cc4] Store (Con 16) (Var (Local 0x03))
 1899 [06cc7] Store (Con 107) (Con 0)
-1900 [06cca] Return (Var (Local 0x04))
+1900 [06cca] Ret (Var (Local 0x04))
 1901 [05903] Jz (Var (Global 0x46)) (Branch F (Dloc [05907]))
 1902 [05906] New_line
 1903 [05907] Print ">"

@@ -242,6 +242,7 @@ formatOfVersion = \case
   Z3 -> Small
   Z4 -> Large
   Z5 -> Large
+  Z6 -> Large
 
 numProps :: ObjectTableFormat -> Value
 numProps = \case

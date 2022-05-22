@@ -115,8 +115,8 @@ callsOfI = \case
 
 branchesOfI :: Operation -> [Addr]
 branchesOfI = \case
-  Op.Dec_check _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  Op.Inc_check _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Dec_chk _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
+  Op.Inc_chk _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
   Op.Je _ (Op.Branch _ (Op.Dloc a)) -> [a]
   Op.Jg _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
   Op.Jl _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
@@ -131,7 +131,7 @@ isStoppingI = \case
   Op.Jump{} -> True
   Op.Print_ret{} -> True
   Op.Ret_popped -> True
-  Op.Return{} -> True
+  Op.Ret{} -> True
   Op.Rfalse{} -> True
   Op.Rtrue{} -> True
   _ -> False

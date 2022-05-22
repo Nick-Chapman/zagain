@@ -34,7 +34,7 @@ eval pc = \case
     error (printf "At [%s] %s" (show pc) mes)
 
   Op.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
-  Op.And_ arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
+  Op.And arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
 
   Op.Call func args target -> do
     funcAddress <- evalFunc func
@@ -54,7 +54,7 @@ eval pc = \case
     v <- evalTarget target
     setTarget target (v - 1)
 
-  Op.Dec_check arg1 arg2 label -> do
+  Op.Dec_chk arg1 arg2 label -> do
     target <- makeValueTarget <$> evalArg arg1
     v1 <- evalTarget target
     v2 <- evalArg arg2
@@ -109,7 +109,7 @@ eval pc = \case
     v <- evalTarget target
     setTarget target (v + 1)
 
-  Op.Inc_check arg1 arg2 label -> do
+  Op.Inc_chk arg1 arg2 label -> do
     target <- makeValueTarget <$> evalArg arg1
     v1 <- evalTarget target
     v2 <- evalArg arg2
@@ -151,13 +151,13 @@ eval pc = \case
       _ -> pure ()
     setTarget target v
 
-  Op.Load_byte arg1 arg2 target -> do
+  Op.Loadb arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
     b <- GetByte (fromIntegral (base + offset))
     setTarget target (fromIntegral b)
 
-  Op.Load_word arg1 arg2 target -> do
+  Op.Loadw arg1 arg2 target -> do
     base <- evalArg arg1
     offset <- evalArg arg2
     let a = fromIntegral base + 2 * fromIntegral offset
@@ -223,7 +223,7 @@ eval pc = \case
 
   Op.Ret_popped -> do PopStack >>= returnValue
 
-  Op.Return arg -> do
+  Op.Ret arg -> do
     v <- evalArg arg
     target <- PopFrame
     setTarget target v
@@ -320,9 +320,20 @@ eval pc = \case
     res <- Objects.testAttr v1 v2
     branchMaybe label res
 
-  Op.Save_lab{} -> undefined
-  Op.Restore_lab{} -> undefined
+  Op.Input_stream{} -> undefined
   Op.Mod{} -> undefined
+  Op.Nop -> undefined
+  Op.Or{} -> undefined
+  Op.Output_stream{} -> undefined
+  Op.Pop -> undefined
+  Op.Restart -> undefined
+  Op.Restore{} -> undefined
+  Op.Save{} -> undefined
+  Op.Set_window{} -> undefined
+  Op.Show_status -> undefined
+  Op.Split_window{} -> undefined
+  Op.Verify{} -> undefined
+
 
 writeBytesFromString :: Addr -> String -> Eff ()
 writeBytesFromString a str = writeBytes a [ fromIntegral (Char.ord c) | c <- str ]

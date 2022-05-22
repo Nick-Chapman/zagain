@@ -1,6 +1,6 @@
 Found 61 reachable routines:
-Found 553 candidate routines:
-Found 557 combined routines:
+Found 558 candidate routines:
+Found 563 combined routines:
 --------------------------------------------------
 [02faa] RoutineHeader []
 [02fab] Jump [030ac]
@@ -9,10 +9,10 @@ Found 557 combined routines:
 [02fb3] Jump [02fbe]
 --------------------------------------------------
 [02fcc] RoutineHeader []
-[02fcd] Return (Con 511)
+[02fcd] Ret (Con 511)
 --------------------------------------------------
 [03d31] RoutineHeader [-32767,30,-6451,11841,-1792,7910,-7419,8937,30,-5478,1345,-25344,7914]
-[03d4c] Return (Con 45)
+[03d4c] Ret (Con 45)
 --------------------------------------------------
 [03dff] RoutineHeader []
 [03e00] Je [Con 166,Var (Global 0xbf)] (Branch F (Dloc [02344]))
@@ -20,40 +20,40 @@ Found 557 combined routines:
 --------------------------------------------------
 [03e61] RoutineHeader []
 [03e62] Jl (Con 52) (Var (Global 0x92)) (Branch F (Dloc [05a87]))
-[03e67] Return (Con 34)
+[03e67] Ret (Con 34)
 --------------------------------------------------
 [03e7c] RoutineHeader [34]
-[03e7f] Return (Con -21037)
+[03e7f] Ret (Con -21037)
 --------------------------------------------------
 [03ef3] RoutineHeader [35]
 [03ef6] Div (Var (Global 0xd1)) (Con 69) (Global 0x31)
-[03efa] Return (Con 0)
+[03efa] Ret (Con 0)
 --------------------------------------------------
 [03f17] RoutineHeader []
-[03f18] Dec_check (Con 210) (Var (Global 0x89)) (Branch T (Dloc [0495c]))
+[03f18] Dec_chk (Con 210) (Var (Global 0x89)) (Branch T (Dloc [0495c]))
 [03f1d] Print_paddr (Con 0)
-[03f1f] Dec_check (Con 210) (Var (Global 0xbc)) (Branch T (Dloc [02463]))
-[03f24] Return (Con 0)
+[03f1f] Dec_chk (Con 210) (Var (Global 0xbc)) (Branch T (Dloc [02463]))
+[03f24] Ret (Con 0)
 --------------------------------------------------
 [040f3] RoutineHeader []
 [040f4] Store (Con 209) (Var (Global 0xb4))
 [040f7] Inc (Var (Global 0x31))
-[040f9] Return (Var Sp)
+[040f9] Ret (Var Sp)
 --------------------------------------------------
 [041c5] RoutineHeader []
-[041c6] Load_word (Con 72) (Var (Global 0xb0)) (Global 0x95)
+[041c6] Loadw (Con 72) (Var (Global 0xb0)) (Global 0x95)
 [041ca] Je [Var (Global 0x8b),Con 0] (Branch F (Dloc [03116]))
 [041cf] Rfalse
 --------------------------------------------------
 [041ef] RoutineHeader []
-[041f0] Load_byte (Con 217) (Var (Global 0x98)) (Global 0x95)
+[041f0] Loadb (Con 217) (Var (Global 0x98)) (Global 0x95)
 [041f4] Jz (Con 256) (Branch F (Dloc [032d0]))
-[041f9] Return (Var (Local 0x05))
+[041f9] Ret (Var (Local 0x05))
 --------------------------------------------------
 [0426d] RoutineHeader []
 [0426e] Get_prop_addr (Con 230) (Var (Global 0xd5)) (Global 0xc3)
 [04272] Jz (Con 256) (Branch F (Dloc [0355f]))
-[04277] Return (Con 10)
+[04277] Ret (Con 10)
 --------------------------------------------------
 [04307] RoutineHeader []
 [04308] Sub (Con 201) (Var (Global 0x98)) (Global 0x95)
@@ -70,7 +70,7 @@ Found 557 combined routines:
 [0435f] Test_attr (Con 65) (Var (Global 0x83)) (Branch F (Dloc [0439c]))
 [04364] Test (Var (Global 0xa8)) (Con 234) (Branch F Dtrue)
 [04368] Get_sibling (Var Sp) (Global 0x2a) (Branch F (Dloc [0437f]))
-[0436c] Return (Con 24)
+[0436c] Ret (Con 24)
 --------------------------------------------------
 [0440a] RoutineHeader []
 [0440b] Je [Var (Global 0xc1),Con 196] (Branch T (Dloc [0294f]))
@@ -84,7 +84,7 @@ Found 557 combined routines:
 [0451e] Print_ret ".   c lurkin"
 --------------------------------------------------
 [045c9] RoutineHeader [74]
-[045cc] Return (Con 168)
+[045cc] Ret (Con 168)
 --------------------------------------------------
 [045d1] RoutineHeader []
 [045d2] Set_attr (Var (Global 0x42)) (Con 158)
@@ -98,7 +98,7 @@ Found 557 combined routines:
 --------------------------------------------------
 [049c1] RoutineHeader []
 [049c2] Je [Var (Global 0x9e),Var (Global 0xd4)] (Branch T (Dloc [02f06]))
-[049c7] Return (Con 0)
+[049c7] Ret (Con 0)
 --------------------------------------------------
 [04a15] RoutineHeader []
 [04a16] Jl (Var (Global 0x0a)) (Var (Global 0xb6)) (Branch F (Dloc [02f99]))
@@ -108,10 +108,16 @@ Found 557 combined routines:
 [04a27] Inc (Var (Global 0x31))
 [04a29] Ret_popped
 --------------------------------------------------
+[04a93] RoutineHeader []
+[04a94] Jl (Var (Global 0x9e)) (Var (Global 0xcd)) (Branch T (Dloc [04aaf]))
+[04a98] Jz (Con 256) (Branch F (Dloc [04abc]))
+[04a9c] Restart
+[04a9d] Ret (Con 197)
+--------------------------------------------------
 [04c5a] RoutineHeader []
 [04c5b] Jin (Var (Global 0xd6)) (Var (Global 0xc5)) (Branch F (Dloc [040de]))
 [04c60] Je [Con 0,Con 102] (Branch T (Dloc [04c8c]))
-[04c64] Return (Con 26)
+[04c64] Ret (Con 26)
 --------------------------------------------------
 [04e38] RoutineHeader [0]
 [04e3b] Print "a "
@@ -128,29 +134,29 @@ Found 557 combined routines:
 [04e5a] Rfalse
 --------------------------------------------------
 [04e5c] RoutineHeader [0]
-[04e5f] Load_word (Var (Local 0x01)) (Con 0) Sp
+[04e5f] Loadw (Var (Local 0x01)) (Con 0) Sp
 [04e63] Random (Var Sp) Sp
-[04e67] Load_word (Var (Local 0x01)) (Var Sp) Sp
+[04e67] Loadw (Var (Local 0x01)) (Var Sp) Sp
 [04e6b] Ret_popped
 --------------------------------------------------
 [04e6c] RoutineHeader [0,0,0,0,0,0]
-[04e79] Load_word (Var (Local 0x01)) (Con 0) (Local 0x02)
-[04e7d] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+[04e79] Loadw (Var (Local 0x01)) (Con 0) (Local 0x02)
+[04e7d] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 [04e81] Dec (Con 2)
 [04e83] Add (Var (Local 0x01)) (Con 2) (Local 0x01)
 [04e87] Mul (Var (Local 0x03)) (Con 2) Sp
 [04e8b] Add (Var (Local 0x01)) (Var Sp) (Local 0x06)
 [04e8f] Sub (Var (Local 0x02)) (Var (Local 0x03)) Sp
 [04e93] Random (Var Sp) (Local 0x04)
-[04e97] Load_word (Var (Local 0x06)) (Var (Local 0x04)) (Local 0x05)
-[04e9b] Load_word (Var (Local 0x06)) (Con 1) Sp
+[04e97] Loadw (Var (Local 0x06)) (Var (Local 0x04)) (Local 0x05)
+[04e9b] Loadw (Var (Local 0x06)) (Con 1) Sp
 [04e9f] Storew (Var (Local 0x06)) (Var (Local 0x04)) (Var Sp)
 [04ea4] Storew (Var (Local 0x06)) (Con 1) (Var (Local 0x05))
 [04ea9] Inc (Con 3)
 [04eab] Je [Var (Local 0x03),Var (Local 0x02)] (Branch F (Dloc [04eb2]))
 [04eaf] Store (Con 3) (Con 0)
 [04eb2] Storew (Var (Local 0x01)) (Con 0) (Var (Local 0x03))
-[04eb7] Return (Var (Local 0x05))
+[04eb7] Ret (Var (Local 0x05))
 --------------------------------------------------
 [04eba] RoutineHeader []
 [04ebb] Je [Var (Global 0x78),Con 43] (Branch F Dfalse)
@@ -160,7 +166,7 @@ Found 557 combined routines:
 [04ec6] RoutineHeader []
 [04ec7] Jz (Var (Global 0x2e)) (Branch T (Dloc [04ee1]))
 [04eca] Test_attr (Con 174) (Con 11) (Branch F (Dloc [04ed0]))
-[04ece] Return (Con 57)
+[04ece] Ret (Con 57)
 [04ed0] Print "The grating is closed!"
 [04ed9] New_line
 [04eda] Call (Floc [09530]) [Con 174] Sp
@@ -234,7 +240,7 @@ Found 557 combined routines:
 [05018] RoutineHeader [0,0,0,0]
 [05021] Call (Floc [0687c]) [Var (Local 0x01)] (Local 0x03)
 [05027] Jg (Var (Local 0x03)) (Con 1) (Branch F (Dloc [0503c]))
-[0502b] Load_word (Var (Local 0x01)) (Con 1) Sp
+[0502b] Loadw (Var (Local 0x01)) (Con 1) Sp
 [0502f] Get_prop (Var Sp) (Con 5) (Local 0x04)
 [05033] Jz (Var (Local 0x04)) (Branch T (Dloc [0503c]))
 [05036] Store (Con 3) (Con 1)
@@ -249,7 +255,7 @@ Found 557 combined routines:
 [0504e] Print "You wouldn't find any"
 [0505d] Call (Floc [05092]) [Var (Local 0x02)] Sp
 [05063] Print_ret " there."
-[05068] Return (Con 11)
+[05068] Ret (Con 11)
 --------------------------------------------------
 [0506a] RoutineHeader [0]
 [0506d] Store (Con 124) (Con 0)
@@ -271,12 +277,12 @@ Found 557 combined routines:
 [050a8] Print_addr (Var (Global 0x4b))
 [050aa] Rtrue
 [050ab] Jz (Var (Local 0x01)) (Branch T (Dloc [050bf]))
-[050ae] Load_word (Var (Global 0x64)) (Con 6) (Local 0x02)
-[050b2] Load_word (Var (Global 0x64)) (Con 7) Sp
+[050ae] Loadw (Var (Global 0x64)) (Con 6) (Local 0x02)
+[050b2] Loadw (Var (Global 0x64)) (Con 7) Sp
 [050b6] Call (Floc [062ee]) [Var (Local 0x02),Var Sp,Con 0] Sp
 [050be] Ret_popped
-[050bf] Load_word (Var (Global 0x64)) (Con 8) (Local 0x02)
-[050c3] Load_word (Var (Global 0x64)) (Con 9) Sp
+[050bf] Loadw (Var (Global 0x64)) (Con 8) (Local 0x02)
+[050c3] Loadw (Var (Global 0x64)) (Con 9) Sp
 [050c7] Call (Floc [062ee]) [Var (Local 0x02),Var Sp,Con 0] Sp
 [050cf] Ret_popped
 --------------------------------------------------
@@ -365,12 +371,12 @@ Found 557 combined routines:
 [0545c] RoutineHeader [0,0,0]
 [05463] Call (Floc [05486]) [Var (Local 0x01),Con 1] (Local 0x03)
 [0546a] Storew (Var (Local 0x03)) (Con 1) (Var (Local 0x02))
-[0546f] Return (Var (Local 0x03))
+[0546f] Ret (Var (Local 0x03))
 --------------------------------------------------
 [05472] RoutineHeader [0,0,0]
 [05479] Call (Floc [05486]) [Var (Local 0x01)] (Local 0x03)
 [0547f] Storew (Var (Local 0x03)) (Con 1) (Var (Local 0x02))
-[05484] Return (Var (Local 0x03))
+[05484] Ret (Var (Local 0x03))
 --------------------------------------------------
 [05486] RoutineHeader [0,0,0,0,0]
 [05491] Add (Var (Global 0x84)) (Con 180) (Local 0x03)
@@ -381,10 +387,10 @@ Found 557 combined routines:
 [054a4] Sub (Var (Global 0x83)) (Con 6) (Global 0x83)
 [054a8] Add (Var (Global 0x84)) (Var (Global 0x82)) (Local 0x05)
 [054ac] Storew (Var (Local 0x05)) (Con 2) (Var (Local 0x01))
-[054b1] Return (Var (Local 0x05))
-[054b3] Load_word (Var (Local 0x04)) (Con 2) Sp
+[054b1] Ret (Var (Local 0x05))
+[054b3] Loadw (Var (Local 0x04)) (Con 2) Sp
 [054b7] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [054bd]))
-[054bb] Return (Var (Local 0x04))
+[054bb] Ret (Var (Local 0x04))
 [054bd] Add (Var (Local 0x04)) (Con 6) (Local 0x04)
 [054c1] Jump [05499]
 --------------------------------------------------
@@ -399,18 +405,18 @@ Found 557 combined routines:
 [054e0] Add (Var (Global 0x84)) (Var Sp) (Local 0x01)
 [054e4] Add (Var (Global 0x84)) (Con 180) (Local 0x02)
 [054e8] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [054f7]))
-[054ec] Inc_check (Con 18) (Con 999) (Branch F (Dloc [054f5]))
+[054ec] Inc_chk (Con 18) (Con 999) (Branch F (Dloc [054f5]))
 [054f2] Store (Con 18) (Con 0)
-[054f5] Return (Var (Local 0x04))
-[054f7] Load_word (Var (Local 0x01)) (Con 0) Sp
+[054f5] Ret (Var (Local 0x04))
+[054f7] Loadw (Var (Local 0x01)) (Con 0) Sp
 [054fb] Jz (Var Sp) (Branch T (Dloc [05523]))
-[054fe] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+[054fe] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 [05502] Jz (Var (Local 0x03)) (Branch F (Dloc [05508]))
 [05505] Jump [05523]
 [05508] Sub (Var (Local 0x03)) (Con 1) Sp
 [0550c] Storew (Var (Local 0x01)) (Con 1) (Var Sp)
 [05511] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [05523]))
-[05515] Load_word (Var (Local 0x01)) (Con 2) Sp
+[05515] Loadw (Var (Local 0x01)) (Con 2) Sp
 [05519] Call (Fvar Sp) [] Sp
 [0551d] Jz (Var Sp) (Branch T (Dloc [05523]))
 [05520] Store (Con 4) (Con 1)
@@ -423,8 +429,8 @@ Found 557 combined routines:
 [05545] Store (Con 8) (Con 1)
 [05548] Call (Floc [05880]) [] (Global 0x7f)
 [0554d] Jz (Var (Global 0x7f)) (Branch T (Dloc [0574b]))
-[05551] Load_word (Var (Global 0x55)) (Var (Global 0x51)) (Local 0x01)
-[05555] Load_word (Var (Global 0x56)) (Var (Global 0x51)) (Local 0x02)
+[05551] Loadw (Var (Global 0x55)) (Var (Global 0x51)) (Local 0x01)
+[05555] Loadw (Var (Global 0x56)) (Var (Global 0x51)) (Local 0x02)
 [05559] Jz (Var (Local 0x02)) (Branch F (Dloc [05562]))
 [0555c] Push (Var (Local 0x02))
 [0555f] Jump [05593]
@@ -433,26 +439,26 @@ Found 557 combined routines:
 [05569] Jz (Var (Local 0x01)) (Branch F (Dloc [05572]))
 [0556c] Store (Con 5) (Con 0)
 [0556f] Jump [05576]
-[05572] Load_word (Var (Global 0x55)) (Con 1) (Local 0x05)
+[05572] Loadw (Var (Global 0x55)) (Con 1) (Local 0x05)
 [05576] Push (Var (Local 0x02))
 [05579] Jump [05593]
 [0557c] Jg (Var (Local 0x01)) (Con 1) (Branch F (Dloc [05590]))
 [05580] Store (Con 8) (Con 0)
 [05583] Store (Con 6) (Var (Global 0x55))
-[05586] Load_word (Var (Global 0x56)) (Con 1) (Local 0x05)
+[05586] Loadw (Var (Global 0x56)) (Con 1) (Local 0x05)
 [0558a] Push (Var (Local 0x01))
 [0558d] Jump [05593]
 [05590] Push (Con 1)
 [05593] Store (Con 3) (Var Sp)
 [05596] Jz (Var (Local 0x05)) (Branch F (Dloc [055a1]))
 [05599] Je [Var (Local 0x01),Con 1] (Branch F (Dloc [055a1]))
-[0559d] Load_word (Var (Global 0x55)) (Con 1) (Local 0x05)
+[0559d] Loadw (Var (Global 0x55)) (Con 1) (Local 0x05)
 [055a1] Je [Var (Global 0x78),Con 137] (Branch F (Dloc [055af]))
 [055a5] Call (Floc [0577c]) [Var (Global 0x78),Var (Global 0x76)] (Local 0x07)
 [055ac] Jump [05717]
 [055af] Jz (Var (Local 0x03)) (Branch F (Dloc [05600]))
-[055b3] Load_byte (Var (Global 0x73)) (Con 0) Sp
-[055b7] And_ (Var Sp) (Con 3) Sp
+[055b3] Loadb (Var (Global 0x73)) (Con 0) Sp
+[055b7] And (Var Sp) (Con 3) Sp
 [055bb] Jz (Var Sp) (Branch F (Dloc [055ca]))
 [055be] Call (Floc [0577c]) [Var (Global 0x78)] (Local 0x07)
 [055c4] Store (Con 134) (Con 0)
@@ -470,7 +476,7 @@ Found 557 combined routines:
 [05606] Jg (Var (Local 0x03)) (Con 1) (Branch F (Dloc [0560d]))
 [0560a] Store (Con 139) (Con 1)
 [0560d] Store (Con 10) (Con 0)
-[05610] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
+[05610] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [0566e]))
 [05615] Jg (Var (Global 0x7a)) (Con 0) (Branch F (Dloc [05655]))
 [0561a] Print "The "
 [0561d] Je [Var (Global 0x7a),Var (Local 0x03)] (Branch T (Dloc [05624]))
@@ -491,9 +497,9 @@ Found 557 combined routines:
 [0566a] New_line
 [0566b] Jump [05717]
 [0566e] Jz (Var (Local 0x08)) (Branch T (Dloc [05678]))
-[05671] Load_word (Var (Global 0x56)) (Var (Local 0x04)) (Local 0x09)
+[05671] Loadw (Var (Global 0x56)) (Var (Local 0x04)) (Local 0x09)
 [05675] Jump [0567c]
-[05678] Load_word (Var (Global 0x55)) (Var (Local 0x04)) (Local 0x09)
+[05678] Loadw (Var (Global 0x55)) (Var (Local 0x04)) (Local 0x09)
 [0567c] Jz (Var (Local 0x08)) (Branch T (Dloc [05685]))
 [0567f] Push (Var (Local 0x09))
 [05682] Jump [05688]
@@ -505,16 +511,16 @@ Found 557 combined routines:
 [05694] Push (Var (Local 0x09))
 [05697] Store (Con 135) (Var Sp)
 [0569a] Jg (Var (Local 0x03)) (Con 1) (Branch T (Dloc [056ad]))
-[0569e] Load_word (Var (Global 0x64)) (Con 6) Sp
-[056a2] Load_word (Var Sp) (Con 0) Sp
+[0569e] Loadw (Var (Global 0x64)) (Con 6) Sp
+[056a2] Loadw (Var Sp) (Con 0) Sp
 [056a6] Je [Var Sp,Con 15228] (Branch F (Dloc [05704]))
 [056ad] Je [Var (Local 0x09),Con 11] (Branch F (Dloc [056b6]))
 [056b1] Inc (Con 138)
 [056b3] Jump [05610]
 [056b6] Je [Var (Global 0x78),Con 93] (Branch F (Dloc [056d2]))
 [056ba] Jz (Var (Global 0x77)) (Branch T (Dloc [056d2]))
-[056bd] Load_word (Var (Global 0x64)) (Con 6) Sp
-[056c1] Load_word (Var Sp) (Con 0) Sp
+[056bd] Loadw (Var (Global 0x64)) (Con 6) Sp
+[056c1] Loadw (Var Sp) (Con 0) Sp
 [056c5] Je [Var Sp,Con 15228] (Branch F (Dloc [056d2]))
 [056cb] Jin (Var (Global 0x76)) (Var (Global 0x77)) (Branch T (Dloc [056d2]))
 [056cf] Jump [05610]
@@ -567,7 +573,7 @@ Found 557 combined routines:
 [0579a] Je [Var (Global 0x6a),Var (Global 0x00)] (Branch T (Dloc [057b8]))
 [0579e] Print "I don't see what you are referring to."
 [057b5] New_line
-[057b6] Return (Con 2)
+[057b6] Ret (Con 2)
 [057b8] Je [Var (Local 0x02),Con 12] (Branch F (Dloc [057bf]))
 [057bc] Store (Con 2) (Var (Global 0x6b))
 [057bf] Je [Var (Local 0x03),Con 12] (Branch F (Dloc [057c6]))
@@ -595,7 +601,7 @@ Found 557 combined routines:
 [0580c] Call (Fvar Sp) [Con 1] (Local 0x04)
 [05811] Jz (Var (Local 0x04)) (Branch T (Dloc [05817]))
 [05814] Jump [05874]
-[05817] Load_word (Var (Global 0x9c)) (Var (Local 0x01)) Sp
+[05817] Loadw (Var (Global 0x9c)) (Var (Local 0x01)) Sp
 [0581b] Call (Fvar Sp) [] (Local 0x04)
 [0581f] Jz (Var (Local 0x04)) (Branch T (Dloc [05825]))
 [05822] Jump [05874]
@@ -619,16 +625,16 @@ Found 557 combined routines:
 [0585f] Call (Fvar Sp) [] (Local 0x04)
 [05863] Jz (Var (Local 0x04)) (Branch T (Dloc [05869]))
 [05866] Jump [05874]
-[05869] Load_word (Var (Global 0x9b)) (Var (Local 0x01)) Sp
+[05869] Loadw (Var (Global 0x9b)) (Var (Local 0x01)) Sp
 [0586d] Call (Fvar Sp) [] (Local 0x04)
 [05871] Jz (Var (Local 0x04)) (Branch T (Dloc [05874]))
 [05874] Store (Con 136) (Var (Local 0x05))
 [05877] Store (Con 134) (Var (Local 0x06))
 [0587a] Store (Con 135) (Var (Local 0x07))
-[0587d] Return (Var (Local 0x04))
+[0587d] Ret (Var (Local 0x04))
 --------------------------------------------------
 [05880] RoutineHeader [1,0,0,0,0,0,0,0,0,0,-1]
-[05897] Inc_check (Con 11) (Con 9) (Branch F (Dloc [0589e]))
+[05897] Inc_chk (Con 11) (Con 9) (Branch F (Dloc [0589e]))
 [0589b] Jump [058a6]
 [0589e] Storew (Var (Global 0x64)) (Var (Local 0x0b)) (Con 0)
 [058a3] Jump [05897]
@@ -662,7 +668,7 @@ Found 557 combined routines:
 [05906] New_line
 [05907] Print ">"
 [0590c] Sread (Var (Global 0x6d)) (Var (Global 0x6e))
-[05910] Load_byte (Var (Global 0x6e)) (Con 1) (Global 0x71)
+[05910] Loadb (Var (Global 0x6e)) (Con 1) (Global 0x71)
 [05914] Jz (Var (Global 0x71)) (Branch F (Dloc [05926]))
 [05917] Print "I beg your pardon?"
 [05924] New_line
@@ -671,10 +677,10 @@ Found 557 combined routines:
 [05929] Store (Con 128) (Con 0)
 [0592c] Store (Con 113) (Con 0)
 [0592f] Store (Con 96) (Con 0)
-[05932] Dec_check (Con 129) (Con 0) (Branch F (Dloc [0593c]))
+[05932] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [0593c]))
 [05936] Store (Con 112) (Con 0)
 [05939] Jump [05b6f]
-[0593c] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
+[0593c] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x02)
 [05940] Jz (Var (Local 0x02)) (Branch F (Dloc [0594d]))
 [05943] Call (Floc [05db8]) [Var (Local 0x01)] (Local 0x02)
 [05949] Jz (Var (Local 0x02)) (Branch T (Dloc [05b5e]))
@@ -706,7 +712,7 @@ Found 557 combined routines:
 [059c1] Je [Var (Local 0x05),Con 2] (Branch F (Dloc [059c9]))
 [059c5] Je [Var (Local 0x04),Con 248] (Branch T (Dloc [059f8]))
 [059c9] Add (Var (Local 0x01)) (Con 2) Sp
-[059cd] Load_word (Var (Global 0x6e)) (Var Sp) (Local 0x07)
+[059cd] Loadw (Var (Global 0x6e)) (Var Sp) (Local 0x07)
 [059d1] Je [Var (Local 0x07),Con 19393,Con 15151,Con 15165] (Branch F (Dloc [059df]))
 [059db] Jl (Var (Local 0x05)) (Con 2) (Branch F (Dloc [059f8]))
 [059df] Jz (Var (Global 0x60)) (Branch T (Dloc [059ec]))
@@ -730,10 +736,10 @@ Found 557 combined routines:
 [05a33] Storew (Var (Global 0x62)) (Con 0) (Var (Local 0x02))
 [05a38] Mul (Var (Local 0x01)) (Con 2) Sp
 [05a3c] Add (Var Sp) (Con 2) (Local 0x09)
-[05a40] Load_byte (Var (Global 0x6e)) (Var (Local 0x09)) Sp
+[05a40] Loadb (Var (Global 0x6e)) (Var (Local 0x09)) Sp
 [05a44] Storeb (Var (Global 0x62)) (Con 2) (Var Sp)
 [05a49] Add (Var (Local 0x09)) (Con 1) Sp
-[05a4d] Load_byte (Var (Global 0x6e)) (Var Sp) Sp
+[05a4d] Loadb (Var (Global 0x6e)) (Var Sp) Sp
 [05a51] Storeb (Var (Global 0x62)) (Con 3) (Var Sp)
 [05a56] Jump [05b65]
 [05a59] Call (Floc [05baa]) [Var (Local 0x02),Con 8,Con 0] (Local 0x03)
@@ -746,7 +752,7 @@ Found 557 combined routines:
 [05a81] Store (Con 3) (Con 0)
 [05a84] Jg (Var (Global 0x71)) (Con 0) (Branch F (Dloc [05aa6]))
 [05a88] Add (Var (Local 0x01)) (Con 2) Sp
-[05a8c] Load_word (Var (Global 0x6e)) (Var Sp) Sp
+[05a8c] Loadw (Var (Global 0x6e)) (Var Sp) Sp
 [05a90] Je [Var Sp,Con 18000] (Branch F (Dloc [05aa6]))
 [05a96] Jz (Var (Local 0x03)) (Branch F (Dloc [05aa6]))
 [05a99] Je [Var (Local 0x02),Con 15228,Con 18042,Con 15172] (Branch T (Dloc [05aa6]))
@@ -754,7 +760,7 @@ Found 557 combined routines:
 [05aa6] Jz (Var (Local 0x03)) (Branch T (Dloc [05ace]))
 [05aa9] Jz (Var (Global 0x71)) (Branch T (Dloc [05abc]))
 [05aac] Add (Var (Local 0x01)) (Con 2) Sp
-[05ab0] Load_word (Var (Global 0x6e)) (Var Sp) Sp
+[05ab0] Loadw (Var (Global 0x6e)) (Var Sp) Sp
 [05ab4] Je [Var Sp,Con 19393,Con 15151] (Branch F (Dloc [05ace]))
 [05abc] Jl (Var (Global 0x61)) (Con 2) (Branch F (Dloc [05b65]))
 [05ac1] Storew (Var (Global 0x64)) (Con 2) (Var (Local 0x03))
@@ -790,7 +796,7 @@ Found 557 combined routines:
 [05b72] Store (Con 136) (Con 137)
 [05b75] Store (Con 134) (Var (Local 0x06))
 [05b78] Store (Con 111) (Var (Local 0x06))
-[05b7b] Return (Con 1)
+[05b7b] Ret (Con 1)
 [05b7d] Store (Con 111) (Con 0)
 [05b80] Jz (Var (Global 0x69)) (Branch T (Dloc [05b88]))
 [05b83] Call (Floc [05e42]) [] Sp
@@ -805,13 +811,13 @@ Found 557 combined routines:
 [05ba8] Rtrue
 --------------------------------------------------
 [05baa] RoutineHeader [0,0,5,5,0]
-[05bb5] Load_byte (Var (Local 0x01)) (Con 4) (Local 0x05)
+[05bb5] Loadb (Var (Local 0x01)) (Con 4) (Local 0x05)
 [05bb9] Test (Var (Local 0x05)) (Var (Local 0x02)) (Branch F Dfalse)
 [05bbd] Jg (Var (Local 0x03)) (Con 4) (Branch T Dtrue)
-[05bc1] And_ (Var (Local 0x05)) (Con 3) (Local 0x05)
+[05bc1] And (Var (Local 0x05)) (Con 3) (Local 0x05)
 [05bc5] Je [Var (Local 0x05),Var (Local 0x03)] (Branch T (Dloc [05bcb]))
 [05bc9] Inc (Con 4)
-[05bcb] Load_byte (Var (Local 0x01)) (Var (Local 0x04)) Sp
+[05bcb] Loadb (Var (Local 0x01)) (Var (Local 0x04)) Sp
 [05bcf] Ret_popped
 --------------------------------------------------
 [05bd0] RoutineHeader [0,0,0,0,0,0,1,0,0,0]
@@ -827,23 +833,23 @@ Found 557 combined routines:
 [05c09] Inc (Con 129)
 [05c0b] Jz (Var (Global 0x71)) (Branch F (Dloc [05c13]))
 [05c0e] Dec (Con 113)
-[05c10] Return (Con -1)
+[05c10] Ret (Con -1)
 [05c13] Add (Con 6) (Var (Local 0x04)) (Local 0x05)
 [05c17] Mul (Var (Local 0x01)) (Con 2) Sp
 [05c1b] Add (Var (Global 0x6e)) (Var Sp) Sp
 [05c1f] Storew (Var (Global 0x64)) (Var (Local 0x05)) (Var Sp)
-[05c24] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) Sp
+[05c24] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) Sp
 [05c28] Je [Var Sp,Con 19379,Con 15172,Con 15242] (Branch F (Dloc [05c3f]))
-[05c32] Load_word (Var (Global 0x64)) (Var (Local 0x05)) Sp
+[05c32] Loadw (Var (Global 0x64)) (Var (Local 0x05)) Sp
 [05c36] Add (Var Sp) (Con 4) Sp
 [05c3a] Storew (Var (Global 0x64)) (Var (Local 0x05)) (Var Sp)
-[05c3f] Dec_check (Con 129) (Con 0) (Branch F (Dloc [05c57]))
+[05c3f] Dec_chk (Con 129) (Con 0) (Branch F (Dloc [05c57]))
 [05c43] Add (Var (Local 0x05)) (Con 1) (Local 0x0a)
 [05c47] Mul (Var (Local 0x01)) (Con 2) Sp
 [05c4b] Add (Var (Global 0x6e)) (Var Sp) Sp
 [05c4f] Storew (Var (Global 0x64)) (Var (Local 0x0a)) (Var Sp)
-[05c54] Return (Con -1)
-[05c57] Load_word (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x03)
+[05c54] Ret (Con -1)
+[05c57] Loadw (Var (Global 0x6e)) (Var (Local 0x01)) (Local 0x03)
 [05c5b] Jz (Var (Local 0x03)) (Branch F (Dloc [05c68]))
 [05c5e] Call (Floc [05db8]) [Var (Local 0x01)] (Local 0x03)
 [05c64] Jz (Var (Local 0x03)) (Branch T (Dloc [05da4]))
@@ -851,7 +857,7 @@ Found 557 combined routines:
 [05c6b] Store (Con 8) (Con 0)
 [05c6e] Jump [05c79]
 [05c71] Add (Var (Local 0x01)) (Con 2) Sp
-[05c75] Load_word (Var (Global 0x6e)) (Var Sp) (Local 0x08)
+[05c75] Loadw (Var (Global 0x6e)) (Var Sp) (Local 0x08)
 [05c79] Je [Var (Local 0x03),Con 15256,Con 15158] (Branch F (Dloc [05c87]))
 [05c81] Store (Con 6) (Con 1)
 [05c84] Jump [05dab]
@@ -863,7 +869,7 @@ Found 557 combined routines:
 [05c9f] Je [Var (Local 0x03),Con 19393,Con 15151] (Branch T (Dloc [05cbb]))
 [05ca7] Call (Floc [05baa]) [Var (Local 0x03),Con 8] Sp
 [05cae] Jz (Var Sp) (Branch T (Dloc [05cd4]))
-[05cb1] Load_word (Var (Global 0x64)) (Con 0) Sp
+[05cb1] Loadw (Var (Global 0x64)) (Con 0) Sp
 [05cb5] Jz (Var Sp) (Branch T (Dloc [05cd4]))
 [05cb8] Jz (Var (Local 0x07)) (Branch F (Dloc [05cd4]))
 [05cbb] Inc (Con 129)
@@ -872,7 +878,7 @@ Found 557 combined routines:
 [05cc5] Add (Var (Global 0x6e)) (Var Sp) Sp
 [05cc9] Storew (Var (Global 0x64)) (Var (Local 0x0a)) (Var Sp)
 [05cce] Sub (Var (Local 0x01)) (Con 2) Sp
-[05cd2] Return (Var Sp)
+[05cd2] Ret (Var Sp)
 [05cd4] Call (Floc [05baa]) [Var (Local 0x03),Con 128] Sp
 [05cdb] Jz (Var Sp) (Branch T (Dloc [05d3f]))
 [05cdf] Jg (Var (Global 0x71)) (Con 0) (Branch F (Dloc [05cf4]))
@@ -893,12 +899,12 @@ Found 557 combined routines:
 [05d2a] Mul (Var Sp) (Con 2) Sp
 [05d2e] Add (Var (Global 0x6e)) (Var Sp) Sp
 [05d32] Storew (Var (Global 0x64)) (Var (Local 0x0a)) (Var Sp)
-[05d37] Return (Var (Local 0x01))
+[05d37] Ret (Var (Local 0x01))
 [05d39] Store (Con 6) (Con 0)
 [05d3c] Jump [05dab]
 [05d3f] Jz (Var (Global 0x68)) (Branch F (Dloc [05d4c]))
 [05d42] Jz (Var (Global 0x69)) (Branch F (Dloc [05d4c]))
-[05d45] Load_word (Var (Global 0x64)) (Con 0) Sp
+[05d45] Loadw (Var (Global 0x64)) (Con 0) Sp
 [05d49] Jz (Var Sp) (Branch T (Dloc [05d64]))
 [05d4c] Call (Floc [05baa]) [Var (Local 0x03),Con 32] Sp
 [05d53] Jz (Var Sp) (Branch F (Dloc [05dab]))
@@ -930,13 +936,13 @@ Found 557 combined routines:
 [05db8] RoutineHeader [0,0,0,0,0,0,0]
 [05dc7] Mul (Var (Local 0x01)) (Con 2) Sp
 [05dcb] Add (Var (Global 0x6e)) (Var Sp) Sp
-[05dcf] Load_byte (Var Sp) (Con 2) (Local 0x02)
+[05dcf] Loadb (Var Sp) (Con 2) (Local 0x02)
 [05dd3] Mul (Var (Local 0x01)) (Con 2) Sp
 [05dd7] Add (Var (Global 0x6e)) (Var Sp) Sp
-[05ddb] Load_byte (Var Sp) (Con 3) (Local 0x03)
-[05ddf] Dec_check (Con 2) (Con 0) (Branch F (Dloc [05de6]))
+[05ddb] Loadb (Var Sp) (Con 3) (Local 0x03)
+[05ddf] Dec_chk (Con 2) (Con 0) (Branch F (Dloc [05de6]))
 [05de3] Jump [05e16]
-[05de6] Load_byte (Var (Global 0x6d)) (Var (Local 0x03)) (Local 0x04)
+[05de6] Loadb (Var (Global 0x6d)) (Var (Local 0x03)) (Local 0x04)
 [05dea] Je [Var (Local 0x04),Con 58] (Branch F (Dloc [05df7]))
 [05dee] Store (Con 6) (Var (Local 0x05))
 [05df1] Store (Con 5) (Con 0)
@@ -959,25 +965,25 @@ Found 557 combined routines:
 [05e34] Mul (Var (Local 0x06)) (Con 60) Sp
 [05e38] Add (Var (Local 0x05)) (Var Sp) (Local 0x05)
 [05e3c] Store (Con 110) (Var (Local 0x05))
-[05e3f] Return (Con 17321)
+[05e3f] Ret (Con 17321)
 --------------------------------------------------
 [05e42] RoutineHeader [-1,0,0,0,0,0,0,0]
 [05e53] Store (Con 121) (Con 0)
-[05e56] Load_word (Var (Global 0x64)) (Con 1) Sp
-[05e5a] Load_word (Var Sp) (Con 0) Sp
+[05e56] Loadw (Var (Global 0x64)) (Con 1) Sp
+[05e5a] Loadw (Var Sp) (Con 0) Sp
 [05e5e] Call (Floc [05baa]) [Var Sp,Con 32,Con 2] Sp
 [05e66] Jz (Var Sp) (Branch T (Dloc [05e6c]))
 [05e69] Store (Con 6) (Con 1)
-[05e6c] Load_word (Var (Global 0x64)) (Con 0) (Local 0x03)
+[05e6c] Loadw (Var (Global 0x64)) (Con 0) (Local 0x03)
 [05e70] Jz (Var (Local 0x03)) (Branch T (Dloc [05e7e]))
 [05e73] Jz (Var (Local 0x06)) (Branch F (Dloc [05e7e]))
-[05e76] Load_word (Var (Global 0x63)) (Con 0) Sp
+[05e76] Loadw (Var (Global 0x63)) (Con 0) Sp
 [05e7a] Je [Var (Local 0x03),Var Sp] (Branch F Dfalse)
 [05e7e] Je [Var (Global 0x61),Con 2] (Branch T Dfalse)
-[05e82] Load_word (Var (Global 0x63)) (Con 6) Sp
+[05e82] Loadw (Var (Global 0x63)) (Con 6) Sp
 [05e86] Je [Var Sp,Con 1] (Branch F (Dloc [05ec7]))
-[05e8b] Load_word (Var (Global 0x64)) (Con 2) (Local 0x02)
-[05e8f] Load_word (Var (Global 0x63)) (Con 2) Sp
+[05e8b] Loadw (Var (Global 0x64)) (Con 2) (Local 0x02)
+[05e8f] Loadw (Var (Global 0x63)) (Con 2) Sp
 [05e93] Je [Var (Local 0x02),Var Sp] (Branch T (Dloc [05e9a]))
 [05e97] Jz (Var (Local 0x02)) (Branch F Dfalse)
 [05e9a] Jz (Var (Local 0x06)) (Branch T (Dloc [05eb2]))
@@ -986,15 +992,15 @@ Found 557 combined routines:
 [05ea6] Add (Var (Global 0x6e)) (Con 6) Sp
 [05eaa] Storew (Var (Global 0x63)) (Con 7) (Var Sp)
 [05eaf] Jump [05f9b]
-[05eb2] Load_word (Var (Global 0x64)) (Con 6) Sp
+[05eb2] Loadw (Var (Global 0x64)) (Con 6) Sp
 [05eb6] Storew (Var (Global 0x63)) (Con 6) (Var Sp)
-[05ebb] Load_word (Var (Global 0x64)) (Con 7) Sp
+[05ebb] Loadw (Var (Global 0x64)) (Con 7) Sp
 [05ebf] Storew (Var (Global 0x63)) (Con 7) (Var Sp)
 [05ec4] Jump [05f9b]
-[05ec7] Load_word (Var (Global 0x63)) (Con 8) Sp
+[05ec7] Loadw (Var (Global 0x63)) (Con 8) Sp
 [05ecb] Je [Var Sp,Con 1] (Branch F (Dloc [05f0c]))
-[05ed0] Load_word (Var (Global 0x64)) (Con 2) (Local 0x02)
-[05ed4] Load_word (Var (Global 0x63)) (Con 4) Sp
+[05ed0] Loadw (Var (Global 0x64)) (Con 2) (Local 0x02)
+[05ed4] Loadw (Var (Global 0x63)) (Con 4) Sp
 [05ed8] Je [Var (Local 0x02),Var Sp] (Branch T (Dloc [05edf]))
 [05edc] Jz (Var (Local 0x02)) (Branch F Dfalse)
 [05edf] Jz (Var (Local 0x06)) (Branch T (Dloc [05ef4]))
@@ -1002,9 +1008,9 @@ Found 557 combined routines:
 [05ee6] Storew (Var (Global 0x64)) (Con 6) (Var Sp)
 [05eeb] Add (Var (Global 0x6e)) (Con 6) Sp
 [05eef] Storew (Var (Global 0x64)) (Con 7) (Var Sp)
-[05ef4] Load_word (Var (Global 0x64)) (Con 6) Sp
+[05ef4] Loadw (Var (Global 0x64)) (Con 6) Sp
 [05ef8] Storew (Var (Global 0x63)) (Con 8) (Var Sp)
-[05efd] Load_word (Var (Global 0x64)) (Con 7) Sp
+[05efd] Loadw (Var (Global 0x64)) (Con 7) Sp
 [05f01] Storew (Var (Global 0x63)) (Con 9) (Var Sp)
 [05f06] Store (Con 113) (Con 2)
 [05f09] Jump [05f9b]
@@ -1013,12 +1019,12 @@ Found 557 combined routines:
 [05f14] Jz (Var (Local 0x06)) (Branch F (Dloc [05f1b]))
 [05f17] Store (Con 119) (Con 0)
 [05f1a] Rfalse
-[05f1b] Load_word (Var (Global 0x64)) (Con 6) (Local 0x04)
+[05f1b] Loadw (Var (Global 0x64)) (Con 6) (Local 0x04)
 [05f1f] Jz (Var (Local 0x06)) (Branch T (Dloc [05f29]))
 [05f22] Add (Var (Global 0x6e)) (Con 2) (Local 0x04)
 [05f26] Store (Con 6) (Con 0)
-[05f29] Load_word (Var (Global 0x64)) (Con 7) (Local 0x05)
-[05f2d] Load_word (Var (Local 0x04)) (Con 0) (Local 0x07)
+[05f29] Loadw (Var (Global 0x64)) (Con 7) (Local 0x05)
+[05f2d] Loadw (Var (Local 0x04)) (Con 0) (Local 0x07)
 [05f31] Je [Var (Local 0x04),Var (Local 0x05)] (Branch F (Dloc [05f45]))
 [05f35] Jz (Var (Local 0x06)) (Branch T (Dloc [05f41]))
 [05f38] Call (Floc [05fb0]) [Var (Local 0x06)] Sp
@@ -1026,12 +1032,12 @@ Found 557 combined routines:
 [05f41] Store (Con 119) (Con 0)
 [05f44] Rfalse
 [05f45] Jz (Var (Local 0x06)) (Branch F (Dloc [05f5e]))
-[05f48] Load_byte (Var (Local 0x07)) (Con 4) Sp
+[05f48] Loadb (Var (Local 0x07)) (Con 4) Sp
 [05f4c] Test (Var Sp) (Con 32) (Branch T (Dloc [05f58]))
 [05f50] Je [Var (Local 0x07),Con 15228,Con 18042] (Branch F (Dloc [05f5e]))
 [05f58] Store (Con 6) (Var (Local 0x07))
 [05f5b] Jump [05f7c]
-[05f5e] Load_byte (Var (Local 0x07)) (Con 4) Sp
+[05f5e] Loadb (Var (Local 0x07)) (Con 4) Sp
 [05f62] Test (Var Sp) (Con 128) (Branch T (Dloc [05f6c]))
 [05f66] Je [Var (Local 0x07),Con 18042] (Branch F (Dloc [05f7c]))
 [05f6c] Je [Var (Local 0x07),Var (Global 0x66),Con 18042] (Branch F Dfalse)
@@ -1045,25 +1051,25 @@ Found 557 combined routines:
 [05f8e] Storew (Var (Global 0x64)) (Con 6) (Var Sp)
 [05f93] Storew (Var (Global 0x64)) (Con 7) (Var (Local 0x04))
 [05f98] Jump [05f2d]
-[05f9b] Inc_check (Con 1) (Con 9) (Branch F (Dloc [05fa3]))
+[05f9b] Inc_chk (Con 1) (Con 9) (Branch F (Dloc [05fa3]))
 [05f9f] Store (Con 120) (Con 1)
 [05fa2] Rtrue
-[05fa3] Load_word (Var (Global 0x63)) (Var (Local 0x01)) Sp
+[05fa3] Loadw (Var (Global 0x63)) (Var (Local 0x01)) Sp
 [05fa7] Storew (Var (Global 0x64)) (Var (Local 0x01)) (Var Sp)
 [05fac] Jump [05f9b]
 --------------------------------------------------
 [05faf] RoutineHeader []
 [05fb0] Je [Con 0,Con 0] (Branch F (Dloc [05fc1]))
 [05fb4] Get_next_prop (Var Sp) (Var Sp) (Global 0xd1)
-[05fb8] Return (Con 116)
+[05fb8] Ret (Con 116)
 --------------------------------------------------
 [05fb0] RoutineHeader [0]
-[05fb3] Load_word (Var (Global 0x63)) (Con 0) Sp
+[05fb3] Loadw (Var (Global 0x63)) (Con 0) Sp
 [05fb7] Storew (Var (Global 0x64)) (Con 0) (Var Sp)
 [05fbc] Store (Con 130) (Var (Global 0x63))
 [05fbf] Add (Var (Global 0x67)) (Con 1) Sp
 [05fc3] Call (Floc [0639e]) [Var (Global 0x67),Var Sp,Var (Local 0x01)] Sp
-[05fcb] Load_word (Var (Global 0x63)) (Con 8) Sp
+[05fcb] Loadw (Var (Global 0x63)) (Con 8) Sp
 [05fcf] Jz (Var Sp) (Branch T (Dloc [05fd5]))
 [05fd2] Store (Con 113) (Con 2)
 [05fd5] Store (Con 119) (Con 0)
@@ -1073,7 +1079,7 @@ Found 557 combined routines:
 [05fbc] Store (Con 130) (Var (Global 0x63))
 [05fbf] Add (Var (Global 0x67)) (Con 1) Sp
 [05fc3] Call (Floc [0639e]) [Var (Global 0x67),Var Sp,Var (Local 0x01)] Sp
-[05fcb] Load_word (Var (Global 0x63)) (Con 8) Sp
+[05fcb] Loadw (Var (Global 0x63)) (Con 8) Sp
 [05fcf] Jz (Var Sp) (Branch T (Dloc [05fd5]))
 [05fd2] Store (Con 113) (Con 2)
 [05fd5] Store (Con 119) (Con 0)
@@ -1081,15 +1087,15 @@ Found 557 combined routines:
 --------------------------------------------------
 [05fd9] RoutineHeader []
 [05fda] Jl (Con 0) (Con 0) (Branch F Dfalse)
-[05fdf] Dec_check (Con 1) (Con 0) (Branch T Dtrue)
-[05fe3] Load_byte (Var (Global 0x6d)) (Var (Local 0x02)) Sp
+[05fdf] Dec_chk (Con 1) (Con 0) (Branch T Dtrue)
+[05fe3] Loadb (Var (Global 0x6d)) (Var (Local 0x02)) Sp
 [05fe7] Print_char (Var Sp)
 [05fea] Inc (Con 2)
 [05fec] Jump [05fdf]
 --------------------------------------------------
 [05fda] RoutineHeader [0,0]
-[05fdf] Dec_check (Con 1) (Con 0) (Branch T Dtrue)
-[05fe3] Load_byte (Var (Global 0x6d)) (Var (Local 0x02)) Sp
+[05fdf] Dec_chk (Con 1) (Con 0) (Branch T Dtrue)
+[05fe3] Loadb (Var (Global 0x6d)) (Var (Local 0x02)) Sp
 [05fe7] Print_char (Var Sp)
 [05fea] Inc (Con 2)
 [05fec] Jump [05fdf]
@@ -1102,15 +1108,15 @@ Found 557 combined routines:
 [0600a] Print "I don't know the word \""
 [06017] Mul (Var (Local 0x01)) (Con 2) (Local 0x02)
 [0601b] Add (Var (Global 0x6e)) (Var (Local 0x02)) Sp
-[0601f] Load_byte (Var Sp) (Con 2) (Local 0x03)
+[0601f] Loadb (Var Sp) (Con 2) (Local 0x03)
 [06023] Add (Var (Global 0x6e)) (Var (Local 0x02)) Sp
-[06027] Load_byte (Var Sp) (Con 3) Sp
+[06027] Loadb (Var Sp) (Con 3) Sp
 [0602b] Call (Floc [05fda]) [Var (Local 0x03),Var Sp] Sp
 [06032] Print "\"."
 [06037] New_line
 [06038] Store (Con 112) (Con 0)
 [0603b] Store (Con 121) (Con 0)
-[0603e] Return (Var (Global 0x69))
+[0603e] Ret (Var (Global 0x69))
 --------------------------------------------------
 [06040] RoutineHeader [0,0,0]
 [06047] Je [Var (Global 0x78),Con 112] (Branch F (Dloc [0605a]))
@@ -1120,51 +1126,51 @@ Found 557 combined routines:
 [0605a] Print "You used the word \""
 [06067] Mul (Var (Local 0x01)) (Con 2) (Local 0x02)
 [0606b] Add (Var (Global 0x6e)) (Var (Local 0x02)) Sp
-[0606f] Load_byte (Var Sp) (Con 2) (Local 0x03)
+[0606f] Loadb (Var Sp) (Con 2) (Local 0x03)
 [06073] Add (Var (Global 0x6e)) (Var (Local 0x02)) Sp
-[06077] Load_byte (Var Sp) (Con 3) Sp
+[06077] Loadb (Var Sp) (Con 3) Sp
 [0607b] Call (Floc [05fda]) [Var (Local 0x03),Var Sp] Sp
 [06082] Print "\" in a way that I don't understand."
 [06097] New_line
 [06098] Store (Con 112) (Con 0)
 [0609b] Store (Con 121) (Con 0)
-[0609e] Return (Var (Global 0x69))
+[0609e] Ret (Var (Global 0x69))
 --------------------------------------------------
 [060a0] RoutineHeader [0,0,0,0,0,0,0,0,0,0,0]
-[060b7] Load_word (Var (Global 0x64)) (Con 0) (Local 0x08)
+[060b7] Loadw (Var (Global 0x64)) (Con 0) (Local 0x08)
 [060bb] Jz (Var (Local 0x08)) (Branch F (Dloc [060d5]))
 [060be] Print "There was no verb in that sentence!"
 [060d3] New_line
 [060d4] Rfalse
 [060d5] Sub (Con 255) (Var (Local 0x08)) Sp
-[060d9] Load_word (Var (Global 0x9d)) (Var Sp) (Local 0x01)
-[060dd] Load_byte (Var (Local 0x01)) (Con 0) (Local 0x02)
+[060d9] Loadw (Var (Global 0x9d)) (Var Sp) (Local 0x01)
+[060dd] Loadb (Var (Local 0x01)) (Con 0) (Local 0x02)
 [060e1] Add (Con 1) (Var (Local 0x01)) (Local 0x01)
-[060e5] Load_byte (Var (Local 0x01)) (Con 0) Sp
-[060e9] And_ (Var Sp) (Con 3) (Local 0x03)
+[060e5] Loadb (Var (Local 0x01)) (Con 0) Sp
+[060e9] And (Var Sp) (Con 3) (Local 0x03)
 [060ed] Jg (Var (Global 0x61)) (Var (Local 0x03)) (Branch F (Dloc [060f4]))
 [060f1] Jump [0613d]
 [060f4] Jl (Var (Local 0x03)) (Con 1) (Branch T (Dloc [06110]))
 [060f8] Jz (Var (Global 0x61)) (Branch F (Dloc [06110]))
-[060fb] Load_word (Var (Global 0x64)) (Con 2) (Local 0x07)
+[060fb] Loadw (Var (Global 0x64)) (Con 2) (Local 0x07)
 [060ff] Jz (Var (Local 0x07)) (Branch T (Dloc [0610a]))
-[06102] Load_byte (Var (Local 0x01)) (Con 1) Sp
+[06102] Loadb (Var (Local 0x01)) (Con 1) Sp
 [06106] Je [Var (Local 0x07),Var Sp] (Branch F (Dloc [06110]))
 [0610a] Store (Con 5) (Var (Local 0x01))
 [0610d] Jump [0613d]
-[06110] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x0b)
-[06114] Load_word (Var (Global 0x64)) (Con 2) Sp
+[06110] Loadb (Var (Local 0x01)) (Con 1) (Local 0x0b)
+[06114] Loadw (Var (Global 0x64)) (Con 2) Sp
 [06118] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 [0611c] Je [Var (Local 0x03),Con 2] (Branch F (Dloc [0612a]))
 [06120] Je [Var (Global 0x61),Con 1] (Branch F (Dloc [0612a]))
 [06124] Store (Con 6) (Var (Local 0x01))
 [06127] Jump [0613d]
-[0612a] Load_byte (Var (Local 0x01)) (Con 2) (Local 0x0b)
-[0612e] Load_word (Var (Global 0x64)) (Con 4) Sp
+[0612a] Loadb (Var (Local 0x01)) (Con 2) (Local 0x0b)
+[0612e] Loadw (Var (Global 0x64)) (Con 4) Sp
 [06132] Je [Var (Local 0x0b),Var Sp] (Branch F (Dloc [0613d]))
 [06136] Call (Floc [0644a]) [Var (Local 0x01)] Sp
 [0613c] Rtrue
-[0613d] Dec_check (Con 2) (Con 1) (Branch F (Dloc [06167]))
+[0613d] Dec_chk (Con 2) (Con 1) (Branch F (Dloc [06167]))
 [06141] Jz (Var (Local 0x05)) (Branch F (Dloc [0616e]))
 [06144] Jz (Var (Local 0x06)) (Branch T (Dloc [0614a]))
 [06147] Jump [0616e]
@@ -1174,9 +1180,9 @@ Found 557 combined routines:
 [06167] Add (Var (Local 0x01)) (Con 8) (Local 0x01)
 [0616b] Jump [060e5]
 [0616e] Jz (Var (Local 0x05)) (Branch T (Dloc [06199]))
-[06171] Load_byte (Var (Local 0x05)) (Con 3) (Local 0x0a)
-[06175] Load_byte (Var (Local 0x05)) (Con 5) (Local 0x0b)
-[06179] Load_byte (Var (Local 0x05)) (Con 1) Sp
+[06171] Loadb (Var (Local 0x05)) (Con 3) (Local 0x0a)
+[06175] Loadb (Var (Local 0x05)) (Con 5) (Local 0x0b)
+[06179] Loadb (Var (Local 0x05)) (Con 1) Sp
 [0617d] Call (Floc [06456]) [Var (Local 0x0a),Var (Local 0x0b),Var Sp] (Local 0x04)
 [06185] Jz (Var (Local 0x04)) (Branch T (Dloc [06199]))
 [06188] Storew (Var (Global 0x56)) (Var (Global 0x51)) (Con 1)
@@ -1184,9 +1190,9 @@ Found 557 combined routines:
 [06192] Call (Floc [0644a]) [Var (Local 0x05)] Sp
 [06198] Ret_popped
 [06199] Jz (Var (Local 0x06)) (Branch T (Dloc [061c4]))
-[0619c] Load_byte (Var (Local 0x06)) (Con 4) (Local 0x0a)
-[061a0] Load_byte (Var (Local 0x06)) (Con 6) (Local 0x0b)
-[061a4] Load_byte (Var (Local 0x06)) (Con 2) Sp
+[0619c] Loadb (Var (Local 0x06)) (Con 4) (Local 0x0a)
+[061a0] Loadb (Var (Local 0x06)) (Con 6) (Local 0x0b)
+[061a4] Loadb (Var (Local 0x06)) (Con 2) Sp
 [061a8] Call (Floc [06456]) [Var (Local 0x0a),Var (Local 0x0b),Var Sp] (Local 0x04)
 [061b0] Jz (Var (Local 0x04)) (Branch T (Dloc [061c4]))
 [061b3] Storew (Var (Global 0x55)) (Var (Global 0x51)) (Con 1)
@@ -1202,26 +1208,26 @@ Found 557 combined routines:
 [061e8] Ret_popped
 [061e9] Call (Floc [06278]) [Var (Local 0x05),Var (Local 0x06)] Sp
 [061f0] Print "What do you want to "
-[061fd] Load_word (Var (Global 0x63)) (Con 1) (Local 0x09)
+[061fd] Loadw (Var (Global 0x63)) (Con 1) (Local 0x09)
 [06201] Jz (Var (Local 0x09)) (Branch F (Dloc [0620c]))
 [06204] Print "tell"
 [06209] Jump [06230]
-[0620c] Load_byte (Var (Global 0x62)) (Con 2) Sp
+[0620c] Loadb (Var (Global 0x62)) (Con 2) Sp
 [06210] Jz (Var Sp) (Branch F (Dloc [0621c]))
-[06213] Load_word (Var (Local 0x09)) (Con 0) Sp
+[06213] Loadw (Var (Local 0x09)) (Con 0) Sp
 [06217] Print_addr (Var Sp)
 [06219] Jump [06230]
-[0621c] Load_byte (Var (Local 0x09)) (Con 2) (Local 0x0b)
-[06220] Load_byte (Var (Local 0x09)) (Con 3) Sp
+[0621c] Loadb (Var (Local 0x09)) (Con 2) (Local 0x0b)
+[06220] Loadb (Var (Local 0x09)) (Con 3) Sp
 [06224] Call (Floc [05fda]) [Var (Local 0x0b),Var Sp] Sp
 [0622b] Storeb (Var (Global 0x62)) (Con 2) (Con 0)
 [06230] Jz (Var (Local 0x06)) (Branch T (Dloc [0623a]))
 [06233] Call (Floc [062d4]) [Con 6,Con 7] Sp
 [0623a] Store (Con 121) (Con 1)
 [0623d] Jz (Var (Local 0x05)) (Branch T (Dloc [06247]))
-[06240] Load_byte (Var (Local 0x05)) (Con 1) Sp
+[06240] Loadb (Var (Local 0x05)) (Con 1) Sp
 [06244] Jump [0624b]
-[06247] Load_byte (Var (Local 0x06)) (Con 2) Sp
+[06247] Loadb (Var (Local 0x06)) (Con 2) Sp
 [0624b] Call (Floc [0638a]) [Var Sp] Sp
 [06251] Print "?"
 [06254] New_line
@@ -1235,9 +1241,9 @@ Found 557 combined routines:
 [06278] RoutineHeader [0,0,-1]
 [0627f] Storew (Var (Global 0x52)) (Var (Global 0x51)) (Con 0)
 [06284] Store (Con 130) (Var (Global 0x64))
-[06287] Inc_check (Con 3) (Con 9) (Branch F (Dloc [0628e]))
+[06287] Inc_chk (Con 3) (Con 9) (Branch F (Dloc [0628e]))
 [0628b] Jump [0629a]
-[0628e] Load_word (Var (Global 0x64)) (Var (Local 0x03)) Sp
+[0628e] Loadw (Var (Global 0x64)) (Var (Local 0x03)) Sp
 [06292] Storew (Var (Global 0x63)) (Var (Local 0x03)) (Var Sp)
 [06297] Jump [06287]
 [0629a] Je [Var (Global 0x61),Con 2] (Branch F (Dloc [062a5]))
@@ -1245,19 +1251,19 @@ Found 557 combined routines:
 [062a5] Jl (Var (Global 0x61)) (Con 1) (Branch T (Dloc [062b0]))
 [062a9] Call (Floc [0639e]) [Con 6,Con 7] Sp
 [062b0] Jz (Var (Local 0x01)) (Branch T (Dloc [062c2]))
-[062b3] Load_byte (Var (Local 0x01)) (Con 1) Sp
+[062b3] Loadb (Var (Local 0x01)) (Con 1) Sp
 [062b7] Storew (Var (Global 0x63)) (Con 2) (Var Sp)
 [062bc] Storew (Var (Global 0x63)) (Con 6) (Con 1)
 [062c1] Rtrue
 [062c2] Jz (Var (Local 0x02)) (Branch T Dfalse)
-[062c5] Load_byte (Var (Local 0x02)) (Con 2) Sp
+[062c5] Loadb (Var (Local 0x02)) (Con 2) Sp
 [062c9] Storew (Var (Global 0x63)) (Con 4) (Var Sp)
 [062ce] Storew (Var (Global 0x63)) (Con 8) (Con 1)
 [062d3] Rtrue
 --------------------------------------------------
 [062d4] RoutineHeader [0,0,1,0]
-[062dd] Load_word (Var (Global 0x64)) (Var (Local 0x01)) (Local 0x04)
-[062e1] Load_word (Var (Global 0x64)) (Var (Local 0x02)) Sp
+[062dd] Loadw (Var (Global 0x64)) (Var (Local 0x01)) (Local 0x04)
+[062e1] Loadw (Var (Global 0x64)) (Var (Local 0x02)) Sp
 [062e5] Call (Floc [062ee]) [Var (Local 0x04),Var Sp,Var (Local 0x03)] Sp
 [062ed] Ret_popped
 --------------------------------------------------
@@ -1267,7 +1273,7 @@ Found 557 combined routines:
 [06306] Store (Con 4) (Con 0)
 [06309] Jump [0630f]
 [0630c] Print " "
-[0630f] Load_word (Var (Local 0x01)) (Con 0) (Local 0x05)
+[0630f] Loadw (Var (Local 0x01)) (Con 0) (Local 0x05)
 [06313] Je [Var (Local 0x05),Con 15151] (Branch F (Dloc [0631f]))
 [06319] Store (Con 4) (Con 1)
 [0631c] Jump [06357]
@@ -1283,21 +1289,21 @@ Found 557 combined routines:
 [0633c] Je [Var (Global 0x6a),Var (Global 0x00)] (Branch F (Dloc [06345]))
 [06340] Print_obj (Var (Global 0x6b))
 [06342] Jump [06354]
-[06345] Load_byte (Var (Local 0x01)) (Con 2) (Local 0x08)
-[06349] Load_byte (Var (Local 0x01)) (Con 3) Sp
+[06345] Loadb (Var (Local 0x01)) (Con 2) (Local 0x08)
+[06349] Loadb (Var (Local 0x01)) (Con 3) Sp
 [0634d] Call (Floc [05fda]) [Var (Local 0x08),Var Sp] Sp
 [06354] Store (Con 6) (Con 0)
 [06357] Add (Var (Local 0x01)) (Con 4) (Local 0x01)
 [0635b] Jump [062ff]
 --------------------------------------------------
 [0635e] RoutineHeader [0,0]
-[06363] Load_byte (Var (Local 0x01)) (Con 3) Sp
-[06367] Load_byte (Var (Global 0x6d)) (Var Sp) Sp
+[06363] Loadb (Var (Local 0x01)) (Con 3) Sp
+[06367] Loadb (Var (Global 0x6d)) (Var Sp) Sp
 [0636b] Sub (Var Sp) (Con 32) Sp
 [0636f] Print_char (Var Sp)
-[06372] Load_byte (Var (Local 0x01)) (Con 2) Sp
+[06372] Loadb (Var (Local 0x01)) (Con 2) Sp
 [06376] Sub (Var Sp) (Con 1) (Local 0x02)
-[0637a] Load_byte (Var (Local 0x01)) (Con 3) Sp
+[0637a] Loadb (Var (Local 0x01)) (Con 3) Sp
 [0637e] Add (Var Sp) (Con 1) Sp
 [06382] Call (Floc [05fda]) [Var (Local 0x02),Var Sp] Sp
 [06389] Ret_popped
@@ -1310,31 +1316,31 @@ Found 557 combined routines:
 [0639d] Rtrue
 --------------------------------------------------
 [0639e] RoutineHeader [0,0,0,0,0]
-[063a9] Load_word (Var (Global 0x72)) (Var (Local 0x01)) (Local 0x04)
-[063ad] Load_word (Var (Global 0x72)) (Var (Local 0x02)) (Local 0x05)
-[063b1] Load_word (Var (Global 0x52)) (Var (Global 0x51)) Sp
+[063a9] Loadw (Var (Global 0x72)) (Var (Local 0x01)) (Local 0x04)
+[063ad] Loadw (Var (Global 0x72)) (Var (Local 0x02)) (Local 0x05)
+[063b1] Loadw (Var (Global 0x52)) (Var (Global 0x51)) Sp
 [063b5] Mul (Var Sp) (Con 2) Sp
 [063b9] Add (Var Sp) (Con 2) Sp
 [063bd] Add (Var (Global 0x52)) (Var Sp) Sp
 [063c1] Storew (Var (Global 0x63)) (Var (Local 0x01)) (Var Sp)
 [063c6] Je [Var (Local 0x04),Var (Local 0x05)] (Branch F (Dloc [063e0]))
-[063ca] Load_word (Var (Global 0x52)) (Var (Global 0x51)) Sp
+[063ca] Loadw (Var (Global 0x52)) (Var (Global 0x51)) Sp
 [063ce] Mul (Var Sp) (Con 2) Sp
 [063d2] Add (Var Sp) (Con 2) Sp
 [063d6] Add (Var (Global 0x52)) (Var Sp) Sp
 [063da] Storew (Var (Global 0x63)) (Var (Local 0x02)) (Var Sp)
 [063df] Rtrue
 [063e0] Jz (Var (Local 0x03)) (Branch T (Dloc [063f1]))
-[063e3] Load_word (Var (Local 0x04)) (Con 0) Sp
+[063e3] Loadw (Var (Local 0x04)) (Con 0) Sp
 [063e7] Je [Var (Global 0x66),Var Sp] (Branch F (Dloc [063f1]))
 [063eb] Call (Floc [06402]) [Var (Local 0x03)] Sp
-[063f1] Load_word (Var (Local 0x04)) (Con 0) Sp
+[063f1] Loadw (Var (Local 0x04)) (Con 0) Sp
 [063f5] Call (Floc [06402]) [Var Sp] Sp
 [063fb] Add (Var (Local 0x04)) (Con 4) (Local 0x04)
 [063ff] Jump [063c6]
 --------------------------------------------------
 [06402] RoutineHeader [0,0]
-[06407] Load_word (Var (Global 0x52)) (Var (Global 0x51)) Sp
+[06407] Loadw (Var (Global 0x52)) (Var (Global 0x51)) Sp
 [0640b] Add (Var Sp) (Con 2) (Local 0x02)
 [0640f] Sub (Var (Local 0x02)) (Con 1) Sp
 [06413] Storew (Var (Global 0x52)) (Var Sp) (Var (Local 0x01))
@@ -1343,32 +1349,32 @@ Found 557 combined routines:
 [06422] Rtrue
 --------------------------------------------------
 [06424] RoutineHeader [0,0,0]
-[0642b] Load_word (Var (Global 0x9a)) (Con 0) Sp
+[0642b] Loadw (Var (Global 0x9a)) (Con 0) Sp
 [0642f] Mul (Var Sp) (Con 2) (Local 0x03)
-[06433] Inc_check (Con 2) (Var (Local 0x03)) (Branch T Dfalse)
-[06437] Load_word (Var (Global 0x9a)) (Var (Local 0x02)) Sp
+[06433] Inc_chk (Con 2) (Var (Local 0x03)) (Branch T Dfalse)
+[06437] Loadw (Var (Global 0x9a)) (Var (Local 0x02)) Sp
 [0643b] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [06433]))
 [06440] Sub (Var (Local 0x02)) (Con 1) Sp
-[06444] Load_word (Var (Global 0x9a)) (Var Sp) Sp
-[06448] Return (Var Sp)
+[06444] Loadw (Var (Global 0x9a)) (Var Sp) Sp
+[06448] Ret (Var Sp)
 --------------------------------------------------
 [0644a] RoutineHeader [0]
 [0644d] Store (Con 131) (Var (Local 0x01))
-[06450] Load_byte (Var (Local 0x01)) (Con 7) (Global 0x78)
-[06454] Return (Var (Global 0x78))
+[06450] Loadb (Var (Local 0x01)) (Con 7) (Global 0x78)
+[06454] Ret (Var (Global 0x78))
 --------------------------------------------------
 [06456] RoutineHeader [0,0,0,0]
 [0645f] Je [Var (Local 0x01),Con 18] (Branch F (Dloc [06465]))
-[06463] Return (Con 82)
+[06463] Ret (Con 82)
 [06465] Store (Con 107) (Var (Local 0x01))
 [06468] Store (Con 108) (Var (Local 0x02))
 [0646b] Storew (Var (Global 0x53)) (Var (Global 0x51)) (Con 0)
 [06470] Call (Floc [066c2]) [Var (Global 0x53),Con 0] Sp
 [06477] Jz (Var Sp) (Branch T (Dloc [064c5]))
 [0647b] Store (Con 107) (Con 0)
-[0647e] Load_word (Var (Global 0x53)) (Var (Global 0x51)) Sp
+[0647e] Loadw (Var (Global 0x53)) (Var (Global 0x51)) Sp
 [06482] Je [Var Sp,Con 1] (Branch F Dfalse)
-[06486] Load_word (Var (Global 0x53)) (Con 1) (Local 0x04)
+[06486] Loadw (Var (Global 0x53)) (Con 1) (Local 0x04)
 [0648a] Je [Var (Local 0x04),Con 5] (Branch T Dfalse)
 [0648e] Print "("
 [06491] Jz (Var (Local 0x03)) (Branch T (Dloc [064b9]))
@@ -1385,29 +1391,55 @@ Found 557 combined routines:
 [064bd] Print_obj (Var (Local 0x04))
 [064bf] Print ")"
 [064c2] New_line
-[064c3] Return (Var (Local 0x04))
+[064c3] Ret (Var (Local 0x04))
 [064c5] Store (Con 107) (Con 0)
 [064c8] Rfalse
 --------------------------------------------------
-[064ca] RoutineHeader [0]
-[064cd] Load_word (Var (Global 0x64)) (Con 6) (Local 0x01)
-[064d1] Jz (Var (Local 0x01)) (Branch T (Dloc [064f4]))
-[064d4] Load_byte (Var (Global 0x73)) (Con 5) (Global 0x5c)
-[064d8] Load_word (Var (Global 0x64)) (Con 7) Sp
-[064dc] Call (Floc [0657a]) [Var (Local 0x01),Var Sp,Var (Global 0x56)] Sp
-[064e4] Jz (Var Sp) (Branch T Dfalse)
-[064e7] Load_word (Var (Global 0x54)) (Var (Global 0x51)) Sp
+[064c9] RoutineHeader []
+[064ca] Je [Con 0,Con 0] (Branch F (Dloc [064db]))
+[064ce] Add (Var (Local 0x06)) (Var (Local 0x01)) (Global 0x90)
+[064d2] Je [Con 226,Con 80] (Branch T (Dloc [067da]))
+[064d7] Clear_attr (Var (Global 0x3f)) (Var (Global 0x64))
+[064da] Test (Con 0) (Con 224) (Branch F (Dloc [04f0f]))
+[064df] Verify (Branch F (Dloc [065e0]))
+[064e2] Jin (Var Sp) (Var (Global 0x90)) (Branch F (Dloc [065a5]))
+[064e7] Loadw (Var (Global 0x54)) (Var (Global 0x51)) Sp
 [064eb] Jz (Var Sp) (Branch T (Dloc [064f4]))
 [064ee] Call (Floc [0652c]) [Var (Global 0x56)] (Global 0x56)
-[064f4] Load_word (Var (Global 0x64)) (Con 8) (Local 0x01)
+[064f4] Loadw (Var (Global 0x64)) (Con 8) (Local 0x01)
 [064f8] Jz (Var (Local 0x01)) (Branch T Dtrue)
-[064fb] Load_byte (Var (Global 0x73)) (Con 6) (Global 0x5c)
-[064ff] Load_word (Var (Global 0x64)) (Con 9) Sp
+[064fb] Loadb (Var (Global 0x73)) (Con 6) (Global 0x5c)
+[064ff] Loadw (Var (Global 0x64)) (Con 9) Sp
 [06503] Call (Floc [0657a]) [Var (Local 0x01),Var Sp,Var (Global 0x55)] Sp
 [0650b] Jz (Var Sp) (Branch T Dfalse)
-[0650e] Load_word (Var (Global 0x54)) (Var (Global 0x51)) Sp
+[0650e] Loadw (Var (Global 0x54)) (Var (Global 0x51)) Sp
 [06512] Jz (Var Sp) (Branch T Dtrue)
-[06515] Load_word (Var (Global 0x55)) (Var (Global 0x51)) Sp
+[06515] Loadw (Var (Global 0x55)) (Var (Global 0x51)) Sp
+[06519] Je [Var Sp,Con 1] (Branch F (Dloc [06524]))
+[0651d] Call (Floc [0652c]) [Var (Global 0x56)] (Global 0x56)
+[06523] Rtrue
+[06524] Call (Floc [0652c]) [Var (Global 0x55)] (Global 0x55)
+[0652a] Rtrue
+--------------------------------------------------
+[064ca] RoutineHeader [0]
+[064cd] Loadw (Var (Global 0x64)) (Con 6) (Local 0x01)
+[064d1] Jz (Var (Local 0x01)) (Branch T (Dloc [064f4]))
+[064d4] Loadb (Var (Global 0x73)) (Con 5) (Global 0x5c)
+[064d8] Loadw (Var (Global 0x64)) (Con 7) Sp
+[064dc] Call (Floc [0657a]) [Var (Local 0x01),Var Sp,Var (Global 0x56)] Sp
+[064e4] Jz (Var Sp) (Branch T Dfalse)
+[064e7] Loadw (Var (Global 0x54)) (Var (Global 0x51)) Sp
+[064eb] Jz (Var Sp) (Branch T (Dloc [064f4]))
+[064ee] Call (Floc [0652c]) [Var (Global 0x56)] (Global 0x56)
+[064f4] Loadw (Var (Global 0x64)) (Con 8) (Local 0x01)
+[064f8] Jz (Var (Local 0x01)) (Branch T Dtrue)
+[064fb] Loadb (Var (Global 0x73)) (Con 6) (Global 0x5c)
+[064ff] Loadw (Var (Global 0x64)) (Con 9) Sp
+[06503] Call (Floc [0657a]) [Var (Local 0x01),Var Sp,Var (Global 0x55)] Sp
+[0650b] Jz (Var Sp) (Branch T Dfalse)
+[0650e] Loadw (Var (Global 0x54)) (Var (Global 0x51)) Sp
+[06512] Jz (Var Sp) (Branch T Dtrue)
+[06515] Loadw (Var (Global 0x55)) (Var (Global 0x51)) Sp
 [06519] Je [Var Sp,Con 1] (Branch F (Dloc [06524]))
 [0651d] Call (Floc [0652c]) [Var (Global 0x56)] (Global 0x56)
 [06523] Rtrue
@@ -1415,11 +1447,11 @@ Found 557 combined routines:
 [0652a] Rtrue
 --------------------------------------------------
 [0652c] RoutineHeader [0,0,0,1,0,0,0]
-[0653b] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x02)
+[0653b] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x02)
 [0653f] Storew (Var (Global 0x53)) (Var (Global 0x51)) (Con 0)
-[06544] Dec_check (Con 2) (Con 0) (Branch F (Dloc [0654b]))
+[06544] Dec_chk (Con 2) (Con 0) (Branch F (Dloc [0654b]))
 [06548] Jump [0656c]
-[0654b] Load_word (Var (Local 0x01)) (Var (Local 0x04)) (Local 0x06)
+[0654b] Loadw (Var (Local 0x01)) (Var (Local 0x04)) (Local 0x06)
 [0654f] Call (Floc [06c22]) [Var (Local 0x06),Var (Global 0x54)] Sp
 [06556] Jz (Var Sp) (Branch T (Dloc [0655c]))
 [06559] Jump [06567]
@@ -1431,7 +1463,7 @@ Found 557 combined routines:
 [0656c] Storew (Var (Global 0x53)) (Var (Global 0x51)) (Var (Local 0x05))
 [06571] Store (Con 7) (Var (Global 0x53))
 [06574] Store (Con 99) (Var (Local 0x01))
-[06577] Return (Var (Local 0x07))
+[06577] Ret (Var (Local 0x07))
 --------------------------------------------------
 [0657a] RoutineHeader [0,0,0,0,0,0,0,0]
 [0658b] Store (Con 96) (Con 0)
@@ -1440,15 +1472,15 @@ Found 557 combined routines:
 [06594] Store (Con 93) (Con 0)
 [06597] Storew (Var (Global 0x54)) (Var (Global 0x51)) (Con 0)
 [0659c] Storew (Var (Local 0x03)) (Var (Global 0x51)) (Con 0)
-[065a1] Load_word (Var (Local 0x01)) (Con 0) (Local 0x07)
+[065a1] Loadw (Var (Local 0x01)) (Con 0) (Local 0x07)
 [065a5] Je [Var (Local 0x01),Var (Local 0x02)] (Branch F (Dloc [065bd]))
 [065a9] Jz (Var (Local 0x04)) (Branch T (Dloc [065b2]))
 [065ac] Push (Var (Local 0x04))
 [065af] Jump [065b5]
 [065b2] Push (Var (Local 0x03))
 [065b5] Call (Floc [066c2]) [Var Sp] Sp
-[065bb] Return (Var Sp)
-[065bd] Load_word (Var (Local 0x01)) (Con 2) (Local 0x08)
+[065bb] Ret (Var Sp)
+[065bd] Loadw (Var (Local 0x01)) (Con 2) (Local 0x08)
 [065c1] Je [Var (Local 0x07),Con 15228] (Branch F (Dloc [065d8]))
 [065c7] Store (Con 96) (Con 1)
 [065ca] Je [Var (Local 0x08),Con 18000] (Branch F (Dloc [066b3]))
@@ -1515,7 +1547,7 @@ Found 557 combined routines:
 --------------------------------------------------
 [066c2] RoutineHeader [0,1,0,0,0,0,0,0,0]
 [066d5] Store (Con 5) (Var (Global 0x5c))
-[066d8] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x06)
+[066d8] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x06)
 [066dc] Test (Var (Global 0x50)) (Con 4) (Branch T Dtrue)
 [066e0] Jz (Var (Global 0x5a)) (Branch F (Dloc [066f7]))
 [066e3] Jz (Var (Global 0x59)) (Branch T (Dloc [066f7]))
@@ -1543,7 +1575,7 @@ Found 557 combined routines:
 [06745] Call (Floc [06a1e]) [Var (Global 0x00),Con 16,Con 32] Sp
 [0674d] Set_attr (Var (Global 0x80)) (Con 12)
 [06750] Call (Floc [06a1e]) [Var (Global 0x80),Con 128,Con 64] Sp
-[06758] Load_word (Var (Local 0x01)) (Var (Global 0x51)) Sp
+[06758] Loadw (Var (Local 0x01)) (Var (Global 0x51)) Sp
 [0675c] Sub (Var Sp) (Var (Local 0x06)) (Local 0x04)
 [06760] Test (Var (Global 0x50)) (Con 1) (Branch F (Dloc [06767]))
 [06764] Jump [06872]
@@ -1551,10 +1583,10 @@ Found 557 combined routines:
 [0676b] Jz (Var (Local 0x04)) (Branch T (Dloc [0679c]))
 [0676e] Je [Var (Local 0x04),Con 1] (Branch T (Dloc [06794]))
 [06772] Random (Var (Local 0x04)) Sp
-[06776] Load_word (Var (Local 0x01)) (Var Sp) Sp
+[06776] Loadw (Var (Local 0x01)) (Var Sp) Sp
 [0677a] Storew (Var (Local 0x01)) (Con 1) (Var Sp)
 [0677f] Print "(How about the "
-[06788] Load_word (Var (Local 0x01)) (Con 1) Sp
+[06788] Loadw (Var (Local 0x01)) (Con 1) Sp
 [0678c] Print_obj (Var Sp)
 [0678e] Print "?)"
 [06793] New_line
@@ -1566,7 +1598,7 @@ Found 557 combined routines:
 [067ab] Je [Var (Global 0x5c),Con -1] (Branch F (Dloc [067c7]))
 [067b1] Store (Con 108) (Var (Local 0x05))
 [067b4] Store (Con 8) (Var (Local 0x04))
-[067b7] Load_word (Var (Local 0x01)) (Var (Global 0x51)) Sp
+[067b7] Loadw (Var (Local 0x01)) (Var (Global 0x51)) Sp
 [067bb] Sub (Var Sp) (Var (Local 0x04)) Sp
 [067bf] Storew (Var (Local 0x01)) (Var (Global 0x51)) (Var Sp)
 [067c4] Jump [06733]
@@ -1630,18 +1662,18 @@ Found 557 combined routines:
 [0689d] Call (Floc [06a52]) [Var (Local 0x02),Var (Local 0x01),Con 1] Sp
 [068a5] Get_sibling (Var (Local 0x02)) (Local 0x02) (Branch T (Dloc [068a9]))
 [068a9] Jump [06897]
-[068ac] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+[068ac] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 [068b0] Jz (Var (Local 0x03)) (Branch F (Dloc [068bb]))
 [068b3] Call (Floc [06a1e]) [Con 249,Con 1,Con 1] Sp
-[068bb] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+[068bb] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 [068bf] Jz (Var (Local 0x03)) (Branch F (Dloc [068ca]))
 [068c2] Call (Floc [06a1e]) [Con 82,Con 1,Con 1] Sp
-[068ca] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+[068ca] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 [068ce] Je [Var (Local 0x03),Con 1] (Branch F (Dloc [068d6]))
-[068d2] Load_word (Var (Local 0x01)) (Con 1) (Global 0x4c)
+[068d2] Loadw (Var (Local 0x01)) (Con 1) (Global 0x4c)
 [068d6] Store (Con 106) (Con 0)
 [068d9] Store (Con 105) (Con 0)
-[068dc] Return (Var (Local 0x03))
+[068dc] Ret (Var (Local 0x03))
 --------------------------------------------------
 [068de] RoutineHeader [0,0,0,0,0]
 [068e9] Store (Con 5) (Var (Local 0x02))
@@ -1658,7 +1690,7 @@ Found 557 combined routines:
 [06911] Call (Floc [062d4]) [Con 8,Con 9,Con 0] Sp
 [06919] Print " do you mean, "
 [06922] Inc (Con 1)
-[06924] Load_word (Var (Local 0x03)) (Var (Local 0x01)) (Local 0x04)
+[06924] Loadw (Var (Local 0x03)) (Var (Local 0x01)) (Local 0x04)
 [06928] Print "the "
 [0692b] Print_obj (Var (Local 0x04))
 [0692d] Je [Var (Local 0x02),Con 2] (Branch F (Dloc [06940]))
@@ -1668,21 +1700,21 @@ Found 557 combined routines:
 [0693d] Jump [06947]
 [06940] Jg (Var (Local 0x02)) (Con 2) (Branch F (Dloc [06947]))
 [06944] Print ", "
-[06947] Dec_check (Con 2) (Con 1) (Branch F (Dloc [06922]))
+[06947] Dec_chk (Con 2) (Con 1) (Branch F (Dloc [06922]))
 [0694c] Print_ret "?"
 --------------------------------------------------
 [06950] RoutineHeader [0,0,0,0,0,0,0,0]
-[06961] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x02)
+[06961] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x02)
 [06965] Store (Con 7) (Var (Global 0x5c))
 [06968] Get_prop_addr (Var (Global 0x00)) (Con 5) (Local 0x03)
 [0696c] Jz (Var (Local 0x03)) (Branch T (Dloc [06990]))
 [0696f] Get_prop_len (Var (Local 0x03)) Sp
 [06972] Sub (Var Sp) (Con 1) (Local 0x04)
-[06976] Load_byte (Var (Local 0x03)) (Var (Local 0x05)) (Local 0x06)
+[06976] Loadb (Var (Local 0x03)) (Var (Local 0x05)) (Local 0x06)
 [0697a] Call (Floc [06d1c]) [Var (Local 0x06),Var (Local 0x01)] Sp
 [06981] Jz (Var Sp) (Branch T (Dloc [0698b]))
 [06984] Call (Floc [06aba]) [Var (Local 0x06),Var (Local 0x01)] Sp
-[0698b] Inc_check (Con 5) (Var (Local 0x04)) (Branch F (Dloc [06976]))
+[0698b] Inc_chk (Con 5) (Var (Local 0x04)) (Branch F (Dloc [06976]))
 [06990] Get_prop_addr (Var (Global 0x00)) (Con 4) (Local 0x03)
 [06994] Jz (Var (Local 0x03)) (Branch T (Dloc [069ec]))
 [06998] Get_prop_len (Var (Local 0x03)) Sp
@@ -1690,28 +1722,28 @@ Found 557 combined routines:
 [0699f] Sub (Var Sp) (Con 1) (Local 0x04)
 [069a3] Store (Con 5) (Con 0)
 [069a6] Mul (Var (Local 0x05)) (Con 2) Sp
-[069aa] Load_word (Var (Local 0x03)) (Var Sp) Sp
+[069aa] Loadw (Var (Local 0x03)) (Var Sp) Sp
 [069ae] Je [Var (Global 0x5a),Var Sp] (Branch F (Dloc [069e7]))
 [069b2] Mul (Var (Local 0x05)) (Con 2) Sp
 [069b6] Add (Var Sp) (Con 1) Sp
-[069ba] Load_word (Var (Local 0x03)) (Var Sp) Sp
+[069ba] Loadw (Var (Local 0x03)) (Var Sp) Sp
 [069be] Put_prop (Con 13) (Con 17) (Var Sp)
 [069c3] Get_prop_addr (Con 13) (Con 17) Sp
 [069c7] Sub (Var Sp) (Con 5) (Local 0x08)
-[069cb] Load_word (Var (Global 0x5a)) (Con 0) Sp
+[069cb] Loadw (Var (Global 0x5a)) (Con 0) Sp
 [069cf] Storew (Var (Local 0x08)) (Con 0) (Var Sp)
-[069d4] Load_word (Var (Global 0x5a)) (Con 1) Sp
+[069d4] Loadw (Var (Global 0x5a)) (Con 1) Sp
 [069d8] Storew (Var (Local 0x08)) (Con 1) (Var Sp)
 [069dd] Call (Floc [06aba]) [Con 13,Var (Local 0x01)] Sp
 [069e4] Jump [069ec]
-[069e7] Inc_check (Con 5) (Var (Local 0x04)) (Branch F (Dloc [069a6]))
-[069ec] Load_word (Var (Local 0x01)) (Var (Global 0x51)) Sp
+[069e7] Inc_chk (Con 5) (Var (Local 0x04)) (Branch F (Dloc [069a6]))
+[069ec] Loadw (Var (Local 0x01)) (Var (Global 0x51)) Sp
 [069f0] Je [Var Sp,Var (Local 0x02)] (Branch F Dfalse)
 [069f4] Store (Con 108) (Con -1)
 [069f9] Store (Con 133) (Var (Local 0x01))
 [069fc] Call (Floc [06a1e]) [Con 247,Con 1,Con 1] Sp
 [06a04] Store (Con 108) (Var (Local 0x07))
-[06a07] Load_word (Var (Local 0x01)) (Var (Global 0x51)) Sp
+[06a07] Loadw (Var (Local 0x01)) (Var (Global 0x51)) Sp
 [06a0b] Jz (Var Sp) (Branch F Dfalse)
 [06a0e] Je [Var (Global 0x78),Con 57,Con 113,Con 56] (Branch F Dfalse)
 [06a15] Call (Floc [06a1e]) [Con 82,Con 1,Con 1] Sp
@@ -1755,7 +1787,7 @@ Found 557 combined routines:
 [06ab9] Rtrue
 --------------------------------------------------
 [06aba] RoutineHeader [0,0,0]
-[06ac1] Load_word (Var (Local 0x02)) (Var (Global 0x51)) (Local 0x03)
+[06ac1] Loadw (Var (Local 0x02)) (Var (Global 0x51)) (Local 0x03)
 [06ac5] Add (Var (Local 0x03)) (Con 1) Sp
 [06ac9] Storew (Var (Local 0x02)) (Var Sp) (Var (Local 0x01))
 [06ace] Add (Var (Local 0x03)) (Con 1) Sp
@@ -1763,21 +1795,21 @@ Found 557 combined routines:
 [06ad7] Rtrue
 --------------------------------------------------
 [06ad8] RoutineHeader []
-[06ad9] Load_byte (Var (Global 0x73)) (Con 5) Sp
+[06ad9] Loadb (Var (Global 0x73)) (Con 5) Sp
 [06add] Call (Floc [06af4]) [Var (Global 0x56),Var Sp] Sp
 [06ae4] Jz (Var Sp) (Branch T Dfalse)
-[06ae7] Load_byte (Var (Global 0x73)) (Con 6) Sp
+[06ae7] Loadb (Var (Global 0x73)) (Con 6) Sp
 [06aeb] Call (Floc [06af4]) [Var (Global 0x55),Var Sp] Sp
 [06af2] Ret_popped
 --------------------------------------------------
 [06af4] RoutineHeader [0,0,0,0,0]
-[06aff] Load_word (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
+[06aff] Loadw (Var (Local 0x01)) (Var (Global 0x51)) (Local 0x03)
 [06b03] Jz (Var (Local 0x03)) (Branch T Dtrue)
 [06b06] Test (Var (Local 0x02)) (Con 2) (Branch T (Dloc [06b0e]))
 [06b0a] Test (Var (Local 0x02)) (Con 8) (Branch F Dtrue)
-[06b0e] Dec_check (Con 3) (Con 0) (Branch T Dtrue)
+[06b0e] Dec_chk (Con 3) (Con 0) (Branch T Dtrue)
 [06b12] Add (Var (Local 0x03)) (Con 1) Sp
-[06b16] Load_word (Var (Local 0x01)) (Var Sp) (Local 0x04)
+[06b16] Loadw (Var (Local 0x01)) (Var Sp) (Local 0x04)
 [06b1a] Je [Var (Local 0x04),Con 12] (Branch F (Dloc [06b21]))
 [06b1e] Store (Con 4) (Var (Global 0x6b))
 [06b21] Call (Floc [094ec]) [Var (Local 0x04)] Sp
@@ -1814,15 +1846,15 @@ Found 557 combined routines:
 [06b95] Jump [06b0e]
 --------------------------------------------------
 [06b98] RoutineHeader [0,0,0]
-[06b9f] Load_word (Var (Global 0x56)) (Var (Global 0x51)) Sp
+[06b9f] Loadw (Var (Global 0x56)) (Var (Global 0x51)) Sp
 [06ba3] Jg (Var Sp) (Con 1) (Branch F (Dloc [06bb5]))
-[06ba7] Load_byte (Var (Global 0x73)) (Con 5) Sp
+[06ba7] Loadb (Var (Global 0x73)) (Con 5) Sp
 [06bab] Test (Var Sp) (Con 4) (Branch T (Dloc [06bb5]))
 [06baf] Store (Con 1) (Con 1)
 [06bb2] Jump [06bc8]
-[06bb5] Load_word (Var (Global 0x55)) (Var (Global 0x51)) Sp
+[06bb5] Loadw (Var (Global 0x55)) (Var (Global 0x51)) Sp
 [06bb9] Jg (Var Sp) (Con 1) (Branch F (Dloc [06bc8]))
-[06bbd] Load_byte (Var (Global 0x73)) (Con 6) Sp
+[06bbd] Loadb (Var (Global 0x73)) (Con 6) Sp
 [06bc1] Test (Var Sp) (Con 4) (Branch T (Dloc [06bc8]))
 [06bc5] Store (Con 1) (Con 2)
 [06bc8] Jz (Var (Local 0x01)) (Branch T Dtrue)
@@ -1830,17 +1862,17 @@ Found 557 combined routines:
 [06bd8] Je [Var (Local 0x01),Con 2] (Branch F (Dloc [06bdf]))
 [06bdc] Print "in"
 [06bdf] Print "direct objects with \""
-[06bee] Load_word (Var (Global 0x64)) (Con 1) (Local 0x02)
+[06bee] Loadw (Var (Global 0x64)) (Con 1) (Local 0x02)
 [06bf2] Jz (Var (Local 0x02)) (Branch F (Dloc [06bfd]))
 [06bf5] Print "tell"
 [06bfa] Jump [06c1b]
 [06bfd] Jz (Var (Global 0x69)) (Branch F (Dloc [06c03]))
 [06c00] Jz (Var (Global 0x68)) (Branch T (Dloc [06c0c]))
-[06c03] Load_word (Var (Local 0x02)) (Con 0) Sp
+[06c03] Loadw (Var (Local 0x02)) (Con 0) Sp
 [06c07] Print_addr (Var Sp)
 [06c09] Jump [06c1b]
-[06c0c] Load_byte (Var (Local 0x02)) (Con 2) (Local 0x03)
-[06c10] Load_byte (Var (Local 0x02)) (Con 3) Sp
+[06c0c] Loadb (Var (Local 0x02)) (Con 2) (Local 0x03)
+[06c10] Loadb (Var (Local 0x02)) (Con 3) Sp
 [06c14] Call (Floc [05fda]) [Var (Local 0x03),Var Sp] Sp
 [06c1b] Print "\"."
 [06c20] New_line
@@ -1851,16 +1883,16 @@ Found 557 combined routines:
 [06c2e] Jl (Var (Local 0x03)) (Con 0) (Branch T (Dloc [06c38]))
 [06c32] Store (Con 4) (Con 0)
 [06c35] Jump [06c3c]
-[06c38] Load_word (Var (Local 0x02)) (Con 0) (Local 0x03)
-[06c3c] Load_word (Var (Local 0x02)) (Var (Local 0x04)) Sp
+[06c38] Loadw (Var (Local 0x02)) (Con 0) (Local 0x03)
+[06c3c] Loadw (Var (Local 0x02)) (Var (Local 0x04)) Sp
 [06c40] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
-[06c44] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
+[06c44] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c3c]))
 [06c49] Rfalse
 --------------------------------------------------
 [06c4a] RoutineHeader [0,0,0,0]
-[06c53] Load_byte (Var (Local 0x02)) (Var (Local 0x04)) Sp
+[06c53] Loadb (Var (Local 0x02)) (Var (Local 0x04)) Sp
 [06c57] Je [Var (Local 0x01),Var Sp] (Branch T Dtrue)
-[06c5b] Inc_check (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c53]))
+[06c5b] Inc_chk (Con 4) (Var (Local 0x03)) (Branch F (Dloc [06c53]))
 [06c60] Rfalse
 --------------------------------------------------
 [06c62] RoutineHeader [0,1,0,0]
@@ -1882,34 +1914,34 @@ Found 557 combined routines:
 [06ca5] Jin (Var (Global 0x80)) (Var (Local 0x01)) (Branch F (Dloc [06cb1]))
 [06ca9] Call (Floc [06a1e]) [Var (Global 0x80),Con 1,Con 1] Sp
 [06cb1] Call (Floc [06a1e]) [Var (Local 0x01),Con 1,Con 1] Sp
-[06cb9] Load_word (Var (Global 0x75)) (Var (Global 0x51)) Sp
+[06cb9] Loadw (Var (Global 0x75)) (Var (Global 0x51)) Sp
 [06cbd] Jg (Var Sp) (Con 0) (Branch F (Dloc [06cc4]))
 [06cc1] Store (Con 4) (Con 1)
 [06cc4] Store (Con 16) (Var (Local 0x03))
 [06cc7] Store (Con 107) (Con 0)
-[06cca] Return (Var (Local 0x04))
+[06cca] Ret (Var (Local 0x04))
 --------------------------------------------------
 [06ccc] RoutineHeader [0]
 [06ccf] Jz (Var (Global 0x68)) (Branch F (Dloc [06ce0]))
-[06cd2] Load_word (Var (Global 0x64)) (Con 6) (Local 0x01)
-[06cd6] Load_word (Var (Local 0x01)) (Con 0) Sp
+[06cd2] Loadw (Var (Global 0x64)) (Con 6) (Local 0x01)
+[06cd6] Loadw (Var (Local 0x01)) (Con 0) Sp
 [06cda] Je [Var Sp,Con 17356] (Branch F (Dloc [06ce6]))
 [06ce0] Print " "
 [06ce3] Print_obj (Var (Global 0x76))
 [06ce5] Rtrue
-[06ce6] Load_word (Var (Global 0x64)) (Con 7) Sp
+[06ce6] Loadw (Var (Global 0x64)) (Con 7) Sp
 [06cea] Call (Floc [062ee]) [Var (Local 0x01),Var Sp,Con 0] Sp
 [06cf2] Ret_popped
 --------------------------------------------------
 [06cf3] RoutineHeader []
 [06cf4] Je [Con 0,Con 0] (Branch T (Dloc [04d6f]))
-[06cf9] Load_byte (Var (Global 0x3f)) (Con 116) (Local 0x08)
+[06cf9] Loadb (Var (Global 0x3f)) (Con 116) (Local 0x08)
 [06cfd] Je [Con 79,Con 1] (Branch F Dfalse)
 [06d02] Je [Var Sp,Con 17356] (Branch F (Dloc [06d0e]))
 [06d08] Print " "
 [06d0b] Print_obj (Var (Global 0x76))
 [06d0d] Rtrue
-[06d0e] Load_word (Var (Global 0x64)) (Con 9) Sp
+[06d0e] Loadw (Var (Global 0x64)) (Con 9) Sp
 [06d12] Call (Floc [062ee]) [Var (Local 0x01),Var Sp,Con 0] Sp
 [06d1a] Ret_popped
 --------------------------------------------------
@@ -1953,7 +1985,7 @@ Found 557 combined routines:
 [06dbb] Ret_popped
 --------------------------------------------------
 [06dbd] RoutineHeader [16697,21079,15895,-29414]
-[06dc6] And_ (Var (Global 0x19)) (Var (Global 0x15)) (Global 0xb8)
+[06dc6] And (Var (Global 0x19)) (Var (Global 0x15)) (Global 0xb8)
 [06dca] Inc (Var Sp)
 [06dcc] Jl (Con 0) (Con 1) (Branch F Dfalse)
 [06dd1] Call (Floc [10582]) [] Sp
@@ -1966,22 +1998,33 @@ Found 557 combined routines:
 [06e08] Rtrue
 [06e09] Print_ret "Ok."
 --------------------------------------------------
+[06e0e] RoutineHeader []
+[06e0f] Call (Floc [10582]) [Con 1] Sp
+[06e15] Print "Do you wish to restart? (Y is affirmative): "
+[06e36] Call (Floc [090dc]) [] Sp
+[06e3b] Jz (Var Sp) (Branch T Dfalse)
+[06e3e] Print "Restarting."
+[06e49] New_line
+[06e4a] Restart
+[06e4b] Print_ret "Failed."
+--------------------------------------------------
 [06e52] RoutineHeader []
-[06e53] Restore_lab (Branch F (Dloc [06e61]))
+[06e53] Restore (Branch F (Dloc [06e61]))
 [06e55] Print "Ok."
 [06e5a] New_line
 [06e5b] Call (Floc [08c88]) [] Sp
 [06e60] Ret_popped
 --------------------------------------------------
 [06e68] RoutineHeader []
-[06e69] Save_lab (Branch F (Dloc [06e70]))
+[06e69] Save (Branch F (Dloc [06e70]))
 [06e6b] Print_ret "Ok."
 --------------------------------------------------
-[06e79] RoutineHeader [8,72,1,225,23296,2048,-19951,-21923,16413,19514,30720,-16282,-6577,2141,-10908]
-[06e98] Je [Con 41,Con 211] (Branch F (Dloc [06ebf]))
-[06e9c] Div (Var (Global 0x09)) (Con 25) (Global 0x28)
-[06ea0] Get_prop_addr (Var (Global 0x61)) (Con 217) (Global 0xa4)
-[06ea4] Inc (Var (Global 0xab))
+[06e78] RoutineHeader []
+[06e79] Loadw (Con 0) (Con 8) Sp
+[06e7d] Or (Var Sp) (Con 1) Sp
+[06e81] Storew (Con 0) (Con 8) (Var Sp)
+[06e86] Print "Here begins a transcript of interaction with"
+[06ea5] New_line
 [06ea6] Call (Floc [06ee0]) [] Sp
 [06eab] Rtrue
 --------------------------------------------------
@@ -1989,8 +2032,8 @@ Found 557 combined routines:
 [06ead] Print "Here ends a transcript of interaction with"
 [06eca] New_line
 [06ecb] Call (Floc [06ee0]) [] Sp
-[06ed0] Load_word (Con 0) (Con 8) Sp
-[06ed4] And_ (Var Sp) (Con -2) Sp
+[06ed0] Loadw (Con 0) (Con 8) Sp
+[06ed4] And (Var Sp) (Con -2) Sp
 [06eda] Storew (Con 0) (Con 8) (Var Sp)
 [06edf] Rtrue
 --------------------------------------------------
@@ -1998,23 +2041,29 @@ Found 557 combined routines:
 [06ee3] Print "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. "
 [06f28] Print "All rights reserved."
 [06f39] New_line
-[06f3a] Load_byte (Con 0) (Con 1) Sp
-[06f3e] And_ (Var Sp) (Con 8) Sp
+[06f3a] Loadb (Con 0) (Con 1) Sp
+[06f3e] And (Var Sp) (Con 8) Sp
 [06f42] Jz (Var Sp) (Branch T (Dloc [06f5d]))
 [06f45] Print "Licensed to Tandy Corporation."
 [06f5c] New_line
 [06f5d] Print "ZORK is a registered trademark of Infocom, Inc.\nRevision "
-[06f88] Load_word (Con 0) (Con 1) Sp
-[06f8c] And_ (Var Sp) (Con 2047) Sp
+[06f88] Loadw (Con 0) (Con 1) Sp
+[06f8c] And (Var Sp) (Con 2047) Sp
 [06f92] Print_num (Var Sp)
 [06f95] Print " / Serial number "
-[06fa4] Inc_check (Con 1) (Con 23) (Branch F (Dloc [06fab]))
+[06fa4] Inc_chk (Con 1) (Con 23) (Branch F (Dloc [06fab]))
 [06fa8] Jump [06fb5]
-[06fab] Load_byte (Con 0) (Var (Local 0x01)) Sp
+[06fab] Loadb (Con 0) (Var (Local 0x01)) Sp
 [06faf] Print_char (Var Sp)
 [06fb2] Jump [06fa4]
 [06fb5] New_line
 [06fb6] Rtrue
+--------------------------------------------------
+[06fb8] RoutineHeader []
+[06fb9] Print "Verifying disk..."
+[06fc8] New_line
+[06fc9] Verify (Branch F (Dloc [06fd8]))
+[06fcb] Print_ret "The disk is correct."
 --------------------------------------------------
 [06ff0] RoutineHeader []
 [06ff1] Print_ret "A hollow voice says \"Fool.\""
@@ -2039,7 +2088,7 @@ Found 557 combined routines:
 [07049] Print_obj (Var (Local 0x01))
 [0704b] Print " anymore."
 [07054] New_line
-[07055] Return (Con 2)
+[07055] Ret (Con 2)
 [07057] Call (Floc [0577c]) [Var (Global 0x7e),Var (Global 0x7d),Var (Global 0x7c)] Sp
 [0705f] Ret_popped
 --------------------------------------------------
@@ -2081,7 +2130,7 @@ Found 557 combined routines:
 [07149] Print_ret "."
 --------------------------------------------------
 [07156] RoutineHeader [11481]
-[07159] Dec_check (Var (Global 0xb8)) (Var (Global 0x30)) (Branch F (Dloc [072dc]))
+[07159] Dec_chk (Var (Global 0xb8)) (Var (Global 0x30)) (Branch F (Dloc [072dc]))
 [0715e] Inc (Var (Global 0x9a))
 [07160] Dec (Con -19968)
 [07163] Store (Con 152) (Var (Local 0x05))
@@ -2107,18 +2156,18 @@ Found 557 combined routines:
 [071d3] Print_obj (Var (Global 0x76))
 [071d5] Print " must be on the ground to be boarded."
 [071e8] New_line
-[071e9] Return (Con 2)
+[071e9] Ret (Con 2)
 --------------------------------------------------
 [071ec] RoutineHeader [6976]
 [071ef] Print "You are already in the "
 [071f8] Print_obj (Var (Local 0x01))
 [071fa] Print "!"
 [071fd] New_line
-[071fe] Return (Con 2)
+[071fe] Ret (Con 2)
 --------------------------------------------------
 [07214] RoutineHeader [-21882,-19964,29994,-4838,-18282]
 [0721f] Inc (Var (Global 0xab))
-[07221] Return (Con 2)
+[07221] Ret (Con 2)
 --------------------------------------------------
 [07223] RoutineHeader []
 [07224] Je [Con 0,Con 0] (Branch T (Dloc [0642b]))
@@ -2164,7 +2213,7 @@ Found 557 combined routines:
 --------------------------------------------------
 [072f8] RoutineHeader [-31949,-26041,184,-8145,15453,-31232,-19836,9642,-31053,262,25869,11008,11735,10241,6181]
 [07317] Jl (Con 147) (Var (Global 0x53)) (Branch F (Dloc [0732b]))
-[0731b] And_ (Con 37) (Var (Global 0xb8)) (Global 0x95)
+[0731b] And (Con 37) (Var (Global 0xb8)) (Global 0x95)
 [0731f] Print "You can't burn a "
 [07328] Print_obj (Var (Global 0x76))
 [0732a] Print_ret "."
@@ -2198,7 +2247,7 @@ Found 557 combined routines:
 [0738e] Get_prop_len (Var (Local 0x04)) (Local 0x03)
 [07391] Je [Var (Local 0x03),Con 2] (Branch T (Dloc [073ab]))
 [07395] Je [Var (Local 0x03),Con 4,Con 5,Con 1] (Branch F (Dloc [073d7]))
-[0739d] Load_byte (Var (Local 0x04)) (Con 0) Sp
+[0739d] Loadb (Var (Local 0x04)) (Con 0) Sp
 [073a1] Call (Floc [094a0]) [Var (Global 0x76),Var Sp] Sp
 [073a8] Jz (Var Sp) (Branch F (Dloc [073d7]))
 [073ab] Print "The "
@@ -2318,7 +2367,7 @@ Found 557 combined routines:
 [07686] Je [Var Sp,Var (Global 0x76)] (Branch T (Dloc [07696]))
 [0768a] Print "You're not in that!"
 [07693] New_line
-[07694] Return (Con 2)
+[07694] Ret (Con 2)
 [07696] Test_attr (Var (Global 0x00)) (Con 6) (Branch F (Dloc [076b0]))
 [0769a] Print "You are on your own feet again."
 [076ab] New_line
@@ -2326,7 +2375,7 @@ Found 557 combined routines:
 [076af] Rtrue
 [076b0] Print "You realize that getting out here would be fatal."
 [076cb] New_line
-[076cc] Return (Con 2)
+[076cc] Ret (Con 2)
 --------------------------------------------------
 [076ce] RoutineHeader []
 [076cf] Print_ret "Nothing happens."
@@ -2391,22 +2440,22 @@ Found 557 combined routines:
 [07847] Ret_popped
 --------------------------------------------------
 [07848] RoutineHeader [0,0,0,0,0]
-[07853] Load_byte (Var (Global 0x6e)) (Con 1) Sp
+[07853] Loadb (Var (Global 0x6e)) (Con 1) Sp
 [07857] Jg (Var Sp) (Con 0) (Branch F (Dloc [078a0]))
-[0785c] Load_byte (Var (Global 0x6e)) (Con 1) Sp
+[0785c] Loadb (Var (Global 0x6e)) (Con 1) Sp
 [07860] Mul (Var Sp) (Con 4) Sp
 [07864] Add (Var (Global 0x6e)) (Var Sp) (Local 0x01)
-[07868] Load_byte (Var (Local 0x01)) (Con 0) (Local 0x05)
-[0786c] Load_byte (Var (Local 0x01)) (Con 1) Sp
+[07868] Loadb (Var (Local 0x01)) (Con 0) (Local 0x05)
+[0786c] Loadb (Var (Local 0x01)) (Con 1) Sp
 [07870] Add (Var (Local 0x05)) (Var Sp) Sp
 [07874] Sub (Var Sp) (Con 1) (Local 0x02)
-[07878] Inc_check (Con 3) (Con 2) (Branch F (Dloc [07881]))
+[07878] Inc_chk (Con 3) (Con 2) (Branch F (Dloc [07881]))
 [0787c] Print_ret "..."
-[07881] Load_byte (Var (Local 0x01)) (Con 1) Sp
+[07881] Loadb (Var (Local 0x01)) (Con 1) Sp
 [07885] Sub (Var Sp) (Con 1) (Local 0x04)
-[07889] Inc_check (Con 4) (Var (Local 0x02)) (Branch F (Dloc [07890]))
+[07889] Inc_chk (Con 4) (Var (Local 0x02)) (Branch F (Dloc [07890]))
 [0788d] Jump [0789a]
-[07890] Load_byte (Var (Global 0x6d)) (Var (Local 0x04)) Sp
+[07890] Loadb (Var (Global 0x6d)) (Var (Local 0x04)) Sp
 [07894] Print_char (Var Sp)
 [07897] Jump [07889]
 [0789a] Print " "
@@ -2482,10 +2531,10 @@ Found 557 combined routines:
 [079aa] Rtrue
 --------------------------------------------------
 [079b1] RoutineHeader [25643,11729]
-[079b6] Dec_check (Var (Local 0x03)) (Con 103) (Branch T (Dloc [0881e]))
+[079b6] Dec_chk (Var (Local 0x03)) (Con 103) (Branch T (Dloc [0881e]))
 [079bb] Inc (Var (Global 0xb8))
 [079bd] Inc (Var (Global 0xa3))
-[079bf] Dec_check (Con 82) (Con 27) (Branch T Dfalse)
+[079bf] Dec_chk (Con 82) (Con 27) (Branch T Dfalse)
 [079c3] Jl (Var (Global 0x64)) (Con 112) (Branch F (Dloc [08719]))
 [079c8] Jz (Con 1385) (Branch F (Dloc [079da]))
 [079cc] Jg (Con 28) (Con 35) (Branch F (Dloc [08311]))
@@ -2652,7 +2701,7 @@ Found 557 combined routines:
 [07d48] Print_paddr (Con -23551)
 [07d4b] Jl (Con 65) (Con 2) (Branch F (Dloc [0801e]))
 [07d50] Je [Var (Local 0x02),Con 4] (Branch F (Dloc [07d89]))
-[07d54] Load_byte (Var (Local 0x01)) (Con 1) Sp
+[07d54] Loadb (Var (Local 0x01)) (Con 1) Sp
 [07d58] Load (Var Sp) Sp
 [07d5b] Jz (Var Sp) (Branch F (Dloc [07d89]))
 [07d5e] Print "This was not a very safe place to try jumping."
@@ -2936,7 +2985,7 @@ Found 557 combined routines:
 [082e8] Print_ret "."
 --------------------------------------------------
 [082f0] RoutineHeader [-8145]
-[082f3] And_ (Var (Global 0x06)) (Con 134) Sp
+[082f3] And (Var (Global 0x06)) (Con 134) Sp
 [082f7] Add (Var (Local 0x01)) (Var Sp) (Local 0x01)
 [082fb] Get_prop (Var (Global 0x77)) (Con 15) Sp
 [082ff] Sub (Var (Local 0x01)) (Var Sp) (Local 0x01)
@@ -3038,7 +3087,7 @@ Found 557 combined routines:
 [084b9] New_line
 [084ba] Store (Con 112) (Con 0)
 [084bd] Store (Con 124) (Con 0)
-[084c0] Return (Var (Global 0x6c))
+[084c0] Ret (Var (Global 0x6c))
 --------------------------------------------------
 [084c5] RoutineHeader []
 [084c6] Je [Var Sp,Con 17118] (Branch F (Dloc [084d0]))
@@ -3083,30 +3132,19 @@ Found 557 combined routines:
 [085ae] Print "to the ground"
 [085b7] Print_ret "."
 --------------------------------------------------
-[085dd] RoutineHeader [-32603]
+[085be] RoutineHeader [-13134,-23930,98,-19960,-26541,21287,69,-12248,564,9570]
+[085d3] Get_child (Con 43) (Global 0x1d) (Branch F (Dloc [08042]))
+[085d8] Je [Con 211,Con 97] (Branch T (Dloc [085e3]))
+[085dc] Or (Con 1) (Var (Global 0x70)) (Global 0x95)
 [085e0] Print_obj (Var (Global 0x76))
 [085e2] Print_ret "."
 --------------------------------------------------
-[085fc] RoutineHeader [0]
-[085ff] Get_child (Var (Global 0x76)) (Local 0x01) (Branch F Dtrue)
-[08603] Set_attr (Var (Local 0x01)) (Con 3)
-[08606] Je [Var (Global 0x00),Con 88] (Branch F (Dloc [08610]))
-[0860a] Push (Con 75)
+[085f0] RoutineHeader [19129,-1870,-19693,3354,2764,-19967,0,-23930,321,19201]
+[08605] Jg (Con 65) (Con 16) (Branch F (Dloc [0861f]))
+[08609] Or (Var (Global 0xd8)) (Con 127) (Global 0x3b)
 [0860d] Jump [0861d]
-[08610] Test_attr (Var (Global 0x00)) (Con 6) (Branch T (Dloc [0861a]))
-[08614] Push (Con 13)
-[08617] Jump [0861d]
-[0861a] Push (Var (Global 0x00))
-[0861d] Insert_obj (Var (Local 0x01)) (Var Sp)
-[08620] Jump [085ff]
 --------------------------------------------------
-[08624] RoutineHeader []
-[08625] Call (Floc [04e6c]) [Var (Global 0x43)] Sp
-[0862b] Print_paddr (Var Sp)
-[0862d] New_line
-[0862e] Rtrue
---------------------------------------------------
-[08630] RoutineHeader []
+[08616] RoutineHeader [-29696,1512,-16624,28161,140,-34,0,-8145,10038,21248,-21248,-17488,0]
 [08631] Print "It smells like a "
 [0863e] Print_obj (Var (Global 0x76))
 [08640] Print_ret "."
@@ -3223,7 +3261,7 @@ Found 557 combined routines:
 [0886e] Jz (Var (Global 0x6c)) (Branch T (Dloc [08879]))
 [08871] Store (Con 127) (Var (Global 0x76))
 [08874] Get_parent (Var (Global 0x6f)) (Global 0x00)
-[08877] Return (Var (Global 0x00))
+[08877] Ret (Var (Global 0x00))
 [08879] Print "The "
 [0887c] Print_obj (Var (Global 0x76))
 [0887e] Print_ret " pauses for a moment, perhaps thinking that you should re-read the manual."
@@ -3233,7 +3271,7 @@ Found 557 combined routines:
 [088bd] New_line
 [088be] Store (Con 112) (Con 0)
 [088c1] Store (Con 124) (Con 0)
-[088c4] Return (Con 2)
+[088c4] Ret (Con 2)
 --------------------------------------------------
 [088c6] RoutineHeader [0,0]
 [088cb] Test_attr (Var (Global 0x76)) (Con 23) (Branch F (Dloc [088dc]))
@@ -3322,12 +3360,12 @@ Found 557 combined routines:
 [08a7e] RoutineHeader [3]
 [08a81] Print "Time passes..."
 [08a8e] New_line
-[08a8f] Dec_check (Con 1) (Con 0) (Branch F (Dloc [08a96]))
+[08a8f] Dec_chk (Con 1) (Con 0) (Branch F (Dloc [08a96]))
 [08a93] Jump [08a9f]
 [08a96] Call (Floc [054c4]) [] Sp
 [08a9b] Jz (Var Sp) (Branch T (Dloc [08a8f]))
 [08a9f] Store (Con 145) (Con 1)
-[08aa2] Return (Var (Global 0x81))
+[08aa2] Ret (Var (Global 0x81))
 --------------------------------------------------
 [08aa4] RoutineHeader [0,0,0,0,0]
 [08aaf] Jz (Var (Global 0x5f)) (Branch F (Dloc [08aba]))
@@ -3337,55 +3375,55 @@ Found 557 combined routines:
 [08abe] Jz (Var (Local 0x01)) (Branch T (Dloc [08b6c]))
 [08ac2] Get_prop_len (Var (Local 0x01)) (Local 0x02)
 [08ac5] Je [Var (Local 0x02),Con 1] (Branch F (Dloc [08ad4]))
-[08ac9] Load_byte (Var (Local 0x01)) (Con 0) Sp
+[08ac9] Loadb (Var (Local 0x01)) (Con 0) Sp
 [08acd] Call (Floc [092b6]) [Var Sp] Sp
 [08ad3] Ret_popped
 [08ad4] Je [Var (Local 0x02),Con 2] (Branch F (Dloc [08ae1]))
-[08ad8] Load_word (Var (Local 0x01)) (Con 0) Sp
+[08ad8] Loadw (Var (Local 0x01)) (Con 0) Sp
 [08adc] Print_paddr (Var Sp)
 [08ade] New_line
-[08adf] Return (Con 2)
+[08adf] Ret (Con 2)
 [08ae1] Je [Var (Local 0x02),Con 3] (Branch F (Dloc [08b01]))
-[08ae5] Load_word (Var (Local 0x01)) (Con 0) Sp
+[08ae5] Loadw (Var (Local 0x01)) (Con 0) Sp
 [08ae9] Call (Fvar Sp) [] (Local 0x05)
 [08aed] Jz (Var (Local 0x05)) (Branch T (Dloc [08af7]))
 [08af0] Call (Floc [092b6]) [Var (Local 0x05)] Sp
 [08af6] Ret_popped
 [08af7] Call (Floc [050d0]) [] Sp
 [08afc] Jz (Var Sp) (Branch F Dfalse)
-[08aff] Return (Con 2)
+[08aff] Ret (Con 2)
 [08b01] Je [Var (Local 0x02),Con 4] (Branch F (Dloc [08b34]))
-[08b05] Load_byte (Var (Local 0x01)) (Con 1) Sp
+[08b05] Loadb (Var (Local 0x01)) (Con 1) Sp
 [08b09] Load (Var Sp) Sp
 [08b0c] Jz (Var Sp) (Branch T (Dloc [08b1a]))
-[08b0f] Load_byte (Var (Local 0x01)) (Con 0) Sp
+[08b0f] Loadb (Var (Local 0x01)) (Con 0) Sp
 [08b13] Call (Floc [092b6]) [Var Sp] Sp
 [08b19] Ret_popped
-[08b1a] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+[08b1a] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 [08b1e] Jz (Var (Local 0x03)) (Branch T (Dloc [08b26]))
 [08b21] Print_paddr (Var (Local 0x03))
 [08b23] New_line
-[08b24] Return (Con 2)
+[08b24] Ret (Con 2)
 [08b26] Print "You can't go that way."
 [08b31] New_line
-[08b32] Return (Con 2)
+[08b32] Ret (Con 2)
 [08b34] Je [Var (Local 0x02),Con 5] (Branch F Dfalse)
-[08b38] Load_byte (Var (Local 0x01)) (Con 1) (Local 0x04)
+[08b38] Loadb (Var (Local 0x01)) (Con 1) (Local 0x04)
 [08b3c] Test_attr (Var (Local 0x04)) (Con 11) (Branch F (Dloc [08b4b]))
-[08b40] Load_byte (Var (Local 0x01)) (Con 0) Sp
+[08b40] Loadb (Var (Local 0x01)) (Con 0) Sp
 [08b44] Call (Floc [092b6]) [Var Sp] Sp
 [08b4a] Ret_popped
-[08b4b] Load_word (Var (Local 0x01)) (Con 1) (Local 0x03)
+[08b4b] Loadw (Var (Local 0x01)) (Con 1) (Local 0x03)
 [08b4f] Jz (Var (Local 0x03)) (Branch T (Dloc [08b57]))
 [08b52] Print_paddr (Var (Local 0x03))
 [08b54] New_line
-[08b55] Return (Con 2)
+[08b55] Ret (Con 2)
 [08b57] Print "The "
 [08b5a] Print_obj (Var (Local 0x04))
 [08b5c] Print " is closed."
 [08b63] New_line
 [08b64] Call (Floc [09530]) [Var (Local 0x04)] Sp
-[08b6a] Return (Con 2)
+[08b6a] Ret (Con 2)
 [08b6c] Jz (Var (Global 0x42)) (Branch F (Dloc [08bbd]))
 [08b70] Random (Con 100) Sp
 [08b74] Jg (Con 80) (Var Sp) (Branch F (Dloc [08bbd]))
@@ -3393,14 +3431,14 @@ Found 557 combined routines:
 [08b7e] Jz (Var (Global 0x41)) (Branch T (Dloc [08bad]))
 [08b81] Print "There are odd noises in the darkness, and there is no exit in that direction."
 [08baa] New_line
-[08bab] Return (Con 2)
+[08bab] Ret (Con 2)
 [08bad] Call (Floc [050d0]) [] Sp
 [08bb2] Jz (Var Sp) (Branch F Dfalse)
 [08bb5] Call (Floc [10666]) [Con -25878] Sp
 [08bbc] Ret_popped
 [08bbd] Print "You can't go that way."
 [08bc8] New_line
-[08bc9] Return (Con 2)
+[08bc9] Ret (Con 2)
 --------------------------------------------------
 [08bcc] RoutineHeader []
 [08bcd] Print_ret "Use compass directions for movement."
@@ -3460,7 +3498,7 @@ Found 557 combined routines:
 [08cc5] Print " You are likely to be eaten by a grue."
 [08cdc] New_line
 [08cdd] Call (Floc [050d0]) [] Sp
-[08ce2] Return (Con 0)
+[08ce2] Ret (Con 0)
 [08ce4] Test_attr (Var (Global 0x00)) (Con 3) (Branch T (Dloc [08cee]))
 [08ce8] Set_attr (Var (Global 0x00)) (Con 3)
 [08ceb] Store (Con 2) (Con 1)
@@ -3528,7 +3566,7 @@ Found 557 combined routines:
 [08dda] Print " (providing light)"
 [08de9] Print "."
 [08dec] Jump [08e1f]
-[08def] Load_word (Var (Global 0x39)) (Var (Local 0x03)) Sp
+[08def] Loadw (Var (Global 0x39)) (Var (Local 0x03)) Sp
 [08df3] Print_paddr (Var Sp)
 [08df5] Print "A "
 [08df8] Print_obj (Var (Local 0x01))
@@ -3661,7 +3699,7 @@ Found 557 combined routines:
 [09000] Print_ret "You are carrying:"
 [0900b] Jin (Var (Local 0x01)) (Con 82) (Branch T Dfalse)
 [0900f] Jg (Var (Local 0x02)) (Con 0) (Branch F (Dloc [09019]))
-[09013] Load_word (Var (Global 0x39)) (Var (Local 0x02)) Sp
+[09013] Loadw (Var (Global 0x39)) (Var (Local 0x02)) Sp
 [09017] Print_paddr (Var Sp)
 [09019] Test_attr (Var (Local 0x01)) (Con 10) (Branch F (Dloc [0902f]))
 [0901d] Print "Sitting on the "
@@ -3682,7 +3720,7 @@ Found 557 combined routines:
 [09000] Print_ret "You are carrying:"
 [0900b] Jin (Var (Local 0x01)) (Con 82) (Branch T Dfalse)
 [0900f] Jg (Var (Local 0x02)) (Con 0) (Branch F (Dloc [09019]))
-[09013] Load_word (Var (Global 0x39)) (Var (Local 0x02)) Sp
+[09013] Loadw (Var (Global 0x39)) (Var (Local 0x02)) Sp
 [09017] Print_paddr (Var Sp)
 [09019] Test_attr (Var (Local 0x01)) (Con 10) (Branch F (Dloc [0902f]))
 [0901d] Print "Sitting on the "
@@ -3727,7 +3765,7 @@ Found 557 combined routines:
 [090dc] RoutineHeader []
 [090dd] Print ">"
 [090e2] Sread (Var (Global 0x6d)) (Var (Global 0x6e))
-[090e6] Load_word (Var (Global 0x6e)) (Con 1) Sp
+[090e6] Loadw (Var (Global 0x6e)) (Con 1) Sp
 [090ea] Je [Var Sp,Con 19988,Con 19960] (Branch F Dfalse)
 [090f2] Rtrue
 --------------------------------------------------
@@ -3762,7 +3800,7 @@ Found 557 combined routines:
 [09188] Jump [0918e]
 [0918b] Print "."
 [0918e] New_line
-[0918f] Return (Con 2)
+[0918f] Ret (Con 2)
 [09191] Je [Var (Global 0x78),Con 93] (Branch F (Dloc [091c4]))
 [09195] Call (Floc [09214]) [Var (Global 0x6f)] (Local 0x02)
 [0919b] Jg (Var (Local 0x02)) (Var (Global 0x3b)) (Branch F (Dloc [091c4]))
@@ -3804,7 +3842,7 @@ Found 557 combined routines:
 [0921f] Test_attr (Var (Local 0x03)) (Con 0) (Branch T (Dloc [09225]))
 [09223] Inc (Con 2)
 [09225] Get_sibling (Var (Local 0x03)) (Local 0x03) (Branch T (Dloc [0921f]))
-[0922a] Return (Var (Local 0x02))
+[0922a] Ret (Var (Local 0x02))
 --------------------------------------------------
 [0922c] RoutineHeader [0,0,0]
 [09233] Get_child (Var (Local 0x01)) (Local 0x02) (Branch F (Dloc [09253]))
@@ -3929,17 +3967,17 @@ Found 557 combined routines:
 [0943a] Jz (Var (Local 0x02)) (Branch T Dfalse)
 [0943d] Call (Floc [092b6]) [Var (Local 0x02)] Sp
 [09443] Jz (Var Sp) (Branch F Dtrue)
-[09446] Return (Con 2)
+[09446] Ret (Con 2)
 --------------------------------------------------
 [09448] RoutineHeader [0,0,0,0]
-[09451] Load_word (Var (Local 0x02)) (Con 0) (Local 0x04)
-[09455] Inc_check (Con 3) (Var (Local 0x04)) (Branch T Dfalse)
-[09459] Load_word (Var (Local 0x02)) (Var (Local 0x03)) Sp
+[09451] Loadw (Var (Local 0x02)) (Con 0) (Local 0x04)
+[09455] Inc_chk (Con 3) (Var (Local 0x04)) (Branch T Dfalse)
+[09459] Loadw (Var (Local 0x02)) (Var (Local 0x03)) Sp
 [0945d] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [09455]))
 [09462] Je [Var (Local 0x03),Var (Local 0x04)] (Branch T Dfalse)
 [09466] Add (Var (Local 0x03)) (Con 1) Sp
-[0946a] Load_word (Var (Local 0x02)) (Var Sp) Sp
-[0946e] Return (Var Sp)
+[0946a] Loadw (Var (Local 0x02)) (Var Sp) Sp
+[0946e] Ret (Var Sp)
 --------------------------------------------------
 [09470] RoutineHeader [0]
 [09473] Store (Con 111) (Var (Local 0x01))
@@ -3967,7 +4005,7 @@ Found 557 combined routines:
 [094c9] Jz (Var (Local 0x03)) (Branch T Dfalse)
 [094cc] Test_attr (Var (Local 0x03)) (Var (Local 0x02)) (Branch F (Dloc [094d6]))
 [094d0] Je [Var (Local 0x03),Con 4] (Branch T (Dloc [094d6]))
-[094d4] Return (Var (Local 0x03))
+[094d4] Ret (Var (Local 0x03))
 [094d6] Get_sibling (Var (Local 0x03)) (Local 0x03) (Branch T (Dloc [094cc]))
 [094db] Rfalse
 --------------------------------------------------
@@ -3994,9 +4032,9 @@ Found 557 combined routines:
 [0950b] Get_prop_addr (Var (Global 0x00)) (Var (Local 0x02)) (Local 0x03)
 [0950f] Get_prop_len (Var (Local 0x03)) Sp
 [09512] Je [Var Sp,Con 5] (Branch F (Dloc [09503]))
-[09517] Load_byte (Var (Local 0x03)) (Con 1) Sp
+[09517] Loadb (Var (Local 0x03)) (Con 1) Sp
 [0951b] Je [Var Sp,Var (Local 0x01)] (Branch F (Dloc [09503]))
-[09520] Return (Var (Local 0x02))
+[09520] Ret (Var (Local 0x02))
 --------------------------------------------------
 [09522] RoutineHeader [0,0]
 [09527] Set_attr (Var (Local 0x01)) (Con 18)
@@ -4006,7 +4044,7 @@ Found 557 combined routines:
 [09530] RoutineHeader [0]
 [09533] Store (Con 123) (Var (Local 0x01))
 [09536] Store (Con 122) (Var (Global 0x00))
-[09539] Return (Var (Global 0x6a))
+[09539] Ret (Var (Global 0x6a))
 --------------------------------------------------
 [0953c] RoutineHeader [0]
 [0953f] Je [Var (Local 0x01),Con 3] (Branch F Dfalse)
@@ -4199,14 +4237,14 @@ Found 557 combined routines:
 [09a5c] Print_ret "The bottle is now full of water."
 --------------------------------------------------
 [09a72] RoutineHeader [8551,4410,-18432,13572]
-[09a7b] Return (Con 14956)
+[09a7b] Ret (Con 14956)
 --------------------------------------------------
 [09a96] RoutineHeader [-31659,22324,-10912,287,3411]
 [09aa1] Get_prop (Var (Global 0x14)) (Con 25) (Global 0x0a)
 [09aa5] Test_attr (Con 0) (Con 103) (Branch F (Dloc [09c7b]))
 [09aaa] Jg (Var (Global 0x1a)) (Var (Global 0x09)) (Branch F (Dloc [08075]))
 [09aaf] Inc (Var (Global 0xa3))
-[09ab1] Dec_check (Con 33) (Con 103) (Branch F (Dloc [0abee]))
+[09ab1] Dec_chk (Con 33) (Con 103) (Branch F (Dloc [0abee]))
 [09ab6] Ret_popped
 --------------------------------------------------
 [09ab7] RoutineHeader []
@@ -4259,7 +4297,7 @@ Found 557 combined routines:
 [09bed] Print "The spirits jeer loudly and ignore you."
 [09c06] New_line
 [09c07] Store (Con 124) (Con 0)
-[09c0a] Return (Var (Global 0x6c))
+[09c0a] Ret (Var (Global 0x6c))
 [09c0c] Je [Var (Global 0x78),Con 58] (Branch F (Dloc [09c2b]))
 [09c10] Print_ret "Only the ceremony itself has any effect."
 [09c2b] Je [Var (Global 0x78),Con 42,Con 19] (Branch F (Dloc [09c54]))
@@ -4308,7 +4346,7 @@ Found 557 combined routines:
 [09d51] Je [Var (Global 0x78),Con 111] (Branch F (Dloc [09d60]))
 [09d55] Call (Floc [09dd6]) [Con 6] Sp
 [09d5b] Store (Con 124) (Con 0)
-[09d5e] Return (Var (Global 0x6c))
+[09d5e] Ret (Var (Global 0x6c))
 [09d60] Je [Var (Global 0x78),Con 42,Con 19,Con 93] (Branch F Dfalse)
 [09d67] Get_parent (Con 189) Sp
 [09d6a] Je [Var Sp,Var (Global 0x6f),Var (Global 0x00)] (Branch F (Dloc [09d8b]))
@@ -4328,7 +4366,7 @@ Found 557 combined routines:
 [09dd5] Rtrue
 --------------------------------------------------
 [09dd6] RoutineHeader [0]
-[09dd9] Dec_check (Con 1) (Con 1) (Branch F (Dloc [09de0]))
+[09dd9] Dec_chk (Con 1) (Con 1) (Branch F (Dloc [09de0]))
 [09ddd] Jump [09ded]
 [09de0] Print "    Fweep!"
 [09de9] New_line
@@ -4405,8 +4443,8 @@ Found 557 combined routines:
 [0a00b] Je [Var (Global 0x78),Con 34] (Branch F Dfalse)
 [0a00f] Je [Var (Global 0x76),Con 177] (Branch F Dfalse)
 [0a013] Print "Inside the Barrow\nAs you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads:  All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered"
-[0a12e] Load_byte (Con 0) (Con 1) Sp
-[0a132] And_ (Var Sp) (Con 8) Sp
+[0a12e] Loadb (Con 0) (Con 1) Sp
+[0a132] And (Var Sp) (Con 8) Sp
 [0a136] Jz (Var Sp) (Branch F (Dloc [0a201]))
 [0a13a] Print " the first part of the ZORK trilogy. Those who pass over this bridge must be prepared to undertake an even greater adventure that will severely test your skill and bravery!\n\nThe ZORK trilogy continues with \"ZORK II: The Wizard of Frobozz\" and is completed in \"ZORK III: The Dungeon Master.\""
 [0a1fd] New_line
@@ -4476,7 +4514,7 @@ Found 557 combined routines:
 [0a3e0] RoutineHeader [194,0,0]
 [0a3e7] Get_child (Var (Local 0x01)) (Local 0x02) (Branch T (Dloc [0a3eb]))
 [0a3eb] Jz (Var (Local 0x02)) (Branch F (Dloc [0a3f0]))
-[0a3ee] Return (Var (Local 0x03))
+[0a3ee] Ret (Var (Local 0x03))
 [0a3f0] Get_prop (Var (Local 0x02)) (Con 12) Sp
 [0a3f4] Add (Var (Local 0x03)) (Var Sp) (Local 0x03)
 [0a3f8] Get_child (Var (Local 0x02)) Sp (Branch F (Dloc [0a402]))
@@ -4545,12 +4583,12 @@ Found 557 combined routines:
 [0a5a4] Jin (Con 164) (Var (Global 0x6f)) (Branch F (Dloc [0a5b3]))
 [0a5a8] Test_attr (Con 183) (Con 11) (Branch T (Dloc [0a5b1]))
 [0a5ac] Clear_attr (Con 183) (Con 3)
-[0a5af] Return (Con 203)
-[0a5b1] Return (Con 203)
+[0a5af] Ret (Con 203)
+[0a5b1] Ret (Con 203)
 --------------------------------------------------
 [0a5c7] RoutineHeader [24318,14956,-27067,-17487,160,16603]
 [0a5d4] Test_attr (Con 183) (Con 11) (Branch F (Dloc [0a5da]))
-[0a5d8] Return (Con 72)
+[0a5d8] Ret (Con 72)
 [0a5da] Print "The trap door is closed."
 [0a5e5] New_line
 [0a5e6] Call (Floc [09530]) [Con 183] Sp
@@ -4570,7 +4608,7 @@ Found 557 combined routines:
 [0a6b9] Clear_attr (Con 183) (Con 7)
 [0a6bc] Call (Floc [09530]) [Con 183] Sp
 [0a6c2] Store (Con 64) (Con 1)
-[0a6c5] Return (Var (Global 0x30))
+[0a6c5] Ret (Var (Global 0x30))
 [0a6c7] Je [Var (Global 0x78),Con 93] (Branch F (Dloc [0a6e6]))
 [0a6cb] Print_ret "The rug is extremely heavy and cannot be carried."
 [0a6e6] Je [Var (Global 0x78),Con 81] (Branch F (Dloc [0a73b]))
@@ -4603,9 +4641,9 @@ Found 557 combined routines:
 --------------------------------------------------
 [0a7e3] RoutineHeader [-19968]
 [0a7e6] Jin (Var (Global 0x61)) (Con 174) (Branch F (Dloc [0a80d]))
-[0a7ea] Inc_check (Var (Global 0x61)) (Con 180) (Branch F (Dloc [0a810]))
+[0a7ea] Inc_chk (Var (Global 0x61)) (Con 180) (Branch F (Dloc [0a810]))
 [0a7ee] Clear_attr (Con 4) (Var (Global 0x31))
-[0a7f1] Inc_check (Con 180) (Var (Global 0x35)) (Branch F (Dloc [087fe]))
+[0a7f1] Inc_chk (Con 180) (Var (Global 0x35)) (Branch F (Dloc [087fe]))
 [0a7f6] Je [Var (Global 0x1d),Con 217] (Branch T (Dloc [0be3e]))
 [0a7fb] New_line
 [0a7fc] Rtrue
@@ -4615,7 +4653,7 @@ Found 557 combined routines:
 [0a805] Print "The troll isn't much of a conversationalist."
 [0a820] New_line
 [0a821] Store (Con 124) (Con 0)
-[0a824] Return (Var (Global 0x6c))
+[0a824] Ret (Var (Global 0x6c))
 [0a826] Je [Var (Local 0x01),Con 1] (Branch F (Dloc [0a8cb]))
 [0a82b] Jin (Con 218) (Con 217) (Branch T Dfalse)
 [0a82f] Jin (Con 218) (Var (Global 0x00)) (Branch F (Dloc [0a888]))
@@ -4638,7 +4676,7 @@ Found 557 combined routines:
 [0a8d6] Clear_attr (Con 218) (Con 14)
 [0a8d9] Set_attr (Con 218) (Con 29)
 [0a8dc] Store (Con 157) (Con 1)
-[0a8df] Return (Var (Global 0x8d))
+[0a8df] Ret (Var (Global 0x8d))
 [0a8e1] Je [Var (Local 0x01),Con 3] (Branch F (Dloc [0a900]))
 [0a8e5] Clear_attr (Con 217) (Con 2)
 [0a8e8] Jin (Con 218) (Con 217) (Branch F (Dloc [0a8f5]))
@@ -4647,7 +4685,7 @@ Found 557 combined routines:
 [0a8f2] Set_attr (Con 218) (Con 29)
 [0a8f5] Put_prop (Con 217) (Con 11) (Con -25586)
 [0a8fb] Store (Con 157) (Con 1)
-[0a8fe] Return (Var (Global 0x8d))
+[0a8fe] Ret (Var (Global 0x8d))
 [0a900] Je [Var (Local 0x01),Con 4] (Branch F (Dloc [0a95c]))
 [0a905] Jin (Con 217) (Var (Global 0x00)) (Branch F (Dloc [0a92e]))
 [0a909] Set_attr (Con 217) (Con 2)
@@ -4695,7 +4733,7 @@ Found 557 combined routines:
 [0aab5] Get_prop (Con 217) (Con 17) Sp
 [0aab9] Call (Fvar Sp) [Con 2] Sp
 [0aabe] Store (Con 157) (Con 1)
-[0aac1] Return (Var (Global 0x8d))
+[0aac1] Ret (Var (Global 0x8d))
 [0aac3] Je [Var (Global 0x76),Con 169,Con 110,Con 218] (Branch F (Dloc [0ab27]))
 [0aacb] Insert_obj (Var (Global 0x76)) (Var (Global 0x00))
 [0aace] Print " and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the "
@@ -4842,13 +4880,13 @@ Found 557 combined routines:
 [0afda] New_line
 [0afdb] New_line
 [0afdc] Je [Var (Global 0x00),Con 69] (Branch F (Dloc [0afe2]))
-[0afe0] Return (Con 67)
+[0afe0] Ret (Con 67)
 [0afe2] Je [Var (Global 0x00),Con 63] (Branch F (Dloc [0afe8]))
-[0afe6] Return (Con 66)
+[0afe6] Ret (Con 66)
 [0afe8] Je [Var (Global 0x00),Con 60] (Branch F (Dloc [0afee]))
-[0afec] Return (Con 58)
+[0afec] Ret (Con 58)
 [0afee] Je [Var (Global 0x00),Con 56] (Branch F Dfalse)
-[0aff2] Return (Con 167)
+[0aff2] Ret (Con 167)
 --------------------------------------------------
 [0aff4] RoutineHeader []
 [0aff5] Je [Var (Global 0x78),Con 93] (Branch F (Dloc [0b037]))
@@ -5026,7 +5064,7 @@ Found 557 combined routines:
 [0b886] Print "The tension of this ceremony is broken, and the wraiths, amused but shaken at your clumsy attempt, resume their hideous jeering."
 [0b8d3] New_line
 [0b8d4] Store (Con 58) (Con 0)
-[0b8d7] Return (Var (Global 0x2a))
+[0b8d7] Ret (Var (Global 0x2a))
 --------------------------------------------------
 [0b8da] RoutineHeader []
 [0b8db] Store (Con 57) (Con 0)
@@ -5193,7 +5231,7 @@ Found 557 combined routines:
 [0bf25] Jz (Var (Local 0x01)) (Branch T (Dloc [0bf3e]))
 [0bf28] Print "The water level here is now "
 [0bf33] Div (Var (Global 0x24)) (Con 2) Sp
-[0bf37] Load_word (Var (Global 0x25)) (Var Sp) Sp
+[0bf37] Loadw (Var (Global 0x25)) (Var Sp) Sp
 [0bf3b] Print_paddr (Var Sp)
 [0bf3d] New_line
 [0bf3e] Inc (Con 52)
@@ -5356,9 +5394,9 @@ Found 557 combined routines:
 [0c68b] Set_attr (Con 186) (Con 2)
 [0c68e] Jl (Var (Local 0x01)) (Con 0) (Branch F (Dloc [0c698]))
 [0c692] Sub (Con 0) (Var (Local 0x01)) (Global 0x23)
-[0c696] Return (Var (Global 0x23))
+[0c696] Ret (Var (Global 0x23))
 [0c698] Store (Con 51) (Var (Local 0x01))
-[0c69b] Return (Var (Global 0x23))
+[0c69b] Ret (Var (Global 0x23))
 [0c69d] Je [Var (Global 0x78),Con 56] (Branch F (Dloc [0c6c0]))
 [0c6a1] Print_ret "A hungry cyclops is standing at the foot of the stairs."
 [0c6c0] Je [Var (Global 0x78),Con 63] (Branch F (Dloc [0c871]))
@@ -5384,7 +5422,7 @@ Found 557 combined routines:
 [0c793] Print "The cyclops takes the bottle, checks that it's open, and drinks the water. A moment later, he lets out a yawn that nearly blows you over, and then falls fast asleep (what did you put in that drink, anyway?)."
 [0c80e] New_line
 [0c80f] Store (Con 165) (Con 1)
-[0c812] Return (Var (Global 0x95))
+[0c812] Ret (Var (Global 0x95))
 [0c814] Print_ret "The cyclops apparently is not thirsty and refuses your generous offer."
 [0c83b] Je [Var (Global 0x76),Con 189] (Branch F (Dloc [0c856]))
 [0c83f] Print_ret "The cyclops may be hungry, but there is a limit."
@@ -5432,7 +5470,7 @@ Found 557 combined routines:
 [0c992] Jump [0c998]
 [0c995] Push (Var (Global 0x23))
 [0c998] Sub (Var Sp) (Con 1) Sp
-[0c99c] Load_word (Var (Global 0x22)) (Var Sp) Sp
+[0c99c] Loadw (Var (Global 0x22)) (Var Sp) Sp
 [0c9a0] Print_paddr (Var Sp)
 [0c9a2] New_line
 [0c9a3] Rtrue
@@ -5493,17 +5531,17 @@ Found 557 combined routines:
 [0ccfa] New_line
 [0ccfb] Print ">"
 [0cd00] Sread (Var (Global 0x6d)) (Var (Global 0x6e))
-[0cd04] Load_byte (Var (Global 0x6e)) (Con 1) Sp
+[0cd04] Loadb (Var (Global 0x6e)) (Con 1) Sp
 [0cd08] Jz (Var Sp) (Branch F (Dloc [0cd1c]))
 [0cd0b] Print "I beg your pardon?"
 [0cd18] New_line
 [0cd19] Jump [0ccfa]
-[0cd1c] Load_word (Var (Global 0x6e)) (Con 1) (Local 0x02)
+[0cd1c] Loadw (Var (Global 0x6e)) (Con 1) (Local 0x02)
 [0cd20] Je [Var (Local 0x02),Con 16950,Con 19806,Con 18658] (Branch F (Dloc [0cd31]))
-[0cd2a] Load_word (Var (Global 0x6e)) (Con 3) (Local 0x02)
+[0cd2a] Loadw (Var (Global 0x6e)) (Con 3) (Local 0x02)
 [0cd2e] Jump [0cd3b]
 [0cd31] Je [Var (Local 0x02),Con 18721] (Branch F (Dloc [0cd3b]))
-[0cd37] Load_word (Var (Global 0x6e)) (Con 5) (Local 0x02)
+[0cd37] Loadw (Var (Global 0x6e)) (Con 5) (Local 0x02)
 [0cd3b] Je [Var (Local 0x02),Con 18714] (Branch F (Dloc [0cd49]))
 [0cd41] Call (Floc [06e68]) [] Sp
 [0cd46] Jump [0ccfa]
@@ -5515,13 +5553,13 @@ Found 557 combined routines:
 [0cd64] Jump [0ccfa]
 [0cd67] Je [Var (Local 0x02),Con 19778,Con 19848] (Branch F (Dloc [0cd77]))
 [0cd6f] Call (Floc [092b6]) [Con 107] Sp
-[0cd75] Return (Var Sp)
+[0cd75] Ret (Var Sp)
 [0cd77] Je [Var (Local 0x02),Con 16362,Con 16369] (Branch F (Dloc [0cd87]))
 [0cd7f] Call (Floc [092b6]) [Con 39] Sp
-[0cd85] Return (Var Sp)
+[0cd85] Ret (Var Sp)
 [0cd87] Je [Var (Local 0x02),Con 19631,Con 19708] (Branch F (Dloc [0cd97]))
 [0cd8f] Call (Floc [092b6]) [Con 40] Sp
-[0cd95] Return (Var Sp)
+[0cd95] Ret (Var Sp)
 [0cd97] Je [Var (Local 0x02),Con 15732] (Branch F (Dloc [0cdb4]))
 [0cd9d] Print "That's only your opinion."
 [0cdb0] New_line
@@ -5669,7 +5707,7 @@ Found 557 combined routines:
 [0d2ee] RoutineHeader [0,0,0,0]
 [0d2f7] Get_child (Con 114) (Local 0x02) (Branch T (Dloc [0d2fb]))
 [0d2fb] Jz (Var (Local 0x02)) (Branch F (Dloc [0d300]))
-[0d2fe] Return (Var (Local 0x04))
+[0d2fe] Ret (Var (Local 0x04))
 [0d300] Get_sibling (Var (Local 0x02)) (Local 0x03) (Branch T (Dloc [0d304]))
 [0d304] Je [Var (Local 0x02),Con 113,Con 115] (Branch F (Dloc [0d30d]))
 [0d30a] Jump [0d325]
@@ -5709,7 +5747,7 @@ Found 557 combined routines:
 [0d3b5] Print "The thief is a strong, silent type."
 [0d3ca] New_line
 [0d3cb] Store (Con 124) (Con 0)
-[0d3ce] Return (Var (Global 0x6c))
+[0d3ce] Ret (Var (Global 0x6c))
 [0d3d0] Jz (Var (Local 0x01)) (Branch F (Dloc [0d6bc]))
 [0d3d4] Je [Var (Global 0x78),Con 66] (Branch F (Dloc [0d427]))
 [0d3d9] Get_prop (Con 114) (Con 11) Sp
@@ -5750,10 +5788,10 @@ Found 557 combined routines:
 [0d5c1] Print_ret " in his bag and thanks you politely."
 --------------------------------------------------
 [0d5f8] RoutineHeader []
-[0d5f9] Return (Con 179)
+[0d5f9] Ret (Con 179)
 --------------------------------------------------
 [0d69a] RoutineHeader [1659,78,-26315,-11472,8987,4,-7872,22301,19020,2898,-3558,12664,3663,14161,14881]
-[0d6b9] And_ (Var (Global 0x86)) (Con 69) (Global 0x31)
+[0d6b9] And (Var (Global 0x86)) (Con 69) (Global 0x31)
 [0d6bd] Je [Con 1,Con 0] (Branch F (Dloc [0d6cd]))
 [0d6c1] Jin (Con 113) (Con 114) (Branch T Dfalse)
 [0d6c5] Get_parent (Con 114) Sp
@@ -5870,7 +5908,7 @@ Found 557 combined routines:
 [0d9c8] RoutineHeader [0,0,0]
 [0d9cf] Je [Var (Local 0x01),Con 2] (Branch F Dfalse)
 [0d9d3] Call (Floc [05486]) [Con -32528] Sp
-[0d9da] Load_word (Var Sp) (Con 0) Sp
+[0d9da] Loadw (Var Sp) (Con 0) Sp
 [0d9de] Je [Var Sp,Con 1] (Branch F Dfalse)
 [0d9e2] Jz (Var (Global 0x3e)) (Branch F Dfalse)
 [0d9e5] Jin (Con 114) (Var (Global 0x00)) (Branch T (Dloc [0d9ef]))
@@ -6043,24 +6081,24 @@ Found 557 combined routines:
 --------------------------------------------------
 [0deaa] RoutineHeader [0,0]
 [0deaf] Load (Con 43) (Local 0x02)
-[0deb2] Load_word (Var (Local 0x02)) (Con 0) (Local 0x01)
+[0deb2] Loadw (Var (Local 0x02)) (Con 0) (Local 0x01)
 [0deb6] Call (Floc [05472]) [Con 28501,Var (Local 0x01)] Sp
 [0debe] Storew (Var Sp) (Con 0) (Con 1)
 [0dec3] Call (Floc [0df02]) [Con 164,Var (Local 0x02),Var (Local 0x01)] Sp
 [0decb] Jz (Var (Local 0x01)) (Branch T Dfalse)
 [0dece] Add (Var (Local 0x02)) (Con 4) (Global 0x1b)
-[0ded2] Return (Var (Global 0x1b))
+[0ded2] Ret (Var (Global 0x1b))
 --------------------------------------------------
 [0ded4] RoutineHeader [0,0]
 [0ded9] Load (Con 41) (Local 0x02)
 [0dedc] Set_attr (Con 147) (Con 3)
-[0dedf] Load_word (Var (Local 0x02)) (Con 0) (Local 0x01)
+[0dedf] Loadw (Var (Local 0x02)) (Con 0) (Local 0x01)
 [0dee3] Call (Floc [05472]) [Con 28522,Var (Local 0x01)] Sp
 [0deeb] Storew (Var Sp) (Con 0) (Con 1)
 [0def0] Call (Floc [0df02]) [Con 147,Var (Local 0x02),Var (Local 0x01)] Sp
 [0def8] Jz (Var (Local 0x01)) (Branch T Dfalse)
 [0defb] Add (Var (Local 0x02)) (Con 4) (Global 0x19)
-[0deff] Return (Var (Global 0x19))
+[0deff] Ret (Var (Global 0x19))
 --------------------------------------------------
 [0df02] RoutineHeader [0,0,0]
 [0df09] Jz (Var (Local 0x03)) (Branch F (Dloc [0df12]))
@@ -6073,15 +6111,15 @@ Found 557 combined routines:
 [0df22] Print "You'd better have more light than from the "
 [0df3b] Print_obj (Var (Local 0x01))
 [0df3d] Print_ret "."
-[0df40] Load_word (Var (Local 0x02)) (Con 1) Sp
+[0df40] Loadw (Var (Local 0x02)) (Con 1) Sp
 [0df44] Print_paddr (Var Sp)
 [0df46] New_line
 [0df47] Rtrue
 --------------------------------------------------
 [0df48] RoutineHeader [0,0]
 [0df4d] Jl (Var (Local 0x01)) (Var (Local 0x02)) (Branch F (Dloc [0df53]))
-[0df51] Return (Var (Local 0x01))
-[0df53] Return (Var (Local 0x02))
+[0df51] Ret (Var (Local 0x01))
+[0df53] Ret (Var (Local 0x02))
 --------------------------------------------------
 [0df56] RoutineHeader []
 [0df57] Test_attr (Con 147) (Con 3) (Branch T (Dloc [0df67]))
@@ -6099,7 +6137,7 @@ Found 557 combined routines:
 [0dfc0] Rtrue
 [0dfc1] Print "You should say what to light them with."
 [0dfdc] New_line
-[0dfdd] Return (Con 2)
+[0dfdd] Ret (Con 2)
 [0dfdf] Je [Var (Global 0x77),Con 155] (Branch F (Dloc [0e00d]))
 [0dfe3] Test_attr (Con 155) (Con 20) (Branch F (Dloc [0e00d]))
 [0dfe7] Print "The candles are "
@@ -6249,7 +6287,7 @@ Found 557 combined routines:
 [0e4e1] Rtrue
 --------------------------------------------------
 [0e4eb] RoutineHeader [12601,8226,13409,22678]
-[0e4f4] Inc_check (Var (Global 0xab)) (Con 12) (Branch T (Dloc [10302]))
+[0e4f4] Inc_chk (Var (Global 0xab)) (Con 12) (Branch T (Dloc [10302]))
 [0e4f9] Rtrue
 --------------------------------------------------
 [0e4ff] RoutineHeader []
@@ -6316,7 +6354,7 @@ Found 557 combined routines:
 [0e68b] Je [Var (Local 0x01),Con 6] (Branch F Dfalse)
 [0e68f] Jin (Con 156) (Var (Global 0x6f)) (Branch F (Dloc [0e698]))
 [0e693] Store (Con 164) (Con 0)
-[0e696] Return (Var (Global 0x94))
+[0e696] Ret (Var (Global 0x94))
 --------------------------------------------------
 [0e69e] RoutineHeader []
 [0e69f] Je [Var (Global 0x78),Con 105,Con 140] (Branch F Dfalse)
@@ -6331,12 +6369,12 @@ Found 557 combined routines:
 [0e707] Print "A shimmering pot of gold appears at the end of the rainbow."
 [0e728] New_line
 [0e729] Store (Con 158) (Con 1)
-[0e72c] Return (Var (Global 0x8e))
+[0e72c] Ret (Var (Global 0x8e))
 [0e72e] Call (Floc [103b8]) [Con 28,Con 246] Sp
 [0e735] Print "The rainbow seems to have become somewhat run-of-the-mill."
 [0e75a] New_line
 [0e75b] Store (Con 158) (Con 0)
-[0e75e] Return (Var (Global 0x8e))
+[0e75e] Ret (Var (Global 0x8e))
 [0e760] Je [Var (Global 0x00),Con 28] (Branch F (Dloc [0e76f]))
 [0e764] Store (Con 158) (Con 0)
 [0e767] Call (Floc [10666]) [Con -24887] Sp
@@ -6542,7 +6580,7 @@ Found 557 combined routines:
 [0eda0] Print "You notice something funny about the feel of the buoy."
 [0edbf] New_line
 [0edc0] Store (Con 36) (Con 0)
-[0edc3] Return (Var (Global 0x14))
+[0edc3] Ret (Var (Global 0x14))
 --------------------------------------------------
 [0edc6] RoutineHeader []
 [0edc7] Je [Var (Global 0x78),Con 44] (Branch F Dfalse)
@@ -6561,7 +6599,7 @@ Found 557 combined routines:
 [0ee07] Call (Floc [09530]) [Con 116] Sp
 [0ee0d] Clear_attr (Con 116) (Con 7)
 [0ee10] Rtrue
-[0ee11] Load_word (Var (Global 0x12)) (Var (Global 0x13)) Sp
+[0ee11] Loadw (Var (Global 0x12)) (Var (Global 0x13)) Sp
 [0ee15] Print_paddr (Var Sp)
 [0ee17] New_line
 [0ee18] Rtrue
@@ -6809,18 +6847,22 @@ Found 557 combined routines:
 [0f54e] Call (Floc [0f556]) [Var (Global 0x76)] Sp
 [0f554] Ret_popped
 --------------------------------------------------
-[0f556] RoutineHeader [0]
-[0f559] Test_attr (Var (Local 0x01)) (Con 17) (Branch F (Dloc [0f585]))
-[0f55d] Print "The "
-[0f560] Print_obj (Var (Local 0x01))
-[0f562] Print " falls into the slide and is gone."
+[0f555] RoutineHeader []
+[0f556] Je [Con 0,Con 0] (Branch F (Dloc [0f562]))
+[0f55a] Je [Con 17,Con 106] (Branch T (Dloc [0e7e1]))
+[0f55f] Inc_chk (Con 170) (Var (Local 0x01)) (Branch T (Dloc [0e763]))
+[0f564] Jin (Var (Global 0x36)) (Var (Global 0x28)) (Branch F (Dloc [0f5a7]))
+[0f569] Dec_chk (Con 24) (Con 69) (Branch T (Dloc [0f574]))
+[0f56d] Or (Con 1) (Var (Global 0x08)) (Global 0x15)
+[0f571] Get_prop_addr (Con 147) (Var (Global 0x98)) (Global 0xa2)
 [0f575] New_line
 [0f576] Je [Var (Local 0x01),Con 237] (Branch F (Dloc [0f581]))
 [0f57a] Call (Floc [078ba]) [Var (Local 0x01)] Sp
 [0f580] Ret_popped
 [0f581] Insert_obj (Var (Local 0x01)) (Con 72)
 [0f584] Rtrue
-[0f585] Call (Floc [04e6c]) [Var (Global 0x35)] Sp
+--------------------------------------------------
+[0f58a] RoutineHeader []
 [0f58b] Print_paddr (Var Sp)
 [0f58d] New_line
 [0f58e] Rtrue
@@ -6881,8 +6923,17 @@ Found 557 combined routines:
 [0f809] Call (Floc [092b6]) [Con 78] Sp
 [0f80f] Ret_popped
 --------------------------------------------------
-[0f82d] RoutineHeader [31744,-25854,160,-24359,-19693,8544,-18336,606,23073,-24508,-12248,4393,30998]
-[0f848] Inc_check (Var (Global 0x38)) (Con 178) (Branch T (Dloc [10e90]))
+[0f817] RoutineHeader []
+[0f818] Insert_obj (Con 10) (Var (Global 0xdd))
+[0f81b] Or (Con 215) (Var (Global 0x94)) (Global 0xa2)
+[0f81f] Print "You can't even do that."
+[0f82c] New_line
+[0f82d] Store (Con 124) (Con 0)
+[0f830] Ret (Con 2)
+--------------------------------------------------
+[0f832] RoutineHeader []
+[0f833] Jz (Var (Global 0x90)) (Branch T (Dloc [0f84d]))
+[0f836] Print_ret "There's not much lake left...."
 [0f84d] Je [Var (Global 0x78),Con 38] (Branch F (Dloc [0f85e]))
 [0f851] Print_ret "It's too wide to cross."
 [0f85e] Je [Var (Global 0x78),Con 34] (Branch F Dfalse)
@@ -6943,8 +6994,8 @@ Found 557 combined routines:
 [0f9f2] Je [Var (Local 0x02),Var (Local 0x01)] (Branch F (Dloc [0f9fc]))
 [0f9f6] Store (Con 3) (Con 1)
 [0f9f9] Jump [0fa3a]
-[0f9fc] Load_word (Var (Global 0x03)) (Var (Local 0x02)) (Local 0x05)
-[0fa00] Load_word (Var (Local 0x05)) (Con 0) (Local 0x04)
+[0f9fc] Loadw (Var (Global 0x03)) (Var (Local 0x02)) (Local 0x05)
+[0fa00] Loadw (Var (Local 0x05)) (Con 0) (Local 0x04)
 [0fa04] Test_attr (Var (Local 0x04)) (Con 2) (Branch T (Dloc [0fa0b]))
 [0fa08] Jump [0f9f0]
 [0fa0b] Get_prop (Var (Local 0x04)) (Con 17) Sp
@@ -6966,10 +7017,10 @@ Found 557 combined routines:
 [0fa46] Rtrue
 --------------------------------------------------
 [0fa48] RoutineHeader [0,0,0,0,0,0]
-[0fa55] Load_word (Var (Local 0x01)) (Con 0) (Local 0x04)
-[0fa59] Inc_check (Con 5) (Var (Local 0x04)) (Branch F (Dloc [0fa60]))
+[0fa55] Loadw (Var (Local 0x01)) (Con 0) (Local 0x04)
+[0fa59] Inc_chk (Con 5) (Var (Local 0x04)) (Branch F (Dloc [0fa60]))
 [0fa5d] Jump [0fa7b]
-[0fa60] Load_word (Var (Local 0x01)) (Var (Local 0x05)) (Local 0x06)
+[0fa60] Loadw (Var (Local 0x01)) (Var (Local 0x05)) (Local 0x06)
 [0fa64] Je [Var (Local 0x06),Con 0] (Branch F (Dloc [0fa6d]))
 [0fa68] Print_obj (Var (Local 0x03))
 [0fa6a] Jump [0fa59]
@@ -6991,10 +7042,10 @@ Found 557 combined routines:
 [0fa96] Get_prop (Var (Global 0x6f)) (Con 7) Sp
 [0fa9a] Add (Var (Local 0x02)) (Var Sp) Sp
 [0fa9e] Ret_popped
-[0fa9f] Return (Var (Local 0x02))
+[0fa9f] Ret (Var (Local 0x02))
 --------------------------------------------------
 [0faa2] RoutineHeader [0,0,0,0]
-[0faab] Load_word (Var (Local 0x01)) (Con 0) (Local 0x02)
+[0faab] Loadw (Var (Local 0x01)) (Con 0) (Local 0x02)
 [0faaf] Get_prop (Var (Local 0x02)) (Con 7) (Local 0x03)
 [0fab3] Jl (Var (Local 0x03)) (Con 0) (Branch T (Dloc [0fae9]))
 [0fab7] Je [Var (Local 0x02),Con 114] (Branch F (Dloc [0fac8]))
@@ -7004,14 +7055,14 @@ Found 557 combined routines:
 [0fac5] Store (Con 46) (Con 0)
 [0fac8] Jz (Var (Global 0x77)) (Branch T (Dloc [0fae9]))
 [0facb] Test_attr (Var (Global 0x77)) (Con 29) (Branch F (Dloc [0fae9]))
-[0facf] Load_word (Var (Local 0x01)) (Con 1) Sp
+[0facf] Loadw (Var (Local 0x01)) (Con 1) Sp
 [0fad3] Je [Var Sp,Var (Global 0x77)] (Branch F (Dloc [0fae9]))
-[0fad7] Load_word (Var (Local 0x01)) (Con 2) Sp
+[0fad7] Loadw (Var (Local 0x01)) (Con 2) Sp
 [0fadb] Sub (Var (Local 0x03)) (Var Sp) (Local 0x04)
 [0fadf] Jl (Var (Local 0x04)) (Con 1) (Branch F (Dloc [0fae6]))
 [0fae3] Store (Con 4) (Con 1)
 [0fae6] Store (Con 3) (Var (Local 0x04))
-[0fae9] Return (Var (Local 0x03))
+[0fae9] Ret (Var (Local 0x03))
 --------------------------------------------------
 [0faeb] RoutineHeader []
 [0faec] Jl (Con 0) (Con 0) (Branch F Dfalse)
@@ -7019,13 +7070,13 @@ Found 557 combined routines:
 [0faf5] Jz (Var (Local 0x02)) (Branch T Dfalse)
 [0faf8] Je [Var (Local 0x02),Con 113,Con 218,Con 110] (Branch T (Dloc [0fb05]))
 [0faff] Je [Var (Local 0x02),Con 169,Con 128] (Branch F (Dloc [0fb07]))
-[0fb05] Return (Var (Local 0x02))
+[0fb05] Ret (Var (Local 0x02))
 [0fb07] Get_sibling (Var (Local 0x02)) (Local 0x02) (Branch T (Dloc [0faf8]))
 [0fb0c] Rfalse
 --------------------------------------------------
 [0fb0e] RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
-[0fb27] Load_word (Var (Local 0x01)) (Con 0) (Local 0x03)
-[0fb2b] Load_word (Var (Local 0x01)) (Con 4) (Local 0x04)
+[0fb27] Loadw (Var (Local 0x01)) (Con 0) (Local 0x03)
+[0fb2b] Loadw (Var (Local 0x01)) (Con 4) (Local 0x04)
 [0fb2f] Clear_attr (Var (Global 0x6f)) (Con 1)
 [0fb32] Test_attr (Var (Local 0x03)) (Con 1) (Branch F (Dloc [0fb51]))
 [0fb36] Print "The "
@@ -7048,13 +7099,13 @@ Found 557 combined routines:
 [0fb80] Jg (Var (Local 0x06)) (Con 2) (Branch F (Dloc [0fb87]))
 [0fb84] Store (Con 6) (Con 3)
 [0fb87] Sub (Var (Local 0x06)) (Con 1) Sp
-[0fb8b] Load_word (Var (Global 0x0a)) (Var Sp) (Local 0x0a)
+[0fb8b] Loadw (Var (Global 0x0a)) (Var Sp) (Local 0x0a)
 [0fb8f] Jump [0fbcd]
 [0fb92] Je [Var (Local 0x07),Con 2] (Branch F (Dloc [0fba8]))
 [0fb96] Jg (Var (Local 0x06)) (Con 3) (Branch F (Dloc [0fb9d]))
 [0fb9a] Store (Con 6) (Con 4)
 [0fb9d] Sub (Var (Local 0x06)) (Con 1) Sp
-[0fba1] Load_word (Var (Global 0x09)) (Var Sp) (Local 0x0a)
+[0fba1] Loadw (Var (Global 0x09)) (Var Sp) (Local 0x0a)
 [0fba5] Jump [0fbcd]
 [0fba8] Jg (Var (Local 0x07)) (Con 2) (Branch F (Dloc [0fbcd]))
 [0fbac] Sub (Var (Local 0x06)) (Var (Local 0x07)) (Local 0x06)
@@ -7064,10 +7115,10 @@ Found 557 combined routines:
 [0fbbe] Jg (Var (Local 0x06)) (Con 1) (Branch F (Dloc [0fbc5]))
 [0fbc2] Store (Con 6) (Con 2)
 [0fbc5] Add (Var (Local 0x06)) (Con 2) Sp
-[0fbc9] Load_word (Var (Global 0x08)) (Var Sp) (Local 0x0a)
+[0fbc9] Loadw (Var (Global 0x08)) (Var Sp) (Local 0x0a)
 [0fbcd] Random (Con 9) Sp
 [0fbd1] Sub (Var Sp) (Con 1) Sp
-[0fbd5] Load_word (Var (Local 0x0a)) (Var Sp) (Local 0x0b)
+[0fbd5] Loadw (Var (Local 0x0a)) (Var Sp) (Local 0x0b)
 [0fbd9] Jz (Var (Local 0x02)) (Branch T (Dloc [0fbe9]))
 [0fbdc] Je [Var (Local 0x0b),Con 6] (Branch F (Dloc [0fbe6]))
 [0fbe0] Store (Con 11) (Con 8)
@@ -7079,7 +7130,7 @@ Found 557 combined routines:
 [0fbf6] Jz (Var Sp) (Branch T (Dloc [0fbfc]))
 [0fbf9] Store (Con 11) (Con 7)
 [0fbfc] Sub (Var (Local 0x0b)) (Con 1) Sp
-[0fc00] Load_word (Var (Local 0x04)) (Var Sp) Sp
+[0fc00] Loadw (Var (Local 0x04)) (Var Sp) Sp
 [0fc04] Call (Floc [04e5c]) [Var Sp] Sp
 [0fc0a] Call (Floc [0fa48]) [Var Sp,Var (Global 0x6f),Var (Local 0x05)] Sp
 [0fc12] Je [Var (Local 0x0b),Con 1] (Branch T (Dloc [0fc93]))
@@ -7120,12 +7171,12 @@ Found 557 combined routines:
 [0fc9b] Ret_popped
 --------------------------------------------------
 [0fc9c] RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0]
-[0fcb7] Load_word (Var (Global 0x03)) (Con 0) (Local 0x0d)
+[0fcb7] Loadw (Var (Global 0x03)) (Con 0) (Local 0x0d)
 [0fcbb] Inc (Con 7)
 [0fcbd] Je [Var (Local 0x07),Var (Local 0x0d)] (Branch F (Dloc [0fcc4]))
 [0fcc1] Jump [0fcd1]
-[0fcc4] Load_word (Var (Global 0x03)) (Var (Local 0x07)) (Local 0x01)
-[0fcc8] Load_word (Var (Local 0x01)) (Con 0) Sp
+[0fcc4] Loadw (Var (Global 0x03)) (Var (Local 0x07)) (Local 0x01)
+[0fcc8] Loadw (Var (Local 0x01)) (Con 0) Sp
 [0fccc] Je [Var Sp,Var (Global 0x76)] (Branch F (Dloc [0fcbb]))
 [0fcd1] Set_attr (Var (Global 0x76)) (Con 2)
 [0fcd4] Test_attr (Var (Global 0x6f)) (Con 1) (Branch F (Dloc [0fd0a]))
@@ -7137,7 +7188,7 @@ Found 557 combined routines:
 [0fd0f] Jl (Var (Local 0x05)) (Con 1) (Branch F (Dloc [0fd16]))
 [0fd13] Store (Con 5) (Con 1)
 [0fd16] Store (Con 8) (Var (Local 0x05))
-[0fd19] Load_word (Var (Local 0x01)) (Con 0) (Local 0x02)
+[0fd19] Loadw (Var (Local 0x01)) (Con 0) (Local 0x02)
 [0fd1d] Call (Floc [0faa2]) [Var (Local 0x01)] Sp
 [0fd23] Store (Con 6) (Var Sp)
 [0fd26] Store (Con 9) (Con 1)
@@ -7166,13 +7217,13 @@ Found 557 combined routines:
 [0fd9b] Jg (Var (Local 0x05)) (Con 2) (Branch F (Dloc [0fda2]))
 [0fd9f] Store (Con 5) (Con 3)
 [0fda2] Sub (Var (Local 0x05)) (Con 1) Sp
-[0fda6] Load_word (Var (Global 0x0a)) (Var Sp) (Local 0x0a)
+[0fda6] Loadw (Var (Global 0x0a)) (Var Sp) (Local 0x0a)
 [0fdaa] Jump [0fde8]
 [0fdad] Je [Var (Local 0x06),Con 2] (Branch F (Dloc [0fdc3]))
 [0fdb1] Jg (Var (Local 0x05)) (Con 3) (Branch F (Dloc [0fdb8]))
 [0fdb5] Store (Con 5) (Con 4)
 [0fdb8] Sub (Var (Local 0x05)) (Con 1) Sp
-[0fdbc] Load_word (Var (Global 0x09)) (Var Sp) (Local 0x0a)
+[0fdbc] Loadw (Var (Global 0x09)) (Var Sp) (Local 0x0a)
 [0fdc0] Jump [0fde8]
 [0fdc3] Jg (Var (Local 0x06)) (Con 2) (Branch F (Dloc [0fde8]))
 [0fdc7] Sub (Var (Local 0x05)) (Var (Local 0x06)) (Local 0x05)
@@ -7182,10 +7233,10 @@ Found 557 combined routines:
 [0fdd9] Jg (Var (Local 0x05)) (Con 1) (Branch F (Dloc [0fde0]))
 [0fddd] Store (Con 5) (Con 2)
 [0fde0] Add (Var (Local 0x05)) (Con 2) Sp
-[0fde4] Load_word (Var (Global 0x08)) (Var Sp) (Local 0x0a)
+[0fde4] Loadw (Var (Global 0x08)) (Var Sp) (Local 0x0a)
 [0fde8] Random (Con 9) Sp
 [0fdec] Sub (Var Sp) (Con 1) Sp
-[0fdf0] Load_word (Var (Local 0x0a)) (Var Sp) (Local 0x0b)
+[0fdf0] Loadw (Var (Local 0x0a)) (Var Sp) (Local 0x0b)
 [0fdf4] Jz (Var (Local 0x03)) (Branch T (Dloc [0fe04]))
 [0fdf7] Je [Var (Local 0x0b),Con 6] (Branch F (Dloc [0fe01]))
 [0fdfb] Store (Con 11) (Con 8)
@@ -7197,7 +7248,7 @@ Found 557 combined routines:
 [0fe0f] Jg (Con 25) (Var Sp) (Branch F (Dloc [0fe16]))
 [0fe13] Store (Con 11) (Con 7)
 [0fe16] Sub (Var (Local 0x0b)) (Con 1) Sp
-[0fe1a] Load_word (Var (Global 0x07)) (Var Sp) Sp
+[0fe1a] Loadw (Var (Global 0x07)) (Var Sp) Sp
 [0fe1e] Call (Floc [04e5c]) [Var Sp] Sp
 [0fe24] Call (Floc [0fa48]) [Var Sp,Var (Global 0x76),Var (Global 0x77)] Sp
 [0fe2c] Je [Var (Local 0x0b),Con 1] (Branch T (Dloc [0fe90]))
@@ -7249,7 +7300,7 @@ Found 557 combined routines:
 [0fee0] Put_prop (Var (Global 0x6f)) (Con 7) (Var Sp)
 [0fee5] Call (Floc [10666]) [Con -24641] Sp
 [0feec] Rfalse
-[0feed] Return (Var (Local 0x02))
+[0feed] Ret (Var (Local 0x02))
 --------------------------------------------------
 [0fef0] RoutineHeader [0,0,0]
 [0fef7] Put_prop (Var (Local 0x01)) (Con 7) (Var (Local 0x02))
@@ -7262,12 +7313,12 @@ Found 557 combined routines:
 [0ff62] Call (Floc [078ba]) [Var (Local 0x01)] Sp
 [0ff68] Get_prop (Var (Local 0x01)) (Con 17) Sp
 [0ff6c] Call (Fvar Sp) [Con 2] Sp
-[0ff71] Return (Var (Local 0x03))
+[0ff71] Ret (Var (Local 0x03))
 [0ff73] Je [Var (Local 0x03),Con 2] (Branch F (Dloc [0ff82]))
 [0ff77] Get_prop (Var (Local 0x01)) (Con 17) Sp
 [0ff7b] Call (Fvar Sp) [Con 3] Sp
-[0ff80] Return (Var (Local 0x03))
-[0ff82] Return (Var (Local 0x03))
+[0ff80] Ret (Var (Local 0x03))
+[0ff82] Ret (Var (Local 0x03))
 --------------------------------------------------
 [0ff84] RoutineHeader [0,0,0]
 [0ff8b] Get_prop (Var (Local 0x01)) (Con 7) (Local 0x02)
@@ -7314,14 +7365,14 @@ Found 557 combined routines:
 [1001e] Rtrue
 --------------------------------------------------
 [10020] RoutineHeader [0,0,0,0,0,0]
-[1002d] Load_word (Var (Global 0x03)) (Con 0) (Local 0x02)
+[1002d] Loadw (Var (Global 0x03)) (Con 0) (Local 0x02)
 [10031] Jz (Var (Global 0x3e)) (Branch F Dfalse)
 [10034] Store (Con 3) (Con 0)
 [10037] Inc (Con 3)
 [10039] Je [Var (Local 0x03),Var (Local 0x02)] (Branch F (Dloc [10040]))
 [1003d] Jump [100cd]
-[10040] Load_word (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
-[10044] Load_word (Var (Local 0x04)) (Con 0) (Local 0x05)
+[10040] Loadw (Var (Global 0x03)) (Var (Local 0x03)) (Local 0x04)
+[10044] Loadw (Var (Local 0x04)) (Con 0) (Local 0x05)
 [10048] Jin (Var (Local 0x05)) (Var (Global 0x00)) (Branch F (Dloc [100a7]))
 [1004d] Test_attr (Var (Local 0x05)) (Con 7) (Branch T (Dloc [100a7]))
 [10052] Je [Var (Local 0x05),Con 114] (Branch F (Dloc [1005f]))
@@ -7330,7 +7381,7 @@ Found 557 combined routines:
 [1005c] Jump [10037]
 [1005f] Get_prop (Var (Local 0x05)) (Con 7) Sp
 [10063] Jl (Var Sp) (Con 0) (Branch F (Dloc [10090]))
-[10067] Load_word (Var (Local 0x04)) (Con 3) (Local 0x06)
+[10067] Loadw (Var (Local 0x04)) (Con 3) (Local 0x06)
 [1006b] Jz (Var (Local 0x06)) (Branch T (Dloc [10084]))
 [1006e] Random (Con 100) Sp
 [10072] Jg (Var (Local 0x06)) (Var Sp) (Branch F (Dloc [10084]))
@@ -7386,7 +7437,7 @@ Found 557 combined routines:
 [10136] Get_prop_addr (Var (Global 0x00)) (Var (Local 0x04)) (Local 0x05)
 [1013a] Get_prop_len (Var (Local 0x05)) (Local 0x06)
 [1013d] Je [Var (Local 0x06),Con 1,Con 4,Con 5] (Branch F (Dloc [10127]))
-[10145] Load_byte (Var (Local 0x05)) (Con 0) Sp
+[10145] Loadb (Var (Local 0x05)) (Con 0) Sp
 [10149] Call (Floc [101c6]) [Var Sp] Sp
 [1014f] Jz (Var Sp) (Branch T (Dloc [10127]))
 [10153] Store (Con 3) (Con 1)
@@ -7474,13 +7525,13 @@ Found 557 combined routines:
 [102b2] Jump [101ee]
 [102b5] Je [Var (Local 0x01),Con 190] (Branch T (Dloc [102c1]))
 [102b9] Call (Floc [102c4]) [Var (Local 0x01)] Sp
-[102bf] Return (Var (Local 0x05))
-[102c1] Return (Var (Local 0x05))
+[102bf] Ret (Var (Local 0x05))
+[102c1] Ret (Var (Local 0x05))
 --------------------------------------------------
 [102c4] RoutineHeader [0,0,0,0]
 [102cd] Get_child (Con 114) (Local 0x02) (Branch T (Dloc [102d1]))
 [102d1] Jz (Var (Local 0x02)) (Branch F (Dloc [102d6]))
-[102d4] Return (Var (Local 0x04))
+[102d4] Ret (Var (Local 0x04))
 [102d6] Get_sibling (Var (Local 0x02)) (Local 0x03) (Branch T (Dloc [102da]))
 [102da] Je [Var (Local 0x02),Con 113,Con 115] (Branch F (Dloc [102e3]))
 [102e0] Jump [10335]
@@ -7532,7 +7583,7 @@ Found 557 combined routines:
 [103b8] RoutineHeader [0,0,0,0,0,0]
 [103c5] Get_child (Var (Local 0x01)) (Local 0x05) (Branch T (Dloc [103c9]))
 [103c9] Jz (Var (Local 0x05)) (Branch F (Dloc [103ce]))
-[103cc] Return (Var (Local 0x06))
+[103cc] Ret (Var (Local 0x06))
 [103ce] Get_sibling (Var (Local 0x05)) (Local 0x04) (Branch T (Dloc [103d2]))
 [103d2] Test_attr (Var (Local 0x05)) (Con 7) (Branch T (Dloc [103fd]))
 [103d6] Test_attr (Var (Local 0x05)) (Con 9) (Branch T (Dloc [103fd]))
@@ -7554,7 +7605,7 @@ Found 557 combined routines:
 [10413] Get_prop (Var (Global 0x6f)) (Con 7) (Local 0x02)
 [10417] Add (Var (Local 0x01)) (Var (Local 0x02)) (Local 0x03)
 [1041b] Call (Floc [05486]) [Con 32746] Sp
-[10422] Load_word (Var Sp) (Con 0) Sp
+[10422] Loadw (Var Sp) (Con 0) Sp
 [10426] Jz (Var Sp) (Branch F (Dloc [1042f]))
 [10429] Store (Con 2) (Con 0)
 [1042c] Jump [10433]
@@ -7579,7 +7630,7 @@ Found 557 combined routines:
 [104ae] Sub (Var (Local 0x02)) (Con 1) Sp
 [104b2] Mul (Con 30) (Var Sp) (Local 0x04)
 [104b6] Call (Floc [05486]) [Con 32746] Sp
-[104bd] Load_word (Var Sp) (Con 1) Sp
+[104bd] Loadw (Var Sp) (Con 1) Sp
 [104c1] Add (Var (Local 0x04)) (Var Sp) Sp
 [104c5] Print_num (Var Sp)
 [104c8] Print " moves."
@@ -7644,7 +7695,7 @@ Found 557 combined routines:
 [10658] Print "Beginner"
 [1065f] Print "."
 [10662] New_line
-[10663] Return (Var (Global 0x01))
+[10663] Ret (Var (Global 0x01))
 --------------------------------------------------
 [10665] RoutineHeader []
 [10666] Jl (Con 0) (Con 0) (Branch F Dfalse)
@@ -7697,7 +7748,7 @@ Found 557 combined routines:
 [108fe] Insert_obj (Con 208) (Con 175)
 [10901] Put_prop (Con 110) (Con 12) (Con 0)
 [10906] Get_child (Var (Global 0x6f)) (Local 0x03) (Branch T (Dloc [1090a]))
-[1090a] Load_word (Var (Global 0x87)) (Con 0) (Local 0x04)
+[1090a] Loadw (Var (Global 0x87)) (Con 0) (Local 0x04)
 [1090e] Store (Con 2) (Var (Local 0x03))
 [10911] Jz (Var (Local 0x02)) (Branch T Dtrue)
 [10914] Get_sibling (Var (Local 0x02)) (Local 0x03) (Branch T (Dloc [10918]))
@@ -7714,7 +7765,7 @@ Found 557 combined routines:
 [1093d] Get_sibling (Var (Local 0x01)) (Local 0x01) (Branch T (Dloc [10941]))
 [10941] Jump [10920]
 [10944] Random (Var (Local 0x04)) Sp
-[10948] Load_word (Var (Global 0x87)) (Var Sp) Sp
+[10948] Loadw (Var (Global 0x87)) (Var Sp) Sp
 [1094c] Insert_obj (Var (Local 0x02)) (Var Sp)
 [1094f] Jump [1090e]
 --------------------------------------------------
@@ -7789,46 +7840,46 @@ Found 557 combined routines:
 [10b15] Ret_popped
 --------------------------------------------------
 [10f96] RoutineHeader []
-[10f97] Return (Con 4356)
+[10f97] Ret (Con 4356)
 --------------------------------------------------
 [11128] RoutineHeader [9263,22890,-5629,-29114,8201,10077,-13257,10844,-19820,-6898,-7924,19716]
 [11141] Ret_popped
 --------------------------------------------------
 [115a3] RoutineHeader [17618,14956,820,23821,1138,6442,42,15220,24517,-14171,4884]
-[115ba] And_ (Var (Global 0x30)) (Con 51) (Global 0x3e)
-[115be] Inc_check (Con 71) (Var (Global 0x42)) (Branch T (Dloc [12621]))
+[115ba] And (Var (Global 0x30)) (Con 51) (Global 0x3e)
+[115be] Inc_chk (Con 71) (Var (Global 0x42)) (Branch T (Dloc [12621]))
 [115c3] Test_attr (Con 79) (Con 46) (Branch F (Dloc [115eb]))
 [115c7] Test_attr (Con 36) (Var (Local 0x05)) (Branch F (Dloc [115ed]))
-[115cb] Return (Con 18068)
+[115cb] Ret (Con 18068)
 --------------------------------------------------
 [117ba] RoutineHeader [-29114,8270,-26311,2560,20996,-26823,-29340,796,-19946,17864,-19956]
 [117d1] Print_ret "asty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
 --------------------------------------------------
 [11a2e] RoutineHeader [24959,21307,27231,2656,8979,-7088,-26862,113,-11964,5470]
-[11a43] Return (Con 57)
+[11a43] Ret (Con 57)
 --------------------------------------------------
 [11ac6] RoutineHeader [19504,277,5229,22313,8197]
-[11ad1] Return (Var (Global 0x2a))
+[11ad1] Ret (Var (Global 0x2a))
 --------------------------------------------------
 [11c26] RoutineHeader []
-[11c27] Inc_check (Con 34) (Var (Global 0xea)) (Branch F (Dloc [11c33]))
+[11c27] Inc_chk (Con 34) (Var (Global 0xea)) (Branch F (Dloc [11c33]))
 [11c2b] Rfalse
 --------------------------------------------------
-[11da2] RoutineHeader []
-[11da3] Div (Con 26) (Var (Global 0x21)) (Local 0x01)
-[11da7] Insert_obj (Con 93) (Var (Global 0x38))
-[11daa] Inc_check (Var (Global 0xc4)) (Var (Global 0x3f)) (Branch F (Dloc [11edd]))
-[11daf] Remove_obj (Con 80)
+[11d94] RoutineHeader [16660,-16338,-26837,6404,24887,14121]
+[11da1] Mod (Var Sp) (Con 55) (Global 0x0a)
+[11da5] Get_prop (Con 1) (Var (Global 0x1e)) (Global 0x4d)
+[11da9] Or (Var (Global 0x55)) (Con 212) (Global 0x3f)
+[11dad] Je [Con 48,Con 153] (Branch F (Dloc [11dbf]))
 [11db1] Je [Con 1,Con 70] (Branch F (Dloc [11dd6]))
 [11db5] Je [Con 12,Var (Global 0x3d)] (Branch F (Dloc [12479]))
 [11dba] Clear_attr (Con 73) (Var (Global 0x53))
 [11dbd] Get_next_prop (Var (Global 0x35)) (Con 204) (Global 0x27)
-[11dc1] Inc_check (Con 200) (Var (Global 0x95)) (Branch F (Dloc [122c5]))
+[11dc1] Inc_chk (Con 200) (Var (Global 0x95)) (Branch F (Dloc [122c5]))
 [11dc6] Mul (Con 116) (Con 3) (Global 0x27)
-[11dca] And_ (Con 64) (Var (Local 0x07)) Sp
+[11dca] And (Con 64) (Var (Local 0x07)) Sp
 [11dce] Jg (Var (Global 0x3e)) (Var (Global 0x54)) (Branch T (Dloc [11dd7]))
-[11dd2] Inc_check (Var (Global 0x30)) (Con 10) (Branch F (Dloc [11dfc]))
-[11dd6] Inc_check (Var (Global 0xc2)) (Con 29) (Branch T (Dloc [11deb]))
+[11dd2] Inc_chk (Var (Global 0x30)) (Con 10) (Branch F (Dloc [11dfc]))
+[11dd6] Inc_chk (Var (Global 0xc2)) (Con 29) (Branch T (Dloc [11deb]))
 [11dda] Rtrue
 --------------------------------------------------
 [1215d] RoutineHeader [19648]
@@ -7842,14 +7893,14 @@ Found 557 combined routines:
 [1237f] Ret_popped
 --------------------------------------------------
 [12980] RoutineHeader [12614,-27573,24,-2963,16388,-7912,11012,4946,-1740,11268,9072,24324]
-[12999] Return (Var (Global 0x36))
+[12999] Ret (Var (Global 0x36))
 --------------------------------------------------
 [12e26] RoutineHeader []
 [12e27] Div (Con 6) (Var (Global 0x56)) (Global 0x0e)
-[12e2b] Return (Con 40)
+[12e2b] Ret (Con 40)
 --------------------------------------------------
 [12fb0] RoutineHeader []
-[12fb1] Return (Con 17625)
+[12fb1] Ret (Con 17625)
 --------------------------------------------------
 [135c2] RoutineHeader []
 [135c3] Jump [1930a]
@@ -7858,7 +7909,7 @@ Found 557 combined routines:
 [1362b] Ret_popped
 --------------------------------------------------
 [13632] RoutineHeader [-21946]
-[13635] Return (Var (Global 0x5a))
+[13635] Ret (Var (Global 0x5a))
 --------------------------------------------------
 [137d0] RoutineHeader []
 [137d1] Jin (Con 34) (Var (Global 0x24)) (Branch F (Dloc [137f4]))
@@ -7867,7 +7918,7 @@ Found 557 combined routines:
 --------------------------------------------------
 [13817] RoutineHeader [5176]
 [1381a] Dec (Con 69)
-[1381c] Load_byte (Con 211) (Con 3) (Global 0x43)
+[1381c] Loadb (Con 211) (Con 3) (Global 0x43)
 [13820] Jl (Con 147) (Var (Global 0x51)) (Branch F (Dloc [14676]))
 [13825] Mod (Var Sp) (Con 88) (Local 0x04)
 [13829] Ret_popped
@@ -7876,52 +7927,56 @@ Found 557 combined routines:
 [13847] Inc (Var (Local 0x0c))
 [13849] Print_ret "asty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
 --------------------------------------------------
+[13ac2] RoutineHeader [-31641,4100,31074,1480,-23292]
+[13acd] Or (Con 121) (Var (Global 0x01)) (Global 0x42)
+[13ad1] Ret_popped
+--------------------------------------------------
 [13af7] RoutineHeader [10257,14608,24578,2317,21176,1133,10264,7128,185,4690,18476,4602,25376]
-[13b12] Inc_check (Var (Global 0xc0)) (Con 40) (Branch F (Dloc [13f5f]))
+[13b12] Inc_chk (Var (Global 0xc0)) (Con 40) (Branch F (Dloc [13f5f]))
 [13b17] Get_child (Con 3) (Global 0x48) (Branch F (Dloc [1243a]))
-[13b1c] Inc_check (Con 114) (Con 26) (Branch F (Dloc [1451f]))
+[13b1c] Inc_chk (Con 114) (Con 26) (Branch F (Dloc [1451f]))
 [13b21] Ret_popped
 --------------------------------------------------
 [13b3a] RoutineHeader [18018,-28117,-29413,8217]
 [13b43] Load (Con 25817) (Global 0x19)
-[13b47] Inc_check (Con 200) (Var (Global 0x95)) (Branch F (Dloc [13f6c]))
-[13b4c] Dec_check (Con 54) (Con 5) (Branch F (Dloc [13b70]))
-[13b50] Inc_check (Con 138) (Var (Global 0x57)) (Branch F (Dloc [129a0]))
+[13b47] Inc_chk (Con 200) (Var (Global 0x95)) (Branch F (Dloc [13f6c]))
+[13b4c] Dec_chk (Con 54) (Con 5) (Branch F (Dloc [13b70]))
+[13b50] Inc_chk (Con 138) (Var (Global 0x57)) (Branch F (Dloc [129a0]))
 [13b55] Jz (Con 19095) (Branch F (Dloc [1235e]))
 [13b5a] Get_prop (Con 217) (Var (Global 0x0b)) (Global 0x1a)
 [13b5e] Get_prop_len (Var (Global 0xa2)) (Local 0x04)
 [13b61] Jl (Con 4) (Var (Global 0x15)) (Branch F (Dloc [13b6d]))
-[13b65] Return (Con 58)
+[13b65] Ret (Con 58)
 --------------------------------------------------
 [13b6b] RoutineHeader [8227,2882,20244]
-[13b72] And_ (Var (Global 0x49)) (Con 53) (Global 0xc3)
+[13b72] And (Var (Global 0x49)) (Con 53) (Global 0xc3)
 [13b76] Rtrue
 --------------------------------------------------
 [13b9e] RoutineHeader [23125,5193,-11472,6220,-14144,-19964,8708,9546]
-[13baf] Return (Con 58)
+[13baf] Ret (Con 58)
 --------------------------------------------------
 [13efa] RoutineHeader [22569,20992,11017,10553]
 [13f03] Jump [17970]
 --------------------------------------------------
 [13fd4] RoutineHeader [18484,-10447,16652,19076]
-[13fdd] Inc_check (Con 1) (Con 250) (Branch F (Dloc [13fe9]))
+[13fdd] Inc_chk (Con 1) (Con 250) (Branch F (Dloc [13fe9]))
 [13fe1] Ret_popped
 --------------------------------------------------
 [1400c] RoutineHeader [19076,1280,9482,19560,-10332,-19956,-21422,-30461,6494,-28632,8969,20068]
 [14025] Ret_popped
 --------------------------------------------------
 [14043] RoutineHeader [19840,-31739,64,9962,6737,6761,-27067,-31707,37,7385,25943,10528,2074,19732]
-[14060] Load_word (Var (Local 0x08)) (Con 58) (Global 0x8a)
+[14060] Loadw (Var (Local 0x08)) (Con 58) (Global 0x8a)
 [14064] Jl (Var (Global 0x5a)) (Var (Global 0x53)) (Branch F (Dloc [1462f]))
 [14069] Inc (Var (Local 0x0c))
-[1406b] Return (Var (Global 0x5a))
+[1406b] Ret (Var (Global 0x5a))
 --------------------------------------------------
 [1411c] RoutineHeader [7261,-10140,8969,20068]
 [14125] Ret_popped
 --------------------------------------------------
 [14652] RoutineHeader [18524,-10187,22528,-2224,-13983,-14040,512,9269,18084]
 [14665] Print "You stagger back under a hail of axe strokes."
-[14684] Dec_check (Con 35) (Con 118) (Branch F (Dloc [14694]))
+[14684] Dec_chk (Con 35) (Con 118) (Branch F (Dloc [14694]))
 [14688] Get_prop (Con 185) (Var (Global 0x68)) (Local 0x07)
 [1468c] Jin (Var (Global 0x8c)) (Con 1) (Branch F (Dloc [13de1]))
 [14691] Ret_popped
