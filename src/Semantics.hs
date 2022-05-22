@@ -18,7 +18,9 @@ import qualified Data.Char as Char (chr,ord)
 import qualified Objects
 import qualified Operation as Op
 
-theEffect :: Eff ()
+type Effect x = Eff Value x -- TODO: generalise Value
+
+theEffect :: Effect ()
 theEffect = loop
   where
     loop = do
@@ -27,7 +29,7 @@ theEffect = loop
       eval pc i
       loop
 
-eval :: Addr -> Operation -> Eff ()
+eval :: Addr -> Operation -> Effect ()
 eval pc = \case
 
   Op.BadOperation mes -> do
@@ -338,36 +340,36 @@ eval pc = \case
   Op.Verify{} -> undefined
 
 
-writeBytesFromString :: Addr -> String -> Eff ()
+writeBytesFromString :: Addr -> String -> Effect ()
 writeBytesFromString a str = writeBytes a [ fromIntegral (Char.ord c) | c <- str ]
 
-writeBytes :: Addr -> [Byte] -> Eff ()
+writeBytes :: Addr -> [Byte] -> Effect ()
 writeBytes a bs = sequence_ [ SetByte (a+i) b | (i,b) <- zip [0..] bs ]
 
 makeValueTarget :: Value -> Target
 makeValueTarget = makeTarget . byteOfValue
 
-evalBin :: Bin -> Arg -> Arg -> Target -> Eff ()
+evalBin :: Bin -> Arg -> Arg -> Target -> Effect ()
 evalBin bin arg1 arg2 target = do
   v1 <- evalArg arg1
   v2 <- evalArg arg2
   v <- BinOp bin v1 v2
   setTarget target v
 
-branchMaybe :: Label -> Bool -> Eff ()
+branchMaybe :: Label -> Bool -> Effect ()
 branchMaybe (Branch sense dest) b = case (sense,b) of
   (Op.T,False) -> pure ()
   (Op.F,True) -> pure ()
   (Op.T,True) -> gotoDest dest
   (Op.F,False) -> gotoDest dest
 
-gotoDest :: Dest -> Eff ()
+gotoDest :: Dest -> Effect ()
 gotoDest = \case
   Dfalse -> returnValue 0
   Dtrue -> returnValue 1
   Dloc a -> SetPC a
 
-evalFunc :: Func -> Eff Addr
+evalFunc :: Func -> Effect Addr
 evalFunc = \case
   BadFunc -> error "failed to decode called function"
   Floc a -> pure a
@@ -377,26 +379,26 @@ evalFunc = \case
     --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
     pure a
 
-evalArg :: Arg -> Eff Value
+evalArg :: Arg -> Effect Value
 evalArg = \case
   Con x -> pure x
   Var v -> evalTarget v
 
-evalTarget :: Target -> Eff Value
+evalTarget :: Target -> Effect Value
 evalTarget = \case
   Sp -> PopStack
   Local n -> GetLocal n
   Global b -> evalGlobal b
 
-evalGlobal :: Byte -> Eff Value
+evalGlobal :: Byte -> Effect Value
 evalGlobal b = globalAddr b >>= getWord
 
-returnValue :: Value -> Eff ()
+returnValue :: Value -> Effect ()
 returnValue v = do
   target <- PopFrame
   setTarget target v
 
-setTarget :: Target -> Value -> Eff ()
+setTarget :: Target -> Value -> Effect ()
 setTarget var v = case var of
   Sp -> PushStack v
   Local n -> SetLocal n v
@@ -404,12 +406,12 @@ setTarget var v = case var of
     a <- globalAddr b
     setWord a v
 
-globalAddr :: Byte -> Eff Addr
+globalAddr :: Byte -> Effect Addr
 globalAddr b = do
   Header{globalVars} <- StoryHeader
   pure (globalVars + 2 * fromIntegral b)
 
-setLocals :: RoutineHeader -> [Value] -> Eff ()
+setLocals :: RoutineHeader -> [Value] -> Effect ()
 setLocals rh actuals =
   case rh of
     Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
@@ -417,13 +419,13 @@ setLocals rh actuals =
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
 
-getWord :: Addr -> Eff Value -- TODO: make primitive
+getWord :: Addr -> Effect Value -- TODO: make primitive
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
   pure (256 * fromIntegral hi + fromIntegral lo)
 
-setWord :: Addr -> Value -> Eff ()
+setWord :: Addr -> Value -> Effect ()
 setWord a w = do
   let (hi,lo) = splitWord w
   SetByte a hi

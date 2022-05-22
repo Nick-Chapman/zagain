@@ -5,39 +5,39 @@ module Eff (Eff(..),Bin(..)) where
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
 import Header (Header)
-import Numbers (Byte,Addr,Value)
+import Numbers (Byte,Addr)
 import Operation (Operation,Target,RoutineHeader)
 
-instance Functor Eff where fmap = liftM
-instance Applicative Eff where pure = return; (<*>) = ap
-instance Monad Eff where return = Ret; (>>=) = Bind
+instance Functor (Eff v) where fmap = liftM
+instance Applicative (Eff v) where pure = return; (<*>) = ap
+instance Monad (Eff v) where return = Ret; (>>=) = Bind
 
-data Eff a where
-  Ret :: a -> Eff a
-  Bind :: Eff a -> (a -> Eff b) -> Eff b
-  Debug :: Show a => a -> Eff ()
-  GamePrint :: String -> Eff ()
-  ReadInputFromUser :: (String,String) -> Eff String
-  GetText :: Addr -> Eff String
-  FetchI :: Eff Operation
-  FetchRoutineHeader :: Eff RoutineHeader
-  FetchDict :: Eff Dict
-  PushFrame :: Addr -> Target -> Eff ()
-  PopFrame :: Eff Target
-  GetPC :: Eff Addr
-  SetPC :: Addr -> Eff ()
-  GetLocal :: Byte -> Eff Value
-  SetLocal :: Byte -> Value -> Eff ()
-  EqualAny :: [Value] -> Eff Bool
-  IsZero :: Value -> Eff Bool
-  BinOp :: Bin -> Value -> Value -> Eff Value
-  GetByte :: Addr -> Eff Byte
-  SetByte :: Addr -> Byte -> Eff ()
-  PushStack :: Value -> Eff ()
-  PopStack :: Eff Value
-  Random :: Value -> Eff Value
-  Quit :: Eff ()
-  StoryHeader :: Eff Header
+data Eff v x where
+  Ret :: x -> Eff v x
+  Bind :: Eff v x -> (x -> Eff v y) -> Eff v y
+  Debug :: Show x => x -> Eff v ()
+  GamePrint :: String -> Eff v ()
+  ReadInputFromUser :: (String,String) -> Eff v String
+  GetText :: Addr -> Eff v String
+  FetchI :: Eff v Operation
+  FetchRoutineHeader :: Eff v RoutineHeader
+  FetchDict :: Eff v Dict
+  PushFrame :: Addr -> Target -> Eff v ()
+  PopFrame :: Eff v Target
+  GetPC :: Eff v Addr
+  SetPC :: Addr -> Eff v ()
+  GetLocal :: Byte -> Eff v v
+  SetLocal :: Byte -> v -> Eff v ()
+  EqualAny :: [v] -> Eff v Bool
+  IsZero :: v -> Eff v Bool
+  BinOp :: Bin -> v -> v -> Eff v v
+  GetByte :: Addr -> Eff v Byte
+  SetByte :: Addr -> Byte -> Eff v ()
+  PushStack :: v -> Eff v ()
+  PopStack :: Eff v v
+  Random :: v -> Eff v v
+  Quit :: Eff v ()
+  StoryHeader :: Eff v Header
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

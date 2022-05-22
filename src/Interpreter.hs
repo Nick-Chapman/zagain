@@ -17,9 +17,11 @@ import Text.Printf (printf)
 import qualified Action as A (Action(..))
 import qualified Data.Map as Map
 
+type Effect x = Eff Value x
+
 --[interpreter for execution effects]----------------------------------
 
-run :: Word -> Story -> Eff () -> Action
+run :: Word -> Story -> Effect () -> Action
 run seed story e0 = loop (initState seed pc0) e0 k0
   where
     header@Header{initialPC=pc0} = Story.header story
@@ -28,7 +30,7 @@ run seed story e0 = loop (initState seed pc0) e0 k0
 
     (dict,_) = runFetch 0 story fetchDict
 
-    loop :: State -> Eff a -> (State -> a -> Action) -> Action
+    loop :: State -> Effect a -> (State -> a -> Action) -> Action
     loop s e k = case e of
       Ret x -> k s x
       Bind e f -> loop s e $ \s a -> loop s (f a) k

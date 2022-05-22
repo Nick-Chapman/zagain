@@ -14,6 +14,8 @@ import Eff (Eff(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value)
 
+type Effect x = Eff Value x -- TODO: generalise Value
+
 --[convs]-----------------------------------------------------
 
 v2i :: Value -> Int
@@ -31,13 +33,13 @@ b2v = fromIntegral
 bb2v :: Byte -> Byte -> Value
 bb2v hi lo = 256 * b2v hi + b2v lo
 
-getWord :: Addr -> Eff Value -- TODO: consider GetWord primitive
+getWord :: Addr -> Effect Value -- TODO: consider GetWord primitive
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
   pure (bb2v hi lo)
 
-objectAddr :: Value -> Eff Addr -- TODO: move static calcs to header?
+objectAddr :: Value -> Effect Addr -- TODO: move static calcs to header?
 objectAddr o = do
   Header{zv,objectTable} <- StoryHeader
   let base = objectTable
@@ -46,7 +48,7 @@ objectAddr o = do
   let propDefaultsSize = 2 * numProps f
   pure (base + v2a (propDefaultsSize + (o-1) * objectEntrySize))
 
-getShortName :: Value -> Eff String
+getShortName :: Value -> Effect String
 getShortName x = do
   a <- objectAddr x
   a' <- getWord (a+7)
@@ -55,7 +57,7 @@ getShortName x = do
 
 --[attributes]--------------------------------------------------------
 
-testAttr :: Value -> Value -> Eff Bool
+testAttr :: Value -> Value -> Effect Bool
 testAttr x n = do
   a <- objectAddr x
   let d = n `div` 8
@@ -64,7 +66,7 @@ testAttr x n = do
   b <- GetByte aa
   pure $ b `testBit` v2i (7-m)
 
-setAttr :: Value -> Value -> Eff ()
+setAttr :: Value -> Value -> Effect ()
 setAttr x n = do
   a <- objectAddr x
   let d = n `div` 8
@@ -74,7 +76,7 @@ setAttr x n = do
   let new = old `setBit` v2i (7-m)
   SetByte aa new
 
-clearAttr :: Value -> Value -> Eff ()
+clearAttr :: Value -> Value -> Effect ()
 clearAttr x n = do
   a <- objectAddr x
   let d = n `div` 8
@@ -94,12 +96,12 @@ offsetFM = \case
   Sibling -> 5
   Child -> 6
 
-getFM :: FamilyMember -> Value -> Eff Value
+getFM :: FamilyMember -> Value -> Effect Value
 getFM fm x = do
   a <- objectAddr x
   b2v <$> GetByte (a + v2a (offsetFM fm))
 
-setFM :: FamilyMember -> Value -> Value -> Eff ()
+setFM :: FamilyMember -> Value -> Value -> Effect ()
 setFM fm x y = do
   a <- objectAddr x
   SetByte (a + v2a (offsetFM fm)) (byteOfValue y)
@@ -109,7 +111,7 @@ byteOfValue v = do
   if v < 0 || v > 255 then error (show ("byteOfValue",v)) else v2b v
 
 
-insertObj :: Value -> Value -> Eff ()
+insertObj :: Value -> Value -> Effect ()
 insertObj x dest = do
   unlink x
   setFM Parent x dest
@@ -117,12 +119,12 @@ insertObj x dest = do
   setFM Sibling x oldChild
   setFM Child dest x
 
-removeObj :: Value -> Eff ()
+removeObj :: Value -> Effect ()
 removeObj x = do
   unlink x
   setFM Parent x 0
 
-unlink :: Value -> Eff ()
+unlink :: Value -> Effect ()
 unlink this = do
   oldP <- getFM Parent this
   when (oldP /= 0) $ do
@@ -134,7 +136,7 @@ unlink this = do
       False -> do
         loop child
       where
-        loop :: Value -> Eff ()
+        loop :: Value -> Effect ()
         loop x = do
           when (x == 0) $ error "unlink loop, failed to find unlinkee"
           sib <- getFM Sibling x
@@ -146,7 +148,7 @@ unlink this = do
 
 --[properties]--------------------------------------------------------
 
-getProp :: Value -> Value -> Eff Value
+getProp :: Value -> Value -> Effect Value
 getProp x n = do
   Header{objectTable=base} <- StoryHeader
   props <- getPropertyTable x
@@ -162,7 +164,7 @@ getProp x n = do
     _ ->
       error "multi prop match"
 
-putProp :: Value -> Value -> Value -> Eff ()
+putProp :: Value -> Value -> Value -> Effect ()
 putProp x n v = do
   props <- getPropertyTable x
   let xs = [ pr | pr@Prop{number} <- props, number == n ]
@@ -183,7 +185,7 @@ putProp x n v = do
     1 -> undefined
     _ -> error "expected 1 or 2 bytes for prop value"
 
-getPropAddr :: Value -> Value -> Eff Value
+getPropAddr :: Value -> Value -> Effect Value
 getPropAddr x n = do
   props <- getPropertyTable x
   case [ dataAddr | Prop{number,dataAddr} <- props, number == n ] of
@@ -191,14 +193,14 @@ getPropAddr x n = do
     [] -> pure 0
     _ -> error "multi prop match"
 
-getPropLen :: Value -> Eff Value
+getPropLen :: Value -> Effect Value
 getPropLen a = do
   if a == 0 then pure 0 else do
     b <- GetByte (v2a (a - 1))
     let numBytes = 1 + b2v ((b `shiftR` 5) .&. 0x7)
     pure numBytes
 
-getNextProp :: Value -> Value -> Eff Value
+getNextProp :: Value -> Value -> Effect Value
 getNextProp x p = do
   props <- getPropertyTable x
   let bigger = [ n | Prop{number=n} <- props, p == 0 || n < p ]
@@ -206,7 +208,7 @@ getNextProp x p = do
     [] -> pure 0
     _ -> pure $ maximum bigger
 
-getPropertyTable :: Value -> Eff [Prop]
+getPropertyTable :: Value -> Effect [Prop]
 getPropertyTable x = do
   a <- objectAddr x
   a' <- getWord (a+7)
@@ -216,7 +218,7 @@ getPropertyTable x = do
 
 data Prop = Prop { number :: Value, dataAddr :: Value, dataBytes :: [Byte] }
 
-getPropsA :: Value -> Eff [Prop]
+getPropsA :: Value -> Effect [Prop]
 getPropsA a = do
   b <- GetByte (v2a a)
   if b == 0 then pure [] else do
@@ -228,7 +230,7 @@ getPropsA a = do
     more <- getPropsA (a + numBytes + 1)
     pure (p1:more)
 
-getBytes :: Value -> Value -> Eff [Byte]
+getBytes :: Value -> Value -> Effect [Byte]
 getBytes a n = sequence [GetByte (v2a (a+i)) | i <- [0.. n - 1]]
 
 --[odds and sods]-----------------------------------------------------
