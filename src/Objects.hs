@@ -14,7 +14,7 @@ import Eff (Eff(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value)
 
-type Effect x = Eff Value x -- TODO: generalise Value
+type Effect x = Eff Byte Value x -- TODO: generalise Value
 
 --[convs]-----------------------------------------------------
 
