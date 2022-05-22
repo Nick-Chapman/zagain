@@ -9,7 +9,7 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Data.Bits ((.&.),shiftR)
+import Data.Bits ((.&.),shiftR) -- TODO: elim
 import Eff (Eff(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value)
@@ -21,20 +21,11 @@ type Effect x = Eff Byte Value x -- TODO: generalise Value
 v2a :: Value -> Addr
 v2a = fromIntegral
 
-v2b :: Value -> Byte
-v2b = fromIntegral
-
-b2v :: Byte -> Value
-b2v = fromIntegral
-
-bb2v :: Byte -> Byte -> Value
-bb2v hi lo = 256 * b2v hi + b2v lo
-
-getWord :: Addr -> Effect Value -- TODO: consider GetWord primitive
+getWord :: Addr -> Effect Value
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
-  pure (bb2v hi lo)
+  MakeWord hi lo
 
 objectAddr :: Value -> Effect Addr -- TODO: move static calcs to header?
 objectAddr o = do
@@ -99,17 +90,14 @@ offsetFM = \case
 getFM :: FamilyMember -> Value -> Effect Value
 getFM fm x = do
   a <- objectAddr x
-  b2v <$> GetByte (a + v2a (offsetFM fm))
+  b <- GetByte (a + v2a (offsetFM fm))
+  Widen b
 
 setFM :: FamilyMember -> Value -> Value -> Effect ()
 setFM fm x y = do
   a <- objectAddr x
-  SetByte (a + v2a (offsetFM fm)) (byteOfValue y)
-
-byteOfValue :: Value -> Byte
-byteOfValue v = do
-  if v < 0 || v > 255 then error (show ("byteOfValue",v)) else v2b v
-
+  lo <- LoByte y
+  SetByte (a + v2a (offsetFM fm)) lo
 
 insertObj :: Value -> Value -> Effect ()
 insertObj x dest = do
@@ -158,8 +146,8 @@ getProp x n = do
       getWord (base + v2a (2 * (n-1)))
     [prop] -> do
       case prop of
-        [hi,lo] -> pure (bb2v hi lo)
-        [b] -> pure $ b2v b
+        [hi,lo] -> MakeWord hi lo
+        [b] -> undefined (Widen b) -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
     _ ->
       error "multi prop match"
@@ -177,8 +165,8 @@ putProp x n v = do
   let Prop{dataBytes,dataAddr=a} = pr
   case length dataBytes  of
     2 -> do
-      let hi :: Byte = v2b (v `shiftR` 8)
-      let lo :: Byte = v2b (v .&. 0xff)
+      hi <- HiByte v
+      lo <- LoByte v
       SetByte (v2a a) hi
       SetByte (v2a (a+1)) lo
       pure ()
@@ -197,8 +185,8 @@ getPropLen :: Value -> Effect Value
 getPropLen a = do
   if a == 0 then pure 0 else do
     b <- GetByte (v2a (a - 1))
-    let numBytes = 1 + b2v ((b `shiftR` 5) .&. 0x7)
-    pure numBytes
+    let numBytes = 1 + ((b `shiftR` 5) .&. 0x7)
+    Widen numBytes
 
 getNextProp :: Value -> Value -> Effect Value
 getNextProp x p = do
@@ -213,7 +201,8 @@ getPropertyTable x = do
   a <- objectAddr x
   a' <- getWord (a+7)
   shortNameLen <- GetByte (v2a a')
-  props <- getPropsA (a' + 1 + b2v (2 * shortNameLen))
+  offset <- Widen (1 + 2 * shortNameLen)
+  props <- getPropsA (a' + offset)
   pure props
 
 data Prop = Prop { number :: Value, dataAddr :: Value, dataBytes :: [Byte] }
@@ -222,8 +211,8 @@ getPropsA :: Value -> Effect [Prop]
 getPropsA a = do
   b <- GetByte (v2a a)
   if b == 0 then pure [] else do
-    let number = b2v (b .&. 0x1f)
-    let numBytes = 1 + b2v (b `shiftR` 5)
+    number <- Widen (b .&. 0x1f)
+    numBytes <- Widen (1 + (b `shiftR` 5))
     let dataAddr = a + 1
     dataBytes <- getBytes (a+1) numBytes
     let p1 = Prop {number,dataAddr,dataBytes}

@@ -46,5 +46,11 @@ data Eff b v x where
   SetBit :: b -> b -> Eff b v b
   TestBit :: b -> b -> Eff b v Bool
 
+  MakeWord :: b -> b -> Eff b v v
+  Widen :: b -> Eff b v v
+  LoByte :: v -> Eff b v b
+  HiByte :: v -> Eff b v b
+
+
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

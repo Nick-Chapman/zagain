@@ -3,7 +3,7 @@
 module Interpreter (State,run) where
 
 import Action (Action)
-import Data.Bits ((.&.),shiftL,clearBit,setBit,testBit)
+import Data.Bits ((.&.),shiftL,clearBit,setBit,testBit,shiftR)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
@@ -154,6 +154,12 @@ run seed story e0 = loop (initState seed pc0) e0 k0
       SetBit b n -> k s (b `setBit` fromIntegral n)
       ClearBit b n -> k s (b `clearBit` fromIntegral n)
       TestBit b n -> k s (b `testBit` fromIntegral n)
+
+      MakeWord hi lo -> k s (256 * fromIntegral hi + fromIntegral lo)
+      Widen lo -> k s (fromIntegral lo)
+      LoByte v -> k s (fromIntegral (v .&. 0xff))
+      HiByte v -> k s (fromIntegral (v `shiftR` 8))
+
 
 --[interpreter state]-------------------------------------------------
 
