@@ -221,6 +221,10 @@ eval pc = \case
     v <- evalArg arg
     Objects.removeObj v
 
+  Op.Restart -> do
+    Header{initialPC} <- StoryHeader
+    SetPC initialPC
+
   Op.Ret_popped -> do PopStack >>= returnValue
 
   Op.Ret arg -> do
@@ -326,7 +330,6 @@ eval pc = \case
   Op.Or{} -> undefined
   Op.Output_stream{} -> undefined
   Op.Pop -> undefined
-  Op.Restart -> undefined
   Op.Restore{} -> undefined
   Op.Save{} -> undefined
   Op.Set_window{} -> undefined
