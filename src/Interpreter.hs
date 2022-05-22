@@ -3,14 +3,14 @@
 module Interpreter (State,run) where
 
 import Action (Action)
-import Data.Bits ((.&.),shiftL)
+import Data.Bits ((.&.),shiftL,clearBit,setBit,testBit)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
 import Eff (Eff(..),Bin(..))
 import Fetch (runFetch)
 import Header (Header(..))
-import Numbers (Byte,Addr,Value)
+import Numbers (Byte,Addr,Value,byteOfValue)
 import Operation (Target)
 import Story (Story(header),readStoryByte)
 import Text.Printf (printf)
@@ -147,6 +147,13 @@ run seed story e0 = loop (initState seed pc0) e0 k0
 
       StoryHeader -> do
         k s header
+
+      Div8 v -> k s (v `div` 8)
+      Mod8 v -> k s (byteOfValue (v `mod` 8))
+      SevenMinus v -> k s (7-v)
+      SetBit b n -> k s (b `setBit` fromIntegral n)
+      ClearBit b n -> k s (b `clearBit` fromIntegral n)
+      TestBit b n -> k s (b `testBit` fromIntegral n)
 
 --[interpreter state]-------------------------------------------------
 

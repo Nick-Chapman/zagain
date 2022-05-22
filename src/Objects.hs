@@ -9,7 +9,7 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Data.Bits (testBit,(.&.),shiftR,setBit,clearBit)
+import Data.Bits ((.&.),shiftR)
 import Eff (Eff(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value)
@@ -17,9 +17,6 @@ import Numbers (Byte,Addr,Value)
 type Effect x = Eff Byte Value x -- TODO: generalise Value
 
 --[convs]-----------------------------------------------------
-
-v2i :: Value -> Int
-v2i = fromIntegral
 
 v2a :: Value -> Addr
 v2a = fromIntegral
@@ -60,30 +57,33 @@ getShortName x = do
 testAttr :: Value -> Value -> Effect Bool
 testAttr x n = do
   a <- objectAddr x
-  let d = n `div` 8
-  let m = n `mod` 8
+  d <- Div8 n
+  m <- Mod8 n
+  m' <- SevenMinus m
   let aa = a + v2a d
   b <- GetByte aa
-  pure $ b `testBit` v2i (7-m)
+  b `TestBit` m'
 
 setAttr :: Value -> Value -> Effect ()
 setAttr x n = do
   a <- objectAddr x
-  let d = n `div` 8
-  let m = n `mod` 8
+  d <- Div8 n
+  m <- Mod8 n
   let aa = a + v2a d
   old <- GetByte aa
-  let new = old `setBit` v2i (7-m)
+  m' <- SevenMinus m
+  new <- old `SetBit` m'
   SetByte aa new
 
 clearAttr :: Value -> Value -> Effect ()
 clearAttr x n = do
   a <- objectAddr x
-  let d = n `div` 8
-  let m = n `mod` 8
+  d <- Div8 n
+  m <- Mod8 n
   let aa = a + v2a d
   old <- GetByte aa
-  let new = old `clearBit` v2i (7-m)
+  m' <- SevenMinus m
+  new <- old `ClearBit` m'
   SetByte aa new
 
 --[object containment hierarchy]--------------------------------------

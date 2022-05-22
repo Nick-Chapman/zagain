@@ -39,5 +39,12 @@ data Eff b v x where
   Quit :: Eff b v ()
   StoryHeader :: Eff b v Header
 
+  Div8 :: v -> Eff b v v
+  Mod8 :: v -> Eff b v b
+  SevenMinus :: b -> Eff b v b
+  ClearBit :: b -> b -> Eff b v b
+  SetBit :: b -> b -> Eff b v b
+  TestBit :: b -> b -> Eff b v Bool
+
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show
