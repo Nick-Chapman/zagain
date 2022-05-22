@@ -9,8 +9,7 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Data.Bits ((.&.),shiftR) -- TODO: elim
-import Eff (Eff(..))
+import Eff (Eff(..),Bin(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Byte,Addr,Value)
 
@@ -185,8 +184,12 @@ getPropLen :: Value -> Effect Value
 getPropLen a = do
   if a == 0 then pure 0 else do
     b <- GetByte (v2a (a - 1))
-    let numBytes = 1 + ((b `shiftR` 5) .&. 0x7)
-    Widen numBytes
+    shifted <- b `ShiftR` 5
+    seven <- LitB 0x7
+    masked <- shifted `BwAnd` seven
+    v <- Widen masked
+    one <- LitV 1
+    BinOp BAdd one v
 
 getNextProp :: Value -> Value -> Effect Value
 getNextProp x p = do
@@ -211,8 +214,11 @@ getPropsA :: Value -> Effect [Prop]
 getPropsA a = do
   b <- GetByte (v2a a)
   if b == 0 then pure [] else do
-    number <- Widen (b .&. 0x1f)
-    numBytes <- Widen (1 + (b `shiftR` 5))
+    oneF <- LitB 0x1f
+    fiveBits <- b `BwAnd` oneF
+    number <- Widen fiveBits
+    shifted <- b `ShiftR` 5
+    numBytes <- Widen (1 + shifted)
     let dataAddr = a + 1
     dataBytes <- getBytes (a+1) numBytes
     let p1 = Prop {number,dataAddr,dataBytes}

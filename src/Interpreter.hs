@@ -160,6 +160,11 @@ run seed story e0 = loop (initState seed pc0) e0 k0
       LoByte v -> k s (fromIntegral (v .&. 0xff))
       HiByte v -> k s (fromIntegral (v `shiftR` 8))
 
+      LitB b -> k s b
+      LitV v -> k s v
+      ShiftR b n -> k s (b `shiftR` n)
+      BwAnd b1 b2 -> k s (b1 .&. b2)
+
 
 --[interpreter state]-------------------------------------------------
 

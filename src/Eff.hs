@@ -5,7 +5,7 @@ module Eff (Eff(..),Bin(..)) where
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
 import Header (Header)
-import Numbers (Addr)
+import Numbers (Addr,Byte,Value)
 import Operation (Operation,Target,RoutineHeader)
 
 instance Functor (Eff b v) where fmap = liftM
@@ -50,6 +50,11 @@ data Eff b v x where
   Widen :: b -> Eff b v v
   LoByte :: v -> Eff b v b
   HiByte :: v -> Eff b v b
+
+  LitB :: Byte -> Eff b v b
+  LitV :: Value -> Eff b v v
+  ShiftR :: b -> Int -> Eff b v b
+  BwAnd :: b -> b -> Eff b v b
 
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
