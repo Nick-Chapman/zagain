@@ -1,7 +1,7 @@
 
 module Console (runAction) where
 
-import Action (Action(..))
+import Action (Action(..),lineWrap)
 import Control.Monad (when)
 import Control.Monad.Trans.Class (lift)
 import Text.Printf (printf)
@@ -43,19 +43,18 @@ repl :: Int -> Action -> HL.InputT IO ()
 repl = loop []
   where
     doWrap = True
+    wrap = if doWrap then lineWrap 80 else id
     loop :: [String] -> Int -> Action -> HL.InputT IO ()
     loop buf n = \case
       Stop{} -> do
         let text = concat (reverse buf)
-        let wrap = if doWrap then lineWrap else \_ -> id
-        lift $ putStr (col AN.Cyan (wrap 80 text))
+        lift $ putStr (col AN.Cyan (wrap text))
       TraceInstruction _ _ _ _ next -> do loop buf n next
       Debug _ next -> do loop buf n next
       Output text next -> do loop (text:buf) n next
       Input status _count f -> do
         let (text,prompt) = splitFinalPrompt (concat (reverse buf))
-        let wrap = if doWrap then lineWrap else \_ -> id
-        lift $ putStr (col AN.Cyan (wrap 80 text))
+        lift $ putStr (col AN.Cyan (wrap text))
         lift $ putStrLn (col AN.Magenta (makeStatusLine status))
         let _numInputs = col AN.Green $ printf "[%i]" n
         let xprompt = col AN.Cyan (prompt ++ " ")
@@ -79,29 +78,6 @@ splitFinalPrompt :: String -> (String,String)
 splitFinalPrompt s = do
   let (xs,ys) = span (not . (== '\n')) (reverse s)
   (reverse ys, reverse xs)
-
-lineWrap :: Int -> String -> String
-lineWrap max text =
-  unlines [ lineWrapOneLine line | line <- lines text ]
-  where
-    lineWrapOneLine line = do
-      let (wsIndent,remainder) = span (== ' ') line
-      case words remainder of
-        [] -> []
-        w1:ws -> do
-          let indentedW1 = wsIndent ++ w1
-          loop [indentedW1] (length indentedW1) ws
-          where
-            loop :: [String] -> Int-> [String] -> String
-            loop acc pos = \case
-              [] -> concat (reverse acc)
-              w:ws -> do
-                let indentedW = wsIndent ++ w
-                let posW = pos + length w + 1
-                let makeSplit = posW > max
-                let pos' = if makeSplit then length indentedW else posW
-                let sep = if makeSplit then "\n"++wsIndent else " "
-                loop (w : sep : acc) pos' ws
 
 
 col :: AN.Color -> String -> String
