@@ -138,7 +138,7 @@ run seed story e0 = loop (initState seed pc0) e0 k0
       Random range -> do
         let State{seed} = s
         let x = stepRandom seed
-        let result = x `mod` (fromIntegral range + 1) + 1 -- TODO: range+1 a bug?
+        let result = x `mod` (fromIntegral range) + 1
         k s { seed = x } (fromIntegral result)
 
       Quit -> do

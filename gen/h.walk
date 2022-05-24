@@ -259,16 +259,16 @@ Dark
 
 >[53]look
 Dark
-You can't hear anything, see anything, smell anything, feel anything, or taste anything, and do not even know where you are or who you are or how you got there.
+There's nothing you can taste, nothing you can see, nothing you can hear, nothing you can feel, nothing you can smell, you do not even know who you are.
 
 >[54]z
-You can hear nothing, smell nothing, taste nothing, see nothing, feel nothing, and are not even certain who you are.
+You can't hear anything, see anything, smell anything, feel anything, or taste anything, and do not even know where you are or who you are or how you got there.
 
 >[55]e
-You can hear nothing, smell nothing, taste nothing, see nothing, feel nothing, and are not even certain who you are.
+You can't hear anything, see anything, smell anything, feel anything, or taste anything, and do not even know where you are or who you are or how you got there.
 
 >[56]z
-There's nothing you can taste, nothing you can see, nothing you can hear, nothing you can feel, you do not even know who you are.
+You can hear nothing, taste nothing, see nothing, feel nothing, and are not even certain who you are.
 
 >[57]smell
 (darkness)
@@ -327,14 +327,13 @@ A mind-bogglingly improbable creature. A babel fish, when placed in one's ear, a
 You have:
   no tea
   The Hitchhiker's Guide
+  a thing your aunt gave you which you don't know what it is
   an electronic Sub-Etha signaling device
   a loose pile of junk mail
   a toothbrush
   a flathead screwdriver
   pocket fluff
   your gown (being worn)
-  It looks like your gown contains:
-    a thing your aunt gave you which you don't know what it is
 
 >[70]hang gown on hook
 You'll have to remove it first.
@@ -369,12 +368,12 @@ That sentence isn't one I recognise.
 satchel: Taken.
 towel: You're holding too much already.
 
-An announcement is coming over the ship's intercom. "Ekwad tthatrud tz zo sthazitqui oe ho toshcavulpefttoyx jtoycho oflux jo sl mhuvorke he htruwro otruflueftfluzittoya rvupkwa   oz zi sollfudwror gd tz zthaeft ofimorkquis gu nr go sw cr gcho okwafudtruerloshirberlquir geft op wz zo ta bx julpthaa rhuvi s oerlvupgryu nollr gs girbquigry ofima b  fime h  huvkono sz z."
+An announcement is coming over the ship's intercom. "Eollvuporke ha rhuvi so so tvup okwatoyr ghuvi sw cthaa bu ne h okonhuvx jo sollchoorks gtrup w oi simbz zl morktoykoni loshgry oz zvupd ts gtruhuvcavgryfiml m ofudflua rhuvquiimbfimchoorkerl or geftquiw cz zirbfuds ga rwro oquigryollchou ntoyr gp woshzit oollirbkwaflukoneftx jw cz za b okwae hkoneftx jo so ta borktoy."
 
 >[78]drop satchel
 Dropped.
 
-An announcement is coming over the ship's intercom. "Eziterlthatrus ge hkwae hu neft ol mwro  fluo swrofimi sfudvup os ghuvflur gfudp wa bs ggryeft od t  o tr gzittoyl mo sorktru oa ba rz zeftollvuporkthakonkwa oerlcavoshthagrye hs go sosho t okon  flud td tr gz zthal mfim os gx ju na ro sp wr g  gryirb op wtoytoyflui su no ta rtruork oflua bx ji sz zollimbimbflui l."
+An announcement is coming over the ship's intercom. "Ep woshimbo tirbfude ha rp wi s oimbolla bu nfluulphuvquigryo t oa bfuds gtrup woshimbthal mfud ofluulpp wosho sfimvupu ntoya r oi lcavzitz zirbd tflutruhuvqui oo so tl mu nflur gefti sgryoll oirbd ttoya rp wquigrythairbkwa ofluulpi losho sollirbd te hulp ohuvi so solll mkwae htruhuvi s oo so tchod te htrueftx jgryfim."
 
 >[79]take towel
 Taken.
@@ -387,37 +386,37 @@ The creature stirred in its sickly broiling vapour, and at that very moment the 
 
 You have destroyed most of a small galaxy. Please pick your words with greater care.
 
-An announcement is coming over the ship's intercom. "Evuptoywroa rorko serlvupa ro t othagryo sirbvupw cimbw cquiw c oorkcavi lr ggry  wrol mflui s oimbl mgryo ttoya ri ld tp wl m oa bimba bfimr gp wvupgryfimi s othaorko scavp wchoz zchofimcav ow ca bu noshefttoyfimwrohuvork oe hp wkonz za rd toshr gl mirb ohuvx jfimtruz zu nollgrygrytha okono shuvulpcavolltoythawrox j."
+An announcement is coming over the ship's intercom. "Evupd ttoyulphuvoshgryo ta bu n os ga reftx jzitfima bd terlr g oi lquio sollirborke ha ri lcav ozitfimirborkflutrui lcavgryo t oirbu ns gkonwroquio sz zchofud oe ha reftx jo sz za bkwafluulp oi li sgryo tirbkwatoytrui li s oo sfima bd tfluulpp wcavw coll ol mu ntoyr gp wx jw co tl mfud oe ha rwrocavw cfimirbd tfluulp."
 
 >[80]put towel on drain
 The towel completely covers the drain.
 
-An announcement is coming over the ship's intercom. "Ee htoys gw chuve hz zthakwa   otoye hr gtoyi struwroa ri ss g oo sthaw coshzitollu nirbe herl ow cd ttoyl mfudp wwroorkx jork oo tp ww cfima rosho ti lorkoll oeftulpfimhuvs gr gu nvupthap w oa ro scavoshkonorkd ts gp wtha oerla beftfluorko ttoychocavimb ou ni lollw cl ml mziti ld ttoy oi lorkimbfudx ju ns gerlhuvd t."
+An announcement is coming over the ship's intercom. "Eeftcavzitz zchofudtoytruhuvqui ozitfimchou ntoykonwroquio soll ol mfudflutrup wcavo sollirbork oerlulpp woshzitz za bfuds gulp oi losho so tchofude htrui lqui oimbo tchoorke hulpi lquizito t ochod ttoyr gefti simbollvupd t oe hulpi li sgryo tirbfudtoya r ohuvcavimbolla borkflur gp wi s oimbthaa borkerltrup wquizitfim."
 
 >[81]press dispenser button
 A single babel fish shoots out of the slot. It sails across the room and hits the dressing gown. The fish slides down the sleeve of the gown and falls to the floor, landing on the towel. A split-second later, a tiny cleaning robot whizzes across the floor, grabs the fish, and continues its breakneck pace toward a tiny robot panel at the base of the wall. The robot zips through the panel, and is gone.
 
-An announcement is coming over the ship's intercom. "Eirbkwas gquiulpe ha bquiz zqui ogrye hgryoshp wr ghuva bzitoll oi schofudz zo tfimimbvuptruz z os gkonu nwrou na bhuvs ggry   od tkwachoefti sl mthaa rosho t ogryhuvp wzitoshquigrytruimbfud otruw cfluu na bo torkorkoshcho ou nkonimbflui lquis gerlulpp w okwas gp wirba berlkonkwatoycho oollerlgrytrufluirbtoyw ckonu n."
+An announcement is coming over the ship's intercom. "Eirbfudflur ghuvosho sfimirbkwa otoytruwroquiw collirborkflua r owroi sw collchokwas gulpp wosh oimbthachod te hr gi lx jimbo t oa bkwaerltruwroi sw co tchokwa oe ha ri loshimbollirborke hkon oeftquiw cthavuporke hr gp wx j ozitz za bfuderltrui lcavw cfim ochou ns ga reftx jimbo tchofud otoyr gp wcavo sfima bu nflua r."
 
 >[82]take satchel
 Taken.
 
-An announcement is coming over the ship's intercom. "Ea rulpvupr gerlr ga rz zoshs g oquiwrogryfimd tthao tvups gx j ovupflux ja rgryimbo tflueft   okonerlw cl mhuvcavulpirbthacav od tp wefterlkwae hi sz za rflu or gkonfima rkone htruimbp wp w oquifluollkonthad timbe hthaoll otrui ltoyzita rtoyerle hollx j or ge ho tefto ti sulpzit  toy oirbi sz zerlo sr girbd ta ru n."
+An announcement is coming over the ship's intercom. "Ewrocavw cfimvupkwatoya ri lcav ow collchod te hulphuvi sgryz z ovupkwae hkoni lx jimbthairbork oe hr ghuvcavo sthaa bkwae hulp oi lquiw cfimvupd ts gtruhuvcav oimbthachod te ha reftquizito t oirbfuderlkonwroquiw cz zchofud otoyulpwrooshzitfiml morkerla r oi li so sthal mfudflukonhuvqui ogryollvupkwaflua reftcavo sfim."
 
 >[83]put satchel on panel
 Okay, the satchel is lying on its side in front of the tiny robot panel.
 
-An announcement is coming over the ship's intercom. "Ezito sw cthao sfim  u nkontoy or ggrye hi ls gr ga rimbchor g ox jfimcavd teftoshimbolli ll m or gfluquir ga bkontoytrui lu n op whuvu nz zwrochop w  x josh oo sgryu ncavcavr gquie hhuvo t okwad tchoi ltruollvup  fudp w ofimx jorkkonorkfuda borkd tx j oolli lo ss g  i limbx jp wulp ofudfluw cwrothar gd tfimfudqui."
+An announcement is coming over the ship's intercom. "Evupd ts gulpi li so sz zirbkwa oflukoneftosho sfimvupd ttoyr g ohuvquizitthairborke htrup wqui oo so tirbu ntoya rhuvquio soll oirbd te hkonp wquiimbz zirbu n otoytrueftquiw cz za bfude ha r owrox jo sthavupd tflur geftosh ow cz za bd ts gtruefti sgryz z ochoorkerltrup wi simbo tl mkwa oflua rp wcavimbthavuporks gulp."
 
 >[84]press dispenser button
 A single babel fish shoots out of the slot. It sails across the room and hits the dressing gown. The fish slides down the sleeve of the gown and falls to the floor, landing on the towel. A split-second later, a tiny cleaning robot whizzes across the floor, grabs the fish, and continues its breakneck pace toward a tiny robot panel at the base of the wall. The robot plows into the satchel, sending the babel fish flying through the air in a graceful arc. A small upper-half-of-the-room cleaning robot flies into the room, catches the babel fish (which is all the flying junk it can find), and exits.
 
-An announcement is coming over the ship's intercom. "Ethao tfluu nirbi ltoyo thuvw c od to s  zitflukonwrou no td t ol mw cvuporkirbz zhuvhuvl mtru oe hi stoyi sx jd ti skond tqui oa berla bvupfimthas gp worki l oimbwroollr ghuverle he h  cav othao su nthawros gr gfimgrykwa oi ls gw co sx jfud  u nw cvup ooshimbirbz zorkr gimbhuvp woll oz zi lcavkwatrur gr gi le he h."
+An announcement is coming over the ship's intercom. "Eoshzitz za borks gkonp woshimb oz za borks ga rp woshzitthavup ofude htruwrocavw cz zvupfudtoy oulpi lx jw cthairbu ne hr ghuv oi sw cthairborkerltrup wx jgry ofimirbd ts gkoneftoshzitfiml m oorks ga rhuvcavw cfima bkwaerl otrui lx jo solla borktoytrup w ooshzitz zchokwaerlr ghuvosho s oolla bfudflukoneftcavimbthal m."
 
 >[85]put junk mail on satchel
 Okay, the loose pile of junk mail is now sitting on the satchel.
 
-An announcement is coming over the ship's intercom. "Eflud timbulps gulpfimirbirbcho oo sgryfimhuvi sa rvupw co s   oo s  wrozitquihuvfimkwaa bosh oirbe hoshorks geftgryd toshtha oi lgrye heftwrow ci lo tl mqui oz zkonz zcavkwatoythairbkwax j ozito si lulpr ghuvp wi seftflu othaorkgryorkr gu nkontoyl mtoy oe h  o skwakwazitwrol mhuvwro ou ntoytoyimbz zwrotrutruoshimb."
+An announcement is coming over the ship's intercom. "Efude hulpeftx jgryfima borke h oulphuvquigryfimchod ttoyulpeft ooshgryo tl morkerlr ghuvquizit oz zirbfudtoya rhuvquio so tvup oorkflukonp wx jimbollvupu ne h oulpp wquio sthal morkerlr geft ox jimbollirbu ntoyr gp wx jimb othavupfuds gtrueftoshzito tvup oorkerla ri li simbthal mkwae h oa refti sgryo tchod ts gtrui l."
 
 >[86]press dispenser button
 A single babel fish shoots out of the slot. It sails across the room and hits the dressing gown. The fish slides down the sleeve of the gown and falls to the floor, landing on the towel. A split-second later, a tiny cleaning robot whizzes across the floor, grabs the fish, and continues its breakneck pace toward a tiny robot panel at the base of the wall. The robot plows into the satchel, sending the babel fish flying through the air in a graceful arc surrounded by a cloud of junk mail. Another robot flies in and begins madly collecting the cluttered plume of mail. The babel fish continues its flight, landing with a loud "squish" in your ear.
@@ -428,8 +427,8 @@ An announcement is coming over the ship's intercom. "This is the Captain. My ins
 You have:
   no tea
   a babel fish (in your ear)
-  a thing your aunt gave you which you don't know what it is
   The Hitchhiker's Guide
+  a thing your aunt gave you which you don't know what it is
   an electronic Sub-Etha signaling device
   a toothbrush
   a flathead screwdriver
@@ -508,12 +507,12 @@ Hey, let's not overdo it, okay?
 (to Vogon poetry)
 You have no choice. Why not relax and enjoy it?
 
-"Bleem miserable venchit! Bleem forever mestinglish asunder frapt."
+"Fripping lyshus wimbgunts, awhilst moongrovenly kormzibs."
 
 >[100]enjoy poetry
 Hey, let's not overdo it, okay?
 
-"Bleem miserable venchit! Bleem forever mestinglish asunder frapt."
+"Gashee morphousite, thou expungiest quoopisk!"
 
 >[101]z
 Time passes...
@@ -602,13 +601,13 @@ Dark
 You can't hear anything, see anything, smell anything, feel anything, or taste anything, and do not even know where you are or who you are or how you got there.
 
 >[113]z
-You can't hear anything, see anything, smell anything, feel anything, or taste anything, and do not even know where you are or who you are or how you got there.
+There's nothing you can taste, nothing you can see, nothing you can hear, nothing you can feel, nothing you can smell, you do not even know who you are.
 
 >[114]z
-You can see nothing, feel nothing, hear nothing, taste nothing, smell nothing, and are not entirely certain who you are.
+You can hear nothing, smell nothing, taste nothing, see nothing, feel nothing, and are not even certain who you are.
 
 >[115]z
-You can't see anything, smell anything, feel anything, or taste anything, and do not even know where you are or who you are or how you got there.
+You can see nothing, feel nothing, taste nothing, smell nothing, and are not entirely certain who you are.
 
 >[116]listen
 (to darkness)
@@ -616,7 +615,7 @@ You hear the deep and distant hum of a star drive coming from far above. There i
 
 >[117]look
 Dark
-There's nothing you can taste, nothing you can see, nothing you can feel, nothing you can smell, you do not even know who you are.
+You can smell nothing, taste nothing, see nothing, feel nothing, and are not even certain who you are.
 
 >[118]listen
 (to darkness)
@@ -629,7 +628,7 @@ You can't go that way.
 You can't go that way.
 
 >[121]exit
-You can't see anything, smell anything, feel anything, or taste anything, and do not even know where you are or who you are or how you got there.
+There's nothing you can taste, nothing you can see, nothing you can feel, nothing you can smell, you do not even know who you are.
 
 >[122]listen to hum
 The sound comes from far above.
@@ -685,28 +684,24 @@ The sales brochure goes on to describe the ship's complement of Sirius Cyberneti
 
 >[132]take all
 satchel: Taken.
-handbag: Taken.
-molecular hyperwave pincer: Taken.
+handbag: You're holding too much already.
+molecular hyperwave pincer: You're holding too much already.
 
 >[133]i
 You have:
   no tea
-  a molecular hyperwave pincer
-  a handbag
   a satchel
   a sales brochure
   your gown (being worn)
   a babel fish (in your ear)
-  a thing your aunt gave you which you don't know what it is
   The Hitchhiker's Guide
+  a thing your aunt gave you which you don't know what it is
   an electronic Sub-Etha signaling device
   a toothbrush
   a flathead screwdriver
   pocket fluff
 
 >[134]put all in thing
-molecular hyperwave pincer: Done.
-handbag: Done.
 satchel: Done.
 sales brochure: Done.
 your gown: You'll have to remove it first.
@@ -731,8 +726,6 @@ You have:
     The Hitchhiker's Guide
     a sales brochure
     a satchel
-    a handbag
-    a molecular hyperwave pincer
 
 >[136]port
 You enter the sauna. After several hours, you come out a changed man.
@@ -740,6 +733,8 @@ You enter the sauna. After several hours, you come out a changed man.
 >[137]look
 Bridge
 This is the bridge of the Heart of Gold. A gangway leads down, and steam comes from an entrance to port. Next to the control console is Eddie (the shipboard computer).
+There is a handbag here.
+There is a molecular hyperwave pincer here.
 
 >[138]d
 Corridor, Fore End
@@ -751,7 +746,7 @@ You are in the Galley area of the ship, containing a machine which is the state 
 A carton labelled "Nutrimat/Computer Interface" is sitting here.
 
 >[140]touch nutrimat
-Fiddling with the Nutrimathen pubrDke   iwhich gdlgsomething  jurev
+Fiddling with the Nutrimat accomplishes nothing.
 
 >[141]examine nutrimat
 The Nutrimat has a touch-sensitive pad, a dispensing slot, and a service panel which is closed. It bears a small label which reads "Another fine product of the Sirius Cybernetics Corporation."
@@ -761,7 +756,7 @@ The Nutrimat makes an instant but highly detailed examination of your taste buds
 A cupful of Advanced Tea Substitute appears in the dispensing slot.
 
 >[143]take cup
-Your load is too heavy.
+Taken.
 
 >[144]sb
 Corridor, Fore End
@@ -770,8 +765,12 @@ Corridor, Fore End
 Corridor, Aft End
 This is one end of a short corridor that continues fore along the main deck of the Heart of Gold. Doorways lead to aft and port. In addition, a gangway leads downward.
 
+You feel a wave of depression sweep over you, and you turn to see that Marvin the robot has stalked miserably into the room.
+
 >[146]aft
 That entrance leads to the Infinite Improbability Drive chamber. It's supposed to be a terribly dangerous area of the ship. Are you sure you want to go in there?
+
+Marvin enters a room to port, and the door closes behind him.
 
 >[147]yes
 Absolutely sure?
@@ -801,16 +800,17 @@ There is a pair of hypersonic pliers here.
 
 >[153]take all
 ionic diffusion rasp: Taken.
-pair of hypersonic pliers: Your load is too heavy.
+pair of hypersonic pliers: Taken.
 spare Improbability Drive: Your load is too heavy.
 
 >[154]put all in thing
+pair of hypersonic pliers: Done.
 ionic diffusion rasp: Done.
+Advanced Tea Substitute: Done.
 your gown: You'll have to remove it first.
 babel fish: You'll have to remove it first.
 
 >[155]take all
-pair of hypersonic pliers: Your load is too heavy.
 spare Improbability Drive: Your load is too heavy.
 
 >[156]drop thing
@@ -836,13 +836,17 @@ You have:
   your gown (being worn)
   a babel fish (in your ear)
 
+You feel a wave of depression sweep over you, and you turn to see that Marvin the robot has stalked miserably into the room.
+
 >[161]l
 Engine Room
 This is the room that houses the powerful Infinite Improbability Generator that drives the Heart of Gold. An exit lies fore of here.
+Marvin, the Paranoid Android, is here.
 There is a thing your aunt gave you which you don't know what it is here.
 It looks like the thing your aunt gave you which you don't know what it is contains:
   an ionic diffusion rasp
   a pair of hypersonic pliers
+  Advanced Tea Substitute
   pocket fluff
   a flathead screwdriver
   a toothbrush
@@ -850,8 +854,8 @@ It looks like the thing your aunt gave you which you don't know what it is conta
   The Hitchhiker's Guide
   a sales brochure
   a satchel
-  a handbag
-  a molecular hyperwave pincer
+
+Marvin wanders off.
 
 >[162]take thing
 Your load is too heavy.
@@ -864,6 +868,8 @@ Corridor, Fore End
 
 >[165]u
 Bridge
+There is a handbag here.
+There is a molecular hyperwave pincer here.
 
 >[166]drop drive
 Dropped.
@@ -881,6 +887,8 @@ Taken.
 Bridge
 This is the bridge of the Heart of Gold. A gangway leads down, and steam comes from an entrance to port. Next to the control console is Eddie (the shipboard computer).
 There is a spare Improbability Drive here.
+There is a handbag here.
+There is a molecular hyperwave pincer here.
 
 >[170]i
 You have:
@@ -889,6 +897,7 @@ You have:
   It looks like the thing your aunt gave you which you don't know what it is contains:
     an ionic diffusion rasp
     a pair of hypersonic pliers
+    Advanced Tea Substitute
     pocket fluff
     a flathead screwdriver
     a toothbrush
@@ -896,8 +905,6 @@ You have:
     The Hitchhiker's Guide
     a sales brochure
     a satchel
-    a handbag
-    a molecular hyperwave pincer
   your gown (being worn)
   a babel fish (in your ear)
 
@@ -905,6 +912,8 @@ You have:
 Bridge
 This is the bridge of the Heart of Gold. A gangway leads down, and steam comes from an entrance to port. Next to the control console is Eddie (the shipboard computer).
 There is a spare Improbability Drive here.
+There is a handbag here.
+There is a molecular hyperwave pincer here.
 
 >[172]take plotter
 You can't see any plotter here!

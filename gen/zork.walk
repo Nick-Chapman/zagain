@@ -162,7 +162,7 @@ A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the 
 Your sword has begun to glow very brightly.
 
 >[36]kill troll with sword
-It's curtains for the troll as your sword removes his head.
+The troll takes a fatal blow and slumps to the floor dead.
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 Your sword is no longer glowing.
 
@@ -175,13 +175,13 @@ There is a jewel-encrusted egg here.
 
 >[39]go south
 East of Chasm
+A "lean and hungry" gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled.
 
 >[40]go east
 Gallery
 
 >[41]go north
 Studio
-Loosely attached to a wall is a small piece of paper.
 
 >[42]go up
 Kitchen
@@ -274,7 +274,6 @@ On the altar is a large black book, open to page 569.
 >[62]pray
 Forest
 This is a forest, with trees in all directions. To the east, there appears to be sunlight.
-You hear in the distance the chirping of a song bird.
 
 >[63]turn off lamp
 The brass lantern is now off.
@@ -282,6 +281,7 @@ The brass lantern is now off.
 >[64]go south
 Forest
 This is a dimly lit forest, with large trees all around.
+You hear in the distance the chirping of a song bird.
 
 >[65]go north
 Clearing
@@ -592,10 +592,9 @@ On the ground is a red hot bell.
 
 >[143]go up
 Cave
-A gust of wind blows out your candles!
 
 >[144]extinguish candles
-The candles are not lighted.
+The flame is extinguished.
 
 >[145]go north
 Mirror Room
@@ -674,6 +673,7 @@ This is a non-descript part of a coal mine.
 >[162]go southwest
 Coal Mine
 This is a non-descript part of a coal mine.
+There is a ZORK owner's manual here.
 
 >[163]go down
 Ladder Top
@@ -699,6 +699,7 @@ Ladder Top
 
 >[169]go up
 Coal Mine
+There is a ZORK owner's manual here.
 
 >[170]go north
 Coal Mine
@@ -747,6 +748,7 @@ Coal Mine
 
 >[183]go southwest
 Coal Mine
+There is a ZORK owner's manual here.
 
 >[184]go down
 Ladder Top
@@ -848,6 +850,7 @@ Coal Mine
 
 >[210]go north
 Coal Mine
+There is a ZORK owner's manual here.
 
 >[211]go east
 Coal Mine
@@ -908,7 +911,6 @@ Slide Room
 
 >[228]go down
 Cellar
-There is a ZORK owner's manual here.
 
 >[229]go up
 Living Room
@@ -945,7 +947,6 @@ Dropped.
 
 >[236]go down
 Cellar
-There is a ZORK owner's manual here.
 
 >[237]go north
 The Troll Room
@@ -1004,6 +1005,8 @@ Reservoir South
 
 >[251]go east
 Dam
+There is an object which looks like a tube of toothpaste here.
+There is a wrench here.
 
 >[252]go east
 Dam Base
@@ -1192,7 +1195,6 @@ Done.
 
 >[292]go down
 Cellar
-There is a ZORK owner's manual here.
 
 >[293]go north
 The Troll Room
@@ -1287,51 +1289,49 @@ This is a large room, whose east wall is solid granite. A number of discarded ba
 There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a deadly stiletto.
 There is a silver chalice, intricately engraved, here.
 Your sword has begun to glow very brightly.
-A quick thrust pinks your left arm, and blood starts to trickle down.
+The stiletto flashes faster than you can follow, and blood wells from your leg.
 
 >[312]kill thief with sword
-Clang! Crash! The thief parries.
-The thief stabs nonchalantly with his stiletto and misses.
-
->[313]kill thief with sword
-A quick stroke, but the thief is on guard.
-You dodge as the thief comes in low.
-
->[314]kill thief with sword
-The force of your blow knocks the thief back, stunned.
-The thief slowly regains his feet.
-
->[315]kill thief with sword
-Slash! Your blow lands! That one hit an artery, it could be serious!
-You parry a lightning thrust, and the thief salutes you with a grim nod.
-
->[316]kill thief with sword
-The thief is momentarily disoriented and can't fight back.
-The thief slowly regains his feet.
-
->[317]kill thief with sword
-The thief is struck on the arm; blood begins to trickle down.
-The butt of his stiletto cracks you on the skull, and you stagger back.
-
->[318]kill thief with sword
-You are still recovering from that last blow, so your attack is ineffective.
-
-
->[319]kill thief with sword
 The thief is confused and can't fight back.
 The thief slowly regains his feet.
 
->[320]kill thief with sword
-The thief is battered into unconsciousness.
+>[313]kill thief with sword
+The thief is confused and can't fight back.
+The thief slowly regains his feet.
 
->[321]kill thief with sword
-The unarmed thief cannot defend himself: He dies.
+>[314]kill thief with sword
+The thief is disarmed by a subtle feint past his guard.
+The robber, somewhat surprised at this turn of events, nimbly retrieves his stiletto.
+
+>[315]kill thief with sword
+Your sword pinks the thief on the wrist, but it's not serious.
+The thief tries to sneak past your guard, but you twist away.
+
+>[316]kill thief with sword
+The thief is confused and can't fight back.
+The thief slowly regains his feet.
+
+>[317]kill thief with sword
+The thief receives a deep gash in his side.
+You parry a lightning thrust, and the thief salutes you with a grim nod.
+
+>[318]kill thief with sword
+It's curtains for the thief as your sword removes his head.
 Almost as soon as the thief breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 As the thief dies, the power of his magic decreases, and his treasures reappear:
   A stiletto
   A jewel-encrusted egg, with a golden clockwork canary
 The chalice is now safe to take.
 Your sword is no longer glowing.
+
+>[319]kill thief with sword
+You can't see any thief here!
+
+>[320]kill thief with sword
+You can't see any thief here!
+
+>[321]kill thief with sword
+You can't see any thief here!
 
 >[322]take all
 stiletto: Taken.
@@ -1396,7 +1396,6 @@ Beside you on the branch is a small bird's nest.
 
 >[337]wind up canary
 The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmering in the grass. As the canary winds down, the songbird flies away.
-You hear in the distance the chirping of a song bird.
 
 >[338]go down
 Forest Path
@@ -1404,7 +1403,6 @@ There is a beautiful brass bauble here.
 
 >[339]take bauble
 Taken.
-You hear in the distance the chirping of a song bird.
 
 >[340]go south
 North of House
@@ -1456,7 +1454,6 @@ Done.
 
 >[349]go down
 Cellar
-There is a ZORK owner's manual here.
 
 >[350]go north
 The Troll Room
@@ -1494,7 +1491,6 @@ There is a bloody axe here.
 
 >[359]go south
 Cellar
-There is a ZORK owner's manual here.
 
 >[360]go up
 Living Room
