@@ -84,7 +84,9 @@ press dispenser button
 put junk on satchel
 press dispenser button
 flip switch
-z
+take all
+put all in thing
+drop thing
 z
 z
 z
@@ -96,12 +98,55 @@ z
 z
 z
 z
-z
-z
-z
-open case
 type " venchit "
+take plotter
+i
+i
+z
+z
+z
+z
+listen
+z
+z
+z
+listen
+aft
+take brochure
+take pincer
+put pincer in thing
+d
+port
+examine interface
+examine nutrimat
+touch pad
+take cup
+i
+sb
+aft
+aft
+aft
+yes
+aft
+no
 look
-quit
-
-Y
+look
+drop thing
+get rasp and pliers
+put rasp and pliers in thing
+take drive
+i
+fore
+fore
+up
+drop drive
+drop cup and plotter
+look
+examine drive
+examine plotter
+put small plug in small receptacle
+put dangly bit in the cup
+look
+turn on drive
+look
+score

@@ -1,9 +1,9 @@
 
 top: reg
 
-#WRAP = -wrap 80
-#dev: compare_with_frotz
-dev: compare_with_mojo
+WRAP = -wrap 80
+dev: compare_with_frotz
+#dev: compare_with_mojo
 
 #LEN = 999
 #STORY = ./story/zork1.88-840726.z3

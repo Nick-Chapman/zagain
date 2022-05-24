@@ -419,13 +419,25 @@ A recording plays: "To open the case, type in the third word from the second ver
 
 An announcement is coming over the ship's intercom. "This is the Captain. My instruments show that we've picked up a couple of hitchhikers. I hate freeloaders, and when my guards find you I'll have you thrown into space. On second thought, maybe I'll read you some of my poetry first. Repeating..."
 
->[87]z
-Time passes...
+>[87]take all
+satchel: Taken.
+towel: Taken.
+thing your aunt gave you which you don't know what it is: Taken.
+your gown: Taken.
+keyboard: Not bloody likely.
 
 An announcement is coming over the ship's intercom. "This is the Captain. My instruments show that we've picked up a couple of hitchhikers. I hate freeloaders, and when my guards find you I'll have you thrown into space. On second thought, maybe I'll read you some of my poetry first. Repeating..."
 
->[88]z
-Time passes...
+>[88]put all in thing
+your gown: Done.
+towel: Done.
+satchel: Done.
+babel fish: You'll have to remove it first.
+The Hitchhiker's Guide: Done.
+electronic Sub-Etha signaling device: Done.
+toothbrush: Done.
+flathead screwdriver: Done.
+pocket fluff: Done.
 
 Guards burst in and grab you and Ford, who comes slowly awake. They drag you down the corridor to a large cabin, where they strap you into large, menacing chairs...
 
@@ -433,66 +445,68 @@ Captain's Quarters, in the poetry appreciation chair
 This is the cabin of the Vogon Captain. You and Ford are strapped into poetry appreciation chairs.
 The Captain is indescribably hideous, indescribably blubbery, and indescribably mid-to-dark green. He is holding samples of his favourite poetry.
 
->[89]z
+>[89]drop thing
+It falls to the ground with a light "thunk." It doesn't do anything else at all.
+
+>[90]z
 Time passes...
 
 "If he's going to read us his poetry," mutters Ford, sweating profusely, "just pray he softens us up with some cudgels first..."
 
 "Hello, hitchhikers!" begins the Vogon Captain. "I've decided to read you a verse of my poetry!"
 
->[90]z
+>[91]z
 Time passes...
 
 "Oh freddled gruntbuggly, thy nacturations are to me!"
 
->[91]enjoy poetry
-You realise that, although the Vogon poetry is indeed astoundingly bad, worse things happen at sea, and in fact, at school. With an effort for which Hercules himself would have patted you on the back, you grit your teeth and enjoy the stuff.
-
-"As plurdled gabbleblotchits on a lurgid bee."
-
 >[92]z
 Time passes...
 
+"As plurdled gabbleblotchits on a lurgid bee."
+
+>[93]enjoy poetry
+You realise that, although the Vogon poetry is indeed astoundingly bad, worse things happen at sea, and in fact, at school. With an effort for which Hercules himself would have patted you on the back, you grit your teeth and enjoy the stuff.
+
 "Groop I implore thee, my foonting turlingdromes."
-
->[93]z
-Time passes...
-
-"And hooptiously drangle me with crinkly bindlewurdles, or I will rend thee in the gobberwarts with my blurglecruncheon, see if I don't!"
 
 >[94]z
 Time passes...
 
-"You looked like you enjoyed my poem. I think...yes, I think I'll read the NEXT verse, also!"
+"And hooptiously drangle me with crinkly bindlewurdles, or I will rend thee in the gobberwarts with my blurglecruncheon, see if I don't!"
 
 >[95]z
 Time passes...
 
-"Bleem miserable venchit! Bleem forever mestinglish asunder frapt."
+"You looked like you enjoyed my poem. I think...yes, I think I'll read the NEXT verse, also!"
 
 >[96]z
 Time passes...
 
-"Fripping lyshus wimbgunts, awhilst moongrovenly kormzibs."
+"Bleem miserable venchit! Bleem forever mestinglish asunder frapt."
 
 >[97]z
 Time passes...
 
-"Gashee morphousite, thou expungiest quoopisk!"
+"Fripping lyshus wimbgunts, awhilst moongrovenly kormzibs."
 
 >[98]z
 Time passes...
 
-"Gerond withoutitude form into formless bloit, why not then? Moose."
+"Gashee morphousite, thou expungiest quoopisk!"
 
 >[99]z
+Time passes...
+
+"Gerond withoutitude form into formless bloit, why not then? Moose."
+
+>[100]z
 Time passes...
 
 "Since you have somehow managed to survive two verses of my poetry, I have no choice but to space you. Guards!" A guard grabs you and Ford, and drags you toward the hold. Ford whispers, "Don't worry, I'll think of something!"
 
 Vogon Hold
-This is a squalid room filled with grubby mattresses, unwashed cups, and unidentifiable bits of smelly alien underwear. A door lies to port, and an airlock lies to starboard. Your gown is hanging from a hook and a towel is draped over a drain on the floor.
-There is a satchel here, resting in front of the tiny robot panel.
+This is a squalid room filled with grubby mattresses, unwashed cups, and unidentifiable bits of smelly alien underwear. A door lies to port, and an airlock lies to starboard.
 Along one wall is a tall dispensing machine.
 In the corner is a glass case with a switch and a keyboard.
 It looks like the glass case contains:
@@ -500,43 +514,286 @@ It looks like the glass case contains:
 
 The guard releases you and Ford and begins cycling the air in the airlock. "Hey, guard!" shouts Ford, "do you really enjoy this sort of thing? Shouting, stomping around, shooting people, is it really a fulfilling career?"
 
->[100]z
-Time passes...
-
-Ford continues trying to talk the guard into a sudden career change.
-
->[101]z
-Time passes...
-
-Ford continues trying to talk the guard into a sudden career change.
-
->[102]open case
-It won't budge.
-
-Ford continues trying to talk the guard into a sudden career change.
-
->[103]type " venchit "
+>[101]type " venchit "
 The glass case opens.
 
 Ford continues trying to talk the guard into a sudden career change.
 
->[104]look
-Vogon Hold
-This is a squalid room filled with grubby mattresses, unwashed cups, and unidentifiable bits of smelly alien underwear. A door lies to port, and an airlock lies to starboard. Your gown is hanging from a hook and a towel is draped over a drain on the floor.
-Ford Prefect is here.
-There is a satchel here, resting in front of the tiny robot panel.
-Along one wall is a tall dispensing machine.
-In the corner is a glass case with a switch and a keyboard.
-It looks like the glass case contains:
+>[102]take plotter
+Taken.
+
+Ford continues trying to talk the guard into a sudden career change.
+
+>[103]i
+You have:
+  no tea
   an atomic vector plotter
+  a babel fish (in your ear)
+
+Ford continues trying to talk the guard into a sudden career change.
+
+>[104]i
+You have:
+  no tea
+  a thing your aunt gave you which you don't know what it is
+  It looks like the thing your aunt gave you which you don't know what it is contains:
+    pocket fluff
+    a flathead screwdriver
+    a toothbrush
+    an electronic Sub-Etha signaling device
+    The Hitchhiker's Guide
+    a satchel
+    a towel
+    your gown
+  an atomic vector plotter
+  a babel fish (in your ear)
+
+Ford continues trying to talk the guard into a sudden career change.
+
+>[105]z
+Time passes...
 
 The guard says, "Well, all things considered, I guess I like being a guard. Especially the shouting. Resistance is useless!" He throws you and Ford into the airlock and closes the door.
 
 Airlock
 This airlock has massive doors to port and starboard.
 
->[105]quit
-We are about to give you your score. Put on your peril-sensitive sunglasses now. (Hit RETURN or ENTER when ready.) >[106]
+Ford points at the outer door. "In about two minutes, it will open and we'll be ejected into the vacuum of space. But don't panic, I'll think of something."
 
-Your score is 85 of a possible 400, in 103 turns.
-Do you wish to leave the game? (Y is affirmative): >[107]Y
+>[106]z
+Time passes...
+
+Ford is mumbling to himself.
+
+>[107]z
+Time passes...
+
+Ford produces a pencil and begins scribbling equations on the wall.
+
+>[108]z
+Time passes...
+
+Ford's eyes light up. "Do you still have the Electronic Sub-Etha Auto Hitching Thu..." At that moment, the airlock door opens, and you and Ford are blown out into space.
+
+Your elbow must have struck some key on The Hitchhiker's Guide because it begins droning out an entry, coincidentally enough the entry on SPACE. "If you hyperventilate and then empty your lungs, you will last about thirty seconds in the vacuum of space. However, because space is so vastly hugely mind-bogglingly big, getting picked up by another ship within those thirty seconds is almost infinitely improbable." (Footnote 9)
+
+Precisely twenty-nine seconds later, you and Ford are scooped up by a passing ship. Gasping for air, you pass out...
+
+Dark
+
+>[109]listen
+(to darkness)
+You can see nothing, feel nothing, hear nothing, taste nothing, smell nothing, and are not entirely certain who you are.
+
+>[110]z
+You can hear nothing, smell nothing, taste nothing, see nothing, feel nothing, and are not even certain who you are.
+
+>[111]z
+You can see nothing, feel nothing, hear nothing, taste nothing, smell nothing, and are not entirely certain who you are.
+
+>[112]z
+You can smell nothing, taste nothing, see nothing, feel nothing, and are not even certain who you are.
+
+>[113]listen
+(to darkness)
+You hear the deep and distant hum of a star drive coming from far above. There is an exit to port.
+
+>[114]aft
+(We were lying about the exit to port.) You emerge from a small doorway...
+
+Entry Bay Number Two
+This is an entry bay for the Heart of Gold. A corridor lies aft of here.
+There is a sales brochure here.
+
+"This looks like that incredible new Infinite Improbability Drive spaceship, the Heart of Gold!" says Ford, with growing excitement.
+
+"Announcement, announcement. This is Eddie (the shipboard computer). We have just picked up two hitchhikers at an improbability factor of 2 to the 21,914th power to 1 against."
+
+>[115]take brochure
+Taken.
+
+"Come on, let's look for the Bridge." You follow Ford, and eventually come to the...
+
+Bridge
+This is the bridge of the Heart of Gold. A gangway leads down, and steam comes from an entrance to port. Next to the control console is Eddie (the shipboard computer).
+
+At the controls, apparently expecting you and Ford, are a man with more than the usual number of heads (the name "Zaphod" is stitched on his shirt) and a dark-haired woman, holding a handbag. Both seem somehow familiar.
+There is a molecular hyperwave pincer here.
+
+>[116]take pincer
+Taken.
+
+"Hey, Zaphod, how ya doing?" says Ford. He's cool. "Not bad, Ford. Great to see you," replies Zaphod. He's cooler. You suddenly realise that the woman is Tricia MacMillan ("Call me Trillian"), whom you were trying to pick up at a party in Islington just a few weeks ago, and that Zaphod is the guy she eventually left the party with! Odd.
+
+>[117]put pincer in thing
+Done.
+
+"Like my spaceship, Ford?" Zaphod asks. "YOUR spaceship?" says Ford, losing his cool for a second. "Yeah, I stole it," Zaphod admits. "I'm gonna use it to find the legendary lost planet of Magrathea. Let's go sit in the sauna while I explain." Zaphod, Ford, and Trillian all head off to port.
+
+>[118]d
+Corridor, Fore End
+This is one end of a short corridor that continues aft along the main deck of the Heart of Gold. Doorways lead to fore and port. In addition, a gangway leads upward.
+
+>[119]port
+Galley
+You are in the Galley area of the ship, containing a machine which is the state of the art in Nutritional Technology, a Sirius Cybernetics Corporation Nutrimat. There is an exit to starboard.
+A carton labelled "Nutrimat/Computer Interface" is sitting here.
+
+>[120]examine interface
+You can't see any interface here!
+
+>[121]examine nutrimat
+The Nutrimat has a touch-sensitive pad, a dispensing slot, and a service panel which is closed. It bears a small label which reads "Another fine product of the Sirius Cybernetics Corporation."
+
+>[122]touch pad
+The Nutrimat makes an instant but highly detailed examination of your taste buds, a spectroscopic analysis of your metabolism and sends tiny experimental signals down your neural pathways to see what you like.
+A cupful of Advanced Tea Substitute appears in the dispensing slot.
+
+>[123]take cup
+Taken.
+
+>[124]i
+You have:
+  no tea
+  Advanced Tea Substitute
+  a sales brochure
+  a thing your aunt gave you which you don't know what it is
+  It looks like the thing your aunt gave you which you don't know what it is contains:
+    a molecular hyperwave pincer
+    pocket fluff
+    a flathead screwdriver
+    a toothbrush
+    an electronic Sub-Etha signaling device
+    The Hitchhiker's Guide
+    a towel
+    your gown
+  an atomic vector plotter
+  a babel fish (in your ear)
+
+Zaphod Beeblebrox walks in and presses the touch-sensitive pad. The Nutrimat produces a huge, ice-cold Pan-Galactic Gargle Blaster. Zaphod heads off toward the sauna, sipping loudly.
+
+>[125]sb
+Corridor, Fore End
+
+>[126]aft
+Corridor, Aft End
+This is one end of a short corridor that continues fore along the main deck of the Heart of Gold. Doorways lead to aft and port. In addition, a gangway leads downward.
+
+>[127]aft
+That entrance leads to the Infinite Improbability Drive chamber. It's supposed to be a terribly dangerous area of the ship. Are you sure you want to go in there?
+
+>[128]aft
+Absolutely sure?
+
+>[129]yes
+I can tell you don't want to really. You stride away with a spring in your step, wisely leaving the Drive Chamber safely behind you. Telegrams arrive from well-wishers in all corners of the Galaxy congratulating you on your prudence and wisdom, cheering you up immensely.
+
+>[130]aft
+What? You're joking, of course. Can I ask you to reconsider?
+
+>[131]no
+Engine Room
+You're in the Infinite Improbability Drive chamber. Nothing happens; there is nothing to see.
+
+>[132]look
+Engine Room
+I mean it! There's nothing to see here!
+
+>[133]look
+Engine Room
+Okay, okay, there are a FEW things to see here. This is the room that houses the powerful Infinite Improbability Generator that drives the Heart of Gold. An exit lies fore of here.
+Sitting in the corner is a spare, portable Improbability Generator.
+There is an ionic diffusion rasp here.
+There is a pair of hypersonic pliers here.
+
+(Footnote 10)
+
+>[134]drop thing
+It falls to the ground with a light "thunk." It doesn't do anything else at all.
+
+>[135]get rasp and pliers
+ionic diffusion rasp: Taken.
+pair of hypersonic pliers: Taken.
+
+You feel a wave of depression sweep over you, and you turn to see that Marvin the robot has stalked miserably into the room.
+
+>[136]put rasp and pliers in thing
+ionic diffusion rasp: Done.
+pair of hypersonic pliers: Done.
+
+Marvin wanders off.
+
+>[137]take drive
+Taken.
+
+>[138]i
+You have:
+  no tea
+  a spare Improbability Drive
+  Advanced Tea Substitute
+  a sales brochure
+  an atomic vector plotter
+  a babel fish (in your ear)
+
+>[139]fore
+Corridor, Aft End
+
+>[140]fore
+Corridor, Fore End
+
+You feel a wave of depression sweep over you, and you turn to see that Marvin the robot has stalked miserably into the room.
+
+>[141]up
+Bridge
+There is a satchel here.
+There is a handbag here.
+
+>[142]drop drive
+Dropped.
+
+>[143]drop cup and plotter
+Advanced Tea Substitute: Dropped.
+atomic vector plotter: Dropped.
+
+>[144]look
+Bridge
+This is the bridge of the Heart of Gold. A gangway leads down, and steam comes from an entrance to port. Next to the control console is Eddie (the shipboard computer).
+Lying on the deck is a plotter.
+There is a nice, hot cup of Advanced Tea Substitute here.
+There is a spare Improbability Drive here.
+There is a satchel here.
+There is a handbag here.
+
+>[145]examine drive
+The spare Improbability Drive has a switch, a long cord ending with a large plug, and a short cord ending with a small plug. It bears a small label which reads "Another fine product of the Sirius Cybernetics Corporation."
+
+>[146]examine plotter
+The atomic vector plotter has a small receptacle and a long, dangly bit. It bears a small label which reads "Another fine product of the Sirius Cybernetics Corporation."
+
+>[147]put small plug in small receptacle
+Plugged.
+
+>[148]put dangly bit in the cup
+Done.
+
+>[149]look
+Bridge
+This is the bridge of the Heart of Gold. A gangway leads down, and steam comes from an entrance to port. Next to the control console is Eddie (the shipboard computer).
+Lying on the deck is a plotter connected to a spare Improbability Drive. The plotter's long, dangly bit is submerged in Advanced Tea Substitute.
+There is a nice, hot cup of Advanced Tea Substitute here.
+There is a spare Improbability Drive here.
+There is a satchel here.
+There is a handbag here.
+
+>[150]turn on drive
+A mist spins round your head. You fall into what seems like a bottomless pit. Suddenly, you hit the bottom so hard that you wish it had been bottomless...
+
+Dark
+
+>[151]look
+Dark
+There's nothing you can taste, nothing you can see, nothing you can hear, nothing you can feel, nothing you can smell, you do not even know who you are.
+
+>[152]score
+We are about to give you your score. Put on your peril-sensitive sunglasses now. (Hit RETURN or ENTER when ready.) >
+[no more input]
