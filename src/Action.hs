@@ -54,6 +54,7 @@ runAction Conf{seeTrace,debug,mojo,bufferOutput,wrap} xs = loop 1 xs []
           input:xs -> do
             putStr (printf "[%d]" nInput)
             putStrLn input
+            putStrLn "" -- extra blank line to match frotz
             loop (nInput+1) xs [] (f input)
       Stop count -> do
         flushBuffer count buf

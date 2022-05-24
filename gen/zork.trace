@@ -398,6 +398,7 @@ You are standing in an open field west of a white house, with a boarded front do
 There is a small mailbox here.
 
 >[1]open mailbox
+
 387 [05910] Loadb (Var (Global 0x6e)) (Con 1) (Global 0x71)
 388 [05914] Jz (Var (Global 0x71)) (Branch F (Dloc [05926]))
 389 [05926] Store (Con 5) (Var (Global 0x71))
@@ -1120,6 +1121,7 @@ There is a small mailbox here.
 Opening the small mailbox reveals a leaflet.
 
 >[2]read leaflet
+
 1104 [05910] Loadb (Var (Global 0x6e)) (Con 1) (Global 0x71)
 1105 [05914] Jz (Var (Global 0x71)) (Branch F (Dloc [05926]))
 1106 [05926] Store (Con 5) (Var (Global 0x71))
