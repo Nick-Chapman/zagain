@@ -27,7 +27,7 @@ follow Ford
 z
 follow Ford
 enter pub
-examin shelf
+examine shelf
 buy sandwich
 buy peanuts
 drink beer
@@ -48,7 +48,7 @@ hit prosser
 take watch
 z
 take device
-examin device
+examine device
 press green button
 look
 z
@@ -57,55 +57,40 @@ z
 smell
 examine shadow
 eat
-open glass case
+examine glass case
+examine keyboard
+examin switch
 examine plotter
-examine dangly bit
-take plotter
+open glass case
+flip switch
 examine machine
 press button
 press dispenser button
-examine guide
-consult guide about babel fish
-i
 hang gown on hook
-doff gown
+take off gown
 hang gown on hook
 press dispenser button
-examin ford
+put towel on drain
+i
 look
-take satchel an towel
-take satchel and towel
-drop satchel
-take towel
+drop thing
+take towel and satchel
+look
+take thing
 put towel on drain
 press dispenser button
-take satchel
 put satchel on panel
 press dispenser button
-put junk mail on satchel
+put junk on satchel
 press dispenser button
-i
-look
-take plotter
-speak to captain
-listen
-look
+flip switch
 z
 z
 z
-listen to poetry
-enjoy poetry
-enjoy poetry
-listen
+z
 enjoy poetry
 z
 z
-take gown
-don gown
-look
-take satchel
-examine glass case
-look
 z
 z
 z
@@ -113,60 +98,10 @@ z
 z
 z
 z
-listen
+z
+open case
+type " venchit "
 look
-listen
-port
-go port
-exit
-listen to hum
-up
-listen to hum
-listen to dark
-port
-port
-aft
-take brochure
-examine woman
-read brochure
-take all
-i
-put all in thing
-i
-port
-look
-d
-port
-touch nutrimat
-examine nutrimat
-touch pad
-take cup
-sb
-aft
-aft
-yes
-yes
-aft
-no
-look
-look
-take all
-put all in thing
-take all
-drop thing
-take rasp and pliers
-put all in thing
-take drive
-i
-l
-take thing
-fore
-fore
-u
-drop drive
-i
-take thing
-look
-i
-look
-take plotter
+quit
+
+Y

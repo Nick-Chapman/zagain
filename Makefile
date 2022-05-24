@@ -1,17 +1,17 @@
 
-top: dev reg
+top: reg
 
 #WRAP = -wrap 80
 #dev: compare_with_frotz
 dev: compare_with_mojo
 
-LEN = 999
-STORY = ./story/zork1.88-840726.z3
-SCRIPT = z.script
-
 #LEN = 999
-#STORY = ./story/hitchhiker-r59-s851108.z3
-#SCRIPT = h.transcript
+#STORY = ./story/zork1.88-840726.z3
+#SCRIPT = z.script
+
+LEN = 999
+STORY = ./story/hitchhiker-r59-s851108.z3
+SCRIPT = h.script
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
