@@ -1,16 +1,39 @@
 
-top: reg dev
+top: dev reg
+
+#WRAP = -wrap 80
+#dev: compare_with_frotz
+dev: compare_with_mojo
+
+LEN = 999
+STORY = ./story/zork1.88-840726.z3
+SCRIPT = z.script
+
+#LEN = 999
+#STORY = ./story/hitchhiker-r59-s851108.z3
+#SCRIPT = h.transcript
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
-dev: my.walk mojo.walk
+compare_with_mojo: my.walk mojo.walk
 	git diff --no-index my.walk mojo.walk
 
-my.walk: $(exe) z.script Makefile
-	bash -c '($(exe) -walk z.script -nobuf > my.walk 2>&1) || true'
+compare_with_frotz: my.walk frotz.walk
+	git diff --no-index my.walk frotz.walk
 
-mojo.walk: ~/code/other/mojozork/mojozork.exe z.script
-	~/code/other/mojozork/mojozork.exe ./story/zork1.88-840726.z3 z.script > mojo.walk
+my.walk: $(exe) $(SCRIPT) Makefile
+	bash -c '($(exe) $(STORY) $(WRAP) -walk <(head -$(LEN) $(SCRIPT)) > my.walk 2>&1) || true'
+
+
+frotz.walk: dfrotz $(SCRIPT) Makefile
+	cat $(SCRIPT) | head -$(LEN) | ~/code/other/frotz/dfrotz -h 99 -w 80 $(STORY) > frotz.walk || true
+
+dfrotz:
+	(cd ~/code/other/frotz; make dumb)
+
+
+mojo.walk: ~/code/other/mojozork/mojozork.exe $(SCRIPT)
+	~/code/other/mojozork/mojozork.exe $(STORY) $(SCRIPT) > mojo.walk
 
 ~/code/other/mojozork/mojozork.exe: ~/code/other/mojozork/mojozork.c
 	(cd ~/code/other/mojozork; make)

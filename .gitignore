@@ -6,3 +6,4 @@ stack.yaml.lock
 c/_build
 my.walk
 mojo.walk
+frotz.walk

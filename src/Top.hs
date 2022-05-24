@@ -40,6 +40,7 @@ config0 = Config
     , seeTrace = False
     , mojo = False
     , bufferOutput = True
+    , wrap = Nothing
   }
 
 parseCommandLine :: [String] -> IO Config
@@ -54,6 +55,7 @@ parseCommandLine = loop config0
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
+      "-wrap":i:more -> loop c { iconf = iconf { wrap = Just (read i) }} more
       "-type":line:more -> loop c { inputs = inputs ++ [line] } more
       "-walk":path:more -> do
         xs <- Prelude.lines <$> readFile path

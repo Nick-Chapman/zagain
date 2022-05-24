@@ -12,6 +12,7 @@ data Conf = Conf
   , seeTrace :: Bool
   , mojo :: Bool
   , bufferOutput :: Bool
+  , wrap :: Maybe Int
   }
 
 --[interaction type]--------------------------------------------------
@@ -26,10 +27,9 @@ data Action
 --[run interaction as IO]---------------------------------------------
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
+runAction Conf{seeTrace,debug,mojo,bufferOutput,wrap} xs = loop 1 xs []
   where
-    doWrap = False
-    wrap = if doWrap then lineWrap 80 else id
+    wrapF = case wrap of Just w -> lineWrap w; Nothing -> id
 
     loop :: Int -> [String] -> [String] -> Action -> IO ()
     loop nInput xs buf = \case
@@ -54,7 +54,6 @@ runAction Conf{seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
           input:xs -> do
             putStr (printf "[%d]" nInput)
             putStrLn input
-            --putStrLn "" -- TODO: match frotz
             loop (nInput+1) xs [] (f input)
       Stop count -> do
         flushBuffer count buf
@@ -63,7 +62,7 @@ runAction Conf{seeTrace,debug,mojo,bufferOutput} xs = loop 1 xs []
     flushBuffer count buf = do
       when seeTrace $ do
         printf "\n[executed: %d instructions]\n" count
-      putStr (wrap (concat (reverse buf)))
+      putStr (wrapF (concat (reverse buf)))
 
 
 lineWrap :: Int -> String -> String
