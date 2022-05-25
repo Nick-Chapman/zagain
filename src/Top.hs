@@ -9,10 +9,11 @@ import Dis (disassemble)
 import Fetch (runFetch)
 import Story (loadStory)
 import System.Environment (getArgs)
-import qualified WalkThrough (runAction)
+import Text.Printf (printf)
 import qualified Console (runAction)
 import qualified Interpreter (runEffect)
 import qualified Semantics (theEffect)
+import qualified WalkThrough (runAction)
 
 main :: IO ()
 main = do
@@ -82,6 +83,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
       let seed = 888
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
+      printf "\n\n"
       let a = Interpreter.runEffect seed story Semantics.theEffect
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a

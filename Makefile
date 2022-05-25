@@ -1,5 +1,5 @@
 
-top: reg
+top: reg dev
 
 LEN = 999
 WIDTH = 90
@@ -29,7 +29,7 @@ my.walk: $(exe) $(SCRIPT) Makefile
 
 
 frotz.walk: dfrotz $(SCRIPT) Makefile
-	cat $(SCRIPT) | head -$(LEN) | ~/code/other/frotz/dfrotz -h 99 -w $(WIDTH) $(STORY) > frotz.walk || true
+	cat $(SCRIPT) | head -$(LEN) | ~/code/other/frotz/dfrotz -q -h 99 -w $(WIDTH) $(STORY) > frotz.walk || true
 
 dfrotz:
 	(cd ~/code/other/frotz; make dumb)
