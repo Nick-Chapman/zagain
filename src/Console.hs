@@ -1,10 +1,11 @@
 
 module Console (runAction) where
 
-import Action (Action(..),lineWrap)
+import Action (Action(..))
 import Control.Monad (when)
 import Control.Monad.Trans.Class (lift)
 import Text.Printf (printf)
+import TextDisplay(lineWrap)
 import qualified System.Console.ANSI as AN
 import qualified System.Console.Haskeline as HL
 import qualified System.Console.Haskeline.History as HL

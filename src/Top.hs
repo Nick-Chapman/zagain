@@ -2,16 +2,17 @@
 -- | Entry point for all z-machine code: Command like parsing and dispatch.
 module Top (main)  where
 
-import Action (Conf(..),runAction)
+import Action (Conf(..))
 import Control.Monad (when)
 import Dictionary (fetchDict)
 import Dis (disassemble)
 import Fetch (runFetch)
 import Story (loadStory)
 import System.Environment (getArgs)
+import qualified WalkThrough (runAction)
+import qualified Console (runAction)
+import qualified Interpreter (runEffect)
 import qualified Semantics (theEffect)
-import qualified Interpreter (run)
-import qualified Console
 
 main :: IO ()
 main = do
@@ -77,11 +78,11 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       let seed = 888
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
-      let a = Interpreter.run seed story Semantics.theEffect
-      runAction iconf inputs a
+      let a = Interpreter.runEffect seed story Semantics.theEffect
+      WalkThrough.runAction iconf inputs a
     Interact -> do
       let seed = 888
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
-      let a = Interpreter.run seed story Semantics.theEffect
+      let a = Interpreter.runEffect seed story Semantics.theEffect
       Console.runAction a --iconf inputs

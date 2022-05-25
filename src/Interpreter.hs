@@ -1,6 +1,6 @@
 
 -- | Interpreter for z-machine effects.
-module Interpreter (State,run) where
+module Interpreter (State,runEffect) where
 
 import Action (Action)
 import Data.Bits ((.&.),shiftL,clearBit,setBit,testBit,shiftR)
@@ -21,8 +21,8 @@ type Effect x = Eff Byte Value x
 
 --[interpreter for execution effects]----------------------------------
 
-run :: Word -> Story -> Effect () -> Action
-run seed story e0 = loop (initState seed pc0) e0 k0
+runEffect :: Word -> Story -> Effect () -> Action
+runEffect seed story e0 = loop (initState seed pc0) e0 k0
   where
     header@Header{initialPC=pc0} = Story.header story
 
