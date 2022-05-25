@@ -1,17 +1,20 @@
 
 top: reg
 
-WRAP = -wrap 80
-dev: compare_with_frotz
-#dev: compare_with_mojo
+LEN = 999
+WIDTH = 90
 
-#LEN = 999
 #STORY = ./story/zork1.88-840726.z3
 #SCRIPT = z.script
 
-LEN = 999
 STORY = ./story/hitchhiker-r59-s851108.z3
 SCRIPT = h.script
+
+dev: compare_with_frotz
+WRAP = -wrap $(WIDTH)
+
+#dev: compare_with_mojo
+#WRAP =
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
@@ -26,7 +29,7 @@ my.walk: $(exe) $(SCRIPT) Makefile
 
 
 frotz.walk: dfrotz $(SCRIPT) Makefile
-	cat $(SCRIPT) | head -$(LEN) | ~/code/other/frotz/dfrotz -h 99 -w 80 $(STORY) > frotz.walk || true
+	cat $(SCRIPT) | head -$(LEN) | ~/code/other/frotz/dfrotz -h 99 -w $(WIDTH) $(STORY) > frotz.walk || true
 
 dfrotz:
 	(cd ~/code/other/frotz; make dumb)
