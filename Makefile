@@ -41,25 +41,25 @@ mojo.walk: ~/code/other/mojozork/mojozork.exe $(SCRIPT)
 
 # regression...
 
-reg: .gen gen/zork.dis gen/zork.trace gen/zork.walk gen/h.walk
-	git diff gen
+reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk
+	git diff reg
 
-gen/zork.dis: $(exe) src/*.hs
+reg/zork.dis: $(exe) src/*.hs
 	$(exe) dis > $@
 
 # trace just the first 2 steps of the zork walk-though
-gen/zork.trace: $(exe) z.script src/*.hs
+reg/zork.trace: $(exe) z.script src/*.hs
 	bash -c '$(exe) -nodebug -trace -walk <(head -2 z.script) > $@'
 
-gen/zork.walk: $(exe) z.script src/*.hs
+reg/zork.walk: $(exe) z.script src/*.hs
 	bash -c '$(exe) -nodebug -walk z.script > $@'
 
-gen/h.walk: $(exe) h.script src/*.hs
+reg/h.walk: $(exe) h.script src/*.hs
 	bash -c '$(exe) story/hitchhiker-r59-s851108.z3 -nodebug -walk h.script > $@'
 
 
-.gen:
-	mkdir -p gen
+.reg:
+	mkdir -p reg
 
 $(exe): src/*.hs
 	stack build; touch $(exe)
