@@ -22,5 +22,6 @@ lineWrap max text =
                 let posW = pos + length w + 1
                 let makeSplit = posW > max
                 let pos' = if makeSplit then length indentedW else posW
-                let sep = if makeSplit then "\n"++wsIndent else " "
+                --let sep = if makeSplit then "\n"++wsIndent else " "
+                let sep = if makeSplit then "\n" else " " -- match frotz
                 loop (w : sep : acc) pos' ws

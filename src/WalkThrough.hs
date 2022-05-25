@@ -13,32 +13,31 @@ runAction Conf{debug,seeTrace,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 
     wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
 
     loop :: Int -> [String] -> [String] -> Action -> IO ()
-    loop nInput xs buf = \case
-      TraceInstruction stateString n a op next -> do
+    loop n xs buf = \case
+      TraceInstruction stateString count a op next -> do
         when mojo $ do
-          printf "%d %s\n" n stateString
+          printf "%d %s\n" count stateString
         when seeTrace $ do
-          printf "%d %s %s\n" n (show a) (show op)
-        loop nInput xs buf next
+          printf "%d %s %s\n" count (show a) (show op)
+        loop n xs buf next
       Output text next -> do
         when (not bufferOutput) $ putStr text
-        loop nInput xs (if bufferOutput then text:buf else buf) next
+        loop n xs (if bufferOutput then text:buf else buf) next
       Debug msg next -> do
         when (debug) $ putStrLn ("Debug: " ++ msg)
-        loop nInput xs buf next
+        loop n xs buf next
       Input _ count f -> do -- ignore the status line
         flushBuffer count buf
         case xs of
           [] -> do
-            when showInput $ do
-              putStrLn "\n[no more input]"
+            --when showInput $ do
+            --  putStrLn "\n[no more input]"
             pure ()
           input:xs -> do
             when showInput $ do
-              putStr (printf "[%d]" nInput)
-              putStrLn input
+              printf "[%d]%s\n\n" n input
             putStrLn "" -- extra blank line to match frotz
-            loop (nInput+1) xs [] (f input)
+            loop (n+1) xs [] (f input)
       Stop count -> do
         flushBuffer count buf
 

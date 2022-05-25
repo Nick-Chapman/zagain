@@ -38,30 +38,30 @@ replay conf = loop 1
               lift $ printf "[%i] %s\n" n line
               loop (n+1) rest (f line)
       [] ->
-        repl conf n -- then start the repl
+        repl conf -- then start the repl
 
-repl :: Conf -> Int -> Action -> HL.InputT IO ()
+repl :: Conf -> Action -> HL.InputT IO ()
 repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop []
   where
     wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
-    loop :: [String] -> Int -> Action -> HL.InputT IO ()
-    loop buf n = \case
+    loop :: [String] -> Action -> HL.InputT IO ()
+    loop buf = \case
       Stop{} -> do
         let text = concat (reverse buf)
         lift $ putStr (col AN.Cyan (wrap text))
-      TraceInstruction stateString n a op next -> do
+      TraceInstruction stateString count a op next -> do
         when mojo $ do
-          lift $ printf "%d %s\n" n stateString
+          lift $ printf "%d %s\n" count stateString
         when seeTrace $ do
-          lift $ printf "%d %s %s\n" n (show a) (show op)
-        loop buf n next
+          lift $ printf "%d %s %s\n" count (show a) (show op)
+        loop buf next
       Debug msg next -> do
         when (debug) $ lift $ putStrLn ("Debug: " ++ msg)
-        loop buf n next
+        loop buf next
       Output text next -> do
         when (not bufferOutput) $ do
           lift $ putStr (col AN.Cyan text)
-        loop (if bufferOutput then text:buf else buf) n next
+        loop (if bufferOutput then text:buf else buf) next
       Input status _count f -> do
         let (text,prompt) = splitFinalPrompt (concat (reverse buf))
         lift $ putStr (col AN.Cyan (wrap text))
@@ -72,7 +72,7 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop []
           Just line -> do
             HL.modifyHistory (HL.addHistory line)
             HL.getHistory >>= lift . writeTranscript
-            loop [] (n+1) (f line)
+            loop [] (f line)
 
 makeStatusLine :: (String,String) -> String
 makeStatusLine (xs,ys) = do
