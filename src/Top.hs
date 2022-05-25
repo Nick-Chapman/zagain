@@ -25,9 +25,10 @@ data Config = Config
   , storyFile :: FilePath
   , iconf :: Action.Conf
   , inputs :: [String]
+  , mayStartConsole :: Bool
   }
 
-data Mode = Run | Dis | Dictionary | Interact
+data Mode = Dis | Dictionary | Run
 
 config0 :: Config
 config0 = Config
@@ -35,6 +36,7 @@ config0 = Config
   , storyFile = "story/zork1.88-840726.z3"
   , iconf = iconf0
   , inputs = []
+  , mayStartConsole = True
   } where
   iconf0 = Action.Conf
     { debug = True
@@ -49,9 +51,9 @@ parseCommandLine = loop config0
   where
     loop c@Config{iconf,inputs} = \case
       [] -> pure c
-      "console":more -> loop c { mode = Interact } more
       "dis":more -> loop c { mode = Dis } more
       "dict":more -> loop c { mode = Dictionary } more
+      "-noconsole":more -> loop c { mayStartConsole = False } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
@@ -65,7 +67,7 @@ parseCommandLine = loop config0
         loop c { storyFile } more
 
 run :: Config -> IO ()
-run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
+run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsole} = do
   case mode of
     Dis -> do
       story <- loadStory storyFile
@@ -79,10 +81,6 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs} = do
       story <- loadStory storyFile
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       let a = Interpreter.runEffect seed story Semantics.theEffect
-      WalkThrough.runAction iconf inputs a
-    Interact -> do
-      let seed = 888
-      story <- loadStory storyFile
-      when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
-      let a = Interpreter.runEffect seed story Semantics.theEffect
-      Console.runAction a --iconf inputs
+      case inputs of
+        [] | mayStartConsole -> Console.runAction a --iconf
+        _ -> WalkThrough.runAction iconf inputs a
