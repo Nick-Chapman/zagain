@@ -42,6 +42,7 @@ config0 = Config
     { debug = True
     , seeTrace = False
     , mojo = False
+    , showInput = True
     , bufferOutput = True
     , wrapSpec = Nothing
   }
@@ -58,6 +59,7 @@ parseCommandLine = loop config0
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
+      "-noinp":more -> loop c { iconf = iconf { showInput = False }} more
       "-wrap":i:more -> loop c { iconf = iconf { wrapSpec = Just (read i) }} more
       "-type":line:more -> loop c { inputs = inputs ++ [line] } more
       "-walk":path:more -> do

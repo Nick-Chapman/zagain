@@ -8,7 +8,7 @@ import Text.Printf (printf)
 import TextDisplay(lineWrap)
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} xs = loop 1 xs []
+runAction Conf{debug,seeTrace,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 xs []
   where
     wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
 
@@ -30,11 +30,13 @@ runAction Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} xs = loop 1 xs []
         flushBuffer count buf
         case xs of
           [] -> do
-            putStrLn "\n[no more input]"
+            when showInput $ do
+              putStrLn "\n[no more input]"
             pure ()
           input:xs -> do
-            putStr (printf "[%d]" nInput)
-            putStrLn input
+            when showInput $ do
+              putStr (printf "[%d]" nInput)
+              putStrLn input
             putStrLn "" -- extra blank line to match frotz
             loop (nInput+1) xs [] (f input)
       Stop count -> do

@@ -62,12 +62,10 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop []
         when (not bufferOutput) $ do
           lift $ putStr (col AN.Cyan text)
         loop (if bufferOutput then text:buf else buf) n next
-
       Input status _count f -> do
         let (text,prompt) = splitFinalPrompt (concat (reverse buf))
         lift $ putStr (col AN.Cyan (wrap text))
         lift $ putStrLn (col AN.Magenta (makeStatusLine status))
-        let _numInputs = col AN.Green $ printf "[%i]" n
         let xprompt = col AN.Cyan (prompt ++ " ")
         HL.getInputLine xprompt >>= \case
           Nothing -> pure () -- Ctr-D
