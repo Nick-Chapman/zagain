@@ -1,7 +1,7 @@
 
 module Console (runAction) where
 
-import Action (Action(..))
+import Action (Action(..),Conf(..))
 import Control.Monad (when)
 import Control.Monad.Trans.Class (lift)
 import Text.Printf (printf)
@@ -10,17 +10,17 @@ import qualified System.Console.ANSI as AN
 import qualified System.Console.Haskeline as HL
 import qualified System.Console.Haskeline.History as HL
 
-runAction :: Action -> IO ()
-runAction action = do
+runAction :: Conf -> Action -> IO ()
+runAction conf action = do
   HL.runInputT haskelineSettings $ do
     transcript <- lift $ readTranscript
     HL.putHistory transcript
     let lines = reverse (HL.historyLines transcript)
-    replay lines action
+    replay conf lines action
 
 -- replay the .transcript lines...
-replay :: [String] -> Action -> HL.InputT IO ()
-replay = loop 1
+replay :: Conf -> [String] -> Action -> HL.InputT IO ()
+replay conf = loop 1
   where
     showOld = False
     loop :: Int -> [String] -> Action -> HL.InputT IO ()
@@ -38,21 +38,31 @@ replay = loop 1
               lift $ printf "[%i] %s\n" n line
               loop (n+1) rest (f line)
       [] ->
-        repl n -- then start the repl
+        repl conf n -- then start the repl
 
-repl :: Int -> Action -> HL.InputT IO ()
-repl = loop []
+repl :: Conf -> Int -> Action -> HL.InputT IO ()
+repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop []
   where
-    doWrap = True
-    wrap = if doWrap then lineWrap 80 else id
+    wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
     loop :: [String] -> Int -> Action -> HL.InputT IO ()
     loop buf n = \case
       Stop{} -> do
         let text = concat (reverse buf)
         lift $ putStr (col AN.Cyan (wrap text))
-      TraceInstruction _ _ _ _ next -> do loop buf n next
-      Debug _ next -> do loop buf n next
-      Output text next -> do loop (text:buf) n next
+      TraceInstruction stateString n a op next -> do
+        when mojo $ do
+          lift $ printf "%d %s\n" n stateString
+        when seeTrace $ do
+          lift $ printf "%d %s %s\n" n (show a) (show op)
+        loop buf n next
+      Debug msg next -> do
+        when (debug) $ lift $ putStrLn ("Debug: " ++ msg)
+        loop buf n next
+      Output text next -> do
+        when (not bufferOutput) $ do
+          lift $ putStr (col AN.Cyan text)
+        loop (if bufferOutput then text:buf else buf) n next
+
       Input status _count f -> do
         let (text,prompt) = splitFinalPrompt (concat (reverse buf))
         lift $ putStr (col AN.Cyan (wrap text))

@@ -10,7 +10,7 @@ data Conf = Conf
   , seeTrace :: Bool
   , mojo :: Bool
   , bufferOutput :: Bool
-  , wrap :: Maybe Int
+  , wrapSpec :: Maybe Int
   }
 
 data Action

@@ -8,9 +8,9 @@ import Text.Printf (printf)
 import TextDisplay(lineWrap)
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{seeTrace,debug,mojo,bufferOutput,wrap} xs = loop 1 xs []
+runAction Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} xs = loop 1 xs []
   where
-    wrapF = case wrap of Just w -> lineWrap w; Nothing -> id
+    wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
 
     loop :: Int -> [String] -> [String] -> Action -> IO ()
     loop nInput xs buf = \case
@@ -23,10 +23,10 @@ runAction Conf{seeTrace,debug,mojo,bufferOutput,wrap} xs = loop 1 xs []
       Output text next -> do
         when (not bufferOutput) $ putStr text
         loop nInput xs (if bufferOutput then text:buf else buf) next
-      Debug s next -> do
-        when (debug) $ putStrLn ("Debug: " ++ s)
+      Debug msg next -> do
+        when (debug) $ putStrLn ("Debug: " ++ msg)
         loop nInput xs buf next
-      Input _ count f -> do -- TODO: show the status line?
+      Input _ count f -> do -- ignore the status line
         flushBuffer count buf
         case xs of
           [] -> do
@@ -44,4 +44,4 @@ runAction Conf{seeTrace,debug,mojo,bufferOutput,wrap} xs = loop 1 xs []
     flushBuffer count buf = do
       when seeTrace $ do
         printf "\n[executed: %d instructions]\n" count
-      putStr (wrapF (concat (reverse buf)))
+      putStr (wrap (concat (reverse buf)))

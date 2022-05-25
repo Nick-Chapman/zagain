@@ -43,7 +43,7 @@ config0 = Config
     , seeTrace = False
     , mojo = False
     , bufferOutput = True
-    , wrap = Nothing
+    , wrapSpec = Nothing
   }
 
 parseCommandLine :: [String] -> IO Config
@@ -58,7 +58,7 @@ parseCommandLine = loop config0
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
-      "-wrap":i:more -> loop c { iconf = iconf { wrap = Just (read i) }} more
+      "-wrap":i:more -> loop c { iconf = iconf { wrapSpec = Just (read i) }} more
       "-type":line:more -> loop c { inputs = inputs ++ [line] } more
       "-walk":path:more -> do
         xs <- Prelude.lines <$> readFile path
@@ -82,5 +82,5 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       let a = Interpreter.runEffect seed story Semantics.theEffect
       case inputs of
-        [] | mayStartConsole -> Console.runAction a --iconf
+        [] | mayStartConsole -> Console.runAction iconf a
         _ -> WalkThrough.runAction iconf inputs a
