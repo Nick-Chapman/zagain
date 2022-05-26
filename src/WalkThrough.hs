@@ -30,19 +30,20 @@ runAction Conf{debug,seeTrace,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 
         flushBuffer count buf
         case xs of
           [] -> do
-            --when showInput $ do
-            --  putStrLn "\n[no more input]"
+            --printf "[no more input]\n"
             pure ()
           input:xs -> do
             when showInput $ do
-              printf "[%d]%s\n\n" n input
-            putStrLn "" -- extra blank line to match frotz
+              printf "[%d]%s\n\n\n" n input
             loop (n+1) xs [] (f input)
       Stop count -> do
         flushBuffer count buf
+        --printf "[the game ended]\n"
+        pure ()
 
     flushBuffer :: Int -> [String] -> IO ()
     flushBuffer count buf = do
+      let text = concat (reverse buf)
       when seeTrace $ do
         printf "\n[executed: %d instructions]\n" count
-      putStr (wrap (concat (reverse buf)))
+      putStr (wrap text)
