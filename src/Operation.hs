@@ -138,6 +138,7 @@ opArgs = \case
   Get_sibling arg _target _label -> do [arg]
   Inc arg -> do [arg]
   Inc_chk arg1 arg2 _label -> do [arg1,arg2]
+  Input_stream arg -> do [arg]
   Insert_obj arg1 arg2 -> do [arg1,arg2]
   Je args _label -> do args
   Jg arg1 arg2 _label -> do [arg1,arg2]
@@ -148,8 +149,13 @@ opArgs = \case
   Load arg _target -> do [arg]
   Loadb arg1 arg2 _target -> do [arg1,arg2]
   Loadw arg1 arg2 _target -> do [arg1,arg2]
+  Mod arg1 arg2 _target -> do [arg1,arg2]
   Mul arg1 arg2 _target -> do [arg1,arg2]
   New_line -> do []
+  Nop -> do []
+  Or arg1 arg2 _target -> do [arg1,arg2]
+  Output_stream arg -> do [arg]
+  Pop -> do []
   Print _string -> do []
   Print_addr arg -> do [arg]
   Print_char arg -> do [arg]
@@ -164,11 +170,16 @@ opArgs = \case
   Random arg _target -> do [arg]
   Remove_obj arg -> do [arg]
   Restart -> do []
-  Ret_popped -> do []
+  Restore _label -> do []
   Ret arg -> do [arg]
+  Ret_popped -> do []
   Rfalse -> do []
   Rtrue -> do []
+  Save _label -> do []
   Set_attr arg1 arg2 -> do [arg1,arg2]
+  Set_window arg -> do [arg]
+  Show_status-> do []
+  Split_window arg -> do [arg]
   Sread arg1 arg2 -> do [arg1,arg2]
   Store arg1 arg2 -> do [arg1,arg2]
   Storeb arg1 arg2 arg3 -> do [arg1,arg2,arg3]
@@ -176,22 +187,7 @@ opArgs = \case
   Sub arg1 arg2 _target -> do [arg1,arg2]
   Test arg1 arg2 _label -> do [arg1,arg2]
   Test_attr arg1 arg2 _label -> do [arg1,arg2]
-
-  _ -> do []
-{-
-  Input_stream{} -> undefined
-  Mod{} -> undefined
-  Nop -> undefined
-  Or{} -> undefined
-  Output_stream{} -> undefined
-  Pop -> undefined
-  Restore{} -> undefined
-  Save{} -> undefined
-  Set_window{} -> undefined
-  Show_status -> undefined
-  Split_window{} -> undefined
-  Verify{} -> undefined
--}
+  Verify _label -> do []
 
 
 opTargetOpt :: Operation -> Maybe Target
@@ -213,6 +209,7 @@ opTargetOpt = \case
   Get_sibling _arg target _label -> do Just target
   Inc _arg -> do Nothing
   Inc_chk _arg1 _arg2 _label -> do Nothing
+  Input_stream _arg -> do Nothing
   Insert_obj _arg1 _arg2 -> do Nothing
   Je _args _label -> do Nothing
   Jg _arg1 _arg2 _label -> do Nothing
@@ -223,8 +220,13 @@ opTargetOpt = \case
   Load _arg target -> do Just target
   Loadb _arg1 _arg2 target -> do Just target
   Loadw _arg1 _arg2 target -> do Just target
+  Mod _arg1 _arg2 target -> do Just target
   Mul _arg1 _arg2 target -> do Just target
   New_line -> do Nothing
+  Nop -> do Nothing
+  Or _arg1 _arg2 target -> do Just target
+  Output_stream _arg -> do Nothing
+  Pop -> do Nothing
   Print _string -> do Nothing
   Print_addr _arg -> do Nothing
   Print_char _arg -> do Nothing
@@ -239,11 +241,16 @@ opTargetOpt = \case
   Random _arg target -> do Just target
   Remove_obj _arg -> do Nothing
   Restart -> do Nothing
-  Ret_popped -> do Nothing
+  Restore _label -> do Nothing
   Ret _arg -> do Nothing
+  Ret_popped -> do Nothing
   Rfalse -> do Nothing
   Rtrue -> do Nothing
+  Save _label -> do Nothing
   Set_attr _arg1 _arg2 -> do Nothing
+  Set_window _arg -> do Nothing
+  Show_status-> do Nothing
+  Split_window _arg -> do Nothing
   Sread _arg1 _arg2 -> do Nothing
   Store _arg1 _arg2 -> do Nothing
   Storeb _arg1 _arg2 _arg3 -> do Nothing
@@ -251,19 +258,5 @@ opTargetOpt = \case
   Sub _arg1 _arg2 target -> do Just target
   Test _arg1 _arg2 _label -> do Nothing
   Test_attr _arg1 _arg2 _label -> do Nothing
+  Verify _label -> do Nothing
 
-  _ -> do Nothing
-{-
-  Input_stream{} -> undefined
-  Mod{} -> undefined
-  Nop -> undefined
-  Or{} -> undefined
-  Output_stream{} -> undefined
-  Pop -> undefined
-  Restore{} -> undefined
-  Save{} -> undefined
-  Set_window{} -> undefined
-  Show_status -> undefined
-  Split_window{} -> undefined
-  Verify{} -> undefined
--}

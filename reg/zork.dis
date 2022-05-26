@@ -11,7 +11,7 @@ Memory Map:
 [14b8c] End of story file
 --------------------------------------
 Found 197 routines by walkthrough
-Found 515 routines by speculative disassembly
+Found 513 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=12202
@@ -8142,19 +8142,7 @@ gap=6
 -- unused: [0x01]
 [13635] Ret (Var (Global 0x5a))
 --------------------------------------------------
-gap=409
-[137d0] RoutineHeader []
-[137d1] Jin (Con 34) (Var (Global 0x24)) (Branch F (Dloc [137f4]))
-[137d5] Mod (Var (Global 0x86)) (Con 69) (Local 0x0c)
-[137d9] Print_ret "asty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
---------------------------------------------------
-gap=24
-[1381e] RoutineHeader [21282,-27807,3667]
--- unused: [0x01,0x02,0x03]
-[13825] Mod (Var Sp) (Con 88) (Local 0x04)
-[13829] Ret_popped
---------------------------------------------------
-gap=734
+gap=1233
 [13b08] RoutineHeader []
 [13b09] Pop
 [13b0a] Get_prop_addr (Con 82) (Con 72) (Global 0x1c)
