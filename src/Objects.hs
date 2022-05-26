@@ -148,8 +148,8 @@ getProp x n = do
         [hi,lo] -> MakeWord hi lo
         [b] -> undefined (Widen b) -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
-    _ ->
-      error "multi prop match"
+    ps ->
+      error (show ("getProp: multi prop match",ps))
 
 putProp :: Value -> Value -> Value -> Effect ()
 putProp x n v = do
@@ -159,7 +159,7 @@ putProp x n v = do
     case xs of
       [x] -> pure x
       [] -> error "putProp, no such prop"
-      _ -> error "multi prop match"
+      ps -> error (show ("putProp: multi prop match",ps))
 
   let Prop{dataBytes,dataAddr=a} = pr
   case length dataBytes  of
@@ -178,7 +178,7 @@ getPropAddr x n = do
   case [ dataAddr | Prop{number,dataAddr} <- props, number == n ] of
     [a] -> pure a
     [] -> pure 0
-    _ -> error "multi prop match"
+    ps -> error (show ("getPropAddr: multi prop match",ps))
 
 getPropLen :: Value -> Effect Value
 getPropLen a = do
@@ -206,9 +206,20 @@ getPropertyTable x = do
   shortNameLen <- GetByte (v2a a')
   offset <- Widen (1 + 2 * shortNameLen)
   props <- getPropsA (a' + offset)
-  pure props
+  pure (takeWhileDescending props)
 
-data Prop = Prop { number :: Value, dataAddr :: Value, dataBytes :: [Byte] }
+takeWhileDescending :: [Prop] -> [Prop]
+takeWhileDescending = \case
+  [] -> []
+  p@Prop{number}:ps -> p : loop number ps
+    where
+      loop last = \case
+        [] -> []
+        p@Prop{number}:ps -> if
+          | number < last -> p : loop number ps
+          | otherwise -> []
+
+data Prop = Prop { number :: Value, dataAddr :: Value, dataBytes :: [Byte] } deriving Show
 
 getPropsA :: Value -> Effect [Prop]
 getPropsA a = do
