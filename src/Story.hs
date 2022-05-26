@@ -63,7 +63,7 @@ readHeader story = Header
 versionOfByte :: Byte -> Zversion
 versionOfByte = \case
   1 -> Z1
-  2 -> undefined Z2
+  2 -> Z2
   3 -> Z3
   4 -> undefined Z4
   5 -> undefined Z5
