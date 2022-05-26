@@ -288,11 +288,11 @@ ztext' version = loop [] A0 A0 []
         expansion <- decodeAbbrev (z + (n-1) * 32)
         inner lock lock stop (reverse expansion ++ acc) zs
 
-      4:zs | (version<=Z2) ->
-        undefined zs
+      4:zs | (version<=Z2) -> inner locked locked stop acc zs
+        where locked = shiftUp alpha
 
-      5:zs | (version<=Z2) ->
-        undefined zs
+      5:zs | (version<=Z2) -> inner locked locked stop acc zs
+        where locked = shiftDown alpha
 
       4:zs -> inner (shiftUp alpha) lock stop acc zs
       5:zs -> inner (shiftDown alpha) lock stop acc zs
