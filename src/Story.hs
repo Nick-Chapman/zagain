@@ -9,15 +9,15 @@ import Text.Printf (printf)
 import qualified Data.ByteString as BS (readFile,unpack)
 
 data Story = Story
-  { size :: Int
-  , bytesA :: Array Int Byte
+  { size :: Addr
+  , bytesA :: Array Addr Byte
   , header :: Header
   }
 
 loadStory :: FilePath -> IO Story
 loadStory path = do
   bytes <- loadBytes path
-  let size = length bytes
+  let size = fromIntegral $ length bytes
   let bytesA = listArray (0,size-1) bytes
   let story = Story { size, bytesA, header = readHeader story }
   pure story
@@ -29,14 +29,14 @@ data OOB_Mode = OOB_Error | OOB_Zero
 
 readStoryByte :: OOB_Mode -> Story -> Addr -> Byte
 readStoryByte mode Story{size, bytesA} a =  if
-  | i < size && i >= 0 -> bytesA ! i
+  | a < size && a >= 0 -> bytesA ! a
   | otherwise ->  oob
     where
-      i = fromIntegral a
       oob =
         case mode of
-          OOB_Error -> error (show ("readStoryByte",a,size))
           OOB_Zero -> 0
+          OOB_Error ->
+            error (printf "readStoryByte: %s, size: %s" (show a) (show size))
 
 readHeader :: Story -> Header
 readHeader story = Header
