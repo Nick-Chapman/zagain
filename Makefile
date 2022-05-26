@@ -10,11 +10,11 @@ WIDTH = 90
 STORY = ./story/hitchhiker-r59-s851108.z3
 SCRIPT = h.script
 
-dev: compare_with_frotz
-WRAP = -wrap $(WIDTH)
+#dev: compare_with_frotz
+#WRAP = -wrap $(WIDTH)
 
-#dev: compare_with_mojo
-#WRAP =
+dev: compare_with_mojo
+WRAP =
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
@@ -35,7 +35,7 @@ dfrotz:
 	(cd ~/code/other/frotz; make dumb)
 
 
-mojo.walk: ~/code/other/mojozork/mojozork.exe $(SCRIPT)
+mojo.walk: ~/code/other/mojozork/mojozork.exe $(SCRIPT) Makefile
 	~/code/other/mojozork/mojozork.exe $(STORY) $(SCRIPT) > mojo.walk
 
 ~/code/other/mojozork/mojozork.exe: ~/code/other/mojozork/mojozork.c
