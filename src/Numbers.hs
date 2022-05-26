@@ -23,7 +23,7 @@ byteOfValue v = do
   if v < 0 || v > 255 then error (show ("byteOfValue",v)) else fromIntegral v
 
 newtype Addr = StoryIndex Word
-  deriving (Ord,Eq,Num,Integral,Real,Enum)
+  deriving (Ord,Eq,Num,Integral,Real,Enum,Bits)
 
 addrOfPackedWord :: Value -> Addr
 addrOfPackedWord v = if

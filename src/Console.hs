@@ -30,6 +30,7 @@ replay conf = loop 1
           inner = \case
             Stop{} -> do pure ()
             TraceInstruction _ _ _ _ next -> do inner next
+            RoutineCall _ next -> do inner next
             Debug _ next -> do inner next
             Output text next -> do
               when showOld $ (lift $ putStr (col AN.Cyan text))
@@ -55,6 +56,7 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop []
         when seeTrace $ do
           lift $ printf "%d %s %s\n" count (show a) (show op)
         loop buf next
+      RoutineCall _ next -> do loop buf next
       Debug msg next -> do
         when (debug) $ lift $ putStrLn ("Debug: " ++ msg)
         loop buf next

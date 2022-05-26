@@ -92,5 +92,5 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
         _ -> WalkThrough.runAction iconf inputs a
     Static -> do
       story <- loadStory storyFile
-      Static.explore story
+      Static.explore story inputs
       pure ()

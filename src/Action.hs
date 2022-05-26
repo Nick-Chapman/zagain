@@ -16,6 +16,7 @@ data Conf = Conf
 
 data Action
   = TraceInstruction String Int Addr Operation Action
+  | RoutineCall Addr Action
   | Output String Action
   | Debug String Action
   | Input (String,String) Int (String -> Action)
