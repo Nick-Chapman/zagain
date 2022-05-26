@@ -303,7 +303,7 @@ ztext' version = loop [] A0 A0 []
 
       zs@(6:_) | (alpha == A2) -> loop zs alpha lock acc
 
-      z:zs -> inner lock lock stop (decodeAlphabet alpha (z - 6) : acc) zs
+      z:zs -> inner lock lock stop (decodeAlphabet version alpha (z - 6) : acc) zs
 
 
 decodeAbbrev :: Value -> Fetch String
@@ -321,13 +321,14 @@ shiftUp = \case A0 -> A1; A1 -> A2; A2 -> A0
 shiftDown :: Alpha -> Alpha
 shiftDown = \case A0 -> A2; A1 -> A0; A2 -> A1
 
-decodeAlphabet :: Alpha -> Value -> Char
-decodeAlphabet alpha i = if
+decodeAlphabet :: Zversion -> Alpha -> Value -> Char
+decodeAlphabet version alpha i = if
   | (i < 0 || i > 25) -> error (show ("decodeAlphabet",i))
   | otherwise -> a ! i
   where
     a = case alpha of A0 -> a0; A1 -> a1; A2 -> a2
     a0 = listArray (0,25) "abcdefghijklmnopqrstuvwxyz"
     a1 = listArray (0,25) "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    a2 = listArray (0,25) " \n0123456789.,!?_#'\"/\\-:()"
-    --a2':: Array Word Char = listArray (0,25) " 0123456789.,!?_#'\"/\\<-:()" -- Z1
+    a2 = if
+      | version==Z1 -> listArray (0,25) " 0123456789.,!?_#'\"/\\<-:()"
+      | otherwise -> listArray (0,25) " \n0123456789.,!?_#'\"/\\-:()"
