@@ -253,7 +253,10 @@ getWord a = do
   pure (256 * fromIntegral hi + fromIntegral lo)
 
 ztext :: Fetch String
-ztext = loop [] A0 A0 []
+ztext = do Header{zv} <- StoryHeader; ztext' zv
+
+ztext' :: Zversion -> Fetch String
+ztext' version = loop [] A0 A0 []
   where
     loop :: [Value] -> Alpha -> Alpha -> [Char] -> Fetch String
     loop delayedZs alpha lock acc = do
@@ -273,11 +276,23 @@ ztext = loop [] A0 A0 []
       0:zs ->
         inner alpha lock stop (' ' : acc) zs
 
+      1:zs | (version==Z1) ->
+        inner alpha lock stop ('\n' : acc) zs
+
+      2:zs | (version<=Z2) -> inner (shiftUp alpha) lock stop acc zs
+      3:zs | (version<=Z2) -> inner (shiftDown alpha) lock stop acc zs
+
       [z] | z `elem` [1,2,3] -> loop [z] alpha lock acc
 
       n:z:zs | n `elem` [1,2,3] -> do
         expansion <- decodeAbbrev (z + (n-1) * 32)
         inner lock lock stop (reverse expansion ++ acc) zs
+
+      4:zs | (version<=Z2) ->
+        undefined zs
+
+      5:zs | (version<=Z2) ->
+        undefined zs
 
       4:zs -> inner (shiftUp alpha) lock stop acc zs
       5:zs -> inner (shiftDown alpha) lock stop acc zs

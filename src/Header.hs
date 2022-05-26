@@ -16,4 +16,4 @@ data Header = Header
   }
 
 data Zversion = Z1 | Z2 | Z3 | Z4 | Z5 | Z6
-  deriving (Eq,Show)
+  deriving (Eq,Ord,Show)
