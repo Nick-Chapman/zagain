@@ -1,6 +1,6 @@
 
 -- | A z-machine story-file.
-module Story (Story(header,size),loadStory,readStoryByte) where
+module Story (Story(header,size),loadStory,readStoryByte,OOB_Mode(..)) where
 
 import Data.Array (Array,(!),listArray)
 import Header (Header(..),Zversion(..))
@@ -25,11 +25,18 @@ loadStory path = do
 loadBytes :: FilePath -> IO [Byte]
 loadBytes path = (map fromIntegral . BS.unpack) <$> BS.readFile path
 
-readStoryByte :: Story -> Addr -> Byte
-readStoryByte Story{size, bytesA} a =  if
+data OOB_Mode = OOB_Error | OOB_Zero
+
+readStoryByte :: OOB_Mode -> Story -> Addr -> Byte
+readStoryByte mode Story{size, bytesA} a =  if
   | i < size && i >= 0 -> bytesA ! i
-  | otherwise -> error (show ("readStoryByte",a,size)) -- TODO ??
-    where i = fromIntegral a
+  | otherwise ->  oob
+    where
+      i = fromIntegral a
+      oob =
+        case mode of
+          OOB_Error -> error (show ("readStoryByte",a,size))
+          OOB_Zero -> 0
 
 readHeader :: Story -> Header
 readHeader story = Header
@@ -50,7 +57,7 @@ readHeader story = Header
       256 * fromIntegral hi + fromIntegral lo
 
     getB :: Addr -> Byte
-    getB a = readStoryByte story a
+    getB a = readStoryByte OOB_Error story a
 
 versionOfByte :: Byte -> Zversion
 versionOfByte = \case

@@ -12,7 +12,7 @@ import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr,Value,byteOfValue)
 import Operation (Target)
-import Story (Story(header),readStoryByte)
+import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action as A (Action(..))
 import qualified Data.Map as Map
@@ -24,11 +24,13 @@ type Effect x = Eff Byte Value x
 runEffect :: Word -> Story -> Effect () -> Action
 runEffect seed story e0 = loop (initState seed pc0) e0 k0
   where
+    mode = OOB_Error
+
     header@Header{initialPC=pc0} = Story.header story
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
-    (dict,_) = runFetch 0 story fetchDict
+    (dict,_) = runFetch mode 0 story fetchDict
 
     loop :: State -> Effect a -> (State -> a -> Action) -> Action
     loop s e k = case e of
@@ -42,12 +44,12 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         A.Input (p1,p2) (count-lastCount) $ \response -> k s { lastCount = count } response
 
       GetText a -> do
-        let (text,_) = runFetch a story ztext
+        let (text,_) = runFetch mode a story ztext
         k s text
 
       FetchI -> do -- TODO: share code common to all Fetch* ops
         let State{pc,count} = s
-        let (ins,pc') = runFetch pc story fetchOperation
+        let (ins,pc') = runFetch mode pc story fetchOperation
         let s' = s { pc = pc'
                    , count = count + 1
                    }
@@ -55,7 +57,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
       FetchRoutineHeader -> do -- TODO: share code common to all Fetch* ops
         let State{pc} = s
-        let (rh,pc') = runFetch pc story fetchRoutineHeader
+        let (rh,pc') = runFetch mode pc story fetchRoutineHeader
         k s { pc = pc' } rh
 
       FetchDict -> do
@@ -116,7 +118,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let (_over,b) =
               case Map.lookup a overrides of
                 Just b -> (True,b)
-                Nothing -> (False,readStoryByte story a)
+                Nothing -> (False,readStoryByte mode story a)
         --A.Debug (show ("GetByte",a,"->",b)) $
         k s b
 
