@@ -79,7 +79,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
       disassemble story
     Dictionary -> do
       story <- loadStory storyFile
-      let (dict,_) = runFetch OOB_Error 0 story fetchDict
+      let (dict,_) = runFetch (OOB_Error "Top.Dictionary") 0 story fetchDict
       print dict
     Run -> do
       let seed = 888

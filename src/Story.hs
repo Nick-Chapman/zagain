@@ -25,18 +25,19 @@ loadStory path = do
 loadBytes :: FilePath -> IO [Byte]
 loadBytes path = (map fromIntegral . BS.unpack) <$> BS.readFile path
 
-data OOB_Mode = OOB_Error | OOB_Zero
+data OOB_Mode = OOB_Error String | OOB_Zero
 
 readStoryByte :: OOB_Mode -> Story -> Addr -> Byte
 readStoryByte mode Story{size, bytesA} a =  if
   | a < size && a >= 0 -> bytesA ! a
-  | otherwise ->  oob
+  | otherwise -> oob
     where
       oob =
         case mode of
           OOB_Zero -> 0
-          OOB_Error ->
-            error (printf "readStoryByte: %s, size: %s" (show a) (show size))
+          OOB_Error who ->
+            error (printf "readStoryByte(%s): %s, size: %s"
+                   who (show a) (show size))
 
 readHeader :: Story -> Header
 readHeader story = Header
@@ -57,11 +58,11 @@ readHeader story = Header
       256 * fromIntegral hi + fromIntegral lo
 
     getB :: Addr -> Byte
-    getB a = readStoryByte OOB_Error story a
+    getB a = readStoryByte (OOB_Error "readHeader") story a
 
 versionOfByte :: Byte -> Zversion
 versionOfByte = \case
-  1 -> undefined Z1
+  1 -> Z1
   2 -> undefined Z2
   3 -> Z3
   4 -> undefined Z4
