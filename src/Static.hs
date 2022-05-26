@@ -33,16 +33,17 @@ seeMemMap story = do
             , staticMem, dictionary, highMem, initialPC
             } = Story.header story
   let endOfStory :: Addr = fromIntegral (size story)
+  putStrLn "Memory Map:"
   putStrLn "--[dynamic]---------------------------"
-  pr ("abbrevTable",abbrevTable)
-  pr ("objectTable",objectTable)
-  pr ("globalVars",globalVars)
+  pr ("Abbreviations",abbrevTable)
+  pr ("Object",objectTable)
+  pr ("Globals",globalVars)
   putStrLn "--[static]----------------------------"
-  pr ("staticMem",staticMem)
-  pr ("dictionary",dictionary)
-  pr ("highMem",highMem)
-  pr ("initialPC",initialPC)
-  pr ("endOfStory",endOfStory)
+  pr ("Static memory",staticMem)
+  pr ("Dictionary",dictionary)
+  pr ("High memory",highMem)
+  pr ("Initial PC",initialPC)
+  pr ("End of story file",endOfStory)
   putStrLn "--------------------------------------"
     where pr (tag,a) = printf "%s %s\n" (show a) tag
 
@@ -51,45 +52,24 @@ discoverCode :: Story -> [String] -> IO ()
 discoverCode story walkthrough = do
   let endOfStory :: Addr = fromIntegral (size story)
   let Header{initialPC=_, staticMem} = Story.header story
-  -- candidate address which might contain routines...
-  let xs0 = [staticMem .. endOfStory]
-  let xs1 = [ x | x <- xs0, x `mod` 2 == 0 ]
-  let xs2 = [ x | x <- xs1, canDecodeRoutine story x ]
-  let xs3 = routinesBetween story (staticMem,endOfStory)
-  let cx = xs2
-  let c = xs3
-  print("candidate...")
-  print("cx",length cx) -- extra candidates
-  print("c",length c)
 
-  --print("walkthough #steps=",length walkthrough)
-  let xs6 = dynamicDiscovery story walkthrough
-  let xs7 = nub xs6
-  let w = xs7
-  print("w",length w)
+  let ws = nub $ dynamicDiscovery story walkthrough
+  let cs = routinesBetween story (staticMem,endOfStory)
+  let lost = ws \\ cs
 
-  --let cx_not_w = cx \\ w
-  let w_not_cx = w \\ cx
-  --print("c\\w",length cx_not_w)
-  print("w\\cx",length w_not_cx)
-  --let c_not_w = c \\ w
-  let w_not_c = w \\ c
-  --print("c\\w",length c_not_w)
-  let num_lost = length w_not_c
-  print("w\\c",num_lost, if num_lost > 0 then "**LOOSE**" else "")
-  print w_not_c
+  printf "Found %d routines by walkthrough\n" (length ws)
+  printf "Found %d routines by speculative disassembly\n" (length cs)
+  printf "%d routines lost (in walkthrough but not disassembly)\n" (length lost)
 
-  let found = [ (Found, disRoutine story a) | a <- c ]
-  let lost = [ (Lost, disRoutine story a) | a <- w_not_c ]
+  let foundR = [ (Found, disRoutine story a) | a <- cs ]
+  let lostR = [ (Lost, disRoutine story a) | a <- lost ]
 
-  let lostAndFound = sortBy (comparing rStart) (lost ++ found)
-        where
-          rStart (_,Routine{start}) = start
+  let lostAndFound = sortBy (comparing rStart) (lostR ++ foundR)
+        where rStart (_,Routine{start}) = start
 
   let prevs = 0 : [ finish | (_,Routine{finish}) <- lostAndFound ]
   sequence_ [ dumpRoutine prev lf r | (prev,(lf,r)) <- zip prevs lostAndFound ]
 
-  pure ()
 
 ----------------------------------------------------------------------
 -- dump
@@ -104,16 +84,13 @@ dumpRoutine prev lf r = do
   printf "gap=%d%s\n" gap (if gap<0 then " **OVERLAP**" else "")
   let tag = case lf of Lost -> "**LOST**"; Found -> ""
   printf "%s%s %s\n" tag (show start) (show header)
-
-  let Routine{defs,refs,illegal,unused} = r
-  printf "-- local defs: %s\n" (show defs)
-  printf "-- local refs locals: %s\n" (show refs)
+  let Routine{illegal,unused} = r
+  --printf "-- local defs: %s\n" (show defs)
+  --printf "-- local refs locals: %s\n" (show refs)
   when (notNull illegal) $ printf "-- illegal: %s\n" (show illegal)
   when (notNull unused ) $ printf "-- unused: %s\n" (show unused)
-
   mapM_ pr xs
-  where
-    pr (a,op) = printf "%s %s\n" (show a) (show op)
+  where pr (a,op) = printf "%s %s\n" (show a) (show op)
 
 ----------------------------------------------------------------------
 -- dynamic discovery from walkthrough (from comparison)
@@ -156,12 +133,6 @@ routinesBetween story (start,end) = loop start
           Nothing -> loop (a+1)
           Just a' -> a : loop a'
 
-canDecodeRoutine :: Story -> Addr -> Bool
-canDecodeRoutine story a = do
-  case tryDecodeRoutine story a of
-    Nothing -> False
-    Just{} -> True
-
 tryDecodeRoutine :: Story -> Addr -> Maybe Addr
 tryDecodeRoutine story a = do
   case disRoutineM story a of
@@ -174,7 +145,6 @@ tryDecodeRoutine story a = do
 
 ----------------------------------------------------------------------
 -- disassembly...
-
 
 data Routine = Routine
   { start :: Addr

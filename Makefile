@@ -44,11 +44,11 @@ mojo.walk: ~/code/other/mojozork/mojozork.exe $(SCRIPT) Makefile
 
 # regression...
 
-reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk
+reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk reg/h.dis
 	git diff reg
 
-reg/zork.dis: $(exe) src/*.hs
-	$(exe) dis > $@
+reg/zork.dis: $(exe) src/*.hs Makefile
+	$(exe) static -walk z.script > $@
 
 # trace just the first 2 steps of the zork walk-though
 reg/zork.trace: $(exe) z.script src/*.hs
@@ -59,6 +59,9 @@ reg/zork.walk: $(exe) z.script src/*.hs
 
 reg/h.walk: $(exe) h.script src/*.hs
 	bash -c '$(exe) story/hitchhiker-r59-s851108.z3 -nodebug -walk h.script > $@'
+
+reg/h.dis: $(exe) src/*.hs Makefile
+	$(exe) static story/hitchhiker-r59-s851108.z3 -walk h.script > $@
 
 
 .reg:
