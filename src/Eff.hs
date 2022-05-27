@@ -12,6 +12,10 @@ instance Functor (Eff b v) where fmap = liftM
 instance Applicative (Eff b v) where pure = return; (<*>) = ap
 instance Monad (Eff b v) where return = Ret; (>>=) = Bind
 
+-- TODO: Bool -> p
+-- TODO: Addr -> a
+-- TODO: String -> s
+-- TODO: String ops: read at Addr; conv-from-value; (short-name)
 data Eff b v x where
   Ret :: x -> Eff b v x
   Bind :: Eff b v x -> (x -> Eff b v y) -> Eff b v y
@@ -20,10 +24,16 @@ data Eff b v x where
   ReadInputFromUser :: (String,String) -> Eff b v String
   GetText :: Addr -> Eff b v String
   FetchI :: Eff b v Operation
-  FetchRoutineHeader :: Eff b v RoutineHeader
-  FetchDict :: Eff b v Dict
+  FetchRoutineHeader :: Eff b v RoutineHeader -- TODO: take PC?
+  FetchDict :: Eff b v Dict -- TODO: no Fetch here! (Fetch mean PC rel)
+
   PushFrame :: Addr -> Target -> Eff b v ()
-  PopFrame :: Eff b v Target
+  PopFrame :: Eff b v Target -- TODO: avoid Eff representation of Target
+
+  -- TODO: replace PushFrame/PopFrame with Call/Return
+  -- Call :: Addr -> Eff b v v
+  -- Return :: v -> Eff b v ()
+
   GetPC :: Eff b v Addr
   SetPC :: Addr -> Eff b v ()
   GetLocal :: b -> Eff b v v

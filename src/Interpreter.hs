@@ -60,7 +60,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let (rh,pc') = runFetch (oob "FetchRoutineHeader") pc story fetchRoutineHeader
         k s { pc = pc' } rh
 
-      FetchDict -> do
+      FetchDict -> do -- TODO: Not a fetch (pc-rel), so rename!
         k s dict
 
       PushFrame addr target -> do

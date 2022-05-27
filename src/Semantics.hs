@@ -223,7 +223,7 @@ eval pc = \case
     v <- evalArg arg
     Objects.removeObj v
 
-  Op.Restart -> do
+  Op.Restart -> do -- TODO: implementation is not stack safe!
     Header{initialPC} <- StoryHeader
     SetPC initialPC
 
@@ -231,7 +231,7 @@ eval pc = \case
 
   Op.Ret arg -> do
     v <- evalArg arg
-    target <- PopFrame
+    target <- PopFrame -- TODO: share code with returnValue
     setTarget target v
 
   Op.Rfalse -> do returnValue 0
@@ -273,6 +273,8 @@ eval pc = \case
         let (hi,lo) = splitWord (fromIntegral dictAddr)
         let quad1 :: [Byte] = [ hi, lo, fromIntegral (length word), (fromIntegral offsetInText) ]
         quad1
+    -- TODO: Move tokenization & offset calc to a new Effect
+    -- TODO: Can't be a concrete list, because the length is data-dependent.
     let words = [ w | w <- splitOn " " rawTyped, w /= "" ]
     let
       offsets = do
@@ -285,6 +287,7 @@ eval pc = \case
         reverse offsetsR
     let canoicalizedTyped = intercalate " " words  ++ "\0"
     let positionedWords = zip offsets words
+    -- TODO: Process the VEC some kind of `ForEach' effect here?
     let quads = [ mkQuad pos word | (pos,word) <- positionedWords ]
     let bs :: [Byte] = fromIntegral (length quads) : concat quads
     writeBytesFromString (t_buf+1) canoicalizedTyped
@@ -416,6 +419,7 @@ setLocals rh actuals =
   case rh of
     Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
+      -- TODO: we can do better here... !
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
 
