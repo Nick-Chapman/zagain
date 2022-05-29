@@ -75,7 +75,7 @@ data Eff a b s v x where
   LoByte :: v -> Eff a b s v b
   MakeWord :: b -> b -> Eff a b s v v
   MinusByte :: b -> b -> Eff a b s v b
-  Mod8 :: v -> Eff a b s v b
+  Mod :: v -> v -> Eff a b s v v
   Mul :: v -> v -> Eff a b s v v
   Offset :: a -> v -> Eff a b s v a
   PackedAddress :: v -> Eff a b s v a

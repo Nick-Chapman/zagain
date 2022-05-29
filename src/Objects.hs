@@ -56,7 +56,7 @@ testAttr :: v -> v -> Eff a b s v Bool
 testAttr x n = do
   base <- objectAddr x
   d <- Div8 n
-  m <- Mod8 n
+  m <- mod8 n
   m' <- SevenMinus m
   a <- Offset base d
   b <- GetByte a
@@ -66,7 +66,7 @@ setAttr :: v -> v -> Eff a b s v ()
 setAttr x n = do
   base <- objectAddr x
   d <- Div8 n
-  m <- Mod8 n
+  m <- mod8 n
   a <- Offset base d
   old <- GetByte a
   m' <- SevenMinus m
@@ -77,12 +77,18 @@ clearAttr :: v -> v -> Eff a b s v ()
 clearAttr x n = do
   base <- objectAddr x
   d <- Div8 n
-  m <- Mod8 n
+  m <- mod8 n
   a <- Offset base d
   old <- GetByte a
   m' <- SevenMinus m
   new <- old `ClearBit` m'
   SetByte a new
+
+mod8 :: v -> Eff a b s v b
+mod8 v = do
+  eight <- LitV 8
+  res <- Mod v eight
+  LoByte res
 
 --[object containment hierarchy]--------------------------------------
 

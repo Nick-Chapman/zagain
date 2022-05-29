@@ -1,7 +1,7 @@
 
 -- | Various types of numbers used by the z-machine.
 module Numbers
-  ( Byte, byteOfValue
+  ( Byte
   , Addr, addrOfPackedWord
   , Value
   ) where
@@ -17,10 +17,6 @@ newtype Byte = EightBits Word8
 
 instance Show Byte where
   show (EightBits w8) = printf "0x%02x" w8
-
-byteOfValue :: Value -> Byte -- TODO: remove
-byteOfValue v = do
-  if v < 0 || v > 255 then error (show ("byteOfValue",v)) else fromIntegral v
 
 newtype Addr = StoryIndex Word
   deriving (Ord,Eq,Num,Integral,Real,Enum,Bits,Ix)
