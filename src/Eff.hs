@@ -75,6 +75,14 @@ data Eff a b s v x where
   LessThan :: v -> v -> Eff a b s v Bool
   LitS :: String -> Eff a b s v s
 
+  -- TODO: Can't return a concrete list, because the length is data-dependent.
+  Tokenize :: s -> Eff a b s v ([(Int,s)],s)
+
+  -- TODO: maybe this is not quite the right behaviour to abstract into Eff
+  LookupInStrings :: [s] -> s -> Eff a b s v (Maybe Int)
+
+  StringLength :: s -> Eff a b s v b
+  StringBytes :: s -> Eff a b s v [b]
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

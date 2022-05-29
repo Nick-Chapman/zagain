@@ -3,9 +3,6 @@
 module Semantics (theEffect) where
 
 import Data.Bits ((.&.),shiftR)
-import Data.List (intercalate)
-import Data.List.Extra (lower)
-import Data.List.Split (splitOn)
 import Decode (makeTarget)
 import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
@@ -14,13 +11,13 @@ import Numbers (Byte,Value,Addr,byteOfValue,addrOfPackedWord)
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
 import Text.Printf (printf)
-import qualified Data.Char as Char (chr,ord)
+import qualified Data.Char as Char (chr) -- TODO: move to effect?
 import qualified Objects
 import qualified Operation as Op
 
-type Effect x = Eff Addr Byte String Value x -- TODO: generalise Value
+type Effect a b s v x = Eff Addr Byte s Value x -- TODO: generalise completely!
 
-theEffect :: Effect ()
+theEffect :: Effect a b s v ()
 theEffect = loop
   where
     loop = do
@@ -29,7 +26,7 @@ theEffect = loop
       eval pc i
       loop
 
-eval :: Addr -> Operation -> Effect ()
+eval :: Addr -> Operation -> Effect a b s v ()
 eval pc = \case
 
   Op.BadOperation mes -> do
@@ -168,8 +165,8 @@ eval pc = \case
 
   Op.Mul arg1 arg2 target -> do evalBin BMul arg1 arg2 target
 
-  Op.New_line -> do GamePrint "\n"
-  Op.Print string -> do GamePrint string
+  Op.New_line -> do LitS "\n" >>= GamePrint
+  Op.Print string -> do LitS string >>= GamePrint
 
   Op.Print_addr arg -> do
     v <- evalArg arg
@@ -180,9 +177,13 @@ eval pc = \case
   Op.Print_char arg -> do
     v <- evalArg arg
     let c :: Char = Char.chr (fromIntegral v) -- TODO -- check char in bound!
-    GamePrint [c]
+    s <- LitS [c]
+    GamePrint s
 
-  Op.Print_num arg -> do evalArg arg >>= GamePrint . show
+  Op.Print_num arg -> do
+    v <- evalArg arg
+    s <- LitS (show v)
+    GamePrint s
 
   Op.Print_obj arg -> do
     v <- evalArg arg
@@ -195,7 +196,10 @@ eval pc = \case
     s <- GetText a
     GamePrint s
 
-  Op.Print_ret string -> do GamePrint (string ++ "\n"); returnValue 1
+  Op.Print_ret string -> do
+    s <- LitS (string ++ "\n")
+    GamePrint s
+    returnValue 1
 
   Op.Pull arg -> do
     target <- makeValueTarget <$> evalArg arg
@@ -247,50 +251,35 @@ eval pc = \case
     v1 <- evalGlobal 1
     v2 <- evalGlobal 2
     p1 <- Objects.getShortName v0
-    let p2 = printf "score:%s--turns:%s" (show v1) (show v2)
+    p2 <- LitS $ printf "score:%s--turns:%s" (show v1) (show v2)
     rawTyped <- ReadInputFromUser (p1,p2)
     t_buf :: Addr <- fromIntegral <$> evalArg arg1
     p_buf :: Addr <- fromIntegral <$> evalArg arg2
     Header{dictionary=dictBase} <- StoryHeader
-    Dict{seps,entryLength,strings} <- FetchDict
+    Dict{seps,entryLength,strings=constStrings} <- FetchDict
+    strings <- mapM LitS constStrings
     -- +4 : #seps byte, entryLength byte, #entries word
     let baseEntries :: Addr = dictBase + fromIntegral (length seps + 4)
-    -- TODO: move this lexing code out of Semantics
-    let
-      mkQuad :: Int -> String -> [Byte]
-      mkQuad offsetInText word = do
-        let
-          iopt :: Maybe Int = do
-            let key = lower (take 6 word)
-            case [ i | (i,s) <- zip [1..] strings, s == key ] of
-              [] -> Nothing
-              xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
-              [i] -> Just i
-        let dictAddr :: Addr =
-              case iopt of
-                Just i -> baseEntries + fromIntegral ((i-1) * entryLength)
-                Nothing -> 0
-        let (hi,lo) = splitWord (fromIntegral dictAddr)
-        let quad1 :: [Byte] = [ hi, lo, fromIntegral (length word), (fromIntegral offsetInText) ]
-        quad1
-    -- TODO: Move tokenization & offset calc to a new Effect
-    -- TODO: Can't be a concrete list, because the length is data-dependent.
-    let words = [ w | w <- splitOn " " rawTyped, w /= "" ]
-    let
-      offsets = do
-        let lens = [ length w | w <- words ]
-        let
-          f :: (Int,[Int]) -> Int -> (Int,[Int])
-          f (off,xs) i = (off+i+1, off : xs) --
-        let z = (1,[])
-        let (_,offsetsR) = foldl f z lens
-        reverse offsetsR
-    let canoicalizedTyped = intercalate " " words  ++ "\0"
-    let positionedWords = zip offsets words
+    (positionedWords,canoicalizedTyped) <- Tokenize rawTyped
+
+    StringBytes canoicalizedTyped >>= writeBytes (t_buf+1)
+
     -- TODO: Process the VEC some kind of `ForEach' effect here?
-    let quads = [ mkQuad pos word | (pos,word) <- positionedWords ]
+    quads <- sequence
+      [
+        do
+          iopt <- LookupInStrings strings word
+          let dictAddr :: Addr =
+                case iopt of
+                  Just i -> baseEntries + fromIntegral ((i-1) * entryLength)
+                  Nothing -> 0
+          let (hi,lo) = splitWord (fromIntegral dictAddr)
+          n <- StringLength word
+          pure [ hi, lo, fromIntegral n, (fromIntegral pos) ]
+
+      | (pos,word) <- positionedWords
+      ]
     let bs :: [Byte] = fromIntegral (length quads) : concat quads
-    writeBytesFromString (t_buf+1) canoicalizedTyped
     writeBytes (fromIntegral (p_buf + 1)) bs
 
   Op.Store arg1 arg2 -> do
@@ -343,36 +332,33 @@ eval pc = \case
   Op.Verify{} -> undefined
 
 
-writeBytesFromString :: Addr -> String -> Effect ()
-writeBytesFromString a str = writeBytes a [ fromIntegral (Char.ord c) | c <- str ]
-
-writeBytes :: Addr -> [Byte] -> Effect ()
+writeBytes :: Addr -> [Byte] -> Effect a b s v ()
 writeBytes a bs = sequence_ [ SetByte (a+i) b | (i,b) <- zip [0..] bs ]
 
 makeValueTarget :: Value -> Target
 makeValueTarget = makeTarget . byteOfValue
 
-evalBin :: Bin -> Arg -> Arg -> Target -> Effect ()
+evalBin :: Bin -> Arg -> Arg -> Target -> Effect a b s v ()
 evalBin bin arg1 arg2 target = do
   v1 <- evalArg arg1
   v2 <- evalArg arg2
   v <- BinOp bin v1 v2
   setTarget target v
 
-branchMaybe :: Label -> Bool -> Effect ()
+branchMaybe :: Label -> Bool -> Effect a b s v ()
 branchMaybe (Branch sense dest) b = case (sense,b) of
   (Op.T,False) -> pure ()
   (Op.F,True) -> pure ()
   (Op.T,True) -> gotoDest dest
   (Op.F,False) -> gotoDest dest
 
-gotoDest :: Dest -> Effect ()
+gotoDest :: Dest -> Effect a b s v ()
 gotoDest = \case
   Dfalse -> returnValue 0
   Dtrue -> returnValue 1
   Dloc a -> SetPC a
 
-evalFunc :: Func -> Effect Addr
+evalFunc :: Func -> Effect a b s v Addr
 evalFunc = \case
   BadFunc -> error "failed to decode called function"
   Floc a -> pure a
@@ -382,26 +368,26 @@ evalFunc = \case
     --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
     pure a
 
-evalArg :: Arg -> Effect Value
+evalArg :: Arg -> Effect a b s v Value
 evalArg = \case
   Con x -> pure x
   Var v -> evalTarget v
 
-evalTarget :: Target -> Effect Value
+evalTarget :: Target -> Effect a b s v Value
 evalTarget = \case
   Sp -> PopStack
   Local n -> GetLocal n
   Global b -> evalGlobal b
 
-evalGlobal :: Byte -> Effect Value
+evalGlobal :: Byte -> Effect a b s v Value
 evalGlobal b = globalAddr b >>= getWord
 
-returnValue :: Value -> Effect ()
+returnValue :: Value -> Effect a b s v ()
 returnValue v = do
   target <- PopFrame
   setTarget target v
 
-setTarget :: Target -> Value -> Effect ()
+setTarget :: Target -> Value -> Effect a b s v ()
 setTarget var v = case var of
   Sp -> PushStack v
   Local n -> SetLocal n v
@@ -409,12 +395,12 @@ setTarget var v = case var of
     a <- globalAddr b
     setWord a v
 
-globalAddr :: Byte -> Effect Addr
+globalAddr :: Byte -> Effect a b s v Addr
 globalAddr b = do
   Header{globalVars} <- StoryHeader
   pure (globalVars + 2 * fromIntegral b)
 
-setLocals :: RoutineHeader -> [Value] -> Effect ()
+setLocals :: RoutineHeader -> [Value] -> Effect a b s v ()
 setLocals rh actuals =
   case rh of
     Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
@@ -423,13 +409,13 @@ setLocals rh actuals =
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] defs ]
       sequence_ [ SetLocal n v | (n,v) <- zip [1..] actuals ]
 
-getWord :: Addr -> Effect Value -- TODO: make primitive
+getWord :: Addr -> Effect a b s v Value -- TODO: make primitive
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
   pure (256 * fromIntegral hi + fromIntegral lo)
 
-setWord :: Addr -> Value -> Effect ()
+setWord :: Addr -> Value -> Effect a b s v ()
 setWord a w = do
   let (hi,lo) = splitWord w
   SetByte a hi

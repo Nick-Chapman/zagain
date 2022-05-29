@@ -4,6 +4,9 @@ module Interpreter (State,runEffect) where
 
 import Action (Action)
 import Data.Bits ((.&.),shiftL,clearBit,setBit,testBit,shiftR)
+import Data.List (intercalate)
+import Data.List.Extra (lower)
+import Data.List.Split (splitOn)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
@@ -15,6 +18,7 @@ import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action as A (Action(..))
+import qualified Data.Char as Char (ord)
 import qualified Data.Map as Map
 
 type Effect x = Eff Addr Byte String Value x
@@ -175,6 +179,34 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       Offset base off -> k s (base + fromIntegral off)
       LessThan v1 v2 -> k s (v1 < v2)
       LitS x -> k s x
+
+      Tokenize str -> do
+        let toks = [ w | w <- splitOn " " str, w /= "" ]
+        let
+          offsets = do
+            let lens = [ length w | w <- toks ]
+            let
+              f :: (Int,[Int]) -> Int -> (Int,[Int])
+              f (off,xs) i = (off+i+1, off : xs) --
+            let z = (1,[])
+            let (_,offsetsR) = foldl f z lens
+            reverse offsetsR
+        -- TODO: Better if we didn't change inter-word whitespace
+        let canonicalized = intercalate " " toks -- TODO: what needs this? ++ "\0"
+        k s (zip offsets toks, canonicalized)
+
+      LookupInStrings strings word -> do
+        let key = lower (take 6 word)
+        let
+          res =
+            case [ i | (i,s) <- zip [1..] strings, s == key ] of
+              [] -> Nothing
+              xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
+              [i] -> Just i
+        k s res
+
+      StringLength str -> k s (fromIntegral $ length str)
+      StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
 
 --[interpreter state]-------------------------------------------------
 
