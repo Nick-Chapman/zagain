@@ -13,7 +13,7 @@ import Eff (Eff(..),Bin(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Addr,Value)
 
-type Effect b x = Eff b Value x -- TODO: generalise further
+type Effect b x = Eff Addr b String Value x -- TODO: generalise further
 
 --[convs]-----------------------------------------------------
 

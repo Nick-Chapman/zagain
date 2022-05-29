@@ -17,7 +17,7 @@ import Text.Printf (printf)
 import qualified Action as A (Action(..))
 import qualified Data.Map as Map
 
-type Effect x = Eff Byte Value x
+type Effect x = Eff Addr Byte String Value x
 
 --[interpreter for execution effects]----------------------------------
 

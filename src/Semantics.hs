@@ -18,7 +18,7 @@ import qualified Data.Char as Char (chr,ord)
 import qualified Objects
 import qualified Operation as Op
 
-type Effect x = Eff Byte Value x -- TODO: generalise Value
+type Effect x = Eff Addr Byte String Value x -- TODO: generalise Value
 
 theEffect :: Effect ()
 theEffect = loop
