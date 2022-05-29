@@ -5,6 +5,7 @@ module Top (main)  where
 import Action (Conf(..))
 import Control.Monad (when)
 import Dictionary (fetchDict)
+import Disassemble (disassemble)
 import Fetch (runFetch)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
@@ -12,7 +13,6 @@ import Text.Printf (printf)
 import qualified Console (runAction)
 import qualified Interpreter (runEffect)
 import qualified Semantics (theEffect)
-import qualified Static (explore)
 import qualified WalkThrough (runAction)
 
 main :: IO ()
@@ -29,7 +29,7 @@ data Config = Config
   , mayStartConsole :: Bool
   }
 
-data Mode = Dictionary | Run | Static
+data Mode = Dictionary | Run | Disassemble
 
 config0 :: Config
 config0 = Config
@@ -54,7 +54,7 @@ parseCommandLine = loop config0
     loop c@Config{iconf,inputs} = \case
       [] -> pure c
       "dict":more -> loop c { mode = Dictionary } more
-      "static":more -> loop c { mode = Static } more
+      "dis":more -> loop c { mode = Disassemble } more
       "-noconsole":more -> loop c { mayStartConsole = False } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
@@ -85,7 +85,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a
         _ -> WalkThrough.runAction iconf inputs a
-    Static -> do
+    Disassemble -> do
       story <- loadStory storyFile
-      Static.explore story inputs
+      disassemble story inputs
       pure ()

@@ -1,6 +1,6 @@
 
 -- | Explore the static structure of a strory file
-module Static (explore) where
+module Disassemble (disassemble) where
 
 import Action (Action(..))
 import Control.Monad (when)
@@ -21,8 +21,8 @@ import qualified Interpreter (runEffect)
 import qualified Operation as Op
 import qualified Semantics (theEffect)
 
-explore :: Story -> [String] -> IO ()
-explore story walkthrough = do
+disassemble :: Story -> [String] -> IO ()
+disassemble story walkthrough = do
   seeMemMap story
   discoverCode story walkthrough
 
