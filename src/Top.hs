@@ -5,7 +5,6 @@ module Top (main)  where
 import Action (Conf(..))
 import Control.Monad (when)
 import Dictionary (fetchDict)
-import Dis (disassemble)
 import Fetch (runFetch)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
@@ -30,7 +29,7 @@ data Config = Config
   , mayStartConsole :: Bool
   }
 
-data Mode = Dis | Dictionary | Run | Static
+data Mode = Dictionary | Run | Static
 
 config0 :: Config
 config0 = Config
@@ -54,7 +53,6 @@ parseCommandLine = loop config0
   where
     loop c@Config{iconf,inputs} = \case
       [] -> pure c
-      "dis":more -> loop c { mode = Dis } more
       "dict":more -> loop c { mode = Dictionary } more
       "static":more -> loop c { mode = Static } more
       "-noconsole":more -> loop c { mayStartConsole = False } more
@@ -74,9 +72,6 @@ parseCommandLine = loop config0
 run :: Config -> IO ()
 run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsole} = do
   case mode of
-    Dis -> do
-      story <- loadStory storyFile
-      disassemble story
     Dictionary -> do
       story <- loadStory storyFile
       let (dict,_) = runFetch (OOB_Error "Top.Dictionary") 0 story fetchDict
