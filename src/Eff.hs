@@ -14,8 +14,6 @@ instance Monad (Eff a b s v) where return = Ret; (>>=) = Bind
 
 -- TODO: introduce a Phase typeclass
 
--- TODO: Bool -> p ?
--- TODO: String ops: read at Addr; conv-from-value; (short-name)
 data Eff a b s v x where
   Ret :: x -> Eff a b s v x
   Bind :: Eff a b s v x -> (x -> Eff a b s v y) -> Eff a b s v y
@@ -31,11 +29,7 @@ data Eff a b s v x where
   FetchRoutineHeader :: Eff a b s v RoutineHeader
 
   PushFrame :: a -> Target -> Eff a b s v ()
-  PopFrame :: Eff a b s v Target -- TODO: avoid Eff representation of Target
-
-  -- TODO: replace PushFrame/PopFrame with Call/Return
-  -- Call :: a -> Eff a b s v v
-  -- Return :: v -> Eff a b s v ()
+  PopFrame :: Eff a b s v Target
 
   GetPC :: Eff a b s v a
   SetPC :: a -> Eff a b s v ()
