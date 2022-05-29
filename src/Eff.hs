@@ -5,16 +5,16 @@ module Eff (Eff(..),Bin(..)) where
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
 import Header (Header)
-import Numbers (Byte,Value)
+import Numbers (Addr,Byte,Value)
 import Operation (Operation,Target,RoutineHeader)
 
 instance Functor (Eff a b s v) where fmap = liftM
 instance Applicative (Eff a b s v) where pure = return; (<*>) = ap
 instance Monad (Eff a b s v) where return = Ret; (>>=) = Bind
 
--- TODO: Bool -> p
--- TODO: Addr -> a
--- TODO: String -> s
+-- TODO: introduce a Phase typeclass
+
+-- TODO: Bool -> p ?
 -- TODO: String ops: read at Addr; conv-from-value; (short-name)
 data Eff a b s v x where
   Ret :: x -> Eff a b s v x
@@ -49,6 +49,7 @@ data Eff a b s v x where
   Quit :: Eff a b s v ()
   StoryHeader :: Eff a b s v Header
 
+  -- TODO: capture Pure ops in a sep type, or maybe in the Phase typeclase
   Div8 :: v -> Eff a b s v v
   Mod8 :: v -> Eff a b s v b
   SevenMinus :: b -> Eff a b s v b
@@ -67,6 +68,13 @@ data Eff a b s v x where
   BwAnd :: b -> b -> Eff a b s v b
 
   IsZeroByte :: b -> Eff a b s v Bool
+
+  LitA :: Addr -> Eff a b s v a
+  Address :: v -> Eff a b s v a
+  Offset :: a -> v -> Eff a b s v a
+  LessThan :: v -> v -> Eff a b s v Bool
+  LitS :: String -> Eff a b s v s
+
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

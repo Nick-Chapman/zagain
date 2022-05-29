@@ -170,6 +170,11 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
       IsZeroByte b -> k s (b == 0)
 
+      LitA a -> k s a
+      Address v -> k s (fromIntegral v)
+      Offset base off -> k s (base + fromIntegral off)
+      LessThan v1 v2 -> k s (v1 < v2)
+      LitS x -> k s x
 
 --[interpreter state]-------------------------------------------------
 

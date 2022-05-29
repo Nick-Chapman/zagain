@@ -11,71 +11,78 @@ module Objects
 import Control.Monad (when)
 import Eff (Eff(..),Bin(..))
 import Header (Header(..),Zversion(..))
-import Numbers (Addr,Value)
-
-type Effect b x = Eff Addr b String Value x -- TODO: generalise further
+import Numbers (Value)
 
 --[convs]-----------------------------------------------------
 
-v2a :: Value -> Addr
-v2a = fromIntegral
-
-getWord :: Addr -> Effect b Value
+getWord :: a -> Eff a b s v v
 getWord a = do
   hi <- GetByte a
-  lo <- GetByte (a+1)
+  one <- LitV 1
+  a1 <- Offset a one
+  lo <- GetByte a1
   MakeWord hi lo
 
-objectAddr :: Value -> Effect b Addr -- TODO: move static calcs to header?
+objectAddr :: v -> Eff a b s v a
 objectAddr o = do
   Header{zv,objectTable} <- StoryHeader
-  let base = objectTable
   let f = formatOfVersion zv
   let objectEntrySize = numByesForAttribute f + (3 * objectIdSize f) + 2
-  let propDefaultsSize = 2 * numProps f
-  pure (base + v2a (propDefaultsSize + (o-1) * objectEntrySize))
+  size <- LitV objectEntrySize
+  otBase <- LitA objectTable
+  objectsOffset <- LitV (2 * numProps f - objectEntrySize)
+  base <- Offset otBase objectsOffset
+  off <- BinOp BMul o size
+  Offset base off
 
-getShortName :: Value -> Effect b String
+getShortName :: v -> Eff a b s v s
 getShortName x = do
-  a <- objectAddr x
-  a' <- getWord (a+7)
-  shortNameLen <- GetByte (v2a a')
+  base <- objectAddr x
+  seven <- LitV 7
+  a <- Offset base seven
+  w <- getWord a
+  a1 <- Address w
+  shortNameLen <- GetByte a1
   p <- IsZeroByte shortNameLen
-  if p then pure "" else GetText (v2a (a'+1))
+  if p then LitS "" else do
+    one <- LitV 1
+    w1 <- BinOp BAdd w one
+    a2 <- Address w1
+    GetText a2
 
 --[attributes]--------------------------------------------------------
 
-testAttr :: Value -> Value -> Effect b Bool
+testAttr :: v -> v -> Eff a b s v Bool
 testAttr x n = do
-  a <- objectAddr x
+  base <- objectAddr x
   d <- Div8 n
   m <- Mod8 n
   m' <- SevenMinus m
-  let aa = a + v2a d
-  b <- GetByte aa
+  a <- Offset base d
+  b <- GetByte a
   b `TestBit` m'
 
-setAttr :: Value -> Value -> Effect b ()
+setAttr :: v -> v -> Eff a b s v ()
 setAttr x n = do
-  a <- objectAddr x
+  base <- objectAddr x
   d <- Div8 n
   m <- Mod8 n
-  let aa = a + v2a d
-  old <- GetByte aa
+  a <- Offset base d
+  old <- GetByte a
   m' <- SevenMinus m
   new <- old `SetBit` m'
-  SetByte aa new
+  SetByte a new
 
-clearAttr :: Value -> Value -> Effect b ()
+clearAttr :: v -> v -> Eff a b s v ()
 clearAttr x n = do
-  a <- objectAddr x
+  base <- objectAddr x
   d <- Div8 n
   m <- Mod8 n
-  let aa = a + v2a d
-  old <- GetByte aa
+  a <- Offset base d
+  old <- GetByte a
   m' <- SevenMinus m
   new <- old `ClearBit` m'
-  SetByte aa new
+  SetByte a new
 
 --[object containment hierarchy]--------------------------------------
 
@@ -87,19 +94,23 @@ offsetFM = \case
   Sibling -> 5
   Child -> 6
 
-getFM :: FamilyMember -> Value -> Effect b Value
+getFM :: FamilyMember -> v -> Eff a b s v v
 getFM fm x = do
-  a <- objectAddr x
-  b <- GetByte (a + v2a (offsetFM fm))
+  base <- objectAddr x
+  off <- LitV (offsetFM fm)
+  a <- Offset base off
+  b <- GetByte a
   Widen b
 
-setFM :: FamilyMember -> Value -> Value -> Effect b ()
+setFM :: FamilyMember -> v -> v -> Eff a b s v ()
 setFM fm x y = do
-  a <- objectAddr x
+  base <- objectAddr x
   lo <- LoByte y
-  SetByte (a + v2a (offsetFM fm)) lo
+  off <- LitV (offsetFM fm)
+  a <- Offset base off
+  SetByte a lo
 
-insertObj :: Value -> Value -> Effect b ()
+insertObj :: v -> v -> Eff a b s v ()
 insertObj x dest = do
   unlink x
   setFM Parent x dest
@@ -107,109 +118,146 @@ insertObj x dest = do
   setFM Sibling x oldChild
   setFM Child dest x
 
-removeObj :: Value -> Effect b ()
+removeObj :: v -> Eff a b s v ()
 removeObj x = do
   unlink x
-  setFM Parent x 0
+  zero <- LitV 0
+  setFM Parent x zero
 
-unlink :: Value -> Effect b ()
+unlink :: forall a b s v. v -> Eff a b s v ()
 unlink this = do
   oldP <- getFM Parent this
-  when (oldP /= 0) $ do
+  b <- not <$> IsZero oldP
+  when b $ do
     child <- getFM Child oldP
-    case child == this of
+    b <- EqualAny [child,this]
+    case b of
       True -> do
         thisSib <- getFM Sibling this
         setFM Child oldP thisSib
       False -> do
         loop child
       where
-        loop :: Value -> Effect b ()
+        loop :: v -> Eff a b s v ()
         loop x = do
-          when (x == 0) $ error "unlink loop, failed to find unlinkee"
-          sib <- getFM Sibling x
-          case  sib == this of
-            False -> loop sib
-            True -> do
-              thisSib <- getFM Sibling this
-              setFM Sibling x thisSib
+          b <- IsZero x
+          if b then error "unlink loop, failed to find unlinkee" else do
+            sib <- getFM Sibling x
+            b <- EqualAny [sib,this]
+            case b of
+              False -> loop sib
+              True -> do
+                thisSib <- getFM Sibling this
+                setFM Sibling x thisSib
 
 --[properties]--------------------------------------------------------
 
-getProp :: Show b => Value -> Value -> Effect b Value
-getProp x n = do
-  Header{objectTable=base} <- StoryHeader
+getPropN :: v -> v -> Eff a b s v (Maybe (Prop b v))
+getPropN x n = do
   props <- getPropertyTable x
-  case [ dataBytes | Prop{number,dataBytes} <- props, number == n ] of
-    [] -> do
+  xs <- sequence
+    [ do b <- EqualAny [n,number]; pure (prop,b)
+    | prop@Prop{number} <- props
+    ]
+  pure $ case [ prop | (prop,b) <- xs, b ] of
+    [] -> Nothing
+    [prop] -> Just prop
+    _ -> error "getPropN: multi prop match"
+
+
+getProp :: v -> v -> Eff a b s v v
+getProp x n = do
+  Header{objectTable} <- StoryHeader
+
+  getPropN x n >>= \case
+    Nothing -> do
       -- get property default
-      getWord (base + v2a (2 * (n-1)))
-    [prop] -> do
-      case prop of
+      m1 <- LitV (-1)
+      nM1 <- BinOp BAdd n m1
+      two <- LitV 2
+      off <- BinOp BMul two nM1
+      base <- LitA objectTable
+      a <- Offset base off
+      getWord a
+    Just (Prop{dataBytes}) -> do
+      case dataBytes of
         [hi,lo] -> MakeWord hi lo
         [b] -> undefined (Widen b) -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
-    ps ->
-      error (show ("getProp: multi prop match",ps))
 
-putProp :: Show b => Value -> Value -> Value -> Effect b ()
+putProp :: Show b => v -> v -> v -> Eff a b s v ()
 putProp x n v = do
-  props <- getPropertyTable x
-  let xs = [ pr | pr@Prop{number} <- props, number == n ]
-  pr <-
-    case xs of
-      [x] -> pure x
-      [] -> error "putProp, no such prop"
-      ps -> error (show ("putProp: multi prop match",ps))
+  pr <- do
+    getPropN x n >>= \case
+      Nothing -> error "putProp, no such prop"
+      Just x -> pure x
 
-  let Prop{dataBytes,dataAddr=a} = pr
+  let Prop{dataBytes,dataAddr} = pr
   case length dataBytes  of
     2 -> do
       hi <- HiByte v
       lo <- LoByte v
-      SetByte (v2a a) hi
-      SetByte (v2a (a+1)) lo
+      a0 <- Address dataAddr
+      one <- LitV 1
+      a1 <- Offset a0 one
+      SetByte a0 hi
+      SetByte a1 lo
       pure ()
     1 -> undefined
     _ -> error "expected 1 or 2 bytes for prop value"
 
-getPropAddr :: Value -> Value -> Effect b Value
+getPropAddr :: v -> v -> Eff a b s v v
 getPropAddr x n = do
-  props <- getPropertyTable x
-  case [ dataAddr | Prop{number,dataAddr} <- props, number == n ] of
-    [a] -> pure a
-    [] -> pure 0
-    ps -> error (show ("getPropAddr: multi prop match",ps))
+  getPropN x n >>= \case
+    Just(Prop{dataAddr}) -> pure dataAddr
+    Nothing -> LitV 0
 
-getPropLen :: Value -> Effect b Value
-getPropLen a = do
-  if a == 0 then pure 0 else do
-    b <- GetByte (v2a (a - 1))
+getPropLen :: v -> Eff a b s v v
+getPropLen v = do
+  b <- IsZero v
+  if b then LitV 0 else do
+    one <- LitV 1
+    vM1 <- BinOp BSub v one
+    aM1 <- Address vM1
+    b <- GetByte aM1
     shifted <- b `ShiftR` 5
     seven <- LitB 0x7
     masked <- shifted `BwAnd` seven
-    v <- Widen masked
+    w <- Widen masked
     one <- LitV 1
-    BinOp BAdd one v
+    BinOp BAdd one w
 
-getNextProp :: Value -> Value -> Effect b Value
+getNextProp :: v -> v -> Eff a b s v v
 getNextProp x p = do
+  -- TODO: stop being so complicated. Assume descendning order and avoid search
   props <- getPropertyTable x
-  let bigger = [ n | Prop{number=n} <- props, p == 0 || n < p ]
+  xs <-
+    sequence
+    [ do
+        b1 <- IsZero p
+        b2 <- LessThan n p
+        pure (prop,b1,b2)
+    | prop@Prop{number=n} <- props
+    ]
+  let bigger = [ n | (Prop{number=n},b1,b2) <- xs, b1 || b2 ]
   case bigger of
-    [] -> pure 0
-    _ -> pure $ maximum bigger
+    [] -> LitV 0
+    fst:_ -> pure fst -- assume the first is the biggest
 
-getPropertyTable :: Value -> Effect b [Prop b]
+getPropertyTable :: v -> Eff a b s v [Prop b v]
 getPropertyTable x = do
-  a <- objectAddr x
-  a' <- getWord (a+7)
-  shortNameLen <- GetByte (v2a a')
-  offset <- dubPlus1 shortNameLen
-  props <- getPropsA (a' + offset)
-  pure (takeWhileDescending props)
+  base <- objectAddr x
+  seven <- LitV 0x7
+  a <- Offset base seven
+  v <- getWord a
+  a1 <- Address v
+  shortNameLen <- GetByte a1
+  off <- dubPlus1 shortNameLen
+  v' <- BinOp BAdd v off
+  props <- getPropsA v'
+  takeWhileDescending props
 
-dubPlus1 :: b -> Effect b Value
+dubPlus1 :: b -> Eff a b s v v
 dubPlus1 b = do --Widen (1 + 2 * shortNameLen)
   v <- Widen b
   one <- LitV 1
@@ -217,22 +265,34 @@ dubPlus1 b = do --Widen (1 + 2 * shortNameLen)
   dub <- BinOp BMul two v
   BinOp BAdd dub one
 
-takeWhileDescending :: [Prop b] -> [Prop b]
+
+takeWhileDescending :: [Prop b v] -> Eff a b s v [Prop b v]
 takeWhileDescending = \case
-  [] -> []
-  p@Prop{number}:ps -> p : loop number ps
+  [] -> pure []
+  p@Prop{number}:ps -> do
+    ps <- loop number ps
+    pure (p : ps)
     where
+      loop :: v -> [Prop b v] -> Eff a b s v [Prop b v]
       loop last = \case
-        [] -> []
-        p@Prop{number}:ps -> if
-          | number < last -> p : loop number ps
-          | otherwise -> []
+        [] -> pure []
+        p@Prop{number}:ps -> do
+          b <- LessThan number last
+          if not b then pure [] else do
+            ps <- loop number ps
+            pure (p : ps)
 
-data Prop b = Prop { number :: Value, dataAddr :: Value, dataBytes :: [b] } deriving Show
 
-getPropsA :: Value -> Effect b [Prop b]
-getPropsA a = do
-  b <- GetByte (v2a a)
+data Prop b v = Prop -- TODO: using this type is not helpful
+  { number :: v
+  , dataAddr :: v -- TODO: dataAdd should be Addr!
+  , dataBytes :: [b]
+  } deriving Show
+
+getPropsA :: v -> Eff a b s v [Prop b v] -- TODO: first arg should be address
+getPropsA v = do
+  a <- Address v
+  b <- GetByte a
   p <- IsZeroByte b
   if p then pure [] else do
     oneF <- LitB 0x1f
@@ -242,17 +302,30 @@ getPropsA a = do
     widened <- Widen shifted
     one <- LitV 1
     numBytes <- BinOp BAdd widened one
-    let dataAddr = a + 1
-    dataBytes <- getBytes (a+1) numBytes
+    dataAddr <- BinOp BAdd v one
+    dataBytes <- getBytes dataAddr numBytes
     let p1 = Prop {number,dataAddr,dataBytes}
-    more <- getPropsA (a + numBytes + 1) -- TODO: loop
+    v' <- BinOp BAdd v numBytes
+    v'' <- BinOp BAdd v' one
+    more <- getPropsA v'' -- TODO: loop
     pure (p1:more)
 
-getBytes :: Value -> Value -> Effect b [b]
-getBytes a n =
-  sequence [do a' <- BinOp BAdd a i; GetByte (v2a a')
-           | i <- [0.. n - 1]
-           ]
+getBytes :: v -> v -> Eff a b s v [b]
+getBytes v n = do
+  a <- Address v
+  getBytesA a n
+
+getBytesA :: a -> v -> Eff a b s v [b]
+getBytesA a n = do
+  stop <- IsZero n
+  if stop then pure [] else do
+    one <- LitV 1
+    b <- GetByte a
+    a' <- Offset a one
+    n' <- BinOp BSub n one
+    bs <- getBytesA a' n'
+    pure (b:bs)
+
 
 --[odds and sods]-----------------------------------------------------
 
