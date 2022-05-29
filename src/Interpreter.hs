@@ -156,7 +156,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         k s header
 
       Div8 v -> k s (v `div` 8)
-      Mod8 v -> k s (byteOfValue (v `mod` 8))
+      Mod8 v -> k s (byteOfValue (v `mod` 8)) -- TODO: remove byteOfValue; ret value
       SevenMinus v -> k s (7-v)
       SetBit b n -> k s (b `setBit` fromIntegral n)
       ClearBit b n -> k s (b `clearBit` fromIntegral n)
@@ -173,6 +173,8 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       BwAnd b1 b2 -> k s (b1 .&. b2)
 
       IsZeroByte b -> k s (b == 0)
+      LessThanByte b1 b2 -> k s (b1 < b2)
+      MinusByte b1 b2 -> k s (b1 - b2)
 
       LitA a -> k s a
       Address v -> k s (fromIntegral v)
@@ -183,10 +185,10 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       Tokenize str -> do
         let toks = [ w | w <- splitOn " " str, w /= "" ]
         let
-          offsets = do
-            let lens = [ length w | w <- toks ]
+          offsets :: [Byte] = do
+            let lens :: [Byte] = [ fromIntegral (length w) | w <- toks ]
             let
-              f :: (Int,[Int]) -> Int -> (Int,[Int])
+              f :: (Byte,[Byte]) -> Byte -> (Byte,[Byte])
               f (off,xs) i = (off+i+1, off : xs) --
             let z = (1,[])
             let (_,offsetsR) = foldl f z lens
@@ -194,6 +196,8 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         -- TODO: Better if we didn't change inter-word whitespace
         let canonicalized = intercalate " " toks -- TODO: what needs this? ++ "\0"
         k s (zip offsets toks, canonicalized)
+
+      ListLength xs -> k s (fromIntegral $ length xs)
 
       LookupInStrings strings word -> do
         let key = lower (take 6 word)

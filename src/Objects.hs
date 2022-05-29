@@ -185,7 +185,7 @@ getProp x n = do
         [b] -> undefined (Widen b) -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
 
-putProp :: Show b => v -> v -> v -> Eff a b s v ()
+putProp :: v -> v -> v -> Eff a b s v ()
 putProp x n v = do
   pr <- do
     getPropN x n >>= \case

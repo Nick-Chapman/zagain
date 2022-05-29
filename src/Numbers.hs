@@ -18,7 +18,7 @@ newtype Byte = EightBits Word8
 instance Show Byte where
   show (EightBits w8) = printf "0x%02x" w8
 
-byteOfValue :: Value -> Byte
+byteOfValue :: Value -> Byte -- TODO: remove
 byteOfValue v = do
   if v < 0 || v > 255 then error (show ("byteOfValue",v)) else fromIntegral v
 

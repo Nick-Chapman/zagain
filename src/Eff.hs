@@ -68,6 +68,8 @@ data Eff a b s v x where
   BwAnd :: b -> b -> Eff a b s v b
 
   IsZeroByte :: b -> Eff a b s v Bool
+  LessThanByte :: b -> b -> Eff a b s v Bool
+  MinusByte :: b -> b -> Eff a b s v b
 
   LitA :: Addr -> Eff a b s v a
   Address :: v -> Eff a b s v a
@@ -76,7 +78,8 @@ data Eff a b s v x where
   LitS :: String -> Eff a b s v s
 
   -- TODO: Can't return a concrete list, because the length is data-dependent.
-  Tokenize :: s -> Eff a b s v ([(Int,s)],s)
+  Tokenize :: s -> Eff a b s v ([(b,s)],s)
+  ListLength :: [x] -> Eff a b s v b
 
   -- TODO: maybe this is not quite the right behaviour to abstract into Eff
   LookupInStrings :: [s] -> s -> Eff a b s v (Maybe Int)
