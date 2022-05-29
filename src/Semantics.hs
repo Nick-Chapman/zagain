@@ -2,19 +2,17 @@
 -- | Semantics of z-machine operations.
 module Semantics (theEffect) where
 
-import Data.Bits ((.&.))
 import Dictionary (Dict(..))
 import Eff (Eff(..),Bin(..))
 import Header (Header(..))
-import Numbers (Value,Byte,Addr,addrOfPackedWord)
+import Numbers (Byte,Addr)
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
 import Text.Printf (printf)
-import qualified Data.Char as Char (chr) -- TODO: move to effect?
 import qualified Objects
 import qualified Operation as Op
 
-type Effect a b s v x = Eff Addr b s Value x -- TODO: generalise completely!
+type Effect a b s v x = Eff Addr b s v x -- TODO: generalise completely!
 
 theEffect :: Effect a b s v ()
 theEffect = loop
@@ -36,7 +34,8 @@ eval pc = \case
 
   Op.Call func args target -> do
     funcAddress <- evalFunc func
-    if funcAddress == 0 then setTarget target 0 else do
+    p <- IsZeroAddress funcAddress
+    if p then LitV 0 >>= setTarget target else do
       actuals <- mapM evalArg args
       PushFrame funcAddress target
       rh <- FetchRoutineHeader
@@ -50,14 +49,18 @@ eval pc = \case
   Op.Dec arg -> do
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
-    setDyn dyn (v - 1)
+    one <- LitV 1
+    v' <- BinOp BSub v one
+    setDyn dyn v'
 
   Op.Dec_chk arg1 arg2 label -> do
     dyn <- evalArgAsDyn arg1
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
-    let res = (v1 <= v2)
-    setDyn dyn (v1 - 1)
+    res <- LessThanEqual v1 v2
+    one <- LitV 1
+    v1' <- BinOp BSub v1 one
+    setDyn dyn v1'
     branchMaybe label res
 
   Op.Div arg1 arg2 target -> do evalBin BDiv arg1 arg2 target
@@ -66,7 +69,8 @@ eval pc = \case
     v <- evalArg arg
     res <- Objects.getFM Child v
     setTarget target res
-    branchMaybe label (res /= 0)
+    b <- IsZero res
+    branchMaybe label (not b)
 
   Op.Get_next_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
@@ -100,19 +104,25 @@ eval pc = \case
     v <- evalArg arg
     res <- Objects.getFM Sibling v
     setTarget target res
-    branchMaybe label (res /= 0)
+    b <- IsZero res
+    branchMaybe label (not b)
 
   Op.Inc arg -> do
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
-    setDyn dyn (v + 1)
+    one <- LitV 1
+    v' <- BinOp BAdd v one
+    setDyn dyn v'
 
   Op.Inc_chk arg1 arg2 label -> do
     dyn <- evalArgAsDyn arg1
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
-    setDyn dyn (v1 + 1)
-    branchMaybe label (v1 >= v2)
+    one <- LitV 1
+    v1' <- BinOp BAdd v1 one
+    setDyn dyn v1'
+    res <- GreaterThanEqual v1 v2
+    branchMaybe label res
 
   Op.Insert_obj arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -125,18 +135,21 @@ eval pc = \case
   Op.Jg arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    branchMaybe label (v1 > v2)
+    res <- GreaterThan v1 v2
+    branchMaybe label res
 
   Op.Jin arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     p <- Objects.getFM Parent v1
-    branchMaybe label (v2 == p)
+    res <- EqualAny [v2,p]
+    branchMaybe label res
 
   Op.Jl arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    branchMaybe label (v1 < v2)
+    res <- LessThan v1 v2
+    branchMaybe label res
 
   Op.Jump addr -> do SetPC addr
   Op.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
@@ -150,16 +163,19 @@ eval pc = \case
     setTarget target v
 
   Op.Loadb arg1 arg2 target -> do
-    base <- evalArg arg1
+    base <- evalArg arg1 >>= Address
     offset <- evalArg arg2
-    b <- GetByte (fromIntegral (base + offset))
+    a <- Offset base offset
+    b <- GetByte a
     v <- Widen b
     setTarget target v
 
   Op.Loadw arg1 arg2 target -> do
-    base <- evalArg arg1
+    base <- evalArg arg1 >>= Address
     offset <- evalArg arg2
-    let a = fromIntegral base + 2 * fromIntegral offset
+    two <- LitV 2
+    doubleOffset <- BinOp BMul two offset
+    a <- Offset base doubleOffset
     w <- getWord a
     setTarget target w
 
@@ -170,19 +186,18 @@ eval pc = \case
 
   Op.Print_addr arg -> do
     v <- evalArg arg
-    let a :: Addr = fromIntegral v
+    a <- Address v
     s <- GetText a
     GamePrint s
 
   Op.Print_char arg -> do
     v <- evalArg arg
-    let c :: Char = Char.chr (fromIntegral v) -- TODO -- check char in bound!
-    s <- LitS [c]
+    s <- SingleChar v
     GamePrint s
 
   Op.Print_num arg -> do
     v <- evalArg arg
-    s <- LitS (show v)
+    s <- ShowNumber v
     GamePrint s
 
   Op.Print_obj arg -> do
@@ -192,14 +207,15 @@ eval pc = \case
 
   Op.Print_paddr arg -> do
     v <- evalArg arg
-    let a :: Addr = addrOfPackedWord v
+    a <- PackedAddress v
     s <- GetText a
     GamePrint s
 
   Op.Print_ret string -> do
     s <- LitS (string ++ "\n")
     GamePrint s
-    returnValue 1
+    one <- LitV 1
+    returnValue one
 
   Op.Pull arg -> do
     dyn <- evalArgAsDyn arg
@@ -219,9 +235,9 @@ eval pc = \case
 
   Op.Random arg target -> do
     v1 <- evalArg arg
-    res <- Random (fromIntegral v1)
+    res <- Random v1
     --Debug ("random",v1,"->",res)
-    setTarget target (fromIntegral res)
+    setTarget target res
 
   Op.Remove_obj arg -> do
     v <- evalArg arg
@@ -235,11 +251,10 @@ eval pc = \case
 
   Op.Ret arg -> do
     v <- evalArg arg
-    target <- PopFrame -- TODO: share code with returnValue
-    setTarget target v
+    returnValue v
 
-  Op.Rfalse -> do returnValue 0
-  Op.Rtrue -> do returnValue 1
+  Op.Rfalse -> do LitV 0 >>= returnValue
+  Op.Rtrue -> do LitV 1 >>= returnValue
 
   Op.Set_attr arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -251,18 +266,18 @@ eval pc = \case
     one <- LitB 0
     two <- LitB 0
     v0 <- evalGlobal zero
-    v1 <- evalGlobal one
-    v2 <- evalGlobal two
+    score <- evalGlobal one
+    turns <- evalGlobal two
     p1 <- Objects.getShortName v0
-    p2 <- LitS $ printf "score:%s--turns:%s" (show v1) (show v2)
-    rawTyped <- ReadInputFromUser (p1,p2)
-    t_buf :: Addr <- fromIntegral <$> evalArg arg1
-    p_buf :: Addr <- fromIntegral <$> evalArg arg2
-    Header{dictionary=dictBase} <- StoryHeader
+    rawTyped <- ReadInputFromUser (p1,score,turns)
+    t_buf <- evalArg arg1 >>= Address
+    p_buf <- evalArg arg2 >>= Address
     Dict{seps,entryLength,strings=constStrings} <- FetchDict
     strings <- mapM LitS constStrings
     -- +4 : #seps byte, entryLength byte, #entries word
-    let baseEntries :: Addr = dictBase + fromIntegral (length seps + 4)
+    Header{dictionary=base} <- StoryHeader
+    offset <- LitV (fromIntegral $ length seps + 4)
+    baseEntries <- Offset base offset
     (positionedWords,canoicalizedTyped) <- Tokenize rawTyped
 
     StringBytes canoicalizedTyped >>= writeBytes (t_buf+1)
@@ -272,11 +287,15 @@ eval pc = \case
       [
         do
           iopt <- LookupInStrings strings word
-          let dictAddr :: Addr =
-                case iopt of
-                  Just i -> baseEntries + fromIntegral ((i-1) * entryLength)
-                  Nothing -> 0
-          (hi,lo) <- splitWord (fromIntegral dictAddr)
+          dictAddr :: Addr <-
+            case iopt of
+              Just i -> do
+                let ii :: Int = (i-1) * entryLength
+                offset <- LitV (fromIntegral ii)
+                Offset baseEntries offset
+              Nothing -> LitA 0
+          dictAddrV <- DeAddress dictAddr
+          (hi,lo) <- splitWord dictAddrV
           n <- StringLength word
           pure [ hi, lo, n, pos ]
 
@@ -284,7 +303,9 @@ eval pc = \case
       ]
     n <- ListLength quads
     let bs = n : concat quads
-    writeBytes (fromIntegral (p_buf + 1)) bs
+    one <- LitV 1
+    a <- Offset p_buf one
+    writeBytes a bs
 
   Op.Store arg1 arg2 -> do
     dyn <- evalArgAsDyn arg1
@@ -295,18 +316,20 @@ eval pc = \case
     setDyn dyn v2
 
   Op.Storeb arg1 arg2 arg3 -> do
-    base <- evalArg arg1
+    base <- evalArg arg1 >>= Address
     offset <- evalArg arg2
     v3 <- evalArg arg3
     value <- LoByte v3
-    let a :: Addr = fromIntegral (base + offset)
+    a :: Addr <- Offset base offset
     SetByte a value
 
   Op.Storew arg1 arg2 arg3 -> do
-    base <- evalArg arg1
+    base <- evalArg arg1 >>= Address
     offset <- evalArg arg2
     value <- evalArg arg3
-    let a :: Addr = fromIntegral (base + 2 * offset)
+    two <-LitV 2
+    doubleOffset <- BinOp BMul two offset
+    a <- Offset base doubleOffset
     setWord a value
 
   Op.Sub arg1 arg2 target -> do evalBin BSub arg1 arg2 target
@@ -314,7 +337,8 @@ eval pc = \case
   Op.Test arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    let res = v1 .&. v2 == v2
+    v12 <- BwAndV v1 v2
+    res <- EqualAny [v12, v2]
     branchMaybe label res
 
   Op.Test_attr arg1 arg2 label -> do
@@ -356,8 +380,8 @@ branchMaybe (Branch sense dest) b = case (sense,b) of
 
 gotoDest :: Dest -> Effect a b s v ()
 gotoDest = \case
-  Dfalse -> returnValue 0
-  Dtrue -> returnValue 1
+  Dfalse -> LitV 0 >>= returnValue
+  Dtrue -> LitV 1 >>= returnValue
   Dloc a -> SetPC a
 
 evalFunc :: Func -> Effect a b s v Addr
@@ -366,33 +390,33 @@ evalFunc = \case
   Floc a -> pure a
   Fvar var -> do
     v <- evalTarget var
-    let a = addrOfPackedWord v
+    a <- PackedAddress v
     --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
     pure a
 
-evalArg :: Arg -> Effect a b s v Value
+evalArg :: Arg -> Effect a b s v v
 evalArg = \case
-  Con x -> pure x
+  Con x -> LitV x
   Var v -> evalTarget v
 
-evalTarget :: Target -> Effect a b s v Value
+evalTarget :: Target -> Effect a b s v v
 evalTarget = \case
   Sp -> PopStack
   Local n -> LitB n >>= GetLocal
   Global b -> LitB b >>= evalGlobal
 
-evalGlobal :: b -> Effect a b s v Value
+evalGlobal :: b -> Effect a b s v v
 evalGlobal b = globalAddr b >>= getWord
 
-returnValue :: Value -> Effect a b s v ()
+returnValue :: v -> Effect a b s v ()
 returnValue v = do
   target <- PopFrame
   setTarget target v
 
-setTarget :: Target -> Value -> Effect a b s v ()
+setTarget :: Target -> v -> Effect a b s v ()
 setTarget var v = case var of
   Sp -> PushStack v
-  Local n -> setLocal n v
+  Local n -> LitB n >>= \n -> SetLocal n v
   Global b -> do
     a <- LitB b >>= globalAddr
     setWord a v
@@ -401,35 +425,34 @@ globalAddr :: b -> Effect a b s v Addr
 globalAddr b = do
   Header{globalVars} <- StoryHeader
   v <- Widen b
-  pure (globalVars + fromIntegral (2 * v))
+  two <- LitV 2
+  vv <- BinOp BMul two v
+  Offset globalVars vv
 
-setLocals :: RoutineHeader -> [Value] -> Effect a b s v ()
+setLocals :: RoutineHeader -> [v] -> Effect a b s v ()
 setLocals rh actuals =
   case rh of
     Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
       -- TODO: we can do better here... !
-      sequence_ [ setLocal n v | (n,v) <- zip [1::Byte ..] defs ]
-      sequence_ [ setLocal n v | (n,v) <- zip [1::Byte ..] actuals ]
+      indexes <- mapM LitB [1::Byte ..]
+      defs <- mapM LitV defs
+      sequence_ [ SetLocal n v | (n,v) <- zip indexes defs ]
+      sequence_ [ SetLocal n v | (n,v) <- zip indexes actuals ]
 
-setLocal :: Byte -> v -> Eff a b s v ()
-setLocal b0 v = do
-  b <- LitB b0
-  SetLocal b v
-
-getWord :: Addr -> Effect a b s v Value
+getWord :: Addr -> Effect a b s v v
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
   MakeWord hi lo
 
-setWord :: Addr -> Value -> Effect a b s v ()
+setWord :: Addr -> v -> Effect a b s v ()
 setWord a w = do
   (hi,lo) <- splitWord w
   SetByte a hi
   SetByte (a+1) lo
 
-splitWord :: Value -> Effect a b s v (b,b)
+splitWord :: v -> Effect a b s v (b,b)
 splitWord w = do
   hi <- HiByte w
   lo <- LoByte w
@@ -458,16 +481,17 @@ makeDyn b = do
         g <- MinusByte b sixteen
         pure (DGlobal g)
 
-evalDyn :: Dyn b -> Effect a b s v Value
+evalDyn :: Dyn b -> Effect a b s v v
 evalDyn = \case
   DSp -> PopStack
   DLocal n -> GetLocal n
   DGlobal b -> evalGlobal b
 
-setDyn :: Dyn b -> Value -> Effect a b s v ()
+setDyn :: Dyn b -> v -> Effect a b s v ()
 setDyn dyn v = case dyn of
   DSp -> PushStack v
   DLocal n -> SetLocal n v
   DGlobal b -> do
     a <- globalAddr b
     setWord a v
+

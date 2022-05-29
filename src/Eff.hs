@@ -21,7 +21,7 @@ data Eff a b s v x where
   Bind :: Eff a b s v x -> (x -> Eff a b s v y) -> Eff a b s v y
   Debug :: Show x => x -> Eff a b s v ()
   GamePrint :: s -> Eff a b s v ()
-  ReadInputFromUser :: (s,s) -> Eff a b s v s
+  ReadInputFromUser :: (s,v,v) -> Eff a b s v s
   GetText :: a -> Eff a b s v s
   FetchI :: Eff a b s v Operation
   FetchRoutineHeader :: Eff a b s v RoutineHeader -- TODO: take PC?
@@ -66,6 +66,7 @@ data Eff a b s v x where
   LitV :: Value -> Eff a b s v v
   ShiftR :: b -> Int -> Eff a b s v b
   BwAnd :: b -> b -> Eff a b s v b
+  BwAndV :: v -> v -> Eff a b s v v
 
   IsZeroByte :: b -> Eff a b s v Bool
   LessThanByte :: b -> b -> Eff a b s v Bool
@@ -73,9 +74,17 @@ data Eff a b s v x where
 
   LitA :: Addr -> Eff a b s v a
   Address :: v -> Eff a b s v a
+  DeAddress :: a -> Eff a b s v v
+  PackedAddress :: v -> Eff a b s v a
   Offset :: a -> v -> Eff a b s v a
+
   LessThan :: v -> v -> Eff a b s v Bool
+  LessThanEqual :: v -> v -> Eff a b s v Bool
+  GreaterThan :: v -> v -> Eff a b s v Bool
+  GreaterThanEqual :: v -> v -> Eff a b s v Bool
+
   LitS :: String -> Eff a b s v s
+  IsZeroAddress :: a -> Eff a b s v Bool
 
   -- TODO: Can't return a concrete list, because the length is data-dependent.
   Tokenize :: s -> Eff a b s v ([(b,s)],s)
@@ -86,6 +95,9 @@ data Eff a b s v x where
 
   StringLength :: s -> Eff a b s v b
   StringBytes :: s -> Eff a b s v [b]
+
+  SingleChar :: v -> Eff a b s v s
+  ShowNumber :: v -> Eff a b s v s
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

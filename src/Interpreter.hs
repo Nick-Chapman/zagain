@@ -13,12 +13,12 @@ import Dictionary (fetchDict)
 import Eff (Eff(..),Bin(..))
 import Fetch (runFetch)
 import Header (Header(..))
-import Numbers (Byte,Addr,Value,byteOfValue)
+import Numbers (Byte,Addr,Value,byteOfValue,addrOfPackedWord)
 import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action as A (Action(..))
-import qualified Data.Char as Char (ord)
+import qualified Data.Char as Char (ord,chr)
 import qualified Data.Map as Map
 
 type Effect x = Eff Addr Byte String Value x
@@ -43,7 +43,8 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       GamePrint mes -> A.Output mes (k s ())
       Debug a -> A.Debug (show a) (k s ())
 
-      ReadInputFromUser (p1,p2) -> do
+      ReadInputFromUser (p1,score,turns) -> do
+        let p2 = printf "score:%s--turns:%s" (show score) (show turns)
         let State{count,lastCount} = s
         A.Input (p1,p2) (count-lastCount) $ \response -> k s { lastCount = count } response
 
@@ -171,6 +172,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       LitV v -> k s v
       ShiftR b n -> k s (b `shiftR` n)
       BwAnd b1 b2 -> k s (b1 .&. b2)
+      BwAndV v1 v2 -> k s (v1 .&. v2)
 
       IsZeroByte b -> k s (b == 0)
       LessThanByte b1 b2 -> k s (b1 < b2)
@@ -178,8 +180,17 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
       LitA a -> k s a
       Address v -> k s (fromIntegral v)
+      DeAddress a -> k s (fromIntegral a)
+      PackedAddress v -> k s (addrOfPackedWord v)
       Offset base off -> k s (base + fromIntegral off)
+
+      IsZeroAddress a -> k s (a == 0)
+
       LessThan v1 v2 -> k s (v1 < v2)
+      LessThanEqual v1 v2 -> k s (v1 <= v2)
+      GreaterThan v1 v2 -> k s (v1 > v2)
+      GreaterThanEqual v1 v2 -> k s (v1 >= v2)
+
       LitS x -> k s x
 
       Tokenize str -> do
@@ -211,6 +222,9 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
       StringLength str -> k s (fromIntegral $ length str)
       StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
+
+      SingleChar v -> k s [Char.chr (fromIntegral v)]
+      ShowNumber v -> k s (show v)
 
 --[interpreter state]-------------------------------------------------
 
