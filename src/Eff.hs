@@ -66,6 +66,7 @@ data Eff b v x where
   ShiftR :: b -> Int -> Eff b v b
   BwAnd :: b -> b -> Eff b v b
 
+  IsZeroByte :: b -> Eff b v Bool
 
 data Bin = BAdd | BSub | BMul | BDiv | BAnd
   deriving Show

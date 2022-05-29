@@ -11,22 +11,22 @@ module Objects
 import Control.Monad (when)
 import Eff (Eff(..),Bin(..))
 import Header (Header(..),Zversion(..))
-import Numbers (Byte,Addr,Value)
+import Numbers (Addr,Value)
 
-type Effect x = Eff Byte Value x -- TODO: generalise Value
+type Effect b x = Eff b Value x -- TODO: generalise further
 
 --[convs]-----------------------------------------------------
 
 v2a :: Value -> Addr
 v2a = fromIntegral
 
-getWord :: Addr -> Effect Value
+getWord :: Addr -> Effect b Value
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
   MakeWord hi lo
 
-objectAddr :: Value -> Effect Addr -- TODO: move static calcs to header?
+objectAddr :: Value -> Effect b Addr -- TODO: move static calcs to header?
 objectAddr o = do
   Header{zv,objectTable} <- StoryHeader
   let base = objectTable
@@ -35,16 +35,17 @@ objectAddr o = do
   let propDefaultsSize = 2 * numProps f
   pure (base + v2a (propDefaultsSize + (o-1) * objectEntrySize))
 
-getShortName :: Value -> Effect String
+getShortName :: Value -> Effect b String
 getShortName x = do
   a <- objectAddr x
   a' <- getWord (a+7)
   shortNameLen <- GetByte (v2a a')
-  if shortNameLen == 0 then pure "" else GetText (v2a (a'+1))
+  p <- IsZeroByte shortNameLen
+  if p then pure "" else GetText (v2a (a'+1))
 
 --[attributes]--------------------------------------------------------
 
-testAttr :: Value -> Value -> Effect Bool
+testAttr :: Value -> Value -> Effect b Bool
 testAttr x n = do
   a <- objectAddr x
   d <- Div8 n
@@ -54,7 +55,7 @@ testAttr x n = do
   b <- GetByte aa
   b `TestBit` m'
 
-setAttr :: Value -> Value -> Effect ()
+setAttr :: Value -> Value -> Effect b ()
 setAttr x n = do
   a <- objectAddr x
   d <- Div8 n
@@ -65,7 +66,7 @@ setAttr x n = do
   new <- old `SetBit` m'
   SetByte aa new
 
-clearAttr :: Value -> Value -> Effect ()
+clearAttr :: Value -> Value -> Effect b ()
 clearAttr x n = do
   a <- objectAddr x
   d <- Div8 n
@@ -86,19 +87,19 @@ offsetFM = \case
   Sibling -> 5
   Child -> 6
 
-getFM :: FamilyMember -> Value -> Effect Value
+getFM :: FamilyMember -> Value -> Effect b Value
 getFM fm x = do
   a <- objectAddr x
   b <- GetByte (a + v2a (offsetFM fm))
   Widen b
 
-setFM :: FamilyMember -> Value -> Value -> Effect ()
+setFM :: FamilyMember -> Value -> Value -> Effect b ()
 setFM fm x y = do
   a <- objectAddr x
   lo <- LoByte y
   SetByte (a + v2a (offsetFM fm)) lo
 
-insertObj :: Value -> Value -> Effect ()
+insertObj :: Value -> Value -> Effect b ()
 insertObj x dest = do
   unlink x
   setFM Parent x dest
@@ -106,12 +107,12 @@ insertObj x dest = do
   setFM Sibling x oldChild
   setFM Child dest x
 
-removeObj :: Value -> Effect ()
+removeObj :: Value -> Effect b ()
 removeObj x = do
   unlink x
   setFM Parent x 0
 
-unlink :: Value -> Effect ()
+unlink :: Value -> Effect b ()
 unlink this = do
   oldP <- getFM Parent this
   when (oldP /= 0) $ do
@@ -123,7 +124,7 @@ unlink this = do
       False -> do
         loop child
       where
-        loop :: Value -> Effect ()
+        loop :: Value -> Effect b ()
         loop x = do
           when (x == 0) $ error "unlink loop, failed to find unlinkee"
           sib <- getFM Sibling x
@@ -135,7 +136,7 @@ unlink this = do
 
 --[properties]--------------------------------------------------------
 
-getProp :: Value -> Value -> Effect Value
+getProp :: Show b => Value -> Value -> Effect b Value
 getProp x n = do
   Header{objectTable=base} <- StoryHeader
   props <- getPropertyTable x
@@ -151,7 +152,7 @@ getProp x n = do
     ps ->
       error (show ("getProp: multi prop match",ps))
 
-putProp :: Value -> Value -> Value -> Effect ()
+putProp :: Show b => Value -> Value -> Value -> Effect b ()
 putProp x n v = do
   props <- getPropertyTable x
   let xs = [ pr | pr@Prop{number} <- props, number == n ]
@@ -172,7 +173,7 @@ putProp x n v = do
     1 -> undefined
     _ -> error "expected 1 or 2 bytes for prop value"
 
-getPropAddr :: Value -> Value -> Effect Value
+getPropAddr :: Value -> Value -> Effect b Value
 getPropAddr x n = do
   props <- getPropertyTable x
   case [ dataAddr | Prop{number,dataAddr} <- props, number == n ] of
@@ -180,7 +181,7 @@ getPropAddr x n = do
     [] -> pure 0
     ps -> error (show ("getPropAddr: multi prop match",ps))
 
-getPropLen :: Value -> Effect Value
+getPropLen :: Value -> Effect b Value
 getPropLen a = do
   if a == 0 then pure 0 else do
     b <- GetByte (v2a (a - 1))
@@ -191,7 +192,7 @@ getPropLen a = do
     one <- LitV 1
     BinOp BAdd one v
 
-getNextProp :: Value -> Value -> Effect Value
+getNextProp :: Value -> Value -> Effect b Value
 getNextProp x p = do
   props <- getPropertyTable x
   let bigger = [ n | Prop{number=n} <- props, p == 0 || n < p ]
@@ -199,16 +200,24 @@ getNextProp x p = do
     [] -> pure 0
     _ -> pure $ maximum bigger
 
-getPropertyTable :: Value -> Effect [Prop]
+getPropertyTable :: Value -> Effect b [Prop b]
 getPropertyTable x = do
   a <- objectAddr x
   a' <- getWord (a+7)
   shortNameLen <- GetByte (v2a a')
-  offset <- Widen (1 + 2 * shortNameLen)
+  offset <- dubPlus1 shortNameLen
   props <- getPropsA (a' + offset)
   pure (takeWhileDescending props)
 
-takeWhileDescending :: [Prop] -> [Prop]
+dubPlus1 :: b -> Effect b Value
+dubPlus1 b = do --Widen (1 + 2 * shortNameLen)
+  v <- Widen b
+  one <- LitV 1
+  two <- LitV 2
+  dub <- BinOp BMul two v
+  BinOp BAdd dub one
+
+takeWhileDescending :: [Prop b] -> [Prop b]
 takeWhileDescending = \case
   [] -> []
   p@Prop{number}:ps -> p : loop number ps
@@ -219,25 +228,31 @@ takeWhileDescending = \case
           | number < last -> p : loop number ps
           | otherwise -> []
 
-data Prop = Prop { number :: Value, dataAddr :: Value, dataBytes :: [Byte] } deriving Show
+data Prop b = Prop { number :: Value, dataAddr :: Value, dataBytes :: [b] } deriving Show
 
-getPropsA :: Value -> Effect [Prop]
+getPropsA :: Value -> Effect b [Prop b]
 getPropsA a = do
   b <- GetByte (v2a a)
-  if b == 0 then pure [] else do
+  p <- IsZeroByte b
+  if p then pure [] else do
     oneF <- LitB 0x1f
     fiveBits <- b `BwAnd` oneF
     number <- Widen fiveBits
     shifted <- b `ShiftR` 5
-    numBytes <- Widen (1 + shifted)
+    widened <- Widen shifted
+    one <- LitV 1
+    numBytes <- BinOp BAdd widened one
     let dataAddr = a + 1
     dataBytes <- getBytes (a+1) numBytes
     let p1 = Prop {number,dataAddr,dataBytes}
-    more <- getPropsA (a + numBytes + 1)
+    more <- getPropsA (a + numBytes + 1) -- TODO: loop
     pure (p1:more)
 
-getBytes :: Value -> Value -> Effect [Byte]
-getBytes a n = sequence [GetByte (v2a (a+i)) | i <- [0.. n - 1]]
+getBytes :: Value -> Value -> Effect b [b]
+getBytes a n =
+  sequence [do a' <- BinOp BAdd a i; GetByte (v2a a')
+           | i <- [0.. n - 1]
+           ]
 
 --[odds and sods]-----------------------------------------------------
 

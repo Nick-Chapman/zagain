@@ -168,6 +168,8 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       ShiftR b n -> k s (b `shiftR` n)
       BwAnd b1 b2 -> k s (b1 .&. b2)
 
+      IsZeroByte b -> k s (b == 0)
+
 
 --[interpreter state]-------------------------------------------------
 
