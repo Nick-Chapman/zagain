@@ -20,12 +20,15 @@ data Eff a b s v x where
   Ret :: x -> Eff a b s v x
   Bind :: Eff a b s v x -> (x -> Eff a b s v y) -> Eff a b s v y
   Debug :: Show x => x -> Eff a b s v ()
+
+  StoryHeader :: Eff a b s v Header
+  TheDictionary :: Eff a b s v Dict
+
   GamePrint :: s -> Eff a b s v ()
   ReadInputFromUser :: (s,v,v) -> Eff a b s v s
   GetText :: a -> Eff a b s v s
   FetchI :: Eff a b s v Operation
-  FetchRoutineHeader :: Eff a b s v RoutineHeader -- TODO: take PC?
-  FetchDict :: Eff a b s v Dict -- TODO: no Fetch here! (Fetch mean PC rel)
+  FetchRoutineHeader :: Eff a b s v RoutineHeader
 
   PushFrame :: a -> Target -> Eff a b s v ()
   PopFrame :: Eff a b s v Target -- TODO: avoid Eff representation of Target
@@ -46,7 +49,6 @@ data Eff a b s v x where
   PopStack :: Eff a b s v v
   Random :: v -> Eff a b s v v
   Quit :: Eff a b s v ()
-  StoryHeader :: Eff a b s v Header
 
   -- TODO: Can't return a concrete list, because the length is data-dependent.
   StringBytes :: s -> Eff a b s v [b]

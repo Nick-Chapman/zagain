@@ -43,6 +43,12 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       GamePrint mes -> A.Output mes (k s ())
       Debug a -> A.Debug (show a) (k s ())
 
+      TheDictionary -> do
+        k s dict
+
+      StoryHeader -> do
+        k s header
+
       ReadInputFromUser (p1,score,turns) -> do
         let p2 = printf "score:%s--turns:%s" (show score) (show turns)
         let State{count,lastCount} = s
@@ -64,9 +70,6 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let State{pc} = s
         let (rh,pc') = runFetch (oob "FetchRoutineHeader") pc story fetchRoutineHeader
         k s { pc = pc' } rh
-
-      FetchDict -> do -- TODO: Not a fetch (pc-rel), so rename!
-        k s dict
 
       PushFrame addr target -> do
         let State{pc,stack,locals,frames} = s
@@ -143,9 +146,6 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       Quit -> do
         -- dont call "k" but instead "k0"
         k0 s ()
-
-      StoryHeader -> do
-        k s header
 
       StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
 
