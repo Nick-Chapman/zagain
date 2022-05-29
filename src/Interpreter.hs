@@ -21,7 +21,8 @@ import qualified Action as A (Action(..))
 import qualified Data.Char as Char (ord,chr)
 import qualified Data.Map as Map
 
-type Effect x = Eff Addr Byte String Value x
+
+type Effect x = Eff [] Addr Byte String Value x
 
 --[interpreter for execution effects]----------------------------------
 
@@ -164,6 +165,11 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let canonicalized = intercalate " " toks -- TODO: what needs this? ++ "\0"
         k s (zip offsets toks, canonicalized)
 
+      ListLength xs -> k s (fromIntegral $ length xs)
+
+      Foreach xs f -> do
+        loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k
+
       LookupInStrings strings word -> do
         let key = lower (take 6 word)
         let
@@ -190,7 +196,6 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       LessThan v1 v2 -> k s (v1 < v2)
       LessThanByte b1 b2 -> k s (b1 < b2)
       LessThanEqual v1 v2 -> k s (v1 <= v2)
-      ListLength xs -> k s (fromIntegral $ length xs)
       LitA a -> k s a
       LitB b -> k s b
       LitS x -> k s x

@@ -11,7 +11,7 @@ import Text.Printf (printf)
 import qualified Objects
 import qualified Operation as Op
 
-theEffect :: Show a => Eff a b s v ()
+theEffect :: Show a => Eff vec a b s v ()
 theEffect = loop
   where
     loop = do
@@ -20,7 +20,7 @@ theEffect = loop
       eval pc i
       loop
 
-eval :: Show a => a -> Operation -> Eff a b s v ()
+eval :: Show a => a -> Operation -> Eff vec a b s v ()
 eval pc = \case
 
   Op.BadOperation mes -> do
@@ -279,34 +279,33 @@ eval pc = \case
     baseEntries <- Offset base offset
     (positionedWords,canoicalizedTyped) <- Tokenize rawTyped
 
-    one <- LitV 1
-    a <- Offset t_buf one
-    StringBytes canoicalizedTyped >>= writeBytes a
+    textBytes <- StringBytes canoicalizedTyped
+    Foreach textBytes $ \i b -> do
+      one <- LitV (fromIntegral i + 1)
+      a <- Offset t_buf one
+      SetByte a b
 
-    -- TODO: Process the VEC some kind of `ForEach' effect here?
-    quads <- sequence
-      [
-        do
-          iopt <- LookupInStrings strings word
-          dictAddr <-
-            case iopt of
-              Just i -> do
-                let ii :: Int = (i-1) * entryLength
-                offset <- LitV (fromIntegral ii)
-                Offset baseEntries offset
-              Nothing -> LitA 0
-          dictAddrV <- DeAddress dictAddr
-          (hi,lo) <- splitWord dictAddrV
-          n <- StringLength word
-          pure [ hi, lo, n, pos ]
-
-      | (pos,word) <- positionedWords
-      ]
-    n <- ListLength quads
-    let bs = n : concat quads
+    n <- ListLength positionedWords
     one <- LitV 1
     a <- Offset p_buf one
-    writeBytes a bs
+    SetByte a n
+
+    Foreach positionedWords $ \i (pos,word) -> do
+      iopt <- LookupInStrings strings word
+      dictAddr <-
+        case iopt of
+          Just i -> do
+            let ii :: Int = (i-1) * entryLength
+            offset <- LitV (fromIntegral ii)
+            Offset baseEntries offset
+          Nothing -> LitA 0
+      dictAddrV <- DeAddress dictAddr
+      (hi,lo) <- splitWord dictAddrV
+      n <- StringLength word
+
+      off <- LitV (fromIntegral (4*i+ 2))
+      a <- Offset p_buf off
+      writeBytes a [hi,lo,n,pos]
 
   Op.Store arg1 arg2 -> do
     dyn <- evalArgAsDyn arg1
@@ -362,7 +361,7 @@ eval pc = \case
   Op.Verify{} -> undefined
 
 
-writeBytes :: a -> [b] -> Eff a b s v ()
+writeBytes :: a -> [b] -> Eff vec a b s v ()
 writeBytes a bs =
   sequence_ [ do
                 offset <- LitV i
@@ -371,27 +370,27 @@ writeBytes a bs =
             | (i,b) <- zip [0..] bs
             ]
 
-evalBin :: (v -> v -> Eff a b s v v) -> Arg -> Arg -> Target -> Eff a b s v ()
+evalBin :: (v -> v -> Eff vec a b s v v) -> Arg -> Arg -> Target -> Eff vec a b s v ()
 evalBin bin arg1 arg2 target = do
   v1 <- evalArg arg1
   v2 <- evalArg arg2
   v <- bin v1 v2
   setTarget target v
 
-branchMaybe :: Label -> Bool -> Eff a b s v ()
+branchMaybe :: Label -> Bool -> Eff vec a b s v ()
 branchMaybe (Branch sense dest) b = case (sense,b) of
   (Op.T,False) -> pure ()
   (Op.F,True) -> pure ()
   (Op.T,True) -> gotoDest dest
   (Op.F,False) -> gotoDest dest
 
-gotoDest :: Dest -> Eff a b s v ()
+gotoDest :: Dest -> Eff vec a b s v ()
 gotoDest = \case
   Dfalse -> LitV 0 >>= returnValue
   Dtrue -> LitV 1 >>= returnValue
   Dloc addr -> LitA addr >>= SetPC
 
-evalFunc :: Func -> Eff a b s v a
+evalFunc :: Func -> Eff vec a b s v a
 evalFunc = \case
   BadFunc -> error "failed to decode called function"
   Floc addr -> LitA addr
@@ -401,26 +400,26 @@ evalFunc = \case
     --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
     pure a
 
-evalArg :: Arg -> Eff a b s v v
+evalArg :: Arg -> Eff vec a b s v v
 evalArg = \case
   Con x -> LitV x
   Var v -> evalTarget v
 
-evalTarget :: Target -> Eff a b s v v
+evalTarget :: Target -> Eff vec a b s v v
 evalTarget = \case
   Sp -> PopStack
   Local n -> LitB n >>= GetLocal
   Global b -> LitB b >>= evalGlobal
 
-evalGlobal :: b -> Eff a b s v v
+evalGlobal :: b -> Eff vec a b s v v
 evalGlobal b = globalAddr b >>= getWord
 
-returnValue :: v -> Eff a b s v ()
+returnValue :: v -> Eff vec a b s v ()
 returnValue v = do
   target <- PopFrame
   setTarget target v
 
-setTarget :: Target -> v -> Eff a b s v ()
+setTarget :: Target -> v -> Eff vec a b s v ()
 setTarget var v = case var of
   Sp -> PushStack v
   Local n -> LitB n >>= \n -> SetLocal n v
@@ -428,7 +427,7 @@ setTarget var v = case var of
     a <- LitB b >>= globalAddr
     setWord a v
 
-globalAddr :: b -> Eff a b s v a
+globalAddr :: b -> Eff vec a b s v a
 globalAddr b = do
   Header{globalVars} <- StoryHeader
   base <- LitA globalVars
@@ -437,7 +436,7 @@ globalAddr b = do
   offset <- Mul two v
   Offset base offset
 
-setLocals :: RoutineHeader -> [v] -> Eff a b s v ()
+setLocals :: RoutineHeader -> [v] -> Eff vec a b s v ()
 setLocals rh actuals =
   case rh of
     Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
@@ -448,7 +447,7 @@ setLocals rh actuals =
       sequence_ [ SetLocal n v | (n,v) <- zip indexes defs ]
       sequence_ [ SetLocal n v | (n,v) <- zip indexes actuals ]
 
-getWord :: a -> Eff a b s v v
+getWord :: a -> Eff vec a b s v v
 getWord a = do
   hi <- GetByte a
   one <- LitV 1
@@ -456,7 +455,7 @@ getWord a = do
   lo <- GetByte a'
   MakeWord hi lo
 
-setWord :: a -> v -> Eff a b s v ()
+setWord :: a -> v -> Eff vec a b s v ()
 setWord a w = do
   (hi,lo) <- splitWord w
   SetByte a hi
@@ -464,7 +463,7 @@ setWord a w = do
   a' <- Offset a one
   SetByte a' lo
 
-splitWord :: v -> Eff a b s v (b,b)
+splitWord :: v -> Eff vec a b s v (b,b)
 splitWord w = do
   hi <- HiByte w
   lo <- LoByte w
@@ -475,13 +474,13 @@ data Dyn b -- dynamic target
   | DLocal b
   | DGlobal b
 
-evalArgAsDyn :: Arg -> Eff a b s v (Dyn b)
+evalArgAsDyn :: Arg -> Eff vec a b s v (Dyn b)
 evalArgAsDyn arg = do
   v <- evalArg arg
   lo <- LoByte v
   makeDyn lo
 
-makeDyn :: b -> Eff a b s v (Dyn b)
+makeDyn :: b -> Eff vec a b s v (Dyn b)
 makeDyn b = do
   q <- IsZeroByte b
   case q of
@@ -493,17 +492,16 @@ makeDyn b = do
         g <- MinusByte b sixteen
         pure (DGlobal g)
 
-evalDyn :: Dyn b -> Eff a b s v v
+evalDyn :: Dyn b -> Eff vec a b s v v
 evalDyn = \case
   DSp -> PopStack
   DLocal n -> GetLocal n
   DGlobal b -> evalGlobal b
 
-setDyn :: Dyn b -> v -> Eff a b s v ()
+setDyn :: Dyn b -> v -> Eff vec a b s v ()
 setDyn dyn v = case dyn of
   DSp -> PushStack v
   DLocal n -> SetLocal n v
   DGlobal b -> do
     a <- globalAddr b
     setWord a v
-
