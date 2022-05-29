@@ -9,7 +9,7 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Eff (Eff(..),Bin(..))
+import Eff (Eff(..))
 import Header (Header(..),Zversion(..))
 import Numbers (Value)
 
@@ -32,7 +32,7 @@ objectAddr o = do
   otBase <- LitA objectTable
   objectsOffset <- LitV (2 * numProps f - objectEntrySize)
   base <- Offset otBase objectsOffset
-  off <- BinOp BMul o size
+  off <- Mul o size
   Offset base off
 
 getShortName :: v -> Eff a b s v s
@@ -46,7 +46,7 @@ getShortName x = do
   p <- IsZeroByte shortNameLen
   if p then LitS "" else do
     one <- LitV 1
-    w1 <- BinOp BAdd w one
+    w1 <- Add w one
     a2 <- Address w1
     GetText a2
 
@@ -173,9 +173,9 @@ getProp x n = do
     Nothing -> do
       -- get property default
       m1 <- LitV (-1)
-      nM1 <- BinOp BAdd n m1
+      nM1 <- Add n m1
       two <- LitV 2
-      off <- BinOp BMul two nM1
+      off <- Mul two nM1
       base <- LitA objectTable
       a <- Offset base off
       getWord a
@@ -217,7 +217,7 @@ getPropLen v = do
   b <- IsZero v
   if b then LitV 0 else do
     one <- LitV 1
-    vM1 <- BinOp BSub v one
+    vM1 <- Sub v one
     aM1 <- Address vM1
     b <- GetByte aM1
     shifted <- b `ShiftR` 5
@@ -225,7 +225,7 @@ getPropLen v = do
     masked <- shifted `BwAnd` seven
     w <- Widen masked
     one <- LitV 1
-    BinOp BAdd one w
+    Add one w
 
 getNextProp :: v -> v -> Eff a b s v v
 getNextProp x p = do
@@ -253,7 +253,7 @@ getPropertyTable x = do
   a1 <- Address v
   shortNameLen <- GetByte a1
   off <- dubPlus1 shortNameLen
-  v' <- BinOp BAdd v off
+  v' <- Add v off
   props <- getPropsA v'
   takeWhileDescending props
 
@@ -262,8 +262,8 @@ dubPlus1 b = do --Widen (1 + 2 * shortNameLen)
   v <- Widen b
   one <- LitV 1
   two <- LitV 2
-  dub <- BinOp BMul two v
-  BinOp BAdd dub one
+  dub <- Mul two v
+  Add dub one
 
 
 takeWhileDescending :: [Prop b v] -> Eff a b s v [Prop b v]
@@ -301,12 +301,12 @@ getPropsA v = do
     shifted <- b `ShiftR` 5
     widened <- Widen shifted
     one <- LitV 1
-    numBytes <- BinOp BAdd widened one
-    dataAddr <- BinOp BAdd v one
+    numBytes <- Add widened one
+    dataAddr <- Add v one
     dataBytes <- getBytes dataAddr numBytes
     let p1 = Prop {number,dataAddr,dataBytes}
-    v' <- BinOp BAdd v numBytes
-    v'' <- BinOp BAdd v' one
+    v' <- Add v numBytes
+    v'' <- Add v' one
     more <- getPropsA v'' -- TODO: loop
     pure (p1:more)
 
@@ -322,7 +322,7 @@ getBytesA a n = do
     one <- LitV 1
     b <- GetByte a
     a' <- Offset a one
-    n' <- BinOp BSub n one
+    n' <- Sub n one
     bs <- getBytesA a' n'
     pure (b:bs)
 

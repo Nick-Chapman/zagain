@@ -3,7 +3,7 @@
 module Semantics (theEffect) where
 
 import Dictionary (Dict(..))
-import Eff (Eff(..),Bin(..))
+import Eff (Eff(..))
 import Header (Header(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
@@ -26,8 +26,8 @@ eval pc = \case
   Op.BadOperation mes -> do
     error (printf "At [%s] %s" (show pc) mes)
 
-  Op.Add arg1 arg2 target -> do evalBin BAdd arg1 arg2 target
-  Op.And arg1 arg2 target -> do evalBin BAnd arg1 arg2 target
+  Op.Add arg1 arg2 target -> do evalBin Add arg1 arg2 target
+  Op.And arg1 arg2 target -> do evalBin And arg1 arg2 target
 
   Op.Call func args target -> do
     funcAddress <- evalFunc func
@@ -47,7 +47,7 @@ eval pc = \case
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     one <- LitV 1
-    v' <- BinOp BSub v one
+    v' <- Sub v one
     setDyn dyn v'
 
   Op.Dec_chk arg1 arg2 label -> do
@@ -56,11 +56,11 @@ eval pc = \case
     v2 <- evalArg arg2
     res <- LessThanEqual v1 v2
     one <- LitV 1
-    v1' <- BinOp BSub v1 one
+    v1' <- Sub v1 one
     setDyn dyn v1'
     branchMaybe label res
 
-  Op.Div arg1 arg2 target -> do evalBin BDiv arg1 arg2 target
+  Op.Div arg1 arg2 target -> do evalBin Div arg1 arg2 target
 
   Op.Get_child arg target label -> do
     v <- evalArg arg
@@ -108,7 +108,7 @@ eval pc = \case
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     one <- LitV 1
-    v' <- BinOp BAdd v one
+    v' <- Add v one
     setDyn dyn v'
 
   Op.Inc_chk arg1 arg2 label -> do
@@ -116,7 +116,7 @@ eval pc = \case
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
     one <- LitV 1
-    v1' <- BinOp BAdd v1 one
+    v1' <- Add v1 one
     setDyn dyn v1'
     res <- GreaterThanEqual v1 v2
     branchMaybe label res
@@ -171,12 +171,12 @@ eval pc = \case
     base <- evalArg arg1 >>= Address
     offset <- evalArg arg2
     two <- LitV 2
-    doubleOffset <- BinOp BMul two offset
+    doubleOffset <- Mul two offset
     a <- Offset base doubleOffset
     w <- getWord a
     setTarget target w
 
-  Op.Mul arg1 arg2 target -> do evalBin BMul arg1 arg2 target
+  Op.Mul arg1 arg2 target -> do evalBin Mul arg1 arg2 target
 
   Op.New_line -> do LitS "\n" >>= GamePrint
   Op.Print string -> do LitS string >>= GamePrint
@@ -329,16 +329,16 @@ eval pc = \case
     offset <- evalArg arg2
     value <- evalArg arg3
     two <-LitV 2
-    doubleOffset <- BinOp BMul two offset
+    doubleOffset <- Mul two offset
     a <- Offset base doubleOffset
     setWord a value
 
-  Op.Sub arg1 arg2 target -> do evalBin BSub arg1 arg2 target
+  Op.Sub arg1 arg2 target -> do evalBin Sub arg1 arg2 target
 
   Op.Test arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    v12 <- BwAndV v1 v2
+    v12 <- And v1 v2
     res <- EqualAny [v12, v2]
     branchMaybe label res
 
@@ -371,11 +371,11 @@ writeBytes a bs =
             | (i,b) <- zip [0..] bs
             ]
 
-evalBin :: Bin -> Arg -> Arg -> Target -> Eff a b s v ()
+evalBin :: (v -> v -> Eff a b s v v) -> Arg -> Arg -> Target -> Eff a b s v ()
 evalBin bin arg1 arg2 target = do
   v1 <- evalArg arg1
   v2 <- evalArg arg2
-  v <- BinOp bin v1 v2
+  v <- bin v1 v2
   setTarget target v
 
 branchMaybe :: Label -> Bool -> Eff a b s v ()
@@ -434,7 +434,7 @@ globalAddr b = do
   base <- LitA globalVars
   v <- Widen b
   two <- LitV 2
-  offset <- BinOp BMul two v
+  offset <- Mul two v
   Offset base offset
 
 setLocals :: RoutineHeader -> [v] -> Eff a b s v ()

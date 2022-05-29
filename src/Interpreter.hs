@@ -10,7 +10,7 @@ import Data.List.Split (splitOn)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
-import Eff (Eff(..),Bin(..))
+import Eff (Eff(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr,Value,byteOfValue,addrOfPackedWord)
@@ -110,15 +110,6 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let res = (value == 0)
         k s res
 
-      BinOp bin v1 v2 -> do
-        let res = case bin of
-              BAdd -> v1 + v2
-              BSub -> v1 - v2
-              BMul -> v1 * v2
-              BDiv -> v1 `div` v2
-              BAnd -> v1 .&. v2
-        k s res
-
       GetByte a -> do
         let State{overrides} = s
         let (_over,b) =
@@ -156,42 +147,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       StoryHeader -> do
         k s header
 
-      Div8 v -> k s (v `div` 8)
-      Mod8 v -> k s (byteOfValue (v `mod` 8)) -- TODO: remove byteOfValue; ret value
-      SevenMinus v -> k s (7-v)
-      SetBit b n -> k s (b `setBit` fromIntegral n)
-      ClearBit b n -> k s (b `clearBit` fromIntegral n)
-      TestBit b n -> k s (b `testBit` fromIntegral n)
-
-      MakeWord hi lo -> k s (256 * fromIntegral hi + fromIntegral lo)
-      Widen lo -> k s (fromIntegral lo)
-      LoByte v -> k s (fromIntegral (v .&. 0xff))
-      HiByte v -> k s (fromIntegral (v `shiftR` 8))
-
-      LitB b -> k s b
-      LitV v -> k s v
-      ShiftR b n -> k s (b `shiftR` n)
-      BwAnd b1 b2 -> k s (b1 .&. b2)
-      BwAndV v1 v2 -> k s (v1 .&. v2)
-
-      IsZeroByte b -> k s (b == 0)
-      LessThanByte b1 b2 -> k s (b1 < b2)
-      MinusByte b1 b2 -> k s (b1 - b2)
-
-      LitA a -> k s a
-      Address v -> k s (fromIntegral v)
-      DeAddress a -> k s (fromIntegral a)
-      PackedAddress v -> k s (addrOfPackedWord v)
-      Offset base off -> k s (base + fromIntegral off)
-
-      IsZeroAddress a -> k s (a == 0)
-
-      LessThan v1 v2 -> k s (v1 < v2)
-      LessThanEqual v1 v2 -> k s (v1 <= v2)
-      GreaterThan v1 v2 -> k s (v1 > v2)
-      GreaterThanEqual v1 v2 -> k s (v1 >= v2)
-
-      LitS x -> k s x
+      StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
 
       Tokenize str -> do
         let toks = [ w | w <- splitOn " " str, w /= "" ]
@@ -208,8 +164,6 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let canonicalized = intercalate " " toks -- TODO: what needs this? ++ "\0"
         k s (zip offsets toks, canonicalized)
 
-      ListLength xs -> k s (fromIntegral $ length xs)
-
       LookupInStrings strings word -> do
         let key = lower (take 6 word)
         let
@@ -220,11 +174,43 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
               [i] -> Just i
         k s res
 
-      StringLength str -> k s (fromIntegral $ length str)
-      StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
-
-      SingleChar v -> k s [Char.chr (fromIntegral v)]
+      Add v1 v2 -> k s (v1 + v2)
+      Address v -> k s (fromIntegral v)
+      And v1 v2 -> k s (v1 .&. v2)
+      BwAnd b1 b2 -> k s (b1 .&. b2)
+      ClearBit b n -> k s (b `clearBit` fromIntegral n)
+      DeAddress a -> k s (fromIntegral a)
+      Div v1 v2 -> k s (v1 `div` v2)
+      Div8 v -> k s (v `div` 8)
+      GreaterThan v1 v2 -> k s (v1 > v2)
+      GreaterThanEqual v1 v2 -> k s (v1 >= v2)
+      HiByte v -> k s (fromIntegral (v `shiftR` 8))
+      IsZeroAddress a -> k s (a == 0)
+      IsZeroByte b -> k s (b == 0)
+      LessThan v1 v2 -> k s (v1 < v2)
+      LessThanByte b1 b2 -> k s (b1 < b2)
+      LessThanEqual v1 v2 -> k s (v1 <= v2)
+      ListLength xs -> k s (fromIntegral $ length xs)
+      LitA a -> k s a
+      LitB b -> k s b
+      LitS x -> k s x
+      LitV v -> k s v
+      LoByte v -> k s (fromIntegral (v .&. 0xff))
+      MakeWord hi lo -> k s (256 * fromIntegral hi + fromIntegral lo)
+      MinusByte b1 b2 -> k s (b1 - b2)
+      Mod8 v -> k s (byteOfValue (v `mod` 8)) -- TODO: remove byteOfValue; ret value
+      Mul v1 v2 -> k s (v1 * v2)
+      Offset base off -> k s (base + fromIntegral off)
+      PackedAddress v -> k s (addrOfPackedWord v)
+      SetBit b n -> k s (b `setBit` fromIntegral n)
+      SevenMinus v -> k s (7-v)
+      ShiftR b n -> k s (b `shiftR` n)
       ShowNumber v -> k s (show v)
+      SingleChar v -> k s [Char.chr (fromIntegral v)]
+      StringLength str -> k s (fromIntegral $ length str)
+      Sub v1 v2 -> k s (v1 - v2)
+      TestBit b n -> k s (b `testBit` fromIntegral n)
+      Widen lo -> k s (fromIntegral lo)
 
 --[interpreter state]-------------------------------------------------
 
