@@ -9,13 +9,13 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Eff (Eff(..))
+import Eff (Eff(..),Phase(..))
 import Header (Header(..),Zversion(..))
-import Numbers (Value)
+import qualified Numbers (Value)
 
 --[convs]-----------------------------------------------------
 
-getWord :: a -> Eff vec a b s v v
+getWord :: Addr p -> Eff p (Value p)
 getWord a = do
   hi <- GetByte a
   one <- LitV 1
@@ -23,7 +23,7 @@ getWord a = do
   lo <- GetByte a1
   MakeWord hi lo
 
-objectAddr :: v -> Eff vec a b s v a
+objectAddr :: Value p -> Eff p (Addr p)
 objectAddr o = do
   Header{zv,objectTable} <- StoryHeader
   let f = formatOfVersion zv
@@ -35,7 +35,7 @@ objectAddr o = do
   off <- Mul o size
   Offset base off
 
-getShortName :: v -> Eff vec a b s v s
+getShortName :: Value p -> Eff p (Text p)
 getShortName x = do
   base <- objectAddr x
   seven <- LitV 7
@@ -52,7 +52,7 @@ getShortName x = do
 
 --[attributes]--------------------------------------------------------
 
-testAttr :: v -> v -> Eff vec a b s v Bool
+testAttr :: Value p -> Value p -> Eff p Bool
 testAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -62,7 +62,7 @@ testAttr x n = do
   b <- GetByte a
   b `TestBit` m'
 
-setAttr :: v -> v -> Eff vec a b s v ()
+setAttr :: Value p -> Value p -> Eff p ()
 setAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -73,7 +73,7 @@ setAttr x n = do
   new <- old `SetBit` m'
   SetByte a new
 
-clearAttr :: v -> v -> Eff vec a b s v ()
+clearAttr :: Value p -> Value p -> Eff p ()
 clearAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -84,7 +84,7 @@ clearAttr x n = do
   new <- old `ClearBit` m'
   SetByte a new
 
-mod8 :: v -> Eff vec a b s v b
+mod8 :: Value p -> Eff p (Byte p)
 mod8 v = do
   eight <- LitV 8
   res <- Mod v eight
@@ -94,13 +94,13 @@ mod8 v = do
 
 data FamilyMember = Parent | Sibling | Child
 
-offsetFM :: FamilyMember -> Value
+offsetFM :: FamilyMember -> Numbers.Value
 offsetFM = \case
   Parent -> 4
   Sibling -> 5
   Child -> 6
 
-getFM :: FamilyMember -> v -> Eff vec a b s v v
+getFM :: FamilyMember -> Value p -> Eff p (Value p)
 getFM fm x = do
   base <- objectAddr x
   off <- LitV (offsetFM fm)
@@ -108,7 +108,7 @@ getFM fm x = do
   b <- GetByte a
   Widen b
 
-setFM :: FamilyMember -> v -> v -> Eff vec a b s v ()
+setFM :: FamilyMember -> Value p -> Value p -> Eff p ()
 setFM fm x y = do
   base <- objectAddr x
   lo <- LoByte y
@@ -116,7 +116,7 @@ setFM fm x y = do
   a <- Offset base off
   SetByte a lo
 
-insertObj :: v -> v -> Eff vec a b s v ()
+insertObj :: Value p -> Value p -> Eff p ()
 insertObj x dest = do
   unlink x
   setFM Parent x dest
@@ -124,13 +124,13 @@ insertObj x dest = do
   setFM Sibling x oldChild
   setFM Child dest x
 
-removeObj :: v -> Eff vec a b s v ()
+removeObj :: Value p -> Eff p ()
 removeObj x = do
   unlink x
   zero <- LitV 0
   setFM Parent x zero
 
-unlink :: forall vec a b s v. v -> Eff vec a b s v ()
+unlink :: forall p. Value p -> Eff p ()
 unlink this = do
   oldP <- getFM Parent this
   b <- not <$> IsZero oldP
@@ -144,7 +144,7 @@ unlink this = do
       False -> do
         loop child
       where
-        loop :: v -> Eff vec a b s v ()
+        loop :: Value p -> Eff p ()
         loop x = do
           b <- IsZero x
           if b then error "unlink loop, failed to find unlinkee" else do
@@ -158,7 +158,7 @@ unlink this = do
 
 --[properties]--------------------------------------------------------
 
-getPropN :: v -> v -> Eff vec a b s v (Maybe (Prop b v))
+getPropN :: Value p -> Value p -> Eff p (Maybe (Prop (Byte p) (Value p)))
 getPropN x n = do
   props <- getPropertyTable x
   xs <- sequence
@@ -171,7 +171,7 @@ getPropN x n = do
     _ -> error "getPropN: multi prop match"
 
 
-getProp :: v -> v -> Eff vec a b s v v
+getProp :: Value p -> Value p -> Eff p (Value p)
 getProp x n = do
   Header{objectTable} <- StoryHeader
 
@@ -188,10 +188,10 @@ getProp x n = do
     Just (Prop{dataBytes}) -> do
       case dataBytes of
         [hi,lo] -> MakeWord hi lo
-        [b] -> undefined (Widen b) -- not hit yet
+        [_b] -> undefined -- Widen _b -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
 
-putProp :: v -> v -> v -> Eff vec a b s v ()
+putProp :: Value p -> Value p -> Value p -> Eff p ()
 putProp x n v = do
   pr <- do
     getPropN x n >>= \case
@@ -212,13 +212,13 @@ putProp x n v = do
     1 -> undefined
     _ -> error "expected 1 or 2 bytes for prop value"
 
-getPropAddr :: v -> v -> Eff vec a b s v v
+getPropAddr :: Value p -> Value p -> Eff p (Value p)
 getPropAddr x n = do
   getPropN x n >>= \case
     Just(Prop{dataAddr}) -> pure dataAddr
     Nothing -> LitV 0
 
-getPropLen :: v -> Eff vec a b s v v
+getPropLen :: Value p -> Eff p (Value p)
 getPropLen v = do
   b <- IsZero v
   if b then LitV 0 else do
@@ -233,7 +233,7 @@ getPropLen v = do
     one <- LitV 1
     Add one w
 
-getNextProp :: v -> v -> Eff vec a b s v v
+getNextProp :: Value p -> Value p -> Eff p (Value p)
 getNextProp x p = do
   -- TODO: stop being so complicated. Assume descendning order and avoid search
   props <- getPropertyTable x
@@ -250,7 +250,7 @@ getNextProp x p = do
     [] -> LitV 0
     fst:_ -> pure fst -- assume the first is the biggest
 
-getPropertyTable :: v -> Eff vec a b s v [Prop b v]
+getPropertyTable :: Value p -> Eff p [Prop (Byte p) (Value p)]
 getPropertyTable x = do
   base <- objectAddr x
   seven <- LitV 0x7
@@ -263,23 +263,21 @@ getPropertyTable x = do
   props <- getPropsA v'
   takeWhileDescending props
 
-dubPlus1 :: b -> Eff vec a b s v v
-dubPlus1 b = do --Widen (1 + 2 * shortNameLen)
+dubPlus1 :: Byte p -> Eff p (Value p)
+dubPlus1 b = do
   v <- Widen b
   one <- LitV 1
   two <- LitV 2
   dub <- Mul two v
   Add dub one
 
-
-takeWhileDescending :: [Prop b v] -> Eff vec a b s v [Prop b v]
+takeWhileDescending :: [Prop (Byte p) (Value p)] -> Eff p [Prop (Byte p) (Value p)]
 takeWhileDescending = \case
   [] -> pure []
   p@Prop{number}:ps -> do
     ps <- loop number ps
     pure (p : ps)
     where
-      loop :: v -> [Prop b v] -> Eff vec a b s v [Prop b v]
       loop last = \case
         [] -> pure []
         p@Prop{number}:ps -> do
@@ -295,7 +293,7 @@ data Prop b v = Prop -- TODO: using this type is not helpful
   , dataBytes :: [b]
   } deriving Show
 
-getPropsA :: v -> Eff vec a b s v [Prop b v] -- TODO: first arg should be address
+getPropsA :: Value p -> Eff p [Prop (Byte p) (Value p)] -- TODO: first arg should be address
 getPropsA v = do
   a <- Address v
   b <- GetByte a
@@ -316,12 +314,12 @@ getPropsA v = do
     more <- getPropsA v'' -- TODO: loop
     pure (p1:more)
 
-getBytes :: v -> v -> Eff vec a b s v [b]
+getBytes :: Value p -> Value p -> Eff p [Byte p]
 getBytes v n = do
   a <- Address v
   getBytesA a n
 
-getBytesA :: a -> v -> Eff vec a b s v [b]
+getBytesA :: Addr p -> Value p -> Eff p [Byte p]
 getBytesA a n = do
   stop <- IsZero n
   if stop then pure [] else do
@@ -346,17 +344,17 @@ formatOfVersion = \case
   Z5 -> Large
   Z6 -> Large
 
-numProps :: ObjectTableFormat -> Value
+numProps :: ObjectTableFormat -> Numbers.Value
 numProps = \case
   Small -> 31
   Large -> 63
 
-numByesForAttribute :: ObjectTableFormat -> Value
+numByesForAttribute :: ObjectTableFormat -> Numbers.Value
 numByesForAttribute = \case
   Small -> 4
   Large -> 6
 
-objectIdSize :: ObjectTableFormat -> Value
+objectIdSize :: ObjectTableFormat -> Numbers.Value
 objectIdSize = \case
   Small -> 1
   Large -> 2

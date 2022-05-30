@@ -10,19 +10,28 @@ import Data.List.Split (splitOn)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
-import Eff (Eff(..))
+import Eff (Eff(..),Phase)
 import Fetch (runFetch)
 import Header (Header(..))
-import Numbers (Byte,Addr,Value,addrOfPackedWord)
+import Numbers as N (Byte,Addr,Value,addrOfPackedWord)
 import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action as A (Action(..))
 import qualified Data.Char as Char (ord,chr)
 import qualified Data.Map as Map
+import qualified Eff (Phase(..))
 
+data Interpret
 
-type Effect x = Eff [] Addr Byte String Value x
+instance Phase Interpret where
+  type Addr Interpret = Addr
+  type Byte Interpret = Byte
+  type Text Interpret = String
+  type Value Interpret = Value
+  type Vector Interpret = []
+
+type Effect x = Eff Interpret x
 
 --[interpreter for execution effects]----------------------------------
 
