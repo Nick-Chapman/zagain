@@ -83,7 +83,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
       PushFrame addr target -> do
         let State{pc,stack,locals,frames} = s
-        A.RoutineCall addr $
+        A.TraceRoutineCall addr $
           k s { pc = addr
               , frames = Frame { pc, target, stack, locals } : frames
               , stack = []
