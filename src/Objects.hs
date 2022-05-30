@@ -21,7 +21,7 @@ getWord a = do
   one <- LitV 1
   a1 <- Offset a one
   lo <- GetByte a1
-  MakeWord hi lo
+  MakeHiLo hi lo
 
 objectAddr :: Value p -> Eff p (Addr p)
 objectAddr o = do
@@ -187,7 +187,7 @@ getProp x n = do
       getWord a
     Just (Prop{dataBytes}) -> do
       case dataBytes of
-        [hi,lo] -> MakeWord hi lo
+        [hi,lo] -> MakeHiLo hi lo
         [_b] -> undefined -- Widen _b -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
 

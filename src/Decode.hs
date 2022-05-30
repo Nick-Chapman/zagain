@@ -11,7 +11,7 @@ import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
 import Header (Header(..),Zversion(..))
-import Numbers (Byte,Addr,Value,addrOfPackedWord)
+import Numbers (Byte,Addr,Value,addrOfPackedWord,makeHiLo)
 import Operation (Operation,Func(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Data.Char as Char
@@ -233,7 +233,7 @@ fetchNextWord :: Fetch Value
 fetchNextWord = do
   hi <- Fetch.NextByte
   lo <- Fetch.NextByte
-  pure (256 * fromIntegral hi + fromIntegral lo)
+  pure $ makeHiLo hi lo
 
 
 fetchRoutineHeader :: Fetch RoutineHeader
@@ -249,8 +249,7 @@ getWord :: Addr -> Fetch Value
 getWord a = do
   hi <- GetByte a
   lo <- GetByte (a+1)
-  -- TODO: share various instances of lo/hi composition
-  pure (256 * fromIntegral hi + fromIntegral lo)
+  pure $ makeHiLo hi lo
 
 ztext :: Fetch String
 ztext = do Header{zv} <- StoryHeader; ztext' zv

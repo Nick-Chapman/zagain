@@ -5,7 +5,7 @@ module Dictionary (Dict(..),fetchDict) where
 import Decode (ztext)
 import Fetch (Fetch(..))
 import Header (Header(..))
-import Numbers (Byte,Addr,Value)
+import Numbers (Byte,Addr,Value,makeHiLo)
 import qualified Data.Char as Char (chr)
 
 data Dict = Dict
@@ -35,7 +35,7 @@ fetchWord :: Fetch Value
 fetchWord = do
   hi <- NextByte
   lo <- NextByte
-  pure (256 * fromIntegral hi + fromIntegral lo)
+  pure $ makeHiLo hi lo
 
 charOfByte :: Byte -> Char
 charOfByte b = Char.chr (fromIntegral b)

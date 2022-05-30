@@ -3,7 +3,7 @@
 module Numbers
   ( Byte
   , Addr, addrOfPackedWord
-  , Value
+  , Value, makeHiLo
   ) where
 
 import Data.Bits (Bits)
@@ -34,3 +34,6 @@ newtype Value = Value Int16 -- 16 bit signed values used for z-machine computati
 
 instance Show Value where
   show (Value x) = show x
+
+makeHiLo :: Byte -> Byte -> Value
+makeHiLo hi lo = 256 * fromIntegral hi + fromIntegral lo

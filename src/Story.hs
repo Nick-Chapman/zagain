@@ -4,7 +4,7 @@ module Story (Story(header,size),loadStory,readStoryByte,OOB_Mode(..)) where
 
 import Data.Array (Array,(!),listArray)
 import Header (Header(..),Zversion(..))
-import Numbers (Byte,Addr)
+import Numbers (Byte,Addr,makeHiLo)
 import Text.Printf (printf)
 import qualified Data.ByteString as BS (readFile,unpack)
 
@@ -55,7 +55,7 @@ readHeader story = Header
     getA a = do
       let hi = getB a
       let lo = getB (a+1)
-      256 * fromIntegral hi + fromIntegral lo
+      fromIntegral $ makeHiLo hi lo
 
     getB :: Addr -> Byte
     getB a = readStoryByte (OOB_Error "readHeader") story a

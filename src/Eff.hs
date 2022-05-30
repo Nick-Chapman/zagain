@@ -79,7 +79,7 @@ data Eff p x where
   LitS :: String -> Eff p (Text p)
   LitV :: Numbers.Value -> Eff p (Value p)
   LoByte :: Value p -> Eff p (Byte p)
-  MakeWord :: Byte p -> Byte p -> Eff p (Value p)
+  MakeHiLo :: Byte p -> Byte p -> Eff p (Value p)
   MinusByte :: Byte p -> Byte p -> Eff p (Byte p)
   Mod :: Value p -> Value p -> Eff p (Value p)
   Mul :: Value p -> Value p -> Eff p (Value p)

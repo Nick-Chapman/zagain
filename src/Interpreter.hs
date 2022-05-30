@@ -13,7 +13,7 @@ import Dictionary (fetchDict)
 import Eff (Eff(..),Phase)
 import Fetch (runFetch)
 import Header (Header(..))
-import Numbers as N (Byte,Addr,Value,addrOfPackedWord)
+import Numbers (Byte,Addr,Value,addrOfPackedWord,makeHiLo)
 import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
@@ -210,7 +210,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       LitS x -> k s x
       LitV v -> k s v
       LoByte v -> k s (fromIntegral (v .&. 0xff))
-      MakeWord hi lo -> k s (256 * fromIntegral hi + fromIntegral lo)
+      MakeHiLo hi lo -> k s (makeHiLo hi lo)
       MinusByte b1 b2 -> k s (b1 - b2)
       Mod v1 v2 -> k s (v1 `mod` v2)
       Mul v1 v2 -> k s (v1 * v2)

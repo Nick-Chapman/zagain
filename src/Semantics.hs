@@ -453,7 +453,7 @@ getWord a = do
   one <- LitV 1
   a' <- Offset a one
   lo <- GetByte a'
-  MakeWord hi lo
+  MakeHiLo hi lo
 
 setWord :: Addr p -> Value p -> Eff p ()
 setWord a w = do
