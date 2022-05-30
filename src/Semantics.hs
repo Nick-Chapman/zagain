@@ -11,7 +11,7 @@ import Text.Printf (printf)
 import qualified Objects
 import qualified Operation as Op
 
-theEffect :: Show (Addr p) => Eff p () -- TODO: can this Show go in the Phase def
+theEffect :: Show (Addr p) => Eff p ()
 theEffect = loop
   where
     loop = do
