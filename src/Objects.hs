@@ -158,7 +158,7 @@ unlink this = do
 
 --[properties]--------------------------------------------------------
 
-getPropN :: Value p -> Value p -> Eff p (Maybe (Prop (Byte p) (Value p)))
+getPropN :: Value p -> Value p -> Eff p (Maybe (Prop p))
 getPropN x n = do
   props <- getPropertyTable x
   xs <- sequence
@@ -203,11 +203,10 @@ putProp x n v = do
     2 -> do
       hi <- HiByte v
       lo <- LoByte v
-      a0 <- Address dataAddr
       one <- LitV 1
-      a1 <- Offset a0 one
-      SetByte a0 hi
-      SetByte a1 lo
+      dataAddrPlusOne <- Offset dataAddr one
+      SetByte dataAddr hi
+      SetByte dataAddrPlusOne lo
       pure ()
     1 -> undefined
     _ -> error "expected 1 or 2 bytes for prop value"
@@ -215,7 +214,7 @@ putProp x n v = do
 getPropAddr :: Value p -> Value p -> Eff p (Value p)
 getPropAddr x n = do
   getPropN x n >>= \case
-    Just(Prop{dataAddr}) -> pure dataAddr
+    Just(Prop{dataAddr}) -> do DeAddress dataAddr
     Nothing -> LitV 0
 
 getPropLen :: Value p -> Eff p (Value p)
@@ -250,17 +249,16 @@ getNextProp x p = do
     [] -> LitV 0
     fst:_ -> pure fst -- assume the first is the biggest
 
-getPropertyTable :: Value p -> Eff p [Prop (Byte p) (Value p)]
+getPropertyTable :: Value p -> Eff p [Prop p]
 getPropertyTable x = do
   base <- objectAddr x
   seven <- LitV 0x7
   a <- Offset base seven
-  v <- getWord a
-  a1 <- Address v
+  a1 <- getWord a >>= Address
   shortNameLen <- GetByte a1
-  off <- dubPlus1 shortNameLen
-  v' <- Add v off
-  props <- getPropsA v'
+  size <- dubPlus1 shortNameLen
+  a2 <- Offset a1 size
+  props <- getPropsA a2
   takeWhileDescending props
 
 dubPlus1 :: Byte p -> Eff p (Value p)
@@ -271,7 +269,7 @@ dubPlus1 b = do
   dub <- Mul two v
   Add dub one
 
-takeWhileDescending :: [Prop (Byte p) (Value p)] -> Eff p [Prop (Byte p) (Value p)]
+takeWhileDescending :: [Prop p] -> Eff p [Prop p]
 takeWhileDescending = \case
   [] -> pure []
   p@Prop{number}:ps -> do
@@ -287,47 +285,42 @@ takeWhileDescending = \case
             pure (p : ps)
 
 
-data Prop b v = Prop -- TODO: using this type is not helpful
-  { number :: v
-  , dataAddr :: v -- TODO: dataAdd should be Addr!
-  , dataBytes :: [b]
-  } deriving Show
+data Prop p = Prop -- TODO: using this type isn't very helpful
+  { number :: Value p
+  , dataAddr :: Addr p
+  , dataBytes :: [Byte p]
+  } --deriving Show
 
-getPropsA :: Value p -> Eff p [Prop (Byte p) (Value p)] -- TODO: first arg should be address
-getPropsA v = do
-  a <- Address v
+getPropsA :: Addr p -> Eff p [Prop p]
+getPropsA a = do
   b <- GetByte a
-  p <- IsZeroByte b >>= If
-  if p then pure [] else do
-    oneF <- LitB 0x1f
-    fiveBits <- b `BwAnd` oneF
-    number <- Widen fiveBits
-    shifted <- b `ShiftR` 5
-    widened <- Widen shifted
+  endOfProps <- IsZeroByte b >>= If
+  if endOfProps then pure [] else do
     one <- LitV 1
-    numBytes <- Add widened one
-    dataAddr <- Add v one
+    dataAddr <- Offset a one
+    number <- do
+      oneF <- LitB 0x1f
+      fiveBits <- b `BwAnd` oneF
+      Widen fiveBits
+    numBytes <- do
+      shifted <- b `ShiftR` 5
+      widened <- Widen shifted
+      Add widened one
     dataBytes <- getBytes dataAddr numBytes
     let p1 = Prop {number,dataAddr,dataBytes}
-    v' <- Add v numBytes
-    v'' <- Add v' one
-    more <- getPropsA v'' -- TODO: loop
+    a' <- Offset dataAddr numBytes
+    more <- getPropsA a' -- TODO: loop
     pure (p1:more)
 
-getBytes :: Value p -> Value p -> Eff p [Byte p]
-getBytes v n = do
-  a <- Address v
-  getBytesA a n
-
-getBytesA :: Addr p -> Value p -> Eff p [Byte p]
-getBytesA a n = do
+getBytes :: Addr p -> Value p -> Eff p [Byte p]
+getBytes a n = do
   stop <- IsZero n >>= If
   if stop then pure [] else do
     one <- LitV 1
     b <- GetByte a
     a' <- Offset a one
     n' <- Sub n one
-    bs <- getBytesA a' n'
+    bs <- getBytes a' n'
     pure (b:bs)
 
 
