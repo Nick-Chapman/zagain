@@ -27,6 +27,7 @@ data Eff p x where
 
   StoryHeader :: Eff p Header
   TheDictionary :: Eff p Dict
+  LookupInStrings :: [String] -> Text p -> Eff p (Maybe Int)
 
   GamePrint :: Text p -> Eff p ()
   ReadInputFromUser :: (Text p,Value p,Value p) -> Eff p (Text p)
@@ -57,10 +58,6 @@ data Eff p x where
   ListLength :: Vector p x -> Eff p (Byte p)
   Foreach :: Vector p x -> (Int -> x -> Eff p ()) -> Eff p ()
 
-  -- TODO: LookupInStrings takes a constant known dict, and so we dont need (Text p)
-  LookupInStrings :: [Text p] -> Text p -> Eff p (Maybe Int)
-
-  -- TODO: capture Pure ops in a sep type, or maybe in the Phase typeclase
   Add :: Value p -> Value p -> Eff p (Value p)
   Address :: Value p -> Eff p (Addr p)
   And :: Value p -> Value p -> Eff p (Value p)

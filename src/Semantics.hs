@@ -269,8 +269,7 @@ eval pc = \case
     rawTyped <- ReadInputFromUser (p1,score,turns)
     t_buf <- evalArg arg1 >>= Address
     p_buf <- evalArg arg2 >>= Address
-    Dict{seps,entryLength,strings=constStrings} <- TheDictionary
-    strings <- mapM LitS constStrings
+    Dict{seps,entryLength,strings=dictStrings} <- TheDictionary
     -- +4 : #seps byte, entryLength byte, #entries word
     Header{dictionary} <- StoryHeader
     offset <- LitV (fromIntegral $ length seps + 4)
@@ -291,7 +290,7 @@ eval pc = \case
     SetByte a n
 
     Foreach positionedWords $ \i (pos,word) -> do
-      iopt <- LookupInStrings strings word
+      iopt <- LookupInStrings dictStrings word
       dictAddr <-
         case iopt of
           Just i -> do
