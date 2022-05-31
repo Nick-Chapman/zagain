@@ -3,22 +3,23 @@
 module Interpreter (State,runEffect) where
 
 import Action (Action)
-import Data.Bits ((.&.),shiftL,clearBit,setBit,testBit,shiftR)
+import Data.Bits (shiftL)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
 import Eff (Eff(..),Phase)
 import Fetch (runFetch)
 import Header (Header(..))
-import Numbers (Byte,Addr,Value,addrOfPackedWord,makeHiLo,equalAny)
+import Numbers (Byte,Addr,Value)
 import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action as A (Action(..))
-import qualified Data.Char as Char (ord,chr)
 import qualified Data.Map as Map
 import qualified Eff (Phase(..))
-import qualified Lex (tokenize,lookupInStrings)
+
+import qualified Primitive as Prim
+import Primitive (evalP1,evalP2)
 
 data Interpret
 
@@ -45,7 +46,7 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
     (dict,_) = runFetch (oob "fetchDict") 0 story fetchDict
 
-    loop :: State -> Effect a -> (State -> a -> Action) -> Action
+    loop :: forall r. State -> Effect r -> (State -> r -> Action) -> Action
     loop s e k = case e of
       Ret x -> k s x
       Bind e f -> loop s e $ \s a -> loop s (f a) k
@@ -152,44 +153,54 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       LitS x -> k s x
       LitV v -> k s v
 
-      Add v1 v2 -> k s (v1 + v2)
-      Address v -> k s (fromIntegral v)
-      And v1 v2 -> k s (v1 .&. v2)
-      BwAnd b1 b2 -> k s (b1 .&. b2)
-      ClearBit b n -> k s (b `clearBit` fromIntegral n)
-      DeAddress a -> k s (fromIntegral a)
-      Div v1 v2 -> k s (v1 `div` v2)
-      Div8 v -> k s (v `div` 8)
-      EqualAny vs -> k s (equalAny vs)
-      GreaterThan v1 v2 -> k s (v1 > v2)
-      GreaterThanEqual v1 v2 -> k s (v1 >= v2)
-      HiByte v -> k s (fromIntegral (v `shiftR` 8))
-      IsZero value -> k s (value == 0)
-      IsZeroAddress a -> k s (a == 0)
-      IsZeroByte b -> k s (b == 0)
-      LessThan v1 v2 -> k s (v1 < v2)
-      LessThanByte b1 b2 -> k s (b1 < b2)
-      LessThanEqual v1 v2 -> k s (v1 <= v2)
-      ListLength xs -> k s (fromIntegral $ length xs)
-      LoByte v -> k s (fromIntegral (v .&. 0xff))
-      LookupInStrings strings word -> k s (Lex.lookupInStrings strings word)
-      MakeHiLo hi lo -> k s (makeHiLo hi lo)
-      MinusByte b1 b2 -> k s (b1 - b2)
-      Mod v1 v2 -> k s (v1 `mod` v2)
-      Mul v1 v2 -> k s (v1 * v2)
-      Offset base off -> k s (base + fromIntegral off)
-      PackedAddress v -> k s (addrOfPackedWord v)
-      SetBit b n -> k s (b `setBit` fromIntegral n)
-      SevenMinus v -> k s (7-v)
-      ShiftR b n -> k s (b `shiftR` n)
-      ShowNumber v -> k s (show v)
-      SingleChar v -> k s [Char.chr (fromIntegral v)]
-      StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
-      StringLength str -> k s (fromIntegral $ length str)
-      Sub v1 v2 -> k s (v1 - v2)
-      TestBit b n -> k s (b `testBit` fromIntegral n)
-      Tokenize str -> k s (Lex.tokenize str)
-      Widen lo -> k s (fromIntegral lo)
+      -- pure unary primitives
+      Address x -> prim1 x Prim.Address
+      DeAddress x -> prim1 x Prim.DeAddress
+      Div8 x -> prim1 x Prim.Div8
+      EqualAny x -> prim1 x Prim.EqualAny
+      HiByte x -> prim1 x Prim.HiByte
+      IsZero x -> prim1 x Prim.IsZero
+      IsZeroAddress x -> prim1 x Prim.IsZeroAddress
+      IsZeroByte x -> prim1 x Prim.IsZeroByte
+      ListLength x -> prim1 x Prim.ListLength
+      LoByte x -> prim1 x Prim.LoByte
+      PackedAddress x -> prim1 x Prim.PackedAddress
+      SevenMinus x -> prim1 x Prim.SevenMinus
+      ShowNumber x -> prim1 x Prim.ShowNumber
+      SingleChar x -> prim1 x Prim.SingleChar
+      StringBytes x -> prim1 x Prim.StringBytes
+      StringLength x -> prim1 x Prim.StringLength
+      Tokenize x -> prim1 x Prim.Tokenize
+      Widen x -> prim1 x Prim.Widen
+
+      -- pure binary primitives
+      Add x y -> prim2 x y Prim.Add
+      And x y -> prim2 x y Prim.And
+      BwAnd x y -> prim2 x y Prim.BwAnd
+      ClearBit x y -> prim2 x y Prim.ClearBit
+      Div x y -> prim2 x y Prim.Div
+      GreaterThan x y -> prim2 x y Prim.GreaterThan
+      GreaterThanEqual x y -> prim2 x y Prim.GreaterThanEqual
+      LessThan x y -> prim2 x y Prim.LessThan
+      LessThanByte x y -> prim2 x y Prim.LessThanByte
+      LessThanEqual x y -> prim2 x y Prim.LessThanEqual
+      LookupInStrings x y -> prim2 x y Prim.LookupInStrings
+      MakeHiLo x y -> prim2 x y Prim.MakeHiLo
+      MinusByte x y -> prim2 x y Prim.MinusByte
+      Mod x y -> prim2 x y Prim.Mod
+      Mul x y -> prim2 x y Prim.Mul
+      Offset x y -> prim2 x y Prim.Offset
+      SetBit x y -> prim2 x y Prim.SetBit
+      ShiftR x y -> prim2 x y Prim.ShiftR
+      Sub x y -> prim2 x y Prim.Sub
+      TestBit x y -> prim2 x y Prim.TestBit
+
+      where
+        prim1 :: forall x. x -> Prim.P1 x r -> Action -- r from scope
+        prim1 x p1 = k s (evalP1 p1 x) -- k/s from scope
+
+        prim2 :: forall x y. x -> y -> Prim.P2 x y r -> Action -- r from scope
+        prim2 x y p2 = k s (evalP2 p2 x y) -- k/s from scope
 
 
 --[interpreter state]-------------------------------------------------
