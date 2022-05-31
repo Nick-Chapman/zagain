@@ -15,6 +15,7 @@ instance Monad (Eff p) where return = Ret; (>>=) = Bind
 class Phase p where
   type Addr p
   type Byte p
+  type Pred p
   type Text p
   type Value p
   type Vector p :: * -> *
@@ -40,14 +41,16 @@ data Eff p x where
   SetPC :: Addr p -> Eff p ()
   GetLocal :: Byte p -> Eff p (Value p)
   SetLocal :: Byte p -> Value p -> Eff p ()
-  EqualAny :: [Value p] -> Eff p Bool
-  IsZero :: Value p -> Eff p Bool
+  EqualAny :: [Value p] -> Eff p (Pred p)
+  IsZero :: Value p -> Eff p (Pred p)
+
   GetByte :: Addr p -> Eff p (Byte p)
   SetByte :: Addr p -> Byte p -> Eff p ()
   PushStack :: Value p -> Eff p ()
   PopStack :: Eff p (Value p)
   Random :: Value p -> Eff p (Value p)
   Quit :: Eff p ()
+  If :: Pred p -> Eff p Bool
 
   StringBytes :: Text p -> Eff p (Vector p (Byte p))
   Tokenize :: Text p -> Eff p (Vector p (Byte p,Text p),Text p)
@@ -66,14 +69,14 @@ data Eff p x where
   DeAddress :: Addr p -> Eff p (Value p)
   Div :: Value p -> Value p -> Eff p (Value p)
   Div8 :: Value p -> Eff p (Value p)
-  GreaterThan :: Value p -> Value p -> Eff p Bool
-  GreaterThanEqual :: Value p -> Value p -> Eff p Bool
+  GreaterThan :: Value p -> Value p -> Eff p (Pred p)
+  GreaterThanEqual :: Value p -> Value p -> Eff p (Pred p)
   HiByte :: Value p -> Eff p (Byte p)
-  IsZeroAddress :: Addr p -> Eff p Bool
-  IsZeroByte :: Byte p -> Eff p Bool
-  LessThan :: Value p -> Value p -> Eff p Bool
-  LessThanByte :: Byte p -> Byte p -> Eff p Bool
-  LessThanEqual :: Value p -> Value p -> Eff p Bool
+  IsZeroAddress :: Addr p -> Eff p (Pred p)
+  IsZeroByte :: Byte p -> Eff p (Pred p)
+  LessThan :: Value p -> Value p -> Eff p (Pred p)
+  LessThanByte :: Byte p -> Byte p -> Eff p (Pred p)
+  LessThanEqual :: Value p -> Value p -> Eff p (Pred p)
   LitA :: Numbers.Addr -> Eff p (Addr p)
   LitB :: Numbers.Byte -> Eff p (Byte p)
   LitS :: String -> Eff p (Text p)
@@ -92,5 +95,5 @@ data Eff p x where
   SingleChar :: Value p -> Eff p (Text p)
   StringLength :: Text p -> Eff p (Byte p)
   Sub :: Value p -> Value p -> Eff p (Value p)
-  TestBit :: Byte p -> Byte p -> Eff p Bool
+  TestBit :: Byte p -> Byte p -> Eff p (Pred p)
   Widen :: Byte p -> Eff p (Value p)

@@ -43,7 +43,7 @@ getShortName x = do
   w <- getWord a
   a1 <- Address w
   shortNameLen <- GetByte a1
-  p <- IsZeroByte shortNameLen
+  p <- IsZeroByte shortNameLen >>= If
   if p then LitS "" else do
     one <- LitV 1
     w1 <- Add w one
@@ -60,7 +60,7 @@ testAttr x n = do
   m' <- SevenMinus m
   a <- Offset base d
   b <- GetByte a
-  b `TestBit` m'
+  b `TestBit` m' >>= If
 
 setAttr :: Value p -> Value p -> Eff p ()
 setAttr x n = do
@@ -133,10 +133,10 @@ removeObj x = do
 unlink :: forall p. Value p -> Eff p ()
 unlink this = do
   oldP <- getFM Parent this
-  b <- not <$> IsZero oldP
+  b <- not <$> (IsZero oldP >>= If)
   when b $ do
     child <- getFM Child oldP
-    b <- EqualAny [child,this]
+    b <- EqualAny [child,this] >>= If
     case b of
       True -> do
         thisSib <- getFM Sibling this
@@ -146,10 +146,10 @@ unlink this = do
       where
         loop :: Value p -> Eff p ()
         loop x = do
-          b <- IsZero x
+          b <- IsZero x >>= If
           if b then error "unlink loop, failed to find unlinkee" else do
             sib <- getFM Sibling x
-            b <- EqualAny [sib,this]
+            b <- EqualAny [sib,this] >>= If
             case b of
               False -> loop sib
               True -> do
@@ -162,7 +162,7 @@ getPropN :: Value p -> Value p -> Eff p (Maybe (Prop (Byte p) (Value p)))
 getPropN x n = do
   props <- getPropertyTable x
   xs <- sequence
-    [ do b <- EqualAny [n,number]; pure (prop,b)
+    [ do b <- EqualAny [n,number] >>= If; pure (prop,b)
     | prop@Prop{number} <- props
     ]
   pure $ case [ prop | (prop,b) <- xs, b ] of
@@ -220,7 +220,7 @@ getPropAddr x n = do
 
 getPropLen :: Value p -> Eff p (Value p)
 getPropLen v = do
-  b <- IsZero v
+  b <- IsZero v >>= If
   if b then LitV 0 else do
     one <- LitV 1
     vM1 <- Sub v one
@@ -240,8 +240,8 @@ getNextProp x p = do
   xs <-
     sequence
     [ do
-        b1 <- IsZero p
-        b2 <- LessThan n p
+        b1 <- IsZero p >>= If
+        b2 <- LessThan n p >>= If
         pure (prop,b1,b2)
     | prop@Prop{number=n} <- props
     ]
@@ -281,7 +281,7 @@ takeWhileDescending = \case
       loop last = \case
         [] -> pure []
         p@Prop{number}:ps -> do
-          b <- LessThan number last
+          b <- LessThan number last >>= If
           if not b then pure [] else do
             ps <- loop number ps
             pure (p : ps)
@@ -297,7 +297,7 @@ getPropsA :: Value p -> Eff p [Prop (Byte p) (Value p)] -- TODO: first arg shoul
 getPropsA v = do
   a <- Address v
   b <- GetByte a
-  p <- IsZeroByte b
+  p <- IsZeroByte b >>= If
   if p then pure [] else do
     oneF <- LitB 0x1f
     fiveBits <- b `BwAnd` oneF
@@ -321,7 +321,7 @@ getBytes v n = do
 
 getBytesA :: Addr p -> Value p -> Eff p [Byte p]
 getBytesA a n = do
-  stop <- IsZero n
+  stop <- IsZero n >>= If
   if stop then pure [] else do
     one <- LitV 1
     b <- GetByte a

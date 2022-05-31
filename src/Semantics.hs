@@ -31,7 +31,7 @@ eval pc = \case
 
   Op.Call func args target -> do
     funcAddress <- evalFunc func
-    p <- IsZeroAddress funcAddress
+    p <- IsZeroAddress funcAddress >>= If
     if p then LitV 0 >>= setTarget target else do
       actuals <- mapM evalArg args
       PushFrame funcAddress target
@@ -54,7 +54,7 @@ eval pc = \case
     dyn <- evalArgAsDyn arg1
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
-    res <- LessThanEqual v1 v2
+    res <- LessThanEqual v1 v2 >>= If
     one <- LitV 1
     v1' <- Sub v1 one
     setDyn dyn v1'
@@ -66,7 +66,7 @@ eval pc = \case
     v <- evalArg arg
     res <- Objects.getFM Child v
     setTarget target res
-    b <- IsZero res
+    b <- IsZero res >>= If
     branchMaybe label (not b)
 
   Op.Get_next_prop arg1 arg2 target -> do
@@ -101,7 +101,7 @@ eval pc = \case
     v <- evalArg arg
     res <- Objects.getFM Sibling v
     setTarget target res
-    b <- IsZero res
+    b <- IsZero res >>= If
     branchMaybe label (not b)
 
   Op.Inc arg -> do
@@ -118,7 +118,7 @@ eval pc = \case
     one <- LitV 1
     v1' <- Add v1 one
     setDyn dyn v1'
-    res <- GreaterThanEqual v1 v2
+    res <- GreaterThanEqual v1 v2 >>= If
     branchMaybe label res
 
   Op.Insert_obj arg1 arg2 -> do
@@ -127,29 +127,29 @@ eval pc = \case
     Objects.insertObj v1 v2
 
   Op.Je args label -> do
-    mapM evalArg args >>= EqualAny >>= branchMaybe label
+    mapM evalArg args >>= EqualAny >>= If >>= branchMaybe label
 
   Op.Jg arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- GreaterThan v1 v2
+    res <- GreaterThan v1 v2 >>= If
     branchMaybe label res
 
   Op.Jin arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     p <- Objects.getFM Parent v1
-    res <- EqualAny [v2,p]
+    res <- EqualAny [v2,p] >>= If
     branchMaybe label res
 
   Op.Jl arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- LessThan v1 v2
+    res <- LessThan v1 v2 >>= If
     branchMaybe label res
 
   Op.Jump addr -> do LitA addr >>= SetPC
-  Op.Jz arg label -> do evalArg arg >>= IsZero >>= branchMaybe label
+  Op.Jz arg label -> do evalArg arg >>= IsZero >>= If >>= branchMaybe label
 
   Op.Load arg target -> do
     dyn <- evalArgAsDyn arg
@@ -338,7 +338,7 @@ eval pc = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v12 <- And v1 v2
-    res <- EqualAny [v12, v2]
+    res <- EqualAny [v12, v2] >>= If
     branchMaybe label res
 
   Op.Test_attr arg1 arg2 label -> do
@@ -482,12 +482,12 @@ evalArgAsDyn arg = do
 
 makeDyn :: Byte p -> Eff p (Dyn (Byte p))
 makeDyn b = do
-  q <- IsZeroByte b
+  q <- IsZeroByte b >>= If
   case q of
     True -> pure DSp
     False -> do
       sixteen <- LitB 16
-      p <- LessThanByte b sixteen
+      p <- LessThanByte b sixteen >>= If
       if p then pure (DLocal b) else do
         g <- MinusByte b sixteen
         pure (DGlobal g)

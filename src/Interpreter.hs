@@ -27,6 +27,7 @@ data Interpret
 instance Phase Interpret where
   type Addr Interpret = Addr
   type Byte Interpret = Byte
+  type Pred Interpret = Bool
   type Text Interpret = String
   type Value Interpret = Value
   type Vector Interpret = []
@@ -156,6 +157,8 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       Quit -> do
         -- dont call "k" but instead "k0"
         k0 s ()
+
+      If pred -> k s pred
 
       StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
 
