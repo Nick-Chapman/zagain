@@ -3,7 +3,7 @@
 module Numbers
   ( Byte
   , Addr, addrOfPackedWord
-  , Value, makeHiLo
+  , Value, makeHiLo, equalAny
   ) where
 
 import Data.Bits (Bits)
@@ -37,3 +37,10 @@ instance Show Value where
 
 makeHiLo :: Byte -> Byte -> Value
 makeHiLo hi lo = 256 * fromIntegral hi + fromIntegral lo
+
+equalAny :: [Value] -> Bool
+equalAny = \case
+  [v1,v2] -> v1==v2
+  [v1,v2,v3] -> v1==v2 || v1==v3
+  [v1,v2,v3,v4] -> v1==v2 || v1==v3 || v1==v4
+  vs -> error (show ("EqualAny",vs))

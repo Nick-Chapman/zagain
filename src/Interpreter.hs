@@ -4,16 +4,13 @@ module Interpreter (State,runEffect) where
 
 import Action (Action)
 import Data.Bits ((.&.),shiftL,clearBit,setBit,testBit,shiftR)
-import Data.List (intercalate)
-import Data.List.Extra (lower)
-import Data.List.Split (splitOn)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
 import Eff (Eff(..),Phase)
 import Fetch (runFetch)
 import Header (Header(..))
-import Numbers (Byte,Addr,Value,addrOfPackedWord,makeHiLo)
+import Numbers (Byte,Addr,Value,addrOfPackedWord,makeHiLo,equalAny)
 import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
@@ -21,6 +18,7 @@ import qualified Action as A (Action(..))
 import qualified Data.Char as Char (ord,chr)
 import qualified Data.Map as Map
 import qualified Eff (Phase(..))
+import qualified Lex (tokenize,lookupInStrings)
 
 data Interpret
 
@@ -110,20 +108,6 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let State{locals} = s
         k s { locals = Map.insert n v locals } ()
 
-      EqualAny vs -> do
-        let
-          res =
-            case vs of
-              [v1,v2] -> v1==v2
-              [v1,v2,v3] -> v1==v2 || v1==v3
-              [v1,v2,v3,v4] -> v1==v2 || v1==v3 || v1==v4
-              vs -> error (show ("EqualAny",vs))
-        k s res
-
-      IsZero value -> do
-        let res = (value == 0)
-        k s res
-
       GetByte a -> do
         let State{overrides} = s
         let (_over,b) =
@@ -160,37 +144,13 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
       If pred -> k s pred
 
-      StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
-
-      Tokenize str -> do
-        let toks = [ w | w <- splitOn " " str, w /= "" ]
-        let
-          offsets :: [Byte] = do
-            let lens :: [Byte] = [ fromIntegral (length w) | w <- toks ]
-            let
-              f :: (Byte,[Byte]) -> Byte -> (Byte,[Byte])
-              f (off,xs) i = (off+i+1, off : xs) --
-            let z = (1,[])
-            let (_,offsetsR) = foldl f z lens
-            reverse offsetsR
-        -- TODO: Better if we didn't change inter-word whitespace
-        let canonicalized = intercalate " " toks -- TODO: what needs this? ++ "\0"
-        k s (zip offsets toks, canonicalized)
-
-      ListLength xs -> k s (fromIntegral $ length xs)
-
       Foreach xs f -> do
         loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k
 
-      LookupInStrings strings word -> do
-        let key = lower (take 6 word)
-        let
-          res =
-            case [ i | (i,s) <- zip [1..] strings, s == key ] of
-              [] -> Nothing
-              xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
-              [i] -> Just i
-        k s res
+      LitA a -> k s a
+      LitB b -> k s b
+      LitS x -> k s x
+      LitV v -> k s v
 
       Add v1 v2 -> k s (v1 + v2)
       Address v -> k s (fromIntegral v)
@@ -200,19 +160,19 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       DeAddress a -> k s (fromIntegral a)
       Div v1 v2 -> k s (v1 `div` v2)
       Div8 v -> k s (v `div` 8)
+      EqualAny vs -> k s (equalAny vs)
       GreaterThan v1 v2 -> k s (v1 > v2)
       GreaterThanEqual v1 v2 -> k s (v1 >= v2)
       HiByte v -> k s (fromIntegral (v `shiftR` 8))
+      IsZero value -> k s (value == 0)
       IsZeroAddress a -> k s (a == 0)
       IsZeroByte b -> k s (b == 0)
       LessThan v1 v2 -> k s (v1 < v2)
       LessThanByte b1 b2 -> k s (b1 < b2)
       LessThanEqual v1 v2 -> k s (v1 <= v2)
-      LitA a -> k s a
-      LitB b -> k s b
-      LitS x -> k s x
-      LitV v -> k s v
+      ListLength xs -> k s (fromIntegral $ length xs)
       LoByte v -> k s (fromIntegral (v .&. 0xff))
+      LookupInStrings strings word -> k s (Lex.lookupInStrings strings word)
       MakeHiLo hi lo -> k s (makeHiLo hi lo)
       MinusByte b1 b2 -> k s (b1 - b2)
       Mod v1 v2 -> k s (v1 `mod` v2)
@@ -224,10 +184,13 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       ShiftR b n -> k s (b `shiftR` n)
       ShowNumber v -> k s (show v)
       SingleChar v -> k s [Char.chr (fromIntegral v)]
+      StringBytes str -> k s [ fromIntegral (Char.ord c) | c <- str ]
       StringLength str -> k s (fromIntegral $ length str)
       Sub v1 v2 -> k s (v1 - v2)
       TestBit b n -> k s (b `testBit` fromIntegral n)
+      Tokenize str -> k s (Lex.tokenize str)
       Widen lo -> k s (fromIntegral lo)
+
 
 --[interpreter state]-------------------------------------------------
 
