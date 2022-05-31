@@ -440,11 +440,13 @@ setLocals rh actuals =
   case rh of
     Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
-      -- TODO: we can do better here... !
       indexes <- mapM LitB [1..]
       defs <- mapM LitV defs
-      sequence_ [ SetLocal n v | (n,v) <- zip indexes defs ]
-      sequence_ [ SetLocal n v | (n,v) <- zip indexes actuals ]
+      sequence_
+        [ SetLocal i v
+        | (i,actual,def) <- zip3 indexes (map Just actuals ++ repeat Nothing) defs
+        , let v = case actual of Just x -> x; Nothing -> def
+        ]
 
 getWord :: Addr p -> Eff p (Value p)
 getWord a = do
