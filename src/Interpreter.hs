@@ -68,15 +68,13 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
         let (text,_) = runFetch (oob "GetText") a story ztext
         k s text
 
-      FetchI -> do -- TODO: share code common to all Fetch* ops
+      FetchI -> do
         let State{pc,count} = s
         let (ins,pc') = runFetch (oob "FetchI") pc story fetchOperation
-        let s' = s { pc = pc'
-                   , count = count + 1
-                   }
-        A.TraceInstruction (show s) count pc ins (k s' ins)
+        A.TraceInstruction (show s) count pc ins $
+          k s { pc = pc', count = count + 1 } ins
 
-      FetchRoutineHeader -> do -- TODO: share code common to all Fetch* ops
+      FetchRoutineHeader -> do
         let State{pc} = s
         let (rh,pc') = runFetch (oob "FetchRoutineHeader") pc story fetchRoutineHeader
         k s { pc = pc' } rh
