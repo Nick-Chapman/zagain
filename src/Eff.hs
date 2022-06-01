@@ -18,13 +18,15 @@ class Phase p where
   type Pred p
   type Text p
   type Value p
-  type Vector p :: * -> *
+  type Vector p a
 
 data Eff p x where
   Ret :: x -> Eff p x
   Bind :: Eff p x -> (x -> Eff p y) -> Eff p y
   GamePrint :: Text p -> Eff p ()
   Debug :: Show x => x -> Eff p ()
+
+  Error :: String -> Eff p a
 
   TheDictionary :: Eff p Dict
   StoryHeader :: Eff p Header
@@ -73,7 +75,6 @@ data Eff p x where
   LessThan :: Value p -> Value p -> Eff p (Pred p)
   LessThanByte :: Byte p -> Byte p -> Eff p (Pred p)
   LessThanEqual :: Value p -> Value p -> Eff p (Pred p)
-  ListLength :: Vector p x -> Eff p (Byte p)
   LoByte :: Value p -> Eff p (Byte p)
   MakeHiLo :: Byte p -> Byte p -> Eff p (Value p)
   MinusByte :: Byte p -> Byte p -> Eff p (Byte p)
@@ -90,5 +91,5 @@ data Eff p x where
   StringLength :: Text p -> Eff p (Byte p)
   Sub :: Value p -> Value p -> Eff p (Value p)
   TestBit :: Byte p -> Byte p -> Eff p (Pred p)
-  Tokenize :: Text p -> Eff p (Vector p (Byte p,Text p),Text p)
+  Tokenize :: Text p -> Eff p (Byte p,Vector p (Byte p,Text p),Text p)
   Widen :: Byte p -> Eff p (Value p)

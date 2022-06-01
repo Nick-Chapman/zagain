@@ -18,7 +18,7 @@ theEffect = loop
       pc <- GetPC -- only in case we fail to decode
       i <- FetchI
       eval pc i
-      loop
+      loop -- TODO: infinite effect is a problem for compilation
 
 eval :: Show (Addr p) => Addr p -> Operation -> Eff p ()
 eval pc = \case
@@ -276,7 +276,7 @@ eval pc = \case
 
     base <- LitA dictionary
     baseEntries <- Offset base offset
-    (positionedWords,canoicalizedTyped) <- Tokenize rawTyped
+    (n,positionedWords,canoicalizedTyped) <- Tokenize rawTyped
 
     textBytes <- StringBytes canoicalizedTyped
     Foreach textBytes $ \i b -> do
@@ -284,7 +284,6 @@ eval pc = \case
       a <- Offset t_buf one
       SetByte a b
 
-    n <- ListLength positionedWords
     one <- LitV 1
     a <- Offset p_buf one
     SetByte a n
@@ -310,7 +309,7 @@ eval pc = \case
     dyn <- evalArgAsDyn arg1
     v2 <- evalArg arg2
     case dyn of
-      DSp{} -> undefined (do _ <- PopStack; pure ()) -- TODO: (from niz) enable code when hit
+      DSp{} -> Error "Op.Store/DSp" -- (do _ <- PopStack; pure ()) -- TODO: (from niz) enable code when hit
       _ -> pure ()
     setDyn dyn v2
 
@@ -438,7 +437,7 @@ globalAddr b = do
 setLocals :: RoutineHeader -> [Value p] -> Eff p ()
 setLocals rh actuals =
   case rh of
-    Op.BadRoutineHeader -> error "setLocals: BadRoutineHeader, n>15"
+    Op.BadRoutineHeader -> Error "setLocals: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
       indexes <- mapM LitB [1..]
       defs <- mapM LitV defs

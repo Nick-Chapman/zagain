@@ -7,7 +7,7 @@ import Numbers (Byte)
 import Data.List (intercalate)
 import Data.List.Extra (lower)
 
-tokenize :: String -> ([(Byte,String)],String)
+tokenize :: String -> (Byte,[(Byte,String)],String)
 tokenize str = do
   let toks = [ w | w <- splitOn " " str, w /= "" ]
   let
@@ -21,7 +21,9 @@ tokenize str = do
       reverse offsetsR
   -- TODO: Better if we didn't change inter-word whitespace
   let canonicalized = intercalate " " toks -- TODO: what needs this? ++ "\0"
-  (zip offsets toks, canonicalized)
+  let positionedWords = zip offsets toks
+  let n = fromIntegral (length positionedWords)
+  (n, positionedWords, canonicalized)
 
 lookupInStrings :: [String] -> String -> Maybe Int
 lookupInStrings strings word = do

@@ -29,7 +29,7 @@ instance Phase Interpret where
   type Pred Interpret = Bool
   type Text Interpret = String
   type Value Interpret = Value
-  type Vector Interpret = []
+  type Vector Interpret a = [a]
 
 type Effect x = Eff Interpret x
 
@@ -46,12 +46,14 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
 
     (dict,_) = runFetch (oob "fetchDict") 0 story fetchDict
 
-    loop :: forall r. State -> Effect r -> (State -> r -> Action) -> Action
+    loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Action) -> Action
     loop s e k = case e of
       Ret x -> k s x
       Bind e f -> loop s e $ \s a -> loop s (f a) k
       GamePrint mes -> A.Output mes (k s ())
       Debug a -> A.Debug (show a) (k s ())
+
+      Error s -> error ("runEffect: " ++ s)
 
       TheDictionary -> do
         k s dict
@@ -160,7 +162,6 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       IsZero x -> prim1 x Prim.IsZero
       IsZeroAddress x -> prim1 x Prim.IsZeroAddress
       IsZeroByte x -> prim1 x Prim.IsZeroByte
-      ListLength x -> prim1 x Prim.ListLength
       LoByte x -> prim1 x Prim.LoByte
       PackedAddress x -> prim1 x Prim.PackedAddress
       SevenMinus x -> prim1 x Prim.SevenMinus
@@ -194,11 +195,11 @@ runEffect seed story e0 = loop (initState seed pc0) e0 k0
       TestBit x y -> prim2 x y Prim.TestBit
 
       where
-        prim1 :: forall x. x -> Prim.P1 x r -> Action -- r from scope
-        prim1 x p1 = k s (evalP1 p1 x) -- k/s from scope
+        prim1 :: forall x. x -> Prim.P1 x loopType -> Action
+        prim1 x p1 = k s (evalP1 p1 x)
 
-        prim2 :: forall x y. x -> y -> Prim.P2 x y r -> Action -- r from scope
-        prim2 x y p2 = k s (evalP2 p2 x y) -- k/s from scope
+        prim2 :: forall x y. x -> y -> Prim.P2 x y loopType -> Action
+        prim2 x y p2 = k s (evalP2 p2 x y)
 
 
 --[interpreter state]-------------------------------------------------

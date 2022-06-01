@@ -151,7 +151,7 @@ unlink this = do
             sib <- getFM Sibling x
             b <- EqualAny [sib,this] >>= If
             case b of
-              False -> loop sib
+              False -> loop sib -- TODO: infinite effect is a problem for compilation
               True -> do
                 thisSib <- getFM Sibling this
                 setFM Sibling x thisSib
@@ -195,7 +195,7 @@ putProp :: Value p -> Value p -> Value p -> Eff p ()
 putProp x n v = do
   pr <- do
     getPropN x n >>= \case
-      Nothing -> error "putProp, no such prop"
+      Nothing -> Error "putProp, no such prop"
       Just x -> pure x
 
   let Prop{dataBytes,dataAddr} = pr
@@ -208,8 +208,8 @@ putProp x n v = do
       SetByte dataAddr hi
       SetByte dataAddrPlusOne lo
       pure ()
-    1 -> undefined
-    _ -> error "expected 1 or 2 bytes for prop value"
+    1 -> Error "expected 2 bytes for a prop value"
+    _ -> Error "expected 1 or 2 bytes for prop value"
 
 getPropAddr :: Value p -> Value p -> Eff p (Value p)
 getPropAddr x n = do
@@ -259,7 +259,7 @@ getPropertyTable x = do
   size <- dubPlus1 shortNameLen
   a2 <- Offset a1 size
   props <- getPropsA a2
-  takeWhileDescending props
+  pure props
 
 dubPlus1 :: Byte p -> Eff p (Value p)
 dubPlus1 b = do
@@ -269,27 +269,12 @@ dubPlus1 b = do
   dub <- Mul two v
   Add dub one
 
-takeWhileDescending :: [Prop p] -> Eff p [Prop p]
-takeWhileDescending = \case
-  [] -> pure []
-  p@Prop{number}:ps -> do
-    ps <- loop number ps
-    pure (p : ps)
-    where
-      loop last = \case
-        [] -> pure []
-        p@Prop{number}:ps -> do
-          b <- LessThan number last >>= If
-          if not b then pure [] else do
-            ps <- loop number ps
-            pure (p : ps)
-
 
 data Prop p = Prop -- TODO: using this type isn't very helpful
   { number :: Value p
   , dataAddr :: Addr p
   , dataBytes :: [Byte p]
-  } --deriving Show
+  }
 
 getPropsA :: Addr p -> Eff p [Prop p]
 getPropsA a = do
@@ -309,7 +294,7 @@ getPropsA a = do
     dataBytes <- getBytes dataAddr numBytes
     let p1 = Prop {number,dataAddr,dataBytes}
     a' <- Offset dataAddr numBytes
-    more <- getPropsA a' -- TODO: loop
+    more <- getPropsA a' -- TODO: infinite effect is a problem for compilation
     pure (p1:more)
 
 getBytes :: Addr p -> Value p -> Eff p [Byte p]
