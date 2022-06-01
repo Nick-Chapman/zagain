@@ -10,6 +10,7 @@ import Fetch (runFetch)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
 import Text.Printf (printf)
+import qualified Compiler (compileEffect,runCode)
 import qualified Console (runAction)
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
@@ -27,6 +28,7 @@ data Config = Config
   , iconf :: Action.Conf
   , inputs :: [String]
   , mayStartConsole :: Bool
+  , viaCompiler :: Bool
   }
 
 data Mode = Dictionary | Run | Disassemble
@@ -38,6 +40,7 @@ config0 = Config
   , iconf = iconf0
   , inputs = []
   , mayStartConsole = True
+  , viaCompiler = False
   } where
   iconf0 = Action.Conf
     { debug = True
@@ -57,6 +60,7 @@ parseCommandLine = loop config0
       "dis":more -> loop c { mode = Disassemble } more
       "-noconsole":more -> loop c { mayStartConsole = False } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
+      "-comp":more -> loop c { viaCompiler = True } more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
@@ -70,7 +74,7 @@ parseCommandLine = loop config0
         loop c { storyFile } more
 
 run :: Config -> IO ()
-run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsole} = do
+run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsole,viaCompiler} = do
   case mode of
     Dictionary -> do
       story <- loadStory storyFile
@@ -79,7 +83,10 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
     Run -> do
       let seed = 888
       story <- loadStory storyFile
-      let a = Interpreter.runEffect seed story Semantics.smallStep
+      a <- if | not viaCompiler -> pure $ Interpreter.runEffect seed story Semantics.smallStep
+              | otherwise -> do
+                  code <- Compiler.compileEffect story Semantics.smallStep
+                  pure $ Compiler.runCode seed code
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       printf "\n\n"
       case inputs of
