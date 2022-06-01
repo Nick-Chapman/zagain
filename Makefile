@@ -25,7 +25,7 @@ compare_with_frotz: my.walk frotz.walk
 	git diff --no-index my.walk frotz.walk
 
 my.walk: $(exe) $(SCRIPT) Makefile
-	bash -c '($(exe) $(STORY) $(WRAP) -walk <(head -$(LEN) $(SCRIPT)) > my.walk 2>&1) || true'
+	bash -c '($(exe) $(STORY) $(WRAP) -nodebug -walk <(head -$(LEN) $(SCRIPT)) > my.walk 2>&1) || true'
 
 
 frotz.walk: dfrotz $(SCRIPT) Makefile
