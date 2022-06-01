@@ -12,7 +12,7 @@ import System.Environment (getArgs)
 import Text.Printf (printf)
 import qualified Console (runAction)
 import qualified Interpreter (runEffect)
-import qualified Semantics (theEffect)
+import qualified Semantics (smallStep)
 import qualified WalkThrough (runAction)
 
 main :: IO ()
@@ -79,9 +79,9 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
     Run -> do
       let seed = 888
       story <- loadStory storyFile
+      let a = Interpreter.runEffect seed story Semantics.smallStep
       when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
       printf "\n\n"
-      let a = Interpreter.runEffect seed story Semantics.theEffect
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a
         _ -> WalkThrough.runAction iconf inputs a

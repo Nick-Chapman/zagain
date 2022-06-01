@@ -19,7 +19,7 @@ import Text.Printf (printf)
 import qualified Data.Set as Set
 import qualified Interpreter (runEffect)
 import qualified Operation as Op
-import qualified Semantics (theEffect)
+import qualified Semantics (smallStep)
 
 disassemble :: Story -> [String] -> IO ()
 disassemble story walkthrough = do
@@ -98,7 +98,7 @@ dumpRoutine prev lf r = do
 dynamicDiscovery :: Story -> [String] -> [Addr]
 dynamicDiscovery story walkthrough = do
   let seed = 888
-  let action = Interpreter.runEffect seed story Semantics.theEffect
+  let action = Interpreter.runEffect seed story Semantics.smallStep
   collectRoutineCalls walkthrough action
 
 collectRoutineCalls :: [String] -> Action -> [Addr]

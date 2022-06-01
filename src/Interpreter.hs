@@ -36,8 +36,10 @@ type Effect x = Eff Interpret x
 --[interpreter for execution effects]----------------------------------
 
 runEffect :: Word -> Story -> Effect () -> Action
-runEffect seed story e0 = loop (initState seed pc0) e0 k0
+runEffect seed story smallStep = loop (initState seed pc0) e0 k0
   where
+    e0 = do smallStep; e0
+
     oob who = OOB_Error ("runEffect:"++who)
 
     header@Header{initialPC=pc0} = Story.header story

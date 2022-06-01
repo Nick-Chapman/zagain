@@ -1,6 +1,6 @@
 
 -- | Semantics of z-machine operations.
-module Semantics (theEffect) where
+module Semantics (smallStep) where
 
 import Dictionary (Dict(..))
 import Eff (Eff(..),Phase(..))
@@ -11,14 +11,11 @@ import Text.Printf (printf)
 import qualified Objects
 import qualified Operation as Op
 
-theEffect :: Show (Addr p) => Eff p ()
-theEffect = loop
-  where
-    loop = do
-      pc <- GetPC -- only in case we fail to decode
-      i <- FetchI
-      eval pc i
-      loop -- TODO: infinite effect is a problem for compilation
+smallStep :: Show (Addr p) => Eff p ()
+smallStep = do
+  pc <- GetPC -- only in case we fail to decode
+  i <- FetchI
+  eval pc i
 
 eval :: Show (Addr p) => Addr p -> Operation -> Eff p ()
 eval pc = \case
