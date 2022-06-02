@@ -257,8 +257,8 @@ eval mode pc = \case
 
   Op.Sread arg1 arg2 -> do
     zero <- LitB 0
-    one <- LitB 0
-    two <- LitB 0
+    one <- LitB 1
+    two <- LitB 2
     v0 <- evalGlobal zero
     score <- evalGlobal one
     turns <- evalGlobal two
