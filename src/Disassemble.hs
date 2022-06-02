@@ -1,6 +1,10 @@
 
 -- | Explore the static structure of a strory file
-module Disassemble (disassemble) where
+module Disassemble
+  ( disassemble
+  , Routine(..), disRoutine, dumpRoutine
+  , branchesOf, isStopping
+  ) where
 
 import Action (Action(..))
 import Control.Monad (when)
@@ -10,6 +14,7 @@ import Data.List.Extra (notNull)
 import Data.Ord (comparing)
 import Data.Set (Set)
 import Decode (fetchOperation,fetchRoutineHeader)
+import Eff (Mode(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr)
@@ -68,7 +73,7 @@ discoverCode story walkthrough = do
         where rStart (_,Routine{start}) = start
 
   let prevs = 0 : [ finish | (_,Routine{finish}) <- lostAndFound ]
-  sequence_ [ dumpRoutine prev lf r | (prev,(lf,r)) <- zip prevs lostAndFound ]
+  sequence_ [ dumpRoutine0 prev lf r | (prev,(lf,r)) <- zip prevs lostAndFound ]
 
 
 ----------------------------------------------------------------------
@@ -76,14 +81,20 @@ discoverCode story walkthrough = do
 
 data LF = Lost | Found
 
-dumpRoutine :: Addr -> LF -> Routine -> IO ()
-dumpRoutine prev lf r = do
-  let Routine{start,header,body=xs} = r
+dumpRoutine0 :: Addr -> LF -> Routine -> IO ()
+dumpRoutine0 prev lf r = do
+  let Routine{start} = r
   let gap :: Int = fromIntegral (start - prev)
   printf "--------------------------------------------------\n"
   printf "gap=%d%s\n" gap (if gap<0 then " **OVERLAP**" else "")
   let tag = case lf of Lost -> "**LOST**"; Found -> ""
-  printf "%s%s %s\n" tag (show start) (show header)
+  printf "%s" tag
+  dumpRoutine r
+
+dumpRoutine :: Routine -> IO ()
+dumpRoutine r = do
+  let Routine{start,header,body=xs} = r
+  printf "%s %s\n" (show start) (show header)
   let Routine{illegal,unused} = r
   --printf "-- local defs: %s\n" (show defs)
   --printf "-- local refs locals: %s\n" (show refs)
@@ -98,7 +109,8 @@ dumpRoutine prev lf r = do
 dynamicDiscovery :: Story -> [String] -> [Addr]
 dynamicDiscovery story walkthrough = do
   let seed = 888
-  let action = Interpreter.runEffect seed story Semantics.smallStep
+  let eff = Semantics.smallStep Interpreting
+  let action = Interpreter.runEffect seed story eff
   collectRoutineCalls walkthrough action
 
 collectRoutineCalls :: [String] -> Action -> [Addr]

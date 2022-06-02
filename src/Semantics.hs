@@ -3,7 +3,7 @@
 module Semantics (smallStep) where
 
 import Dictionary (Dict(..))
-import Eff (Eff(..),Phase(..))
+import Eff (Eff(..),Phase(..),Mode)
 import Header (Header(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
@@ -11,14 +11,14 @@ import Text.Printf (printf)
 import qualified Objects
 import qualified Operation as Op
 
-smallStep :: Show (Addr p) => Eff p ()
-smallStep = do
+smallStep :: Show (Addr p) => Mode -> Eff p ()
+smallStep mode = do
   pc <- GetPC -- only in case we fail to decode
   i <- FetchI
-  eval pc i
+  eval mode pc i
 
-eval :: Show (Addr p) => Addr p -> Operation -> Eff p ()
-eval pc = \case
+eval :: Show (Addr p) => Mode -> Addr p -> Operation -> Eff p ()
+eval mode pc = \case
 
   Op.BadOperation mes -> do
     error (printf "At [%s] %s" (show pc) mes)
@@ -69,7 +69,7 @@ eval pc = \case
   Op.Get_next_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getNextProp v1 v2
+    res <- Objects.getNextProp mode v1 v2
     setTarget target res
 
   Op.Get_parent arg target -> do
@@ -80,13 +80,13 @@ eval pc = \case
   Op.Get_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getProp v1 v2
+    res <- Objects.getProp mode v1 v2
     setTarget target res
 
   Op.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getPropAddr v1 v2
+    res <- Objects.getPropAddr mode v1 v2
     setTarget target res
 
   Op.Get_prop_len arg target -> do
@@ -121,7 +121,7 @@ eval pc = \case
   Op.Insert_obj arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    Objects.insertObj v1 v2
+    Objects.insertObj mode v1 v2
 
   Op.Je args label -> do
     mapM evalArg args >>= EqualAny >>= If >>= branchMaybe label
@@ -222,7 +222,7 @@ eval pc = \case
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v3 <- evalArg arg3
-    Objects.putProp v1 v2 v3
+    Objects.putProp mode v1 v2 v3
 
   Op.Quit -> do
     Quit
@@ -235,7 +235,7 @@ eval pc = \case
 
   Op.Remove_obj arg -> do
     v <- evalArg arg
-    Objects.removeObj v
+    Objects.removeObj mode v
 
   Op.Restart -> do -- TODO: implementation is not stack safe!
     Header{initialPC} <- StoryHeader

@@ -9,7 +9,7 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Eff (Eff(..),Phase(..))
+import Eff (Eff(..),Phase(..),Mode(..))
 import Header (Header(..),Zversion(..))
 import qualified Numbers (Value)
 
@@ -116,22 +116,22 @@ setFM fm x y = do
   a <- Offset base off
   SetByte a lo
 
-insertObj :: Value p -> Value p -> Eff p ()
-insertObj x dest = do
-  unlink x
+insertObj :: Mode -> Value p -> Value p -> Eff p ()
+insertObj mode x dest = do
+  unlink mode x
   setFM Parent x dest
   oldChild <- getFM Child dest
   setFM Sibling x oldChild
   setFM Child dest x
 
-removeObj :: Value p -> Eff p ()
-removeObj x = do
-  unlink x
+removeObj :: Mode -> Value p -> Eff p ()
+removeObj mode x = do
+  unlink mode x
   zero <- LitV 0
   setFM Parent x zero
 
-unlink :: forall p. Value p -> Eff p ()
-unlink this = do
+unlink :: forall p. Mode -> Value p -> Eff p ()
+unlink mode this = do
   oldP <- getFM Parent this
   b <- not <$> (IsZero oldP >>= If)
   when b $ do
@@ -142,7 +142,9 @@ unlink this = do
         thisSib <- getFM Sibling this
         setFM Child oldP thisSib
       False -> do
-        loop child
+        case mode of
+          Compiling -> Error "unlink/loop"
+          Interpreting -> loop child
       where
         loop :: Value p -> Eff p ()
         loop x = do
@@ -158,24 +160,26 @@ unlink this = do
 
 --[properties]--------------------------------------------------------
 
-getPropN :: Value p -> Value p -> Eff p (Maybe (Prop p))
-getPropN x n = do
-  props <- getPropertyTable x
+getPropN :: Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
+getPropN mode x n = do
+  props <- getPropertyTable mode x
   xs <- sequence
     [ do b <- EqualAny [n,number] >>= If; pure (prop,b)
     | prop@Prop{number} <- props
     ]
   pure $ case [ prop | (prop,b) <- xs, b ] of
     [] -> Nothing
-    [prop] -> Just prop
-    _ -> error "getPropN: multi prop match"
+    --[prop] -> Just prop
+    --_ -> error "getPropN: multi prop match"
+    prop:_ -> Just prop
 
 
-getProp :: Value p -> Value p -> Eff p (Value p)
-getProp x n = do
+
+getProp :: Mode -> Value p -> Value p -> Eff p (Value p)
+getProp mode x n = do
   Header{objectTable} <- StoryHeader
 
-  getPropN x n >>= \case
+  getPropN mode x n >>= \case
     Nothing -> do
       -- get property default
       m1 <- LitV (-1)
@@ -191,10 +195,10 @@ getProp x n = do
         [_b] -> undefined -- Widen _b -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
 
-putProp :: Value p -> Value p -> Value p -> Eff p ()
-putProp x n v = do
+putProp :: Mode -> Value p -> Value p -> Value p -> Eff p ()
+putProp mode x n v = do
   pr <- do
-    getPropN x n >>= \case
+    getPropN mode x n >>= \case
       Nothing -> Error "putProp, no such prop"
       Just x -> pure x
 
@@ -211,9 +215,9 @@ putProp x n v = do
     1 -> Error "expected 2 bytes for a prop value"
     _ -> Error "expected 1 or 2 bytes for prop value"
 
-getPropAddr :: Value p -> Value p -> Eff p (Value p)
-getPropAddr x n = do
-  getPropN x n >>= \case
+getPropAddr :: Mode -> Value p -> Value p -> Eff p (Value p)
+getPropAddr mode x n = do
+  getPropN mode x n >>= \case
     Just(Prop{dataAddr}) -> do DeAddress dataAddr
     Nothing -> LitV 0
 
@@ -232,10 +236,10 @@ getPropLen v = do
     one <- LitV 1
     Add one w
 
-getNextProp :: Value p -> Value p -> Eff p (Value p)
-getNextProp x p = do
+getNextProp :: Mode -> Value p -> Value p -> Eff p (Value p)
+getNextProp mode x p = do
   -- TODO: stop being so complicated. Assume descendning order and avoid search
-  props <- getPropertyTable x
+  props <- getPropertyTable mode x
   xs <-
     sequence
     [ do
@@ -249,8 +253,8 @@ getNextProp x p = do
     [] -> LitV 0
     fst:_ -> pure fst -- assume the first is the biggest
 
-getPropertyTable :: Value p -> Eff p [Prop p]
-getPropertyTable x = do
+getPropertyTable :: Mode -> Value p -> Eff p [Prop p]
+getPropertyTable mode x = do
   base <- objectAddr x
   seven <- LitV 0x7
   a <- Offset base seven
@@ -258,7 +262,7 @@ getPropertyTable x = do
   shortNameLen <- GetByte a1
   size <- dubPlus1 shortNameLen
   a2 <- Offset a1 size
-  props <- getPropsA a2
+  props <- getPropsA mode a2
   pure props
 
 dubPlus1 :: Byte p -> Eff p (Value p)
@@ -276,8 +280,17 @@ data Prop p = Prop -- TODO: using this type isn't very helpful
   , dataBytes :: [Byte p]
   }
 
-getPropsA :: Addr p -> Eff p [Prop p]
-getPropsA a = do
+
+getPropsA :: Mode -> Addr p -> Eff p [Prop p]
+getPropsA = \case
+  Compiling -> hack_getPropsA
+  Interpreting -> real_getPropsA
+
+hack_getPropsA :: Addr p -> Eff p [Prop p]
+hack_getPropsA _a = Error "TODO:getPropsA"
+
+real_getPropsA ::  Addr p -> Eff p [Prop p]
+real_getPropsA a = do
   b <- GetByte a
   endOfProps <- IsZeroByte b >>= If
   if endOfProps then pure [] else do
@@ -294,7 +307,7 @@ getPropsA a = do
     dataBytes <- getBytes dataAddr numBytes
     let p1 = Prop {number,dataAddr,dataBytes}
     a' <- Offset dataAddr numBytes
-    more <- getPropsA a' -- TODO: infinite effect is a problem for compilation
+    more <- real_getPropsA a' -- TODO: infinite effect is a problem for compilation
     pure (p1:more)
 
 getBytes :: Addr p -> Value p -> Eff p [Byte p]

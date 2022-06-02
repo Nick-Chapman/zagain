@@ -12,6 +12,7 @@ import System.Environment (getArgs)
 import Text.Printf (printf)
 import qualified Compiler (compileEffect,runCode)
 import qualified Console (runAction)
+import qualified Eff (Mode(..))
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
 import qualified WalkThrough (runAction)
@@ -83,12 +84,15 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
     Run -> do
       let seed = 888
       story <- loadStory storyFile
-      a <- if | not viaCompiler -> pure $ Interpreter.runEffect seed story Semantics.smallStep
+      a <- if | not viaCompiler -> do
+                  when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
+                  printf "\n\n"
+                  let eff = Semantics.smallStep Eff.Interpreting
+                  pure $ Interpreter.runEffect seed story eff
               | otherwise -> do
-                  code <- Compiler.compileEffect story Semantics.smallStep
+                  let eff = Semantics.smallStep Eff.Compiling
+                  code <- Compiler.compileEffect story eff
                   pure $ Compiler.runCode seed code
-      when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
-      printf "\n\n"
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a
         _ -> WalkThrough.runAction iconf inputs a

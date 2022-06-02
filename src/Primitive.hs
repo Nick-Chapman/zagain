@@ -27,6 +27,8 @@ data P1 arg ret where
   Tokenize :: P1 String (Byte,[(Byte,String)],String)
   Widen :: P1 Byte Value
 
+deriving instance Show (P1 a b)
+
 evalP1 :: P1 a r -> a -> r
 evalP1 = \case
   Address -> fromIntegral
@@ -69,6 +71,8 @@ data P2 arg1 arg2 ret where
   ShiftR :: P2 Byte Int Byte
   Sub :: P2 Value Value Value
   TestBit :: P2 Byte Byte Bool
+
+deriving instance Show (P2 a b r)
 
 evalP2 :: P2 a b r -> a -> b -> r
 evalP2 = \case
