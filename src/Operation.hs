@@ -20,11 +20,13 @@ data Operation
 
   | Add Arg Arg Target
   | And Arg Arg Target
+  | Buffer_mode Arg
   | Call Func [Arg] Target
   | Clear_attr Arg Arg
   | Dec Arg
   | Dec_chk Arg Arg Label
   | Div Arg Arg Target
+  | Erase_window Arg
   | Get_child Arg Target Label
   | Get_next_prop Arg Arg Target
   | Get_parent Arg Target
@@ -64,15 +66,18 @@ data Operation
   | Put_prop Arg Arg Arg
   | Quit
   | Random Arg Target
+  | Read_char Target
   | Remove_obj Arg
   | Restart
   | Restore Label
-  | Ret_popped
   | Ret Arg
+  | Ret_popped
   | Rfalse
   | Rtrue
   | Save Label
   | Set_attr Arg Arg
+  | Set_cursor Arg Arg
+  | Set_text_style Arg
   | Set_window Arg
   | Show_status
   | Split_window Arg
@@ -108,7 +113,6 @@ data Sense = T | F
 data RoutineHeader = BadRoutineHeader | RoutineHeader [Value]
   deriving Show
 
-----------------------------------------------------------------------
 
 opLocals :: Operation -> [Byte]
 opLocals op = [ b | t <- opTargets op, Local b <- [t] ]
@@ -124,11 +128,13 @@ opArgs = \case
   BadOperation _mes -> do []
   Add arg1 arg2 _target -> do [arg1,arg2]
   And arg1 arg2 _target -> do [arg1,arg2]
+  Buffer_mode arg -> do [arg]
   Call _func args _target -> do args
   Clear_attr arg1 arg2 -> do [arg1,arg2]
   Dec arg -> do [arg]
   Dec_chk arg1 arg2 _label -> do [arg1,arg2]
   Div arg1 arg2 _target -> do [arg1,arg2]
+  Erase_window arg -> do [arg]
   Get_child arg _target _label -> do [arg]
   Get_next_prop arg1 arg2 _target -> do [arg1,arg2]
   Get_parent arg _target -> do [arg]
@@ -168,6 +174,7 @@ opArgs = \case
   Put_prop arg1 arg2 arg3 -> do [arg1,arg2,arg3]
   Quit -> do []
   Random arg _target -> do [arg]
+  Read_char _target -> do []
   Remove_obj arg -> do [arg]
   Restart -> do []
   Restore _label -> do []
@@ -177,6 +184,8 @@ opArgs = \case
   Rtrue -> do []
   Save _label -> do []
   Set_attr arg1 arg2 -> do [arg1,arg2]
+  Set_cursor arg1 arg2 -> do [arg1,arg2]
+  Set_text_style arg -> do [arg]
   Set_window arg -> do [arg]
   Show_status-> do []
   Split_window arg -> do [arg]
@@ -195,11 +204,13 @@ opTargetOpt = \case
   BadOperation _mes -> do Nothing
   Add _arg1 _arg2 target -> do Just target
   And _arg1 _arg2 target -> do Just target
+  Buffer_mode _arg -> do Nothing
   Call _func _args target -> do Just target
   Clear_attr _arg1 _arg2 -> do Nothing
   Dec _arg -> do Nothing
   Dec_chk _arg1 _arg2 _label -> do Nothing
   Div _arg1 _arg2 target -> do Just target
+  Erase_window _arg -> do Nothing
   Get_child _arg target _label -> do Just target
   Get_next_prop _arg1 _arg2 target -> do Just target
   Get_parent _arg target -> do Just target
@@ -239,6 +250,7 @@ opTargetOpt = \case
   Put_prop _arg1 _arg2 _arg3 -> do Nothing
   Quit -> do Nothing
   Random _arg target -> do Just target
+  Read_char target -> do Just target
   Remove_obj _arg -> do Nothing
   Restart -> do Nothing
   Restore _label -> do Nothing
@@ -248,6 +260,8 @@ opTargetOpt = \case
   Rtrue -> do Nothing
   Save _label -> do Nothing
   Set_attr _arg1 _arg2 -> do Nothing
+  Set_cursor _arg1 _arg2 -> do Nothing
+  Set_text_style _arg -> do Nothing
   Set_window _arg -> do Nothing
   Show_status-> do Nothing
   Split_window _arg -> do Nothing
@@ -259,4 +273,3 @@ opTargetOpt = \case
   Test _arg1 _arg2 _label -> do Nothing
   Test_attr _arg1 _arg2 _label -> do Nothing
   Verify _label -> do Nothing
-

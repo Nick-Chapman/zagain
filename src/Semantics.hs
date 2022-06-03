@@ -348,6 +348,17 @@ eval mode pc = \case
     res <- Objects.testAttr v1 v2
     branchMaybe label res
 
+  Op.Read_char target -> do
+    Debug("TODO: Read_char",target)
+    pure ()
+
+  Op.Buffer_mode{} -> pure ()
+  Op.Erase_window{} -> pure ()
+  Op.Set_cursor{} -> pure ()
+  Op.Set_text_style{} -> pure ()
+  Op.Set_window{} -> pure ()
+  Op.Split_window{} -> pure ()
+
   Op.Input_stream{} -> undefined
   Op.Mod{} -> undefined
   Op.Nop -> undefined
@@ -356,11 +367,8 @@ eval mode pc = \case
   Op.Pop -> undefined
   Op.Restore{} -> undefined
   Op.Save{} -> undefined
-  Op.Set_window{} -> undefined
   Op.Show_status -> undefined
-  Op.Split_window{} -> undefined
   Op.Verify{} -> undefined
-
 
 writeBytes :: Addr p -> [Byte p] -> Eff p ()
 writeBytes a bs =

@@ -61,7 +61,10 @@ decode zv x = do
   Code 22 [t1,t2] -> Op.Mul <$> arg t1 <*> arg t2 <*> target
   Code 23 [t1,t2] -> Op.Div <$> arg t1 <*> arg t2 <*> target
   Code 24 [t1,t2] -> Op.Mod <$> arg t1 <*> arg t2 <*> target
-  Code 25 _ -> wrong [Z4]
+
+  Code 25 [t1,t2]
+    | zv>=Z4 -> do f <- func zv t1; a <- arg t2; t <- target; pure $ Op.Call f [a] t
+
   Code 26 _ -> wrong [Z5]
   Code 27 _ -> wrong [Z5,Z6]
   Code 28 _ -> wrong [Z5,Z6]
@@ -79,10 +82,7 @@ decode zv x = do
   Code 133 [t] -> Op.Inc <$> arg t
   Code 134 [t] -> Op.Dec <$> arg t
   Code 135 [t] -> Op.Print_addr <$> arg t
-
-  Code 136 [t]
-    | zv>=Z4 -> flip Op.Call [] <$> func zv t <*> target
-
+  Code 136 [t] | zv>=Z4 -> flip Op.Call [] <$> func zv t <*> target
   Code 137 [t] -> Op.Remove_obj <$> arg t
   Code 138 [t] -> Op.Print_obj <$> arg t
   Code 139 [t] -> Op.Ret <$> arg t
@@ -124,8 +124,17 @@ decode zv x = do
   Code 233 [t] -> Op.Pull <$> arg t -- changes in Z6
   Code 234 [t] -> Op.Split_window <$> arg t
   Code 235 [t] -> Op.Set_window <$> arg t
+  -- 236
+  Code 237 [t] | zv>=Z4 -> Op.Erase_window <$> arg t
+  -- 238
+  Code 239 [t1,t2] | zv>=Z4 -> Op.Set_cursor <$> arg t1 <*> arg t2
+  -- 240
+  Code 241 [t] | zv>=Z4 -> Op.Set_text_style <$> arg t
+  Code 242 [t] | zv>=Z4 -> Op.Buffer_mode <$> arg t
   Code 243 [t] -> Op.Output_stream <$> arg t
-  Code 243 [t] -> Op.Input_stream <$> arg t
+  Code 244 [t] -> Op.Input_stream <$> arg t
+  -- 245
+  Code 246 [_ignored_mustBe1] -> Op.Read_char <$> target
   _ -> wrong []
 
 
