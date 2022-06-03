@@ -20,8 +20,8 @@ newtype Byte = EightBits Word8
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits)
 
 instance Show Byte where
-  show (EightBits w8) = printf "0x%02x" w8
-  --show (EightBits w8) = printf "%i" w8
+  --show (EightBits w8) = printf "0x%02x" w8
+  show (EightBits w8) = printf "%i" w8
 
 newtype Addr = StoryIndex Word
   deriving (Ord,Eq,Num,Integral,Real,Enum,Bits,Ix)
@@ -42,7 +42,8 @@ makeByteAddress v = if
   | otherwise -> StoryIndex (fromIntegral v)
 
 instance Show Addr where
-  show (StoryIndex i) = printf "[%05x]" i
+  --show (StoryIndex i) = printf "[%05x]" i
+  show (StoryIndex i) = printf "%06i" i
 
 newtype Value = Value Int16 -- 16 bit signed values used for z-machine computations
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits,Ix)
