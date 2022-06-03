@@ -1,6 +1,6 @@
 
 -- | The computation effect of z-machine execution.
-module Eff (Eff(..),Phase(..),Mode(..)) where
+module Eff (Eff(..),Phase(..),Mode(..),PCmode(..)) where
 
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
@@ -22,6 +22,8 @@ class Phase p where
   type Value p
   type Vector p a
 
+data PCmode = AtRoutineHeader { numActuals :: Int } | AtInstruction
+
 data Eff p x where
   Ret :: x -> Eff p x
   Bind :: Eff p x -> (x -> Eff p y) -> Eff p y
@@ -36,6 +38,10 @@ data Eff p x where
 
   ReadInputFromUser :: (Text p,Value p,Value p) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
+
+  GetPCmode :: Eff p PCmode
+  SetPCmode :: PCmode -> Eff p ()
+
   FetchI :: Eff p Operation
   FetchRoutineHeader :: Eff p RoutineHeader
 

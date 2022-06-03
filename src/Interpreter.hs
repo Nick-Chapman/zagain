@@ -7,7 +7,7 @@ import Data.Bits (shiftL)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
-import Eff (Eff(..),Phase)
+import Eff (Eff(..),Phase,PCmode(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr,Value)
@@ -36,7 +36,7 @@ type Effect x = Eff Interpret x
 --[interpreter for execution effects]----------------------------------
 
 runEffect :: Word -> Story -> Effect () -> Action
-runEffect seed story smallStep = loop (initState seed pc0) e0 k0
+runEffect seed story smallStep = loop (initState seed pc0 AtInstruction) e0 k0
   where
     e0 = do smallStep; e0
 
@@ -71,6 +71,9 @@ runEffect seed story smallStep = loop (initState seed pc0) e0 k0
       GetText a -> do
         let (text,_) = runFetch (oob "GetText") a story ztext
         k s text
+
+      GetPCmode -> let State{pcMode} = s in k s pcMode
+      SetPCmode pcMode -> k s { pcMode } ()
 
       FetchI -> do
         let State{pc,count} = s
@@ -208,6 +211,7 @@ runEffect seed story smallStep = loop (initState seed pc0) e0 k0
 
 data State = State
   { pc :: Addr
+  , pcMode :: PCmode
   , lastCount :: Int
   , count :: Int
   , stack :: [Value]
@@ -233,9 +237,10 @@ instance Show State where
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack
 
-initState :: Word -> Addr -> State
-initState seed pc = do
+initState :: Word -> Addr -> PCmode -> State
+initState seed pc pcMode = do
   State { pc
+        , pcMode
         , lastCount = 0
         , count = 0
         , stack = []

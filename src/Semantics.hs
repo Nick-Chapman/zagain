@@ -3,7 +3,7 @@
 module Semantics (smallStep) where
 
 import Dictionary (Dict(..))
-import Eff (Eff(..),Phase(..),Mode)
+import Eff (Eff(..),Phase(..),Mode,PCmode(..))
 import Header (Header(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
@@ -14,8 +14,14 @@ import qualified Operation as Op
 smallStep :: Show (Addr p) => Mode -> Eff p ()
 smallStep mode = do
   pc <- GetPC -- only in case we fail to decode
-  i <- FetchI
-  eval mode pc i
+  GetPCmode >>= \case
+    AtInstruction -> do
+      i <- FetchI
+      eval mode pc i
+    AtRoutineHeader{numActuals} -> do
+      rh <- FetchRoutineHeader
+      setDefaults rh numActuals
+      SetPCmode AtInstruction
 
 eval :: Show (Addr p) => Mode -> Addr p -> Operation -> Eff p ()
 eval mode pc = \case
@@ -26,14 +32,14 @@ eval mode pc = \case
   Op.Add arg1 arg2 target -> do evalBin Add arg1 arg2 target
   Op.And arg1 arg2 target -> do evalBin And arg1 arg2 target
 
-  Op.Call func args target -> do
+  Op.Call func args target -> do  -- TODO: rename "func" --> "routine"
     funcAddress <- evalFunc func
     p <- IsZeroAddress funcAddress >>= If
     if p then LitV 0 >>= setTarget target else do
       actuals <- mapM evalArg args
       PushFrame funcAddress target
-      rh <- FetchRoutineHeader
-      setLocals rh actuals
+      setActuals actuals
+      SetPCmode (AtRoutineHeader { numActuals = length actuals })
 
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -431,17 +437,22 @@ globalAddr b = do
   offset <- Mul two v
   Offset base offset
 
-setLocals :: RoutineHeader -> [Value p] -> Eff p ()
-setLocals rh actuals =
+setActuals :: [Value p] -> Eff p ()
+setActuals actuals = do
+  indexes <- mapM LitB [1..]
+  sequence_ [ SetLocal i def | (i,def) <- zip indexes actuals ]
+
+setDefaults :: RoutineHeader -> Int -> Eff p ()
+setDefaults rh n =
   case rh of
     Op.BadRoutineHeader -> Error "setLocals: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
       indexes <- mapM LitB [1..]
       defs <- mapM LitV defs
       sequence_
-        [ SetLocal i v
-        | (i,actual,def) <- zip3 indexes (map Just actuals ++ repeat Nothing) defs
-        , let v = case actual of Just x -> x; Nothing -> def
+        [ SetLocal i def
+        | (i,b,def) <- zip3 indexes (take n (repeat False) ++ repeat True) defs
+        , b
         ]
 
 getWord :: Addr p -> Eff p (Value p)
