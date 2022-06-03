@@ -3,7 +3,7 @@
 module Primitive (P1(..),P2(..),evalP1,evalP2) where
 
 import Data.Bits ((.&.),clearBit,setBit,testBit,shiftR)
-import Numbers (Byte,Value,Addr,addrOfPackedWord,makeHiLo,equalAny)
+import Numbers (Zversion,Byte,Value,Addr,makePackedAddress,makeHiLo,equalAny)
 import qualified Data.Char as Char (chr,ord)
 import qualified Lex (tokenize,lookupInStrings)
 
@@ -18,7 +18,7 @@ data P1 arg ret where
   IsZeroAddress :: P1 Addr Bool
   IsZeroByte :: P1 Byte Bool
   LoByte :: P1 Value Byte
-  PackedAddress :: P1 Value Addr
+  PackedAddress :: Zversion -> P1 Value Addr
   SevenMinus :: P1 Byte Byte
   ShowNumber :: P1 Value String
   SingleChar :: P1 Value String
@@ -40,7 +40,7 @@ evalP1 = \case
   IsZeroAddress -> (== 0)
   IsZeroByte -> (== 0)
   LoByte -> \v -> fromIntegral (v .&. 0xff)
-  PackedAddress -> addrOfPackedWord
+  PackedAddress zv -> makePackedAddress zv
   SevenMinus -> \v -> 7-v
   ShowNumber -> show
   SingleChar -> \v -> [Char.chr (fromIntegral v)]

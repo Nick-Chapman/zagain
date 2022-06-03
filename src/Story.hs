@@ -3,8 +3,8 @@
 module Story (Story(header,size),loadStory,readStoryByte,OOB_Mode(..)) where
 
 import Data.Array (Array,(!),listArray)
-import Header (Header(..),Zversion(..))
-import Numbers (Byte,Addr,makeHiLo)
+import Header (Header(..))
+import Numbers (Byte,Addr,makeHiLo,makeByteAddress,Zversion(..))
 import Text.Printf (printf)
 import qualified Data.ByteString as BS (readFile,unpack)
 
@@ -55,7 +55,7 @@ readHeader story = Header
     getA a = do
       let hi = getB a
       let lo = getB (a+1)
-      fromIntegral $ makeHiLo hi lo
+      makeByteAddress $ makeHiLo hi lo
 
     getB :: Addr -> Byte
     getB a = readStoryByte (OOB_Error "readHeader") story a
@@ -65,7 +65,7 @@ versionOfByte = \case
   1 -> Z1
   2 -> Z2
   3 -> Z3
-  4 -> undefined Z4
+  4 -> Z4
   5 -> undefined Z5
   6 -> undefined Z6
   n -> error (printf "unsupported z-machine version: %s" (show n))

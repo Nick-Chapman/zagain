@@ -69,7 +69,7 @@ compileEffect story smallStep = do
   where
     oob who = OOB_Error ("compileEffect:"++who)
 
-    header = Story.header story
+    header@Header{zv} = Story.header story
 
     compileFrom :: Addr -> [Addr] -> Gen Statement
     compileFrom addr inlineSet = do
@@ -188,7 +188,7 @@ compileEffect story smallStep = do
       IsZeroAddress x -> prim1 x Prim.IsZeroAddress
       IsZeroByte x -> prim1 x Prim.IsZeroByte
       LoByte x -> prim1 x Prim.LoByte
-      PackedAddress x -> prim1 x Prim.PackedAddress
+      PackedAddress x -> prim1 x (Prim.PackedAddress zv)
       SevenMinus x -> prim1 x Prim.SevenMinus
       ShowNumber x -> prim1 x Prim.ShowNumber
       SingleChar x -> prim1 x Prim.SingleChar

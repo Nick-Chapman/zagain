@@ -1,8 +1,8 @@
 
 -- | Header of a z-machine story file.
-module Header(Header(..),Zversion(..)) where
+module Header(Header(..)) where
 
-import Numbers (Addr)
+import Numbers (Addr,Zversion)
 
 data Header = Header
   { zv :: Zversion
@@ -14,6 +14,4 @@ data Header = Header
   , staticMem :: Addr
   , abbrevTable :: Addr
   }
-
-data Zversion = Z1 | Z2 | Z3 | Z4 | Z5 | Z6
-  deriving (Eq,Ord,Show)
+  deriving Show

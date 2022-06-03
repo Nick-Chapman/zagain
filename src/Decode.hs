@@ -10,8 +10,8 @@ module Decode
 import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
-import Header (Header(..),Zversion(..))
-import Numbers (Byte,Addr,Value,addrOfPackedWord,makeHiLo)
+import Header (Header(..))
+import Numbers (Zversion(..),Byte,Addr,Value,makePackedAddress,makeHiLo)
 import Operation (Operation,Func(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Data.Char as Char
@@ -24,10 +24,12 @@ data RandType = ByteConst | WordConst | ByteVariable
   deriving Show
 
 fetchOperation :: Fetch Operation
-fetchOperation = fetchOpCodeAndArgs >>= decode
+fetchOperation = do
+  Header{zv} <- StoryHeader
+  fetchOpCodeAndArgs >>= decode zv
 
-decode :: OpCodeAndArgs -> Fetch Operation
-decode x = do
+decode :: Zversion -> OpCodeAndArgs -> Fetch Operation
+decode zv x = do
  let
     wrong :: [Zversion] -> Fetch Operation
     wrong versions =
@@ -67,7 +69,7 @@ decode x = do
   Code 30 _ -> wrong []
   Code 31 _ -> wrong []
 
-  Code n ts | 32<=n && n<=127 -> decode (Code (n .&. 0x1f) ts)
+  Code n ts | 32<=n && n<=127 -> decode zv (Code (n .&. 0x1f) ts)
 
   Code 128 [t] -> Op.Jz <$> arg t <*> label
   Code 129 [t] -> Op.Get_sibling <$> arg t <*> target <*> label
@@ -77,7 +79,10 @@ decode x = do
   Code 133 [t] -> Op.Inc <$> arg t
   Code 134 [t] -> Op.Dec <$> arg t
   Code 135 [t] -> Op.Print_addr <$> arg t
-  Code 136 _ -> wrong [Z4]
+
+  Code 136 [t]
+    | zv>=Z4 -> flip Op.Call [] <$> func zv t <*> target
+
   Code 137 [t] -> Op.Remove_obj <$> arg t
   Code 138 [t] -> Op.Print_obj <$> arg t
   Code 139 [t] -> Op.Ret <$> arg t
@@ -86,7 +91,7 @@ decode x = do
   Code 142 [t] -> Op.Load <$> arg t <*> target
   Code 143 _ -> wrong [Z1,Z4,Z5]
 
-  Code n ts | 144<=n && n<=175 -> decode (Code (n .&. 0x8f) ts)
+  Code n ts | 144<=n && n<=175 -> decode zv (Code (n .&. 0x8f) ts)
 
   Code 176 [] -> pure Op.Rtrue
   Code 177 [] -> pure Op.Rfalse
@@ -105,9 +110,9 @@ decode x = do
   Code 190 _ -> wrong [Z5] -- code for extended opcodes
   Code 191 _ -> wrong [Z5]
 
-  Code n ts | 192<=n && n<=223 -> decode (Code (n .&. 0x1f) ts)
+  Code n ts | 192<=n && n<=223 -> decode zv (Code (n .&. 0x1f) ts)
 
-  Code 224 (t1:ts) -> Op.Call <$> func t1 <*> mapM arg ts <*> target -- changes in Z4
+  Code 224 (t1:ts) -> Op.Call <$> func zv t1 <*> mapM arg ts <*> target -- changes in Z4
   Code 225 [t1,t2,t3] -> Op.Storew <$> arg t1 <*> arg t2 <*> arg t3
   Code 226 [t1,t2,t3] -> Op.Storeb <$> arg t1 <*> arg t2 <*> arg t3
   Code 227 [t1,t2,t3] -> Op.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
@@ -176,10 +181,10 @@ decodeLongRandType x a =
     True -> ByteVariable
     False -> ByteConst
 
-func :: RandType -> Fetch Func
-func = \case
+func :: Zversion -> RandType -> Fetch Func
+func zv = \case
   ByteConst -> pure BadFunc
-  WordConst -> (Floc . addrOfPackedWord) <$> fetchNextWord
+  WordConst -> (Floc . makePackedAddress zv) <$> fetchNextWord
   ByteVariable -> (Fvar . makeTarget) <$> Fetch.NextByte
 
 target :: Fetch Target
@@ -307,8 +312,8 @@ ztext' version = loop [] A0 A0 []
 
 decodeAbbrev :: Value -> Fetch String
 decodeAbbrev n = do
-  Header{abbrevTable} <- StoryHeader
-  thisAbbrev :: Addr <- addrOfPackedWord <$> getWord (abbrevTable + fromIntegral (2 * n))
+  Header{zv,abbrevTable} <- StoryHeader
+  thisAbbrev :: Addr <- makePackedAddress zv <$> getWord (abbrevTable + fromIntegral (2 * n))
   WithPC thisAbbrev ztext
 
 

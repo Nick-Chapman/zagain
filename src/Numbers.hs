@@ -1,8 +1,9 @@
 
 -- | Various types of numbers used by the z-machine.
 module Numbers
-  ( Byte
-  , Addr, addrOfPackedWord
+  ( Zversion(..)
+  , Byte
+  , Addr, makePackedAddress, makeByteAddress
   , Value, makeHiLo, equalAny
   ) where
 
@@ -12,19 +13,33 @@ import Data.Word (Word8)
 import GHC.Ix (Ix)
 import Text.Printf (printf)
 
+data Zversion = Z1 | Z2 | Z3 | Z4 | Z5 | Z6
+  deriving (Eq,Ord,Show)
+
 newtype Byte = EightBits Word8
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits)
 
 instance Show Byte where
   show (EightBits w8) = printf "0x%02x" w8
+  --show (EightBits w8) = printf "%i" w8
 
 newtype Addr = StoryIndex Word
   deriving (Ord,Eq,Num,Integral,Real,Enum,Bits,Ix)
 
-addrOfPackedWord :: Value -> Addr
-addrOfPackedWord v = if
-  | v < 0 -> StoryIndex (2 * (0x10000 + fromIntegral v))
-  | otherwise -> StoryIndex (2 * fromIntegral v)
+packAdressMultiplier :: Zversion -> Int
+packAdressMultiplier v = if v <= Z3 then 2 else 4
+
+makePackedAddress :: Zversion -> Value -> Addr
+makePackedAddress zv v = if
+  | v < 0 -> StoryIndex (fromIntegral m * (0x10000 + fromIntegral v))
+  | otherwise -> StoryIndex (fromIntegral (m * fromIntegral v))
+    where
+      m = packAdressMultiplier zv
+
+makeByteAddress :: Value -> Addr
+makeByteAddress v = if
+  | v < 0 -> StoryIndex (0x10000 + fromIntegral v)
+  | otherwise -> StoryIndex (fromIntegral v)
 
 instance Show Addr where
   show (StoryIndex i) = printf "[%05x]" i

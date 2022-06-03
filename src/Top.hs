@@ -16,6 +16,7 @@ import qualified Eff (Mode(..))
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
 import qualified WalkThrough (runAction)
+import qualified Story
 
 main :: IO ()
 main = do
@@ -88,6 +89,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
                   when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
                   printf "\n\n"
                   let eff = Semantics.smallStep Eff.Interpreting
+                  let _ = print (Story.header story)
                   pure $ Interpreter.runEffect seed story eff
               | otherwise -> do
                   let eff = Semantics.smallStep Eff.Compiling

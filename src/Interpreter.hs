@@ -42,7 +42,7 @@ runEffect seed story smallStep = loop (initState seed pc0 AtInstruction) e0 k0
 
     oob who = OOB_Error ("runEffect:"++who)
 
-    header@Header{initialPC=pc0} = Story.header story
+    header@Header{zv,initialPC=pc0} = Story.header story
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
@@ -168,7 +168,7 @@ runEffect seed story smallStep = loop (initState seed pc0 AtInstruction) e0 k0
       IsZeroAddress x -> prim1 x Prim.IsZeroAddress
       IsZeroByte x -> prim1 x Prim.IsZeroByte
       LoByte x -> prim1 x Prim.LoByte
-      PackedAddress x -> prim1 x Prim.PackedAddress
+      PackedAddress x -> prim1 x (Prim.PackedAddress zv)
       SevenMinus x -> prim1 x Prim.SevenMinus
       ShowNumber x -> prim1 x Prim.ShowNumber
       SingleChar x -> prim1 x Prim.SingleChar

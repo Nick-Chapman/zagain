@@ -10,7 +10,8 @@ module Objects
 
 import Control.Monad (when)
 import Eff (Eff(..),Phase(..),Mode(..))
-import Header (Header(..),Zversion(..))
+import Header (Header(..))
+import Numbers (Zversion(..))
 import qualified Numbers (Value)
 
 --[convs]-----------------------------------------------------
