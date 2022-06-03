@@ -1,0 +1,41 @@
+toCompile: [[04f05],[04f88]]
+toInline: [[04f0e],[04f13],[04f1c],[04f25],[04f2a],[04f32],[04f3a],[04f3f],[04f43],[04f48],[04f4c],[04f51],[04f55],[04f5a],[04f5e],[04f63],[04f67],[04f6c],[04f70],[04f75],[04f78],[04f7e],[04f82],[04f87],[04f8b],[04f8e],[04f91],[04f94],[04f99],[04f9e]]
+--[1]--------------------------------------------------
+[04f05]:
+  AtomPushFrame Sp [04f0e];
+  AtomSetLocal 0x01 -32752;
+  AtomSetLocal 0x02 -1;
+  DoneJump [05472]
+--[2]--------------------------------------------------
+[04f88]:
+  AtomSetByte [022f5] 0x00;
+  AtomSetByte [022f6] 0x01;
+  [04f8b]:
+    AtomSetByte [0234f] 0x00;
+    AtomSetByte [02350] 0x04;
+    [04f8e]:
+      AtomSetByte [02371] HiByte(MakeHiLo(M[[0234f]],M[[02350]]));
+      AtomSetByte [02372] LoByte(MakeHiLo(M[[0234f]],M[[02350]]));
+      [04f91]:
+        if (IsZero(Widen(M[Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),4)]))) {
+          AtomSetByte Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),4) LoByte(MakeHiLo(M[[02271]],M[[02272]]));
+          AtomSetByte Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),5) LoByte(Widen(M[Offset(Offset([002e5],Mul(MakeHiLo(M[[02271]],M[[02272]]),9)),6)]));
+          AtomSetByte Offset(Offset([002e5],Mul(MakeHiLo(M[[02271]],M[[02272]]),9)),6) LoByte(MakeHiLo(M[[0234f]],M[[02350]]));
+          [04f94]:
+            AtomPushFrame Sp [04f99];
+            DoneJump [07e04]
+        } else {
+          if (EqualAny(List(Widen(M[Offset(Offset([002e5],Mul(Widen(M[Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),4)]),9)),6)]),MakeHiLo(M[[0234f]],M[[02350]])))) {
+            AtomSetByte Offset(Offset([002e5],Mul(Widen(M[Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),4)]),9)),6) LoByte(Widen(M[Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),5)]));
+            AtomSetByte Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),4) LoByte(MakeHiLo(M[[02271]],M[[02272]]));
+            AtomSetByte Offset(Offset([002e5],Mul(MakeHiLo(M[[0234f]],M[[02350]]),9)),5) LoByte(Widen(M[Offset(Offset([002e5],Mul(MakeHiLo(M[[02271]],M[[02272]]),9)),6)]));
+            AtomSetByte Offset(Offset([002e5],Mul(MakeHiLo(M[[02271]],M[[02272]]),9)),6) LoByte(MakeHiLo(M[[0234f]],M[[02350]]));
+            [04f94]:
+              AtomPushFrame Sp [04f99];
+              DoneJump [07e04]
+          } else {
+            DoneError "unlink/loop"
+          }
+        }
+Debug: **TODO:runCode
+[96m[97m
