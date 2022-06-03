@@ -246,7 +246,7 @@ initState seed pc pcMode = do
         , stack = []
         , locals = Map.empty
         , frames = []
-        , overrides = Map.empty
+        , overrides = Map.fromList [(33,80)] -- screen width
         , seed
         }
 
