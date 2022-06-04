@@ -95,27 +95,50 @@ mod8 v = do
 
 data FamilyMember = Parent | Sibling | Child
 
-offsetFM :: FamilyMember -> Numbers.Value
-offsetFM = \case
-  Parent -> 4
-  Sibling -> 5
-  Child -> 6
+indexFM :: FamilyMember -> Numbers.Value
+indexFM = \case
+  Parent -> 0
+  Sibling -> 1
+  Child -> 2
+
+offsetFM :: FamilyMember -> Eff p (Value p)
+offsetFM fm = do
+  Header{zv} <- StoryHeader
+  let f = formatOfVersion zv
+  LitV (numByesForAttribute f + (indexFM fm * objectIdSize f))
 
 getFM :: FamilyMember -> Value p -> Eff p (Value p)
 getFM fm x = do
   base <- objectAddr x
-  off <- LitV (offsetFM fm)
+  off <- offsetFM fm
   a <- Offset base off
-  b <- GetByte a
-  Widen b
+  Header{zv} <- StoryHeader
+  let f = formatOfVersion zv
+  case f of
+    Small -> do
+      b <- GetByte a
+      Widen b
+    Large -> do
+      getWord a
 
 setFM :: FamilyMember -> Value p -> Value p -> Eff p ()
 setFM fm x y = do
   base <- objectAddr x
-  lo <- LoByte y
-  off <- LitV (offsetFM fm)
+  off <- offsetFM fm
   a <- Offset base off
-  SetByte a lo
+  Header{zv} <- StoryHeader
+  let f = formatOfVersion zv
+  case f of
+    Small -> do
+      lo <- LoByte y
+      SetByte a lo
+    Large -> do
+      hi <- HiByte y
+      SetByte a hi
+      one <- LitV 1
+      a1 <- Offset a one
+      lo <- LoByte y
+      SetByte a1 lo
 
 insertObj :: Mode -> Value p -> Value p -> Eff p ()
 insertObj mode x dest = do
@@ -131,7 +154,7 @@ removeObj mode x = do
   zero <- LitV 0
   setFM Parent x zero
 
-unlink :: forall p. Mode -> Value p -> Eff p ()
+unlink :: Mode -> Value p -> Eff p ()
 unlink mode this = do
   oldP <- getFM Parent this
   b <- not <$> (IsZero oldP >>= If)
@@ -147,7 +170,6 @@ unlink mode this = do
           Compiling -> Error "unlink/loop"
           Interpreting -> loop child
       where
-        loop :: Value p -> Eff p ()
         loop x = do
           b <- IsZero x >>= If
           if b then error "unlink loop, failed to find unlinkee" else do
@@ -170,11 +192,7 @@ getPropN mode x n = do
     ]
   pure $ case [ prop | (prop,b) <- xs, b ] of
     [] -> Nothing
-    --[prop] -> Just prop
-    --_ -> error "getPropN: multi prop match"
     prop:_ -> Just prop
-
-
 
 getProp :: Mode -> Value p -> Value p -> Eff p (Value p)
 getProp mode x n = do
