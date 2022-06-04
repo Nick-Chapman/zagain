@@ -131,7 +131,8 @@ decode zv x = do
   -- 240
   Code 241 [t] | zv>=Z4 -> Op.Set_text_style <$> arg t
   Code 242 [t] | zv>=Z4 -> Op.Buffer_mode <$> arg t
-  Code 243 [t] -> Op.Output_stream <$> arg t
+  Code 243 [t] -> Op.Output_stream1 <$> arg t
+  Code 243 [t1,t2] -> Op.Output_stream2 <$> arg t1 <*> arg t2
   Code 244 [t] -> Op.Input_stream <$> arg t
   -- 245
   Code 246 [_ignored_mustBe1] -> Op.Read_char <$> target

@@ -52,7 +52,8 @@ data Operation
   | New_line
   | Nop
   | Or Arg Arg Target
-  | Output_stream Arg
+  | Output_stream1 Arg
+  | Output_stream2 Arg Arg
   | Pop
   | Print String
   | Print_addr Arg
@@ -160,7 +161,8 @@ opArgs = \case
   New_line -> do []
   Nop -> do []
   Or arg1 arg2 _target -> do [arg1,arg2]
-  Output_stream arg -> do [arg]
+  Output_stream1 arg -> do [arg]
+  Output_stream2 arg1 arg2 -> do [arg1,arg2]
   Pop -> do []
   Print _string -> do []
   Print_addr arg -> do [arg]
@@ -236,7 +238,8 @@ opTargetOpt = \case
   New_line -> do Nothing
   Nop -> do Nothing
   Or _arg1 _arg2 target -> do Just target
-  Output_stream _arg -> do Nothing
+  Output_stream1 _arg1 -> do Nothing
+  Output_stream2 _arg1 _arg2 -> do Nothing
   Pop -> do Nothing
   Print _string -> do Nothing
   Print_addr _arg -> do Nothing

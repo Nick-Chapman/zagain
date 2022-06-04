@@ -354,6 +354,8 @@ eval mode pc = \case
 
   Op.Buffer_mode{} -> pure ()
   Op.Erase_window{} -> pure ()
+  Op.Output_stream1{} -> pure ()
+  Op.Output_stream2{} -> pure ()
   Op.Set_cursor{} -> pure ()
   Op.Set_text_style{} -> pure ()
   Op.Set_window{} -> pure ()
@@ -363,7 +365,6 @@ eval mode pc = \case
   Op.Mod{} -> undefined
   Op.Nop -> undefined
   Op.Or{} -> undefined
-  Op.Output_stream{} -> undefined
   Op.Pop -> undefined
   Op.Restore{} -> undefined
   Op.Save{} -> undefined
