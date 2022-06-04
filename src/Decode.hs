@@ -11,7 +11,7 @@ import Data.Array ((!),listArray)
 import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
 import Header (Header(..))
-import Numbers (Zversion(..),Byte,Addr,Value,makePackedAddress,makeHiLo)
+import Numbers (Zversion(..),Byte,Addr,Value,makeWordAddress,makePackedAddress,makeHiLo)
 import Operation (Operation,Func(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Data.Char as Char
@@ -266,10 +266,10 @@ getWord a = do
   pure $ makeHiLo hi lo
 
 ztext :: Fetch String
-ztext = do Header{zv} <- StoryHeader; ztext' zv
+ztext = do Header{zv} <- StoryHeader; ztext' True zv
 
-ztext' :: Zversion -> Fetch String
-ztext' version = loop [] A0 A0 []
+ztext' :: Bool -> Zversion -> Fetch String
+ztext' allowAbbrev version = loop [] A0 A0 []
   where
     loop :: [Value] -> Alpha -> Alpha -> [Char] -> Fetch String
     loop delayedZs alpha lock acc = do
@@ -298,7 +298,10 @@ ztext' version = loop [] A0 A0 []
       [z] | z `elem` [1,2,3] -> loop [z] alpha lock acc
 
       n:z:zs | n `elem` [1,2,3] -> do
-        expansion <- decodeAbbrev (z + (n-1) * 32)
+        expansion <-
+          if allowAbbrev
+          then decodeAbbrev (z + (n-1) * 32)
+          else error "recursive abbrev"
         inner lock lock stop (reverse expansion ++ acc) zs
 
       4:zs | (version<=Z2) -> inner locked locked stop acc zs
@@ -322,8 +325,8 @@ ztext' version = loop [] A0 A0 []
 decodeAbbrev :: Value -> Fetch String
 decodeAbbrev n = do
   Header{zv,abbrevTable} <- StoryHeader
-  thisAbbrev :: Addr <- makePackedAddress zv <$> getWord (abbrevTable + fromIntegral (2 * n))
-  WithPC thisAbbrev ztext
+  thisAbbrev :: Addr <- makeWordAddress <$> getWord (abbrevTable + fromIntegral (2 * n))
+  WithPC thisAbbrev (ztext' False zv)
 
 
 data Alpha = A0 | A1 | A2 deriving Eq

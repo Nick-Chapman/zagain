@@ -3,7 +3,7 @@
 module Numbers
   ( Zversion(..)
   , Byte
-  , Addr, makePackedAddress, makeByteAddress
+  , Addr, makeByteAddress, makeWordAddress, makePackedAddress
   , Value, makeHiLo, equalAny
   ) where
 
@@ -26,20 +26,20 @@ instance Show Byte where
 newtype Addr = StoryIndex Word
   deriving (Ord,Eq,Num,Integral,Real,Enum,Bits,Ix)
 
-packAdressMultiplier :: Zversion -> Int
-packAdressMultiplier v = if v <= Z3 then 2 else 4
+makeByteAddress :: Value -> Addr
+makeByteAddress v = StoryIndex (asUnsigned v)
+
+makeWordAddress :: Value -> Addr
+makeWordAddress v = StoryIndex (2 * asUnsigned v)
 
 makePackedAddress :: Zversion -> Value -> Addr
-makePackedAddress zv v = if
-  | v < 0 -> StoryIndex (fromIntegral m * (0x10000 + fromIntegral v))
-  | otherwise -> StoryIndex (fromIntegral (m * fromIntegral v))
-    where
-      m = packAdressMultiplier zv
+makePackedAddress zv v = StoryIndex (m * asUnsigned v)
+  where m = if zv <= Z3 then 2 else 4
 
-makeByteAddress :: Value -> Addr
-makeByteAddress v = if
-  | v < 0 -> StoryIndex (0x10000 + fromIntegral v)
-  | otherwise -> StoryIndex (fromIntegral v)
+asUnsigned :: Value -> Word
+asUnsigned v = if
+  | v < 0 -> 0x10000 + fromIntegral v
+  | otherwise -> fromIntegral v
 
 instance Show Addr where
   --show (StoryIndex i) = printf "[%05x]" i
