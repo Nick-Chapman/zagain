@@ -76,7 +76,7 @@ parseCommandLine = loop config0
         loop c { storyFile } more
 
 run :: Config -> IO ()
-run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsole,viaCompiler} = do
+run Config{mode,storyFile,iconf=iconf@Conf{seeTrace,wrapSpec},inputs,mayStartConsole,viaCompiler} = do
   case mode of
     Dictionary -> do
       story <- loadStory storyFile
@@ -84,13 +84,15 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace=trace},inputs,mayStartConsol
       print dict
     Run -> do
       let seed = 888
+      let screenWidth = case wrapSpec of Nothing -> 255; Just w -> fromIntegral w
       story <- loadStory storyFile
       a <- if | not viaCompiler -> do
-                  when trace $ putStrLn "[release/serial: 88/840726, z-version: .z3}"
+                  when seeTrace $
+                    putStrLn "[release/serial: 88/840726, z-version: .z3}"
                   printf "\n\n"
                   let eff = Semantics.smallStep Eff.Interpreting
                   let _ = print (Story.header story)
-                  pure $ Interpreter.runEffect seed story eff
+                  pure $ Interpreter.runEffect screenWidth seed story eff
               | otherwise -> do
                   let eff = Semantics.smallStep Eff.Compiling
                   code <- Compiler.compileEffect story eff

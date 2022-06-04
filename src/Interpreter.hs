@@ -35,8 +35,9 @@ type Effect x = Eff Interpret x
 
 --[interpreter for execution effects]----------------------------------
 
-runEffect :: Word -> Story -> Effect () -> Action
-runEffect seed story smallStep = loop (initState seed pc0 AtInstruction) e0 k0
+runEffect :: Byte -> Word -> Story -> Effect () -> Action
+runEffect screenWidth seed story smallStep = do
+  loop (initState screenWidth seed pc0 AtInstruction) e0 k0
   where
     e0 = do smallStep; e0
 
@@ -237,8 +238,8 @@ instance Show State where
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack
 
-initState :: Word -> Addr -> PCmode -> State
-initState seed pc pcMode = do
+initState :: Byte -> Word -> Addr -> PCmode -> State
+initState screenWidth seed pc pcMode = do
   State { pc
         , pcMode
         , lastCount = 0
@@ -246,7 +247,7 @@ initState seed pc pcMode = do
         , stack = []
         , locals = Map.empty
         , frames = []
-        , overrides = Map.fromList [(33,80)] -- screen width
+        , overrides = Map.fromList [(33,screenWidth)]
         , seed
         }
 

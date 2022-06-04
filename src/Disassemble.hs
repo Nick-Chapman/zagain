@@ -110,7 +110,8 @@ dynamicDiscovery :: Story -> [String] -> [Addr]
 dynamicDiscovery story walkthrough = do
   let seed = 888
   let eff = Semantics.smallStep Interpreting
-  let action = Interpreter.runEffect seed story eff
+  let screenWidth = 80
+  let action = Interpreter.runEffect screenWidth seed story eff
   collectRoutineCalls walkthrough action
 
 collectRoutineCalls :: [String] -> Action -> [Addr]
