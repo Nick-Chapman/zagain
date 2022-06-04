@@ -3,7 +3,7 @@
 module Primitive (P1(..),P2(..),evalP1,evalP2) where
 
 import Data.Bits ((.&.),clearBit,setBit,testBit,shiftR)
-import Numbers (Zversion,Byte,Value,Addr,makePackedAddress,makeHiLo,equalAny)
+import Numbers (Zversion,Byte,Value,Addr,makeByteAddress,makePackedAddress,makeHiLo,equalAny)
 import qualified Data.Char as Char (chr,ord)
 import qualified Lex (tokenize,lookupInStrings)
 
@@ -31,7 +31,7 @@ deriving instance Show (P1 a b)
 
 evalP1 :: P1 a r -> a -> r
 evalP1 = \case
-  Address -> fromIntegral
+  Address -> makeByteAddress
   DeAddress -> fromIntegral
   Div8 -> \v -> v `div` 8
   EqualAny -> equalAny
