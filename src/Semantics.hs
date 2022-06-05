@@ -382,21 +382,21 @@ writeBytes a bs =
             | (i,b) <- zip [0..] bs
             ]
 
-evalBin :: (Value p -> Value p -> Eff p (Value p)) -> Arg -> Arg -> Target -> Eff p ()
+evalBin :: Phase p => (Value p -> Value p -> Eff p (Value p)) -> Arg -> Arg -> Target -> Eff p ()
 evalBin bin arg1 arg2 target = do
   v1 <- evalArg arg1
   v2 <- evalArg arg2
   v <- bin v1 v2
   setTarget target v
 
-branchMaybe :: Label -> Bool -> Eff p ()
+branchMaybe :: Phase p => Label -> Bool -> Eff p ()
 branchMaybe (Branch sense dest) b = case (sense,b) of
   (Op.T,False) -> pure ()
   (Op.F,True) -> pure ()
   (Op.T,True) -> gotoDest dest
   (Op.F,False) -> gotoDest dest
 
-gotoDest :: Dest -> Eff p ()
+gotoDest :: Phase p => Dest -> Eff p ()
 gotoDest = \case
   Dfalse -> LitV 0 >>= returnValue
   Dtrue -> LitV 1 >>= returnValue
@@ -426,7 +426,7 @@ evalTarget = \case
 evalGlobal :: Byte p -> Eff p (Value p)
 evalGlobal b = globalAddr b >>= getWord
 
-returnValue :: Value p -> Eff p ()
+returnValue :: Phase p => Value p -> Eff p ()
 returnValue v = do
   target <- PopFrame
   setTarget target v

@@ -97,7 +97,7 @@ mod8 v = do
 
 --[object containment hierarchy]--------------------------------------
 
-data FamilyMember = Parent | Sibling | Child
+data FamilyMember = Parent | Sibling | Child deriving Show
 
 indexFM :: FamilyMember -> Numbers.Value
 indexFM = \case
@@ -283,6 +283,8 @@ getPropertyTable mode x = do
   size <- dubPlus1 shortNameLen
   a2 <- Offset a1 size
   props <- getPropsA mode a2
+  --Debug ("getPropertyTable",x,"...")
+  --mapM_ Debug props
   pure props
 
 dubPlus1 :: Phase p => Byte p -> Eff p (Value p)
@@ -299,6 +301,8 @@ data Prop p = Prop -- TODO: using this type isn't very helpful
   , dataAddr :: Addr p
   , dataBytes :: [Byte p]
   }
+
+deriving instance Phase p => Show (Prop p)
 
 
 getPropsA :: Phase p => Mode -> Addr p -> Eff p [Prop p]
