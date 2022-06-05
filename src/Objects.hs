@@ -26,8 +26,8 @@ getWord a = do
 
 objectAddr :: Phase p => Value p -> Eff p (Addr p)
 objectAddr o = do
-  Header{zv,objectTable} <- StoryHeader
-  let f = formatOfVersion zv
+  Header{objectTable} <- StoryHeader
+  f <- objectTableFormat
   let objectEntrySize = numByesForAttribute f + (3 * objectIdSize f) + 2
   size <- LitV objectEntrySize
   otBase <- LitA objectTable
@@ -39,8 +39,7 @@ objectAddr o = do
 propTableAddr :: Phase p => Value p -> Eff p (Addr p)
 propTableAddr x = do
   base <- objectAddr x
-  Header{zv} <- StoryHeader
-  let f = formatOfVersion zv
+  f <- objectTableFormat
   off <- LitV (numByesForAttribute f + (3 * objectIdSize f))
   a <- Offset base off
   getWord a >>= Address
@@ -107,8 +106,7 @@ indexFM = \case
 
 offsetFM :: Phase p => FamilyMember -> Eff p (Value p)
 offsetFM fm = do
-  Header{zv} <- StoryHeader
-  let f = formatOfVersion zv
+  f <- objectTableFormat
   LitV (numByesForAttribute f + (indexFM fm * objectIdSize f))
 
 getFM :: Phase p => FamilyMember -> Value p -> Eff p (Value p)
@@ -116,9 +114,7 @@ getFM fm x = do
   base <- objectAddr x
   off <- offsetFM fm
   a <- Offset base off
-  Header{zv} <- StoryHeader
-  let f = formatOfVersion zv
-  case f of
+  objectTableFormat >>= \case
     Small -> do
       b <- GetByte a
       Widen b
@@ -130,9 +126,7 @@ setFM fm x y = do
   base <- objectAddr x
   off <- offsetFM fm
   a <- Offset base off
-  Header{zv} <- StoryHeader
-  let f = formatOfVersion zv
-  case f of
+  objectTableFormat >>= \case
     Small -> do
       lo <- LoByte y
       SetByte a lo
@@ -192,7 +186,7 @@ getPropN mode x n = do
   props <- getPropertyTable mode x
   xs <- sequence
     [ do b <- EqualAny [n,number] >>= If; pure (prop,b)
-    | prop@Prop{number} <- props
+    | prop@Prop{propNumber=number} <- props
     ]
   pure $ case [ prop | (prop,b) <- xs, b ] of
     [] -> Nothing
@@ -269,9 +263,9 @@ getNextProp mode x p = do
         b1 <- IsZero p >>= If
         b2 <- LessThan n p >>= If
         pure (prop,b1,b2)
-    | prop@Prop{number=n} <- props
+    | prop@Prop{propNumber=n} <- props
     ]
-  let bigger = [ n | (Prop{number=n},b1,b2) <- xs, b1 || b2 ]
+  let bigger = [ n | (Prop{propNumber=n},b1,b2) <- xs, b1 || b2 ]
   case bigger of
     [] -> LitV 0
     fst:_ -> pure fst -- assume the first is the biggest
@@ -295,15 +289,14 @@ dubPlus1 b = do
   dub <- Mul two v
   Add dub one
 
-
 data Prop p = Prop -- TODO: using this type isn't very helpful
-  { number :: Value p
+  { propNumber :: Value p
+  , numBytes :: Value p -- TODO: just a byte?
   , dataAddr :: Addr p
   , dataBytes :: [Byte p]
   }
 
 deriving instance Phase p => Show (Prop p)
-
 
 getPropsA :: Phase p => Mode -> Addr p -> Eff p [Prop p]
 getPropsA = \case
@@ -313,26 +306,58 @@ getPropsA = \case
 hack_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
 hack_getPropsA _a = Error "TODO:getPropsA"
 
-real_getPropsA :: Phase p =>  Addr p -> Eff p [Prop p]
-real_getPropsA a = do
-  b <- GetByte a
-  endOfProps <- IsZeroByte b >>= If
+real_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
+real_getPropsA a1 = do
+  b1 <- GetByte a1
+  endOfProps <- IsZeroByte b1 >>= If
   if endOfProps then pure [] else do
-    one <- LitV 1
-    dataAddr <- Offset a one
-    number <- do
-      oneF <- LitB 0x1f
-      fiveBits <- b `BwAnd` oneF
-      Widen fiveBits
-    numBytes <- do
-      shifted <- b `ShiftR` 5
-      widened <- Widen shifted
-      Add widened one
+    PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
+    off <- LitV (fromIntegral sizeByteSize)
+    dataAddr <- Offset a1 off
     dataBytes <- getBytes dataAddr numBytes
-    let p1 = Prop {number,dataAddr,dataBytes}
+    let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
     a' <- Offset dataAddr numBytes
     more <- real_getPropsA a' -- TODO: infinite effect is a problem for compilation
     pure (p1:more)
+
+data PropNumAndSize p = PropNumAndSize
+  { propNumber :: Value p
+  , numBytes :: Value p
+  , sizeByteSize :: Int
+  }
+
+getPropNumAndSize :: Phase p => Addr p -> Byte p -> Eff p (PropNumAndSize p)
+getPropNumAndSize a1 b1 = do
+  one <- LitV 1
+  objectTableFormat >>= \case
+    Small -> do
+      propNumber <- do
+        oneF <- LitB 0x1f
+        fiveBits <- b1 `BwAnd` oneF
+        Widen fiveBits
+      numBytes <- do
+        shifted <- b1 `ShiftR` 5
+        widened <- Widen shifted
+        Add widened one
+      pure PropNumAndSize{sizeByteSize=1,propNumber,numBytes}
+    Large -> do
+      mask6 <- LitB 0x3f
+      propNumber <- do
+        sixBits <- b1 `BwAnd` mask6
+        Widen sixBits
+      (LitB 7 >>= TestBit b1) >>= If >>= \case
+        False -> do
+          numBytes <- do
+            b6 <- (LitB 6 >>= TestBit b1) >>= If
+            LitV (case b6 of False -> 1; True -> 2)
+          pure PropNumAndSize{sizeByteSize=1,propNumber,numBytes}
+        True -> do
+          numBytes <- do
+            a2 <- Offset a1 one
+            b2 <- GetByte a2
+            sixBits <- b2 `BwAnd` mask6
+            Widen sixBits
+          pure PropNumAndSize{sizeByteSize=2,propNumber,numBytes}
 
 getBytes :: Phase p => Addr p -> Value p -> Eff p [Byte p]
 getBytes a n = do
@@ -347,6 +372,11 @@ getBytes a n = do
 
 
 --[odds and sods]-----------------------------------------------------
+
+objectTableFormat :: Eff p ObjectTableFormat
+objectTableFormat = do
+  Header{zv} <- StoryHeader
+  pure $ formatOfVersion zv
 
 data ObjectTableFormat = Small | Large
 
