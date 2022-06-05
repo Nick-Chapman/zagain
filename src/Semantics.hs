@@ -182,6 +182,9 @@ eval mode pc = \case
   Op.Mul arg1 arg2 target -> do evalBin Mul arg1 arg2 target
 
   Op.New_line -> do LitS "\n" >>= GamePrint
+
+  Op.Or arg1 arg2 target -> do evalBin Or arg1 arg2 target
+
   Op.Print string -> do LitS string >>= GamePrint
 
   Op.Print_addr arg -> do
@@ -364,7 +367,6 @@ eval mode pc = \case
   Op.Input_stream{} -> undefined
   Op.Mod{} -> undefined
   Op.Nop -> undefined
-  Op.Or{} -> undefined
   Op.Pop -> undefined
   Op.Restore{} -> undefined
   Op.Save{} -> undefined

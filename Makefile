@@ -48,7 +48,7 @@ reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk reg/h.dis reg/wip
 	git diff reg
 
 reg/wip.code: $(exe) src/*.hs Makefile
-	$(exe) -comp > $@
+	$(exe) -comp -noconsole > $@
 
 reg/zork.dis: $(exe) src/*.hs Makefile
 	$(exe) dis -walk z.script > $@

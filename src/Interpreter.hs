@@ -195,6 +195,7 @@ runEffect screenWidth seed story smallStep = do
       Mod x y -> prim2 x y Prim.Mod
       Mul x y -> prim2 x y Prim.Mul
       Offset x y -> prim2 x y Prim.Offset
+      Or x y -> prim2 x y Prim.Or
       SetBit x y -> prim2 x y Prim.SetBit
       ShiftR x y -> prim2 x y Prim.ShiftR
       Sub x y -> prim2 x y Prim.Sub

@@ -211,6 +211,7 @@ compileEffect story smallStep = do
       Mod x y -> prim2 x y Prim.Mod
       Mul x y -> prim2 x y Prim.Mul
       Offset x y -> prim2 x y Prim.Offset
+      Or x y -> prim2 x y Prim.Or
       SetBit x y -> prim2 x y Prim.SetBit
       ShiftR x y -> prim2 x (Const y) Prim.ShiftR -- TODO: avoid special case
       Sub x y -> prim2 x y Prim.Sub

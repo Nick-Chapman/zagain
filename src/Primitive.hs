@@ -2,7 +2,7 @@
 -- | Pure primitives, typed & reified.
 module Primitive (P1(..),P2(..),evalP1,evalP2) where
 
-import Data.Bits ((.&.),clearBit,setBit,testBit,shiftR)
+import Data.Bits ((.&.),(.|.),clearBit,setBit,testBit,shiftR)
 import Numbers (Zversion,Byte,Value,Addr,makeByteAddress,makePackedAddress,makeHiLo,equalAny)
 import qualified Data.Char as Char (chr,ord)
 import qualified Lex (tokenize,lookupInStrings)
@@ -67,6 +67,7 @@ data P2 arg1 arg2 ret where
   Mod :: P2 Value Value Value
   Mul :: P2 Value Value Value
   Offset :: P2 Addr Value Addr
+  Or :: P2 Value Value Value
   SetBit :: P2 Byte Byte Byte
   ShiftR :: P2 Byte Int Byte
   Sub :: P2 Value Value Value
@@ -92,6 +93,7 @@ evalP2 = \case
   Mod -> mod
   Mul -> (*)
   Offset -> \base off -> base + fromIntegral off
+  Or -> (.|.)
   SetBit -> \b n -> b `setBit` fromIntegral n
   ShiftR -> shiftR
   Sub -> (-)

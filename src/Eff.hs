@@ -89,6 +89,7 @@ data Eff p x where
   Mod :: Value p -> Value p -> Eff p (Value p)
   Mul :: Value p -> Value p -> Eff p (Value p)
   Offset :: Addr p -> Value p -> Eff p (Addr p)
+  Or :: Value p -> Value p -> Eff p (Value p)
   PackedAddress :: Value p -> Eff p (Addr p)
   SetBit :: Byte p -> Byte p -> Eff p (Byte p)
   SevenMinus :: Byte p -> Eff p (Byte p)
