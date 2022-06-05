@@ -14,7 +14,11 @@ instance Monad (Eff p) where return = Ret; (>>=) = Bind
 
 data Mode = Compiling | Interpreting -- TODO: temp while have infinite effects
 
-class Phase p where
+class
+  ( Show (Addr p)
+  , Show (Byte p)
+  , Show (Value p)
+  ) => Phase p where
   type Addr p
   type Byte p
   type Pred p

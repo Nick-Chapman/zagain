@@ -16,7 +16,7 @@ import qualified Numbers (Value)
 
 --[convs]-----------------------------------------------------
 
-getWord :: Addr p -> Eff p (Value p)
+getWord :: Phase p => Addr p -> Eff p (Value p)
 getWord a = do
   hi <- GetByte a
   one <- LitV 1
@@ -24,7 +24,7 @@ getWord a = do
   lo <- GetByte a1
   MakeHiLo hi lo
 
-objectAddr :: Value p -> Eff p (Addr p)
+objectAddr :: Phase p => Value p -> Eff p (Addr p)
 objectAddr o = do
   Header{zv,objectTable} <- StoryHeader
   let f = formatOfVersion zv
@@ -36,7 +36,7 @@ objectAddr o = do
   off <- Mul o size
   Offset base off
 
-getShortName :: Value p -> Eff p (Text p)
+getShortName :: Phase p => Value p -> Eff p (Text p)
 getShortName x = do
   base <- objectAddr x
   seven <- LitV 7
@@ -53,7 +53,7 @@ getShortName x = do
 
 --[attributes]--------------------------------------------------------
 
-testAttr :: Value p -> Value p -> Eff p Bool
+testAttr :: Phase p => Value p -> Value p -> Eff p Bool
 testAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -63,7 +63,7 @@ testAttr x n = do
   b <- GetByte a
   b `TestBit` m' >>= If
 
-setAttr :: Value p -> Value p -> Eff p ()
+setAttr :: Phase p => Value p -> Value p -> Eff p ()
 setAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -74,7 +74,7 @@ setAttr x n = do
   new <- old `SetBit` m'
   SetByte a new
 
-clearAttr :: Value p -> Value p -> Eff p ()
+clearAttr :: Phase p => Value p -> Value p -> Eff p ()
 clearAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -85,7 +85,7 @@ clearAttr x n = do
   new <- old `ClearBit` m'
   SetByte a new
 
-mod8 :: Value p -> Eff p (Byte p)
+mod8 :: Phase p => Value p -> Eff p (Byte p)
 mod8 v = do
   eight <- LitV 8
   res <- Mod v eight
@@ -101,13 +101,13 @@ indexFM = \case
   Sibling -> 1
   Child -> 2
 
-offsetFM :: FamilyMember -> Eff p (Value p)
+offsetFM :: Phase p => FamilyMember -> Eff p (Value p)
 offsetFM fm = do
   Header{zv} <- StoryHeader
   let f = formatOfVersion zv
   LitV (numByesForAttribute f + (indexFM fm * objectIdSize f))
 
-getFM :: FamilyMember -> Value p -> Eff p (Value p)
+getFM :: Phase p => FamilyMember -> Value p -> Eff p (Value p)
 getFM fm x = do
   base <- objectAddr x
   off <- offsetFM fm
@@ -121,7 +121,7 @@ getFM fm x = do
     Large -> do
       getWord a
 
-setFM :: FamilyMember -> Value p -> Value p -> Eff p ()
+setFM :: Phase p => FamilyMember -> Value p -> Value p -> Eff p ()
 setFM fm x y = do
   base <- objectAddr x
   off <- offsetFM fm
@@ -140,7 +140,7 @@ setFM fm x y = do
       lo <- LoByte y
       SetByte a1 lo
 
-insertObj :: Mode -> Value p -> Value p -> Eff p ()
+insertObj :: Phase p => Mode -> Value p -> Value p -> Eff p ()
 insertObj mode x dest = do
   unlink mode x
   setFM Parent x dest
@@ -148,13 +148,13 @@ insertObj mode x dest = do
   setFM Sibling x oldChild
   setFM Child dest x
 
-removeObj :: Mode -> Value p -> Eff p ()
+removeObj :: Phase p => Mode -> Value p -> Eff p ()
 removeObj mode x = do
   unlink mode x
   zero <- LitV 0
   setFM Parent x zero
 
-unlink :: Mode -> Value p -> Eff p ()
+unlink :: Phase p => Mode -> Value p -> Eff p ()
 unlink mode this = do
   oldP <- getFM Parent this
   b <- not <$> (IsZero oldP >>= If)
@@ -183,7 +183,7 @@ unlink mode this = do
 
 --[properties]--------------------------------------------------------
 
-getPropN :: Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
+getPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
 getPropN mode x n = do
   props <- getPropertyTable mode x
   xs <- sequence
@@ -194,7 +194,7 @@ getPropN mode x n = do
     [] -> Nothing
     prop:_ -> Just prop
 
-getProp :: Mode -> Value p -> Value p -> Eff p (Value p)
+getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getProp mode x n = do
   Header{objectTable} <- StoryHeader
 
@@ -214,7 +214,7 @@ getProp mode x n = do
         [_b] -> undefined -- Widen _b -- not hit yet
         _ -> error "expected 1 or 2 bytes for prop value"
 
-putProp :: Mode -> Value p -> Value p -> Value p -> Eff p ()
+putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
 putProp mode x n v = do
   pr <- do
     getPropN mode x n >>= \case
@@ -234,13 +234,13 @@ putProp mode x n v = do
     1 -> Error "expected 2 bytes for a prop value"
     _ -> Error "expected 1 or 2 bytes for prop value"
 
-getPropAddr :: Mode -> Value p -> Value p -> Eff p (Value p)
+getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getPropAddr mode x n = do
   getPropN mode x n >>= \case
     Just(Prop{dataAddr}) -> do DeAddress dataAddr
     Nothing -> LitV 0
 
-getPropLen :: Value p -> Eff p (Value p)
+getPropLen :: Phase p => Value p -> Eff p (Value p)
 getPropLen v = do
   b <- IsZero v >>= If
   if b then LitV 0 else do
@@ -255,7 +255,7 @@ getPropLen v = do
     one <- LitV 1
     Add one w
 
-getNextProp :: Mode -> Value p -> Value p -> Eff p (Value p)
+getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getNextProp mode x p = do
   -- TODO: stop being so complicated. Assume descendning order and avoid search
   props <- getPropertyTable mode x
@@ -272,7 +272,7 @@ getNextProp mode x p = do
     [] -> LitV 0
     fst:_ -> pure fst -- assume the first is the biggest
 
-getPropertyTable :: Mode -> Value p -> Eff p [Prop p]
+getPropertyTable :: Phase p => Mode -> Value p -> Eff p [Prop p]
 getPropertyTable mode x = do
   base <- objectAddr x
   seven <- LitV 0x7
@@ -284,7 +284,7 @@ getPropertyTable mode x = do
   props <- getPropsA mode a2
   pure props
 
-dubPlus1 :: Byte p -> Eff p (Value p)
+dubPlus1 :: Phase p => Byte p -> Eff p (Value p)
 dubPlus1 b = do
   v <- Widen b
   one <- LitV 1
@@ -300,15 +300,15 @@ data Prop p = Prop -- TODO: using this type isn't very helpful
   }
 
 
-getPropsA :: Mode -> Addr p -> Eff p [Prop p]
+getPropsA :: Phase p => Mode -> Addr p -> Eff p [Prop p]
 getPropsA = \case
   Compiling -> hack_getPropsA
   Interpreting -> real_getPropsA
 
-hack_getPropsA :: Addr p -> Eff p [Prop p]
+hack_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
 hack_getPropsA _a = Error "TODO:getPropsA"
 
-real_getPropsA ::  Addr p -> Eff p [Prop p]
+real_getPropsA :: Phase p =>  Addr p -> Eff p [Prop p]
 real_getPropsA a = do
   b <- GetByte a
   endOfProps <- IsZeroByte b >>= If
@@ -329,7 +329,7 @@ real_getPropsA a = do
     more <- real_getPropsA a' -- TODO: infinite effect is a problem for compilation
     pure (p1:more)
 
-getBytes :: Addr p -> Value p -> Eff p [Byte p]
+getBytes :: Phase p => Addr p -> Value p -> Eff p [Byte p]
 getBytes a n = do
   stop <- IsZero n >>= If
   if stop then pure [] else do

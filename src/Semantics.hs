@@ -11,7 +11,7 @@ import Text.Printf (printf)
 import qualified Objects
 import qualified Operation as Op
 
-smallStep :: Show (Addr p) => Mode -> Eff p ()
+smallStep :: Phase p => Mode -> Eff p ()
 smallStep mode = do
   pc <- GetPC -- only in case we fail to decode
   GetPCmode >>= \case
@@ -23,7 +23,7 @@ smallStep mode = do
       setDefaults rh numActuals
       SetPCmode AtInstruction
 
-eval :: Show (Addr p) => Mode -> Addr p -> Operation -> Eff p ()
+eval :: Phase p => Mode -> Addr p -> Operation -> Eff p ()
 eval mode pc = \case
 
   Op.BadOperation mes -> do
