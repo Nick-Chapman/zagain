@@ -36,19 +36,23 @@ objectAddr o = do
   off <- Mul o size
   Offset base off
 
+propTableAddr :: Phase p => Value p -> Eff p (Addr p)
+propTableAddr x = do
+  base <- objectAddr x
+  Header{zv} <- StoryHeader
+  let f = formatOfVersion zv
+  off <- LitV (numByesForAttribute f + (3 * objectIdSize f))
+  a <- Offset base off
+  getWord a >>= Address
+
 getShortName :: Phase p => Value p -> Eff p (Text p)
 getShortName x = do
-  base <- objectAddr x
-  seven <- LitV 7
-  a <- Offset base seven
-  w <- getWord a
-  a1 <- Address w
+  a1 <- propTableAddr x
   shortNameLen <- GetByte a1
   p <- IsZeroByte shortNameLen >>= If
   if p then LitS "" else do
     one <- LitV 1
-    w1 <- Add w one
-    a2 <- Address w1
+    a2 <- Offset a1 one
     GetText a2
 
 --[attributes]--------------------------------------------------------
@@ -274,10 +278,7 @@ getNextProp mode x p = do
 
 getPropertyTable :: Phase p => Mode -> Value p -> Eff p [Prop p]
 getPropertyTable mode x = do
-  base <- objectAddr x
-  seven <- LitV 0x7
-  a <- Offset base seven
-  a1 <- getWord a >>= Address
+  a1 <- propTableAddr x
   shortNameLen <- GetByte a1
   size <- dubPlus1 shortNameLen
   a2 <- Offset a1 size
