@@ -1,12 +1,12 @@
 
 -- | The computation effect of z-machine execution.
-module Eff (Eff(..),Phase(..),Mode(..),PCmode(..)) where
+module Eff (Eff(..),Phase(..),Mode(..),PCmode(..),StatusInfo(..)) where
 
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
 import Header (Header)
-import qualified Numbers (Addr,Byte,Value)
 import Operation (Operation,Target,RoutineHeader)
+import qualified Numbers (Addr,Byte,Value)
 
 instance Functor (Eff p) where fmap = liftM
 instance Applicative (Eff p) where pure = return; (<*>) = ap
@@ -28,6 +28,12 @@ class
 
 data PCmode = AtRoutineHeader { numActuals :: Int } | AtInstruction
 
+data StatusInfo p = StatusInfo
+  { room :: Text p
+  , score :: Value p
+  , turns :: Value p
+  }
+
 data Eff p x where
   Ret :: x -> Eff p x
   Bind :: Eff p x -> (x -> Eff p y) -> Eff p y
@@ -40,7 +46,7 @@ data Eff p x where
   StoryHeader :: Eff p Header
   LookupInStrings :: [String] -> Text p -> Eff p (Maybe Int)
 
-  ReadInputFromUser :: (Text p,Value p,Value p) -> Eff p (Text p)
+  ReadInputFromUser :: Maybe (StatusInfo p) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
 
   GetPCmode :: Eff p PCmode

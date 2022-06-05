@@ -103,7 +103,7 @@ compileEffect story smallStep = do
 
       TheDictionary -> undefined
       StoryHeader -> k s header
-      ReadInputFromUser (p1,score,turns) -> undefined (p1,score,turns)
+      ReadInputFromUser _ -> undefined
       GetText a -> undefined a
 
       GetPCmode -> let State{pcMode} = s in k s pcMode

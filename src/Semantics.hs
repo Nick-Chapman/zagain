@@ -3,8 +3,9 @@
 module Semantics (smallStep) where
 
 import Dictionary (Dict(..))
-import Eff (Eff(..),Phase(..),Mode,PCmode(..))
+import Eff (Eff(..),Phase(..),Mode,PCmode(..),StatusInfo(..))
 import Header (Header(..))
+import Numbers (Zversion(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
 import Text.Printf (printf)
@@ -265,35 +266,33 @@ eval mode pc = \case
     Objects.setAttr v1 v2
 
   Op.Sread arg1 arg2 -> do
-    zero <- LitB 0
-    one <- LitB 1
-    two <- LitB 2
-    v0 <- evalGlobal zero
-    score <- evalGlobal one
-    turns <- evalGlobal two
-    p1 <- Objects.getShortName v0
-    rawTyped <- ReadInputFromUser (p1,score,turns)
+    Header{zv} <- StoryHeader
+    statusInfoM <- if
+      | zv <= Z3 -> do
+          room <- LitB 0 >>= evalGlobal >>= Objects.getShortName
+          score <- LitB 1 >>= evalGlobal
+          turns <- LitB 2 >>= evalGlobal
+          pure $ Just $ StatusInfo { room, score, turns }
+      | otherwise ->
+          pure Nothing
+    rawTyped <- ReadInputFromUser statusInfoM
     t_buf <- evalArg arg1 >>= Address
     p_buf <- evalArg arg2 >>= Address
     Dict{seps,entryLength,strings=dictStrings} <- TheDictionary
     -- +4 : #seps byte, entryLength byte, #entries word
     Header{dictionary} <- StoryHeader
     offset <- LitV (fromIntegral $ length seps + 4)
-
     base <- LitA dictionary
     baseEntries <- Offset base offset
     (n,positionedWords,canoicalizedTyped) <- Tokenize rawTyped
-
     textBytes <- StringBytes canoicalizedTyped
     Foreach textBytes $ \i b -> do
       one <- LitV (fromIntegral i + 1)
       a <- Offset t_buf one
       SetByte a b
-
     one <- LitV 1
     a <- Offset p_buf one
     SetByte a n
-
     Foreach positionedWords $ \i (pos,word) -> do
       iopt <- LookupInStrings dictStrings word
       dictAddr <-
@@ -306,7 +305,6 @@ eval mode pc = \case
       dictAddrV <- DeAddress dictAddr
       (hi,lo) <- splitWord dictAddrV
       n <- StringLength word
-
       off <- LitV (fromIntegral (4*i+ 2))
       a <- Offset p_buf off
       writeBytes a [hi,lo,n,pos]
@@ -402,7 +400,7 @@ gotoDest = \case
   Dtrue -> LitV 1 >>= returnValue
   Dloc addr -> LitA addr >>= SetPC
 
-evalFunc :: Func -> Eff p (Addr p)
+evalFunc :: Phase p => Func -> Eff p (Addr p)
 evalFunc = \case
   BadFunc -> error "failed to decode called function"
   Floc addr -> LitA addr
@@ -412,19 +410,22 @@ evalFunc = \case
     --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
     pure a
 
-evalArg :: Arg -> Eff p (Value p)
+evalArg :: Phase p => Arg -> Eff p (Value p)
 evalArg = \case
   Con x -> LitV x
   Var v -> evalTarget v
 
-evalTarget :: Target -> Eff p (Value p)
+evalTarget :: Phase p => Target -> Eff p (Value p)
 evalTarget = \case
   Sp -> PopStack
   Local n -> LitB n >>= GetLocal
   Global b -> LitB b >>= evalGlobal
 
-evalGlobal :: Byte p -> Eff p (Value p)
-evalGlobal b = globalAddr b >>= getWord
+evalGlobal :: Phase p => Byte p -> Eff p (Value p)
+evalGlobal b = do
+  res <- globalAddr b >>= getWord
+  --Debug ("evalGlobal",b,"->",res)
+  pure res
 
 returnValue :: Phase p => Value p -> Eff p ()
 returnValue v = do
@@ -493,7 +494,7 @@ data Dyn b -- dynamic target
   | DLocal b
   | DGlobal b
 
-evalArgAsDyn :: Arg -> Eff p (Dyn (Byte p))
+evalArgAsDyn :: Phase p => Arg -> Eff p (Dyn (Byte p))
 evalArgAsDyn arg = do
   v <- evalArg arg
   lo <- LoByte v
@@ -511,7 +512,7 @@ makeDyn b = do
         g <- MinusByte b sixteen
         pure (DGlobal g)
 
-evalDyn :: Dyn (Byte p) -> Eff p (Value p)
+evalDyn :: Phase p =>  Dyn (Byte p) -> Eff p (Value p)
 evalDyn = \case
   DSp -> PopStack
   DLocal n -> GetLocal n

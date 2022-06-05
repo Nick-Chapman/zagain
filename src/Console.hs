@@ -1,7 +1,7 @@
 
 module Console (runAction) where
 
-import Action (Action(..),Conf(..))
+import Action (Action(..),Conf(..),StatusLine(..))
 import Control.Monad (when)
 import Control.Monad.Trans.Class (lift)
 import Text.Printf (printf)
@@ -64,10 +64,13 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop []
         when (not bufferOutput) $ do
           lift $ putStr (col AN.Cyan text)
         loop (if bufferOutput then text:buf else buf) next
-      Input status _count f -> do
+      Input statusLineM _count f -> do
         let (text,prompt) = splitFinalPrompt (concat (reverse buf))
         lift $ putStr (col AN.Cyan (wrap text))
-        lift $ putStrLn (col AN.Magenta (makeStatusLine status))
+        case statusLineM of
+          Nothing -> pure ()
+          Just statusLine ->
+            lift $ putStrLn (col AN.Magenta (makeStatusLine statusLine))
         let xprompt = col AN.Cyan (prompt ++ " ")
         HL.getInputLine xprompt >>= \case
           Nothing -> pure () -- Ctr-D
@@ -76,8 +79,8 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop []
             HL.getHistory >>= lift . writeTranscript
             loop [] (f line)
 
-makeStatusLine :: (String,String) -> String
-makeStatusLine (xs,ys) = do
+makeStatusLine :: StatusLine -> String
+makeStatusLine StatusLine{left=xs,right=ys} = do
   let max = 80
   let xs' = take 30 xs
   let ys' = take 30 ys

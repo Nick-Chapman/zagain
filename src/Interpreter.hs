@@ -7,14 +7,14 @@ import Data.Bits (shiftL)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
-import Eff (Eff(..),Phase,PCmode(..))
+import Eff (Eff(..),Phase,PCmode(..),StatusInfo(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr,Value)
 import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
-import qualified Action as A (Action(..))
+import qualified Action as A (Action(..),StatusLine(..))
 import qualified Data.Map as Map
 import qualified Eff (Phase(..))
 
@@ -64,10 +64,18 @@ runEffect screenWidth seed story smallStep = do
       StoryHeader -> do
         k s header
 
-      ReadInputFromUser (p1,score,turns) -> do
-        let p2 = printf "score:%s--turns:%s" (show score) (show turns)
+      ReadInputFromUser statusInfo -> do
         let State{count,lastCount} = s
-        A.Input (p1,p2) (count-lastCount) $ \response -> k s { lastCount = count } response
+        let
+          statusLineM =
+            case statusInfo of
+              Nothing -> Nothing
+              Just (StatusInfo{room,score,turns}) ->
+                Just (A.StatusLine
+                      { left = room
+                      , right = printf "score:%s--turns:%s" (show score) (show turns)
+                      })
+        A.Input statusLineM (count-lastCount) $ \response -> k s { lastCount = count } response
 
       GetText a -> do
         let (text,_) = runFetch (oob "GetText") a story ztext
