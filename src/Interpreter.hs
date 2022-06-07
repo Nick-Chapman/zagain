@@ -96,20 +96,24 @@ runEffect screenWidth seed story smallStep = do
         k s { pc = pc' } rh
 
       PushFrame addr target -> do
-        let State{pc,stack,locals,frames} = s
+        let State{pc,stack,locals,frames,callstack} = s
         A.TraceRoutineCall addr $
           k s { pc = addr
-              , frames = Frame { pc, target, stack, locals } : frames
+              , frames = Frame { stack, locals } : frames
+              , callstack = (pc,target):callstack
               , stack = []
               , locals = Map.empty
               } ()
 
       PopFrame -> do
-        let State{frames} = s
+        let State{frames,callstack} = s
         case frames of
           [] -> error "PopFrame, frames=[]"
-          Frame{pc,target,stack,locals}:frames -> do
-            k s { pc, stack, locals, frames } target
+          Frame{stack,locals}:frames -> do
+            case callstack of
+              [] -> error "PopFrame, callstack=[]"
+              (pc,target):callstack -> do
+                k s { pc, stack, locals, frames, callstack } target
 
       GetPC -> let State{pc} = s in k s pc
       SetPC pc -> k s { pc } ()
@@ -227,6 +231,7 @@ data State = State
   , stack :: [Value]
   , locals :: Map Byte Value
   , frames :: [Frame]
+  , callstack :: [(Addr,Target)]
   , overrides :: Map Addr Byte
   , seed :: Word
   }
@@ -256,6 +261,7 @@ initState screenWidth seed pc pcMode = do
         , stack = []
         , locals = Map.empty
         , frames = []
+        , callstack = []
         , overrides = Map.fromList [(33,screenWidth)]
         , seed
         }
@@ -269,9 +275,7 @@ stepRandom x = (x * a  + c) `mod` m
     m = 1 `shiftL` 31
 
 data Frame = Frame
-  { pc :: Addr
-  , target :: Target
-  , stack :: [Value]
+  { stack :: [Value]
   , locals :: Map Byte Value
   }
   deriving Show
