@@ -38,7 +38,10 @@ eval mode pc = \case
     p <- IsZeroAddress funcAddress >>= If
     if p then LitV 0 >>= setTarget target else do
       actuals <- mapM evalArg args
-      PushFrame funcAddress target
+      PushFrame --funcAddress target
+      here <- GetPC
+      PushCallStack here target
+      SetPC_forCall funcAddress -- forCall just for disassemble/explore-walkthrough
       setActuals actuals
       SetPCmode (AtRoutineHeader { numActuals = length actuals })
 
@@ -429,7 +432,10 @@ evalGlobal b = do
 
 returnValue :: Phase p => Value p -> Eff p ()
 returnValue v = do
-  target <- PopFrame
+  --target <- PopFrame
+  PopFrame
+  (pc,target) <- PopCallStack
+  SetPC pc
   setTarget target v
 
 setTarget :: Target -> Value p -> Eff p ()

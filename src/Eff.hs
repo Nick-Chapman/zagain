@@ -55,10 +55,16 @@ data Eff p x where
   FetchI :: Eff p Operation
   FetchRoutineHeader :: Eff p RoutineHeader
 
-  PushFrame :: Addr p -> Target -> Eff p ()
-  PopFrame :: Eff p Target
+  PushFrame :: Eff p ()
+  PopFrame :: Eff p ()
+
+  PushCallStack :: Addr p -> Target -> Eff p ()
+  PopCallStack :: Eff p (Addr p, Target)
+
   GetPC :: Eff p (Addr p)
   SetPC :: Addr p -> Eff p ()
+  SetPC_forCall :: Addr p -> Eff p () -- TODO: temp; remove!
+
   GetLocal :: Byte p -> Eff p (Value p)
   SetLocal :: Byte p -> Value p -> Eff p ()
   GetByte :: Addr p -> Eff p (Byte p)

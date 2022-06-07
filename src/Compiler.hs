@@ -127,20 +127,26 @@ compileEffect story smallStep = do
           _ -> do
             error "Fetch routine header at non-constant PC"
 
-      PushFrame addr target -> do
+      {-PushFrame addr target -> do
         let State{pc} = s
         case pc of
           Const pc -> do
             S_Seq (AtomPushFrame target pc) <$> k s { pc = addr } ()
           _ -> do
-            error "PushFrame at non-constant PC"
+            error "PushFrame at non-constant PC"-}
 
+      PushFrame -> undefined
       PopFrame -> undefined
+
+      PushCallStack pc target -> do undefined pc target
+      PopCallStack -> do undefined
 
       GetPC -> let State{pc} = s in k s pc
 
       SetPC pc -> do
         pure $ S_Done (DoneJump pc)
+
+      SetPC_forCall{} -> undefined
 
       GetLocal n -> undefined n
 

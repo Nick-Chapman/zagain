@@ -95,28 +95,36 @@ runEffect screenWidth seed story smallStep = do
         let (rh,pc') = runFetch (oob "FetchRoutineHeader") pc story fetchRoutineHeader
         k s { pc = pc' } rh
 
-      PushFrame addr target -> do
-        let State{pc,stack,locals,frames,callstack} = s
-        A.TraceRoutineCall addr $
-          k s { pc = addr
-              , frames = Frame { stack, locals } : frames
-              , callstack = (pc,target):callstack
-              , stack = []
-              , locals = Map.empty
-              } ()
+      PushFrame -> do
+        let State{stack,locals,frames} = s
+        k s { frames = Frame { stack, locals } : frames
+            , stack = []
+            , locals = Map.empty
+            } ()
 
       PopFrame -> do
-        let State{frames,callstack} = s
+        let State{frames} = s
         case frames of
           [] -> error "PopFrame, frames=[]"
           Frame{stack,locals}:frames -> do
-            case callstack of
-              [] -> error "PopFrame, callstack=[]"
-              (pc,target):callstack -> do
-                k s { pc, stack, locals, frames, callstack } target
+            k s { stack, locals, frames } ()
+
+      PushCallStack addr target -> do
+        let State{callstack} = s
+        k s { callstack = (addr,target) : callstack } ()
+
+      PopCallStack -> do
+        let State{callstack} = s
+        case callstack of
+          [] -> error "PopCallStack[]"
+          (pc,target):callstack -> do
+            k s { callstack } (pc,target)
 
       GetPC -> let State{pc} = s in k s pc
       SetPC pc -> k s { pc } ()
+      SetPC_forCall pc -> do
+        A.TraceRoutineCall pc $ -- purely for Disassemble/explore-walkthrough
+          k s { pc } ()
 
       GetLocal n -> do
         let State{locals} = s
