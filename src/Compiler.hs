@@ -6,7 +6,7 @@ import Control.Monad (ap,liftM)
 import Data.List (intercalate)
 import Decode (fetchOperation,fetchRoutineHeader)
 import Disassemble (disRoutine,dumpRoutine,Routine(..),branchesOf,isStopping)
-import Eff (Eff(..),Phase,PCmode(..))
+import Eff (Eff(..),Phase,PC(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
@@ -73,7 +73,7 @@ compileEffect story smallStep = do
 
     compileFrom :: Addr -> [Addr] -> Gen Statement
     compileFrom addr inlineSet = do
-      S_Label addr <$> loop (initState addr AtInstruction) smallStep finish
+      S_Label addr <$> loop (initState addr (AtInstruction (Const addr))) smallStep finish
       where
         finish :: State -> () -> Gen Statement
         finish s () = do
@@ -106,11 +106,13 @@ compileEffect story smallStep = do
       ReadInputFromUser _ -> undefined
       GetText a -> undefined a
 
-      GetPCmode -> let State{pcMode} = s in k s pcMode
-      SetPCmode pcMode -> k s { pcMode } ()
+      --GetPC -> let State{pc} = s in k s pc
+      --SetPC pc -> do pure $ S_Done (DoneJump pc)
 
-      FetchOperation -> do
-        let State{pc} = s
+      GetPC -> let State{pcMode} = s in k s pcMode
+      SetPC pcMode -> k s { pcMode } ()
+
+      FetchOperation pc -> do
         case pc of
           Const pc -> do
             let (ins,pc') = runFetch (oob "Compile/FetchOperation") pc story fetchOperation
@@ -121,8 +123,7 @@ compileEffect story smallStep = do
       TraceOperation a op ->
         undefined a op
 
-      FetchRoutineHeader -> do
-        let State{pc} = s
+      FetchRoutineHeader pc -> do
         case pc of
           Const pc -> do
             let (rh,pc') = runFetch (oob "Compile/FetchRoutineHeader") pc story fetchRoutineHeader
@@ -146,11 +147,6 @@ compileEffect story smallStep = do
 
       PushCallStack pc -> do undefined pc
       PopCallStack -> do undefined
-
-      GetPC -> let State{pc} = s in k s pc
-
-      SetPC pc -> do
-        pure $ S_Done (DoneJump pc)
 
       GetLocal n -> undefined n
 
@@ -243,10 +239,10 @@ compileEffect story smallStep = do
 
 data State = State
   { pc :: Expression Addr
-  , pcMode :: PCmode Compile
+  , pcMode :: PC Compile
   }
 
-initState :: Addr -> PCmode Compile -> State
+initState :: Addr -> PC Compile -> State
 initState pc pcMode = State
   { pc = Const pc
   , pcMode

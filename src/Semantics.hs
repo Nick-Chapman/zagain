@@ -3,7 +3,7 @@
 module Semantics (smallStep) where
 
 import Dictionary (Dict(..))
-import Eff (Eff(..),Phase(..),Mode,PCmode(..),StatusInfo(..))
+import Eff (Eff(..),Phase(..),Mode,PC(..),StatusInfo(..))
 import Header (Header(..))
 import Numbers (Zversion(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
@@ -14,27 +14,23 @@ import qualified Operation as Op
 
 smallStep :: Phase p => Mode -> Eff p ()
 smallStep mode = do
-  GetPCmode >>= \case
+  GetPC >>= \case
 
-    AtInstruction -> do
-      here <- GetPC
-      (operation,pc) <- FetchOperation
-      SetPC pc
-      SetPCmode AtInstruction
+    AtInstruction{pc=here} -> do
+      (operation,pc) <- FetchOperation here
+      SetPC AtInstruction { pc }
       TraceOperation here operation
       eval mode here operation
 
-    AtRoutineHeader{numActuals} -> do
-      (rh,pc) <- FetchRoutineHeader
+    AtRoutineHeader{routine,numActuals} -> do
+      (rh,pc) <- FetchRoutineHeader routine
       setDefaults rh numActuals
-      SetPC pc
-      SetPCmode AtInstruction
+      SetPC AtInstruction { pc }
 
-    ReturnToCaller v -> do
-      (operation,pc) <- FetchOperation
+    AtReturnToCaller{caller,result=v} -> do
+      (operation,pc) <- FetchOperation caller
       setTarget (callTarget operation) v
-      SetPC pc
-      SetPCmode AtInstruction
+      SetPC AtInstruction { pc }
 
     where
       callTarget = \case
@@ -61,8 +57,7 @@ eval mode here = \case
       setActuals actuals
       numActuals <- LitB $ fromIntegral (length actuals)
       TraceRoutineCall routine
-      SetPC routine
-      SetPCmode (AtRoutineHeader { numActuals })
+      SetPC AtRoutineHeader { routine, numActuals }
 
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -176,7 +171,7 @@ eval mode here = \case
 
   Op.Jump addr -> do
     pc <- LitA addr
-    SetPC pc
+    SetPC AtInstruction { pc }
 
   Op.Jz arg label -> do evalArg arg >>= IsZero >>= If >>= branchMaybe label
 
@@ -275,7 +270,7 @@ eval mode here = \case
   Op.Restart -> do -- TODO: implementation is not stack safe!
     Header{initialPC} <- StoryHeader
     pc <- LitA initialPC
-    SetPC pc
+    SetPC AtInstruction { pc }
 
   Op.Ret_popped -> do PopStack >>= returnValue
 
@@ -424,7 +419,9 @@ gotoDest :: Phase p => Dest -> Eff p ()
 gotoDest = \case
   Dfalse -> LitV 0 >>= returnValue
   Dtrue -> LitV 1 >>= returnValue
-  Dloc addr -> LitA addr >>= SetPC
+  Dloc addr -> do
+    pc <- LitA addr
+    SetPC AtInstruction { pc }
 
 evalFunc :: Phase p => Func -> Eff p (Addr p)
 evalFunc = \case
@@ -454,11 +451,10 @@ evalGlobal b = do
   pure res
 
 returnValue :: Phase p => Value p -> Eff p ()
-returnValue v = do
+returnValue result = do
   PopFrame
-  pc <- PopCallStack
-  SetPC pc
-  SetPCmode (ReturnToCaller v)
+  caller <- PopCallStack
+  SetPC AtReturnToCaller { caller, result }
 
 setTarget :: Target -> Value p -> Eff p ()
 setTarget var v = case var of

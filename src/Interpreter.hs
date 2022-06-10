@@ -7,7 +7,7 @@ import Data.Bits (shiftL)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
-import Eff (Eff(..),Phase,PCmode(..),StatusInfo(..))
+import Eff (Eff(..),Phase,PC(..),StatusInfo(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr,Value)
@@ -36,13 +36,13 @@ type Effect x = Eff Interpret x
 
 runEffect :: Byte -> Word -> Story -> Effect () -> Action
 runEffect screenWidth seed story smallStep = do
-  loop (initState screenWidth seed pc0 AtInstruction) e0 k0
+  loop (initState screenWidth seed (AtInstruction initialPC)) e0 k0
   where
     e0 = do smallStep; e0
 
     oob who = OOB_Error ("runEffect:"++who)
 
-    header@Header{zv,initialPC=pc0} = Story.header story
+    header@Header{zv,initialPC} = Story.header story
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
@@ -80,20 +80,18 @@ runEffect screenWidth seed story smallStep = do
         let (text,_) = runFetch (oob "GetText") a story ztext
         k s text
 
-      GetPCmode -> let State{pcMode} = s in k s pcMode
-      SetPCmode pcMode -> k s { pcMode } ()
-
-      FetchOperation -> do
-        let State{pc} = s
+      FetchOperation pc -> do
         k s $ runFetch (oob "FetchOperation") pc story fetchOperation
+
+      FetchRoutineHeader routine -> do
+        k s $ runFetch (oob "FetchRoutineHeader") routine story fetchRoutineHeader
 
       TraceOperation addr operation -> do
         let State{count} = s
         A.TraceInstruction (show s) count addr operation $ k s { count = count + 1 } ()
 
-      FetchRoutineHeader -> do
-        let State{pc} = s
-        k s $ runFetch (oob "FetchRoutineHeader") pc story fetchRoutineHeader
+      TraceRoutineCall addr -> do
+        A.TraceRoutineCall addr $ k s ()
 
       PushFrame -> do
         let State{stack,locals,frames} = s
@@ -101,6 +99,9 @@ runEffect screenWidth seed story smallStep = do
             , stack = []
             , locals = Map.empty
             } ()
+
+      GetPC -> let State{pcMode} = s in k s pcMode
+      SetPC pcMode -> k s { pcMode } ()
 
       PopFrame -> do
         let State{frames} = s
@@ -119,12 +120,6 @@ runEffect screenWidth seed story smallStep = do
           [] -> error "PopCallStack[]"
           pc:callstack -> do
             k s { callstack } pc
-
-      GetPC -> let State{pc} = s in k s pc
-      SetPC pc -> k s { pc } ()
-
-      TraceRoutineCall addr -> do
-        A.TraceRoutineCall addr $ k s ()
 
       GetLocal n -> do
         let State{locals} = s
@@ -232,8 +227,7 @@ runEffect screenWidth seed story smallStep = do
 --[interpreter state]-------------------------------------------------
 
 data State = State
-  { pc :: Addr
-  , pcMode :: PCmode Interpret
+  { pcMode :: PC Interpret
   , lastCount :: Int
   , count :: Int
   , stack :: [Value]
@@ -245,7 +239,7 @@ data State = State
   }
 
 instance Show State where
-  show State{pc,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pc) num x depth y
+  show State{pcMode,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pcMode) num x depth y
     where
       x = concat
         [ " " ++ printf "%05s" (show v)
@@ -260,10 +254,9 @@ instance Show State where
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack
 
-initState :: Byte -> Word -> Addr -> PCmode Interpret -> State
-initState screenWidth seed pc pcMode = do
-  State { pc
-        , pcMode
+initState :: Byte -> Word -> PC Interpret -> State
+initState screenWidth seed pcMode = do
+  State { pcMode
         , lastCount = 0
         , count = 0
         , stack = []

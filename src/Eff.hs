@@ -1,6 +1,6 @@
 
 -- | The computation effect of z-machine execution.
-module Eff (Eff(..),Phase(..),Mode(..),PCmode(..),StatusInfo(..)) where
+module Eff (Eff(..),Phase(..),Mode(..),PC(..),StatusInfo(..)) where
 
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
@@ -26,10 +26,12 @@ class
   type Value p
   type Vector p a
 
-data PCmode p
-  = AtRoutineHeader { numActuals :: Byte p }
-  | AtInstruction
-  | ReturnToCaller (Value p)
+data PC p
+  = AtRoutineHeader { routine :: Addr p, numActuals :: Byte p }
+  | AtInstruction { pc :: Addr p }
+  | AtReturnToCaller { caller :: Addr p, result :: Value p }
+
+deriving instance Phase p => Show (PC p)
 
 data StatusInfo p = StatusInfo
   { room :: Text p
@@ -52,18 +54,14 @@ data Eff p x where
   ReadInputFromUser :: Maybe (StatusInfo p) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
 
-  -- TODO: merge PC & PCmode
-  GetPC :: Eff p (Addr p)
-  SetPC :: Addr p -> Eff p ()
-
-  GetPCmode :: Eff p (PCmode p)
-  SetPCmode :: PCmode p -> Eff p ()
-
-  FetchRoutineHeader :: Eff p (RoutineHeader, Addr p)
-  FetchOperation :: Eff p (Operation, Addr p)
+  FetchRoutineHeader :: Addr p -> Eff p (RoutineHeader, Addr p)
+  FetchOperation :: Addr p -> Eff p (Operation, Addr p)
 
   TraceOperation :: Addr p -> Operation -> Eff p ()
   TraceRoutineCall :: Addr p -> Eff p ()
+
+  GetPC :: Eff p (PC p)
+  SetPC :: PC p -> Eff p ()
 
   -- TODO: merge back Push/Pop Frame & CallStack
   PushFrame :: Eff p ()
