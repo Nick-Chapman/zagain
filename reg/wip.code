@@ -50832,6 +50832,8 @@ LocOp 022791:
   TraceOperation (Sread (Var (Global 109)) (Var (Global 110)));
   if (IsZeroByte(M[Address(MakeHiLo(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),7)],M[Offset(Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),7),1)]))])) {
     ReadInputFromUser user_command_line_1;
+    Tokenize user_command_line_1 (num_tokens_2,position_words_3,canonicalized_4);
+    StringBytes canonicalized_4 string_bytes_5;
     Foreach {
       <...something...>
     }
@@ -50842,6 +50844,8 @@ LocOp 022791:
     Jump: 022800
   } else {
     ReadInputFromUser user_command_line_6;
+    Tokenize user_command_line_6 (num_tokens_7,position_words_8,canonicalized_9);
+    StringBytes canonicalized_9 string_bytes_10;
     Foreach {
       <...something...>
     }

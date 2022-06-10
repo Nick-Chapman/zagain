@@ -273,17 +273,14 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
       Eff.LookupInStrings{} -> undefined
 
       Eff.StringBytes string -> do
-        let _ = string -- TODO: use string!
         split :: Identifier [Expression Byte] <- genId "string_bytes"
-        k s (Variable split)
+        Seq (StringBytes string split) <$> k s (Variable split)
 
-      --Eff.Tokenize x -> prim1 x Prim.Tokenize -- ill-typed
       Eff.Tokenize x -> do
-        let _ = x -- TODO: use x!
-        a :: Identifier Byte <- genId "num_tokens"
-        b :: Identifier [(Expression Byte,Expression String)] <- genId "position_words"
-        c :: Identifier String <- genId "canonicalized"
-        k s (Variable a,Variable b,Variable c)
+        a <- genId "num_tokens"
+        b <- genId "position_words"
+        c <- genId "canonicalized"
+        Seq (Tokenize x (a,b,c)) <$> k s (Variable a,Variable b,Variable c)
 
       where
         prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen Statement
@@ -421,7 +418,15 @@ data Atom
   | PopStack (Identifier Value)
   | SetLocal (Expression Byte) (Expression Value)
   | ReadInputFromUser (Identifier String)
+  | StringBytes (Expression String) (Identifier [Expression Byte])
+  | Tokenize (Expression String) TokenizeIdents
   deriving Show
+
+type TokenizeIdents =
+  ( Identifier Byte
+  , Identifier [(Expression Byte,Expression String)]
+  , Identifier String
+  )
 
 data Expression a where
   Const :: a -> Expression a
