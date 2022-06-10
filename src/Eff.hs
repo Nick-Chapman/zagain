@@ -55,7 +55,6 @@ data Eff p x where
   -- TODO: merge PC & PCmode
   GetPC :: Eff p (Addr p)
   SetPC :: Addr p -> Eff p ()
-  SetPC_forCall :: Addr p -> Eff p () -- TODO: temp; remove!
 
   GetPCmode :: Eff p (PCmode p)
   SetPCmode :: PCmode p -> Eff p ()
@@ -64,6 +63,7 @@ data Eff p x where
   FetchOperation :: Eff p (Operation, Addr p)
 
   TraceOperation :: Addr p -> Operation -> Eff p ()
+  TraceRoutineCall :: Addr p -> Eff p ()
 
   -- TODO: merge back Push/Pop Frame & CallStack
   PushFrame :: Eff p ()

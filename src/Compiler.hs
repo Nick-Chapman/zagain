@@ -130,6 +130,9 @@ compileEffect story smallStep = do
           _ -> do
             error "Fetch routine header at non-constant PC"
 
+      TraceRoutineCall addr -> do
+        undefined addr
+
       {-PushFrame addr target -> do
         let State{pc} = s
         case pc of
@@ -148,8 +151,6 @@ compileEffect story smallStep = do
 
       SetPC pc -> do
         pure $ S_Done (DoneJump pc)
-
-      SetPC_forCall{} -> undefined
 
       GetLocal n -> undefined n
 

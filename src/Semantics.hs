@@ -60,7 +60,8 @@ eval mode here = \case
       PushCallStack here
       setActuals actuals
       numActuals <- LitB $ fromIntegral (length actuals)
-      SetPC_forCall funcAddress -- forCall just for disassemble/explore-walkthrough
+      TraceRoutineCall funcAddress
+      SetPC funcAddress
       SetPCmode (AtRoutineHeader { numActuals })
 
   Op.Clear_attr arg1 arg2 -> do

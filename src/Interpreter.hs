@@ -122,9 +122,9 @@ runEffect screenWidth seed story smallStep = do
 
       GetPC -> let State{pc} = s in k s pc
       SetPC pc -> k s { pc } ()
-      SetPC_forCall pc -> do
-        A.TraceRoutineCall pc $ -- purely for Disassemble/explore-walkthrough
-          k s { pc } ()
+
+      TraceRoutineCall addr -> do
+        A.TraceRoutineCall addr $ k s ()
 
       GetLocal n -> do
         let State{locals} = s
