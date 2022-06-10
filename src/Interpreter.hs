@@ -233,7 +233,7 @@ runEffect screenWidth seed story smallStep = do
 
 data State = State
   { pc :: Addr
-  , pcMode :: PCmode
+  , pcMode :: PCmode Interpret
   , lastCount :: Int
   , count :: Int
   , stack :: [Value]
@@ -260,7 +260,7 @@ instance Show State where
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack
 
-initState :: Byte -> Word -> Addr -> PCmode -> State
+initState :: Byte -> Word -> Addr -> PCmode Interpret -> State
 initState screenWidth seed pc pcMode = do
   State { pc
         , pcMode

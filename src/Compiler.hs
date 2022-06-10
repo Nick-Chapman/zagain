@@ -239,10 +239,10 @@ compileEffect story smallStep = do
 
 data State = State
   { pc :: Expression Addr
-  , pcMode :: PCmode
+  , pcMode :: PCmode Compile
   }
 
-initState :: Addr -> PCmode -> State
+initState :: Addr -> PCmode Compile -> State
 initState pc pcMode = State
   { pc = Const pc
   , pcMode

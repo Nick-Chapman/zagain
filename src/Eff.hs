@@ -26,7 +26,9 @@ class
   type Value p
   type Vector p a
 
-data PCmode = AtRoutineHeader { numActuals :: Int } | AtInstruction
+data PCmode p
+  = AtRoutineHeader { numActuals :: Byte p }
+  | AtInstruction
 
 data StatusInfo p = StatusInfo
   { room :: Text p
@@ -49,8 +51,8 @@ data Eff p x where
   ReadInputFromUser :: Maybe (StatusInfo p) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
 
-  GetPCmode :: Eff p PCmode
-  SetPCmode :: PCmode -> Eff p ()
+  GetPCmode :: Eff p (PCmode p)
+  SetPCmode :: PCmode p -> Eff p ()
 
   FetchI :: Eff p Operation
   FetchRoutineHeader :: Eff p RoutineHeader

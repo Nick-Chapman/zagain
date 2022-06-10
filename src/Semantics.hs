@@ -43,7 +43,8 @@ eval mode pc = \case
       PushCallStack here target
       SetPC_forCall funcAddress -- forCall just for disassemble/explore-walkthrough
       setActuals actuals
-      SetPCmode (AtRoutineHeader { numActuals = length actuals })
+      numActuals <- LitB $ fromIntegral (length actuals)
+      SetPCmode (AtRoutineHeader { numActuals })
 
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -460,17 +461,18 @@ setActuals actuals = do
   indexes <- mapM LitB [1..]
   sequence_ [ SetLocal i def | (i,def) <- zip indexes actuals ]
 
-setDefaults :: RoutineHeader -> Int -> Eff p ()
+setDefaults :: RoutineHeader -> Byte p -> Eff p ()
 setDefaults rh n =
   case rh of
     Op.BadRoutineHeader -> Error "setLocals: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
-      indexes <- mapM LitB [1..]
-      defs <- mapM LitV defs
       sequence_
-        [ SetLocal i def
-        | (i,b,def) <- zip3 indexes (take n (repeat False) ++ repeat True) defs
-        , b
+        [ do
+            i <- LitB i
+            LessThanByte n i >>= If >>= \case
+              True -> do LitV def >>= SetLocal i
+              False -> pure ()
+        | (i,def) <- zip [1..] defs
         ]
 
 getWord :: Addr p -> Eff p (Value p)
