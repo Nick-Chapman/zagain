@@ -297,8 +297,8 @@ eval mode here = \case
       | otherwise ->
           pure Nothing
     rawTyped <- ReadInputFromUser statusInfoM
-    t_buf <- evalArg arg1 >>= Address
-    p_buf <- evalArg arg2 >>= Address
+    tBuf <- evalArg arg1 >>= Address
+    pBuf <- evalArg arg2 >>= Address
     Dict{seps,entryLength,strings=dictStrings} <- TheDictionary
     -- +4 : #seps byte, entryLength byte, #entries word
     Header{dictionary} <- StoryHeader
@@ -307,13 +307,15 @@ eval mode here = \case
     baseEntries <- Offset base offset
     (n,positionedWords,canoicalizedTyped) <- Tokenize rawTyped
     textBytes <- StringBytes canoicalizedTyped
-    Foreach textBytes $ \i b -> do
-      one <- LitV (fromIntegral i + 1)
-      a <- Offset t_buf one
-      SetByte a b
     one <- LitV 1
-    a <- Offset p_buf one
-    SetByte a n
+    tBuf1 <- Offset tBuf one
+    Foreach textBytes $ \off b -> do
+      a <- Offset tBuf1 off
+      SetByte a b
+    pBuf1 <- Offset pBuf one
+    SetByte pBuf1 n
+    two <- LitV 2
+    pBuf2 <- Offset pBuf two
     Foreach positionedWords $ \i (pos,word) -> do
       iopt <- LookupInStrings dictStrings word
       dictAddr <-
@@ -326,8 +328,9 @@ eval mode here = \case
       dictAddrV <- DeAddress dictAddr
       (hi,lo) <- splitWord dictAddrV
       n <- StringLength word
-      off <- LitV (fromIntegral (4*i+ 2))
-      a <- Offset p_buf off
+      four <- LitV 4
+      off <- Mul four i
+      a <- Offset pBuf2 off
       writeBytes a [hi,lo,n,pos]
 
   Op.Store arg1 arg2 -> do

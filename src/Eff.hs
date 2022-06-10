@@ -79,7 +79,7 @@ data Eff p x where
   Random :: Value p -> Eff p (Value p)
   Quit :: Eff p ()
   If :: Pred p -> Eff p Bool
-  Foreach :: Vector p x -> (Int -> x -> Eff p ()) -> Eff p () -- TODO: This Int needs to be phase-polymorphic
+  Foreach :: Vector p x -> (Value p -> x -> Eff p ()) -> Eff p ()
 
   LitA :: Numbers.Addr -> Eff p (Addr p)
   LitB :: Numbers.Byte -> Eff p (Byte p)
