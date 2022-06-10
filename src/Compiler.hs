@@ -30,103 +30,99 @@ instance Phase Compile where
 
 type Effect a = Eff Compile a
 
+compileEffect :: Story -> Effect () -> IO Code
+compileEffect story smallStep = do
+  code <- compileToCode story smallStep
+  dumpCode code
+  pure code
+
+dumpCode :: Code -> IO ()
+dumpCode Code{chunks} = do
+  sequence_
+    [ do
+        printf "--[%d]--------------------------------------------------\n" i
+        print chunk
+    | (i,chunk) <- zip [1::Int ..] chunks
+    ]
+
 runCode :: Word -> Code -> Action
 runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
 
-compileEffect :: Story -> Effect () -> IO Code
-compileEffect story smallStep = do
+compileToCode :: Story -> Effect () -> IO Code
+compileToCode story smallStep = do
   let Header{initialPC} = Story.header story
+  let addr = initialPC - 1
+  let routine = disRoutine story addr
+  chunks <- compileRoutine story smallStep routine
+  pure (Code chunks)
 
-  let firstRoutine = initialPC - 1
-  let Routine{body=routineBody} = disRoutine story firstRoutine
-
-  let
-    mkRoutineControl a = do
-      Eff.AtRoutineHeader { routine = Const a, numActuals = NumActuals }
-
-  let
-    mkReturnControl a = do
-      Eff.AtReturnFromCall { caller = Const a, result = CallResult }
-
+compileRoutine :: Story -> Effect () -> Routine -> IO [Chunk]
+compileRoutine story smallStep routine = do
+  let Routine{start,body} = routine
   let
     isCall :: Operation -> Bool
     isCall = \case
       Operation.Call{} -> True
       _ -> False
-
   let
-    locations :: [Control Compile] =
+    locations :: [Loc] =
       [ x
-      | (addr,op) <- routineBody
-      , x <- [Eff.AtInstruction (Const addr)] ++ if isCall op then [mkReturnControl addr] else []
+      | (addr,op) <- body
+      , x <- [LocOp addr] ++ if isCall op then [LocReturn addr] else []
       ]
-
-  let routine0 = mkRoutineControl firstRoutine
-
-  let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- routineBody ]
-
+  let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- body ]
   let
     addressesToInline :: [Addr] =
       [ a
-      | (a,_) <- routineBody
+      | (a,_) <- body
         -- TODO: we could still inline if there is only a single jump-from location & no fallthrough
       , a `notElem` jumpDest
       ]
-
   let
-    nonInlinedLocations :: [Control Compile] =
-      [ pc
-      | pc <- locations
-      , case pc of Eff.AtInstruction (Const a) -> a `notElem` addressesToInline; _ -> True
+    nonInlinedLocations :: [Loc] =
+      [ control
+      | control <- locations
+      , case control of LocOp a -> a `notElem` addressesToInline; _ -> True
       ]
+  let locationsToCompile = [LocRoutine start] ++ nonInlinedLocations
+  let
+    shouldInline :: Control Compile -> Bool
+    shouldInline control =
+      case control of
+        Eff.AtInstruction (Const control) -> (control `elem` addressesToInline)
+        _ -> False
+  let
+    static = Static { story, smallStep, shouldInline }
 
-  let toCompile :: [Control Compile] = [routine0] ++ nonInlinedLocations
-
-  let static = Static { story, smallStep, addressesToInline }
-
-  chunks <- sequence
-    [ do
-        statement <- runGen $ compileFrom static pc
-        printf "--[%d]--------------------------------------------------\n" i
-        print statement
-        pure statement
-    | (i,pc) <- zip [1::Int ..] toCompile
-    ]
-  pure $ Code { chunks }
-
+  mapM (runGen . compileLoc static) locationsToCompile
 
 
 data Static = Static
   { story :: Story
   , smallStep :: Effect ()
-  , addressesToInline :: [Addr]
+  , shouldInline :: Control Compile -> Bool
   }
 
+compileLoc :: Static -> Loc -> Gen Chunk
+compileLoc Static{story,smallStep,shouldInline} loc = do
 
-compileFrom :: Static -> Control Compile -> Gen Statement
-compileFrom Static{story,smallStep,addressesToInline} pc = do
-
-  Label pc <$> loop (initState pc) smallStep finish
+  let control = makeControl loc
+  body <- loop (initState control) smallStep transfer
+  pure Chunk { label = loc, body }
 
   where
-    oob who = OOB_Error ("compileFrom:"++who)
+    oob who = OOB_Error ("compileLoc:"++who)
 
     header@Header{zv} = Story.header story
 
-    doInline :: Control Compile -> Bool
-    doInline pc =
-      case pc of
-        Eff.AtInstruction (Const pc) -> (pc `elem` addressesToInline)
-        _ -> False
-
-    finish :: State -> () -> Gen Statement
-    finish s () = do
-      let State{pc} = s
+    transfer :: State -> () -> Gen Statement
+    transfer s () = do
+      let State{control} = s
       if
-        | doInline pc -> do
-            Seq (Inlining pc) <$> loop s { pc } smallStep finish
+        | shouldInline control -> do
+            Seq (Inlining control) <$> loop s { control } smallStep transfer
         | otherwise -> do
-            pure (Transfer pc)
+            pure (Transfer control)
 
     loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Gen Statement) -> Gen Statement
     loop s e k = case e of
@@ -142,8 +138,8 @@ compileFrom Static{story,smallStep,addressesToInline} pc = do
       Eff.ReadInputFromUser _ -> undefined
       Eff.GetText a -> undefined a
 
-      Eff.GetControl -> let State{pc} = s in k s pc
-      Eff.SetControl pc -> k s { pc } ()
+      Eff.GetControl -> let State{control} = s in k s control
+      Eff.SetControl control -> k s { control } ()
 
       Eff.FetchOperation pc -> do
         case pc of
@@ -172,8 +168,8 @@ compileFrom Static{story,smallStep,addressesToInline} pc = do
       Eff.PopFrame -> do
         undefined
 
-      Eff.PushCallStack pc -> do
-        Seq (PushReturnAddress pc) <$> k s ()
+      Eff.PushCallStack addr -> do
+        Seq (PushReturnAddress addr) <$> k s ()
 
       Eff.PopCallStack -> do
         undefined
@@ -273,13 +269,23 @@ compileFrom Static{story,smallStep,addressesToInline} pc = do
 
 --[state]-------------------------------------------------------------
 
+makeControl :: Loc -> Control Compile
+makeControl = \case
+  LocRoutine a ->
+    Eff.AtRoutineHeader { routine = Const a, numActuals = NumActuals }
+  LocOp a ->
+    Eff.AtInstruction { pc = Const a }
+  LocReturn a ->
+    Eff.AtReturnFromCall { caller = Const a, result = CallResult }
+
+
 data State = State
-  { pc :: Control Compile
+  { control :: Control Compile
   }
 
 initState :: Control Compile -> State
-initState pc = State
-  { pc
+initState control = State
+  { control
   }
 
 --[gen]---------------------------------------------------------------
@@ -324,17 +330,22 @@ makeBinary p2 x y = case (x,y) of
 --[code]--------------------------------------------------------------
 
 data Code = Code
-  { chunks :: [Statement]
+  { chunks :: [Chunk]
   }
+
+data Chunk = Chunk { label :: Loc, body :: Statement }
+
+instance Show Chunk where
+  show Chunk{ label, body } =
+    intercalate "\n" ((show label ++ ":") : pretty 2 body)
+
+data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
 data Statement
   = Error String
   | Transfer (Control Compile)
   | Seq Atom Statement
   | If (Expression Bool) Statement Statement
-  | Label (Control Compile) Statement -- TODO: should be on the Chunk
-
-instance Show Statement where show = intercalate "\n" . pretty 0
 
 pretty :: Int -> Statement -> [String]
 pretty i = \case
@@ -351,10 +362,6 @@ pretty i = \case
     , pretty (i+2) s1
     , [tab i "} else {"]
     , pretty (i+2) s2 ++ [tab i "}"]
-    ]
-  Label a s -> concat
-    [ [tab i (show a ++ ":")]
-    , pretty (i+2) s
     ]
 
 tab :: Int -> String -> String

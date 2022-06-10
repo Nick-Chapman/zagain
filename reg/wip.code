@@ -1,8 +1,8 @@
 --[1]--------------------------------------------------
-AtRoutineHeader {routine = 020228, numActuals = num_actuals}:
+LocRoutine 020228:
   Jump: 020229
 --[2]--------------------------------------------------
-AtInstruction {pc = 020229}:
+LocOp 020229:
   TraceOperation (Call (Floc 021618) [Con -32752,Con -1] Sp);
   PushFrame;
   PushReturnAddress 020229;
@@ -10,7 +10,7 @@ AtInstruction {pc = 020229}:
   SetLocal 2 -1;
   Call: 021618(..#2..)
 --[3]--------------------------------------------------
-AtReturnFromCall {caller = 020229, result = call_result}:
+LocReturn 020229:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020238});
   TraceOperation (Storew (Var Sp) (Con 0) (Con 1));
@@ -25,7 +25,7 @@ AtReturnFromCall {caller = 020229, result = call_result}:
   SetLocal 2 -1;
   Call: 021618(..#2..)
 --[4]--------------------------------------------------
-AtReturnFromCall {caller = 020243, result = call_result}:
+LocReturn 020243:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020252});
   TraceOperation (Call (Floc 021618) [Con -32528,Con -1] Sp);
@@ -35,7 +35,7 @@ AtReturnFromCall {caller = 020243, result = call_result}:
   SetLocal 2 -1;
   Call: 021618(..#2..)
 --[5]--------------------------------------------------
-AtReturnFromCall {caller = 020252, result = call_result}:
+LocReturn 020252:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020261});
   TraceOperation (Storew (Var Sp) (Con 0) (Con 1));
@@ -50,7 +50,7 @@ AtReturnFromCall {caller = 020252, result = call_result}:
   SetLocal 2 40;
   Call: 021618(..#2..)
 --[6]--------------------------------------------------
-AtReturnFromCall {caller = 020266, result = call_result}:
+LocReturn 020266:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020274});
   TraceOperation (Call (Floc 021618) [Con 28501,Con 200] Sp);
@@ -60,13 +60,13 @@ AtReturnFromCall {caller = 020266, result = call_result}:
   SetLocal 2 200;
   Call: 021618(..#2..)
 --[7]--------------------------------------------------
-AtReturnFromCall {caller = 020274, result = call_result}:
+LocReturn 020274:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020282});
   TraceOperation (Put_prop (Con 156) (Con 6) (Con 4));
   "TODO:getPropsA"
 --[8]--------------------------------------------------
-AtReturnFromCall {caller = 020344, result = call_result}:
+LocReturn 020344:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020350});
   TraceOperation (Test_attr (Var (Global 0)) (Con 3) (Branch T (Dloc 020360)));
@@ -80,14 +80,14 @@ AtReturnFromCall {caller = 020344, result = call_result}:
     Call: 028384(..#0..)
   }
 --[9]--------------------------------------------------
-AtReturnFromCall {caller = 020354, result = call_result}:
+LocReturn 020354:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020359});
   TraceOperation New_line;
   GamePrint "\n";
   Jump: 020360
 --[10]--------------------------------------------------
-AtInstruction {pc = 020360}:
+LocOp 020360:
   TraceOperation (Store (Con 82) (Con 1));
   SetByte 008949 0;
   SetByte 008950 1;
@@ -126,7 +126,7 @@ AtInstruction {pc = 020360}:
     }
   }
 --[11]--------------------------------------------------
-AtReturnFromCall {caller = 020372, result = call_result}:
+LocReturn 020372:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020377});
   TraceOperation (Call (Floc 021802) [] Sp);
@@ -134,7 +134,7 @@ AtReturnFromCall {caller = 020372, result = call_result}:
   PushReturnAddress 020377;
   Call: 021802(..#0..)
 --[12]--------------------------------------------------
-AtReturnFromCall {caller = 020377, result = call_result}:
+LocReturn 020377:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020382});
   TraceOperation (Jump 020229);
