@@ -7,7 +7,7 @@ import Data.Bits (shiftL)
 import Data.Map (Map)
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Dictionary (fetchDict)
-import Eff (Eff(..),Phase,PC(..),StatusInfo(..))
+import Eff (Eff(..),Phase,Control(..),StatusInfo(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr,Value)
@@ -92,7 +92,7 @@ runEffect screenWidth seed story smallStep = do
         A.TraceInstruction stateString count addr operation $ k s { count = count + 1 } ()
 
       TraceRoutineCall addr -> do
-        A.TraceRoutineCall addr $ k s ()
+        A.TraceRoutineCall addr $ k s () -- for dynamic discovery
 
       PushFrame -> do
         let State{stack,locals,frames} = s
@@ -101,8 +101,8 @@ runEffect screenWidth seed story smallStep = do
             , locals = Map.empty
             } ()
 
-      GetPC -> let State{pcMode} = s in k s pcMode
-      SetPC pcMode -> k s { pcMode } ()
+      GetControl -> let State{pcMode} = s in k s pcMode
+      SetControl pcMode -> k s { pcMode } ()
 
       PopFrame -> do
         let State{frames} = s
@@ -228,7 +228,7 @@ runEffect screenWidth seed story smallStep = do
 --[interpreter state]-------------------------------------------------
 
 data State = State
-  { pcMode :: PC Interpret
+  { pcMode :: Control Interpret
   , lastCount :: Int
   , count :: Int
   , stack :: [Value]
@@ -255,7 +255,7 @@ data State = State
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack-}
 
-initState :: Byte -> Word -> PC Interpret -> State
+initState :: Byte -> Word -> Control Interpret -> State
 initState screenWidth seed pcMode = do
   State { pcMode
         , lastCount = 0

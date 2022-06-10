@@ -6,8 +6,8 @@ import Control.Monad (ap,liftM)
 import Data.List (intercalate)
 import Decode (fetchOperation,fetchRoutineHeader)
 import Disassemble (Routine(..),disRoutine,branchesOf)
-import Eff (Phase,Eff,PC)
-import qualified Eff (Eff(..),PC(..))
+import Eff (Phase,Eff,Control)
+import qualified Eff (Eff(..),Control(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
@@ -41,11 +41,11 @@ compileEffect story smallStep = do
   let Routine{body=routineBody} = disRoutine story firstRoutine
 
   let
-    mkRoutinePC a = do
+    mkRoutineControl a = do
       Eff.AtRoutineHeader { routine = Const a, numActuals = NumActuals }
 
   let
-    mkReturnPC a = do
+    mkReturnControl a = do
       Eff.AtReturnFromCall { caller = Const a, result = CallResult }
 
   let
@@ -55,13 +55,13 @@ compileEffect story smallStep = do
       _ -> False
 
   let
-    locations :: [PC Compile] =
+    locations :: [Control Compile] =
       [ x
       | (addr,op) <- routineBody
-      , x <- [Eff.AtInstruction (Const addr)] ++ if isCall op then [mkReturnPC addr] else []
+      , x <- [Eff.AtInstruction (Const addr)] ++ if isCall op then [mkReturnControl addr] else []
       ]
 
-  let routine0 = mkRoutinePC firstRoutine
+  let routine0 = mkRoutineControl firstRoutine
 
   let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- routineBody ]
 
@@ -74,17 +74,19 @@ compileEffect story smallStep = do
       ]
 
   let
-    nonInlinedLocations :: [PC Compile] =
+    nonInlinedLocations :: [Control Compile] =
       [ pc
       | pc <- locations
       , case pc of Eff.AtInstruction (Const a) -> a `notElem` addressesToInline; _ -> True
       ]
 
-  let toCompile :: [PC Compile] = [routine0] ++ nonInlinedLocations
+  let toCompile :: [Control Compile] = [routine0] ++ nonInlinedLocations
+
+  let static = Static { story, smallStep, addressesToInline }
 
   chunks <- sequence
     [ do
-        statement <- runGen $ compileFrom pc addressesToInline
+        statement <- runGen $ compileFrom static pc
         printf "--[%d]--------------------------------------------------\n" i
         print statement
         pure statement
@@ -92,54 +94,56 @@ compileEffect story smallStep = do
     ]
   pure $ Code { chunks }
 
-  -- TODO: un-nest this code for better clarity!
+
+
+data Static = Static
+  { story :: Story
+  , smallStep :: Effect ()
+  , addressesToInline :: [Addr]
+  }
+
+
+compileFrom :: Static -> Control Compile -> Gen Statement
+compileFrom Static{story,smallStep,addressesToInline} pc = do
+
+  Label pc <$> loop (initState pc) smallStep finish
+
   where
-    oob who = OOB_Error ("compileEffect:"++who)
+    oob who = OOB_Error ("compileFrom:"++who)
 
     header@Header{zv} = Story.header story
 
-    compileFrom :: PC Compile -> [Addr] -> Gen Statement
-    compileFrom pc addressesToInline = do
-      S_Label pc <$> continue
-      where
+    doInline :: Control Compile -> Bool
+    doInline pc =
+      case pc of
+        Eff.AtInstruction (Const pc) -> (pc `elem` addressesToInline)
+        _ -> False
 
-        continue :: Gen Statement
-        continue = loop (initState pc) smallStep finish
-
-        doInline :: PC Compile -> Bool
-        doInline pc =
-          case pc of
-            Eff.AtInstruction (Const pc) -> (pc `elem` addressesToInline)
-            _ -> False
-
-        finish :: State -> () -> Gen Statement
-        finish s () = do
-          let State{pc} = s
-          if
-            | doInline pc -> do
-                -- TODO: comment in gen code that we are inlining
-                loop s (do Eff.SetPC pc; smallStep) finish -- TODO: dont need to manufacture effect here
-            | otherwise -> do
-                pure (S_Done (DoneJump pc))
+    finish :: State -> () -> Gen Statement
+    finish s () = do
+      let State{pc} = s
+      if
+        | doInline pc -> do
+            Seq (Inlining pc) <$> loop s { pc } smallStep finish
+        | otherwise -> do
+            pure (Transfer pc)
 
     loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Gen Statement) -> Gen Statement
     loop s e k = case e of
       Eff.Ret x -> k s x
       Eff.Bind e f -> loop s e $ \s a -> loop s (f a) k
 
-      Eff.GamePrint mes -> do S_Seq (GamePrint mes) <$> k s ()
+      Eff.GamePrint mes -> do Seq (GamePrint mes) <$> k s ()
       Eff.Debug thing -> do GDebug thing; k s ()
-
-      Eff.Error msg -> do
-        pure $ S_Done (DoneError msg)
+      Eff.Error msg -> do pure $ Error msg
 
       Eff.TheDictionary -> undefined
       Eff.StoryHeader -> k s header
       Eff.ReadInputFromUser _ -> undefined
       Eff.GetText a -> undefined a
 
-      Eff.GetPC -> let State{pc} = s in k s pc
-      Eff.SetPC pc -> k s { pc } ()
+      Eff.GetControl -> let State{pc} = s in k s pc
+      Eff.SetControl pc -> k s { pc } ()
 
       Eff.FetchOperation pc -> do
         case pc of
@@ -157,20 +161,19 @@ compileEffect story smallStep = do
           _ -> do
             error "Fetch routine header at non-constant PC"
 
-      Eff.TraceOperation a op -> do
-        S_Seq (TraceOperation a op) <$> k s ()
+      Eff.TraceOperation _addr op -> do
+        Seq (TraceOperation op) <$> k s ()
 
-      Eff.TraceRoutineCall addr -> do
-        S_Seq (TraceRoutineCall addr) <$> k s ()
+      Eff.TraceRoutineCall _addr -> do k s ()
 
       Eff.PushFrame -> do
-        S_Seq PushFrame  <$> k s ()
+        Seq PushFrame  <$> k s ()
 
       Eff.PopFrame -> do
         undefined
 
       Eff.PushCallStack pc -> do
-        S_Seq (PushReturnAddress pc) <$> k s ()
+        Seq (PushReturnAddress pc) <$> k s ()
 
       Eff.PopCallStack -> do
         undefined
@@ -179,20 +182,20 @@ compileEffect story smallStep = do
         undefined n
 
       Eff.SetLocal n v -> do
-        S_Seq (SetLocal n v) <$> k s ()
+        Seq (SetLocal n v) <$> k s ()
 
       Eff.GetByte a -> k s (GetByte a)
-      Eff.SetByte a b -> S_Seq (SetByte a b) <$> k s ()
+      Eff.SetByte a b -> Seq (SetByte a b) <$> k s ()
 
       -- TODO: explore maintaining temporary-stack at compile-time
       Eff.PushStack v -> do
-        S_Seq (PushStack v) <$> k s ()
+        Seq (PushStack v) <$> k s ()
 
       Eff.PopStack -> do
         u <- GenUnique
         let name :: Identifier Value = Identifier u
         let v :: Expression Value = Variable name
-        S_Seq (PopStack name) <$> k s v
+        Seq (PopStack name) <$> k s v
 
       Eff.Random range -> do
         undefined range
@@ -206,7 +209,7 @@ compileEffect story smallStep = do
           _ -> do
             b1 <- k s True
             b2 <- k s False
-            pure $ S_If pred b1 b2
+            pure $ If pred b1 b2
 
       Eff.Foreach xs f -> do
         undefined xs f
@@ -271,10 +274,10 @@ compileEffect story smallStep = do
 --[state]-------------------------------------------------------------
 
 data State = State
-  { pc :: PC Compile
+  { pc :: Control Compile
   }
 
-initState :: PC Compile -> State
+initState :: Control Compile -> State
 initState pc = State
   { pc
   }
@@ -325,24 +328,31 @@ data Code = Code
   }
 
 data Statement
-  = S_Done Done
-  | S_Seq Atom Statement
-  | S_If (Expression Bool) Statement Statement
-  | S_Label (PC Compile) Statement
+  = Error String
+  | Transfer (Control Compile)
+  | Seq Atom Statement
+  | If (Expression Bool) Statement Statement
+  | Label (Control Compile) Statement -- TODO: should be on the Chunk
 
 instance Show Statement where show = intercalate "\n" . pretty 0
 
 pretty :: Int -> Statement -> [String]
 pretty i = \case
-  S_Done x -> [tab i (show x)]
-  S_Seq a s -> tab i (show a ++ ";") : pretty i s
-  S_If e s1 s2 -> concat
+  Error msg -> [tab i (show msg)]
+  Transfer Eff.AtInstruction{pc} ->
+    [tab i ("Jump: " ++ show pc)]
+  Transfer Eff.AtRoutineHeader {routine,numActuals} ->
+    [tab i ("Call: " ++ show routine ++ "(..#" ++ show numActuals ++ "..)")]
+  Transfer Eff.AtReturnFromCall{caller,result} ->
+    [tab i ("Return(" ++ show result ++ ") -> " ++ show caller)]
+  Seq a s -> tab i (show a ++ ";") : pretty i s
+  If e s1 s2 -> concat
     [ [tab i "if (" ++ show e ++ ") {"]
     , pretty (i+2) s1
     , [tab i "} else {"]
     , pretty (i+2) s2 ++ [tab i "}"]
     ]
-  S_Label a s -> concat
+  Label a s -> concat
     [ [tab i (show a ++ ":")]
     , pretty (i+2) s
     ]
@@ -350,18 +360,13 @@ pretty i = \case
 tab :: Int -> String -> String
 tab n s = take n (repeat ' ') ++ s
 
-data Done
-  = DoneError String
-  | DoneJump (PC Compile)
-  deriving Show
-
 data Atom
   = SetByte (Expression Addr) (Expression Byte)
   | GamePrint (Expression String)
-  | TraceOperation (Expression Addr) Operation
-  | TraceRoutineCall (Expression Addr)
+  | Inlining (Control Compile)
+  | TraceOperation Operation
   | PushFrame
-  | PushReturnAddress (Expression Addr) -- TODO: needs to be an expression?
+  | PushReturnAddress (Expression Addr)
   | PushStack (Expression Value)
   | PopStack (Identifier Value)
   | SetLocal (Expression Byte) (Expression Value)

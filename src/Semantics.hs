@@ -3,7 +3,7 @@
 module Semantics (smallStep) where
 
 import Dictionary (Dict(..))
-import Eff (Eff(..),Phase(..),Mode,PC(..),StatusInfo(..))
+import Eff (Eff(..),Phase(..),Mode,Control(..),StatusInfo(..))
 import Header (Header(..))
 import Numbers (Zversion(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
@@ -14,23 +14,23 @@ import qualified Operation as Op
 
 smallStep :: Phase p => Mode -> Eff p ()
 smallStep mode = do
-  GetPC >>= \case
+  GetControl >>= \case
 
     AtInstruction{pc=here} -> do
       (operation,pc) <- FetchOperation here
-      SetPC AtInstruction { pc }
+      SetControl AtInstruction { pc }
       TraceOperation here operation
       eval mode here operation
 
     AtRoutineHeader{routine,numActuals} -> do
       (rh,pc) <- FetchRoutineHeader routine
       setDefaults rh numActuals
-      SetPC AtInstruction { pc }
+      SetControl AtInstruction { pc }
 
     AtReturnFromCall{caller,result=v} -> do
       (operation,pc) <- FetchOperation caller
       setTarget (callTarget operation) v
-      SetPC AtInstruction { pc }
+      SetControl AtInstruction { pc }
 
     where
       callTarget = \case
@@ -56,8 +56,8 @@ eval mode here = \case
       PushCallStack here
       setActuals actuals
       numActuals <- LitB $ fromIntegral (length actuals)
-      TraceRoutineCall routine
-      SetPC AtRoutineHeader { routine, numActuals }
+      TraceRoutineCall routine -- for dynamic discovery
+      SetControl AtRoutineHeader { routine, numActuals }
 
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -171,7 +171,7 @@ eval mode here = \case
 
   Op.Jump addr -> do
     pc <- LitA addr
-    SetPC AtInstruction { pc }
+    SetControl AtInstruction { pc }
 
   Op.Jz arg label -> do evalArg arg >>= IsZero >>= If >>= branchMaybe label
 
@@ -270,7 +270,7 @@ eval mode here = \case
   Op.Restart -> do -- TODO: implementation is not stack safe!
     Header{initialPC} <- StoryHeader
     pc <- LitA initialPC
-    SetPC AtInstruction { pc }
+    SetControl AtInstruction { pc }
 
   Op.Ret_popped -> do PopStack >>= returnValue
 
@@ -421,7 +421,7 @@ gotoDest = \case
   Dtrue -> LitV 1 >>= returnValue
   Dloc addr -> do
     pc <- LitA addr
-    SetPC AtInstruction { pc }
+    SetControl AtInstruction { pc }
 
 evalFunc :: Phase p => Func -> Eff p (Addr p)
 evalFunc = \case
@@ -454,7 +454,7 @@ returnValue :: Phase p => Value p -> Eff p ()
 returnValue result = do
   PopFrame
   caller <- PopCallStack
-  SetPC AtReturnFromCall { caller, result }
+  SetControl AtReturnFromCall { caller, result }
 
 setTarget :: Target -> Value p -> Eff p ()
 setTarget var v = case var of

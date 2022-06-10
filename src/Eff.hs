@@ -1,6 +1,6 @@
 
 -- | The computation effect of z-machine execution.
-module Eff (Eff(..),Phase(..),Mode(..),PC(..),StatusInfo(..)) where
+module Eff (Eff(..),Phase(..),Mode(..),Control(..),StatusInfo(..)) where
 
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
@@ -26,12 +26,12 @@ class
   type Value p
   type Vector p a
 
-data PC p
+data Control p
   = AtRoutineHeader { routine :: Addr p, numActuals :: Byte p }
   | AtInstruction { pc :: Addr p }
   | AtReturnFromCall { caller :: Addr p, result :: Value p }
 
-deriving instance Phase p => Show (PC p)
+deriving instance Phase p => Show (Control p)
 
 data StatusInfo p = StatusInfo
   { room :: Text p
@@ -60,8 +60,8 @@ data Eff p x where
   TraceOperation :: Addr p -> Operation -> Eff p ()
   TraceRoutineCall :: Addr p -> Eff p ()
 
-  GetPC :: Eff p (PC p)
-  SetPC :: PC p -> Eff p ()
+  GetControl :: Eff p (Control p)
+  SetControl :: Control p -> Eff p ()
 
   -- TODO: merge back Push/Pop Frame & CallStack
   PushFrame :: Eff p ()
