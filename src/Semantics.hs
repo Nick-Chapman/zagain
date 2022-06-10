@@ -483,7 +483,7 @@ setDefaults rh n =
   case rh of
     Op.BadRoutineHeader -> Error "setDefaults: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
-      sequence_
+      sequence_ -- TODO: This generates terrible code!
         [ do
             i <- LitB i
             LessThanByte n i >>= If >>= \case

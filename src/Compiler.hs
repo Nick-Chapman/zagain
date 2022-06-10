@@ -3,9 +3,10 @@ module Compiler (compileEffect,runCode) where
 
 import Action (Action)
 import Control.Monad (ap,liftM)
-import Data.List (intercalate)
+import Data.List (intercalate,nub)
 import Decode (fetchOperation,fetchRoutineHeader)
-import Disassemble (Routine(..),disRoutine,branchesOf)
+import Dictionary (Dict,fetchDict)
+import Disassemble (Routine(..),disRoutine,branchesOf,dynamicDiscovery)
 import Eff (Phase,Eff,Control)
 import qualified Eff (Eff(..),Control(..))
 import Fetch (runFetch)
@@ -50,10 +51,15 @@ runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
 
 compileToCode :: Story -> Effect () -> IO Code
 compileToCode story smallStep = do
+
   let Header{initialPC} = Story.header story
-  let addr = initialPC - 1
-  let routine = disRoutine story addr
-  chunks <- compileRoutine story smallStep routine
+  let r0 = initialPC - 1
+
+  let walkthrough = []
+  let as = nub (r0 : dynamicDiscovery story walkthrough)
+  let routines = [ disRoutine story a | a <- as ]
+
+  chunks <- concat <$> mapM (compileRoutine story smallStep) routines
   pure (Code chunks)
 
 compileRoutine :: Story -> Effect () -> Routine -> IO [Chunk]
@@ -91,20 +97,25 @@ compileRoutine story smallStep routine = do
       case control of
         Eff.AtInstruction (Const control) -> (control `elem` addressesToInline)
         _ -> False
+
   let
-    static = Static { story, smallStep, shouldInline }
+    (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
+
+  let
+    static = Static { story, dict, smallStep, shouldInline }
 
   mapM (runGen . compileLoc static) locationsToCompile
 
 
 data Static = Static
   { story :: Story
+  , dict :: Dict
   , smallStep :: Effect ()
   , shouldInline :: Control Compile -> Bool
   }
 
 compileLoc :: Static -> Loc -> Gen Chunk
-compileLoc Static{story,smallStep,shouldInline} loc = do
+compileLoc Static{story,dict,smallStep,shouldInline} loc = do
 
   let control = makeControl loc
   body <- loop (initState control) smallStep transfer
@@ -133,10 +144,16 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.Debug thing -> do GDebug thing; k s ()
       Eff.Error msg -> do pure $ Error msg
 
-      Eff.TheDictionary -> undefined
+      Eff.TheDictionary -> k s dict
       Eff.StoryHeader -> k s header
-      Eff.ReadInputFromUser _ -> undefined
-      Eff.GetText a -> undefined a
+
+      Eff.ReadInputFromUser _statusLine -> do -- TODO: dont ignore status line
+        name <- genId "user_command_line"
+        Seq (ReadInputFromUser name) <$> k s (Variable name)
+
+      Eff.GetText a -> do
+        -- TODO: make special case for constant addresses
+        k s (GetText a)
 
       Eff.GetControl -> let State{control} = s in k s control
       Eff.SetControl control -> k s { control } ()
@@ -166,16 +183,16 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq PushFrame  <$> k s ()
 
       Eff.PopFrame -> do
-        undefined
+        Seq PopFrame  <$> k s ()
 
       Eff.PushCallStack addr -> do
         Seq (PushReturnAddress addr) <$> k s ()
 
       Eff.PopCallStack -> do
-        undefined
+        name <- genId "return_address"
+        Seq (PopReturnAddress name) <$> k s (Variable name)
 
-      Eff.GetLocal n -> do
-        undefined n
+      Eff.GetLocal n -> k s (GetLocal n)
 
       Eff.SetLocal n v -> do
         Seq (SetLocal n v) <$> k s ()
@@ -188,10 +205,8 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (PushStack v) <$> k s ()
 
       Eff.PopStack -> do
-        u <- GenUnique
-        let name :: Identifier Value = Identifier u
-        let v :: Expression Value = Variable name
-        Seq (PopStack name) <$> k s v
+        name <- genId "v" -- TODO: popped
+        Seq (PopStack name) <$> k s (Variable name)
 
       Eff.Random range -> do
         undefined range
@@ -207,8 +222,9 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
-      Eff.Foreach xs f -> do
-        undefined xs f
+      Eff.Foreach _xs _f -> do -- TODO: use xs/f
+        Foreach_TODO <$> k s ()
+        --undefined xs f -- TODO: here
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -256,8 +272,19 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.TestBit x y -> prim2 x y Prim.TestBit
 
       Eff.LookupInStrings{} -> undefined
-      Eff.StringBytes{} -> undefined
-      Eff.Tokenize{} -> undefined
+
+      Eff.StringBytes string -> do
+        let _ = string -- TODO: use string!
+        split :: Identifier [Expression Byte] <- genId "split"
+        k s (Variable split)
+
+      --Eff.Tokenize x -> prim1 x Prim.Tokenize -- ill-typed
+      Eff.Tokenize x -> do
+        let _ = x -- TODO: use x!
+        a :: Identifier Byte <- genId "a"
+        b :: Identifier [(Expression Byte,Expression String)] <- genId "b"
+        c :: Identifier String <- genId "c"
+        k s (Variable a,Variable b,Variable c)
 
       where
         prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen Statement
@@ -265,6 +292,13 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
         prim2 :: (Show x, Show y) => Expression r ~ loopType => Expression x -> Expression y -> Prim.P2 x y r -> Gen Statement
         prim2 x y p2 = k s (makeBinary p2 x y)
+
+
+genId :: String -> Gen (Identifier a)
+genId tag = do
+  u <- GenUnique
+  pure $ Identifier tag u
+
 
 
 --[state]-------------------------------------------------------------
@@ -346,6 +380,7 @@ data Statement
   | Transfer (Control Compile)
   | Seq Atom Statement
   | If (Expression Bool) Statement Statement
+  | Foreach_TODO Statement
 
 pretty :: Int -> Statement -> [String]
 pretty i = \case
@@ -363,6 +398,12 @@ pretty i = \case
     , [tab i "} else {"]
     , pretty (i+2) s2 ++ [tab i "}"]
     ]
+  Foreach_TODO s ->
+    [ tab i "Foreach {"
+    , tab (i+2) "<...something...>"
+    , tab i "}"
+    ]
+    ++ pretty i s
 
 tab :: Int -> String -> String
 tab n s = take n (repeat ' ') ++ s
@@ -373,10 +414,13 @@ data Atom
   | Inlining (Control Compile)
   | TraceOperation Operation
   | PushFrame
+  | PopFrame
   | PushReturnAddress (Expression Addr)
+  | PopReturnAddress (Identifier Addr)
   | PushStack (Expression Value)
   | PopStack (Identifier Value)
   | SetLocal (Expression Byte) (Expression Value)
+  | ReadInputFromUser (Identifier String)
   deriving Show
 
 data Expression a where
@@ -386,7 +430,9 @@ data Expression a where
   Variable :: Identifier a -> Expression a
   Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
-  GetByte :: Expression Addr -> Expression Byte
+  GetByte :: Expression Addr -> Expression Byte -- TODO: careful when Sets may be reordered
+  GetLocal :: Expression Byte -> Expression Value
+  GetText :: Expression Addr -> Expression String
   List :: Show x => [Expression x] -> Expression [x]
 
 instance Show a => Show (Expression a) where
@@ -398,10 +444,12 @@ instance Show a => Show (Expression a) where
     Unary p1 x -> show p1 ++ "(" ++ show x ++ ")"
     Binary p2 x y -> show p2 ++ "(" ++ show x ++ "," ++ show y ++ ")"
     GetByte a -> "M[" ++ show a ++ "]"
+    GetLocal n -> "GetLocal(" ++ show n ++ ")"
+    GetText a -> "GetText(" ++ show a ++ ")"
     List xs -> "List(" ++ intercalate "," (map show xs) ++ ")"
 
 data Identifier a where
-  Identifier :: Int -> Identifier a
+  Identifier :: String -> Int -> Identifier a
 
 instance Show (Identifier a) where
-  show (Identifier i) = "v_" ++ show i
+  show (Identifier tag i) = tag ++ "_" ++ show i
