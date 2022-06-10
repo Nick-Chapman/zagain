@@ -27,7 +27,7 @@ instance Phase Compile where
   type Pred Compile = Expression Bool
   type Text Compile = Expression String
   type Value Compile = Expression Value
-  type Vector Compile a = Expression [a]
+  type Vector Compile a = Expression [a] -- TODO: hmm
 
 type Effect a = Eff Compile a
 
@@ -141,6 +141,7 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
         | otherwise -> do
             pure (Transfer control)
 
+    -- TODO: rename loop -> compile ?
     loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Gen Statement) -> Gen Statement
     loop s e k = case e of
       Eff.Ret x -> k s x
@@ -189,10 +190,10 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
         Seq (MakeRoutineFrame n)  <$> k s ()
 
       Eff.PushFrame -> do
-        Seq PushFrame  <$> k s ()
+        Seq PushFrame <$> k s ()
 
       Eff.PopFrame -> do
-        Seq PopFrame  <$> k s ()
+        Seq PopFrame <$> k s ()
 
       Eff.PushCallStack addr -> do
         Seq (PushReturnAddress addr) <$> k s ()
@@ -231,8 +232,17 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
-      Eff.Foreach _xs _f -> do -- TODO: use xs/f
-        Foreach_TODO <$> k s ()
+      Eff.Foreach xs _f -> do -- TODO: use f!
+        index <- genId "index"
+        elem <- genId "elem"
+
+        --let evar = undefined -- ??
+        --let bodyE :: Effect () = _f (Variable index) evar
+        --_body <- loop s bodyE k
+
+        let body = Null
+        let following = k s () -- TODO: but we loose any effects from the body (is this ok?)
+        Foreach (index,elem) xs body <$> following
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -282,7 +292,7 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
       Eff.LookupInStrings{} -> undefined
 
       Eff.StringBytes string -> do
-        split :: Identifier [Expression Byte] <- genId "string_bytes"
+        split <- genId "string_bytes"
         Seq (StringBytes string split) <$> k s (Variable split)
 
       Eff.Tokenize x -> do
@@ -384,15 +394,17 @@ instance Show Chunk where
 
 data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
-data Statement
-  = Error String
-  | Transfer (Control Compile)
-  | Seq Atom Statement
-  | If (Expression Bool) Statement Statement
-  | Foreach_TODO Statement
+data Statement where
+  Null :: Statement
+  Error :: String -> Statement
+  Transfer :: Control Compile -> Statement
+  Seq :: Atom ->  Statement -> Statement
+  If :: Expression Bool -> Statement -> Statement -> Statement
+  Foreach :: Show a => (Identifier Value, Identifier a) -> Expression [a] -> Statement -> Statement -> Statement -- existential a!
 
 pretty :: Int -> Statement -> [String]
 pretty i = \case
+  Null -> []
   Error msg -> [tab i (show msg)]
   Transfer Eff.AtInstruction{pc} ->
     [tab i ("Jump: " ++ show pc)]
@@ -407,12 +419,12 @@ pretty i = \case
     , [tab i "} else {"]
     , pretty (i+2) s2 ++ [tab i "}"]
     ]
-  Foreach_TODO s ->
-    [ tab i "Foreach {"
-    , tab (i+2) "<...something...>"
-    , tab i "}"
+  Foreach (index,elem) xs body following -> concat
+    [ [tab i ("Foreach: " ++ show index ++ ", " ++ show elem ++ " in (" ++ show xs ++ ") {")]
+    , pretty (i+2) body
+    , [tab i "}"]
     ]
-    ++ pretty i s
+    ++ pretty i following
 
 tab :: Int -> String -> String
 tab n s = take n (repeat ' ') ++ s

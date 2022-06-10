@@ -2705,24 +2705,20 @@ LocOp 022791:
     ReadInputFromUser user_command_line_1;
     Tokenize user_command_line_1 (num_tokens_2,position_words_3,canonicalized_4);
     StringBytes canonicalized_4 string_bytes_5;
-    Foreach {
-      <...something...>
+    Foreach: index_6, elem_7 in (string_bytes_5) {
     }
     SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) num_tokens_2;
-    Foreach {
-      <...something...>
+    Foreach: index_8, elem_9 in (position_words_3) {
     }
     Jump: 022800
   } else {
-    ReadInputFromUser user_command_line_6;
-    Tokenize user_command_line_6 (num_tokens_7,position_words_8,canonicalized_9);
-    StringBytes canonicalized_9 string_bytes_10;
-    Foreach {
-      <...something...>
+    ReadInputFromUser user_command_line_10;
+    Tokenize user_command_line_10 (num_tokens_11,position_words_12,canonicalized_13);
+    StringBytes canonicalized_13 string_bytes_14;
+    Foreach: index_15, elem_16 in (string_bytes_14) {
     }
-    SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) num_tokens_7;
-    Foreach {
-      <...something...>
+    SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) num_tokens_11;
+    Foreach: index_17, elem_18 in (position_words_12) {
     }
     Jump: 022800
   }

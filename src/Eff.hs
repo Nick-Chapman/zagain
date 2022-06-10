@@ -18,6 +18,7 @@ class
   ( Show (Addr p)
   , Show (Byte p)
   , Show (Value p)
+  , Show (Text p)
   ) => Phase p where
   type Addr p
   type Byte p
@@ -79,7 +80,8 @@ data Eff p x where
   Random :: Value p -> Eff p (Value p)
   Quit :: Eff p ()
   If :: Pred p -> Eff p Bool
-  Foreach :: Vector p x -> (Value p -> x -> Eff p ()) -> Eff p ()
+
+  Foreach :: Show x => Vector p x -> (Value p -> x -> Eff p ()) -> Eff p ()
 
   LitA :: Numbers.Addr -> Eff p (Addr p)
   LitB :: Numbers.Byte -> Eff p (Byte p)
