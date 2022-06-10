@@ -6,7 +6,8 @@ import Control.Monad (ap,liftM)
 import Data.List (intercalate)
 import Decode (fetchOperation,fetchRoutineHeader)
 import Disassemble (Routine(..),disRoutine,branchesOf)
-import Eff (Eff(..),Phase,PC(..))
+import Eff (Phase,Eff,PC)
+import qualified Eff (Eff(..),PC(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
@@ -41,11 +42,11 @@ compileEffect story smallStep = do
 
   let
     mkRoutinePC a = do
-      AtRoutineHeader { routine = Const a, numActuals = NumActuals }
+      Eff.AtRoutineHeader { routine = Const a, numActuals = NumActuals }
 
   let
     mkReturnPC a = do
-      AtReturnFromCall { caller = Const a, result = CallResult }
+      Eff.AtReturnFromCall { caller = Const a, result = CallResult }
 
   let
     isCall :: Operation -> Bool
@@ -57,7 +58,7 @@ compileEffect story smallStep = do
     locations :: [PC Compile] =
       [ x
       | (addr,op) <- routineBody
-      , x <- [AtInstruction (Const addr)] ++ if isCall op then [mkReturnPC addr] else []
+      , x <- [Eff.AtInstruction (Const addr)] ++ if isCall op then [mkReturnPC addr] else []
       ]
 
   let routine0 = mkRoutinePC firstRoutine
@@ -76,7 +77,7 @@ compileEffect story smallStep = do
     nonInlinedLocations :: [PC Compile] =
       [ pc
       | pc <- locations
-      , case pc of AtInstruction (Const a) -> a `notElem` addressesToInline; _ -> True
+      , case pc of Eff.AtInstruction (Const a) -> a `notElem` addressesToInline; _ -> True
       ]
 
   let toCompile :: [PC Compile] = [routine0] ++ nonInlinedLocations
@@ -108,7 +109,7 @@ compileEffect story smallStep = do
         doInline :: PC Compile -> Bool
         doInline pc =
           case pc of
-            AtInstruction (Const pc) -> (pc `elem` addressesToInline)
+            Eff.AtInstruction (Const pc) -> (pc `elem` addressesToInline)
             _ -> False
 
         finish :: State -> () -> Gen Statement
@@ -117,30 +118,30 @@ compileEffect story smallStep = do
           if
             | doInline pc -> do
                 -- TODO: comment in gen code that we are inlining
-                loop s (do SetPC pc; smallStep) finish
+                loop s (do Eff.SetPC pc; smallStep) finish -- TODO: dont need to manufacture effect here
             | otherwise -> do
                 pure (S_Done (DoneJump pc))
 
     loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Gen Statement) -> Gen Statement
     loop s e k = case e of
-      Ret x -> k s x
-      Bind e f -> loop s e $ \s a -> loop s (f a) k
+      Eff.Ret x -> k s x
+      Eff.Bind e f -> loop s e $ \s a -> loop s (f a) k
 
-      GamePrint mes -> do S_Seq (AtomGamePrint mes) <$> k s ()
-      Debug thing -> do GDebug thing; k s ()
+      Eff.GamePrint mes -> do S_Seq (AtomGamePrint mes) <$> k s ()
+      Eff.Debug thing -> do GDebug thing; k s ()
 
-      Error msg -> do
+      Eff.Error msg -> do
         pure $ S_Done (DoneError msg)
 
-      TheDictionary -> undefined
-      StoryHeader -> k s header
-      ReadInputFromUser _ -> undefined
-      GetText a -> undefined a
+      Eff.TheDictionary -> undefined
+      Eff.StoryHeader -> k s header
+      Eff.ReadInputFromUser _ -> undefined
+      Eff.GetText a -> undefined a
 
-      GetPC -> let State{pc} = s in k s pc
-      SetPC pc -> k s { pc } ()
+      Eff.GetPC -> let State{pc} = s in k s pc
+      Eff.SetPC pc -> k s { pc } ()
 
-      FetchOperation pc -> do
+      Eff.FetchOperation pc -> do
         case pc of
           Const pc -> do
             let (ins,pc') = runFetch (oob "Compile/FetchOperation") pc story fetchOperation
@@ -148,7 +149,7 @@ compileEffect story smallStep = do
           _ ->
             error "Fetch instruction at non-constant PC"
 
-      FetchRoutineHeader pc -> do
+      Eff.FetchRoutineHeader pc -> do
         case pc of
           Const pc -> do
             let (rh,pc') = runFetch (oob "Compile/FetchRoutineHeader") pc story fetchRoutineHeader
@@ -156,50 +157,50 @@ compileEffect story smallStep = do
           _ -> do
             error "Fetch routine header at non-constant PC"
 
-      TraceOperation a op -> do
+      Eff.TraceOperation a op -> do
         S_Seq (AtomTraceOperation a op) <$> k s ()
 
-      TraceRoutineCall addr -> do
+      Eff.TraceRoutineCall addr -> do
         S_Seq (AtomTraceRoutineCall addr) <$> k s ()
 
-      PushFrame -> do
+      Eff.PushFrame -> do
         S_Seq AtomPushFrame  <$> k s ()
 
-      PopFrame -> do
+      Eff.PopFrame -> do
         undefined
 
-      PushCallStack pc -> do
+      Eff.PushCallStack pc -> do
         S_Seq (AtomPushReturnAddress pc) <$> k s ()
 
-      PopCallStack -> do
+      Eff.PopCallStack -> do
         undefined
 
-      GetLocal n -> do
+      Eff.GetLocal n -> do
         undefined n
 
-      SetLocal n v -> do
+      Eff.SetLocal n v -> do
         S_Seq (AtomSetLocal n v) <$> k s ()
 
-      GetByte a -> k s (E_GetByte a)
-      SetByte a b -> S_Seq (AtomSetByte a b) <$> k s ()
+      Eff.GetByte a -> k s (E_GetByte a)
+      Eff.SetByte a b -> S_Seq (AtomSetByte a b) <$> k s ()
 
       -- TODO: explore maintaining temporary-stack at compile-time
-      PushStack v -> do
+      Eff.PushStack v -> do
         S_Seq (AtomPushStack v) <$> k s ()
 
-      PopStack -> do
+      Eff.PopStack -> do
         u <- GenUnique
         let name :: Identifier Value = Identifier u
         let v :: Expression Value = Variable name
         S_Seq (AtomPopStack name) <$> k s v
 
-      Random range -> do
+      Eff.Random range -> do
         undefined range
 
-      Quit -> do
+      Eff.Quit -> do
         undefined
 
-      If pred -> do
+      Eff.If pred -> do
         case pred of
           Const pred -> k s pred
           _ -> do
@@ -207,57 +208,57 @@ compileEffect story smallStep = do
             b2 <- k s False
             pure $ S_If pred b1 b2
 
-      Foreach xs f -> do
+      Eff.Foreach xs f -> do
         undefined xs f
 
-      LitA a -> k s (Const a)
-      LitB b -> k s (Const b)
-      LitS x -> k s (Const x)
-      LitV v -> k s (Const v)
+      Eff.LitA a -> k s (Const a)
+      Eff.LitB b -> k s (Const b)
+      Eff.LitS x -> k s (Const x)
+      Eff.LitV v -> k s (Const v)
 
       -- pure unary primitives
-      Address x -> prim1 x Prim.Address
-      DeAddress x -> prim1 x Prim.DeAddress
-      Div8 x -> prim1 x Prim.Div8
-      EqualAny x -> k s (Unary Prim.EqualAny (E_List x))
+      Eff.Address x -> prim1 x Prim.Address
+      Eff.DeAddress x -> prim1 x Prim.DeAddress
+      Eff.Div8 x -> prim1 x Prim.Div8
+      Eff.EqualAny x -> k s (Unary Prim.EqualAny (E_List x))
 
-      HiByte x -> prim1 x Prim.HiByte
-      IsZero x -> prim1 x Prim.IsZero
-      IsZeroAddress x -> prim1 x Prim.IsZeroAddress
-      IsZeroByte x -> prim1 x Prim.IsZeroByte
-      LoByte x -> prim1 x Prim.LoByte
-      PackedAddress x -> prim1 x (Prim.PackedAddress zv)
-      SevenMinus x -> prim1 x Prim.SevenMinus
-      ShowNumber x -> prim1 x Prim.ShowNumber
-      SingleChar x -> prim1 x Prim.SingleChar
-      StringLength x -> prim1 x Prim.StringLength
-      Widen x -> prim1 x Prim.Widen
+      Eff.HiByte x -> prim1 x Prim.HiByte
+      Eff.IsZero x -> prim1 x Prim.IsZero
+      Eff.IsZeroAddress x -> prim1 x Prim.IsZeroAddress
+      Eff.IsZeroByte x -> prim1 x Prim.IsZeroByte
+      Eff.LoByte x -> prim1 x Prim.LoByte
+      Eff.PackedAddress x -> prim1 x (Prim.PackedAddress zv)
+      Eff.SevenMinus x -> prim1 x Prim.SevenMinus
+      Eff.ShowNumber x -> prim1 x Prim.ShowNumber
+      Eff.SingleChar x -> prim1 x Prim.SingleChar
+      Eff.StringLength x -> prim1 x Prim.StringLength
+      Eff.Widen x -> prim1 x Prim.Widen
 
       -- pure binary primitives
-      Add x y -> prim2 x y Prim.Add
-      And x y -> prim2 x y Prim.And
-      BwAnd x y -> prim2 x y Prim.BwAnd
-      ClearBit x y -> prim2 x y Prim.ClearBit
-      Div x y -> prim2 x y Prim.Div
-      GreaterThan x y -> prim2 x y Prim.GreaterThan
-      GreaterThanEqual x y -> prim2 x y Prim.GreaterThanEqual
-      LessThan x y -> prim2 x y Prim.LessThan
-      LessThanByte x y -> prim2 x y Prim.LessThanByte
-      LessThanEqual x y -> prim2 x y Prim.LessThanEqual
-      MakeHiLo x y -> prim2 x y Prim.MakeHiLo
-      MinusByte x y -> prim2 x y Prim.MinusByte
-      Mod x y -> prim2 x y Prim.Mod
-      Mul x y -> prim2 x y Prim.Mul
-      Offset x y -> prim2 x y Prim.Offset
-      Or x y -> prim2 x y Prim.Or
-      SetBit x y -> prim2 x y Prim.SetBit
-      ShiftR x y -> prim2 x (Const y) Prim.ShiftR -- TODO: avoid special case
-      Sub x y -> prim2 x y Prim.Sub
-      TestBit x y -> prim2 x y Prim.TestBit
+      Eff.Add x y -> prim2 x y Prim.Add
+      Eff.And x y -> prim2 x y Prim.And
+      Eff.BwAnd x y -> prim2 x y Prim.BwAnd
+      Eff.ClearBit x y -> prim2 x y Prim.ClearBit
+      Eff.Div x y -> prim2 x y Prim.Div
+      Eff.GreaterThan x y -> prim2 x y Prim.GreaterThan
+      Eff.GreaterThanEqual x y -> prim2 x y Prim.GreaterThanEqual
+      Eff.LessThan x y -> prim2 x y Prim.LessThan
+      Eff.LessThanByte x y -> prim2 x y Prim.LessThanByte
+      Eff.LessThanEqual x y -> prim2 x y Prim.LessThanEqual
+      Eff.MakeHiLo x y -> prim2 x y Prim.MakeHiLo
+      Eff.MinusByte x y -> prim2 x y Prim.MinusByte
+      Eff.Mod x y -> prim2 x y Prim.Mod
+      Eff.Mul x y -> prim2 x y Prim.Mul
+      Eff.Offset x y -> prim2 x y Prim.Offset
+      Eff.Or x y -> prim2 x y Prim.Or
+      Eff.SetBit x y -> prim2 x y Prim.SetBit
+      Eff.ShiftR x y -> prim2 x (Const y) Prim.ShiftR -- TODO: avoid special case
+      Eff.Sub x y -> prim2 x y Prim.Sub
+      Eff.TestBit x y -> prim2 x y Prim.TestBit
 
-      LookupInStrings{} -> undefined
-      StringBytes{} -> undefined
-      Tokenize{} -> undefined
+      Eff.LookupInStrings{} -> undefined
+      Eff.StringBytes{} -> undefined
+      Eff.Tokenize{} -> undefined
 
       where
         prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen Statement
