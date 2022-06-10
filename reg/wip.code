@@ -97,14 +97,14 @@ LocOp 020360:
   SetByte 009040 4;
   Inlining (AtInstruction {pc = 020366});
   TraceOperation (Store (Con 144) (Var (Global 111)));
-  SetByte 009073 HiByte(MakeHiLo(M[009039],M[009040]));
-  SetByte 009074 LoByte(MakeHiLo(M[009039],M[009040]));
+  SetByte 009073 M[009039];
+  SetByte 009074 M[009040];
   Inlining (AtInstruction {pc = 020369});
   TraceOperation (Insert_obj (Var (Global 111)) (Var (Global 0)));
   if (IsZero(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]))) {
-    SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) LoByte(MakeHiLo(M[008817],M[008818]));
+    SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) M[008818];
     SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]));
-    SetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) LoByte(MakeHiLo(M[009039],M[009040]));
+    SetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) M[009040];
     Inlining (AtInstruction {pc = 020372});
     TraceOperation (Call (Floc 032260) [] Sp);
     PushFrame;
@@ -113,9 +113,9 @@ LocOp 020360:
   } else {
     if (EqualAny(List(Widen(M[Offset(Offset(000741,Mul(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]),9)),6)]),MakeHiLo(M[009039],M[009040])))) {
       SetByte Offset(Offset(000741,Mul(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]),9)),6) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5)]));
-      SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) LoByte(MakeHiLo(M[008817],M[008818]));
+      SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) M[008818];
       SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]));
-      SetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) LoByte(MakeHiLo(M[009039],M[009040]));
+      SetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) M[009040];
       Inlining (AtInstruction {pc = 020372});
       TraceOperation (Call (Floc 032260) [] Sp);
       PushFrame;
@@ -647,8 +647,8 @@ LocRoutine 038192:
     SetByte 009032 LoByte(GetLocal(1));
     Inlining (AtInstruction {pc = 038198});
     TraceOperation (Store (Con 122) (Var (Global 0)));
-    SetByte 009029 HiByte(MakeHiLo(M[008817],M[008818]));
-    SetByte 009030 LoByte(MakeHiLo(M[008817],M[008818]));
+    SetByte 009029 M[008817];
+    SetByte 009030 M[008818];
     Inlining (AtInstruction {pc = 038201});
     TraceOperation (Ret (Var (Global 106)));
     PopFrame;
@@ -661,8 +661,8 @@ LocRoutine 038192:
     SetByte 009032 LoByte(GetLocal(1));
     Inlining (AtInstruction {pc = 038198});
     TraceOperation (Store (Con 122) (Var (Global 0)));
-    SetByte 009029 HiByte(MakeHiLo(M[008817],M[008818]));
-    SetByte 009030 LoByte(MakeHiLo(M[008817],M[008818]));
+    SetByte 009029 M[008817];
+    SetByte 009030 M[008818];
     Inlining (AtInstruction {pc = 038201});
     TraceOperation (Ret (Var (Global 106)));
     PopFrame;
@@ -40341,16 +40341,16 @@ LocOp 022311:
 --[143]--------------------------------------------------
 LocOp 022328:
   TraceOperation (Store (Con 142) (Var (Global 120)));
-  SetByte 009069 HiByte(MakeHiLo(M[009057],M[009058]));
-  SetByte 009070 LoByte(MakeHiLo(M[009057],M[009058]));
+  SetByte 009069 M[009057];
+  SetByte 009070 M[009058];
   Inlining (AtInstruction {pc = 022331});
   TraceOperation (Store (Con 141) (Var (Global 118)));
-  SetByte 009067 HiByte(MakeHiLo(M[009053],M[009054]));
-  SetByte 009068 LoByte(MakeHiLo(M[009053],M[009054]));
+  SetByte 009067 M[009053];
+  SetByte 009068 M[009054];
   Inlining (AtInstruction {pc = 022334});
   TraceOperation (Store (Con 140) (Var (Global 119)));
-  SetByte 009065 HiByte(MakeHiLo(M[009055],M[009056]));
-  SetByte 009066 LoByte(MakeHiLo(M[009055],M[009056]));
+  SetByte 009065 M[009055];
+  SetByte 009066 M[009056];
   Jump: 022337
 --[144]--------------------------------------------------
 LocOp 022337:
@@ -50706,8 +50706,8 @@ LocOp 022694:
     } else {
       Inlining (AtInstruction {pc = 022722});
       TraceOperation (Store (Con 127) (Var (Global 128)));
-      SetByte 009039 HiByte(MakeHiLo(M[009073],M[009074]));
-      SetByte 009040 LoByte(MakeHiLo(M[009073],M[009074]));
+      SetByte 009039 M[009073];
+      SetByte 009040 M[009074];
       Inlining (AtInstruction {pc = 022725});
       TraceOperation (Get_parent (Var (Global 111)) Sp);
       PushStack Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
@@ -50782,8 +50782,8 @@ LocOp 022759:
 --[157]--------------------------------------------------
 LocOp 022765:
   TraceOperation (Store (Con 127) (Var (Global 128)));
-  SetByte 009039 HiByte(MakeHiLo(M[009073],M[009074]));
-  SetByte 009040 LoByte(MakeHiLo(M[009073],M[009074]));
+  SetByte 009039 M[009073];
+  SetByte 009040 M[009074];
   Inlining (AtInstruction {pc = 022768});
   TraceOperation (Store (Con 112) (Con 0));
   SetByte 009009 0;
@@ -51043,7 +51043,7 @@ LocOp 022938:
 --[172]--------------------------------------------------
 LocOp 022945:
   TraceOperation (Storeb (Var (Global 110)) (Con 1) (Var (Global 113)));
-  SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) LoByte(MakeHiLo(M[009043],M[009044]));
+  SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) M[009044];
   Inlining (AtInstruction {pc = 022950});
   TraceOperation (Jump 023407);
   Jump: 023407
@@ -51207,8 +51207,8 @@ LocReturn 023064:
       SetByte Offset(Offset(Address(MakeHiLo(M[009017],M[009018])),0),1) LoByte(GetLocal(3));
       Inlining (AtInstruction {pc = 023086});
       TraceOperation (Storew (Var (Global 100)) (Con 1) (Var (Global 98)));
-      SetByte Offset(Address(MakeHiLo(M[009017],M[009018])),2) HiByte(MakeHiLo(M[009013],M[009014]));
-      SetByte Offset(Offset(Address(MakeHiLo(M[009017],M[009018])),2),1) LoByte(MakeHiLo(M[009013],M[009014]));
+      SetByte Offset(Address(MakeHiLo(M[009017],M[009018])),2) M[009013];
+      SetByte Offset(Offset(Address(MakeHiLo(M[009017],M[009018])),2),1) M[009014];
       Inlining (AtInstruction {pc = 023091});
       TraceOperation (Storew (Var (Global 98)) (Con 0) (Var (Local 2)));
       SetByte Offset(Address(MakeHiLo(M[009013],M[009014])),0) HiByte(GetLocal(2));
@@ -52000,8 +52000,8 @@ LocOp 027784:
   SetByte Offset(Offset(Address(MakeHiLo(M[008983],M[008984])),Mul(2,MakeHiLo(M[008979],M[008980]))),1) 0;
   Inlining (AtInstruction {pc = 027789});
   TraceOperation (Store (Con 133) (Var (Global 83)));
-  SetByte 009051 HiByte(MakeHiLo(M[008983],M[008984]));
-  SetByte 009052 LoByte(MakeHiLo(M[008983],M[008984]));
+  SetByte 009051 M[008983];
+  SetByte 009052 M[008984];
   Inlining (AtInstruction {pc = 027792});
   TraceOperation (Store (Con 108) (Con -1));
   SetByte 009001 255;

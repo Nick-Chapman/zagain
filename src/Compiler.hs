@@ -349,9 +349,12 @@ doConstFolding = True
 
 makeUnary :: Show x => Prim.P1 x r -> Expression x -> Expression r
 makeUnary p1 = \case
-  -- TODO: special case to optimize: {Lo,Hi}Byte / MakeHiLo
   Const x | doConstFolding -> Const (Prim.evalP1 p1 x)
-  x -> Unary p1 x
+  x ->
+    case (p1,x) of
+      (Prim.LoByte,Binary Prim.MakeHiLo _ lo) -> lo
+      (Prim.HiByte,Binary Prim.MakeHiLo hi _) -> hi
+      _ -> Unary p1 x
 
 makeBinary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
 makeBinary p2 x y = case (x,y) of
