@@ -11,7 +11,6 @@ import Eff (Eff(..),Phase,PCmode(..),StatusInfo(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr,Value)
-import Operation (Target)
 import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action as A (Action(..),StatusLine(..))
@@ -84,16 +83,17 @@ runEffect screenWidth seed story smallStep = do
       GetPCmode -> let State{pcMode} = s in k s pcMode
       SetPCmode pcMode -> k s { pcMode } ()
 
-      FetchI -> do
-        let State{pc,count} = s
-        let (ins,pc') = runFetch (oob "FetchI") pc story fetchOperation
-        A.TraceInstruction (show s) count pc ins $
-          k s { pc = pc', count = count + 1 } ins
+      FetchOperation -> do
+        let State{pc} = s
+        k s $ runFetch (oob "FetchOperation") pc story fetchOperation
+
+      TraceOperation addr operation -> do
+        let State{count} = s
+        A.TraceInstruction (show s) count addr operation $ k s { count = count + 1 } ()
 
       FetchRoutineHeader -> do
         let State{pc} = s
-        let (rh,pc') = runFetch (oob "FetchRoutineHeader") pc story fetchRoutineHeader
-        k s { pc = pc' } rh
+        k s $ runFetch (oob "FetchRoutineHeader") pc story fetchRoutineHeader
 
       PushFrame -> do
         let State{stack,locals,frames} = s
@@ -109,16 +109,16 @@ runEffect screenWidth seed story smallStep = do
           Frame{stack,locals}:frames -> do
             k s { stack, locals, frames } ()
 
-      PushCallStack addr target -> do
+      PushCallStack addr -> do
         let State{callstack} = s
-        k s { callstack = (addr,target) : callstack } ()
+        k s { callstack = addr : callstack } ()
 
       PopCallStack -> do
         let State{callstack} = s
         case callstack of
           [] -> error "PopCallStack[]"
-          (pc,target):callstack -> do
-            k s { callstack } (pc,target)
+          pc:callstack -> do
+            k s { callstack } pc
 
       GetPC -> let State{pc} = s in k s pc
       SetPC pc -> k s { pc } ()
@@ -239,7 +239,7 @@ data State = State
   , stack :: [Value]
   , locals :: Map Byte Value
   , frames :: [Frame]
-  , callstack :: [(Addr,Target)]
+  , callstack :: [Addr]
   , overrides :: Map Addr Byte
   , seed :: Word
   }

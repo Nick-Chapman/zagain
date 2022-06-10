@@ -5,7 +5,7 @@ module Eff (Eff(..),Phase(..),Mode(..),PCmode(..),StatusInfo(..)) where
 import Control.Monad (ap,liftM)
 import Dictionary (Dict)
 import Header (Header)
-import Operation (Operation,Target,RoutineHeader)
+import Operation (Operation,RoutineHeader)
 import qualified Numbers (Addr,Byte,Value)
 
 instance Functor (Eff p) where fmap = liftM
@@ -29,6 +29,7 @@ class
 data PCmode p
   = AtRoutineHeader { numActuals :: Byte p }
   | AtInstruction
+  | ReturnToCaller (Value p)
 
 data StatusInfo p = StatusInfo
   { room :: Text p
@@ -51,21 +52,24 @@ data Eff p x where
   ReadInputFromUser :: Maybe (StatusInfo p) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
 
-  GetPCmode :: Eff p (PCmode p)
-  SetPCmode :: PCmode p -> Eff p ()
-
-  FetchI :: Eff p Operation
-  FetchRoutineHeader :: Eff p RoutineHeader
-
-  PushFrame :: Eff p ()
-  PopFrame :: Eff p ()
-
-  PushCallStack :: Addr p -> Target -> Eff p ()
-  PopCallStack :: Eff p (Addr p, Target)
-
+  -- TODO: merge PC & PCmode
   GetPC :: Eff p (Addr p)
   SetPC :: Addr p -> Eff p ()
   SetPC_forCall :: Addr p -> Eff p () -- TODO: temp; remove!
+
+  GetPCmode :: Eff p (PCmode p)
+  SetPCmode :: PCmode p -> Eff p ()
+
+  FetchRoutineHeader :: Eff p (RoutineHeader, Addr p)
+  FetchOperation :: Eff p (Operation, Addr p)
+
+  TraceOperation :: Addr p -> Operation -> Eff p ()
+
+  -- TODO: merge back Push/Pop Frame & CallStack
+  PushFrame :: Eff p ()
+  PopFrame :: Eff p ()
+  PushCallStack :: Addr p -> Eff p ()
+  PopCallStack :: Eff p (Addr p)
 
   GetLocal :: Byte p -> Eff p (Value p)
   SetLocal :: Byte p -> Value p -> Eff p ()

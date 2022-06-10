@@ -109,21 +109,24 @@ compileEffect story smallStep = do
       GetPCmode -> let State{pcMode} = s in k s pcMode
       SetPCmode pcMode -> k s { pcMode } ()
 
-      FetchI -> do
+      FetchOperation -> do
         let State{pc} = s
         case pc of
           Const pc -> do
-            let (ins,pc') = runFetch (oob "Compile/FetchI") pc story fetchOperation
-            k s { pc = Const (pc') } ins
+            let (ins,pc') = runFetch (oob "Compile/FetchOperation") pc story fetchOperation
+            k s (ins, Const pc')
           _ ->
             error "Fetch instruction at non-constant PC"
+
+      TraceOperation a op ->
+        undefined a op
 
       FetchRoutineHeader -> do
         let State{pc} = s
         case pc of
           Const pc -> do
             let (rh,pc') = runFetch (oob "Compile/FetchRoutineHeader") pc story fetchRoutineHeader
-            k s { pc = Const pc' } rh
+            k s (rh, Const pc')
           _ -> do
             error "Fetch routine header at non-constant PC"
 
@@ -138,7 +141,7 @@ compileEffect story smallStep = do
       PushFrame -> undefined
       PopFrame -> undefined
 
-      PushCallStack pc target -> do undefined pc target
+      PushCallStack pc -> do undefined pc
       PopCallStack -> do undefined
 
       GetPC -> let State{pc} = s in k s pc

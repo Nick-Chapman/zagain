@@ -14,21 +14,39 @@ import qualified Operation as Op
 
 smallStep :: Phase p => Mode -> Eff p ()
 smallStep mode = do
-  pc <- GetPC -- only in case we fail to decode
   GetPCmode >>= \case
+
     AtInstruction -> do
-      i <- FetchI
-      eval mode pc i
+      here <- GetPC
+      (operation,pc) <- FetchOperation
+      SetPC pc
+      SetPCmode AtInstruction
+      TraceOperation here operation
+      eval mode here operation
+
     AtRoutineHeader{numActuals} -> do
-      rh <- FetchRoutineHeader
+      (rh,pc) <- FetchRoutineHeader
       setDefaults rh numActuals
+      SetPC pc
       SetPCmode AtInstruction
 
+    ReturnToCaller v -> do
+      (operation,pc) <- FetchOperation
+      setTarget (callTarget operation) v
+      SetPC pc
+      SetPCmode AtInstruction
+
+    where
+      callTarget = \case
+        Op.Call _ _ target -> target
+        _ ->  error "callTarget: not a call instruction!"
+
+
 eval :: Phase p => Mode -> Addr p -> Operation -> Eff p ()
-eval mode pc = \case
+eval mode here = \case
 
   Op.BadOperation mes -> do
-    error (printf "At [%s] %s" (show pc) mes)
+    error (printf "At [%s] %s" (show here) mes)
 
   Op.Add arg1 arg2 target -> do evalBin Add arg1 arg2 target
   Op.And arg1 arg2 target -> do evalBin And arg1 arg2 target
@@ -38,12 +56,11 @@ eval mode pc = \case
     p <- IsZeroAddress funcAddress >>= If
     if p then LitV 0 >>= setTarget target else do
       actuals <- mapM evalArg args
-      PushFrame --funcAddress target
-      here <- GetPC
-      PushCallStack here target
-      SetPC_forCall funcAddress -- forCall just for disassemble/explore-walkthrough
+      PushFrame
+      PushCallStack here
       setActuals actuals
       numActuals <- LitB $ fromIntegral (length actuals)
+      SetPC_forCall funcAddress -- forCall just for disassemble/explore-walkthrough
       SetPCmode (AtRoutineHeader { numActuals })
 
   Op.Clear_attr arg1 arg2 -> do
@@ -156,7 +173,10 @@ eval mode pc = \case
     res <- LessThan v1 v2 >>= If
     branchMaybe label res
 
-  Op.Jump addr -> do LitA addr >>= SetPC
+  Op.Jump addr -> do
+    pc <- LitA addr
+    SetPC pc
+
   Op.Jz arg label -> do evalArg arg >>= IsZero >>= If >>= branchMaybe label
 
   Op.Load arg target -> do
@@ -253,7 +273,8 @@ eval mode pc = \case
 
   Op.Restart -> do -- TODO: implementation is not stack safe!
     Header{initialPC} <- StoryHeader
-    LitA initialPC >>= SetPC
+    pc <- LitA initialPC
+    SetPC pc
 
   Op.Ret_popped -> do PopStack >>= returnValue
 
@@ -433,11 +454,10 @@ evalGlobal b = do
 
 returnValue :: Phase p => Value p -> Eff p ()
 returnValue v = do
-  --target <- PopFrame
   PopFrame
-  (pc,target) <- PopCallStack
+  pc <- PopCallStack
   SetPC pc
-  setTarget target v
+  SetPCmode (ReturnToCaller v)
 
 setTarget :: Target -> Value p -> Eff p ()
 setTarget var v = case var of
@@ -464,7 +484,7 @@ setActuals actuals = do
 setDefaults :: RoutineHeader -> Byte p -> Eff p ()
 setDefaults rh n =
   case rh of
-    Op.BadRoutineHeader -> Error "setLocals: BadRoutineHeader, n>15"
+    Op.BadRoutineHeader -> Error "setDefaults: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
       sequence_
         [ do
