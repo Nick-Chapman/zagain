@@ -205,7 +205,7 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
         Seq (PushStack v) <$> k s ()
 
       Eff.PopStack -> do
-        name <- genId "v" -- TODO: popped
+        name <- genId "popped"
         Seq (PopStack name) <$> k s (Variable name)
 
       Eff.Random range -> do
@@ -224,7 +224,6 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
 
       Eff.Foreach _xs _f -> do -- TODO: use xs/f
         Foreach_TODO <$> k s ()
-        --undefined xs f -- TODO: here
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -275,15 +274,15 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
 
       Eff.StringBytes string -> do
         let _ = string -- TODO: use string!
-        split :: Identifier [Expression Byte] <- genId "split"
+        split :: Identifier [Expression Byte] <- genId "string_bytes"
         k s (Variable split)
 
       --Eff.Tokenize x -> prim1 x Prim.Tokenize -- ill-typed
       Eff.Tokenize x -> do
         let _ = x -- TODO: use x!
-        a :: Identifier Byte <- genId "a"
-        b :: Identifier [(Expression Byte,Expression String)] <- genId "b"
-        c :: Identifier String <- genId "c"
+        a :: Identifier Byte <- genId "num_tokens"
+        b :: Identifier [(Expression Byte,Expression String)] <- genId "position_words"
+        c :: Identifier String <- genId "canonicalized"
         k s (Variable a,Variable b,Variable c)
 
       where
@@ -353,6 +352,7 @@ doConstFolding = True
 
 makeUnary :: Show x => Prim.P1 x r -> Expression x -> Expression r
 makeUnary p1 = \case
+  -- TODO: special case to optimize: {Lo,Hi}Byte / MakeHiLo
   Const x | doConstFolding -> Const (Prim.evalP1 p1 x)
   x -> Unary p1 x
 
