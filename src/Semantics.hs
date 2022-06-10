@@ -51,17 +51,17 @@ eval mode here = \case
   Op.Add arg1 arg2 target -> do evalBin Add arg1 arg2 target
   Op.And arg1 arg2 target -> do evalBin And arg1 arg2 target
 
-  Op.Call func args target -> do  -- TODO: rename "func" --> "routine"
-    funcAddress <- evalFunc func
-    p <- IsZeroAddress funcAddress >>= If
+  Op.Call func args target -> do
+    routine <- evalFunc func
+    p <- IsZeroAddress routine >>= If
     if p then LitV 0 >>= setTarget target else do
       actuals <- mapM evalArg args
       PushFrame
       PushCallStack here
       setActuals actuals
       numActuals <- LitB $ fromIntegral (length actuals)
-      TraceRoutineCall funcAddress
-      SetPC funcAddress
+      TraceRoutineCall routine
+      SetPC routine
       SetPCmode (AtRoutineHeader { numActuals })
 
   Op.Clear_attr arg1 arg2 -> do
