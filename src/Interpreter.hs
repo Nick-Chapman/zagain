@@ -88,7 +88,8 @@ runEffect screenWidth seed story smallStep = do
 
       TraceOperation addr operation -> do
         let State{count} = s
-        A.TraceInstruction (show s) count addr operation $ k s { count = count + 1 } ()
+        let stateString = "state-string" --show s
+        A.TraceInstruction stateString count addr operation $ k s { count = count + 1 } ()
 
       TraceRoutineCall addr -> do
         A.TraceRoutineCall addr $ k s ()
@@ -238,7 +239,7 @@ data State = State
   , seed :: Word
   }
 
-instance Show State where
+{-instance Show State where
   show State{pcMode,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pcMode) num x depth y
     where
       x = concat
@@ -252,7 +253,7 @@ instance Show State where
         ]
       num::Int =
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
-      depth = length stack
+      depth = length stack-}
 
 initState :: Byte -> Word -> PC Interpret -> State
 initState screenWidth seed pcMode = do

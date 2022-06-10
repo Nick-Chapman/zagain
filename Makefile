@@ -44,7 +44,7 @@ mojo.walk: ~/code/other/mojozork/mojozork.exe $(SCRIPT) Makefile
 
 # regression...
 
-reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk reg/h.dis #reg/wip.code
+reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk reg/h.dis reg/wip.code
 	git diff reg
 
 reg/wip.code: $(exe) src/*.hs Makefile

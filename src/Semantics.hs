@@ -27,7 +27,7 @@ smallStep mode = do
       setDefaults rh numActuals
       SetPC AtInstruction { pc }
 
-    AtReturnToCaller{caller,result=v} -> do
+    AtReturnFromCall{caller,result=v} -> do
       (operation,pc) <- FetchOperation caller
       setTarget (callTarget operation) v
       SetPC AtInstruction { pc }
@@ -454,7 +454,7 @@ returnValue :: Phase p => Value p -> Eff p ()
 returnValue result = do
   PopFrame
   caller <- PopCallStack
-  SetPC AtReturnToCaller { caller, result }
+  SetPC AtReturnFromCall { caller, result }
 
 setTarget :: Target -> Value p -> Eff p ()
 setTarget var v = case var of

@@ -5,12 +5,12 @@ import Action (Action)
 import Control.Monad (ap,liftM)
 import Data.List (intercalate)
 import Decode (fetchOperation,fetchRoutineHeader)
-import Disassemble (disRoutine,dumpRoutine,Routine(..),branchesOf,isStopping)
+import Disassemble (Routine(..),disRoutine,branchesOf)
 import Eff (Eff(..),Phase,PC(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
-import Operation (Target)
+import Operation (Operation(Call))
 import Story (Story(header),OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action (Action(..))
@@ -32,63 +32,94 @@ type Effect a = Eff Compile a
 runCode :: Word -> Code -> Action
 runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
 
-intersect :: Eq a => [a] -> [a] -> [a]
-intersect xs ys = [ x | x <-xs, x `elem` ys ] -- TODO: use sets!
-
 compileEffect :: Story -> Effect () -> IO Code
 compileEffect story smallStep = do
-  let Header{initialPC=pc0} = Story.header story
+  let Header{initialPC} = Story.header story
+
+  let firstRoutine = initialPC - 1
+  let Routine{body=routineBody} = disRoutine story firstRoutine
 
   let
-    (toCompile,toInline) = do
-      let addr = pc0 - 1
-      let routine@Routine{body=xs} = disRoutine story addr
-      let _ = dumpRoutine routine
-      let all = do [ a | (a,_) <- xs ]
-      let fallthrough = [ a | ((_,op),(a,_)) <- zip xs (tail xs) , not (isStopping op) ]
-      let reach = case xs of [] -> []; (first,_):_ -> first : fallthrough
-      let jumpDest = concat [branchesOf op | (_,op) <- xs ]
-      let needLabel = reach `intersect` jumpDest
-      let inline = [ r | r <- reach, r `notElem` needLabel ]
-      let allMinusInlining = [ a | a <- all, a `notElem` inline ]
-      (allMinusInlining, inline)
+    mkRoutinePC a = do
+      AtRoutineHeader { routine = Const a, numActuals = NumActuals }
 
-  printf "toCompile: %s\n" (show toCompile)
-  printf "toInline: %s\n" (show toInline)
+  let
+    mkReturnPC a = do
+      AtReturnFromCall { caller = Const a, result = CallResult }
+
+  let
+    isCall :: Operation -> Bool
+    isCall = \case
+      Operation.Call{} -> True
+      _ -> False
+
+  let
+    locations :: [PC Compile] =
+      [ x
+      | (addr,op) <- routineBody
+      , x <- [AtInstruction (Const addr)] ++ if isCall op then [mkReturnPC addr] else []
+      ]
+
+  let routine0 = mkRoutinePC firstRoutine
+
+  let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- routineBody ]
+
+  let
+    addressesToInline :: [Addr] =
+      [ a
+      | (a,_) <- routineBody
+        -- TODO: we could still inline if there is only a single jump-from location & no fallthrough
+      , a `notElem` jumpDest
+      ]
+
+  let
+    nonInlinedLocations :: [PC Compile] =
+      [ pc
+      | pc <- locations
+      , case pc of AtInstruction (Const a) -> a `notElem` addressesToInline; _ -> True
+      ]
+
+  let toCompile :: [PC Compile] = [routine0] ++ nonInlinedLocations
 
   chunks <- sequence
     [ do
-        statement <- runGen $ compileFrom a toInline
+        statement <- runGen $ compileFrom pc addressesToInline
         printf "--[%d]--------------------------------------------------\n" i
         print statement
         pure statement
-    | (i,a) <- zip [1::Int ..] toCompile
+    | (i,pc) <- zip [1::Int ..] toCompile
     ]
   pure $ Code { chunks }
 
+  -- TODO: un-nest this code for better clarity!
   where
     oob who = OOB_Error ("compileEffect:"++who)
 
     header@Header{zv} = Story.header story
 
-    compileFrom :: Addr -> [Addr] -> Gen Statement
-    compileFrom addr inlineSet = do
-      S_Label addr <$> loop (initState addr (AtInstruction (Const addr))) smallStep finish
+    compileFrom :: PC Compile -> [Addr] -> Gen Statement
+    compileFrom pc addressesToInline = do
+      S_Label pc <$> continue
       where
+
+        continue :: Gen Statement
+        continue = loop (initState pc) smallStep finish
+
+        doInline :: PC Compile -> Bool
+        doInline pc =
+          case pc of
+            AtInstruction (Const pc) -> (pc `elem` addressesToInline)
+            _ -> False
+
         finish :: State -> () -> Gen Statement
         finish s () = do
           let State{pc} = s
-          let doInline =
-                case pc of
-                  Const pc ->
-                    if pc `elem` inlineSet then Just pc else Nothing
-                  _ -> Nothing
-          case doInline of
-            Nothing -> pure (S_Done (DoneJump pc))
-            Just pc -> do
-              -- TODO: comment in gen code that wee are inlining
-              compileFrom pc inlineSet
-
+          if
+            | doInline pc -> do
+                -- TODO: comment in gen code that we are inlining
+                loop s (do SetPC pc; smallStep) finish
+            | otherwise -> do
+                pure (S_Done (DoneJump pc))
 
     loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Gen Statement) -> Gen Statement
     loop s e k = case e of
@@ -106,11 +137,8 @@ compileEffect story smallStep = do
       ReadInputFromUser _ -> undefined
       GetText a -> undefined a
 
-      --GetPC -> let State{pc} = s in k s pc
-      --SetPC pc -> do pure $ S_Done (DoneJump pc)
-
-      GetPC -> let State{pcMode} = s in k s pcMode
-      SetPC pcMode -> k s { pcMode } ()
+      GetPC -> let State{pc} = s in k s pc
+      SetPC pc -> k s { pc } ()
 
       FetchOperation pc -> do
         case pc of
@@ -120,9 +148,6 @@ compileEffect story smallStep = do
           _ ->
             error "Fetch instruction at non-constant PC"
 
-      TraceOperation a op ->
-        undefined a op
-
       FetchRoutineHeader pc -> do
         case pc of
           Const pc -> do
@@ -131,24 +156,26 @@ compileEffect story smallStep = do
           _ -> do
             error "Fetch routine header at non-constant PC"
 
+      TraceOperation a op -> do
+        S_Seq (AtomTraceOperation a op) <$> k s ()
+
       TraceRoutineCall addr -> do
-        undefined addr
+        S_Seq (AtomTraceRoutineCall addr) <$> k s ()
 
-      {-PushFrame addr target -> do
-        let State{pc} = s
-        case pc of
-          Const pc -> do
-            S_Seq (AtomPushFrame target pc) <$> k s { pc = addr } ()
-          _ -> do
-            error "PushFrame at non-constant PC"-}
+      PushFrame -> do
+        S_Seq AtomPushFrame  <$> k s ()
 
-      PushFrame -> undefined
-      PopFrame -> undefined
+      PopFrame -> do
+        undefined
 
-      PushCallStack pc -> do undefined pc
-      PopCallStack -> do undefined
+      PushCallStack pc -> do
+        S_Seq (AtomPushReturnAddress pc) <$> k s ()
 
-      GetLocal n -> undefined n
+      PopCallStack -> do
+        undefined
+
+      GetLocal n -> do
+        undefined n
 
       SetLocal n v -> do
         S_Seq (AtomSetLocal n v) <$> k s ()
@@ -156,6 +183,7 @@ compileEffect story smallStep = do
       GetByte a -> k s (E_GetByte a)
       SetByte a b -> S_Seq (AtomSetByte a b) <$> k s ()
 
+      -- TODO: explore maintaining temporary-stack at compile-time
       PushStack v -> do
         S_Seq (AtomPushStack v) <$> k s ()
 
@@ -165,8 +193,11 @@ compileEffect story smallStep = do
         let v :: Expression Value = Variable name
         S_Seq (AtomPopStack name) <$> k s v
 
-      Random range -> undefined range
-      Quit -> undefined
+      Random range -> do
+        undefined range
+
+      Quit -> do
+        undefined
 
       If pred -> do
         case pred of
@@ -176,7 +207,8 @@ compileEffect story smallStep = do
             b2 <- k s False
             pure $ S_If pred b1 b2
 
-      Foreach xs f -> undefined xs f
+      Foreach xs f -> do
+        undefined xs f
 
       LitA a -> k s (Const a)
       LitB b -> k s (Const b)
@@ -238,14 +270,12 @@ compileEffect story smallStep = do
 --[state]-------------------------------------------------------------
 
 data State = State
-  { pc :: Expression Addr
-  , pcMode :: PC Compile
+  { pc :: PC Compile
   }
 
-initState :: Addr -> PC Compile -> State
-initState pc pcMode = State
-  { pc = Const pc
-  , pcMode
+initState :: PC Compile -> State
+initState pc = State
+  { pc
   }
 
 --[gen]---------------------------------------------------------------
@@ -274,14 +304,17 @@ data GenState = GenState { u :: Int }
 
 --[constant folding]--------------------------------------------------
 
+doConstFolding :: Bool
+doConstFolding = True
+
 makeUnary :: Show x => Prim.P1 x r -> Expression x -> Expression r
 makeUnary p1 = \case
-  Const x -> Const (Prim.evalP1 p1 x)
+  Const x | doConstFolding -> Const (Prim.evalP1 p1 x)
   x -> Unary p1 x
 
 makeBinary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
 makeBinary p2 x y = case (x,y) of
-  (Const x,Const y) -> Const (Prim.evalP2 p2 x y)
+  (Const x,Const y) | doConstFolding -> Const (Prim.evalP2 p2 x y)
   _ -> Binary p2 x y
 
 --[code]--------------------------------------------------------------
@@ -294,7 +327,7 @@ data Statement
   = S_Done Done
   | S_Seq Atom Statement
   | S_If (Expression Bool) Statement Statement
-  | S_Label Addr Statement
+  | S_Label (PC Compile) Statement
 
 instance Show Statement where show = intercalate "\n" . pretty 0
 
@@ -318,13 +351,16 @@ tab n s = take n (repeat ' ') ++ s
 
 data Done
   = DoneError String
-  | DoneJump (Expression Addr)
+  | DoneJump (PC Compile)
   deriving Show
 
 data Atom
   = AtomSetByte (Expression Addr) (Expression Byte)
   | AtomGamePrint (Expression String)
-  | AtomPushFrame Target Addr
+  | AtomTraceOperation (Expression Addr) Operation
+  | AtomTraceRoutineCall (Expression Addr)
+  | AtomPushFrame
+  | AtomPushReturnAddress (Expression Addr) -- TODO: needs to be an expression?
   | AtomPushStack (Expression Value)
   | AtomPopStack (Identifier Value)
   | AtomSetLocal (Expression Byte) (Expression Value)
@@ -332,6 +368,8 @@ data Atom
 
 data Expression a where
   Const :: a -> Expression a
+  NumActuals :: Expression Byte
+  CallResult :: Expression Value
   Variable :: Identifier a -> Expression a
   Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
@@ -341,6 +379,8 @@ data Expression a where
 instance Show a => Show (Expression a) where
   show = \case
     Const a -> show a
+    NumActuals -> "num_actuals"
+    CallResult -> "call_result"
     Variable v -> show v
     Unary p1 x -> show p1 ++ "(" ++ show x ++ ")"
     Binary p2 x y -> show p2 ++ "(" ++ show x ++ "," ++ show y ++ ")"

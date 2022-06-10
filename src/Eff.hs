@@ -29,7 +29,7 @@ class
 data PC p
   = AtRoutineHeader { routine :: Addr p, numActuals :: Byte p }
   | AtInstruction { pc :: Addr p }
-  | AtReturnToCaller { caller :: Addr p, result :: Value p }
+  | AtReturnFromCall { caller :: Addr p, result :: Value p }
 
 deriving instance Phase p => Show (PC p)
 
@@ -66,7 +66,7 @@ data Eff p x where
   -- TODO: merge back Push/Pop Frame & CallStack
   PushFrame :: Eff p ()
   PopFrame :: Eff p ()
-  PushCallStack :: Addr p -> Eff p ()
+  PushCallStack :: Addr p -> Eff p () -- TODO: rename {Push,Pop}ReturnAddress ?
   PopCallStack :: Eff p (Addr p)
 
   GetLocal :: Byte p -> Eff p (Value p)
