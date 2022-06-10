@@ -94,15 +94,16 @@ runEffect screenWidth seed story smallStep = do
       TraceRoutineCall addr -> do
         A.TraceRoutineCall addr $ k s () -- for dynamic discovery
 
+      GetControl -> let State{pcMode} = s in k s pcMode
+      SetControl pcMode -> k s { pcMode } ()
+
+      MakeRoutineFrame{} -> k s () -- nothing to do in interpreter
       PushFrame -> do
         let State{stack,locals,frames} = s
         k s { frames = Frame { stack, locals } : frames
             , stack = []
             , locals = Map.empty
             } ()
-
-      GetControl -> let State{pcMode} = s in k s pcMode
-      SetControl pcMode -> k s { pcMode } ()
 
       PopFrame -> do
         let State{frames} = s

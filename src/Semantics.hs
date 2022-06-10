@@ -483,6 +483,7 @@ setDefaults rh n =
   case rh of
     Op.BadRoutineHeader -> Error "setDefaults: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
+      MakeRoutineFrame (length defs)
       sequence_ -- TODO: This generates terrible code!
         [ do
             i <- LitB i

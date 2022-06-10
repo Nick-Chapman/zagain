@@ -1,5 +1,6 @@
 --[1]--------------------------------------------------
 LocRoutine 020228:
+  MakeRoutineFrame 0;
   Jump: 020229
 --[2]--------------------------------------------------
 LocOp 020229:
@@ -141,6 +142,7 @@ LocReturn 020377:
   Jump: 020229
 --[13]--------------------------------------------------
 LocRoutine 021618:
+  MakeRoutineFrame 3;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -231,6 +233,7 @@ LocReturn 021625:
   Return(GetLocal(3)) -> return_address_1
 --[15]--------------------------------------------------
 LocRoutine 021638:
+  MakeRoutineFrame 5;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -639,6 +642,7 @@ LocOp 021693:
   Jump: 021657
 --[20]--------------------------------------------------
 LocRoutine 038192:
+  MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     Inlining (AtInstruction {pc = 038195});
@@ -671,6 +675,7 @@ LocRoutine 038192:
   }
 --[21]--------------------------------------------------
 LocRoutine 028384:
+  MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 17;
     Inlining (AtInstruction {pc = 028387});
@@ -787,6 +792,7 @@ LocOp 028597:
   Return(1) -> return_address_1
 --[26]--------------------------------------------------
 LocRoutine 032260:
+  MakeRoutineFrame 0;
   Inlining (AtInstruction {pc = 032261});
   TraceOperation (Call (Floc 035994) [Con 1] Sp);
   PushFrame;
@@ -822,6 +828,7 @@ LocReturn 032270:
   Return(popped_1) -> return_address_2
 --[29]--------------------------------------------------
 LocRoutine 035994:
+  MakeRoutineFrame 4;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -1308,6 +1315,7 @@ LocReturn 036167:
   Return(1) -> return_address_1
 --[45]--------------------------------------------------
 LocRoutine 038204:
+  MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     Inlining (AtInstruction {pc = 038207});
@@ -1365,6 +1373,7 @@ LocOp 038290:
   Return(1) -> return_address_1
 --[47]--------------------------------------------------
 LocRoutine 036174:
+  MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     Inlining (AtInstruction {pc = 036177});
@@ -1459,6 +1468,7 @@ LocOp 036209:
   Return(1) -> return_address_1
 --[52]--------------------------------------------------
 LocRoutine 036522:
+  MakeRoutineFrame 10;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -33561,6 +33571,7 @@ LocOp 036816:
   }
 --[79]--------------------------------------------------
 LocRoutine 036824:
+  MakeRoutineFrame 2;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -33740,6 +33751,7 @@ LocOp 036931:
   }
 --[85]--------------------------------------------------
 LocRoutine 036242:
+  MakeRoutineFrame 5;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -34521,6 +34533,7 @@ LocReturn 036431:
   Return(popped_1) -> return_address_2
 --[99]--------------------------------------------------
 LocRoutine 020688:
+  MakeRoutineFrame 2;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -34555,6 +34568,7 @@ LocRoutine 020688:
   }
 --[100]--------------------------------------------------
 LocRoutine 036946:
+  MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     Inlining (AtInstruction {pc = 036949});
@@ -34619,6 +34633,7 @@ LocRoutine 036946:
   }
 --[101]--------------------------------------------------
 LocRoutine 021802:
+  MakeRoutineFrame 10;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {
@@ -40420,6 +40435,7 @@ LocReturn 022388:
   Jump: 021823
 --[149]--------------------------------------------------
 LocRoutine 022656:
+  MakeRoutineFrame 11;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 1;
     if (LessThanByte(num_actuals,2)) {
@@ -51663,6 +51679,7 @@ LocReturn 023456:
   }
 --[210]--------------------------------------------------
 LocRoutine 027746:
+  MakeRoutineFrame 4;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
     if (LessThanByte(num_actuals,2)) {

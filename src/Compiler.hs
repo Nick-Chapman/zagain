@@ -179,6 +179,9 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
 
       Eff.TraceRoutineCall _addr -> do k s ()
 
+      Eff.MakeRoutineFrame n -> do
+        Seq (MakeRoutineFrame n)  <$> k s ()
+
       Eff.PushFrame -> do
         Seq PushFrame  <$> k s ()
 
@@ -413,6 +416,7 @@ data Atom
   | GamePrint (Expression String)
   | Inlining (Control Compile)
   | TraceOperation Operation
+  | MakeRoutineFrame Int
   | PushFrame
   | PopFrame
   | PushReturnAddress (Expression Addr)
