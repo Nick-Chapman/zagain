@@ -127,7 +127,7 @@ compileEffect story smallStep = do
       Eff.Ret x -> k s x
       Eff.Bind e f -> loop s e $ \s a -> loop s (f a) k
 
-      Eff.GamePrint mes -> do S_Seq (AtomGamePrint mes) <$> k s ()
+      Eff.GamePrint mes -> do S_Seq (GamePrint mes) <$> k s ()
       Eff.Debug thing -> do GDebug thing; k s ()
 
       Eff.Error msg -> do
@@ -158,19 +158,19 @@ compileEffect story smallStep = do
             error "Fetch routine header at non-constant PC"
 
       Eff.TraceOperation a op -> do
-        S_Seq (AtomTraceOperation a op) <$> k s ()
+        S_Seq (TraceOperation a op) <$> k s ()
 
       Eff.TraceRoutineCall addr -> do
-        S_Seq (AtomTraceRoutineCall addr) <$> k s ()
+        S_Seq (TraceRoutineCall addr) <$> k s ()
 
       Eff.PushFrame -> do
-        S_Seq AtomPushFrame  <$> k s ()
+        S_Seq PushFrame  <$> k s ()
 
       Eff.PopFrame -> do
         undefined
 
       Eff.PushCallStack pc -> do
-        S_Seq (AtomPushReturnAddress pc) <$> k s ()
+        S_Seq (PushReturnAddress pc) <$> k s ()
 
       Eff.PopCallStack -> do
         undefined
@@ -179,20 +179,20 @@ compileEffect story smallStep = do
         undefined n
 
       Eff.SetLocal n v -> do
-        S_Seq (AtomSetLocal n v) <$> k s ()
+        S_Seq (SetLocal n v) <$> k s ()
 
-      Eff.GetByte a -> k s (E_GetByte a)
-      Eff.SetByte a b -> S_Seq (AtomSetByte a b) <$> k s ()
+      Eff.GetByte a -> k s (GetByte a)
+      Eff.SetByte a b -> S_Seq (SetByte a b) <$> k s ()
 
       -- TODO: explore maintaining temporary-stack at compile-time
       Eff.PushStack v -> do
-        S_Seq (AtomPushStack v) <$> k s ()
+        S_Seq (PushStack v) <$> k s ()
 
       Eff.PopStack -> do
         u <- GenUnique
         let name :: Identifier Value = Identifier u
         let v :: Expression Value = Variable name
-        S_Seq (AtomPopStack name) <$> k s v
+        S_Seq (PopStack name) <$> k s v
 
       Eff.Random range -> do
         undefined range
@@ -220,7 +220,7 @@ compileEffect story smallStep = do
       Eff.Address x -> prim1 x Prim.Address
       Eff.DeAddress x -> prim1 x Prim.DeAddress
       Eff.Div8 x -> prim1 x Prim.Div8
-      Eff.EqualAny x -> k s (Unary Prim.EqualAny (E_List x))
+      Eff.EqualAny x -> k s (Unary Prim.EqualAny (List x))
 
       Eff.HiByte x -> prim1 x Prim.HiByte
       Eff.IsZero x -> prim1 x Prim.IsZero
@@ -356,15 +356,15 @@ data Done
   deriving Show
 
 data Atom
-  = AtomSetByte (Expression Addr) (Expression Byte)
-  | AtomGamePrint (Expression String)
-  | AtomTraceOperation (Expression Addr) Operation
-  | AtomTraceRoutineCall (Expression Addr)
-  | AtomPushFrame
-  | AtomPushReturnAddress (Expression Addr) -- TODO: needs to be an expression?
-  | AtomPushStack (Expression Value)
-  | AtomPopStack (Identifier Value)
-  | AtomSetLocal (Expression Byte) (Expression Value)
+  = SetByte (Expression Addr) (Expression Byte)
+  | GamePrint (Expression String)
+  | TraceOperation (Expression Addr) Operation
+  | TraceRoutineCall (Expression Addr)
+  | PushFrame
+  | PushReturnAddress (Expression Addr) -- TODO: needs to be an expression?
+  | PushStack (Expression Value)
+  | PopStack (Identifier Value)
+  | SetLocal (Expression Byte) (Expression Value)
   deriving Show
 
 data Expression a where
@@ -374,8 +374,8 @@ data Expression a where
   Variable :: Identifier a -> Expression a
   Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
-  E_GetByte :: Expression Addr -> Expression Byte
-  E_List :: Show x => [Expression x] -> Expression [x]
+  GetByte :: Expression Addr -> Expression Byte
+  List :: Show x => [Expression x] -> Expression [x]
 
 instance Show a => Show (Expression a) where
   show = \case
@@ -385,8 +385,8 @@ instance Show a => Show (Expression a) where
     Variable v -> show v
     Unary p1 x -> show p1 ++ "(" ++ show x ++ ")"
     Binary p2 x y -> show p2 ++ "(" ++ show x ++ "," ++ show y ++ ")"
-    E_GetByte a -> "M[" ++ show a ++ "]"
-    E_List xs -> "List(" ++ intercalate "," (map show xs) ++ ")"
+    GetByte a -> "M[" ++ show a ++ "]"
+    List xs -> "List(" ++ intercalate "," (map show xs) ++ ")"
 
 data Identifier a where
   Identifier :: Int -> Identifier a

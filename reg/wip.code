@@ -3,116 +3,116 @@ AtRoutineHeader {routine = 020228, numActuals = num_actuals}:
   DoneJump (AtInstruction {pc = 020229})
 --[2]--------------------------------------------------
 AtInstruction {pc = 020229}:
-  AtomTraceOperation 020229 (Call (Floc 021618) [Con -32752,Con -1] Sp);
-  AtomPushFrame;
-  AtomPushReturnAddress 020229;
-  AtomSetLocal 1 -32752;
-  AtomSetLocal 2 -1;
-  AtomTraceRoutineCall 021618;
+  TraceOperation 020229 (Call (Floc 021618) [Con -32752,Con -1] Sp);
+  PushFrame;
+  PushReturnAddress 020229;
+  SetLocal 1 -32752;
+  SetLocal 2 -1;
+  TraceRoutineCall 021618;
   DoneJump (AtRoutineHeader {routine = 021618, numActuals = 2})
 --[3]--------------------------------------------------
 AtReturnFromCall {caller = 020229, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020238 (Storew (Var Sp) (Con 0) (Con 1));
-  AtomPopStack v_1;
-  AtomSetByte Offset(Address(v_1),0) 0;
-  AtomSetByte Offset(Offset(Address(v_1),0),1) 1;
-  AtomTraceOperation 020243 (Call (Floc 021618) [Con -32644,Con -1] Sp);
-  AtomPushFrame;
-  AtomPushReturnAddress 020243;
-  AtomSetLocal 1 -32644;
-  AtomSetLocal 2 -1;
-  AtomTraceRoutineCall 021618;
+  PushStack call_result;
+  TraceOperation 020238 (Storew (Var Sp) (Con 0) (Con 1));
+  PopStack v_1;
+  SetByte Offset(Address(v_1),0) 0;
+  SetByte Offset(Offset(Address(v_1),0),1) 1;
+  TraceOperation 020243 (Call (Floc 021618) [Con -32644,Con -1] Sp);
+  PushFrame;
+  PushReturnAddress 020243;
+  SetLocal 1 -32644;
+  SetLocal 2 -1;
+  TraceRoutineCall 021618;
   DoneJump (AtRoutineHeader {routine = 021618, numActuals = 2})
 --[4]--------------------------------------------------
 AtReturnFromCall {caller = 020243, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020252 (Call (Floc 021618) [Con -32528,Con -1] Sp);
-  AtomPushFrame;
-  AtomPushReturnAddress 020252;
-  AtomSetLocal 1 -32528;
-  AtomSetLocal 2 -1;
-  AtomTraceRoutineCall 021618;
+  PushStack call_result;
+  TraceOperation 020252 (Call (Floc 021618) [Con -32528,Con -1] Sp);
+  PushFrame;
+  PushReturnAddress 020252;
+  SetLocal 1 -32528;
+  SetLocal 2 -1;
+  TraceRoutineCall 021618;
   DoneJump (AtRoutineHeader {routine = 021618, numActuals = 2})
 --[5]--------------------------------------------------
 AtReturnFromCall {caller = 020252, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020261 (Storew (Var Sp) (Con 0) (Con 1));
-  AtomPopStack v_1;
-  AtomSetByte Offset(Address(v_1),0) 0;
-  AtomSetByte Offset(Offset(Address(v_1),0),1) 1;
-  AtomTraceOperation 020266 (Call (Floc 021618) [Con 28522,Con 40] Sp);
-  AtomPushFrame;
-  AtomPushReturnAddress 020266;
-  AtomSetLocal 1 28522;
-  AtomSetLocal 2 40;
-  AtomTraceRoutineCall 021618;
+  PushStack call_result;
+  TraceOperation 020261 (Storew (Var Sp) (Con 0) (Con 1));
+  PopStack v_1;
+  SetByte Offset(Address(v_1),0) 0;
+  SetByte Offset(Offset(Address(v_1),0),1) 1;
+  TraceOperation 020266 (Call (Floc 021618) [Con 28522,Con 40] Sp);
+  PushFrame;
+  PushReturnAddress 020266;
+  SetLocal 1 28522;
+  SetLocal 2 40;
+  TraceRoutineCall 021618;
   DoneJump (AtRoutineHeader {routine = 021618, numActuals = 2})
 --[6]--------------------------------------------------
 AtReturnFromCall {caller = 020266, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020274 (Call (Floc 021618) [Con 28501,Con 200] Sp);
-  AtomPushFrame;
-  AtomPushReturnAddress 020274;
-  AtomSetLocal 1 28501;
-  AtomSetLocal 2 200;
-  AtomTraceRoutineCall 021618;
+  PushStack call_result;
+  TraceOperation 020274 (Call (Floc 021618) [Con 28501,Con 200] Sp);
+  PushFrame;
+  PushReturnAddress 020274;
+  SetLocal 1 28501;
+  SetLocal 2 200;
+  TraceRoutineCall 021618;
   DoneJump (AtRoutineHeader {routine = 021618, numActuals = 2})
 --[7]--------------------------------------------------
 AtReturnFromCall {caller = 020274, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020282 (Put_prop (Con 156) (Con 6) (Con 4));
+  PushStack call_result;
+  TraceOperation 020282 (Put_prop (Con 156) (Con 6) (Con 4));
   DoneError "TODO:getPropsA"
 --[8]--------------------------------------------------
 AtReturnFromCall {caller = 020344, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020350 (Test_attr (Var (Global 0)) (Con 3) (Branch T (Dloc 020360)));
+  PushStack call_result;
+  TraceOperation 020350 (Test_attr (Var (Global 0)) (Con 3) (Branch T (Dloc 020360)));
   if (TestBit(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),0)],4)) {
     DoneJump (AtInstruction {pc = 020360})
   } else {
-    AtomTraceOperation 020354 (Call (Floc 028384) [] Sp);
-    AtomPushFrame;
-    AtomPushReturnAddress 020354;
-    AtomTraceRoutineCall 028384;
+    TraceOperation 020354 (Call (Floc 028384) [] Sp);
+    PushFrame;
+    PushReturnAddress 020354;
+    TraceRoutineCall 028384;
     DoneJump (AtRoutineHeader {routine = 028384, numActuals = 0})
   }
 --[9]--------------------------------------------------
 AtReturnFromCall {caller = 020354, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020359 New_line;
-  AtomGamePrint "\n";
+  PushStack call_result;
+  TraceOperation 020359 New_line;
+  GamePrint "\n";
   DoneJump (AtInstruction {pc = 020360})
 --[10]--------------------------------------------------
 AtInstruction {pc = 020360}:
-  AtomTraceOperation 020360 (Store (Con 82) (Con 1));
-  AtomSetByte 008949 0;
-  AtomSetByte 008950 1;
-  AtomTraceOperation 020363 (Store (Con 127) (Con 4));
-  AtomSetByte 009039 0;
-  AtomSetByte 009040 4;
-  AtomTraceOperation 020366 (Store (Con 144) (Var (Global 111)));
-  AtomSetByte 009073 HiByte(MakeHiLo(M[009039],M[009040]));
-  AtomSetByte 009074 LoByte(MakeHiLo(M[009039],M[009040]));
-  AtomTraceOperation 020369 (Insert_obj (Var (Global 111)) (Var (Global 0)));
+  TraceOperation 020360 (Store (Con 82) (Con 1));
+  SetByte 008949 0;
+  SetByte 008950 1;
+  TraceOperation 020363 (Store (Con 127) (Con 4));
+  SetByte 009039 0;
+  SetByte 009040 4;
+  TraceOperation 020366 (Store (Con 144) (Var (Global 111)));
+  SetByte 009073 HiByte(MakeHiLo(M[009039],M[009040]));
+  SetByte 009074 LoByte(MakeHiLo(M[009039],M[009040]));
+  TraceOperation 020369 (Insert_obj (Var (Global 111)) (Var (Global 0)));
   if (IsZero(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]))) {
-    AtomSetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) LoByte(MakeHiLo(M[008817],M[008818]));
-    AtomSetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]));
-    AtomSetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) LoByte(MakeHiLo(M[009039],M[009040]));
-    AtomTraceOperation 020372 (Call (Floc 032260) [] Sp);
-    AtomPushFrame;
-    AtomPushReturnAddress 020372;
-    AtomTraceRoutineCall 032260;
+    SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) LoByte(MakeHiLo(M[008817],M[008818]));
+    SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]));
+    SetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) LoByte(MakeHiLo(M[009039],M[009040]));
+    TraceOperation 020372 (Call (Floc 032260) [] Sp);
+    PushFrame;
+    PushReturnAddress 020372;
+    TraceRoutineCall 032260;
     DoneJump (AtRoutineHeader {routine = 032260, numActuals = 0})
   } else {
     if (EqualAny(List(Widen(M[Offset(Offset(000741,Mul(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]),9)),6)]),MakeHiLo(M[009039],M[009040])))) {
-      AtomSetByte Offset(Offset(000741,Mul(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]),9)),6) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5)]));
-      AtomSetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) LoByte(MakeHiLo(M[008817],M[008818]));
-      AtomSetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]));
-      AtomSetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) LoByte(MakeHiLo(M[009039],M[009040]));
-      AtomTraceOperation 020372 (Call (Floc 032260) [] Sp);
-      AtomPushFrame;
-      AtomPushReturnAddress 020372;
-      AtomTraceRoutineCall 032260;
+      SetByte Offset(Offset(000741,Mul(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]),9)),6) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5)]));
+      SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4) LoByte(MakeHiLo(M[008817],M[008818]));
+      SetByte Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),5) LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]));
+      SetByte Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6) LoByte(MakeHiLo(M[009039],M[009040]));
+      TraceOperation 020372 (Call (Floc 032260) [] Sp);
+      PushFrame;
+      PushReturnAddress 020372;
+      TraceRoutineCall 032260;
       DoneJump (AtRoutineHeader {routine = 032260, numActuals = 0})
     } else {
       DoneError "unlink/loop"
@@ -120,15 +120,15 @@ AtInstruction {pc = 020360}:
   }
 --[11]--------------------------------------------------
 AtReturnFromCall {caller = 020372, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020377 (Call (Floc 021802) [] Sp);
-  AtomPushFrame;
-  AtomPushReturnAddress 020377;
-  AtomTraceRoutineCall 021802;
+  PushStack call_result;
+  TraceOperation 020377 (Call (Floc 021802) [] Sp);
+  PushFrame;
+  PushReturnAddress 020377;
+  TraceRoutineCall 021802;
   DoneJump (AtRoutineHeader {routine = 021802, numActuals = 0})
 --[12]--------------------------------------------------
 AtReturnFromCall {caller = 020377, result = call_result}:
-  AtomPushStack call_result;
-  AtomTraceOperation 020382 (Jump 020229);
+  PushStack call_result;
+  TraceOperation 020382 (Jump 020229);
   DoneJump (AtInstruction {pc = 020229})
 Debug: **TODO:runCode
