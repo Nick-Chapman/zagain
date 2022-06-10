@@ -484,14 +484,19 @@ setDefaults rh n =
     Op.BadRoutineHeader -> Error "setDefaults: BadRoutineHeader, n>15"
     Op.RoutineHeader defs -> do
       MakeRoutineFrame (length defs)
-      sequence_ -- TODO: This generates terrible code!
-        [ do
-            i <- LitB i
-            LessThanByte n i >>= If >>= \case
-              True -> do LitV def >>= SetLocal i
-              False -> pure ()
-        | (i,def) <- zip [1..] defs
-        ]
+      loop (fromIntegral (length defs)) (reverse defs)
+        where
+          loop i = \case
+            [] -> pure ()
+            def:defs -> do
+              ie <- LitB i
+              LessThanByte n ie >>= If >>= \case
+                False -> pure ()
+                True -> do
+                  LitV def >>= SetLocal ie
+                  loop (i-1) defs
+
+
 
 getWord :: Addr p -> Eff p (Value p)
 getWord a = do
