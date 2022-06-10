@@ -149,37 +149,24 @@ LocRoutine 021618:
       SetLocal 2 0;
       if (LessThanByte(num_actuals,1)) {
         SetLocal 1 0;
-        Inlining (AtInstruction {pc = 021625});
-        TraceOperation (Call (Floc 021638) [Var (Local 1)] (Local 3));
-        PushFrame;
-        PushReturnAddress 021625;
-        SetLocal 1 GetLocal(1);
-        Call: 021638(..#1..)
+        Jump: 021625
       } else {
-        Inlining (AtInstruction {pc = 021625});
-        TraceOperation (Call (Floc 021638) [Var (Local 1)] (Local 3));
-        PushFrame;
-        PushReturnAddress 021625;
-        SetLocal 1 GetLocal(1);
-        Call: 021638(..#1..)
+        Jump: 021625
       }
     } else {
-      Inlining (AtInstruction {pc = 021625});
-      TraceOperation (Call (Floc 021638) [Var (Local 1)] (Local 3));
-      PushFrame;
-      PushReturnAddress 021625;
-      SetLocal 1 GetLocal(1);
-      Call: 021638(..#1..)
+      Jump: 021625
     }
   } else {
-    Inlining (AtInstruction {pc = 021625});
-    TraceOperation (Call (Floc 021638) [Var (Local 1)] (Local 3));
-    PushFrame;
-    PushReturnAddress 021625;
-    SetLocal 1 GetLocal(1);
-    Call: 021638(..#1..)
+    Jump: 021625
   }
 --[14]--------------------------------------------------
+LocOp 021625:
+  TraceOperation (Call (Floc 021638) [Var (Local 1)] (Local 3));
+  PushFrame;
+  PushReturnAddress 021625;
+  SetLocal 1 GetLocal(1);
+  Call: 021638(..#1..)
+--[15]--------------------------------------------------
 LocReturn 021625:
   SetLocal 3 call_result;
   Inlining (AtInstruction {pc = 021631});
@@ -191,7 +178,7 @@ LocReturn 021625:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(GetLocal(3)) -> return_address_1
---[15]--------------------------------------------------
+--[16]--------------------------------------------------
 LocRoutine 021638:
   MakeRoutineFrame 5;
   if (LessThanByte(num_actuals,5)) {
@@ -204,59 +191,31 @@ LocRoutine 021638:
           SetLocal 2 0;
           if (LessThanByte(num_actuals,1)) {
             SetLocal 1 0;
-            Inlining (AtInstruction {pc = 021649});
-            TraceOperation (Add (Var (Global 132)) (Con 180) (Local 3));
-            SetLocal 3 Add(MakeHiLo(M[009081],M[009082]),180);
-            Inlining (AtInstruction {pc = 021653});
-            TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 4));
-            SetLocal 4 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
-            Jump: 021657
+            Jump: 021649
           } else {
-            Inlining (AtInstruction {pc = 021649});
-            TraceOperation (Add (Var (Global 132)) (Con 180) (Local 3));
-            SetLocal 3 Add(MakeHiLo(M[009081],M[009082]),180);
-            Inlining (AtInstruction {pc = 021653});
-            TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 4));
-            SetLocal 4 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
-            Jump: 021657
+            Jump: 021649
           }
         } else {
-          Inlining (AtInstruction {pc = 021649});
-          TraceOperation (Add (Var (Global 132)) (Con 180) (Local 3));
-          SetLocal 3 Add(MakeHiLo(M[009081],M[009082]),180);
-          Inlining (AtInstruction {pc = 021653});
-          TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 4));
-          SetLocal 4 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
-          Jump: 021657
+          Jump: 021649
         }
       } else {
-        Inlining (AtInstruction {pc = 021649});
-        TraceOperation (Add (Var (Global 132)) (Con 180) (Local 3));
-        SetLocal 3 Add(MakeHiLo(M[009081],M[009082]),180);
-        Inlining (AtInstruction {pc = 021653});
-        TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 4));
-        SetLocal 4 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
-        Jump: 021657
+        Jump: 021649
       }
     } else {
-      Inlining (AtInstruction {pc = 021649});
-      TraceOperation (Add (Var (Global 132)) (Con 180) (Local 3));
-      SetLocal 3 Add(MakeHiLo(M[009081],M[009082]),180);
-      Inlining (AtInstruction {pc = 021653});
-      TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 4));
-      SetLocal 4 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
-      Jump: 021657
+      Jump: 021649
     }
   } else {
-    Inlining (AtInstruction {pc = 021649});
-    TraceOperation (Add (Var (Global 132)) (Con 180) (Local 3));
-    SetLocal 3 Add(MakeHiLo(M[009081],M[009082]),180);
-    Inlining (AtInstruction {pc = 021653});
-    TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 4));
-    SetLocal 4 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
-    Jump: 021657
+    Jump: 021649
   }
---[16]--------------------------------------------------
+--[17]--------------------------------------------------
+LocOp 021649:
+  TraceOperation (Add (Var (Global 132)) (Con 180) (Local 3));
+  SetLocal 3 Add(MakeHiLo(M[009081],M[009082]),180);
+  Inlining (AtInstruction {pc = 021653});
+  TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 4));
+  SetLocal 4 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
+  Jump: 021657
+--[18]--------------------------------------------------
 LocOp 021657:
   TraceOperation (Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 021683)));
   if (EqualAny(List(GetLocal(4),GetLocal(3)))) {
@@ -278,7 +237,7 @@ LocOp 021657:
   } else {
     Jump: 021683
   }
---[17]--------------------------------------------------
+--[19]--------------------------------------------------
 LocOp 021672:
   TraceOperation (Add (Var (Global 132)) (Var (Global 130)) (Local 5));
   SetLocal 5 Add(MakeHiLo(M[009081],M[009082]),MakeHiLo(M[009077],M[009078]));
@@ -291,7 +250,7 @@ LocOp 021672:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(GetLocal(5)) -> return_address_1
---[18]--------------------------------------------------
+--[20]--------------------------------------------------
 LocOp 021683:
   TraceOperation (Loadw (Var (Local 4)) (Con 2) Sp);
   PushStack MakeHiLo(M[Offset(Address(GetLocal(4)),4)],M[Offset(Offset(Address(GetLocal(4)),4),1)]);
@@ -307,114 +266,77 @@ LocOp 021683:
   } else {
     Jump: 021693
   }
---[19]--------------------------------------------------
+--[21]--------------------------------------------------
 LocOp 021693:
   TraceOperation (Add (Var (Local 4)) (Con 6) (Local 4));
   SetLocal 4 Add(GetLocal(4),6);
   Inlining (AtInstruction {pc = 021697});
   TraceOperation (Jump 021657);
   Jump: 021657
---[20]--------------------------------------------------
+--[22]--------------------------------------------------
 LocRoutine 038192:
   MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
-    Inlining (AtInstruction {pc = 038195});
-    TraceOperation (Store (Con 123) (Var (Local 1)));
-    SetByte 009031 HiByte(GetLocal(1));
-    SetByte 009032 LoByte(GetLocal(1));
-    Inlining (AtInstruction {pc = 038198});
-    TraceOperation (Store (Con 122) (Var (Global 0)));
-    SetByte 009029 M[008817];
-    SetByte 009030 M[008818];
-    Inlining (AtInstruction {pc = 038201});
-    TraceOperation (Ret (Var (Global 106)));
-    PopFrame;
-    PopReturnAddress return_address_1;
-    Return(MakeHiLo(M[009029],M[009030])) -> return_address_1
+    Jump: 038195
   } else {
-    Inlining (AtInstruction {pc = 038195});
-    TraceOperation (Store (Con 123) (Var (Local 1)));
-    SetByte 009031 HiByte(GetLocal(1));
-    SetByte 009032 LoByte(GetLocal(1));
-    Inlining (AtInstruction {pc = 038198});
-    TraceOperation (Store (Con 122) (Var (Global 0)));
-    SetByte 009029 M[008817];
-    SetByte 009030 M[008818];
-    Inlining (AtInstruction {pc = 038201});
-    TraceOperation (Ret (Var (Global 106)));
-    PopFrame;
-    PopReturnAddress return_address_2;
-    Return(MakeHiLo(M[009029],M[009030])) -> return_address_2
+    Jump: 038195
   }
---[21]--------------------------------------------------
+--[23]--------------------------------------------------
+LocOp 038195:
+  TraceOperation (Store (Con 123) (Var (Local 1)));
+  SetByte 009031 HiByte(GetLocal(1));
+  SetByte 009032 LoByte(GetLocal(1));
+  Inlining (AtInstruction {pc = 038198});
+  TraceOperation (Store (Con 122) (Var (Global 0)));
+  SetByte 009029 M[008817];
+  SetByte 009030 M[008818];
+  Inlining (AtInstruction {pc = 038201});
+  TraceOperation (Ret (Var (Global 106)));
+  PopFrame;
+  PopReturnAddress return_address_1;
+  Return(MakeHiLo(M[009029],M[009030])) -> return_address_1
+--[24]--------------------------------------------------
 LocRoutine 028384:
   MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 17;
-    Inlining (AtInstruction {pc = 028387});
-    TraceOperation (Print "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. ");
-    GamePrint "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. ";
-    Inlining (AtInstruction {pc = 028456});
-    TraceOperation (Print "All rights reserved.");
-    GamePrint "All rights reserved.";
-    Inlining (AtInstruction {pc = 028473});
-    TraceOperation New_line;
-    GamePrint "\n";
-    Inlining (AtInstruction {pc = 028474});
-    TraceOperation (Loadb (Con 0) (Con 1) Sp);
-    PushStack Widen(M[000001]);
-    Inlining (AtInstruction {pc = 028478});
-    TraceOperation (And (Var Sp) (Con 8) Sp);
-    PopStack popped_1;
-    PushStack And(popped_1,8);
-    Inlining (AtInstruction {pc = 028482});
-    TraceOperation (Jz (Var Sp) (Branch T (Dloc 028509)));
-    PopStack popped_2;
-    if (IsZero(popped_2)) {
-      Jump: 028509
-    } else {
-      Inlining (AtInstruction {pc = 028485});
-      TraceOperation (Print "Licensed to Tandy Corporation.");
-      GamePrint "Licensed to Tandy Corporation.";
-      Inlining (AtInstruction {pc = 028508});
-      TraceOperation New_line;
-      GamePrint "\n";
-      Jump: 028509
-    }
+    Jump: 028387
   } else {
-    Inlining (AtInstruction {pc = 028387});
-    TraceOperation (Print "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. ");
-    GamePrint "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. ";
-    Inlining (AtInstruction {pc = 028456});
-    TraceOperation (Print "All rights reserved.");
-    GamePrint "All rights reserved.";
-    Inlining (AtInstruction {pc = 028473});
+    Jump: 028387
+  }
+--[25]--------------------------------------------------
+LocOp 028387:
+  TraceOperation (Print "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. ");
+  GamePrint "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. ";
+  Inlining (AtInstruction {pc = 028456});
+  TraceOperation (Print "All rights reserved.");
+  GamePrint "All rights reserved.";
+  Inlining (AtInstruction {pc = 028473});
+  TraceOperation New_line;
+  GamePrint "\n";
+  Inlining (AtInstruction {pc = 028474});
+  TraceOperation (Loadb (Con 0) (Con 1) Sp);
+  PushStack Widen(M[000001]);
+  Inlining (AtInstruction {pc = 028478});
+  TraceOperation (And (Var Sp) (Con 8) Sp);
+  PopStack popped_1;
+  PushStack And(popped_1,8);
+  Inlining (AtInstruction {pc = 028482});
+  TraceOperation (Jz (Var Sp) (Branch T (Dloc 028509)));
+  PopStack popped_2;
+  if (IsZero(popped_2)) {
+    Jump: 028509
+  } else {
+    Inlining (AtInstruction {pc = 028485});
+    TraceOperation (Print "Licensed to Tandy Corporation.");
+    GamePrint "Licensed to Tandy Corporation.";
+    Inlining (AtInstruction {pc = 028508});
     TraceOperation New_line;
     GamePrint "\n";
-    Inlining (AtInstruction {pc = 028474});
-    TraceOperation (Loadb (Con 0) (Con 1) Sp);
-    PushStack Widen(M[000001]);
-    Inlining (AtInstruction {pc = 028478});
-    TraceOperation (And (Var Sp) (Con 8) Sp);
-    PopStack popped_3;
-    PushStack And(popped_3,8);
-    Inlining (AtInstruction {pc = 028482});
-    TraceOperation (Jz (Var Sp) (Branch T (Dloc 028509)));
-    PopStack popped_4;
-    if (IsZero(popped_4)) {
-      Jump: 028509
-    } else {
-      Inlining (AtInstruction {pc = 028485});
-      TraceOperation (Print "Licensed to Tandy Corporation.");
-      GamePrint "Licensed to Tandy Corporation.";
-      Inlining (AtInstruction {pc = 028508});
-      TraceOperation New_line;
-      GamePrint "\n";
-      Jump: 028509
-    }
+    Jump: 028509
   }
---[22]--------------------------------------------------
+--[26]--------------------------------------------------
 LocOp 028509:
   TraceOperation (Print "ZORK is a registered trademark of Infocom, Inc.\nRevision ");
   GamePrint "ZORK is a registered trademark of Infocom, Inc.\nRevision ";
@@ -433,7 +355,7 @@ LocOp 028509:
   TraceOperation (Print " / Serial number ");
   GamePrint " / Serial number ";
   Jump: 028580
---[23]--------------------------------------------------
+--[27]--------------------------------------------------
 LocOp 028580:
   TraceOperation (Inc_chk (Con 1) (Con 23) (Branch F (Dloc 028587)));
   SetLocal 1 Add(GetLocal(1),1);
@@ -444,7 +366,7 @@ LocOp 028580:
   } else {
     Jump: 028587
   }
---[24]--------------------------------------------------
+--[28]--------------------------------------------------
 LocOp 028587:
   TraceOperation (Loadb (Con 0) (Var (Local 1)) Sp);
   PushStack Widen(M[Offset(000000,GetLocal(1))]);
@@ -455,7 +377,7 @@ LocOp 028587:
   Inlining (AtInstruction {pc = 028594});
   TraceOperation (Jump 028580);
   Jump: 028580
---[25]--------------------------------------------------
+--[29]--------------------------------------------------
 LocOp 028597:
   TraceOperation New_line;
   GamePrint "\n";
@@ -464,16 +386,18 @@ LocOp 028597:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(1) -> return_address_1
---[26]--------------------------------------------------
+--[30]--------------------------------------------------
 LocRoutine 032260:
   MakeRoutineFrame 0;
-  Inlining (AtInstruction {pc = 032261});
+  Jump: 032261
+--[31]--------------------------------------------------
+LocOp 032261:
   TraceOperation (Call (Floc 035994) [Con 1] Sp);
   PushFrame;
   PushReturnAddress 032261;
   SetLocal 1 1;
   Call: 035994(..#1..)
---[27]--------------------------------------------------
+--[32]--------------------------------------------------
 LocReturn 032261:
   PushStack call_result;
   Inlining (AtInstruction {pc = 032267});
@@ -491,7 +415,7 @@ LocReturn 032261:
     SetLocal 1 1;
     Call: 036174(..#1..)
   }
---[28]--------------------------------------------------
+--[33]--------------------------------------------------
 LocReturn 032270:
   PushStack call_result;
   Inlining (AtInstruction {pc = 032276});
@@ -500,7 +424,7 @@ LocReturn 032270:
   PopFrame;
   PopReturnAddress return_address_2;
   Return(popped_1) -> return_address_2
---[29]--------------------------------------------------
+--[34]--------------------------------------------------
 LocRoutine 035994:
   MakeRoutineFrame 4;
   if (LessThanByte(num_actuals,4)) {
@@ -511,80 +435,38 @@ LocRoutine 035994:
         SetLocal 2 0;
         if (LessThanByte(num_actuals,1)) {
           SetLocal 1 0;
-          Inlining (AtInstruction {pc = 036003});
-          TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036012)));
-          if (IsZero(GetLocal(1))) {
-            Jump: 036012
-          } else {
-            Inlining (AtInstruction {pc = 036006});
-            TraceOperation (Push (Var (Local 1)));
-            PushStack GetLocal(1);
-            Inlining (AtInstruction {pc = 036009});
-            TraceOperation (Jump 036015);
-            Jump: 036015
-          }
+          Jump: 036003
         } else {
-          Inlining (AtInstruction {pc = 036003});
-          TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036012)));
-          if (IsZero(GetLocal(1))) {
-            Jump: 036012
-          } else {
-            Inlining (AtInstruction {pc = 036006});
-            TraceOperation (Push (Var (Local 1)));
-            PushStack GetLocal(1);
-            Inlining (AtInstruction {pc = 036009});
-            TraceOperation (Jump 036015);
-            Jump: 036015
-          }
+          Jump: 036003
         }
       } else {
-        Inlining (AtInstruction {pc = 036003});
-        TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036012)));
-        if (IsZero(GetLocal(1))) {
-          Jump: 036012
-        } else {
-          Inlining (AtInstruction {pc = 036006});
-          TraceOperation (Push (Var (Local 1)));
-          PushStack GetLocal(1);
-          Inlining (AtInstruction {pc = 036009});
-          TraceOperation (Jump 036015);
-          Jump: 036015
-        }
+        Jump: 036003
       }
     } else {
-      Inlining (AtInstruction {pc = 036003});
-      TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036012)));
-      if (IsZero(GetLocal(1))) {
-        Jump: 036012
-      } else {
-        Inlining (AtInstruction {pc = 036006});
-        TraceOperation (Push (Var (Local 1)));
-        PushStack GetLocal(1);
-        Inlining (AtInstruction {pc = 036009});
-        TraceOperation (Jump 036015);
-        Jump: 036015
-      }
+      Jump: 036003
     }
   } else {
-    Inlining (AtInstruction {pc = 036003});
-    TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036012)));
-    if (IsZero(GetLocal(1))) {
-      Jump: 036012
-    } else {
-      Inlining (AtInstruction {pc = 036006});
-      TraceOperation (Push (Var (Local 1)));
-      PushStack GetLocal(1);
-      Inlining (AtInstruction {pc = 036009});
-      TraceOperation (Jump 036015);
-      Jump: 036015
-    }
+    Jump: 036003
   }
---[30]--------------------------------------------------
+--[35]--------------------------------------------------
+LocOp 036003:
+  TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036012)));
+  if (IsZero(GetLocal(1))) {
+    Jump: 036012
+  } else {
+    Inlining (AtInstruction {pc = 036006});
+    TraceOperation (Push (Var (Local 1)));
+    PushStack GetLocal(1);
+    Inlining (AtInstruction {pc = 036009});
+    TraceOperation (Jump 036015);
+    Jump: 036015
+  }
+--[36]--------------------------------------------------
 LocOp 036012:
   TraceOperation (Push (Var (Global 71)));
   PushStack MakeHiLo(M[008959],M[008960]);
   Jump: 036015
---[31]--------------------------------------------------
+--[37]--------------------------------------------------
 LocOp 036015:
   TraceOperation (Pull (Con 2));
   PopStack popped_1;
@@ -608,7 +490,7 @@ LocOp 036015:
   } else {
     Jump: 036068
   }
---[32]--------------------------------------------------
+--[38]--------------------------------------------------
 LocOp 036060:
   TraceOperation New_line;
   GamePrint "\n";
@@ -617,7 +499,7 @@ LocOp 036060:
   PushFrame;
   PushReturnAddress 036061;
   Call: 020688(..#0..)
---[33]--------------------------------------------------
+--[39]--------------------------------------------------
 LocReturn 036061:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036066});
@@ -625,7 +507,7 @@ LocReturn 036061:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(0) -> return_address_1
---[34]--------------------------------------------------
+--[40]--------------------------------------------------
 LocOp 036068:
   TraceOperation (Test_attr (Var (Global 0)) (Con 3) (Branch T (Dloc 036078)));
   if (TestBit(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),0)],4)) {
@@ -639,7 +521,7 @@ LocOp 036068:
     SetLocal 2 1;
     Jump: 036078
   }
---[35]--------------------------------------------------
+--[41]--------------------------------------------------
 LocOp 036078:
   TraceOperation (Test_attr (Var (Global 0)) (Con 5) (Branch F (Dloc 036085)));
   if (TestBit(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),0)],2)) {
@@ -650,7 +532,7 @@ LocOp 036078:
   } else {
     Jump: 036085
   }
---[36]--------------------------------------------------
+--[42]--------------------------------------------------
 LocOp 036085:
   TraceOperation (Jin (Var (Global 0)) (Con 82) (Branch F (Dloc 036106)));
   if (EqualAny(List(82,Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),4)])))) {
@@ -720,7 +602,7 @@ LocOp 036085:
       Jump: 036112
     }
   }
---[37]--------------------------------------------------
+--[43]--------------------------------------------------
 LocOp 036105:
   TraceOperation New_line;
   GamePrint "\n";
@@ -739,7 +621,7 @@ LocOp 036105:
   } else {
     Jump: 036112
   }
---[38]--------------------------------------------------
+--[44]--------------------------------------------------
 LocOp 036112:
   TraceOperation (Get_parent (Var (Global 111)) (Local 4));
   SetLocal 4 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
@@ -752,7 +634,7 @@ LocOp 036112:
     TraceOperation (Get_prop (Var (Global 0)) (Con 17) Sp);
     "TODO:getPropsA"
   }
---[39]--------------------------------------------------
+--[45]--------------------------------------------------
 LocReturn 036122:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036127});
@@ -765,7 +647,7 @@ LocReturn 036122:
     PopReturnAddress return_address_2;
     Return(1) -> return_address_2
   }
---[40]--------------------------------------------------
+--[46]--------------------------------------------------
 LocOp 036130:
   TraceOperation (Jz (Var (Local 2)) (Branch T (Dloc 036146)));
   if (IsZero(GetLocal(2))) {
@@ -775,15 +657,15 @@ LocOp 036130:
     TraceOperation (Get_prop (Var (Global 0)) (Con 11) (Local 3));
     "TODO:getPropsA"
   }
---[41]--------------------------------------------------
+--[47]--------------------------------------------------
 LocOp 036146:
   TraceOperation (Get_prop (Var (Global 0)) (Con 17) Sp);
   "TODO:getPropsA"
---[42]--------------------------------------------------
+--[48]--------------------------------------------------
 LocReturn 036150:
   PushStack call_result;
   Jump: 036155
---[43]--------------------------------------------------
+--[49]--------------------------------------------------
 LocOp 036155:
   TraceOperation (Je [Var (Global 0),Var (Local 4)] (Branch T Dtrue));
   if (EqualAny(List(MakeHiLo(M[008817],M[008818]),GetLocal(4)))) {
@@ -803,7 +685,7 @@ LocOp 036155:
       Return(1) -> return_address_2
     }
   }
---[44]--------------------------------------------------
+--[50]--------------------------------------------------
 LocReturn 036167:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036172});
@@ -811,56 +693,38 @@ LocReturn 036167:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(1) -> return_address_1
---[45]--------------------------------------------------
+--[51]--------------------------------------------------
 LocRoutine 038204:
   MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
-    Inlining (AtInstruction {pc = 038207});
-    TraceOperation (Je [Var (Local 1),Con 3] (Branch F Dfalse));
-    if (EqualAny(List(GetLocal(1),3))) {
-      Inlining (AtInstruction {pc = 038211});
-      TraceOperation (Print "You are standing in an open field west of a white house, with a boarded front door.");
-      GamePrint "You are standing in an open field west of a white house, with a boarded front door.";
-      Inlining (AtInstruction {pc = 038260});
-      TraceOperation (Jz (Var (Global 140)) (Branch T (Dloc 038290)));
-      if (IsZero(MakeHiLo(M[009097],M[009098]))) {
-        Jump: 038290
-      } else {
-        Inlining (AtInstruction {pc = 038263});
-        TraceOperation (Print " A secret path leads southwest into the forest.");
-        GamePrint " A secret path leads southwest into the forest.";
-        Jump: 038290
-      }
+    Jump: 038207
+  } else {
+    Jump: 038207
+  }
+--[52]--------------------------------------------------
+LocOp 038207:
+  TraceOperation (Je [Var (Local 1),Con 3] (Branch F Dfalse));
+  if (EqualAny(List(GetLocal(1),3))) {
+    Inlining (AtInstruction {pc = 038211});
+    TraceOperation (Print "You are standing in an open field west of a white house, with a boarded front door.");
+    GamePrint "You are standing in an open field west of a white house, with a boarded front door.";
+    Inlining (AtInstruction {pc = 038260});
+    TraceOperation (Jz (Var (Global 140)) (Branch T (Dloc 038290)));
+    if (IsZero(MakeHiLo(M[009097],M[009098]))) {
+      Jump: 038290
     } else {
-      PopFrame;
-      PopReturnAddress return_address_1;
-      Return(0) -> return_address_1
+      Inlining (AtInstruction {pc = 038263});
+      TraceOperation (Print " A secret path leads southwest into the forest.");
+      GamePrint " A secret path leads southwest into the forest.";
+      Jump: 038290
     }
   } else {
-    Inlining (AtInstruction {pc = 038207});
-    TraceOperation (Je [Var (Local 1),Con 3] (Branch F Dfalse));
-    if (EqualAny(List(GetLocal(1),3))) {
-      Inlining (AtInstruction {pc = 038211});
-      TraceOperation (Print "You are standing in an open field west of a white house, with a boarded front door.");
-      GamePrint "You are standing in an open field west of a white house, with a boarded front door.";
-      Inlining (AtInstruction {pc = 038260});
-      TraceOperation (Jz (Var (Global 140)) (Branch T (Dloc 038290)));
-      if (IsZero(MakeHiLo(M[009097],M[009098]))) {
-        Jump: 038290
-      } else {
-        Inlining (AtInstruction {pc = 038263});
-        TraceOperation (Print " A secret path leads southwest into the forest.");
-        GamePrint " A secret path leads southwest into the forest.";
-        Jump: 038290
-      }
-    } else {
-      PopFrame;
-      PopReturnAddress return_address_2;
-      Return(0) -> return_address_2
-    }
+    PopFrame;
+    PopReturnAddress return_address_1;
+    Return(0) -> return_address_1
   }
---[46]--------------------------------------------------
+--[53]--------------------------------------------------
 LocOp 038290:
   TraceOperation New_line;
   GamePrint "\n";
@@ -869,73 +733,49 @@ LocOp 038290:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(1) -> return_address_1
---[47]--------------------------------------------------
+--[54]--------------------------------------------------
 LocRoutine 036174:
   MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
-    Inlining (AtInstruction {pc = 036177});
-    TraceOperation (Jz (Var (Global 66)) (Branch T (Dloc 036209)));
-    if (IsZero(MakeHiLo(M[008949],M[008950]))) {
-      Jump: 036209
-    } else {
-      Inlining (AtInstruction {pc = 036180});
-      TraceOperation (Get_child (Var (Global 0)) Sp (Branch F Dfalse));
-      PushStack Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]);
-      if (IsZero(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]))) {
-        PopFrame;
-        PopReturnAddress return_address_1;
-        Return(0) -> return_address_1
-      } else {
-        Inlining (AtInstruction {pc = 036184});
-        TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036193)));
-        if (IsZero(GetLocal(1))) {
-          Jump: 036193
-        } else {
-          Inlining (AtInstruction {pc = 036187});
-          TraceOperation (Push (Var (Local 1)));
-          PushStack GetLocal(1);
-          Inlining (AtInstruction {pc = 036190});
-          TraceOperation (Jump 036196);
-          Jump: 036196
-        }
-      }
-    }
+    Jump: 036177
   } else {
-    Inlining (AtInstruction {pc = 036177});
-    TraceOperation (Jz (Var (Global 66)) (Branch T (Dloc 036209)));
-    if (IsZero(MakeHiLo(M[008949],M[008950]))) {
-      Jump: 036209
+    Jump: 036177
+  }
+--[55]--------------------------------------------------
+LocOp 036177:
+  TraceOperation (Jz (Var (Global 66)) (Branch T (Dloc 036209)));
+  if (IsZero(MakeHiLo(M[008949],M[008950]))) {
+    Jump: 036209
+  } else {
+    Inlining (AtInstruction {pc = 036180});
+    TraceOperation (Get_child (Var (Global 0)) Sp (Branch F Dfalse));
+    PushStack Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]);
+    if (IsZero(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]))) {
+      PopFrame;
+      PopReturnAddress return_address_1;
+      Return(0) -> return_address_1
     } else {
-      Inlining (AtInstruction {pc = 036180});
-      TraceOperation (Get_child (Var (Global 0)) Sp (Branch F Dfalse));
-      PushStack Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]);
-      if (IsZero(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),6)]))) {
-        PopFrame;
-        PopReturnAddress return_address_2;
-        Return(0) -> return_address_2
+      Inlining (AtInstruction {pc = 036184});
+      TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036193)));
+      if (IsZero(GetLocal(1))) {
+        Jump: 036193
       } else {
-        Inlining (AtInstruction {pc = 036184});
-        TraceOperation (Jz (Var (Local 1)) (Branch T (Dloc 036193)));
-        if (IsZero(GetLocal(1))) {
-          Jump: 036193
-        } else {
-          Inlining (AtInstruction {pc = 036187});
-          TraceOperation (Push (Var (Local 1)));
-          PushStack GetLocal(1);
-          Inlining (AtInstruction {pc = 036190});
-          TraceOperation (Jump 036196);
-          Jump: 036196
-        }
+        Inlining (AtInstruction {pc = 036187});
+        TraceOperation (Push (Var (Local 1)));
+        PushStack GetLocal(1);
+        Inlining (AtInstruction {pc = 036190});
+        TraceOperation (Jump 036196);
+        Jump: 036196
       }
     }
   }
---[48]--------------------------------------------------
+--[56]--------------------------------------------------
 LocOp 036193:
   TraceOperation (Push (Var (Global 71)));
   PushStack MakeHiLo(M[008959],M[008960]);
   Jump: 036196
---[49]--------------------------------------------------
+--[57]--------------------------------------------------
 LocOp 036196:
   TraceOperation (Pull (Con 1));
   PopStack popped_1;
@@ -948,7 +788,7 @@ LocOp 036196:
   SetLocal 2 GetLocal(1);
   SetLocal 3 -1;
   Call: 036522(..#3..)
---[50]--------------------------------------------------
+--[58]--------------------------------------------------
 LocReturn 036199:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036208});
@@ -957,14 +797,14 @@ LocReturn 036199:
   PopFrame;
   PopReturnAddress return_address_2;
   Return(popped_1) -> return_address_2
---[51]--------------------------------------------------
+--[59]--------------------------------------------------
 LocOp 036209:
   TraceOperation (Print_ret "Only bats can see in the dark. And you're not one.");
   GamePrint "Only bats can see in the dark. And you're not one.\n";
   PopFrame;
   PopReturnAddress return_address_1;
   Return(1) -> return_address_1
---[52]--------------------------------------------------
+--[60]--------------------------------------------------
 LocRoutine 036522:
   MakeRoutineFrame 10;
   if (LessThanByte(num_actuals,10)) {
@@ -987,329 +827,71 @@ LocRoutine 036522:
                     SetLocal 2 0;
                     if (LessThanByte(num_actuals,1)) {
                       SetLocal 1 0;
-                      Inlining (AtInstruction {pc = 036543});
-                      TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-                      SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-                      if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-                        PopFrame;
-                        PopReturnAddress return_address_1;
-                        Return(1) -> return_address_1
-                      } else {
-                        Inlining (AtInstruction {pc = 036547});
-                        TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-                        SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-                        Inlining (AtInstruction {pc = 036550});
-                        TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-                        if (IsZero(GetLocal(7))) {
-                          Jump: 036560
-                        } else {
-                          Inlining (AtInstruction {pc = 036553});
-                          TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-                          if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                            Inlining (AtInstruction {pc = 036557});
-                            TraceOperation (Jump 036563);
-                            Jump: 036563
-                          } else {
-                            Jump: 036560
-                          }
-                        }
-                      }
+                      Jump: 036543
                     } else {
-                      Inlining (AtInstruction {pc = 036543});
-                      TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-                      SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-                      if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-                        PopFrame;
-                        PopReturnAddress return_address_2;
-                        Return(1) -> return_address_2
-                      } else {
-                        Inlining (AtInstruction {pc = 036547});
-                        TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-                        SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-                        Inlining (AtInstruction {pc = 036550});
-                        TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-                        if (IsZero(GetLocal(7))) {
-                          Jump: 036560
-                        } else {
-                          Inlining (AtInstruction {pc = 036553});
-                          TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-                          if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                            Inlining (AtInstruction {pc = 036557});
-                            TraceOperation (Jump 036563);
-                            Jump: 036563
-                          } else {
-                            Jump: 036560
-                          }
-                        }
-                      }
+                      Jump: 036543
                     }
                   } else {
-                    Inlining (AtInstruction {pc = 036543});
-                    TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-                    SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-                    if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-                      PopFrame;
-                      PopReturnAddress return_address_3;
-                      Return(1) -> return_address_3
-                    } else {
-                      Inlining (AtInstruction {pc = 036547});
-                      TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-                      SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-                      Inlining (AtInstruction {pc = 036550});
-                      TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-                      if (IsZero(GetLocal(7))) {
-                        Jump: 036560
-                      } else {
-                        Inlining (AtInstruction {pc = 036553});
-                        TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-                        if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                          Inlining (AtInstruction {pc = 036557});
-                          TraceOperation (Jump 036563);
-                          Jump: 036563
-                        } else {
-                          Jump: 036560
-                        }
-                      }
-                    }
+                    Jump: 036543
                   }
                 } else {
-                  Inlining (AtInstruction {pc = 036543});
-                  TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-                  SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-                  if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-                    PopFrame;
-                    PopReturnAddress return_address_4;
-                    Return(1) -> return_address_4
-                  } else {
-                    Inlining (AtInstruction {pc = 036547});
-                    TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-                    SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-                    Inlining (AtInstruction {pc = 036550});
-                    TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-                    if (IsZero(GetLocal(7))) {
-                      Jump: 036560
-                    } else {
-                      Inlining (AtInstruction {pc = 036553});
-                      TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-                      if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                        Inlining (AtInstruction {pc = 036557});
-                        TraceOperation (Jump 036563);
-                        Jump: 036563
-                      } else {
-                        Jump: 036560
-                      }
-                    }
-                  }
+                  Jump: 036543
                 }
               } else {
-                Inlining (AtInstruction {pc = 036543});
-                TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-                SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-                if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-                  PopFrame;
-                  PopReturnAddress return_address_5;
-                  Return(1) -> return_address_5
-                } else {
-                  Inlining (AtInstruction {pc = 036547});
-                  TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-                  SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-                  Inlining (AtInstruction {pc = 036550});
-                  TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-                  if (IsZero(GetLocal(7))) {
-                    Jump: 036560
-                  } else {
-                    Inlining (AtInstruction {pc = 036553});
-                    TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-                    if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                      Inlining (AtInstruction {pc = 036557});
-                      TraceOperation (Jump 036563);
-                      Jump: 036563
-                    } else {
-                      Jump: 036560
-                    }
-                  }
-                }
+                Jump: 036543
               }
             } else {
-              Inlining (AtInstruction {pc = 036543});
-              TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-              SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-              if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-                PopFrame;
-                PopReturnAddress return_address_6;
-                Return(1) -> return_address_6
-              } else {
-                Inlining (AtInstruction {pc = 036547});
-                TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-                SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-                Inlining (AtInstruction {pc = 036550});
-                TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-                if (IsZero(GetLocal(7))) {
-                  Jump: 036560
-                } else {
-                  Inlining (AtInstruction {pc = 036553});
-                  TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-                  if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                    Inlining (AtInstruction {pc = 036557});
-                    TraceOperation (Jump 036563);
-                    Jump: 036563
-                  } else {
-                    Jump: 036560
-                  }
-                }
-              }
+              Jump: 036543
             }
           } else {
-            Inlining (AtInstruction {pc = 036543});
-            TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-            SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-            if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-              PopFrame;
-              PopReturnAddress return_address_7;
-              Return(1) -> return_address_7
-            } else {
-              Inlining (AtInstruction {pc = 036547});
-              TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-              SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-              Inlining (AtInstruction {pc = 036550});
-              TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-              if (IsZero(GetLocal(7))) {
-                Jump: 036560
-              } else {
-                Inlining (AtInstruction {pc = 036553});
-                TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-                if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                  Inlining (AtInstruction {pc = 036557});
-                  TraceOperation (Jump 036563);
-                  Jump: 036563
-                } else {
-                  Jump: 036560
-                }
-              }
-            }
+            Jump: 036543
           }
         } else {
-          Inlining (AtInstruction {pc = 036543});
-          TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-          SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-          if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-            PopFrame;
-            PopReturnAddress return_address_8;
-            Return(1) -> return_address_8
-          } else {
-            Inlining (AtInstruction {pc = 036547});
-            TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-            SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-            Inlining (AtInstruction {pc = 036550});
-            TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-            if (IsZero(GetLocal(7))) {
-              Jump: 036560
-            } else {
-              Inlining (AtInstruction {pc = 036553});
-              TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-              if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-                Inlining (AtInstruction {pc = 036557});
-                TraceOperation (Jump 036563);
-                Jump: 036563
-              } else {
-                Jump: 036560
-              }
-            }
-          }
+          Jump: 036543
         }
       } else {
-        Inlining (AtInstruction {pc = 036543});
-        TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-        SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-        if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-          PopFrame;
-          PopReturnAddress return_address_9;
-          Return(1) -> return_address_9
-        } else {
-          Inlining (AtInstruction {pc = 036547});
-          TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-          SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-          Inlining (AtInstruction {pc = 036550});
-          TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-          if (IsZero(GetLocal(7))) {
-            Jump: 036560
-          } else {
-            Inlining (AtInstruction {pc = 036553});
-            TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-            if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-              Inlining (AtInstruction {pc = 036557});
-              TraceOperation (Jump 036563);
-              Jump: 036563
-            } else {
-              Jump: 036560
-            }
-          }
-        }
+        Jump: 036543
       }
     } else {
-      Inlining (AtInstruction {pc = 036543});
-      TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-      SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-      if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-        PopFrame;
-        PopReturnAddress return_address_10;
-        Return(1) -> return_address_10
-      } else {
-        Inlining (AtInstruction {pc = 036547});
-        TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-        SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-        Inlining (AtInstruction {pc = 036550});
-        TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-        if (IsZero(GetLocal(7))) {
-          Jump: 036560
-        } else {
-          Inlining (AtInstruction {pc = 036553});
-          TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-          if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-            Inlining (AtInstruction {pc = 036557});
-            TraceOperation (Jump 036563);
-            Jump: 036563
-          } else {
-            Jump: 036560
-          }
-        }
-      }
+      Jump: 036543
     }
   } else {
-    Inlining (AtInstruction {pc = 036543});
-    TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
-    SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
-    if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
-      PopFrame;
-      PopReturnAddress return_address_11;
-      Return(1) -> return_address_11
+    Jump: 036543
+  }
+--[61]--------------------------------------------------
+LocOp 036543:
+  TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue));
+  SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
+  if (IsZero(Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]))) {
+    PopFrame;
+    PopReturnAddress return_address_1;
+    Return(1) -> return_address_1
+  } else {
+    Inlining (AtInstruction {pc = 036547});
+    TraceOperation (Get_parent (Var (Global 111)) (Local 7));
+    SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
+    Inlining (AtInstruction {pc = 036550});
+    TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
+    if (IsZero(GetLocal(7))) {
+      Jump: 036560
     } else {
-      Inlining (AtInstruction {pc = 036547});
-      TraceOperation (Get_parent (Var (Global 111)) (Local 7));
-      SetLocal 7 Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]);
-      Inlining (AtInstruction {pc = 036550});
-      TraceOperation (Jz (Var (Local 7)) (Branch T (Dloc 036560)));
-      if (IsZero(GetLocal(7))) {
-        Jump: 036560
+      Inlining (AtInstruction {pc = 036553});
+      TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
+      if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
+        Inlining (AtInstruction {pc = 036557});
+        TraceOperation (Jump 036563);
+        Jump: 036563
       } else {
-        Inlining (AtInstruction {pc = 036553});
-        TraceOperation (Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560)));
-        if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(7),9)),3)],4)) {
-          Inlining (AtInstruction {pc = 036557});
-          TraceOperation (Jump 036563);
-          Jump: 036563
-        } else {
-          Jump: 036560
-        }
+        Jump: 036560
       }
     }
   }
---[53]--------------------------------------------------
+--[62]--------------------------------------------------
 LocOp 036560:
   TraceOperation (Store (Con 7) (Con 0));
   SetLocal 7 0;
   Jump: 036563
---[54]--------------------------------------------------
+--[63]--------------------------------------------------
 LocOp 036563:
   TraceOperation (Store (Con 5) (Con 1));
   SetLocal 5 1;
@@ -1332,7 +914,7 @@ LocOp 036563:
   } else {
     Jump: 036584
   }
---[55]--------------------------------------------------
+--[64]--------------------------------------------------
 LocOp 036584:
   TraceOperation (Jz (Var (Local 4)) (Branch F (Dloc 036590)));
   if (IsZero(GetLocal(4))) {
@@ -1342,7 +924,7 @@ LocOp 036584:
   } else {
     Jump: 036590
   }
---[56]--------------------------------------------------
+--[65]--------------------------------------------------
 LocOp 036590:
   TraceOperation (Je [Var (Local 4),Var (Local 7)] (Branch F (Dloc 036600)));
   if (EqualAny(List(GetLocal(4),GetLocal(7)))) {
@@ -1355,7 +937,7 @@ LocOp 036590:
   } else {
     Jump: 036600
   }
---[57]--------------------------------------------------
+--[66]--------------------------------------------------
 LocOp 036600:
   TraceOperation (Je [Var (Local 4),Var (Global 111)] (Branch F (Dloc 036607)));
   if (EqualAny(List(GetLocal(4),MakeHiLo(M[009039],M[009040])))) {
@@ -1365,7 +947,7 @@ LocOp 036600:
   } else {
     Jump: 036607
   }
---[58]--------------------------------------------------
+--[67]--------------------------------------------------
 LocOp 036607:
   TraceOperation (Test_attr (Var (Local 4)) (Con 7) (Branch T (Dloc 036670)));
   if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(4),9)),0)],0)) {
@@ -1381,14 +963,14 @@ LocOp 036607:
       "TODO:getPropsA"
     }
   }
---[59]--------------------------------------------------
+--[68]--------------------------------------------------
 LocOp 036633:
   TraceOperation (Call (Floc 036946) [Var (Local 4)] Sp);
   PushFrame;
   PushReturnAddress 036633;
   SetLocal 1 GetLocal(4);
   Call: 036946(..#1..)
---[60]--------------------------------------------------
+--[69]--------------------------------------------------
 LocReturn 036633:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036639});
@@ -1405,7 +987,7 @@ LocReturn 036633:
     PopStack popped_2;
     "TODO:getPropsA"
   }
---[61]--------------------------------------------------
+--[70]--------------------------------------------------
 LocReturn 036656:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036664});
@@ -1419,7 +1001,7 @@ LocReturn 036656:
     SetLocal 5 0;
     Jump: 036670
   }
---[62]--------------------------------------------------
+--[71]--------------------------------------------------
 LocOp 036670:
   TraceOperation (Get_sibling (Var (Local 4)) (Local 4) (Branch T (Dloc 036674)));
   SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(4),9)),5)]);
@@ -1432,7 +1014,7 @@ LocOp 036670:
     TraceOperation (Jump 036584);
     Jump: 036584
   }
---[63]--------------------------------------------------
+--[72]--------------------------------------------------
 LocOp 036677:
   TraceOperation (Get_child (Var (Local 1)) (Local 4) (Branch T (Dloc 036681)));
   SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),6)]);
@@ -1441,7 +1023,7 @@ LocOp 036677:
   } else {
     Jump: 036681
   }
---[64]--------------------------------------------------
+--[73]--------------------------------------------------
 LocOp 036681:
   TraceOperation (Jz (Var (Local 4)) (Branch F (Dloc 036710)));
   if (IsZero(GetLocal(4))) {
@@ -1478,13 +1060,13 @@ LocOp 036681:
   } else {
     Jump: 036710
   }
---[65]--------------------------------------------------
+--[74]--------------------------------------------------
 LocReturn 036699:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036707});
   TraceOperation (Jump 036816);
   Jump: 036816
---[66]--------------------------------------------------
+--[75]--------------------------------------------------
 LocOp 036710:
   TraceOperation (Je [Var (Local 4),Var (Local 7),Con 4] (Branch F (Dloc 036719)));
   if (EqualAny(List(GetLocal(4),GetLocal(7),4))) {
@@ -1494,7 +1076,7 @@ LocOp 036710:
   } else {
     Jump: 036719
   }
---[67]--------------------------------------------------
+--[76]--------------------------------------------------
 LocOp 036719:
   TraceOperation (Test_attr (Var (Local 4)) (Con 7) (Branch T (Dloc 036809)));
   if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(4),9)),0)],0)) {
@@ -1516,7 +1098,7 @@ LocOp 036719:
       Jump: 036739
     }
   }
---[68]--------------------------------------------------
+--[77]--------------------------------------------------
 LocOp 036739:
   TraceOperation (Test_attr (Var (Local 4)) (Con 14) (Branch T (Dloc 036786)));
   if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(4),9)),1)],1)) {
@@ -1536,7 +1118,7 @@ LocOp 036739:
       Call: 036824(..#2..)
     }
   }
---[69]--------------------------------------------------
+--[78]--------------------------------------------------
 LocReturn 036746:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036753});
@@ -1556,7 +1138,7 @@ LocReturn 036746:
       Jump: 036763
     }
   }
---[70]--------------------------------------------------
+--[79]--------------------------------------------------
 LocOp 036763:
   TraceOperation (Inc (Con 3));
   SetLocal 3 Add(GetLocal(3),1);
@@ -1564,7 +1146,7 @@ LocOp 036763:
   TraceOperation (Store (Con 5) (Con 0));
   SetLocal 5 0;
   Jump: 036768
---[71]--------------------------------------------------
+--[80]--------------------------------------------------
 LocOp 036768:
   TraceOperation (Jl (Var (Local 3)) (Con 0) (Branch F (Dloc 036775)));
   if (LessThan(GetLocal(3),0)) {
@@ -1575,7 +1157,7 @@ LocOp 036768:
   } else {
     Jump: 036775
   }
---[72]--------------------------------------------------
+--[81]--------------------------------------------------
 LocOp 036775:
   TraceOperation (Call (Floc 036242) [Var (Local 4),Var (Local 2),Var (Local 3)] Sp);
   PushFrame;
@@ -1584,13 +1166,13 @@ LocOp 036775:
   SetLocal 2 GetLocal(2);
   SetLocal 3 GetLocal(3);
   Call: 036242(..#3..)
---[73]--------------------------------------------------
+--[82]--------------------------------------------------
 LocReturn 036775:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036783});
   TraceOperation (Jump 036809);
   Jump: 036809
---[74]--------------------------------------------------
+--[83]--------------------------------------------------
 LocOp 036786:
   TraceOperation (Get_child (Var (Local 4)) Sp (Branch F (Dloc 036809)));
   PushStack Widen(M[Offset(Offset(000741,Mul(GetLocal(4),9)),6)]);
@@ -1604,7 +1186,7 @@ LocOp 036786:
     SetLocal 1 GetLocal(4);
     Call: 036946(..#1..)
   }
---[75]--------------------------------------------------
+--[84]--------------------------------------------------
 LocReturn 036790:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036796});
@@ -1625,11 +1207,11 @@ LocReturn 036790:
     SetLocal 3 GetLocal(3);
     Call: 036522(..#3..)
   }
---[76]--------------------------------------------------
+--[85]--------------------------------------------------
 LocReturn 036801:
   PushStack call_result;
   Jump: 036809
---[77]--------------------------------------------------
+--[86]--------------------------------------------------
 LocOp 036809:
   TraceOperation (Get_sibling (Var (Local 4)) (Local 4) (Branch T (Dloc 036813)));
   SetLocal 4 Widen(M[Offset(Offset(000741,Mul(GetLocal(4),9)),5)]);
@@ -1642,7 +1224,7 @@ LocOp 036809:
     TraceOperation (Jump 036681);
     Jump: 036681
   }
---[78]--------------------------------------------------
+--[87]--------------------------------------------------
 LocOp 036816:
   TraceOperation (Jz (Var (Local 5)) (Branch T Dtrue));
   if (IsZero(GetLocal(5))) {
@@ -1664,54 +1246,34 @@ LocOp 036816:
       Return(0) -> return_address_3
     }
   }
---[79]--------------------------------------------------
+--[88]--------------------------------------------------
 LocRoutine 036824:
   MakeRoutineFrame 2;
   if (LessThanByte(num_actuals,2)) {
     SetLocal 2 0;
     if (LessThanByte(num_actuals,1)) {
       SetLocal 1 0;
-      Inlining (AtInstruction {pc = 036829});
-      TraceOperation (Je [Var (Local 1),Con 194] (Branch F (Dloc 036860)));
-      if (EqualAny(List(GetLocal(1),194))) {
-        Inlining (AtInstruction {pc = 036833});
-        TraceOperation (Print_ret "Your collection of treasures consists of:");
-        GamePrint "Your collection of treasures consists of:\n";
-        PopFrame;
-        PopReturnAddress return_address_1;
-        Return(1) -> return_address_1
-      } else {
-        Jump: 036860
-      }
+      Jump: 036829
     } else {
-      Inlining (AtInstruction {pc = 036829});
-      TraceOperation (Je [Var (Local 1),Con 194] (Branch F (Dloc 036860)));
-      if (EqualAny(List(GetLocal(1),194))) {
-        Inlining (AtInstruction {pc = 036833});
-        TraceOperation (Print_ret "Your collection of treasures consists of:");
-        GamePrint "Your collection of treasures consists of:\n";
-        PopFrame;
-        PopReturnAddress return_address_2;
-        Return(1) -> return_address_2
-      } else {
-        Jump: 036860
-      }
+      Jump: 036829
     }
   } else {
-    Inlining (AtInstruction {pc = 036829});
-    TraceOperation (Je [Var (Local 1),Con 194] (Branch F (Dloc 036860)));
-    if (EqualAny(List(GetLocal(1),194))) {
-      Inlining (AtInstruction {pc = 036833});
-      TraceOperation (Print_ret "Your collection of treasures consists of:");
-      GamePrint "Your collection of treasures consists of:\n";
-      PopFrame;
-      PopReturnAddress return_address_3;
-      Return(1) -> return_address_3
-    } else {
-      Jump: 036860
-    }
+    Jump: 036829
   }
---[80]--------------------------------------------------
+--[89]--------------------------------------------------
+LocOp 036829:
+  TraceOperation (Je [Var (Local 1),Con 194] (Branch F (Dloc 036860)));
+  if (EqualAny(List(GetLocal(1),194))) {
+    Inlining (AtInstruction {pc = 036833});
+    TraceOperation (Print_ret "Your collection of treasures consists of:");
+    GamePrint "Your collection of treasures consists of:\n";
+    PopFrame;
+    PopReturnAddress return_address_1;
+    Return(1) -> return_address_1
+  } else {
+    Jump: 036860
+  }
+--[90]--------------------------------------------------
 LocOp 036860:
   TraceOperation (Je [Var (Local 1),Var (Global 111)] (Branch F (Dloc 036875)));
   if (EqualAny(List(GetLocal(1),MakeHiLo(M[009039],M[009040])))) {
@@ -1724,7 +1286,7 @@ LocOp 036860:
   } else {
     Jump: 036875
   }
---[81]--------------------------------------------------
+--[91]--------------------------------------------------
 LocOp 036875:
   TraceOperation (Jin (Var (Local 1)) (Con 82) (Branch T Dfalse));
   if (EqualAny(List(82,Widen(M[Offset(Offset(000741,Mul(GetLocal(1),9)),4)])))) {
@@ -1747,7 +1309,7 @@ LocOp 036875:
       Jump: 036889
     }
   }
---[82]--------------------------------------------------
+--[92]--------------------------------------------------
 LocOp 036889:
   TraceOperation (Test_attr (Var (Local 1)) (Con 10) (Branch F (Dloc 036911)));
   if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),1)],5)) {
@@ -1776,7 +1338,7 @@ LocOp 036889:
   } else {
     Jump: 036911
   }
---[83]--------------------------------------------------
+--[93]--------------------------------------------------
 LocOp 036911:
   TraceOperation (Test_attr (Var (Local 1)) (Con 30) (Branch F (Dloc 036931)));
   if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),3)],1)) {
@@ -1805,7 +1367,7 @@ LocOp 036911:
   } else {
     Jump: 036931
   }
---[84]--------------------------------------------------
+--[94]--------------------------------------------------
 LocOp 036931:
   TraceOperation (Print "The ");
   GamePrint "The ";
@@ -1828,7 +1390,7 @@ LocOp 036931:
     PopReturnAddress return_address_2;
     Return(1) -> return_address_2
   }
---[85]--------------------------------------------------
+--[95]--------------------------------------------------
 LocRoutine 036242:
   MakeRoutineFrame 5;
   if (LessThanByte(num_actuals,5)) {
@@ -1841,95 +1403,37 @@ LocRoutine 036242:
           SetLocal 2 0;
           if (LessThanByte(num_actuals,1)) {
             SetLocal 1 0;
-            Inlining (AtInstruction {pc = 036253});
-            TraceOperation (Store (Con 80) (Var (Local 1)));
-            SetByte 008945 HiByte(GetLocal(1));
-            SetByte 008946 LoByte(GetLocal(1));
-            Inlining (AtInstruction {pc = 036256});
-            TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036271)));
-            if (IsZero(GetLocal(3))) {
-              Inlining (AtInstruction {pc = 036259});
-              TraceOperation (Get_prop (Var (Local 1)) (Con 9) Sp);
-              "TODO:getPropsA"
-            } else {
-              Jump: 036271
-            }
+            Jump: 036253
           } else {
-            Inlining (AtInstruction {pc = 036253});
-            TraceOperation (Store (Con 80) (Var (Local 1)));
-            SetByte 008945 HiByte(GetLocal(1));
-            SetByte 008946 LoByte(GetLocal(1));
-            Inlining (AtInstruction {pc = 036256});
-            TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036271)));
-            if (IsZero(GetLocal(3))) {
-              Inlining (AtInstruction {pc = 036259});
-              TraceOperation (Get_prop (Var (Local 1)) (Con 9) Sp);
-              "TODO:getPropsA"
-            } else {
-              Jump: 036271
-            }
+            Jump: 036253
           }
         } else {
-          Inlining (AtInstruction {pc = 036253});
-          TraceOperation (Store (Con 80) (Var (Local 1)));
-          SetByte 008945 HiByte(GetLocal(1));
-          SetByte 008946 LoByte(GetLocal(1));
-          Inlining (AtInstruction {pc = 036256});
-          TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036271)));
-          if (IsZero(GetLocal(3))) {
-            Inlining (AtInstruction {pc = 036259});
-            TraceOperation (Get_prop (Var (Local 1)) (Con 9) Sp);
-            "TODO:getPropsA"
-          } else {
-            Jump: 036271
-          }
+          Jump: 036253
         }
       } else {
-        Inlining (AtInstruction {pc = 036253});
-        TraceOperation (Store (Con 80) (Var (Local 1)));
-        SetByte 008945 HiByte(GetLocal(1));
-        SetByte 008946 LoByte(GetLocal(1));
-        Inlining (AtInstruction {pc = 036256});
-        TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036271)));
-        if (IsZero(GetLocal(3))) {
-          Inlining (AtInstruction {pc = 036259});
-          TraceOperation (Get_prop (Var (Local 1)) (Con 9) Sp);
-          "TODO:getPropsA"
-        } else {
-          Jump: 036271
-        }
+        Jump: 036253
       }
     } else {
-      Inlining (AtInstruction {pc = 036253});
-      TraceOperation (Store (Con 80) (Var (Local 1)));
-      SetByte 008945 HiByte(GetLocal(1));
-      SetByte 008946 LoByte(GetLocal(1));
-      Inlining (AtInstruction {pc = 036256});
-      TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036271)));
-      if (IsZero(GetLocal(3))) {
-        Inlining (AtInstruction {pc = 036259});
-        TraceOperation (Get_prop (Var (Local 1)) (Con 9) Sp);
-        "TODO:getPropsA"
-      } else {
-        Jump: 036271
-      }
+      Jump: 036253
     }
   } else {
-    Inlining (AtInstruction {pc = 036253});
-    TraceOperation (Store (Con 80) (Var (Local 1)));
-    SetByte 008945 HiByte(GetLocal(1));
-    SetByte 008946 LoByte(GetLocal(1));
-    Inlining (AtInstruction {pc = 036256});
-    TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036271)));
-    if (IsZero(GetLocal(3))) {
-      Inlining (AtInstruction {pc = 036259});
-      TraceOperation (Get_prop (Var (Local 1)) (Con 9) Sp);
-      "TODO:getPropsA"
-    } else {
-      Jump: 036271
-    }
+    Jump: 036253
   }
---[86]--------------------------------------------------
+--[96]--------------------------------------------------
+LocOp 036253:
+  TraceOperation (Store (Con 80) (Var (Local 1)));
+  SetByte 008945 HiByte(GetLocal(1));
+  SetByte 008946 LoByte(GetLocal(1));
+  Inlining (AtInstruction {pc = 036256});
+  TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036271)));
+  if (IsZero(GetLocal(3))) {
+    Inlining (AtInstruction {pc = 036259});
+    TraceOperation (Get_prop (Var (Local 1)) (Con 9) Sp);
+    "TODO:getPropsA"
+  } else {
+    Jump: 036271
+  }
+--[97]--------------------------------------------------
 LocReturn 036263:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036268});
@@ -1942,7 +1446,7 @@ LocReturn 036263:
     PopReturnAddress return_address_2;
     Return(1) -> return_address_2
   }
---[87]--------------------------------------------------
+--[98]--------------------------------------------------
 LocOp 036271:
   TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036297)));
   if (IsZero(GetLocal(3))) {
@@ -1958,18 +1462,18 @@ LocOp 036271:
   } else {
     Jump: 036297
   }
---[88]--------------------------------------------------
+--[99]--------------------------------------------------
 LocOp 036285:
   TraceOperation (Get_prop (Var (Local 1)) (Con 11) (Local 4));
   "TODO:getPropsA"
---[89]--------------------------------------------------
+--[100]--------------------------------------------------
 LocOp 036292:
   TraceOperation (Print_paddr (Var (Local 4)));
   GamePrint GetText(PackedAddress Z3(GetLocal(4)));
   Inlining (AtInstruction {pc = 036294});
   TraceOperation (Jump 036383);
   Jump: 036383
---[90]--------------------------------------------------
+--[101]--------------------------------------------------
 LocOp 036297:
   TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 036335)));
   if (IsZero(GetLocal(3))) {
@@ -2012,14 +1516,14 @@ LocOp 036297:
   } else {
     Jump: 036335
   }
---[91]--------------------------------------------------
+--[102]--------------------------------------------------
 LocOp 036329:
   TraceOperation (Print ".");
   GamePrint ".";
   Inlining (AtInstruction {pc = 036332});
   TraceOperation (Jump 036383);
   Jump: 036383
---[92]--------------------------------------------------
+--[103]--------------------------------------------------
 LocOp 036335:
   TraceOperation (Loadw (Var (Global 57)) (Var (Local 3)) Sp);
   PushStack MakeHiLo(M[Offset(Address(MakeHiLo(M[008931],M[008932])),Mul(2,GetLocal(3)))],M[Offset(Offset(Address(MakeHiLo(M[008931],M[008932])),Mul(2,GetLocal(3))),1)]);
@@ -2061,7 +1565,7 @@ LocOp 036335:
       Jump: 036368
     }
   }
---[93]--------------------------------------------------
+--[104]--------------------------------------------------
 LocOp 036368:
   TraceOperation (Test_attr (Var (Local 1)) (Con 0) (Branch F (Dloc 036383)));
   if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),0)],7)) {
@@ -2072,13 +1576,13 @@ LocOp 036368:
   } else {
     Jump: 036383
   }
---[94]--------------------------------------------------
+--[105]--------------------------------------------------
 LocOp 036383:
   TraceOperation (Call (Floc 020688) [] Sp);
   PushFrame;
   PushReturnAddress 036383;
   Call: 020688(..#0..)
---[95]--------------------------------------------------
+--[106]--------------------------------------------------
 LocReturn 036383:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036388});
@@ -2120,7 +1624,7 @@ LocReturn 036383:
   } else {
     Jump: 036417
   }
---[96]--------------------------------------------------
+--[107]--------------------------------------------------
 LocOp 036417:
   TraceOperation New_line;
   GamePrint "\n";
@@ -2130,7 +1634,7 @@ LocOp 036417:
   PushReturnAddress 036418;
   SetLocal 1 GetLocal(1);
   Call: 036946(..#1..)
---[97]--------------------------------------------------
+--[108]--------------------------------------------------
 LocReturn 036418:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036424});
@@ -2159,7 +1663,7 @@ LocReturn 036418:
       Call: 036522(..#3..)
     }
   }
---[98]--------------------------------------------------
+--[109]--------------------------------------------------
 LocReturn 036431:
   PushStack call_result;
   Inlining (AtInstruction {pc = 036439});
@@ -2168,98 +1672,66 @@ LocReturn 036431:
   PopFrame;
   PopReturnAddress return_address_2;
   Return(popped_1) -> return_address_2
---[99]--------------------------------------------------
+--[110]--------------------------------------------------
 LocRoutine 020688:
   MakeRoutineFrame 2;
   if (LessThanByte(num_actuals,2)) {
     SetLocal 2 0;
     if (LessThanByte(num_actuals,1)) {
       SetLocal 1 0;
-      Inlining (AtInstruction {pc = 020693});
-      TraceOperation Rfalse;
-      PopFrame;
-      PopReturnAddress return_address_1;
-      Return(0) -> return_address_1
+      Jump: 020693
     } else {
-      Inlining (AtInstruction {pc = 020693});
-      TraceOperation Rfalse;
-      PopFrame;
-      PopReturnAddress return_address_2;
-      Return(0) -> return_address_2
+      Jump: 020693
     }
   } else {
-    Inlining (AtInstruction {pc = 020693});
-    TraceOperation Rfalse;
-    PopFrame;
-    PopReturnAddress return_address_3;
-    Return(0) -> return_address_3
+    Jump: 020693
   }
---[100]--------------------------------------------------
+--[111]--------------------------------------------------
+LocOp 020693:
+  TraceOperation Rfalse;
+  PopFrame;
+  PopReturnAddress return_address_1;
+  Return(0) -> return_address_1
+--[112]--------------------------------------------------
 LocRoutine 036946:
   MakeRoutineFrame 1;
   if (LessThanByte(num_actuals,1)) {
     SetLocal 1 0;
-    Inlining (AtInstruction {pc = 036949});
-    TraceOperation (Test_attr (Var (Local 1)) (Con 7) (Branch T Dfalse));
-    if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),0)],0)) {
-      PopFrame;
-      PopReturnAddress return_address_1;
-      Return(0) -> return_address_1
-    } else {
-      Inlining (AtInstruction {pc = 036953});
-      TraceOperation (Test_attr (Var (Local 1)) (Con 12) (Branch T Dtrue));
-      if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),1)],3)) {
-        PopFrame;
-        PopReturnAddress return_address_2;
-        Return(1) -> return_address_2
-      } else {
-        Inlining (AtInstruction {pc = 036957});
-        TraceOperation (Test_attr (Var (Local 1)) (Con 11) (Branch T Dtrue));
-        if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),1)],4)) {
-          PopFrame;
-          PopReturnAddress return_address_3;
-          Return(1) -> return_address_3
-        } else {
-          Inlining (AtInstruction {pc = 036961});
-          TraceOperation Rfalse;
-          PopFrame;
-          PopReturnAddress return_address_4;
-          Return(0) -> return_address_4
-        }
-      }
-    }
+    Jump: 036949
   } else {
-    Inlining (AtInstruction {pc = 036949});
-    TraceOperation (Test_attr (Var (Local 1)) (Con 7) (Branch T Dfalse));
-    if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),0)],0)) {
+    Jump: 036949
+  }
+--[113]--------------------------------------------------
+LocOp 036949:
+  TraceOperation (Test_attr (Var (Local 1)) (Con 7) (Branch T Dfalse));
+  if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),0)],0)) {
+    PopFrame;
+    PopReturnAddress return_address_1;
+    Return(0) -> return_address_1
+  } else {
+    Inlining (AtInstruction {pc = 036953});
+    TraceOperation (Test_attr (Var (Local 1)) (Con 12) (Branch T Dtrue));
+    if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),1)],3)) {
       PopFrame;
-      PopReturnAddress return_address_5;
-      Return(0) -> return_address_5
+      PopReturnAddress return_address_2;
+      Return(1) -> return_address_2
     } else {
-      Inlining (AtInstruction {pc = 036953});
-      TraceOperation (Test_attr (Var (Local 1)) (Con 12) (Branch T Dtrue));
-      if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),1)],3)) {
+      Inlining (AtInstruction {pc = 036957});
+      TraceOperation (Test_attr (Var (Local 1)) (Con 11) (Branch T Dtrue));
+      if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),1)],4)) {
         PopFrame;
-        PopReturnAddress return_address_6;
-        Return(1) -> return_address_6
+        PopReturnAddress return_address_3;
+        Return(1) -> return_address_3
       } else {
-        Inlining (AtInstruction {pc = 036957});
-        TraceOperation (Test_attr (Var (Local 1)) (Con 11) (Branch T Dtrue));
-        if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(1),9)),1)],4)) {
-          PopFrame;
-          PopReturnAddress return_address_7;
-          Return(1) -> return_address_7
-        } else {
-          Inlining (AtInstruction {pc = 036961});
-          TraceOperation Rfalse;
-          PopFrame;
-          PopReturnAddress return_address_8;
-          Return(0) -> return_address_8
-        }
+        Inlining (AtInstruction {pc = 036961});
+        TraceOperation Rfalse;
+        PopFrame;
+        PopReturnAddress return_address_4;
+        Return(0) -> return_address_4
       }
     }
   }
---[101]--------------------------------------------------
+--[114]--------------------------------------------------
 LocRoutine 021802:
   MakeRoutineFrame 10;
   if (LessThanByte(num_actuals,10)) {
@@ -2313,7 +1785,7 @@ LocRoutine 021802:
   } else {
     Jump: 021823
   }
---[102]--------------------------------------------------
+--[115]--------------------------------------------------
 LocOp 021823:
   TraceOperation (Store (Con 4) (Con 0));
   SetLocal 4 0;
@@ -2328,7 +1800,7 @@ LocOp 021823:
   PushFrame;
   PushReturnAddress 021832;
   Call: 022656(..#0..)
---[103]--------------------------------------------------
+--[116]--------------------------------------------------
 LocReturn 021832:
   SetByte 009071 HiByte(call_result);
   SetByte 009072 LoByte(call_result);
@@ -2356,7 +1828,7 @@ LocReturn 021832:
       Jump: 021858
     }
   }
---[104]--------------------------------------------------
+--[117]--------------------------------------------------
 LocOp 021858:
   TraceOperation (Jg (Var (Local 2)) (Con 1) (Branch F (Dloc 021884)));
   if (GreaterThan(GetLocal(2),1)) {
@@ -2378,19 +1850,19 @@ LocOp 021858:
   } else {
     Jump: 021884
   }
---[105]--------------------------------------------------
+--[118]--------------------------------------------------
 LocOp 021874:
   TraceOperation (Loadw (Var (Global 85)) (Con 1) (Local 5));
   SetLocal 5 MakeHiLo(M[Offset(Address(MakeHiLo(M[008987],M[008988])),2)],M[Offset(Offset(Address(MakeHiLo(M[008987],M[008988])),2),1)]);
   Jump: 021878
---[106]--------------------------------------------------
+--[119]--------------------------------------------------
 LocOp 021878:
   TraceOperation (Push (Var (Local 2)));
   PushStack GetLocal(2);
   Inlining (AtInstruction {pc = 021881});
   TraceOperation (Jump 021907);
   Jump: 021907
---[107]--------------------------------------------------
+--[120]--------------------------------------------------
 LocOp 021884:
   TraceOperation (Jg (Var (Local 1)) (Con 1) (Branch F (Dloc 021904)));
   if (GreaterThan(GetLocal(1),1)) {
@@ -2412,12 +1884,12 @@ LocOp 021884:
   } else {
     Jump: 021904
   }
---[108]--------------------------------------------------
+--[121]--------------------------------------------------
 LocOp 021904:
   TraceOperation (Push (Con 1));
   PushStack 1;
   Jump: 021907
---[109]--------------------------------------------------
+--[122]--------------------------------------------------
 LocOp 021907:
   TraceOperation (Store (Con 3) (Var Sp));
   PopStack popped_1;
@@ -2438,7 +1910,7 @@ LocOp 021907:
   } else {
     Jump: 021921
   }
---[110]--------------------------------------------------
+--[123]--------------------------------------------------
 LocOp 021921:
   TraceOperation (Je [Var (Global 120),Con 137] (Branch F (Dloc 021935)));
   if (EqualAny(List(MakeHiLo(M[009057],M[009058]),137))) {
@@ -2452,13 +1924,13 @@ LocOp 021921:
   } else {
     Jump: 021935
   }
---[111]--------------------------------------------------
+--[124]--------------------------------------------------
 LocReturn 021925:
   SetLocal 7 call_result;
   Inlining (AtInstruction {pc = 021932});
   TraceOperation (Jump 022295);
   Jump: 022295
---[112]--------------------------------------------------
+--[125]--------------------------------------------------
 LocOp 021935:
   TraceOperation (Jz (Var (Local 3)) (Branch F (Dloc 022016)));
   if (IsZero(GetLocal(3))) {
@@ -2485,7 +1957,7 @@ LocOp 021935:
   } else {
     Jump: 022016
   }
---[113]--------------------------------------------------
+--[126]--------------------------------------------------
 LocReturn 021950:
   SetLocal 7 call_result;
   Inlining (AtInstruction {pc = 021956});
@@ -2495,7 +1967,7 @@ LocReturn 021950:
   Inlining (AtInstruction {pc = 021959});
   TraceOperation (Jump 022295);
   Jump: 022295
---[114]--------------------------------------------------
+--[127]--------------------------------------------------
 LocOp 021962:
   TraceOperation (Jz (Var (Global 66)) (Branch F (Dloc 021982)));
   if (IsZero(MakeHiLo(M[008949],M[008950]))) {
@@ -2511,7 +1983,7 @@ LocOp 021962:
   } else {
     Jump: 021982
   }
---[115]--------------------------------------------------
+--[128]--------------------------------------------------
 LocOp 021982:
   TraceOperation (Print "It's not clear what you're referring to.");
   GamePrint "It's not clear what you're referring to.";
@@ -2524,7 +1996,7 @@ LocOp 021982:
   Inlining (AtInstruction {pc = 022013});
   TraceOperation (Jump 022295);
   Jump: 022295
---[116]--------------------------------------------------
+--[129]--------------------------------------------------
 LocOp 022016:
   TraceOperation (Store (Con 138) (Con 0));
   SetByte 009061 0;
@@ -2544,12 +2016,12 @@ LocOp 022016:
   } else {
     Jump: 022029
   }
---[117]--------------------------------------------------
+--[130]--------------------------------------------------
 LocOp 022029:
   TraceOperation (Store (Con 10) (Con 0));
   SetLocal 10 0;
   Jump: 022032
---[118]--------------------------------------------------
+--[131]--------------------------------------------------
 LocOp 022032:
   TraceOperation (Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 022126)));
   SetLocal 4 Add(GetLocal(4),1);
@@ -2576,7 +2048,7 @@ LocOp 022032:
   } else {
     Jump: 022126
   }
---[119]--------------------------------------------------
+--[132]--------------------------------------------------
 LocOp 022052:
   TraceOperation (Print "object");
   GamePrint "object";
@@ -2590,7 +2062,7 @@ LocOp 022052:
     GamePrint "s";
     Jump: 022064
   }
---[120]--------------------------------------------------
+--[133]--------------------------------------------------
 LocOp 022064:
   TraceOperation (Print " that you mentioned ");
   GamePrint " that you mentioned ";
@@ -2606,12 +2078,12 @@ LocOp 022064:
     TraceOperation (Jump 022090);
     Jump: 022090
   }
---[121]--------------------------------------------------
+--[134]--------------------------------------------------
 LocOp 022087:
   TraceOperation (Print "is");
   GamePrint "is";
   Jump: 022090
---[122]--------------------------------------------------
+--[135]--------------------------------------------------
 LocOp 022090:
   TraceOperation (Print "n't here.");
   GamePrint "n't here.";
@@ -2621,7 +2093,7 @@ LocOp 022090:
   Inlining (AtInstruction {pc = 022098});
   TraceOperation (Jump 022295);
   Jump: 022295
---[123]--------------------------------------------------
+--[136]--------------------------------------------------
 LocOp 022101:
   TraceOperation (Jz (Var (Local 10)) (Branch F (Dloc 022295)));
   if (IsZero(GetLocal(10))) {
@@ -2637,7 +2109,7 @@ LocOp 022101:
   } else {
     Jump: 022295
   }
---[124]--------------------------------------------------
+--[137]--------------------------------------------------
 LocOp 022126:
   TraceOperation (Jz (Var (Local 8)) (Branch T (Dloc 022136)));
   if (IsZero(GetLocal(8))) {
@@ -2650,12 +2122,12 @@ LocOp 022126:
     TraceOperation (Jump 022140);
     Jump: 022140
   }
---[125]--------------------------------------------------
+--[138]--------------------------------------------------
 LocOp 022136:
   TraceOperation (Loadw (Var (Global 85)) (Var (Local 4)) (Local 9));
   SetLocal 9 MakeHiLo(M[Offset(Address(MakeHiLo(M[008987],M[008988])),Mul(2,GetLocal(4)))],M[Offset(Offset(Address(MakeHiLo(M[008987],M[008988])),Mul(2,GetLocal(4))),1)]);
   Jump: 022140
---[126]--------------------------------------------------
+--[139]--------------------------------------------------
 LocOp 022140:
   TraceOperation (Jz (Var (Local 8)) (Branch T (Dloc 022149)));
   if (IsZero(GetLocal(8))) {
@@ -2668,12 +2140,12 @@ LocOp 022140:
     TraceOperation (Jump 022152);
     Jump: 022152
   }
---[127]--------------------------------------------------
+--[140]--------------------------------------------------
 LocOp 022149:
   TraceOperation (Push (Var (Local 5)));
   PushStack GetLocal(5);
   Jump: 022152
---[128]--------------------------------------------------
+--[141]--------------------------------------------------
 LocOp 022152:
   TraceOperation (Store (Con 134) (Var Sp));
   PopStack popped_1;
@@ -2691,12 +2163,12 @@ LocOp 022152:
     TraceOperation (Jump 022167);
     Jump: 022167
   }
---[129]--------------------------------------------------
+--[142]--------------------------------------------------
 LocOp 022164:
   TraceOperation (Push (Var (Local 9)));
   PushStack GetLocal(9);
   Jump: 022167
---[130]--------------------------------------------------
+--[143]--------------------------------------------------
 LocOp 022167:
   TraceOperation (Store (Con 135) (Var Sp));
   PopStack popped_1;
@@ -2723,7 +2195,7 @@ LocOp 022167:
       Jump: 022276
     }
   }
---[131]--------------------------------------------------
+--[144]--------------------------------------------------
 LocOp 022189:
   TraceOperation (Je [Var (Local 9),Con 11] (Branch F (Dloc 022198)));
   if (EqualAny(List(GetLocal(9),11))) {
@@ -2737,7 +2209,7 @@ LocOp 022189:
   } else {
     Jump: 022198
   }
---[132]--------------------------------------------------
+--[145]--------------------------------------------------
 LocOp 022198:
   TraceOperation (Je [Var (Global 120),Con 93] (Branch F (Dloc 022226)));
   if (EqualAny(List(MakeHiLo(M[009057],M[009058]),93))) {
@@ -2773,7 +2245,7 @@ LocOp 022198:
   } else {
     Jump: 022226
   }
---[133]--------------------------------------------------
+--[146]--------------------------------------------------
 LocOp 022226:
   TraceOperation (Je [Var (Global 80),Con 1] (Branch F (Dloc 022262)));
   if (EqualAny(List(MakeHiLo(M[008977],M[008978]),1))) {
@@ -2807,7 +2279,7 @@ LocOp 022226:
   } else {
     Jump: 022262
   }
---[134]--------------------------------------------------
+--[147]--------------------------------------------------
 LocOp 022251:
   TraceOperation (Test_attr (Var (Local 9)) (Con 17) (Branch T (Dloc 022262)));
   if (TestBit(M[Offset(Offset(000741,Mul(GetLocal(9),9)),2)],6)) {
@@ -2823,7 +2295,7 @@ LocOp 022251:
       Jump: 022032
     }
   }
---[135]--------------------------------------------------
+--[148]--------------------------------------------------
 LocOp 022262:
   TraceOperation (Je [Var (Local 9),Con 12] (Branch F (Dloc 022271)));
   if (EqualAny(List(GetLocal(9),12))) {
@@ -2843,7 +2315,7 @@ LocOp 022262:
   } else {
     Jump: 022271
   }
---[136]--------------------------------------------------
+--[149]--------------------------------------------------
 LocOp 022271:
   TraceOperation (Print_obj (Var (Local 9)));
   if (IsZeroByte(M[Address(MakeHiLo(M[Offset(Offset(000741,Mul(GetLocal(9),9)),7)],M[Offset(Offset(Offset(000741,Mul(GetLocal(9),9)),7),1)]))])) {
@@ -2853,12 +2325,12 @@ LocOp 022271:
     GamePrint GetText(Offset(Address(MakeHiLo(M[Offset(Offset(000741,Mul(GetLocal(9),9)),7)],M[Offset(Offset(Offset(000741,Mul(GetLocal(9),9)),7),1)])),1));
     Jump: 022273
   }
---[137]--------------------------------------------------
+--[150]--------------------------------------------------
 LocOp 022273:
   TraceOperation (Print ": ");
   GamePrint ": ";
   Jump: 022276
---[138]--------------------------------------------------
+--[151]--------------------------------------------------
 LocOp 022276:
   TraceOperation (Store (Con 10) (Con 1));
   SetLocal 10 1;
@@ -2870,7 +2342,7 @@ LocOp 022276:
   SetLocal 2 MakeHiLo(M[009053],M[009054]);
   SetLocal 3 MakeHiLo(M[009055],M[009056]);
   Call: 022396(..#3..)
---[139]--------------------------------------------------
+--[152]--------------------------------------------------
 LocReturn 022279:
   SetLocal 7 call_result;
   Inlining (AtInstruction {pc = 022287});
@@ -2882,7 +2354,7 @@ LocReturn 022279:
   } else {
     Jump: 022032
   }
---[140]--------------------------------------------------
+--[153]--------------------------------------------------
 LocOp 022295:
   TraceOperation (Je [Var (Local 7),Con 2] (Branch T (Dloc 022311)));
   if (EqualAny(List(GetLocal(7),2))) {
@@ -2896,11 +2368,11 @@ LocOp 022295:
     PopStack popped_1;
     "TODO:getPropsA"
   }
---[141]--------------------------------------------------
+--[154]--------------------------------------------------
 LocReturn 022306:
   SetLocal 7 call_result;
   Jump: 022311
---[142]--------------------------------------------------
+--[155]--------------------------------------------------
 LocOp 022311:
   TraceOperation (Je [Var (Global 120),Con 8,Con 137,Con 15] (Branch T (Dloc 022337)));
   if (EqualAny(List(MakeHiLo(M[009057],M[009058]),8,137,15))) {
@@ -2916,7 +2388,7 @@ LocOp 022311:
       Jump: 022328
     }
   }
---[143]--------------------------------------------------
+--[156]--------------------------------------------------
 LocOp 022328:
   TraceOperation (Store (Con 142) (Var (Global 120)));
   SetByte 009069 M[009057];
@@ -2930,7 +2402,7 @@ LocOp 022328:
   SetByte 009065 M[009055];
   SetByte 009066 M[009056];
   Jump: 022337
---[144]--------------------------------------------------
+--[157]--------------------------------------------------
 LocOp 022337:
   TraceOperation (Je [Var (Local 7),Con 2] (Branch F (Dloc 022350)));
   if (EqualAny(List(GetLocal(7),2))) {
@@ -2944,13 +2416,13 @@ LocOp 022337:
   } else {
     Jump: 022350
   }
---[145]--------------------------------------------------
+--[158]--------------------------------------------------
 LocOp 022347:
   TraceOperation (Store (Con 124) (Con 0));
   SetByte 009033 0;
   SetByte 009034 0;
   Jump: 022350
---[146]--------------------------------------------------
+--[159]--------------------------------------------------
 LocOp 022350:
   TraceOperation (Jz (Var (Global 127)) (Branch T (Dloc 021823)));
   if (IsZero(MakeHiLo(M[009071],M[009072]))) {
@@ -2984,19 +2456,19 @@ LocOp 022350:
       }
     }
   }
---[147]--------------------------------------------------
+--[160]--------------------------------------------------
 LocOp 022388:
   TraceOperation (Call (Floc 021700) [] (Local 7));
   PushFrame;
   PushReturnAddress 022388;
   Call: 021700(..#0..)
---[148]--------------------------------------------------
+--[161]--------------------------------------------------
 LocReturn 022388:
   SetLocal 7 call_result;
   Inlining (AtInstruction {pc = 022393});
   TraceOperation (Jump 021823);
   Jump: 021823
---[149]--------------------------------------------------
+--[162]--------------------------------------------------
 LocRoutine 022656:
   MakeRoutineFrame 11;
   if (LessThanByte(num_actuals,11)) {
@@ -3055,7 +2527,7 @@ LocRoutine 022656:
   } else {
     Jump: 022679
   }
---[150]--------------------------------------------------
+--[163]--------------------------------------------------
 LocOp 022679:
   TraceOperation (Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686)));
   SetLocal 11 Add(GetLocal(11),1);
@@ -3066,7 +2538,7 @@ LocOp 022679:
   } else {
     Jump: 022686
   }
---[151]--------------------------------------------------
+--[164]--------------------------------------------------
 LocOp 022686:
   TraceOperation (Storew (Var (Global 100)) (Var (Local 11)) (Con 0));
   SetByte Offset(Address(MakeHiLo(M[009017],M[009018])),Mul(2,GetLocal(11))) 0;
@@ -3074,7 +2546,7 @@ LocOp 022686:
   Inlining (AtInstruction {pc = 022691});
   TraceOperation (Jump 022679);
   Jump: 022679
---[152]--------------------------------------------------
+--[165]--------------------------------------------------
 LocOp 022694:
   TraceOperation (Store (Con 104) (Con 0));
   SetByte 008993 0;
@@ -3126,19 +2598,19 @@ LocOp 022694:
   } else {
     Jump: 022741
   }
---[153]--------------------------------------------------
+--[166]--------------------------------------------------
 LocOp 022735:
   TraceOperation (Call (Floc 027746) [Var (Global 0)] (Global 66));
   PushFrame;
   PushReturnAddress 022735;
   SetLocal 1 MakeHiLo(M[008817],M[008818]);
   Call: 027746(..#1..)
---[154]--------------------------------------------------
+--[167]--------------------------------------------------
 LocReturn 022735:
   SetByte 008949 HiByte(call_result);
   SetByte 008950 LoByte(call_result);
   Jump: 022741
---[155]--------------------------------------------------
+--[168]--------------------------------------------------
 LocOp 022741:
   TraceOperation (Jz (Var (Global 108)) (Branch T (Dloc 022765)));
   if (IsZero(MakeHiLo(M[009033],M[009034]))) {
@@ -3170,7 +2642,7 @@ LocOp 022741:
       Jump: 022759
     }
   }
---[156]--------------------------------------------------
+--[169]--------------------------------------------------
 LocOp 022759:
   TraceOperation (Store (Con 124) (Con 0));
   SetByte 009033 0;
@@ -3178,7 +2650,7 @@ LocOp 022759:
   Inlining (AtInstruction {pc = 022762});
   TraceOperation (Jump 022800);
   Jump: 022800
---[157]--------------------------------------------------
+--[170]--------------------------------------------------
 LocOp 022765:
   TraceOperation (Store (Con 127) (Var (Global 128)));
   SetByte 009039 M[009073];
@@ -3202,14 +2674,14 @@ LocOp 022765:
     SetByte 008818 LoByte(Widen(M[Offset(Offset(000741,Mul(MakeHiLo(M[009039],M[009040]),9)),4)]));
     Jump: 022781
   }
---[158]--------------------------------------------------
+--[171]--------------------------------------------------
 LocOp 022781:
   TraceOperation (Call (Floc 027746) [Var (Global 0)] (Global 66));
   PushFrame;
   PushReturnAddress 022781;
   SetLocal 1 MakeHiLo(M[008817],M[008818]);
   Call: 027746(..#1..)
---[159]--------------------------------------------------
+--[172]--------------------------------------------------
 LocReturn 022781:
   SetByte 008949 HiByte(call_result);
   SetByte 008950 LoByte(call_result);
@@ -3223,7 +2695,7 @@ LocReturn 022781:
   } else {
     Jump: 022791
   }
---[160]--------------------------------------------------
+--[173]--------------------------------------------------
 LocOp 022791:
   TraceOperation (Print ">");
   GamePrint ">";
@@ -3254,7 +2726,7 @@ LocOp 022791:
     }
     Jump: 022800
   }
---[161]--------------------------------------------------
+--[174]--------------------------------------------------
 LocOp 022800:
   TraceOperation (Loadb (Var (Global 110)) (Con 1) (Global 113));
   SetByte 009043 HiByte(Widen(M[Offset(Address(MakeHiLo(M[009037],M[009038])),1)]));
@@ -3276,7 +2748,7 @@ LocOp 022800:
   } else {
     Jump: 022822
   }
---[162]--------------------------------------------------
+--[175]--------------------------------------------------
 LocOp 022822:
   TraceOperation (Store (Con 5) (Var (Global 113)));
   SetLocal 5 MakeHiLo(M[009043],M[009044]);
@@ -3293,7 +2765,7 @@ LocOp 022822:
   SetByte 008977 0;
   SetByte 008978 0;
   Jump: 022834
---[163]--------------------------------------------------
+--[176]--------------------------------------------------
 LocOp 022834:
   TraceOperation (Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844)));
   if (LessThanEqual(MakeHiLo(M[009043],M[009044]),0)) {
@@ -3311,7 +2783,7 @@ LocOp 022834:
     SetByte 009044 LoByte(Sub(MakeHiLo(M[009043],M[009044]),1));
     Jump: 022844
   }
---[164]--------------------------------------------------
+--[177]--------------------------------------------------
 LocOp 022844:
   TraceOperation (Loadw (Var (Global 110)) (Var (Local 1)) (Local 2));
   SetLocal 2 MakeHiLo(M[Offset(Address(MakeHiLo(M[009037],M[009038])),Mul(2,GetLocal(1)))],M[Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),Mul(2,GetLocal(1))),1)]);
@@ -3327,7 +2799,7 @@ LocOp 022844:
   } else {
     Jump: 022861
   }
---[165]--------------------------------------------------
+--[178]--------------------------------------------------
 LocReturn 022851:
   SetLocal 2 call_result;
   Inlining (AtInstruction {pc = 022857});
@@ -3337,7 +2809,7 @@ LocReturn 022851:
   } else {
     Jump: 022861
   }
---[166]--------------------------------------------------
+--[179]--------------------------------------------------
 LocOp 022861:
   TraceOperation (Je [Var (Local 2),Con 19456] (Branch F (Dloc 022879)));
   if (EqualAny(List(GetLocal(2),19456))) {
@@ -3356,7 +2828,7 @@ LocOp 022861:
   } else {
     Jump: 022879
   }
---[167]--------------------------------------------------
+--[180]--------------------------------------------------
 LocOp 022879:
   TraceOperation (Je [Var (Local 2),Con 19393] (Branch F (Dloc 022906)));
   if (EqualAny(List(GetLocal(2),19393))) {
@@ -3387,7 +2859,7 @@ LocOp 022879:
   } else {
     Jump: 022906
   }
---[168]--------------------------------------------------
+--[181]--------------------------------------------------
 LocOp 022906:
   TraceOperation (Je [Var (Local 2),Con 19393,Con 15151] (Branch T (Dloc 022920)));
   if (EqualAny(List(GetLocal(2),19393,15151))) {
@@ -3401,7 +2873,7 @@ LocOp 022906:
       Jump: 022953
     }
   }
---[169]--------------------------------------------------
+--[182]--------------------------------------------------
 LocOp 022920:
   TraceOperation (Je [Var (Local 2),Con 15165] (Branch F (Dloc 022938)));
   if (EqualAny(List(GetLocal(2),15165))) {
@@ -3421,13 +2893,13 @@ LocOp 022920:
   } else {
     Jump: 022938
   }
---[170]--------------------------------------------------
+--[183]--------------------------------------------------
 LocOp 022935:
   TraceOperation (Store (Con 112) (Con 1));
   SetByte 009009 0;
   SetByte 009010 1;
   Jump: 022938
---[171]--------------------------------------------------
+--[184]--------------------------------------------------
 LocOp 022938:
   TraceOperation (Jz (Var (Global 113)) (Branch T (Dloc 022945)));
   if (IsZero(MakeHiLo(M[009043],M[009044]))) {
@@ -3439,14 +2911,14 @@ LocOp 022938:
     SetByte 009034 LoByte(Add(GetLocal(1),2));
     Jump: 022945
   }
---[172]--------------------------------------------------
+--[185]--------------------------------------------------
 LocOp 022945:
   TraceOperation (Storeb (Var (Global 110)) (Con 1) (Var (Global 113)));
   SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) M[009044];
   Inlining (AtInstruction {pc = 022950});
   TraceOperation (Jump 023407);
   Jump: 023407
---[173]--------------------------------------------------
+--[186]--------------------------------------------------
 LocOp 022953:
   TraceOperation (Call (Floc 023466) [Var (Local 2),Con 16,Con 3] (Local 3));
   PushFrame;
@@ -3455,7 +2927,7 @@ LocOp 022953:
   SetLocal 2 16;
   SetLocal 3 3;
   Call: 023466(..#3..)
---[174]--------------------------------------------------
+--[187]--------------------------------------------------
 LocReturn 022953:
   SetLocal 3 call_result;
   Inlining (AtInstruction {pc = 022961});
@@ -3489,7 +2961,7 @@ LocReturn 022953:
       Jump: 023064
     }
   }
---[175]--------------------------------------------------
+--[188]--------------------------------------------------
 LocOp 022985:
   TraceOperation (Add (Var (Local 1)) (Con 2) Sp);
   PushStack Add(GetLocal(1),2);
@@ -3510,7 +2982,7 @@ LocOp 022985:
   } else {
     Jump: 023007
   }
---[176]--------------------------------------------------
+--[189]--------------------------------------------------
 LocOp 023007:
   TraceOperation (Jz (Var (Global 96)) (Branch T (Dloc 023020)));
   if (IsZero(MakeHiLo(M[009009],M[009010]))) {
@@ -3530,7 +3002,7 @@ LocOp 023007:
       Jump: 023020
     }
   }
---[177]--------------------------------------------------
+--[190]--------------------------------------------------
 LocOp 023020:
   TraceOperation (Jg (Var (Local 5)) (Con 2) (Branch F (Dloc 023064)));
   if (GreaterThan(GetLocal(5),2)) {
@@ -3544,7 +3016,7 @@ LocOp 023020:
   } else {
     Jump: 023064
   }
---[178]--------------------------------------------------
+--[191]--------------------------------------------------
 LocOp 023032:
   TraceOperation (Store (Con 6) (Var (Local 3)));
   SetLocal 6 GetLocal(3);
@@ -3563,7 +3035,7 @@ LocOp 023032:
   } else {
     Jump: 023053
   }
---[179]--------------------------------------------------
+--[192]--------------------------------------------------
 LocOp 023053:
   TraceOperation (Jg (Var (Local 5)) (Con 2) (Branch T (Dloc 023397)));
   if (GreaterThan(GetLocal(5),2)) {
@@ -3577,7 +3049,7 @@ LocOp 023053:
     TraceOperation (Jump 023407);
     Jump: 023407
   }
---[180]--------------------------------------------------
+--[193]--------------------------------------------------
 LocOp 023064:
   TraceOperation (Call (Floc 023466) [Var (Local 2),Con 64,Con 1] (Local 3));
   PushFrame;
@@ -3586,7 +3058,7 @@ LocOp 023064:
   SetLocal 2 64;
   SetLocal 3 1;
   Call: 023466(..#3..)
---[181]--------------------------------------------------
+--[194]--------------------------------------------------
 LocReturn 023064:
   SetLocal 3 call_result;
   Inlining (AtInstruction {pc = 023072});
@@ -3644,7 +3116,7 @@ LocReturn 023064:
       Jump: 023129
     }
   }
---[182]--------------------------------------------------
+--[195]--------------------------------------------------
 LocOp 023129:
   TraceOperation (Call (Floc 023466) [Var (Local 2),Con 8,Con 0] (Local 3));
   PushFrame;
@@ -3653,7 +3125,7 @@ LocOp 023129:
   SetLocal 2 8;
   SetLocal 3 0;
   Call: 023466(..#3..)
---[183]--------------------------------------------------
+--[196]--------------------------------------------------
 LocReturn 023129:
   SetLocal 3 call_result;
   Inlining (AtInstruction {pc = 023137});
@@ -3675,7 +3147,7 @@ LocReturn 023129:
   } else {
     Jump: 023172
   }
---[184]--------------------------------------------------
+--[197]--------------------------------------------------
 LocReturn 023148:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023155});
@@ -3692,7 +3164,7 @@ LocReturn 023148:
   } else {
     Jump: 023169
   }
---[185]--------------------------------------------------
+--[198]--------------------------------------------------
 LocReturn 023158:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023165});
@@ -3703,12 +3175,12 @@ LocReturn 023158:
   } else {
     Jump: 023169
   }
---[186]--------------------------------------------------
+--[199]--------------------------------------------------
 LocOp 023169:
   TraceOperation (Store (Con 3) (Con 0));
   SetLocal 3 0;
   Jump: 023172
---[187]--------------------------------------------------
+--[200]--------------------------------------------------
 LocOp 023172:
   TraceOperation (Jg (Var (Global 113)) (Con 0) (Branch F (Dloc 023206)));
   if (GreaterThan(MakeHiLo(M[009043],M[009044]),0)) {
@@ -3744,7 +3216,7 @@ LocOp 023172:
   } else {
     Jump: 023206
   }
---[188]--------------------------------------------------
+--[201]--------------------------------------------------
 LocOp 023206:
   TraceOperation (Jz (Var (Local 3)) (Branch T (Dloc 023246)));
   if (IsZero(GetLocal(3))) {
@@ -3772,7 +3244,7 @@ LocOp 023206:
       }
     }
   }
---[189]--------------------------------------------------
+--[202]--------------------------------------------------
 LocOp 023228:
   TraceOperation (Jl (Var (Global 97)) (Con 2) (Branch F (Dloc 023397)));
   if (LessThan(MakeHiLo(M[009011],M[009012]),2)) {
@@ -3790,7 +3262,7 @@ LocOp 023228:
   } else {
     Jump: 023397
   }
---[190]--------------------------------------------------
+--[203]--------------------------------------------------
 LocOp 023246:
   TraceOperation (Je [Var (Global 97),Con 2] (Branch F (Dloc 023277)));
   if (EqualAny(List(MakeHiLo(M[009011],M[009012]),2))) {
@@ -3808,7 +3280,7 @@ LocOp 023246:
   } else {
     Jump: 023277
   }
---[191]--------------------------------------------------
+--[204]--------------------------------------------------
 LocOp 023277:
   TraceOperation (Inc (Con 113));
   SetByte 009011 HiByte(Add(MakeHiLo(M[009011],M[009012]),1));
@@ -3821,7 +3293,7 @@ LocOp 023277:
   SetLocal 2 GetLocal(3);
   SetLocal 3 GetLocal(2);
   Call: 023504(..#3..)
---[192]--------------------------------------------------
+--[205]--------------------------------------------------
 LocReturn 023279:
   SetLocal 1 call_result;
   Inlining (AtInstruction {pc = 023287});
@@ -3845,7 +3317,7 @@ LocReturn 023279:
       Jump: 023397
     }
   }
---[193]--------------------------------------------------
+--[206]--------------------------------------------------
 LocOp 023301:
   TraceOperation (Call (Floc 023466) [Var (Local 2),Con 4] Sp);
   PushFrame;
@@ -3853,7 +3325,7 @@ LocOp 023301:
   SetLocal 1 GetLocal(2);
   SetLocal 2 4;
   Call: 023466(..#2..)
---[194]--------------------------------------------------
+--[207]--------------------------------------------------
 LocReturn 023301:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023308});
@@ -3866,7 +3338,7 @@ LocReturn 023301:
     TraceOperation (Jump 023397);
     Jump: 023397
   }
---[195]--------------------------------------------------
+--[208]--------------------------------------------------
 LocOp 023314:
   TraceOperation (Je [Var (Local 4),Con 239] (Branch F (Dloc 023383)));
   if (EqualAny(List(GetLocal(4),239))) {
@@ -3881,7 +3353,7 @@ LocOp 023314:
   } else {
     Jump: 023383
   }
---[196]--------------------------------------------------
+--[209]--------------------------------------------------
 LocReturn 023319:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023327});
@@ -3902,14 +3374,14 @@ LocReturn 023319:
     PopReturnAddress return_address_2;
     Return(0) -> return_address_2
   }
---[197]--------------------------------------------------
+--[210]--------------------------------------------------
 LocOp 023383:
   TraceOperation (Call (Floc 024640) [Var (Local 1)] Sp);
   PushFrame;
   PushReturnAddress 023383;
   SetLocal 1 GetLocal(1);
   Call: 024640(..#1..)
---[198]--------------------------------------------------
+--[211]--------------------------------------------------
 LocReturn 023383:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023389});
@@ -3917,14 +3389,14 @@ LocReturn 023383:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(0) -> return_address_1
---[199]--------------------------------------------------
+--[212]--------------------------------------------------
 LocOp 023390:
   TraceOperation (Call (Floc 024560) [Var (Local 1)] Sp);
   PushFrame;
   PushReturnAddress 023390;
   SetLocal 1 GetLocal(1);
   Call: 024560(..#1..)
---[200]--------------------------------------------------
+--[213]--------------------------------------------------
 LocReturn 023390:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023396});
@@ -3932,7 +3404,7 @@ LocReturn 023390:
   PopFrame;
   PopReturnAddress return_address_1;
   Return(0) -> return_address_1
---[201]--------------------------------------------------
+--[214]--------------------------------------------------
 LocOp 023397:
   TraceOperation (Store (Con 8) (Var (Local 2)));
   SetLocal 8 GetLocal(2);
@@ -3942,7 +3414,7 @@ LocOp 023397:
   Inlining (AtInstruction {pc = 023404});
   TraceOperation (Jump 022834);
   Jump: 022834
---[202]--------------------------------------------------
+--[215]--------------------------------------------------
 LocOp 023407:
   TraceOperation (Jz (Var (Local 6)) (Branch T (Dloc 023421)));
   if (IsZero(GetLocal(6))) {
@@ -3966,7 +3438,7 @@ LocOp 023407:
     PopReturnAddress return_address_1;
     Return(1) -> return_address_1
   }
---[203]--------------------------------------------------
+--[216]--------------------------------------------------
 LocOp 023421:
   TraceOperation (Store (Con 111) (Con 0));
   SetByte 009007 0;
@@ -3982,17 +3454,17 @@ LocOp 023421:
     PushReturnAddress 023427;
     Call: 024130(..#0..)
   }
---[204]--------------------------------------------------
+--[217]--------------------------------------------------
 LocReturn 023427:
   PushStack call_result;
   Jump: 023432
---[205]--------------------------------------------------
+--[218]--------------------------------------------------
 LocOp 023432:
   TraceOperation (Call (Floc 024736) [] Sp);
   PushFrame;
   PushReturnAddress 023432;
   Call: 024736(..#0..)
---[206]--------------------------------------------------
+--[219]--------------------------------------------------
 LocReturn 023432:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023437});
@@ -4009,7 +3481,7 @@ LocReturn 023432:
     PushReturnAddress 023440;
     Call: 025802(..#0..)
   }
---[207]--------------------------------------------------
+--[220]--------------------------------------------------
 LocReturn 023440:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023445});
@@ -4026,7 +3498,7 @@ LocReturn 023440:
     PushReturnAddress 023448;
     Call: 027544(..#0..)
   }
---[208]--------------------------------------------------
+--[221]--------------------------------------------------
 LocReturn 023448:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023453});
@@ -4043,7 +3515,7 @@ LocReturn 023448:
     PushReturnAddress 023456;
     Call: 027352(..#0..)
   }
---[209]--------------------------------------------------
+--[222]--------------------------------------------------
 LocReturn 023456:
   PushStack call_result;
   Inlining (AtInstruction {pc = 023461});
@@ -4060,7 +3532,7 @@ LocReturn 023456:
     PopReturnAddress return_address_3;
     Return(1) -> return_address_3
   }
---[210]--------------------------------------------------
+--[223]--------------------------------------------------
 LocRoutine 027746:
   MakeRoutineFrame 4;
   if (LessThanByte(num_actuals,4)) {
@@ -4071,90 +3543,36 @@ LocRoutine 027746:
         SetLocal 2 1;
         if (LessThanByte(num_actuals,1)) {
           SetLocal 1 0;
-          Inlining (AtInstruction {pc = 027755});
-          TraceOperation (Jz (Var (Global 72)) (Branch T (Dloc 027762)));
-          if (IsZero(MakeHiLo(M[008961],M[008962]))) {
-            Jump: 027762
-          } else {
-            Inlining (AtInstruction {pc = 027758});
-            TraceOperation (Je [Var (Global 111),Var (Global 128)] (Branch T Dtrue));
-            if (EqualAny(List(MakeHiLo(M[009039],M[009040]),MakeHiLo(M[009073],M[009074])))) {
-              PopFrame;
-              PopReturnAddress return_address_1;
-              Return(1) -> return_address_1
-            } else {
-              Jump: 027762
-            }
-          }
+          Jump: 027755
         } else {
-          Inlining (AtInstruction {pc = 027755});
-          TraceOperation (Jz (Var (Global 72)) (Branch T (Dloc 027762)));
-          if (IsZero(MakeHiLo(M[008961],M[008962]))) {
-            Jump: 027762
-          } else {
-            Inlining (AtInstruction {pc = 027758});
-            TraceOperation (Je [Var (Global 111),Var (Global 128)] (Branch T Dtrue));
-            if (EqualAny(List(MakeHiLo(M[009039],M[009040]),MakeHiLo(M[009073],M[009074])))) {
-              PopFrame;
-              PopReturnAddress return_address_2;
-              Return(1) -> return_address_2
-            } else {
-              Jump: 027762
-            }
-          }
+          Jump: 027755
         }
       } else {
-        Inlining (AtInstruction {pc = 027755});
-        TraceOperation (Jz (Var (Global 72)) (Branch T (Dloc 027762)));
-        if (IsZero(MakeHiLo(M[008961],M[008962]))) {
-          Jump: 027762
-        } else {
-          Inlining (AtInstruction {pc = 027758});
-          TraceOperation (Je [Var (Global 111),Var (Global 128)] (Branch T Dtrue));
-          if (EqualAny(List(MakeHiLo(M[009039],M[009040]),MakeHiLo(M[009073],M[009074])))) {
-            PopFrame;
-            PopReturnAddress return_address_3;
-            Return(1) -> return_address_3
-          } else {
-            Jump: 027762
-          }
-        }
+        Jump: 027755
       }
     } else {
-      Inlining (AtInstruction {pc = 027755});
-      TraceOperation (Jz (Var (Global 72)) (Branch T (Dloc 027762)));
-      if (IsZero(MakeHiLo(M[008961],M[008962]))) {
-        Jump: 027762
-      } else {
-        Inlining (AtInstruction {pc = 027758});
-        TraceOperation (Je [Var (Global 111),Var (Global 128)] (Branch T Dtrue));
-        if (EqualAny(List(MakeHiLo(M[009039],M[009040]),MakeHiLo(M[009073],M[009074])))) {
-          PopFrame;
-          PopReturnAddress return_address_4;
-          Return(1) -> return_address_4
-        } else {
-          Jump: 027762
-        }
-      }
+      Jump: 027755
     }
   } else {
-    Inlining (AtInstruction {pc = 027755});
-    TraceOperation (Jz (Var (Global 72)) (Branch T (Dloc 027762)));
-    if (IsZero(MakeHiLo(M[008961],M[008962]))) {
-      Jump: 027762
+    Jump: 027755
+  }
+--[224]--------------------------------------------------
+LocOp 027755:
+  TraceOperation (Jz (Var (Global 72)) (Branch T (Dloc 027762)));
+  if (IsZero(MakeHiLo(M[008961],M[008962]))) {
+    Jump: 027762
+  } else {
+    Inlining (AtInstruction {pc = 027758});
+    TraceOperation (Je [Var (Global 111),Var (Global 128)] (Branch T Dtrue));
+    if (EqualAny(List(MakeHiLo(M[009039],M[009040]),MakeHiLo(M[009073],M[009074])))) {
+      PopFrame;
+      PopReturnAddress return_address_1;
+      Return(1) -> return_address_1
     } else {
-      Inlining (AtInstruction {pc = 027758});
-      TraceOperation (Je [Var (Global 111),Var (Global 128)] (Branch T Dtrue));
-      if (EqualAny(List(MakeHiLo(M[009039],M[009040]),MakeHiLo(M[009073],M[009074])))) {
-        PopFrame;
-        PopReturnAddress return_address_5;
-        Return(1) -> return_address_5
-      } else {
-        Jump: 027762
-      }
+      Jump: 027762
     }
   }
---[211]--------------------------------------------------
+--[225]--------------------------------------------------
 LocOp 027762:
   TraceOperation (Store (Con 107) (Con 20));
   SetByte 008999 0;
@@ -4184,7 +3602,7 @@ LocOp 027762:
       Jump: 027784
     }
   }
---[212]--------------------------------------------------
+--[226]--------------------------------------------------
 LocOp 027784:
   TraceOperation (Storew (Var (Global 83)) (Var (Global 81)) (Con 0));
   SetByte Offset(Address(MakeHiLo(M[008983],M[008984])),Mul(2,MakeHiLo(M[008979],M[008980]))) 0;
@@ -4211,7 +3629,7 @@ LocOp 027784:
   } else {
     Jump: 027825
   }
---[213]--------------------------------------------------
+--[227]--------------------------------------------------
 LocReturn 027801:
   PushStack call_result;
   Inlining (AtInstruction {pc = 027809});
@@ -4234,11 +3652,11 @@ LocReturn 027801:
       Jump: 027825
     }
   }
---[214]--------------------------------------------------
+--[228]--------------------------------------------------
 LocReturn 027817:
   PushStack call_result;
   Jump: 027825
---[215]--------------------------------------------------
+--[229]--------------------------------------------------
 LocOp 027825:
   TraceOperation (Call (Floc 027166) [Var (Local 1),Con 1,Con 1] Sp);
   PushFrame;
@@ -4247,7 +3665,7 @@ LocOp 027825:
   SetLocal 2 1;
   SetLocal 3 1;
   Call: 027166(..#3..)
---[216]--------------------------------------------------
+--[230]--------------------------------------------------
 LocReturn 027825:
   PushStack call_result;
   Inlining (AtInstruction {pc = 027833});
@@ -4264,7 +3682,7 @@ LocReturn 027825:
   } else {
     Jump: 027844
   }
---[217]--------------------------------------------------
+--[231]--------------------------------------------------
 LocOp 027844:
   TraceOperation (Store (Con 16) (Var (Local 3)));
   SetByte 008817 HiByte(GetLocal(3));

@@ -77,12 +77,18 @@ compileRoutine story smallStep routine = do
       , x <- [LocOp addr] ++ if isCall op then [LocReturn addr] else []
       ]
   let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- body ]
+
+  let
+    dontInlineSet = case body of
+      [] -> jumpDest
+      (bodyStart,_):_ -> bodyStart : jumpDest
+
   let
     addressesToInline :: [Addr] =
       [ a
       | (a,_) <- body
         -- TODO: we could still inline if there is only a single jump-from location & no fallthrough
-      , a `notElem` jumpDest
+      , a `notElem` dontInlineSet
       ]
   let
     nonInlinedLocations :: [Loc] =
