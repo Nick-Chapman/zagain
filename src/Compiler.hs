@@ -3,16 +3,16 @@ module Compiler (compileEffect,runCode) where
 
 import Action (Action)
 import Control.Monad (ap,liftM)
-import Data.List (intercalate,nub)
+import Data.List (intercalate)
 import Decode (fetchOperation,fetchRoutineHeader)
-import Disassemble (Routine(..),disRoutine,branchesOf,dynamicDiscovery)
+import Disassemble (Routine(..),disRoutine,branchesOf,routinesBetween)
 import Eff (Phase,Eff,Control)
 import qualified Eff (Eff(..),Control(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
 import Operation (Operation(Call))
-import Story (Story(header),OOB_Mode(..))
+import Story (Story(header,size),OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action (Action(..))
 import qualified Eff (Phase(..),StatusInfo(..))
@@ -51,14 +51,10 @@ runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
 
 compileToCode :: Story -> Effect () -> IO Code
 compileToCode story smallStep = do
-
-  let Header{initialPC} = Story.header story
-  let r0 = initialPC - 1
-
-  let walkthrough = []
-  let as = nub (r0 : dynamicDiscovery story walkthrough)
+  let endOfStory :: Addr = fromIntegral (size story)
+  let Header{initialPC=_, staticMem} = Story.header story
+  let as = routinesBetween story (staticMem,endOfStory)
   let routines = [ disRoutine story a | a <- as ]
-
   Code <$> mapM (compileRoutine story smallStep) routines
 
 compileRoutine :: Story -> Effect () -> Routine -> IO CompiledRoutine
@@ -148,8 +144,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.Bind e f -> loop s e $ \s a -> loop s (f a) k
 
       Eff.GamePrint mes -> do Seq (GamePrint mes) <$> k s ()
-      Eff.Debug thing -> do GDebug thing; k s ()
+
       Eff.Error msg -> do pure $ Error msg
+      Eff.Debug msg -> do GDebug msg; k s ()
+      Eff.Note msg -> Seq (Note msg) <$> k s ()
 
       Eff.StoryHeader -> k s header
 
@@ -218,10 +216,11 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (PopStack name) <$> k s (Variable name)
 
       Eff.Random range -> do
-        undefined range
+        name <- genId "random"
+        Seq (LetRandom name range) <$> k s (Variable name)
 
       Eff.Quit -> do
-        undefined
+        pure Quit
 
       Eff.If pred -> do
         case pred of
@@ -410,6 +409,7 @@ data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
 data Statement where
   Null :: Statement
+  Quit :: Statement
   Error :: String -> Statement
   Transfer :: Control Compile -> Statement
   Seq :: Atom ->  Statement -> Statement
@@ -421,6 +421,7 @@ data Statement where
 pretty :: Int -> Statement -> [String]
 pretty i = \case
   Null -> []
+  Quit -> [tab i "Quit"]
   Error msg -> [tab i (show msg)]
   Transfer Eff.AtInstruction{pc} ->
     [tab i ("Jump: " ++ show pc)]
@@ -464,9 +465,10 @@ tab n s = take n (repeat ' ') ++ s
 
 data Atom
   = SetByte (Expression Addr) (Expression Byte)
-  | GamePrint (Expression String)
+  | Note String
   | Inlining (Control Compile)
   | TraceOperation Operation
+  | GamePrint (Expression String)
   | MakeRoutineFrame Int
   | PushFrame
   | PopFrame
@@ -479,6 +481,7 @@ data Atom
   | StringBytes (Expression String) (Identifier [Expression Byte])
   | Tokenize (Expression String) TokenizeIdents
   | LookupInDict (Expression String) (Identifier Addr)
+  | LetRandom (Identifier Value) (Expression Value) -- TODO: use this "Let" prefix style more widely
   deriving Show
 
 type StatusInfo = Maybe (Eff.StatusInfo Compile)

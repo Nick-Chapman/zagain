@@ -45,9 +45,10 @@ data Eff p x where
   Ret :: x -> Eff p x
   Bind :: Eff p x -> (x -> Eff p y) -> Eff p y
   GamePrint :: Text p -> Eff p ()
-  Debug :: Show x => x -> Eff p ()
 
-  Error :: String -> Eff p a
+  Error :: String -> Eff p a -- runtime error
+  Debug :: Show x => x -> Eff p () -- runtime debug
+  Note :: String -> Eff p () -- make this appear in compiled code
 
   StoryHeader :: Eff p Header
   LookupInDict :: Text p -> Eff p (Addr p)

@@ -53,9 +53,10 @@ runEffect screenWidth seed story smallStep = do
       Ret x -> k s x
       Bind e f -> loop s e $ \s a -> loop s (f a) k
       GamePrint mes -> A.Output mes (k s ())
-      Debug a -> A.Debug (show a) (k s ())
 
       Error s -> error ("runEffect: " ++ s)
+      Debug a -> A.Debug (show a) (k s ())
+      Note a -> A.Debug (show a) (k s ()) -- TODO: or do nothing?
 
       StoryHeader -> do
         k s header

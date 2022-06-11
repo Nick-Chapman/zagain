@@ -2,7 +2,7 @@
 -- | Explore the static structure of a strory file
 module Disassemble
   ( disassemble
-  , dynamicDiscovery
+  , dynamicDiscovery, routinesBetween
   , Routine(..), disRoutine, dumpRoutine
   , branchesOf, isStopping
   ) where

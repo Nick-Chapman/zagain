@@ -179,7 +179,7 @@ eval mode here = \case
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     case dyn of
-      DSp{} -> error "TODO: re-push value on stack!"
+      DSp{} -> Note "TODO: re-push value on stack!" -- TODO: code the correct thing!
       _ -> pure ()
     setTarget target v
 
@@ -199,6 +199,8 @@ eval mode here = \case
     a <- Offset base doubleOffset
     w <- getWord a
     setTarget target w
+
+  Op.Mod arg1 arg2 target -> do evalBin Mod arg1 arg2 target
 
   Op.Mul arg1 arg2 target -> do evalBin Mul arg1 arg2 target
 
@@ -374,13 +376,13 @@ eval mode here = \case
   Op.Split_window{} -> pure ()
 
   Op.Input_stream{} -> undefined
-  Op.Mod{} -> undefined
+
   Op.Nop -> undefined
-  Op.Pop -> undefined
-  Op.Restore{} -> undefined
-  Op.Save{} -> undefined
+  Op.Pop -> Note "Pop"
+  Op.Restore{} -> Note "Restore" -- TODO: do it properly
+  Op.Save{} -> Note "Save" -- TODO: do it properly
   Op.Show_status -> undefined
-  Op.Verify{} -> undefined
+  Op.Verify{} -> Note "Verify" -- TODO: anything to do here?
 
 writeBytes :: Addr p -> [Byte p] -> Eff p ()
 writeBytes a bs =
