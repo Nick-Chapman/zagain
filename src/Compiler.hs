@@ -111,12 +111,12 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         | shouldInline control -> do
             Seq (Inlining control) <$> loop s { control } smallStep transfer
         | otherwise -> do
-            pure (Transfer control)
+            pure (flushStack s (Transfer control))
 
 
     compileInIsolation :: State -> Effect () -> Gen (Statement 'WontJump)
     compileInIsolation s eff = do
-      loop s eff $ \_ () -> pure Null -- TODO: flush delayed state change here
+      loop s eff $ \s () -> pure (flushStack s Null)
 
     -- TODO: rename loop -> compile ?
     loop :: forall jumpiness loopType. State -> Effect loopType -> (State -> loopType -> Gen (Statement jumpiness)) -> Gen (Statement jumpiness)
@@ -189,12 +189,20 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.SetByte a b -> Seq (SetByte a b) <$> k s ()
 
       -- TODO: explore maintaining temporary-stack at compile-time
-      Eff.PushStack v -> do
-        Seq (PushStack v) <$> k s ()
+      Eff.PushStack v -> if
+        | eagerStack -> Seq (PushStack v) <$> k s ()
+        | otherwise -> do
+          let State{stack} = s
+          k s { stack = v : stack } ()
 
       Eff.PopStack -> do
-        name <- genId "popped"
-        Seq (PopStack name) <$> k s (Variable name)
+        let State{stack} = s
+        case stack of
+          v:stack -> do
+            k s { stack } v
+          [] -> do
+            name <- genId "popped"
+            Seq (PopStack name) <$> k s (Variable name)
 
       Eff.Random range -> do
         name <- genId "random"
@@ -317,12 +325,24 @@ makeControl = \case
 
 data State = State
   { control :: Control Compile
+  , stack :: [Expression Value] -- TODO: need notion of sharable?
   }
+
+eagerStack :: Bool
+eagerStack = True -- disable the lazy stack optimization
 
 initState :: Control Compile -> State
 initState control = State
   { control
+  , stack = []
   }
+
+flushStack :: State -> Statement j -> Statement j
+flushStack State{stack} s = loop s stack
+  where
+    loop s = \case
+      [] -> s
+      x:xs -> loop (Seq (PushStack x) s) xs
 
 --[gen]---------------------------------------------------------------
 
@@ -400,7 +420,7 @@ data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
 data Jumpiness = WillJump | WontJump
 
-data Statement :: Jumpiness -> * where
+data Statement :: Jumpiness -> * where -- TODO: rename "Prog" ("Statement" is too similar to "State")
   Null :: Statement 'WontJump
   Quit :: Statement j
   Error :: String -> Statement j
