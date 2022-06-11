@@ -37,12 +37,13 @@ compileEffect story smallStep = do
   pure code
 
 dumpCode :: Code -> IO ()
-dumpCode Code{chunks} = do
+dumpCode Code{routines} = do
+  printf "Code for %d routines\n" (length routines)
   sequence_
     [ do
         printf "--[%d]--------------------------------------------------\n" i
-        print chunk
-    | (i,chunk) <- zip [1::Int ..] chunks
+        mapM_ print chunks
+    | (i,CompiledRoutine{chunks}) <- zip [1::Int ..] routines
     ]
 
 runCode :: Word -> Code -> Action
@@ -58,10 +59,9 @@ compileToCode story smallStep = do
   let as = nub (r0 : dynamicDiscovery story walkthrough)
   let routines = [ disRoutine story a | a <- as ]
 
-  chunks <- concat <$> mapM (compileRoutine story smallStep) routines
-  pure (Code chunks)
+  Code <$> mapM (compileRoutine story smallStep) routines
 
-compileRoutine :: Story -> Effect () -> Routine -> IO [Chunk]
+compileRoutine :: Story -> Effect () -> Routine -> IO CompiledRoutine
 compileRoutine story smallStep routine = do
   let Routine{start,body} = routine
   let
@@ -106,7 +106,7 @@ compileRoutine story smallStep routine = do
   let
     static = Static { story, smallStep, shouldInline }
 
-  mapM (runGen . compileLoc static) locationsToCompile
+  CompiledRoutine <$> mapM (runGen . compileLoc static) locationsToCompile
 
 
 data Static = Static
@@ -393,6 +393,10 @@ makeBinary p2 x y = case (x,y) of
 --[code]--------------------------------------------------------------
 
 data Code = Code
+  { routines :: [CompiledRoutine]
+  }
+
+data CompiledRoutine = CompiledRoutine
   { chunks :: [Chunk]
   }
 
