@@ -168,7 +168,10 @@ runEffect screenWidth seed story smallStep = do
 
       If pred -> k s pred
 
-      Foreach xs f -> do
+      ForeachB xs f -> do
+        loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k
+
+      ForeachBT xs f -> do
         loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k
 
       LitA a -> k s a

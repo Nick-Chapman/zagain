@@ -309,14 +309,14 @@ eval mode here = \case
     textBytes <- StringBytes canoicalizedTyped
     one <- LitV 1
     tBuf1 <- Offset tBuf one
-    Foreach textBytes $ \off b -> do
+    ForeachB textBytes $ \off b -> do
       a <- Offset tBuf1 off
       SetByte a b
     pBuf1 <- Offset pBuf one
     SetByte pBuf1 n
     two <- LitV 2
     pBuf2 <- Offset pBuf two
-    Foreach positionedWords $ \i (pos,word) -> do
+    ForeachBT positionedWords $ \i (pos,word) -> do
       iopt <- LookupInStrings dictStrings word
       dictAddr <-
         case iopt of

@@ -50,7 +50,7 @@ data Eff p x where
 
   TheDictionary :: Eff p Dict
   StoryHeader :: Eff p Header
-  LookupInStrings :: [String] -> Text p -> Eff p (Maybe Int)
+  LookupInStrings :: [String] -> Text p -> Eff p (Maybe Int) -- TODO: need phase-poly result
 
   ReadInputFromUser :: Maybe (StatusInfo p) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
@@ -81,7 +81,9 @@ data Eff p x where
   Quit :: Eff p ()
   If :: Pred p -> Eff p Bool
 
-  Foreach :: Show x => Vector p x -> (Value p -> x -> Eff p ()) -> Eff p ()
+  --ForeachG :: Show x => Vector p x -> (Value p -> x -> Eff p ()) -> Eff p ()
+  ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
+  ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
 
   LitA :: Numbers.Addr -> Eff p (Addr p)
   LitB :: Numbers.Byte -> Eff p (Byte p)

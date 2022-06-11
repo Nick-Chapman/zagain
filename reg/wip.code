@@ -2705,20 +2705,32 @@ LocOp 022791:
     ReadInputFromUser user_command_line_1;
     Tokenize user_command_line_1 (num_tokens_2,position_words_3,canonicalized_4);
     StringBytes canonicalized_4 string_bytes_5;
-    Foreach: index_6, elem_7 in (string_bytes_5) {
+    ForeachB: (index_6,byte_7) in (string_bytes_5) {
+      SetByte Offset(Offset(Address(MakeHiLo(M[009035],M[009036])),1),index_6) byte_7;
     }
     SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) num_tokens_2;
-    Foreach: index_8, elem_9 in (position_words_3) {
+    ForeachB: (index_8,pos_9,word_10) in (position_words_3) {
+      LookupInDict word_10;
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_8)),0) 61;
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_8)),1) 221;
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_8)),2) StringLength(word_10);
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_8)),3) pos_9;
     }
     Jump: 022800
   } else {
-    ReadInputFromUser user_command_line_10;
-    Tokenize user_command_line_10 (num_tokens_11,position_words_12,canonicalized_13);
-    StringBytes canonicalized_13 string_bytes_14;
-    Foreach: index_15, elem_16 in (string_bytes_14) {
+    ReadInputFromUser user_command_line_11;
+    Tokenize user_command_line_11 (num_tokens_12,position_words_13,canonicalized_14);
+    StringBytes canonicalized_14 string_bytes_15;
+    ForeachB: (index_16,byte_17) in (string_bytes_15) {
+      SetByte Offset(Offset(Address(MakeHiLo(M[009035],M[009036])),1),index_16) byte_17;
     }
-    SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) num_tokens_11;
-    Foreach: index_17, elem_18 in (position_words_12) {
+    SetByte Offset(Address(MakeHiLo(M[009037],M[009038])),1) num_tokens_12;
+    ForeachB: (index_18,pos_19,word_20) in (position_words_13) {
+      LookupInDict word_20;
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_18)),0) 61;
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_18)),1) 221;
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_18)),2) StringLength(word_20);
+      SetByte Offset(Offset(Offset(Address(MakeHiLo(M[009037],M[009038])),2),Mul(4,index_18)),3) pos_19;
     }
     Jump: 022800
   }

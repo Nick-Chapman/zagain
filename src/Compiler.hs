@@ -232,17 +232,22 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
-      Eff.Foreach xs _f -> do -- TODO: use f!
+      Eff.ForeachB xs f -> do
         index <- genId "index"
-        elem <- genId "elem"
-
-        --let evar = undefined -- ??
-        --let bodyE :: Effect () = _f (Variable index) evar
-        --_body <- loop s bodyE k
-
-        let body = Null
+        elem <- genId "byte"
+        let bodyEff = f (Variable index) (Variable elem)
+        body <- loop s bodyEff $ \_ () -> pure Null -- dont use k
         let following = k s () -- TODO: but we loose any effects from the body (is this ok?)
-        Foreach (index,elem) xs body <$> following
+        ForeachB (index,elem) xs body <$> following
+
+      Eff.ForeachBT xs f -> do -- TODO: use f!
+        index <- genId "index"
+        elem1 <- genId "pos"
+        elem2 <- genId "word"
+        let bodyEff = f (Variable index) (Variable elem1,Variable elem2)
+        body <- loop s bodyEff $ \_ () -> pure Null -- dont use k
+        let following = k s () -- TODO: but we loose any effects from the body (is this ok?)
+        ForeachBT (index,elem1,elem2) xs body <$> following
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -289,7 +294,10 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
       Eff.Sub x y -> prim2 x y Prim.Sub
       Eff.TestBit x y -> prim2 x y Prim.TestBit
 
-      Eff.LookupInStrings{} -> undefined
+      Eff.LookupInStrings _dict word -> do -- TODO: ignore arg1; it s always the dict
+        --res <- genId "lookup_in_strings_res"
+        let res = Just 100 -- TODO: hack
+        Seq (LookupInDict word) <$> k s res
 
       Eff.StringBytes string -> do
         split <- genId "string_bytes"
@@ -400,7 +408,8 @@ data Statement where
   Transfer :: Control Compile -> Statement
   Seq :: Atom ->  Statement -> Statement
   If :: Expression Bool -> Statement -> Statement -> Statement
-  Foreach :: Show a => (Identifier Value, Identifier a) -> Expression [a] -> Statement -> Statement -> Statement -- existential a!
+  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Statement -> Statement -> Statement
+  ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Statement -> Statement -> Statement
 
 pretty :: Int -> Statement -> [String]
 pretty i = \case
@@ -419,8 +428,14 @@ pretty i = \case
     , [tab i "} else {"]
     , pretty (i+2) s2 ++ [tab i "}"]
     ]
-  Foreach (index,elem) xs body following -> concat
-    [ [tab i ("Foreach: " ++ show index ++ ", " ++ show elem ++ " in (" ++ show xs ++ ") {")]
+  ForeachB (index,elem) xs body following -> concat
+    [ [tab i ("ForeachB: " ++ show (index,elem) ++ " in (" ++ show xs ++ ") {")]
+    , pretty (i+2) body
+    , [tab i "}"]
+    ]
+    ++ pretty i following
+  ForeachBT (index,elem1,elem2) xs body following -> concat
+    [ [tab i ("ForeachB: " ++ show (index,elem1,elem2) ++ " in (" ++ show xs ++ ") {")]
     , pretty (i+2) body
     , [tab i "}"]
     ]
@@ -445,6 +460,7 @@ data Atom
   | ReadInputFromUser (Identifier String)
   | StringBytes (Expression String) (Identifier [Expression Byte])
   | Tokenize (Expression String) TokenizeIdents
+  | LookupInDict (Expression String)
   deriving Show
 
 type TokenizeIdents =
