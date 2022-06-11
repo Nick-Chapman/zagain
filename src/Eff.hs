@@ -3,7 +3,6 @@
 module Eff (Eff(..),Phase(..),Mode(..),Control(..),StatusInfo(..)) where
 
 import Control.Monad (ap,liftM)
-import Dictionary (Dict)
 import Header (Header)
 import Operation (Operation,RoutineHeader)
 import qualified Numbers (Addr,Byte,Value)
@@ -48,9 +47,8 @@ data Eff p x where
 
   Error :: String -> Eff p a
 
-  TheDictionary :: Eff p Dict
   StoryHeader :: Eff p Header
-  LookupInStrings :: [String] -> Text p -> Eff p (Maybe Int) -- TODO: need phase-poly result
+  LookupInDict :: Text p -> Eff p (Addr p)
 
   ReadInputFromUser :: Maybe (StatusInfo p) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
@@ -81,7 +79,6 @@ data Eff p x where
   Quit :: Eff p ()
   If :: Pred p -> Eff p Bool
 
-  --ForeachG :: Show x => Vector p x -> (Value p -> x -> Eff p ()) -> Eff p ()
   ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
 

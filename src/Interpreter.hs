@@ -57,9 +57,6 @@ runEffect screenWidth seed story smallStep = do
 
       Error s -> error ("runEffect: " ++ s)
 
-      TheDictionary -> do
-        k s dict
-
       StoryHeader -> do
         k s header
 
@@ -189,6 +186,7 @@ runEffect screenWidth seed story smallStep = do
       IsZeroAddress x -> prim1 x Prim.IsZeroAddress
       IsZeroByte x -> prim1 x Prim.IsZeroByte
       LoByte x -> prim1 x Prim.LoByte
+      LookupInDict x -> prim1 x (Prim.LookupInDict dict)
       PackedAddress x -> prim1 x (Prim.PackedAddress zv)
       SevenMinus x -> prim1 x Prim.SevenMinus
       ShowNumber x -> prim1 x Prim.ShowNumber
@@ -209,7 +207,6 @@ runEffect screenWidth seed story smallStep = do
       LessThan x y -> prim2 x y Prim.LessThan
       LessThanByte x y -> prim2 x y Prim.LessThanByte
       LessThanEqual x y -> prim2 x y Prim.LessThanEqual
-      LookupInStrings x y -> prim2 x y Prim.LookupInStrings
       MakeHiLo x y -> prim2 x y Prim.MakeHiLo
       MinusByte x y -> prim2 x y Prim.MinusByte
       Mod x y -> prim2 x y Prim.Mod

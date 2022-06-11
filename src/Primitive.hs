@@ -3,9 +3,10 @@
 module Primitive (P1(..),P2(..),evalP1,evalP2) where
 
 import Data.Bits ((.&.),(.|.),clearBit,setBit,testBit,shiftR)
+import Dictionary (Dict(..))
 import Numbers (Zversion,Byte,Value,Addr,makeByteAddress,makePackedAddress,makeHiLo,equalAny)
 import qualified Data.Char as Char (chr,ord)
-import qualified Lex (tokenize,lookupInStrings)
+import qualified Lex (tokenize,lookupInDict)
 
 data P1 arg ret where
 
@@ -18,6 +19,7 @@ data P1 arg ret where
   IsZeroAddress :: P1 Addr Bool
   IsZeroByte :: P1 Byte Bool
   LoByte :: P1 Value Byte
+  LookupInDict :: Dict -> P1 String Addr
   PackedAddress :: Zversion -> P1 Value Addr
   SevenMinus :: P1 Byte Byte
   ShowNumber :: P1 Value String
@@ -40,6 +42,7 @@ evalP1 = \case
   IsZeroAddress -> (== 0)
   IsZeroByte -> (== 0)
   LoByte -> \v -> fromIntegral (v .&. 0xff)
+  LookupInDict dict-> Lex.lookupInDict dict
   PackedAddress zv -> makePackedAddress zv
   SevenMinus -> \v -> 7-v
   ShowNumber -> show
@@ -61,7 +64,6 @@ data P2 arg1 arg2 ret where
   LessThan :: P2 Value Value Bool
   LessThanByte :: P2 Byte Byte Bool
   LessThanEqual :: P2 Value Value Bool
-  LookupInStrings :: P2 [String] String (Maybe Int)
   MakeHiLo :: P2 Byte Byte Value
   MinusByte :: P2 Byte Byte Byte
   Mod :: P2 Value Value Value
@@ -87,7 +89,6 @@ evalP2 = \case
   LessThan -> (<)
   LessThanByte -> (<)
   LessThanEqual -> (<=)
-  LookupInStrings -> Lex.lookupInStrings
   MakeHiLo -> makeHiLo
   MinusByte -> (-)
   Mod -> mod

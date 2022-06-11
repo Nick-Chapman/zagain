@@ -1,11 +1,12 @@
 
 -- | primitives for lexing
-module Lex (tokenize,lookupInStrings) where
+module Lex (tokenize,lookupInDict) where
 
-import Data.List.Split (splitOn)
-import Numbers (Byte)
 import Data.List (intercalate)
 import Data.List.Extra (lower)
+import Data.List.Split (splitOn)
+import Dictionary (Dict(..))
+import Numbers (Byte,Addr)
 
 tokenize :: String -> (Byte,[(Byte,String)],String)
 tokenize str = do
@@ -25,10 +26,14 @@ tokenize str = do
   let n = fromIntegral (length positionedWords)
   (n, positionedWords, canonicalized)
 
-lookupInStrings :: [String] -> String -> Maybe Int
-lookupInStrings strings word = do
+lookupInDict :: Dict -> String -> Addr
+lookupInDict dict word = do
+  let Dict{base,seps,entryLength,strings} = dict
   let key = lower (take 6 word)
   case [ i | (i,s) <- zip [1..] strings, s == key ] of
-    [] -> Nothing
+    [] -> 0
     xs@(_:_:_) -> error (show ("multi dict match!",word,xs))
-    [i] -> Just i
+    [i] -> do
+      let offset = length seps + 4 -- +4 : #seps byte, entryLength byte, #entries word
+      let baseEntries = fromIntegral base + offset
+      fromIntegral (baseEntries + (i-1) * entryLength)

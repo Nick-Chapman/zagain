@@ -2,7 +2,7 @@
 -- | Semantics of z-machine operations.
 module Semantics (smallStep) where
 
-import Dictionary (Dict(..))
+--import Dictionary (Dict(..))
 import Eff (Eff(..),Phase(..),Mode,Control(..),StatusInfo(..))
 import Header (Header(..))
 import Numbers (Zversion(..))
@@ -299,12 +299,6 @@ eval mode here = \case
     rawTyped <- ReadInputFromUser statusInfoM
     tBuf <- evalArg arg1 >>= Address
     pBuf <- evalArg arg2 >>= Address
-    Dict{seps,entryLength,strings=dictStrings} <- TheDictionary
-    -- +4 : #seps byte, entryLength byte, #entries word
-    Header{dictionary} <- StoryHeader
-    offset <- LitV (fromIntegral $ length seps + 4)
-    base <- LitA dictionary
-    baseEntries <- Offset base offset
     (n,positionedWords,canoicalizedTyped) <- Tokenize rawTyped
     textBytes <- StringBytes canoicalizedTyped
     one <- LitV 1
@@ -317,14 +311,7 @@ eval mode here = \case
     two <- LitV 2
     pBuf2 <- Offset pBuf two
     ForeachBT positionedWords $ \i (pos,word) -> do
-      iopt <- LookupInStrings dictStrings word
-      dictAddr <-
-        case iopt of
-          Just i -> do
-            let ii :: Int = (i-1) * entryLength
-            offset <- LitV (fromIntegral ii)
-            Offset baseEntries offset
-          Nothing -> LitA 0
+      dictAddr <- LookupInDict word
       dictAddrV <- DeAddress dictAddr
       (hi,lo) <- splitWord dictAddrV
       n <- StringLength word

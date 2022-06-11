@@ -9,7 +9,8 @@ import Numbers (Byte,Addr,Value,makeHiLo)
 import qualified Data.Char as Char (chr)
 
 data Dict = Dict
-  { seps :: String
+  { base :: Addr
+  , seps :: String
   , entryLength :: Int
   , numEntries :: Int
   , strings :: [String]
@@ -29,7 +30,7 @@ fetchDict = do
                       | i <- [1::Int .. numEntries]
                       , let a :: Addr = base + fromIntegral (n + 4 + entryLength * (i-1))
                       ]
-    pure $ Dict {seps,entryLength,numEntries,strings}
+    pure $ Dict {base,seps,entryLength,numEntries,strings}
 
 fetchWord :: Fetch Value
 fetchWord = do

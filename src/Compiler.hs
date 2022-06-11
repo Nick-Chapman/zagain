@@ -5,7 +5,6 @@ import Action (Action)
 import Control.Monad (ap,liftM)
 import Data.List (intercalate,nub)
 import Decode (fetchOperation,fetchRoutineHeader)
-import Dictionary (Dict,fetchDict)
 import Disassemble (Routine(..),disRoutine,branchesOf,dynamicDiscovery)
 import Eff (Phase,Eff,Control)
 import qualified Eff (Eff(..),Control(..))
@@ -105,23 +104,19 @@ compileRoutine story smallStep routine = do
         _ -> False
 
   let
-    (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
-
-  let
-    static = Static { story, dict, smallStep, shouldInline }
+    static = Static { story, smallStep, shouldInline }
 
   mapM (runGen . compileLoc static) locationsToCompile
 
 
 data Static = Static
   { story :: Story
-  , dict :: Dict
   , smallStep :: Effect ()
   , shouldInline :: Control Compile -> Bool
   }
 
 compileLoc :: Static -> Loc -> Gen Chunk
-compileLoc Static{story,dict,smallStep,shouldInline} loc = do
+compileLoc Static{story,smallStep,shouldInline} loc = do
 
   let control = makeControl loc
   body <- loop (initState control) smallStep transfer
@@ -151,7 +146,6 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
       Eff.Debug thing -> do GDebug thing; k s ()
       Eff.Error msg -> do pure $ Error msg
 
-      Eff.TheDictionary -> k s dict
       Eff.StoryHeader -> k s header
 
       Eff.ReadInputFromUser _statusLine -> do -- TODO: dont ignore status line
@@ -294,10 +288,9 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
       Eff.Sub x y -> prim2 x y Prim.Sub
       Eff.TestBit x y -> prim2 x y Prim.TestBit
 
-      Eff.LookupInStrings _dict word -> do -- TODO: ignore arg1; it s always the dict
-        --res <- genId "lookup_in_strings_res"
-        let res = Just 100 -- TODO: hack
-        Seq (LookupInDict word) <$> k s res
+      Eff.LookupInDict word -> do
+        res <- genId "lookee"
+        Seq (LookupInDict word res) <$> k s (Variable res)
 
       Eff.StringBytes string -> do
         split <- genId "string_bytes"
@@ -460,7 +453,7 @@ data Atom
   | ReadInputFromUser (Identifier String)
   | StringBytes (Expression String) (Identifier [Expression Byte])
   | Tokenize (Expression String) TokenizeIdents
-  | LookupInDict (Expression String)
+  | LookupInDict (Expression String) (Identifier Addr)
   deriving Show
 
 type TokenizeIdents =
