@@ -15,7 +15,7 @@ import Operation (Operation(Call))
 import Story (Story(header),OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action (Action(..))
-import qualified Eff (Phase(..))
+import qualified Eff (Phase(..),StatusInfo(..))
 import qualified Primitive as Prim
 
 data Compile
@@ -136,6 +136,11 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         | otherwise -> do
             pure (Transfer control)
 
+
+    compileInIsolation :: State -> Effect () -> Gen Statement
+    compileInIsolation s eff = do
+      loop s eff $ \_ () -> pure Null
+
     -- TODO: rename loop -> compile ?
     loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Gen Statement) -> Gen Statement
     loop s e k = case e of
@@ -148,9 +153,9 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       Eff.StoryHeader -> k s header
 
-      Eff.ReadInputFromUser _statusLine -> do -- TODO: dont ignore status line
+      Eff.ReadInputFromUser statusLine -> do
         name <- genId "user_command_line"
-        Seq (ReadInputFromUser name) <$> k s (Variable name)
+        Seq (ReadInputFromUser statusLine name) <$> k s (Variable name)
 
       Eff.GetText a -> do
         -- TODO: make special case for constant addresses
@@ -230,7 +235,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         index <- genId "index"
         elem <- genId "byte"
         let bodyEff = f (Variable index) (Variable elem)
-        body <- loop s bodyEff $ \_ () -> pure Null -- dont use k
+        body <- compileInIsolation s bodyEff
         let following = k s () -- TODO: but we loose any effects from the body (is this ok?)
         ForeachB (index,elem) xs body <$> following
 
@@ -239,7 +244,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         elem1 <- genId "pos"
         elem2 <- genId "word"
         let bodyEff = f (Variable index) (Variable elem1,Variable elem2)
-        body <- loop s bodyEff $ \_ () -> pure Null -- dont use k
+        body <- compileInIsolation s bodyEff
         let following = k s () -- TODO: but we loose any effects from the body (is this ok?)
         ForeachBT (index,elem1,elem2) xs body <$> following
 
@@ -314,7 +319,6 @@ genId :: String -> Gen (Identifier a)
 genId tag = do
   u <- GenUnique
   pure $ Identifier tag u
-
 
 
 --[state]-------------------------------------------------------------
@@ -450,11 +454,13 @@ data Atom
   | PushStack (Expression Value)
   | PopStack (Identifier Value)
   | SetLocal (Expression Byte) (Expression Value)
-  | ReadInputFromUser (Identifier String)
+  | ReadInputFromUser StatusInfo (Identifier String)
   | StringBytes (Expression String) (Identifier [Expression Byte])
   | Tokenize (Expression String) TokenizeIdents
   | LookupInDict (Expression String) (Identifier Addr)
   deriving Show
+
+type StatusInfo = Maybe (Eff.StatusInfo Compile)
 
 type TokenizeIdents =
   ( Identifier Byte

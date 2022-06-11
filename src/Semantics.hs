@@ -288,7 +288,7 @@ eval mode here = \case
 
   Op.Sread arg1 arg2 -> do
     Header{zv} <- StoryHeader
-    statusInfoM <- if
+    statusInfoM <- if -- TODO: This causes code duplication
       | zv <= Z3 -> do
           room <- LitB 0 >>= evalGlobal >>= Objects.getShortName
           score <- LitB 1 >>= evalGlobal

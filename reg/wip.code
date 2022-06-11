@@ -2702,7 +2702,7 @@ LocOp 022791:
   Inlining (AtInstruction {pc = 022796});
   TraceOperation (Sread (Var (Global 109)) (Var (Global 110)));
   if (IsZeroByte(M[Address(MakeHiLo(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),7)],M[Offset(Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),7),1)]))])) {
-    ReadInputFromUser user_command_line_1;
+    ReadInputFromUser (Just (StatusInfo {room = "", score = MakeHiLo(M[008819],M[008820]), turns = MakeHiLo(M[008821],M[008822])})) user_command_line_1;
     Tokenize user_command_line_1 (num_tokens_2,position_words_3,canonicalized_4);
     StringBytes canonicalized_4 string_bytes_5;
     ForeachB: (index_6,byte_7) in (string_bytes_5) {
@@ -2718,7 +2718,7 @@ LocOp 022791:
     }
     Jump: 022800
   } else {
-    ReadInputFromUser user_command_line_12;
+    ReadInputFromUser (Just (StatusInfo {room = GetText(Offset(Address(MakeHiLo(M[Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),7)],M[Offset(Offset(Offset(000741,Mul(MakeHiLo(M[008817],M[008818]),9)),7),1)])),1)), score = MakeHiLo(M[008819],M[008820]), turns = MakeHiLo(M[008821],M[008822])})) user_command_line_12;
     Tokenize user_command_line_12 (num_tokens_13,position_words_14,canonicalized_15);
     StringBytes canonicalized_15 string_bytes_16;
     ForeachB: (index_17,byte_18) in (string_bytes_16) {

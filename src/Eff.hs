@@ -39,6 +39,8 @@ data StatusInfo p = StatusInfo
   , turns :: Value p
   }
 
+deriving instance Phase p => Show (StatusInfo p)
+
 data Eff p x where
   Ret :: x -> Eff p x
   Bind :: Eff p x -> (x -> Eff p y) -> Eff p y
