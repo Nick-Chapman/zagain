@@ -425,9 +425,9 @@ pretty i = \case
   Transfer Eff.AtInstruction{pc} ->
     [tab i ("Jump: " ++ show pc)]
   Transfer Eff.AtRoutineHeader {routine,numActuals} ->
-    [tab i ("Call: " ++ show routine ++ "(..#" ++ show numActuals ++ "..)")]
+    [tab i ("JumpCall: " ++ show routine ++ ", #actuals: " ++ show numActuals)]
   Transfer Eff.AtReturnFromCall{caller,result} ->
-    [tab i ("Return(" ++ show result ++ ") -> " ++ show caller)]
+    [tab i ("JumpReturn: " ++ show caller ++ ", result: " ++ show result)]
   Seq a s -> tab i (show a ++ ";") : pretty i s
   FullSeq s1 s2 -> pretty i s1 ++ pretty i s2
   If e s1 Null -> concat
