@@ -26,7 +26,7 @@ instance Phase Compile where
   type Pred Compile = Expression Bool
   type Text Compile = Expression String
   type Value Compile = Expression Value
-  type Vector Compile a = Expression [a] -- TODO: hmm
+  type Vector Compile a = Expression [a]
 
 type Effect a = Eff Compile a
 
@@ -104,7 +104,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
     header@Header{zv} = Story.header story
 
-    transfer :: State -> () -> Gen Statement
+    transfer :: State -> () -> Gen (Statement 'WillJump)
     transfer s () = do
       let State{control} = s
       if
@@ -114,12 +114,12 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             pure (Transfer control)
 
 
-    compileInIsolation :: State -> Effect () -> Gen Statement
+    compileInIsolation :: State -> Effect () -> Gen (Statement 'WontJump)
     compileInIsolation s eff = do
-      loop s eff $ \_ () -> pure Null
+      loop s eff $ \_ () -> pure Null -- TODO: flush delayed state change here
 
     -- TODO: rename loop -> compile ?
-    loop :: forall loopType. State -> Effect loopType -> (State -> loopType -> Gen Statement) -> Gen Statement
+    loop :: forall jumpiness loopType. State -> Effect loopType -> (State -> loopType -> Gen (Statement jumpiness)) -> Gen (Statement jumpiness)
     loop s e k = case e of
       Eff.Ret x -> k s x
       Eff.Bind e f -> loop s e $ \s a -> loop s (f a) k
@@ -185,7 +185,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.SetLocal n v -> do
         Seq (SetLocal n v) <$> k s ()
 
-      Eff.GetByte a -> k s (GetByte a)
+      Eff.GetByte a -> k s (GetByte a) -- TODO: lookup in static memory range should happen now
       Eff.SetByte a b -> Seq (SetByte a b) <$> k s ()
 
       -- TODO: explore maintaining temporary-stack at compile-time
@@ -212,7 +212,6 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             pure $ If pred b1 b2
 
       Eff.Isolate eff -> do
-        --loop s eff k
         first <- compileInIsolation s eff
         FullSeq first <$> k s ()
 
@@ -221,17 +220,15 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         elem <- genId "byte"
         let bodyEff = f (Variable index) (Variable elem)
         body <- compileInIsolation s bodyEff
-        let following = k s () -- TODO: but we loose any effects from the body (is this ok?)
-        ForeachB (index,elem) xs body <$> following
+        ForeachB (index,elem) xs body <$> k s ()
 
-      Eff.ForeachBT xs f -> do -- TODO: use f!
+      Eff.ForeachBT xs f -> do
         index <- genId "index"
         elem1 <- genId "pos"
         elem2 <- genId "word"
         let bodyEff = f (Variable index) (Variable elem1,Variable elem2)
         body <- compileInIsolation s bodyEff
-        let following = k s () -- TODO: but we loose any effects from the body (is this ok?)
-        ForeachBT (index,elem1,elem2) xs body <$> following
+        ForeachBT (index,elem1,elem2) xs body <$> k s ()
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -293,10 +290,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (Tokenize x (a,b,c)) <$> k s (Variable a,Variable b,Variable c)
 
       where
-        prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen Statement
+        prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen (Statement jumpiness)
         prim1 x p1 = k s (makeUnary p1 x)
 
-        prim2 :: (Show x, Show y) => Expression r ~ loopType => Expression x -> Expression y -> Prim.P2 x y r -> Gen Statement
+        prim2 :: (Show x, Show y) => Expression r ~ loopType => Expression x -> Expression y -> Prim.P2 x y r -> Gen (Statement jumpiness)
         prim2 x y p2 = k s (makeBinary p2 x y)
 
 
@@ -392,7 +389,7 @@ data CompiledRoutine = CompiledRoutine
   { chunks :: [Chunk]
   }
 
-data Chunk = Chunk { label :: Loc, body :: Statement }
+data Chunk = Chunk { label :: Loc, body :: Statement 'WillJump }
 
 instance Show Chunk where
   show Chunk{ label, body } =
@@ -400,18 +397,21 @@ instance Show Chunk where
 
 data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
-data Statement where
-  Null :: Statement
-  Quit :: Statement
-  Error :: String -> Statement
-  Transfer :: Control Compile -> Statement
-  Seq :: Atom ->  Statement -> Statement
-  FullSeq :: Statement ->  Statement -> Statement
-  If :: Expression Bool -> Statement -> Statement -> Statement
-  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Statement -> Statement -> Statement
-  ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Statement -> Statement -> Statement
 
-pretty :: Int -> Statement -> [String]
+data Jumpiness = WillJump | WontJump
+
+data Statement :: Jumpiness -> * where
+  Null :: Statement 'WontJump
+  Quit :: Statement j
+  Error :: String -> Statement j
+  Transfer :: Control Compile -> Statement 'WillJump
+  Seq :: Atom ->  Statement j -> Statement j
+  FullSeq :: Statement 'WontJump ->  Statement j -> Statement j
+  If :: Expression Bool -> Statement j -> Statement j -> Statement j
+  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Statement 'WontJump -> Statement j -> Statement j
+  ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Statement 'WontJump -> Statement j -> Statement j
+
+pretty :: Int -> Statement j -> [String]
 pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]

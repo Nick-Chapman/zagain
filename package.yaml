@@ -30,6 +30,7 @@ dependencies:
 
 default-extensions:
 - BangPatterns
+- DataKinds
 - DuplicateRecordFields
 - EmptyCase
 - FlexibleContexts
