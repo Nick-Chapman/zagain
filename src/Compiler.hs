@@ -231,6 +231,11 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
+      Eff.Isolate eff -> do
+        --loop s eff k
+        first <- compileInIsolation s eff
+        FullSeq first <$> k s ()
+
       Eff.ForeachB xs f -> do
         index <- genId "index"
         elem <- genId "byte"
@@ -404,6 +409,7 @@ data Statement where
   Error :: String -> Statement
   Transfer :: Control Compile -> Statement
   Seq :: Atom ->  Statement -> Statement
+  FullSeq :: Statement ->  Statement -> Statement
   If :: Expression Bool -> Statement -> Statement -> Statement
   ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Statement -> Statement -> Statement
   ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Statement -> Statement -> Statement
@@ -419,6 +425,17 @@ pretty i = \case
   Transfer Eff.AtReturnFromCall{caller,result} ->
     [tab i ("Return(" ++ show result ++ ") -> " ++ show caller)]
   Seq a s -> tab i (show a ++ ";") : pretty i s
+  FullSeq s1 s2 -> pretty i s1 ++ pretty i s2
+  If e s1 Null -> concat
+    [ [tab i "if (" ++ show e ++ ") {"]
+    , pretty (i+2) s1
+    , [tab i "}"]
+    ]
+  If e Null s2 -> concat
+    [ [tab i "if (" ++ show e ++ ") {} else {"]
+    , pretty (i+2) s2
+    , [tab i "}"]
+    ]
   If e s1 s2 -> concat
     [ [tab i "if (" ++ show e ++ ") {"]
     , pretty (i+2) s1

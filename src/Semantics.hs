@@ -288,7 +288,7 @@ eval mode here = \case
 
   Op.Sread arg1 arg2 -> do
     Header{zv} <- StoryHeader
-    statusInfoM <- if -- TODO: This causes code duplication
+    statusInfoM <- if
       | zv <= Z3 -> do
           room <- LitB 0 >>= evalGlobal >>= Objects.getShortName
           score <- LitB 1 >>= evalGlobal
@@ -478,15 +478,13 @@ setDefaults rh n =
         where
           loop i = \case
             [] -> pure ()
-            def:defs -> do
+            def:defs -> Isolate $ do
               ie <- LitB i
               LessThanByte n ie >>= If >>= \case
                 False -> pure ()
                 True -> do
                   LitV def >>= SetLocal ie
                   loop (i-1) defs
-
-
 
 getWord :: Addr p -> Eff p (Value p)
 getWord a = do

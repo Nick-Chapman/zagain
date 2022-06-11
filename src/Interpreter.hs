@@ -165,6 +165,8 @@ runEffect screenWidth seed story smallStep = do
 
       If pred -> k s pred
 
+      Isolate eff -> loop s eff k
+
       ForeachB xs f -> do
         loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k
 

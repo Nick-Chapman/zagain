@@ -79,7 +79,9 @@ data Eff p x where
   PopStack :: Eff p (Value p)
   Random :: Value p -> Eff p (Value p)
   Quit :: Eff p ()
+
   If :: Pred p -> Eff p Bool
+  Isolate :: Eff p () -> Eff p ()
 
   ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
