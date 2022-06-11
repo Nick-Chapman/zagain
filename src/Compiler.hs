@@ -1,5 +1,5 @@
 
-module Compiler (compileEffect,runCode) where
+module Compiler (compileEffect,dumpCode,runCode) where
 
 import Action (Action)
 import Control.Monad (ap,liftM)
@@ -32,25 +32,6 @@ type Effect a = Eff Compile a
 
 compileEffect :: Story -> Effect () -> IO Code
 compileEffect story smallStep = do
-  code <- compileToCode story smallStep
-  dumpCode code
-  pure code
-
-dumpCode :: Code -> IO ()
-dumpCode Code{routines} = do
-  printf "Code for %d routines\n" (length routines)
-  sequence_
-    [ do
-        printf "--[%d]--------------------------------------------------\n" i
-        mapM_ print chunks
-    | (i,CompiledRoutine{chunks}) <- zip [1::Int ..] routines
-    ]
-
-runCode :: Word -> Code -> Action
-runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
-
-compileToCode :: Story -> Effect () -> IO Code
-compileToCode story smallStep = do
   let endOfStory :: Addr = fromIntegral (size story)
   let Header{initialPC=_, staticMem} = Story.header story
   let as = routinesBetween story (staticMem,endOfStory)
@@ -369,7 +350,6 @@ runGen g = fst <$> loop GenState{u=1} g where
 
 data GenState = GenState { u :: Int }
 
-
 --[constant folding]--------------------------------------------------
 
 doConstFolding :: Bool
@@ -390,6 +370,19 @@ makeBinary p2 x y = case (x,y) of
   _ -> Binary p2 x y
 
 --[code]--------------------------------------------------------------
+
+runCode :: Word -> Code -> Action
+runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
+
+dumpCode :: Code -> IO ()
+dumpCode Code{routines} = do
+  printf "Code for %d routines\n" (length routines)
+  sequence_
+    [ do
+        printf "--[%d]--------------------------------------------------\n" i
+        mapM_ print chunks
+    | (i,CompiledRoutine{chunks}) <- zip [1::Int ..] routines
+    ]
 
 data Code = Code
   { routines :: [CompiledRoutine]

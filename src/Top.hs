@@ -10,7 +10,7 @@ import Fetch (runFetch)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
 import Text.Printf (printf)
-import qualified Compiler (compileEffect,runCode)
+import qualified Compiler (compileEffect,dumpCode,runCode)
 import qualified Console (runAction)
 import qualified Eff (Mode(..))
 import qualified Interpreter (runEffect)
@@ -33,7 +33,7 @@ data Config = Config
   , viaCompiler :: Bool
   }
 
-data Mode = Dictionary | Run | Disassemble
+data Mode = Dictionary | Run | Disassemble | Compile
 
 config0 :: Config
 config0 = Config
@@ -60,9 +60,10 @@ parseCommandLine = loop config0
       [] -> pure c
       "dict":more -> loop c { mode = Dictionary } more
       "dis":more -> loop c { mode = Disassemble } more
+      "comp":more -> loop c { mode = Compile } more
       "-noconsole":more -> loop c { mayStartConsole = False } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
-      "-comp":more -> loop c { viaCompiler = True } more
+      "-viacomp":more -> loop c { viaCompiler = True } more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
@@ -104,3 +105,8 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace,wrapSpec},inputs,mayStartCon
       story <- loadStory storyFile
       disassemble story inputs
       pure ()
+    Compile -> do
+      story <- loadStory storyFile
+      let eff = Semantics.smallStep Eff.Compiling
+      code <- Compiler.compileEffect story eff
+      Compiler.dumpCode code -- to stdout
