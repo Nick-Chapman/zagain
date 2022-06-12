@@ -44,27 +44,29 @@ mojo.walk: ~/code/other/mojozork/mojozork.exe $(SCRIPT) Makefile
 
 # regression...
 
-reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk reg/h.dis reg/z.code
+reg: .reg reg/zork.dis reg/zork.trace reg/zork.walk reg/h.walk reg/h.dis reg/zork.code reg/h.code
 	git diff reg
 
-reg/z.code: $(exe) src/*.hs Makefile
-	$(exe) comp > $@
+reg/zork.trace: $(exe) z.script src/*.hs Makefile
+	bash -c '$(exe) -nodebug -trace -walk <(head -2 z.script) > $@'
+
+reg/zork.walk: $(exe) z.script src/*.hs Makefile
+	$(exe) -nodebug -walk z.script > $@
 
 reg/zork.dis: $(exe) src/*.hs Makefile
 	$(exe) dis -walk z.script > $@
 
-# trace just the first 2 steps of the zork walk-though
-reg/zork.trace: $(exe) z.script src/*.hs
-	bash -c '$(exe) -nodebug -trace -walk <(head -2 z.script) > $@'
+reg/zork.code: $(exe) src/*.hs Makefile
+	$(exe) comp > $@
 
-reg/zork.walk: $(exe) z.script src/*.hs
-	bash -c '$(exe) -nodebug -walk z.script > $@'
-
-reg/h.walk: $(exe) h.script src/*.hs
-	bash -c '$(exe) story/hitchhiker-r59-s851108.z3 -nodebug -walk h.script > $@'
+reg/h.walk: $(exe) h.script src/*.hs Makefile
+	$(exe) story/hitchhiker-r59-s851108.z3 -nodebug -walk h.script > $@
 
 reg/h.dis: $(exe) src/*.hs Makefile
 	$(exe) dis story/hitchhiker-r59-s851108.z3 -walk h.script > $@
+
+reg/h.code: $(exe) src/*.hs Makefile
+	$(exe) comp story/hitchhiker-r59-s851108.z3 > $@
 
 
 .reg:
