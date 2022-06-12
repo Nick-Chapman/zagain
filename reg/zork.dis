@@ -11,7 +11,7 @@ Memory Map:
 084876 End of story file
 --------------------------------------
 Found 197 routines by walkthrough
-Found 513 routines by speculative disassembly
+Found 468 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=12202
@@ -1974,8 +1974,9 @@ gap=1
 028081 Get_child (Var (Global 111)) Sp (Branch F (Dloc 028092))
 028085 Call (Floc 036522) [Var (Global 111)] Sp
 028091 Ret_popped
+028092 Print_ret "You are empty-handed."
 --------------------------------------------------
-gap=16
+gap=1
 028108 RoutineHeader [1,0]
 -- unused: [2]
 028113 Call (Floc 066946) [] Sp
@@ -2006,13 +2007,15 @@ gap=0
 028250 New_line
 028251 Call (Floc 035976) [] Sp
 028256 Ret_popped
+028257 Print_ret "Failed."
 --------------------------------------------------
-gap=7
+gap=0
 028264 RoutineHeader []
 028265 Save (Branch F (Dloc 028272))
 028267 Print_ret "Ok."
+028272 Print_ret "Failed."
 --------------------------------------------------
-gap=8
+gap=1
 028280 RoutineHeader []
 028281 Loadw (Con 0) (Con 8) Sp
 028285 Or (Var Sp) (Con 1) Sp
@@ -2061,8 +2064,10 @@ gap=1
 028616 New_line
 028617 Verify (Branch F (Dloc 028632))
 028619 Print_ret "The disk is correct."
+028632 New_line
+028633 Print_ret "** Disk Failure **"
 --------------------------------------------------
-gap=24
+gap=0
 028656 RoutineHeader []
 028657 Print_ret "A hollow voice says \"Fool.\""
 --------------------------------------------------
@@ -2130,16 +2135,16 @@ gap=0
 028980 Print "You aren't even holding the "
 028999 Print_obj (Var (Global 119))
 029001 Print_ret "."
---------------------------------------------------
-gap=16
-029020 RoutineHeader [-32603]
--- unused: [1]
+029004 Test_attr (Var (Global 119)) (Con 29) (Branch T (Dloc 029043))
+029008 Print "Trying to attack the "
 029023 Print_obj (Var (Global 118))
 029025 Print " with a "
 029030 Print_obj (Var (Global 119))
 029032 Print_ret " is suicidal."
+029043 Call (Floc 064668) [] Sp
+029048 Ret_popped
 --------------------------------------------------
-gap=7
+gap=1
 029050 RoutineHeader []
 029051 Print_ret "Sorry, my memory is poor. Please give a direction."
 --------------------------------------------------
@@ -2159,18 +2164,16 @@ gap=0
 029141 Print " must be on the ground to be boarded."
 029160 New_line
 029161 Ret (Con 2)
---------------------------------------------------
-gap=1
-029164 RoutineHeader [6976]
+029163 Test_attr (Var (Local 1)) (Con 27) (Branch F Dfalse)
 029167 Print "You are already in the "
 029176 Print_obj (Var (Local 1))
 029178 Print "!"
 029181 New_line
 029182 Ret (Con 2)
---------------------------------------------------
-gap=24
-029208 RoutineHeader [29994,-4838,-18282,-23109]
--- unused: [1,2,3,4]
+029184 Print "You have a theory on how to board a "
+029205 Print_obj (Var (Global 118))
+029207 Print ", perhaps?"
+029216 New_line
 029217 Ret (Con 2)
 --------------------------------------------------
 gap=1
@@ -2220,14 +2223,18 @@ gap=1
 029414 Jin (Var (Global 111)) (Var (Global 118)) (Branch F (Dloc 029424))
 029418 Print "in"
 029421 Jump 029431
---------------------------------------------------
-gap=20
-029444 RoutineHeader []
+029424 Print "holding"
+029431 Call (Floc 067174) [Con -26041] Sp
+029438 Ret_popped
+029439 Call (Floc 030906) [Var (Global 118)] Sp
 029445 Print "The "
 029448 Print_obj (Var (Global 118))
 029450 Print_ret " catches fire and is consumed."
+029471 Print "You can't burn a "
+029480 Print_obj (Var (Global 118))
+029482 Print_ret "."
 --------------------------------------------------
-gap=15
+gap=1
 029486 RoutineHeader []
 029487 Print_ret "Preposterous!"
 --------------------------------------------------
@@ -2351,18 +2358,17 @@ gap=1
 030069 Test_attr (Var (Global 119)) (Con 29) (Branch F (Dloc 030170))
 030074 Jin (Var (Global 111)) (Var (Global 118)) (Branch F (Dloc 030113))
 030078 Print_ret "Not a bright idea, especially since you're in it."
---------------------------------------------------
-gap=5
-030118 RoutineHeader []
+030113 Call (Floc 030906) [Var (Global 118)] Sp
 030119 Print "Your skillful "
 030128 Print_obj (Var (Global 119))
 030130 Print "smanship slices the "
 030143 Print_obj (Var (Global 118))
 030145 Print_ret " into innumerable slivers which blow away."
---------------------------------------------------
-gap=56
-030226 RoutineHeader [-32603]
--- unused: [1]
+030170 Test_attr (Var (Global 119)) (Con 29) (Branch T (Dloc 030208))
+030174 Print "The \"cutting edge\" of a "
+030191 Print_obj (Var (Global 119))
+030193 Print_ret " is hardly adequate."
+030208 Print "Strange concept, cutting the "
 030229 Print_obj (Var (Global 118))
 030231 Print_ret "...."
 --------------------------------------------------
@@ -2428,7 +2434,6 @@ gap=0
 --------------------------------------------------
 gap=0
 030482 RoutineHeader [0,0,0]
--- unused: [2,3]
 030489 Test_attr (Var (Global 118)) (Con 21) (Branch T (Dloc 030499))
 030493 Push (Con 0)
 030496 Jump 030502
@@ -2441,20 +2446,40 @@ gap=0
 030520 Print "You're not holding that."
 030533 New_line
 030534 Jump 030594
---------------------------------------------------
-gap=103
-030640 RoutineHeader [-14171,26115,32728,-19964,16704]
--- unused: [1,2,4,5]
-030651 Set_attr (Con 9) (Var (Global 29))
-030654 Get_prop_addr (Var (Global 25)) (Con 58) (Global 92)
-030658 Jz (Con 8362) (Branch F (Dloc 031608))
-030663 Je [Con 110,Con 95] (Branch F (Dloc 037216))
-030668 Inc_chk (Var (Global 58)) (Con 3) (Branch F (Dloc 033705))
+030537 Je [Var (Global 120),Con 47] (Branch F (Dloc 030559))
+030541 Print "How can you drink that?"
+030556 Jump 030594
+030559 Print "Thank you very much. It really hit the spot."
+030588 Call (Floc 030906) [Var (Global 118)] Sp
+030594 New_line
+030595 Rtrue
+030596 Test_attr (Var (Global 118)) (Con 22) (Branch F (Dloc 030703))
+030601 Store (Con 2) (Con 1)
+030604 Get_parent (Var (Global 118)) (Local 3)
+030607 Jin (Var (Global 118)) (Con 247) (Branch T (Dloc 030619))
+030611 Jin (Var (Global 118)) (Con 249) (Branch T (Dloc 030619))
+030615 Je [Var (Global 118),Con 13] (Branch F (Dloc 030625))
+030619 Call (Floc 030734) [] Sp
+030624 Ret_popped
+030625 Jz (Var (Local 3)) (Branch F (Dloc 030643))
+030628 Print_ret "You don't have any to drink."
+030643 Jin (Var (Local 3)) (Var (Global 111)) (Branch T (Dloc 030669))
+030647 Print "You have to be holding the "
+030660 Print_obj (Var (Local 3))
+030662 Print_ret " first."
+030669 Test_attr (Var (Local 3)) (Con 11) (Branch T (Dloc 030697))
 030673 Print "You'll have to open the "
 030688 Print_obj (Var (Local 3))
 030690 Print_ret " first."
+030697 Call (Floc 030734) [] Sp
+030702 Ret_popped
+030703 Jz (Var (Local 1)) (Branch F Dfalse)
+030706 Jz (Var (Local 2)) (Branch F Dfalse)
+030709 Print "I don't think that the "
+030718 Print_obj (Var (Global 118))
+030720 Print_ret " would agree with you."
 --------------------------------------------------
-gap=37
+gap=1
 030734 RoutineHeader []
 030735 Print "Thank you very much. I was rather thirsty (from all this talking, probably)."
 030784 New_line
@@ -2561,8 +2586,10 @@ gap=1
 031134 Jin (Con 237) (Var Sp) (Branch F (Dloc 031147))
 031138 Call (Floc 022396) [Con 59,Var (Global 118),Con 237] Sp
 031146 Rtrue
+031147 Print_ret "There's nothing to fill it with."
+031166 Print_ret "You may know how to do that, but I don't."
 --------------------------------------------------
-gap=45
+gap=1
 031192 RoutineHeader [0]
 031195 Get_parent (Var (Global 118)) (Local 1)
 031198 Je [Var (Global 118),Con 1,Con 6] (Branch F (Dloc 031247))
@@ -2573,33 +2600,27 @@ gap=45
 031274 Print_ret "You find it."
 031283 Jin (Var (Global 118)) (Var (Global 111)) (Branch F (Dloc 031294))
 031287 Print_ret "You have it."
---------------------------------------------------
-gap=12
-031306 RoutineHeader []
-031307 Jin (Var (Global 49)) (Con 134) (Branch F (Dloc 034713))
+031294 Jin (Var (Global 118)) (Var (Global 0)) (Branch T (Dloc 031312))
+031298 Call (Floc 038048) [Var (Global 118),Var (Global 0)] Sp
+031305 Jz (Var Sp) (Branch F (Dloc 031312))
+031308 Je [Var (Global 118),Con 13] (Branch F (Dloc 031321))
 031312 Print_ret "It's right here."
---------------------------------------------------
-gap=1
-031322 RoutineHeader [7758]
+031321 Test_attr (Var (Local 1)) (Con 30) (Branch F (Dloc 031337))
 031325 Print "The "
 031328 Print_obj (Var (Local 1))
 031330 Print_ret " has it."
---------------------------------------------------
-gap=1
-031338 RoutineHeader [2636]
+031337 Test_attr (Var (Local 1)) (Con 10) (Branch F (Dloc 031351))
 031341 Print "It's on the "
 031346 Print_obj (Var (Local 1))
 031348 Print_ret "."
---------------------------------------------------
-gap=1
-031352 RoutineHeader [4940]
+031351 Test_attr (Var (Local 1)) (Con 19) (Branch F (Dloc 031365))
 031355 Print "It's in the "
 031360 Print_obj (Var (Local 1))
 031362 Print_ret "."
+031365 Print_ret "Beats me."
 --------------------------------------------------
-gap=5
-031370 RoutineHeader [19094,17664]
--- unused: [1,2]
+gap=0
+031374 RoutineHeader []
 031375 Print_ret "You're nuts!"
 --------------------------------------------------
 gap=0
@@ -2668,10 +2689,10 @@ gap=0
 031713 Print " the "
 031716 Print_obj (Var (Global 119))
 031718 Print_ret "."
+031721 Print_ret "No, it isn't."
 --------------------------------------------------
-gap=3
-031724 RoutineHeader [25445,-10164,-18204,-19968]
--- unused: [1,2,3,4]
+gap=0
+031732 RoutineHeader []
 031733 Call (Floc 037468) [Con -26036] Sp
 031740 Ret_popped
 --------------------------------------------------
@@ -2734,7 +2755,6 @@ gap=1
 --------------------------------------------------
 gap=0
 032004 RoutineHeader [0,0]
--- unused: [1,2]
 032009 Jz (Var (Global 118)) (Branch T (Dloc 032065))
 032012 Jin (Var (Global 118)) (Var (Global 0)) (Branch F (Dloc 032048))
 032016 Test_attr (Var (Global 118)) (Con 30) (Branch F (Dloc 032042))
@@ -2743,10 +2763,14 @@ gap=0
 032025 Print_ret " is too big to jump over."
 032042 Call (Floc 034340) [] Sp
 032047 Ret_popped
---------------------------------------------------
-gap=34
-032082 RoutineHeader [30544,257,174,0]
--- unused: [1,2,3,4]
+032048 Print_ret "That would be a good trick."
+032065 Get_prop_addr (Var (Global 0)) (Con 22) (Local 1)
+032069 Jz (Var (Local 1)) (Branch T (Dloc 032212))
+032073 Get_prop_len (Var (Local 1)) (Local 2)
+032076 Je [Var (Local 2),Con 2] (Branch T (Dloc 032094))
+032080 Je [Var (Local 2),Con 4] (Branch F (Dloc 032137))
+032084 Loadb (Var (Local 1)) (Con 1) Sp
+032088 Load (Var Sp) Sp
 032091 Jz (Var Sp) (Branch F (Dloc 032137))
 032094 Print "This was not a very safe place to try jumping."
 032123 New_line
@@ -2761,9 +2785,7 @@ gap=34
 032205 Rtrue
 032206 Call (Floc 034340) [] Sp
 032211 Ret_popped
---------------------------------------------------
-gap=4
-032216 RoutineHeader []
+032212 Call (Floc 034340) [] Sp
 032217 Ret_popped
 --------------------------------------------------
 gap=0
@@ -3021,8 +3043,9 @@ gap=1
 033344 Jin (Con 173) (Var (Global 111)) (Branch F (Dloc 033357))
 033348 Call (Floc 022396) [Con 23,Var (Global 118),Con 173] Sp
 033356 Ret_popped
+033357 Print_ret "It's really not clear how."
 --------------------------------------------------
-gap=17
+gap=0
 033374 RoutineHeader []
 033375 Call (Floc 037468) [Con -25995] Sp
 033382 Ret_popped
@@ -3040,7 +3063,6 @@ gap=0
 --------------------------------------------------
 gap=1
 033418 RoutineHeader [0]
--- unused: [1]
 033421 Test_attr (Var (Global 119)) (Con 11) (Branch T (Dloc 033449))
 033425 Test_attr (Var (Global 119)) (Con 23) (Branch T (Dloc 033433))
 033429 Test_attr (Var (Global 119)) (Con 19) (Branch T (Dloc 033449))
@@ -3062,10 +3084,8 @@ gap=1
 033503 Print " is already in the "
 033510 Print_obj (Var (Global 119))
 033512 Print_ret "."
---------------------------------------------------
-gap=5
-033520 RoutineHeader [-8145]
-033523 And (Var (Global 6)) (Con 134) Sp
+033515 Call (Floc 037420) [Var (Global 119)] (Local 1)
+033521 Call (Floc 037420) [Var (Global 118)] Sp
 033527 Add (Var (Local 1)) (Var Sp) (Local 1)
 033531 Get_prop (Var (Global 119)) (Con 15) Sp
 033535 Sub (Var (Local 1)) (Var Sp) (Local 1)
@@ -3226,8 +3246,17 @@ gap=0
 034219 Jump 034231
 034222 Print "to the ground"
 034231 Print_ret "."
+034234 Print_ret "Shaken."
+034241 Get_child (Var (Global 118)) Sp (Branch F (Dloc 034277))
+034245 Print "It sounds like there is something inside the "
+034272 Print_obj (Var (Global 118))
+034274 Print_ret "."
+034277 Print "The "
+034280 Print_obj (Var (Global 118))
+034282 Print_ret " sounds empty."
+034293 Print_ret "Shaken."
 --------------------------------------------------
-gap=66
+gap=0
 034300 RoutineHeader [0]
 034303 Get_child (Var (Global 118)) (Local 1) (Branch F Dtrue)
 034307 Set_attr (Var (Local 1)) (Con 3)
@@ -3340,9 +3369,9 @@ gap=0
 034745 Test_attr (Var (Global 118)) (Con 0) (Branch F (Dloc 034762))
 034749 Print_ret "You are already wearing it."
 034762 Print_ret "You already have that!"
---------------------------------------------------
-gap=9
-034780 RoutineHeader []
+034771 Get_parent (Var (Global 118)) Sp
+034774 Test_attr (Var Sp) (Con 19) (Branch F (Dloc 034820))
+034778 Get_parent (Var (Global 118)) Sp
 034781 Test_attr (Var Sp) (Con 11) (Branch T (Dloc 034820))
 034785 Print_ret "You can't reach something that's inside a closed container."
 034820 Jz (Var (Global 119)) (Branch T (Dloc 034861))
@@ -3418,9 +3447,7 @@ gap=0
 035131 Print_ret "You can't do that!"
 035140 Jin (Var (Global 118)) (Var (Global 111)) (Branch F (Dloc 035169))
 035144 Print_ret "That would involve quite a contortion!"
---------------------------------------------------
-gap=5
-035174 RoutineHeader []
+035169 Call (Floc 020076) [Var (Global 53)] Sp
 035175 Print_paddr (Var Sp)
 035177 New_line
 035178 Rtrue
@@ -3959,9 +3986,8 @@ gap=0
 037359 Print "."
 037362 New_line
 037363 Rfalse
---------------------------------------------------
-gap=6
-037370 RoutineHeader []
+037364 Jin (Var (Global 118)) (Var (Global 111)) (Branch T (Dloc 037389))
+037368 Get_parent (Var (Global 118)) Sp
 037371 Test_attr (Var Sp) (Con 11) (Branch T (Dloc 037389))
 037375 Print "The "
 037378 Print_obj (Var (Global 118))
@@ -4391,24 +4417,14 @@ gap=1
 039509 Get_child (Con 236) Sp (Branch T (Dloc 039537))
 039513 Insert_obj (Con 237) (Con 236)
 039516 Print_ret "The bottle is now full of water."
---------------------------------------------------
-gap=1
-039538 RoutineHeader [8551,4410,-18432,13572]
--- unused: [1,2,3,4]
-039547 Ret (Con 14956)
---------------------------------------------------
-gap=42
-039592 RoutineHeader [-11421]
--- unused: [1]
-039595 Test_attr (Con 25) (Var (Global 21)) (Branch T (Dloc 039605))
-039599 Inc (Var (Global 163))
-039601 Dec_chk (Con 33) (Con 103) (Branch F (Dloc 044014))
-039606 Ret_popped
---------------------------------------------------
-gap=11
-039618 RoutineHeader [-13389,4718,8512]
--- unused: [2,3]
-039625 Jin (Var (Global 238)) (Var (Global 134)) (Branch F (Dloc 039632))
+039537 Print_ret "The water slips through your fingers."
+039554 Jin (Var (Global 118)) (Con 236) (Branch F (Dloc 039600))
+039558 Je [Var (Global 120),Con 93] (Branch F (Dloc 039600))
+039562 Jz (Var (Global 119)) (Branch F (Dloc 039600))
+039565 Print_ret "It's in the bottle. Perhaps you should take that instead."
+039600 Print_ret "The water slips through your fingers."
+039617 Jz (Var (Local 3)) (Branch T (Dloc 039629))
+039620 Print_ret "Nice try."
 039629 Je [Var (Global 120),Con 63,Con 49] (Branch F (Dloc 039719))
 039636 Call (Floc 030906) [Con 237] Sp
 039642 Jz (Var (Local 1)) (Branch T (Dloc 039678))
@@ -4757,8 +4773,18 @@ gap=0
 042367 Print "Going up empty-handed is a bad idea."
 042394 New_line
 042395 Rfalse
+042396 Get_sibling (Var (Local 1)) (Local 1) (Branch F (Dloc 042404))
+042400 Get_sibling (Var (Local 1)) Sp (Branch T (Dloc 042419))
+042404 Jin (Con 164) (Var (Global 111)) (Branch F (Dloc 042419))
+042408 Test_attr (Con 183) (Con 11) (Branch T (Dloc 042417))
+042412 Clear_attr (Con 183) (Con 3)
+042415 Ret (Con 203)
+042417 Ret (Con 203)
+042419 Print "You can't get up there with what you're carrying."
+042446 New_line
+042447 Rfalse
 --------------------------------------------------
-gap=52
+gap=0
 042448 RoutineHeader []
 042449 Jz (Var (Global 48)) (Branch T (Dloc 042477))
 042452 Test_attr (Con 183) (Con 11) (Branch F (Dloc 042458))
@@ -4818,8 +4844,13 @@ gap=1
 042953 Print "The "
 042956 Print_obj (Var (Local 2))
 042958 Print_ret " swings it out of your reach."
+042975 Print "The "
+042978 Print_obj (Var (Local 1))
+042980 Print " seems white-hot. You can't hold on to it."
+043003 New_line
+043004 Rtrue
 --------------------------------------------------
-gap=31
+gap=1
 043006 RoutineHeader [0]
 043009 Je [Var (Global 120),Con 111] (Branch F (Dloc 043046))
 043013 Print "The troll isn't much of a conversationalist."
@@ -4866,10 +4897,21 @@ gap=31
 043310 Jin (Con 218) (Con 217) (Branch F (Dloc 043323))
 043314 Put_prop (Con 217) (Con 11) (Con -25564)
 043320 Jump 043351
---------------------------------------------------
-gap=47
-043370 RoutineHeader [3452,176]
--- unused: [2]
+043323 Jin (Con 218) (Con 102) (Branch F (Dloc 043345))
+043327 Set_attr (Con 218) (Con 14)
+043330 Clear_attr (Con 218) (Con 29)
+043333 Insert_obj (Con 218) (Con 217)
+043336 Put_prop (Con 217) (Con 11) (Con -25564)
+043342 Jump 043351
+043345 Put_prop (Con 217) (Con 11) (Con -25541)
+043351 Store (Con 157) (Con 0)
+043354 Ret (Var (Global 141))
+043356 Je [Var (Local 1),Con 5] (Branch F (Dloc 043375))
+043360 Random (Con 100) Sp
+043364 Jg (Con 33) (Var Sp) (Branch F Dfalse)
+043368 Set_attr (Con 217) (Con 2)
+043371 Store (Con 124) (Con 0)
+043374 Rtrue
 043375 Jz (Var (Local 1)) (Branch F Dfalse)
 043378 Je [Var (Global 120),Con 56] (Branch F (Dloc 043390))
 043382 Get_prop (Con 217) (Con 11) Sp
@@ -4954,16 +4996,26 @@ gap=0
 044157 Call (Floc 030906) [Var (Global 118)] Sp
 044163 Jin (Var (Global 118)) (Var (Global 0)) (Branch F (Dloc 044178))
 044167 Print_ret "The leaves burn."
---------------------------------------------------
-gap=6
-044184 RoutineHeader []
+044178 Call (Floc 067174) [Con -25537] Sp
 044185 Ret_popped
---------------------------------------------------
-gap=42
-044228 RoutineHeader []
+044186 Je [Var (Global 120),Con 39] (Branch F (Dloc 044230))
+044190 Print "You rustle the leaves around, making quite a mess."
+044223 New_line
+044224 Call (Floc 044036) [] Sp
 044229 Rtrue
+044230 Je [Var (Global 120),Con 93,Con 88] (Branch F (Dloc 044261))
+044236 Je [Var (Global 120),Con 88] (Branch F (Dloc 044248))
+044240 Print "Done."
+044247 New_line
+044248 Jz (Var (Global 46)) (Branch F Dfalse)
+044251 Call (Floc 044036) [] Sp
+044256 Je [Var (Global 120),Con 93] (Branch F Dtrue)
+044260 Rfalse
+044261 Je [Var (Global 120),Con 81] (Branch F Dfalse)
+044265 Jz (Var (Global 46)) (Branch F Dfalse)
+044268 Print_ret "Underneath the pile of leaves is a grating. As you release the leaves, the grating is once again concealed from view."
 --------------------------------------------------
-gap=106
+gap=1
 044336 RoutineHeader [0]
 044339 Je [Var (Local 1),Con 2] (Branch F (Dloc 044350))
 044343 Jz (Var (Global 46)) (Branch F Dfalse)
@@ -5204,10 +5256,16 @@ gap=1
 046573 Jin (Con 211) (Var (Global 111)) (Branch F (Dloc 046600))
 046577 Jin (Con 147) (Var (Global 111)) (Branch F (Dloc 046600))
 046581 Print_ret "You must perform the ceremony."
---------------------------------------------------
-gap=184
-046784 RoutineHeader [3354,-21866,17851]
--- unused: [1,2,3]
+046600 Print_ret "You aren't equipped for an exorcism."
+046623 Jz (Var (Global 145)) (Branch F (Dloc 046876))
+046627 Je [Var (Global 120),Con 109] (Branch F (Dloc 046876))
+046632 Je [Var (Global 118),Con 221] (Branch F (Dloc 046876))
+046637 Store (Con 58) (Con 1)
+046640 Call (Floc 030906) [Con 221] Sp
+046646 Call (Floc 038192) [Con 219] Sp
+046652 Insert_obj (Con 219) (Var (Global 0))
+046655 Print "The bell suddenly becomes red hot and falls to the ground. The wraiths, as if paralyzed, stop their jeering and slowly turn to face you. On their ashen faces, the expression of a long-forgotten terror takes shape."
+046790 New_line
 046791 Jin (Con 147) (Var (Global 111)) (Branch F (Dloc 046849))
 046795 Print "In your confusion, the candles drop to the ground (and they are out)."
 046830 New_line
@@ -5220,18 +5278,24 @@ gap=184
 046862 Call (Floc 021618) [Con 23666,Con 20] Sp
 046870 Storew (Var Sp) (Con 0) (Con 1)
 046875 Rtrue
---------------------------------------------------
-gap=200
-047076 RoutineHeader []
+046876 Jz (Var (Global 41)) (Branch T Dfalse)
+046879 Je [Var (Global 120),Con 83] (Branch F Dfalse)
+046883 Je [Var (Global 118),Con 211] (Branch F Dfalse)
+046887 Jz (Var (Global 145)) (Branch F Dfalse)
+046890 Print "Each word of the prayer reverberates through the hall in a deafening confusion. As the last word fades, a voice, loud and commanding, speaks: \"Begone, fiends!\" A heart-stopping scream fills the cavern, and the spirits, sensing a greater power, flee through the walls."
+047055 New_line
+047056 Call (Floc 030906) [Con 233] Sp
+047062 Store (Con 161) (Con 1)
+047065 Call (Floc 021638) [Con 23661] Sp
+047072 Storew (Var Sp) (Con 0) (Con 0)
 047077 Rtrue
---------------------------------------------------
-gap=96
-047174 RoutineHeader [14421,-10437,14337,5233]
--- unused: [1,3,4]
-047183 Div (Var Sp) (Con 217) Sp
-047187 Dec_chk (Con 106) (Var (Global 90)) (Branch F (Dloc 054095))
-047192 Mul (Con 62) (Var (Local 2)) (Global 164)
-047196 Get_prop (Var (Global 71)) (Var (Global 134)) (Global 53)
+047078 Je [Var (Local 1),Con 6] (Branch F Dfalse)
+047082 Jz (Var (Global 42)) (Branch T Dfalse)
+047085 Jin (Con 147) (Var (Global 111)) (Branch F Dfalse)
+047089 Test_attr (Con 147) (Con 20) (Branch F Dfalse)
+047093 Jz (Var (Global 41)) (Branch F Dfalse)
+047096 Store (Con 57) (Con 1)
+047099 Print "The flames flicker wildly and appear to dance. The earth beneath your feet trembles, and your legs nearly buckle beneath you. The spirits cower at your unearthly power."
 047200 New_line
 047201 Call (Floc 021638) [Con 23614] Sp
 047208 Storew (Var Sp) (Con 0) (Con 0)
@@ -5798,7 +5862,6 @@ gap=0
 --------------------------------------------------
 gap=1
 052878 RoutineHeader [0,0,0,0]
--- unused: [2,3,4]
 052887 Jz (Var (Global 62)) (Branch F (Dloc 052894))
 052890 Je [Var (Global 0),Con 190] (Branch T Dfalse)
 052894 Jz (Var (Global 31)) (Branch F (Dloc 053774))
@@ -5812,15 +5875,14 @@ gap=1
 053028 New_line
 053029 Store (Con 47) (Con 1)
 053032 Rtrue
---------------------------------------------------
-gap=63
-053096 RoutineHeader [52,7372,55,21098,417,6182]
--- unused: [4,5,6]
-053109 Mod (Con 24) (Con 101) (Global 193)
-053113 Set_attr (Con 33) (Var (Global 28))
-053116 Div (Con 4) (Var (Global 4)) (Global 85)
-053120 Print_obj (Var (Global 204))
-053122 Print "door j hkc the N"
+053033 Jin (Con 113) (Var (Global 111)) (Branch F Dfalse)
+053037 Insert_obj (Con 113) (Con 114)
+053040 Set_attr (Con 113) (Con 14)
+053043 Clear_attr (Con 114) (Con 7)
+053046 Print "You feel a light finger-touch, and turning, notice a grinning figure holding a large bag in one hand and a stiletto in the other."
+053123 Store (Con 47) (Con 1)
+053126 Rtrue
+053127 Jz (Var (Local 1)) (Branch T (Dloc 053276))
 053131 Test_attr (Con 114) (Con 2) (Branch F (Dloc 053276))
 053136 Call (Floc 065412) [Con 114] Sp
 053142 Jz (Var Sp) (Branch F (Dloc 053276))
@@ -5877,17 +5939,25 @@ gap=63
 053695 Store (Con 1) (Con 0)
 053698 Rtrue
 053699 Print_ret "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled."
---------------------------------------------------
-gap=40
-053814 RoutineHeader [-24574,-32698]
--- unused: [1,2]
+053774 Jz (Var (Local 1)) (Branch T Dfalse)
+053777 Random (Con 100) Sp
+053781 Jg (Con 30) (Var Sp) (Branch F Dfalse)
+053785 Call (Floc 066488) [Var (Global 0),Con 114,Con 100] Sp
+053793 Pull (Con 4)
+053796 Jz (Var (Local 4)) (Branch T (Dloc 053805))
+053799 Push (Var (Local 4))
+053802 Jump 053812
+053805 Call (Floc 066488) [Var (Global 111),Con 114] Sp
+053812 Pull (Con 2)
+053815 Jz (Var (Local 2)) (Branch T (Dloc 053887))
 053819 Print "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first."
 053878 New_line
 053879 Call (Floc 053932) [] Sp
 053884 Jump 053919
---------------------------------------------------
-gap=37
-053924 RoutineHeader []
+053887 Print "The thief, finding nothing of value, left disgusted."
+053918 New_line
+053919 Set_attr (Con 114) (Con 7)
+053922 Store (Con 1) (Con 0)
 053925 Call (Floc 066364) [] Sp
 053930 Rfalse
 --------------------------------------------------
@@ -5951,7 +6021,7 @@ gap=1
 --------------------------------------------------
 gap=1
 054184 RoutineHeader [0,0,0,0]
--- unused: [2,4]
+-- unused: [4]
 054193 Je [Var (Global 120),Con 111] (Branch F (Dloc 054224))
 054197 Print "The thief is a strong, silent type."
 054218 New_line
@@ -5972,9 +6042,19 @@ gap=1
 054387 Call (Floc 055622) [Con 114,Var (Global 0)] Sp
 054394 Print ", but the contents of his bag fall on the floor."
 054421 Jump 054427
---------------------------------------------------
-gap=128
-054552 RoutineHeader []
+054424 Print "."
+054427 New_line
+054428 Set_attr (Con 114) (Con 7)
+054431 Rtrue
+054432 Print "You missed. The thief makes no attempt to take the knife, though it would be a fine addition to the collection in his bag. He does seem angered by your attempt."
+054523 New_line
+054524 Set_attr (Con 114) (Con 2)
+054527 Rtrue
+054528 Je [Var (Global 120),Con 63,Con 127] (Branch F (Dloc 054742))
+054535 Jz (Var (Global 118)) (Branch T (Dloc 054742))
+054539 Je [Var (Global 118),Con 114] (Branch T (Dloc 054742))
+054544 Je [Var (Global 119),Con 114] (Branch F (Dloc 054742))
+054549 Get_prop (Con 114) (Con 7) Sp
 054553 Jl (Var Sp) (Con 0) (Branch F (Dloc 054629))
 054558 Get_prop (Con 114) (Con 7) Sp
 054562 Sub (Con 0) (Var Sp) Sp
@@ -5995,14 +6075,13 @@ gap=128
 054708 Print "The thief places the "
 054719 Print_obj (Var (Global 118))
 054721 Print_ret " in his bag and thanks you politely."
---------------------------------------------------
-gap=34
-054776 RoutineHeader []
-054777 Ret (Con 179)
---------------------------------------------------
-gap=195
-054974 RoutineHeader [78]
--- unused: [1]
+054742 Je [Var (Global 120),Con 93] (Branch F (Dloc 054771))
+054746 Print_ret "Once you got him, what would you do with him?"
+054771 Je [Var (Global 120),Con 57,Con 56] (Branch F (Dloc 054931))
+054778 Print_ret "The thief is a slippery character with beady eyes that flit back and forth. He carries, along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly in your direction. I'd watch out if I were you."
+054931 Je [Var (Global 120),Con 77] (Branch F Dfalse)
+054935 Print_ret "The thief says nothing, as you have not been formally introduced."
+054972 Je [Var (Local 1),Con 1] (Branch F (Dloc 055053))
 054977 Jin (Con 113) (Con 114) (Branch T Dfalse)
 054981 Get_parent (Con 114) Sp
 054984 Jin (Con 113) (Var Sp) (Branch F Dfalse)
@@ -6012,10 +6091,16 @@ gap=195
 054998 Print "The robber, somewhat surprised at this turn of events, nimbly retrieves his stiletto."
 055051 New_line
 055052 Rtrue
---------------------------------------------------
-gap=41
-055094 RoutineHeader [11584,1401,6666,-27067,-17524,125]
--- unused: [1,4,5,6]
+055053 Je [Var (Local 1),Con 2] (Branch F (Dloc 055243))
+055058 Insert_obj (Con 113) (Var (Global 0))
+055061 Clear_attr (Con 113) (Con 14)
+055064 Call (Floc 053998) [Var (Global 0)] (Local 3)
+055070 Je [Var (Global 0),Con 190] (Branch F (Dloc 055211))
+055075 Get_child (Var (Global 0)) (Local 3) (Branch T (Dloc 055079))
+055079 Jz (Var (Local 3)) (Branch F (Dloc 055107))
+055082 Print "The chalice is now safe to take."
+055103 New_line
+055104 Jump 055230
 055107 Je [Var (Local 3),Con 191,Con 114,Con 4] (Branch T (Dloc 055204))
 055115 Clear_attr (Var (Local 3)) (Con 7)
 055118 Jz (Var (Local 2)) (Branch F (Dloc 055172))
@@ -6032,15 +6117,13 @@ gap=41
 055203 New_line
 055204 Get_sibling (Var (Local 3)) (Local 3) (Branch T (Dloc 055208))
 055208 Jump 055079
---------------------------------------------------
-gap=25
-055236 RoutineHeader []
+055211 Jz (Var (Local 3)) (Branch T (Dloc 055230))
+055214 Print "His booty remains."
+055229 New_line
+055230 Call (Floc 021638) [Con -32528] Sp
 055237 Storew (Var Sp) (Con 0) (Con 0)
 055242 Rtrue
---------------------------------------------------
-gap=1
-055244 RoutineHeader [1368]
--- unused: [1]
+055243 Je [Var (Local 1),Con 5] (Branch F (Dloc 055269))
 055247 Jz (Var (Global 31)) (Branch T Dfalse)
 055250 Test_attr (Con 114) (Con 7) (Branch T Dfalse)
 055254 Random (Con 100) Sp
@@ -6048,10 +6131,7 @@ gap=1
 055262 Set_attr (Con 114) (Con 2)
 055265 Store (Con 124) (Con 0)
 055268 Rtrue
---------------------------------------------------
-gap=1
-055270 RoutineHeader [861]
--- unused: [1]
+055269 Je [Var (Local 1),Con 3] (Branch F (Dloc 055300))
 055273 Call (Floc 021638) [Con -32528] Sp
 055280 Storew (Var Sp) (Con 0) (Con 0)
 055285 Clear_attr (Con 114) (Con 2)
@@ -6059,9 +6139,8 @@ gap=1
 055291 Clear_attr (Con 113) (Con 14)
 055294 Put_prop (Con 114) (Con 11) (Var (Global 28))
 055299 Rtrue
---------------------------------------------------
-gap=6
-055306 RoutineHeader []
+055300 Je [Var (Local 1),Con 4] (Branch F Dfalse)
+055304 Get_parent (Con 114) Sp
 055307 Je [Var Sp,Var (Global 0)] (Branch F (Dloc 055393))
 055312 Set_attr (Con 114) (Con 2)
 055315 Print "The robber revives, briefly feigning continued unconsciousness, and, when he sees his moment, scrambles away from you."
@@ -6115,7 +6194,7 @@ gap=0
 --------------------------------------------------
 gap=1
 055752 RoutineHeader [0,0,0]
--- unused: [2,3]
+-- unused: [3]
 055759 Je [Var (Local 1),Con 2] (Branch F Dfalse)
 055763 Call (Floc 021638) [Con -32528] Sp
 055770 Loadw (Var Sp) (Con 0) Sp
@@ -6124,9 +6203,17 @@ gap=1
 055781 Jin (Con 114) (Var (Global 0)) (Branch T (Dloc 055791))
 055785 Push (Con 1)
 055788 Jump 055794
---------------------------------------------------
-gap=105
-055896 RoutineHeader []
+055791 Push (Con 0)
+055794 Store (Con 2) (Var Sp)
+055797 Jz (Var (Local 2)) (Branch T (Dloc 055889))
+055801 Print "You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense."
+055876 New_line
+055877 Insert_obj (Con 114) (Var (Global 0))
+055880 Set_attr (Con 114) (Con 2)
+055883 Clear_attr (Con 114) (Con 7)
+055886 Jump 055892
+055889 Set_attr (Con 114) (Con 2)
+055892 Call (Floc 055898) [] Sp
 055897 Ret_popped
 --------------------------------------------------
 gap=0
@@ -6505,10 +6592,28 @@ gap=1
 058573 New_line
 058574 Set_attr (Con 158) (Con 11)
 058577 Rtrue
+058578 Print "The lid opens."
+058589 New_line
+058590 Set_attr (Con 158) (Con 11)
+058593 Rtrue
+058594 Je [Var (Global 120),Con 35] (Branch F (Dloc 058628))
+058598 Test_attr (Con 158) (Con 11) (Branch F (Dloc 058618))
+058602 Print "The lid closes."
+058613 New_line
+058614 Clear_attr (Con 158) (Con 11)
+058617 Rtrue
+058618 Call (Floc 020076) [Var (Global 52)] Sp
+058624 Print_paddr (Var Sp)
+058626 New_line
+058627 Rtrue
+058628 Je [Var (Global 120),Con 14] (Branch F Dfalse)
+058632 Jz (Var (Global 119)) (Branch F (Dloc 058662))
+058635 Print_ret "It's not clear how to turn it on with your bare hands."
+058662 Call (Floc 022396) [Con 89,Con 112,Var (Global 119)] Sp
+058670 Rtrue
 --------------------------------------------------
-gap=94
+gap=1
 058672 RoutineHeader [0]
--- unused: [1]
 058675 Je [Var (Global 120),Con 89] (Branch F Dfalse)
 058679 Je [Var (Global 119),Con 123] (Branch F (Dloc 058842))
 058684 Test_attr (Con 158) (Con 11) (Branch F (Dloc 058715))
@@ -6519,16 +6624,13 @@ gap=94
 058815 Call (Floc 030906) [Con 119] Sp
 058821 Insert_obj (Con 171) (Con 158)
 058824 Rtrue
---------------------------------------------------
-gap=9
-058834 RoutineHeader []
+058825 Get_child (Con 158) (Local 1) (Branch F (Dloc 058838))
+058829 Call (Floc 030906) [Var (Local 1)] Sp
 058835 Jump 058825
---------------------------------------------------
-gap=8
-058846 RoutineHeader [16679,14942,24591,8500]
--- unused: [1,2,3,4]
-058855 Dec_chk (Con 52) (Var (Global 195)) (Branch F (Dloc 052463))
-058860 Or (Var (Global 162)) (Con 150) (Global 53)
+058838 Insert_obj (Con 146) (Con 158)
+058841 Rtrue
+058842 Jz (Var (Global 119)) (Branch F (Dloc 058864))
+058845 Print_ret "You can't turn it with your hands..."
 058864 Print "It seems that a "
 058871 Print_obj (Var (Global 119))
 058873 Print_ret " won't do."
@@ -6563,9 +6665,8 @@ gap=0
 058999 Jin (Con 208) (Var (Global 111)) (Branch T (Dloc 059009))
 059003 Push (Con 1)
 059006 Jump 059012
---------------------------------------------------
-gap=5
-059014 RoutineHeader []
+059009 Push (Con 0)
+059012 Store (Con 155) (Var Sp)
 059015 Rfalse
 --------------------------------------------------
 gap=0
@@ -6574,8 +6675,10 @@ gap=0
 059023 Jin (Con 156) (Var (Global 111)) (Branch F (Dloc 059032))
 059027 Store (Con 164) (Con 0)
 059030 Ret (Var (Global 148))
+059032 Store (Con 164) (Con 1)
+059035 Ret (Var (Global 148))
 --------------------------------------------------
-gap=6
+gap=1
 059038 RoutineHeader []
 059039 Je [Var (Global 120),Con 105,Con 140] (Branch F Dfalse)
 059045 Je [Var (Global 0),Con 29] (Branch T (Dloc 059054))
@@ -6774,11 +6877,8 @@ gap=1
 060549 Print_ret "You can't deflate the boat while you're in it."
 060576 Jin (Con 156) (Var (Global 0)) (Branch T (Dloc 060605))
 060580 Print_ret "The boat must be on the ground to be deflated."
---------------------------------------------------
-gap=1
-060606 RoutineHeader [10064,-9983,10798,9829]
--- unused: [1,2,3,4]
-060615 Mod (Var (Global 134)) (Con 69) (Global 171)
+060605 Print "The boat deflates."
+060618 New_line
 060619 Store (Con 164) (Con 1)
 060622 Call (Floc 030906) [Con 156] Sp
 060628 Insert_obj (Con 141) (Var (Global 0))
@@ -6795,12 +6895,24 @@ gap=0
 060649 Je [Var (Global 120),Con 59,Con 23] (Branch F Dfalse)
 060655 Jin (Con 141) (Var (Global 0)) (Branch T (Dloc 060684))
 060659 Print_ret "The boat must be on the ground to be inflated."
---------------------------------------------------
-gap=76
-060760 RoutineHeader []
+060684 Je [Var (Global 119),Con 173] (Branch F (Dloc 060762))
+060689 Print "The boat inflates and appears seaworthy."
+060712 New_line
+060713 Test_attr (Con 108) (Con 3) (Branch T (Dloc 060743))
+060717 Print "A tan label is lying inside the boat."
+060742 New_line
+060743 Store (Con 164) (Con 0)
+060746 Call (Floc 030906) [Con 141] Sp
+060752 Insert_obj (Con 156) (Var (Global 0))
+060755 Call (Floc 038192) [Con 156] Sp
 060761 Ret_popped
+060762 Je [Var (Global 119),Con 6] (Branch F (Dloc 060793))
+060766 Print_ret "You don't have enough lung power to inflate it."
+060793 Print "With a "
+060800 Print_obj (Var (Global 119))
+060802 Print_ret "? Surely you jest!"
 --------------------------------------------------
-gap=56
+gap=1
 060818 RoutineHeader [0]
 060821 Je [Var (Local 1),Con 6] (Branch F Dfalse)
 060825 Jin (Con 162) (Var (Global 111)) (Branch F Dfalse)
@@ -6929,9 +7041,7 @@ gap=0
 061730 Get_prop (Con 83) (Con 14) Sp
 061734 Print_paddr (Var Sp)
 061736 Jump 061745
---------------------------------------------------
-gap=5
-061744 RoutineHeader []
+061739 Call (Floc 030906) [Con 83] Sp
 061745 Get_parent (Con 87) Sp
 061748 Insert_obj (Con 86) (Var Sp)
 061751 Call (Floc 030906) [Con 87] Sp
@@ -7144,9 +7254,18 @@ gap=0
 063212 Get_child (Var (Global 0)) Sp (Branch T (Dloc 063222))
 063216 Print "."
 063219 Jump 063243
---------------------------------------------------
-gap=84
-063306 RoutineHeader []
+063222 Print " and objects appear indistinct."
+063243 New_line
+063244 Test_attr (Var (Global 0)) (Con 20) (Branch T (Dloc 063284))
+063248 Print "Although there is no light, the room seems dimly illuminated."
+063283 New_line
+063284 New_line
+063285 Rfalse
+063286 Je [Var (Global 120),Con 98] (Branch F (Dloc 063519))
+063291 Je [Var (Global 0),Con 212] (Branch F (Dloc 063504))
+063296 Clear_attr (Con 164) (Con 7)
+063299 Put_prop (Var (Global 111)) (Con 17) (Con 0)
+063304 Store (Con 137) (Con 0)
 063307 Store (Con 88) (Con 0)
 063310 Store (Con 78) (Con 0)
 063313 Jin (Con 217) (Con 102) (Branch F (Dloc 063320))
@@ -7156,8 +7275,13 @@ gap=84
 063496 New_line
 063497 Call (Floc 037558) [Con 78] Sp
 063503 Ret_popped
+063504 Print_ret "Your prayers are not heard."
+063519 Print "You can't even do that."
+063532 New_line
+063533 Store (Con 124) (Con 0)
+063536 Ret (Con 2)
 --------------------------------------------------
-gap=34
+gap=0
 063538 RoutineHeader []
 063539 Jz (Var (Global 144)) (Branch T (Dloc 063565))
 063542 Print_ret "There's not much lake left...."
@@ -7702,8 +7826,10 @@ gap=0
 065976 New_line
 065977 Put_prop (Con 110) (Con 12) (Var (Local 3))
 065982 Rtrue
+065983 Storew (Var (Local 1)) (Con 0) (Con 0)
+065988 Rfalse
 --------------------------------------------------
-gap=7
+gap=1
 065990 RoutineHeader [0,0]
 065995 Get_child (Var (Local 1)) (Local 2) (Branch T (Dloc 065999))
 065999 Jz (Var (Local 2)) (Branch T Dfalse)

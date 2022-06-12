@@ -409,9 +409,9 @@ dumpCode Code{routines} = do
   printf "Code for %d routines\n" (length routines)
   sequence_
     [ do
-        printf "--[%d]--------------------------------------------------\n" i
+        printf "--------------------------------------------------\n"
         mapM_ print chunks
-    | (i,CompiledRoutine{chunks}) <- zip [1::Int ..] routines
+    | CompiledRoutine{chunks} <- routines
     ]
 
 data Code = Code

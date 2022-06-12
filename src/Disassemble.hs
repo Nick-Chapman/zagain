@@ -19,7 +19,7 @@ import Eff (Mode(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr)
-import Operation (Operation,RoutineHeader,opLocals)
+import Operation (Operation,RoutineHeader,opLocals,opLabels)
 import Story (Story(header,size),OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Data.Set as Set
@@ -209,16 +209,8 @@ disRoutineM story start = do
 
 branchesOf :: Operation -> [Addr]
 branchesOf = \case
-  Op.Dec_chk _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  Op.Inc_chk _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  Op.Je _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  Op.Jg _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  Op.Jl _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
   Op.Jump a -> [a]
-  Op.Jz _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  Op.Test _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  Op.Test_attr _ _ (Op.Branch _ (Op.Dloc a)) -> [a]
-  _ -> []
+  op -> [ a | Op.Branch _ (Op.Dloc a) <- opLabels op ]
 
 isStopping :: Operation -> Bool
 isStopping = \case

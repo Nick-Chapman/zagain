@@ -11,6 +11,7 @@ module Operation
   , RoutineHeader(..)
   , opLocals
   , opTargets
+  , opLabels
   ) where
 
 import Numbers (Byte,Addr,Value)
@@ -276,3 +277,22 @@ opTargetOpt = \case
   Test _arg1 _arg2 _label -> do Nothing
   Test_attr _arg1 _arg2 _label -> do Nothing
   Verify _label -> do Nothing
+
+
+opLabels :: Operation -> [Label]
+opLabels = \case
+  Dec_chk _arg1 _arg2 label -> do [label]
+  Get_child _arg _target label -> do [label]
+  Get_sibling _arg _target label -> do [label]
+  Inc_chk _arg1 _arg2 label -> do [label]
+  Je _args label -> do [label]
+  Jg _arg1 _arg2 label -> do [label]
+  Jin _arg1 _arg2 label -> do [label]
+  Jl _arg1 _arg2 label -> do [label]
+  Jz _arg label -> do [label]
+  Restore label -> do [label]
+  Save label -> do [label]
+  Test _arg1 _arg2 label -> do [label]
+  Test_attr _arg1 _arg2 label -> do [label]
+  Verify label -> do [label]
+  _ -> do []
