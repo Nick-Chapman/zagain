@@ -146,8 +146,13 @@ eval mode here op = case op of
     v2 <- evalArg arg2
     Objects.insertObj mode v1 v2
 
-  Op.Je args label -> do
-    mapM evalArg args >>= EqualAny >>= If >>= branchMaybe label
+  Op.Je [] _ -> error "Je/[]"
+  Op.Je [_] _ -> error "Je/[_]"
+  Op.Je (arg1:arg2:args) label -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    vs <- mapM evalArg args
+    equalAny v1 v2 vs >>= If >>= branchMaybe label
 
   Op.Jg arg1 arg2 label -> do
     v1 <- evalArg arg1
@@ -159,7 +164,7 @@ eval mode here op = case op of
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     p <- Objects.getFM Parent v1
-    res <- EqualAny [v2,p] >>= If
+    res <- Equal v2 p >>= If
     branchMaybe label res
 
   Op.Jl arg1 arg2 label -> do
@@ -352,7 +357,7 @@ eval mode here op = case op of
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v12 <- And v1 v2
-    res <- EqualAny [v12, v2] >>= If
+    res <- Equal v12 v2 >>= If
     branchMaybe label res
 
   Op.Test_attr arg1 arg2 label -> do
@@ -378,6 +383,14 @@ eval mode here op = case op of
   Op.Nop -> undefined
   Op.Read_char{} -> do undefined
   Op.Show_status -> undefined
+
+
+equalAny :: Value p -> Value p -> [Value p] -> Eff p (Pred p)
+equalAny v1 v2 vs = Equal v1 v2 >>= loop vs
+  where
+    loop vs pred = case vs of
+      [] -> pure pred
+      v:vs -> Equal v1 v >>= LogOr pred >>= loop vs
 
 writeBytes :: Addr p -> [Byte p] -> Eff p ()
 writeBytes a bs =

@@ -158,7 +158,7 @@ unlink mode this = do
   b <- not <$> (IsZero oldP >>= If)
   when b $ do
     child <- getFM Child oldP
-    b <- EqualAny [child,this] >>= If
+    b <- Equal child this >>= If
     case b of
       True -> do
         thisSib <- getFM Sibling this
@@ -172,7 +172,7 @@ unlink mode this = do
           b <- IsZero x >>= If
           if b then error "unlink loop, failed to find unlinkee" else do
             sib <- getFM Sibling x
-            b <- EqualAny [sib,this] >>= If
+            b <- Equal sib this >>= If
             case b of
               False -> loop sib -- TODO: infinite effect is a problem for compilation
               True -> do
@@ -185,7 +185,7 @@ getPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
 getPropN mode x n = do
   props <- getPropertyTable mode x
   xs <- sequence
-    [ do b <- EqualAny [n,number] >>= If; pure (prop,b)
+    [ do b <- Equal n number >>= If; pure (prop,b)
     | prop@Prop{propNumber=number} <- props
     ]
   pure $ case [ prop | (prop,b) <- xs, b ] of

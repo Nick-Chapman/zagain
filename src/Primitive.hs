@@ -4,7 +4,7 @@ module Primitive (P1(..),P2(..),evalP1,evalP2) where
 
 import Data.Bits ((.&.),(.|.),clearBit,setBit,testBit,shiftR)
 import Dictionary (Dict(..))
-import Numbers (Zversion,Byte,Value,Addr,makeByteAddress,makePackedAddress,makeHiLo,equalAny)
+import Numbers (Zversion,Byte,Value,Addr,makeByteAddress,makePackedAddress,makeHiLo)
 import qualified Data.Char as Char (chr,ord)
 import qualified Lex (tokenize,lookupInDict)
 
@@ -13,7 +13,6 @@ data P1 arg ret where
   Address :: P1 Value Addr
   DeAddress :: P1 Addr Value
   Div8 :: P1 Value Value
-  EqualAny :: P1 [Value] Bool -- TODO: replace with a binary equality op & bool-or op
   HiByte :: P1 Value Byte
   IsZero :: P1 Value Bool
   IsZeroAddress :: P1 Addr Bool
@@ -36,7 +35,6 @@ evalP1 = \case
   Address -> makeByteAddress
   DeAddress -> fromIntegral
   Div8 -> \v -> v `div` 8
-  EqualAny -> equalAny
   HiByte -> \v -> fromIntegral (v `shiftR` 8)
   IsZero -> (== 0)
   IsZeroAddress -> (== 0)
@@ -59,11 +57,13 @@ data P2 arg1 arg2 ret where
   BwAnd :: P2 Byte Byte Byte
   ClearBit :: P2 Byte Byte Byte
   Div :: P2 Value Value Value
+  Equal :: P2 Value Value Bool
   GreaterThan :: P2 Value Value Bool
   GreaterThanEqual :: P2 Value Value Bool
   LessThan :: P2 Value Value Bool
   LessThanByte :: P2 Byte Byte Bool
   LessThanEqual :: P2 Value Value Bool
+  LogOr :: P2 Bool Bool Bool
   MakeHiLo :: P2 Byte Byte Value
   MinusByte :: P2 Byte Byte Byte
   Mod :: P2 Value Value Value
@@ -84,11 +84,13 @@ evalP2 = \case
   BwAnd -> (.&.)
   ClearBit -> \b n -> b `clearBit` fromIntegral n
   Div -> div
+  Equal -> (==)
   GreaterThan -> (>)
   GreaterThanEqual -> (>=)
   LessThan -> (<)
   LessThanByte -> (<)
   LessThanEqual -> (<=)
+  LogOr -> (||)
   MakeHiLo -> makeHiLo
   MinusByte -> (-)
   Mod -> mod

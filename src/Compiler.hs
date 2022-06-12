@@ -246,7 +246,6 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.Address x -> prim1 x Prim.Address
       Eff.DeAddress x -> prim1 x Prim.DeAddress
       Eff.Div8 x -> prim1 x Prim.Div8
-      Eff.EqualAny x -> k s (Unary Prim.EqualAny (List x))
 
       Eff.HiByte x -> prim1 x Prim.HiByte
       Eff.IsZero x -> prim1 x Prim.IsZero
@@ -266,11 +265,13 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.BwAnd x y -> prim2 x y Prim.BwAnd
       Eff.ClearBit x y -> prim2 x y Prim.ClearBit
       Eff.Div x y -> prim2 x y Prim.Div
+      Eff.Equal x y -> prim2 x y Prim.Equal
       Eff.GreaterThan x y -> prim2 x y Prim.GreaterThan
       Eff.GreaterThanEqual x y -> prim2 x y Prim.GreaterThanEqual
       Eff.LessThan x y -> prim2 x y Prim.LessThan
       Eff.LessThanByte x y -> prim2 x y Prim.LessThanByte
       Eff.LessThanEqual x y -> prim2 x y Prim.LessThanEqual
+      Eff.LogOr x y -> prim2 x y Prim.LogOr
       Eff.MakeHiLo x y -> prim2 x y Prim.MakeHiLo
       Eff.MinusByte x y -> prim2 x y Prim.MinusByte
       Eff.Mod x y -> prim2 x y Prim.Mod
@@ -519,7 +520,6 @@ data Expression a where
   GetByte :: Expression Addr -> Expression Byte
   GetLocal :: Expression Byte -> Expression Value
   GetText :: Expression Addr -> Expression String
-  List :: Show x => [Expression x] -> Expression [x]
   LookupInDict :: Expression String -> Expression Addr
 
 instance Show a => Show (Expression a) where
@@ -533,7 +533,6 @@ instance Show a => Show (Expression a) where
     GetByte a -> "M[" ++ show a ++ "]"
     GetLocal n -> "GetLocal(" ++ show n ++ ")"
     GetText a -> "GetText(" ++ show a ++ ")"
-    List xs -> "List(" ++ intercalate "," (map show xs) ++ ")"
     LookupInDict x -> "LookupInDict(" ++ show x ++ ")"
 
 data Identifier a where

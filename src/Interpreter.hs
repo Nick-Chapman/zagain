@@ -177,7 +177,6 @@ runEffect screenWidth seed story smallStep = do
       Address x -> prim1 x Prim.Address
       DeAddress x -> prim1 x Prim.DeAddress
       Div8 x -> prim1 x Prim.Div8
-      EqualAny x -> prim1 x Prim.EqualAny
       HiByte x -> prim1 x Prim.HiByte
       IsZero x -> prim1 x Prim.IsZero
       IsZeroAddress x -> prim1 x Prim.IsZeroAddress
@@ -199,11 +198,13 @@ runEffect screenWidth seed story smallStep = do
       BwAnd x y -> prim2 x y Prim.BwAnd
       ClearBit x y -> prim2 x y Prim.ClearBit
       Div x y -> prim2 x y Prim.Div
+      Equal x y -> prim2 x y Prim.Equal
       GreaterThan x y -> prim2 x y Prim.GreaterThan
       GreaterThanEqual x y -> prim2 x y Prim.GreaterThanEqual
       LessThan x y -> prim2 x y Prim.LessThan
       LessThanByte x y -> prim2 x y Prim.LessThanByte
       LessThanEqual x y -> prim2 x y Prim.LessThanEqual
+      LogOr x y -> prim2 x y Prim.LogOr
       MakeHiLo x y -> prim2 x y Prim.MakeHiLo
       MinusByte x y -> prim2 x y Prim.MinusByte
       Mod x y -> prim2 x y Prim.Mod
