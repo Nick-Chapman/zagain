@@ -134,7 +134,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.StoryHeader -> k s header
 
       Eff.ReadInputFromUser statusLine -> do
-        name <- genId "user_command_line"
+        name <- genId "user_command_line_"
         Seq (ReadInputFromUser statusLine name) <$> k s (Variable name)
 
       Eff.GetText a -> do
@@ -172,7 +172,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (PushFrame addr) <$> k s ()
 
       Eff.PopFrame -> do
-        name <- genId "return_address"
+        name <- genId "return_address_"
         Seq (PopFrame name) <$> k s (Variable name)
 
       Eff.GetLocal n -> k s (GetLocal n)
@@ -180,8 +180,12 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.SetLocal n v -> do
         Seq (SetLocal n v) <$> k s ()
 
-      Eff.GetByte a -> k s (GetByte a) -- TODO: lookup in static memory range should happen now
-      Eff.SetByte a b -> Seq (SetByte a b) <$> k s ()
+      Eff.GetByte a -> do -- TODO: optimize: lookup in static memory range should happen now
+        name <- genId "b"
+        Seq (Let (Bind name (GetByte a))) <$> k s (Variable name)
+
+      Eff.SetByte a b ->
+        Seq (SetByte a b) <$> k s ()
 
       Eff.PushStack v -> if
         | eagerStack -> Seq (PushStack v) <$> k s ()
@@ -279,15 +283,15 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       Eff.LookupInDict word -> do
         res <- genId "lookee"
-        Seq (LetBind (Bind res (LookupInDict word))) <$> k s (Variable res)
+        Seq (Let (Bind res (LookupInDict word))) <$> k s (Variable res)
 
       Eff.StringBytes string -> do
-        split <- genId "string_bytes"
+        split <- genId "string_bytes_"
         Seq (StringBytes string split) <$> k s (Variable split)
 
       Eff.Tokenize x -> do
-        a <- genId "num_tokens"
-        b <- genId "position_words"
+        a <- genId "num_tokens_"
+        b <- genId "position_words_"
         c <- genId "canonicalized"
         Seq (Tokenize x (a,b,c)) <$> k s (Variable a,Variable b,Variable c)
 
@@ -486,13 +490,15 @@ data Atom
   | StringBytes (Expression String) (Identifier [Expression Byte])
   | Tokenize (Expression String) TokenizeIdents
   | LetRandom (Identifier Value) (Expression Value) -- TODO: use this "Let" prefix style more widely
-  | LetBind Bind
+  | Let Bind
   deriving Show
 
 data Bind where
   Bind :: Show x => Identifier x -> Expression x -> Bind
 
-deriving instance Show Bind
+instance Show Bind where
+  show = \case
+    Bind x e -> show x ++ " = " ++ show e
 
 type StatusInfo = Maybe (Eff.StatusInfo Compile)
 
@@ -509,7 +515,7 @@ data Expression a where
   Variable :: Identifier a -> Expression a
   Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
-  GetByte :: Expression Addr -> Expression Byte -- TODO: careful when Sets may be reordered
+  GetByte :: Expression Addr -> Expression Byte
   GetLocal :: Expression Byte -> Expression Value
   GetText :: Expression Addr -> Expression String
   List :: Show x => [Expression x] -> Expression [x]
@@ -533,4 +539,4 @@ data Identifier a where
   Identifier :: String -> Int -> Identifier a
 
 instance Show (Identifier a) where
-  show (Identifier tag i) = tag ++ "_" ++ show i
+  show (Identifier tag i) = tag ++ show i
