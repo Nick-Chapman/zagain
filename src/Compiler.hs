@@ -39,11 +39,13 @@ compileEffect story smallStep = do
   let as = routinesBetween story (staticMem,endOfStory)
   let routines = [ disRoutine story a | a <- as ]
 
-  let addressesToInline = Set.fromList $
+  let
+    addressesToInline :: Set Addr =
+      Set.fromList $
         concat [ routineAddressesToInline r | r <- routines]
 
   -- Experiment with inlining across routine calls
-  let xInline = [] --[025175]
+  let xInline = [] -- [025175]
 
   let
     shouldInline :: Control Compile -> Bool
@@ -58,9 +60,7 @@ compileEffect story smallStep = do
   let static = Static { story, smallStep, shouldInline }
 
   Code <$> sequence
-    [ do compileRoutine static addressesToInline r
-    | r <- routines
-    ]
+    [ do compileRoutine static r | r <- routines ]
 
 routineAddressesToInline :: Routine -> [Addr]
 routineAddressesToInline routine = do
@@ -87,28 +87,25 @@ data Static = Static
   }
 
 
-compileRoutine :: Static -> Set Addr -> Routine -> IO CompiledRoutine
-compileRoutine static addressesToInline routine = do
+compileRoutine :: Static -> Routine -> IO CompiledRoutine
+compileRoutine static routine = do
   let Routine{start,body} = routine
+  let Static{shouldInline} = static
   let
     isCall :: Operation -> Bool
     isCall = \case
       Operation.Call{} -> True
       _ -> False
   let
-    locations :: [Loc] =
-      [ x
+    locations =
+      [LocRoutine start] ++
+      [ loc
       | (addr,op) <- body
-      , x <- [LocOp addr] ++ if isCall op then [LocReturn addr] else []
+      , loc <- [LocOp addr] ++ if isCall op then [LocReturn addr] else []
+      , not $ shouldInline (makeControl loc)
       ]
-  let
-    nonInlinedLocations :: [Loc] =
-      [ control
-      | control <- locations
-      , case control of LocOp a -> a `Set.notMember` addressesToInline; _ -> True
-      ]
-  let locationsToCompile = [LocRoutine start] ++ nonInlinedLocations
-  CompiledRoutine <$> mapM (runGen . compileLoc static) locationsToCompile
+  CompiledRoutine <$> sequence
+    [ runGen (compileLoc static loc) | loc <- locations]
 
 
 compileLoc :: Static -> Loc -> Gen Chunk
