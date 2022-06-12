@@ -21,7 +21,7 @@ tokenize str = do
       let (_,offsetsR) = foldl f z lens
       reverse offsetsR
   -- TODO: Better if we didn't change inter-word whitespace
-  let canonicalized = intercalate " " toks -- TODO: what needs this? ++ "\0"
+  let canonicalized = intercalate " " toks ++ "\0" -- what actually needs this?
   let positionedWords = zip offsets toks
   let n = fromIntegral (length positionedWords)
   (n, positionedWords, canonicalized)
