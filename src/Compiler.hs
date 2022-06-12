@@ -104,7 +104,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
     header@Header{zv} = Story.header story
 
-    transfer :: State -> () -> Gen (Statement 'WillJump)
+    transfer :: State -> () -> Gen (Prog 'WillJump)
     transfer s () = do
       let State{control} = s
       if
@@ -114,12 +114,12 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             pure (flushStack s (Transfer control))
 
 
-    compileInIsolation :: State -> Effect () -> Gen (Statement 'WontJump)
+    compileInIsolation :: State -> Effect () -> Gen (Prog 'WontJump)
     compileInIsolation s eff = do
       loop s eff $ \s () -> pure (flushStack s Null)
 
     -- TODO: rename loop -> compile ?
-    loop :: forall jumpiness loopType. State -> Effect loopType -> (State -> loopType -> Gen (Statement jumpiness)) -> Gen (Statement jumpiness)
+    loop :: forall jumpiness loopType. State -> Effect loopType -> (State -> loopType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
     loop s e k = case e of
       Eff.Ret x -> k s x
       Eff.Bind e f -> loop s e $ \s a -> loop s (f a) k
@@ -298,10 +298,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (Tokenize x (a,b,c)) <$> k s (Variable a,Variable b,Variable c)
 
       where
-        prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen (Statement jumpiness)
+        prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen (Prog jumpiness)
         prim1 x p1 = k s (makeUnary p1 x)
 
-        prim2 :: (Show x, Show y) => Expression r ~ loopType => Expression x -> Expression y -> Prim.P2 x y r -> Gen (Statement jumpiness)
+        prim2 :: (Show x, Show y) => Expression r ~ loopType => Expression x -> Expression y -> Prim.P2 x y r -> Gen (Prog jumpiness)
         prim2 x y p2 = k s (makeBinary p2 x y)
 
 
@@ -337,7 +337,7 @@ initState control = State
   , stack = []
   }
 
-flushStack :: State -> Statement j -> Statement j
+flushStack :: State -> Prog j -> Prog j
 flushStack State{stack} s = loop s stack
   where
     loop s = \case
@@ -409,7 +409,7 @@ data CompiledRoutine = CompiledRoutine
   { chunks :: [Chunk]
   }
 
-data Chunk = Chunk { label :: Loc, body :: Statement 'WillJump }
+data Chunk = Chunk { label :: Loc, body :: Prog 'WillJump }
 
 instance Show Chunk where
   show Chunk{ label, body } =
@@ -420,18 +420,18 @@ data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
 data Jumpiness = WillJump | WontJump
 
-data Statement :: Jumpiness -> * where -- TODO: rename "Prog" ("Statement" is too similar to "State")
-  Null :: Statement 'WontJump
-  Quit :: Statement j
-  Error :: String -> Statement j
-  Transfer :: Control Compile -> Statement 'WillJump
-  Seq :: Atom ->  Statement j -> Statement j
-  FullSeq :: Statement 'WontJump ->  Statement j -> Statement j
-  If :: Expression Bool -> Statement j -> Statement j -> Statement j
-  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Statement 'WontJump -> Statement j -> Statement j
-  ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Statement 'WontJump -> Statement j -> Statement j
+data Prog :: Jumpiness -> * where
+  Null :: Prog 'WontJump
+  Quit :: Prog j
+  Error :: String -> Prog j
+  Transfer :: Control Compile -> Prog 'WillJump
+  Seq :: Atom ->  Prog j -> Prog j
+  FullSeq :: Prog 'WontJump ->  Prog j -> Prog j
+  If :: Expression Bool -> Prog j -> Prog j -> Prog j
+  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Prog 'WontJump -> Prog j -> Prog j
+  ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Prog 'WontJump -> Prog j -> Prog j
 
-pretty :: Int -> Statement j -> [String]
+pretty :: Int -> Prog j -> [String]
 pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]
