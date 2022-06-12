@@ -279,7 +279,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       Eff.LookupInDict word -> do
         res <- genId "lookee"
-        Seq (LookupInDict word res) <$> k s (Variable res)
+        Seq (LetBind (Bind res (LookupInDict word))) <$> k s (Variable res)
 
       Eff.StringBytes string -> do
         split <- genId "string_bytes"
@@ -487,9 +487,14 @@ data Atom
   | ReadInputFromUser StatusInfo (Identifier String)
   | StringBytes (Expression String) (Identifier [Expression Byte])
   | Tokenize (Expression String) TokenizeIdents
-  | LookupInDict (Expression String) (Identifier Addr)
   | LetRandom (Identifier Value) (Expression Value) -- TODO: use this "Let" prefix style more widely
+  | LetBind Bind
   deriving Show
+
+data Bind where
+  Bind :: Show x => Identifier x -> Expression x -> Bind
+
+deriving instance Show Bind
 
 type StatusInfo = Maybe (Eff.StatusInfo Compile)
 
@@ -510,6 +515,7 @@ data Expression a where
   GetLocal :: Expression Byte -> Expression Value
   GetText :: Expression Addr -> Expression String
   List :: Show x => [Expression x] -> Expression [x]
+  LookupInDict :: Expression String -> Expression Addr
 
 instance Show a => Show (Expression a) where
   show = \case
@@ -523,6 +529,7 @@ instance Show a => Show (Expression a) where
     GetLocal n -> "GetLocal(" ++ show n ++ ")"
     GetText a -> "GetText(" ++ show a ++ ")"
     List xs -> "List(" ++ intercalate "," (map show xs) ++ ")"
+    LookupInDict x -> "LookupInDict(" ++ show x ++ ")"
 
 data Identifier a where
   Identifier :: String -> Int -> Identifier a
