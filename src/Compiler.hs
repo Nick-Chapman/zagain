@@ -174,11 +174,11 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (MakeRoutineFrame n)  <$> k s ()
 
       Eff.PushFrame addr -> do
-        Seq (PushFrame addr) <$> k s ()
+        Seq PushFrame <$> Seq (PushReturnAddress addr) <$> k s ()
 
       Eff.PopFrame -> do
         name <- genId "return_address_"
-        Seq (PopFrame name) <$> k s (Variable name)
+        Seq PopFrame <$> Seq (PopReturnAddress name) <$> k s (Variable name)
 
       Eff.GetLocal n -> k s (GetLocal n)
 
@@ -496,8 +496,10 @@ data Atom
   | TraceOperation (Expression Addr) Operation
   | GamePrint (Expression String)
   | MakeRoutineFrame Int
-  | PushFrame (Expression Addr)
-  | PopFrame (Identifier Addr)
+  | PushFrame
+  | PopFrame
+  | PushReturnAddress (Expression Addr)
+  | PopReturnAddress (Identifier Addr)
   | PushStack (Expression Value)
   | PopStack (Identifier Value)
   | SetLocal (Expression Byte) (Expression Value)
