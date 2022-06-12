@@ -13,7 +13,7 @@ data P1 arg ret where
   Address :: P1 Value Addr
   DeAddress :: P1 Addr Value
   Div8 :: P1 Value Value
-  EqualAny :: P1 [Value] Bool
+  EqualAny :: P1 [Value] Bool -- TODO: replace with a binary equality op & bool-or op
   HiByte :: P1 Value Byte
   IsZero :: P1 Value Bool
   IsZeroAddress :: P1 Addr Bool
