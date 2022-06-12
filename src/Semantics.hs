@@ -178,7 +178,7 @@ eval mode here op = case op of
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     case dyn of
-      DSp{} -> Note "re-push value on stack!" -- TODO: code it!
+      DSp{} -> PushStack v
       _ -> pure ()
     setTarget target v
 

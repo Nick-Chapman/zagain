@@ -16557,7 +16557,7 @@ LocOp 035585:
     PopStack popped2;
     if (IsZeroByte(LoByte(popped2))) {
       PopStack popped3;
-      Note "\"re-push value on stack!\"";
+      PushStack popped3;
       PushStack popped3;
       TraceOperation 035596 (Jz (Var Sp) (Branch T (Dloc 035610)));
       PopStack popped4;
