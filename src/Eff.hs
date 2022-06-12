@@ -48,7 +48,7 @@ data Eff p x where
 
   Error :: String -> Eff p a -- runtime error
   Debug :: Show x => x -> Eff p () -- runtime debug
-  Note :: String -> Eff p () -- make this appear in compiled code
+  Note :: Show x => x -> Eff p () -- make this appear in compiled code
 
   StoryHeader :: Eff p Header
   LookupInDict :: Text p -> Eff p (Addr p)

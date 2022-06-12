@@ -129,7 +129,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       Eff.Error msg -> do pure $ Error msg
       Eff.Debug msg -> do GDebug msg; k s ()
-      Eff.Note msg -> Seq (Note msg) <$> k s ()
+      Eff.Note x -> Seq (Note (show x)) <$> k s ()
 
       Eff.StoryHeader -> k s header
 

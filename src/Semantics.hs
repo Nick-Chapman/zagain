@@ -39,7 +39,7 @@ smallStep mode = do
 
 
 eval :: Phase p => Mode -> Addr p -> Operation -> Eff p ()
-eval mode here = \case
+eval mode here op = case op of
 
   Op.BadOperation mes -> do
     error (printf "At [%s] %s" (show here) mes)
@@ -361,26 +361,23 @@ eval mode here = \case
     res <- Objects.testAttr v1 v2
     branchMaybe label res
 
-  Op.Read_char target -> do
-    Error (show ("Read_char",target))
-
-  Op.Buffer_mode{} -> pure () -- TODO: change to Note, so we see in generated code
-  Op.Erase_window{} -> pure ()
-  Op.Output_stream1{} -> pure ()
-  Op.Output_stream2{} -> pure ()
-  Op.Set_cursor{} -> pure ()
-  Op.Set_text_style{} -> pure ()
-  Op.Set_window{} -> pure ()
-  Op.Split_window{} -> pure ()
+  Op.Buffer_mode{} -> Note op
+  Op.Erase_window{} -> Note op
+  Op.Output_stream1{} -> Note op
+  Op.Output_stream2{} -> Note op
+  Op.Pop -> Note op
+  Op.Restore{} -> Note op
+  Op.Save{} -> Note op
+  Op.Set_cursor{} -> Note op
+  Op.Set_text_style{} -> Note op
+  Op.Set_window{} -> Note op
+  Op.Split_window{} -> Note op
+  Op.Verify{} -> Note op
 
   Op.Input_stream{} -> undefined
   Op.Nop -> undefined
+  Op.Read_char{} -> do undefined
   Op.Show_status -> undefined
-
-  Op.Pop -> Note "Pop"
-  Op.Restore{} -> Note "Restore"
-  Op.Save{} -> Note "Save"
-  Op.Verify{} -> Note "Verify"
 
 writeBytes :: Addr p -> [Byte p] -> Eff p ()
 writeBytes a bs =

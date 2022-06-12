@@ -10796,7 +10796,7 @@ LocRoutine 028242:
   Jump: 028243
 LocOp 028243:
   TraceOperation (Restore (Branch F (Dloc 028257)));
-  Note "Restore";
+  Note "Restore (Branch F (Dloc 028257))";
   Inlining (AtInstruction {pc = 028245});
   TraceOperation (Print "Ok.");
   GamePrint "Ok.";
@@ -10820,7 +10820,7 @@ LocRoutine 028264:
   Jump: 028265
 LocOp 028265:
   TraceOperation (Save (Branch F (Dloc 028272)));
-  Note "Save";
+  Note "Save (Branch F (Dloc 028272))";
   Inlining (AtInstruction {pc = 028267});
   TraceOperation (Print_ret "Ok.");
   GamePrint "Ok.\n";
@@ -10992,7 +10992,7 @@ LocOp 028601:
   GamePrint "\n";
   Inlining (AtInstruction {pc = 028617});
   TraceOperation (Verify (Branch F (Dloc 028632)));
-  Note "Verify";
+  Note "Verify (Branch F (Dloc 028632))";
   Inlining (AtInstruction {pc = 028619});
   TraceOperation (Print_ret "The disk is correct.");
   GamePrint "The disk is correct.\n";
@@ -18635,7 +18635,7 @@ LocOp 035585:
     PopStack popped2;
     if (IsZeroByte(LoByte(popped2))) {
       PopStack popped3;
-      Note "re-push value on stack!";
+      Note "\"re-push value on stack!\"";
       PushStack popped3;
       Inlining (AtInstruction {pc = 035596});
       TraceOperation (Jz (Var Sp) (Branch T (Dloc 035610)));
