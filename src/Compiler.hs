@@ -96,7 +96,7 @@ compileLoc :: Static -> Loc -> Gen Chunk
 compileLoc Static{story,smallStep,shouldInline} loc = do
 
   let control = makeControl loc
-  body <- loop (initState control) smallStep transfer
+  body <- compileK (initState control) smallStep kJump
   pure Chunk { label = loc, body }
 
   where
@@ -104,25 +104,26 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
     header@Header{zv} = Story.header story
 
-    transfer :: State -> () -> Gen (Prog 'WillJump)
-    transfer s () = do
+    -- continuation (for compilation) which will finish the compiled program with a jump
+    kJump :: State -> () -> Gen (Prog 'WillJump)
+    kJump s () = do
       let State{control} = s
       if
         | shouldInline control -> do
-            Seq (Inlining control) <$> loop s { control } smallStep transfer
+            Seq (Inlining control) <$> compileK s { control } smallStep kJump
         | otherwise -> do
-            pure (flushStack s (Transfer control))
+            pure (flushStack s (Jump control))
 
+    -- compile0: compile an effect, in isolation, to a program which will not jump
+    compile0 :: State -> Effect () -> Gen (Prog 'WontJump)
+    compile0 s eff = do
+      compileK s eff $ \s () -> pure (flushStack s Null)
 
-    compileInIsolation :: State -> Effect () -> Gen (Prog 'WontJump)
-    compileInIsolation s eff = do
-      loop s eff $ \s () -> pure (flushStack s Null)
-
-    -- TODO: rename loop -> compile ?
-    loop :: forall jumpiness loopType. State -> Effect loopType -> (State -> loopType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
-    loop s e k = case e of
+    -- compileK: compile an effect, given a continuation, to a program which may or notjump
+    compileK :: forall jumpiness effectType. State -> Effect effectType -> (State -> effectType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
+    compileK s e k = case e of
       Eff.Ret x -> k s x
-      Eff.Bind e f -> loop s e $ \s a -> loop s (f a) k
+      Eff.Bind e f -> compileK s e $ \s a -> compileK s (f a) k
 
       Eff.GamePrint mes -> do Seq (GamePrint mes) <$> k s ()
 
@@ -182,7 +183,6 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.GetByte a -> k s (GetByte a) -- TODO: lookup in static memory range should happen now
       Eff.SetByte a b -> Seq (SetByte a b) <$> k s ()
 
-      -- TODO: explore maintaining temporary-stack at compile-time
       Eff.PushStack v -> if
         | eagerStack -> Seq (PushStack v) <$> k s ()
         | otherwise -> do
@@ -214,14 +214,14 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             pure $ If pred b1 b2
 
       Eff.Isolate eff -> do
-        first <- compileInIsolation s eff
+        first <- compile0 s eff
         FullSeq first <$> k s ()
 
       Eff.ForeachB xs f -> do
         index <- genId "index"
         elem <- genId "byte"
         let bodyEff = f (Variable index) (Variable elem)
-        body <- compileInIsolation s bodyEff
+        body <- compile0 s bodyEff
         ForeachB (index,elem) xs body <$> k s ()
 
       Eff.ForeachBT xs f -> do
@@ -229,7 +229,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         elem1 <- genId "pos"
         elem2 <- genId "word"
         let bodyEff = f (Variable index) (Variable elem1,Variable elem2)
-        body <- compileInIsolation s bodyEff
+        body <- compile0 s bodyEff
         ForeachBT (index,elem1,elem2) xs body <$> k s ()
 
       Eff.LitA a -> k s (Const a)
@@ -292,10 +292,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (Tokenize x (a,b,c)) <$> k s (Variable a,Variable b,Variable c)
 
       where
-        prim1 :: (Show x) => Expression r ~ loopType => Expression x -> Prim.P1 x r -> Gen (Prog jumpiness)
+        prim1 :: (Show x) => Expression r ~ effectType => Expression x -> Prim.P1 x r -> Gen (Prog jumpiness)
         prim1 x p1 = k s (makeUnary p1 x)
 
-        prim2 :: (Show x, Show y) => Expression r ~ loopType => Expression x -> Expression y -> Prim.P2 x y r -> Gen (Prog jumpiness)
+        prim2 :: (Show x, Show y) => Expression r ~ effectType => Expression x -> Expression y -> Prim.P2 x y r -> Gen (Prog jumpiness)
         prim2 x y p2 = k s (makeBinary p2 x y)
 
 
@@ -418,7 +418,7 @@ data Prog :: Jumpiness -> * where
   Null :: Prog 'WontJump
   Quit :: Prog j
   Error :: String -> Prog j
-  Transfer :: Control Compile -> Prog 'WillJump
+  Jump :: Control Compile -> Prog 'WillJump
   Seq :: Atom ->  Prog j -> Prog j
   FullSeq :: Prog 'WontJump ->  Prog j -> Prog j
   If :: Expression Bool -> Prog j -> Prog j -> Prog j
@@ -430,11 +430,11 @@ pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]
   Error msg -> [tab i (show msg)]
-  Transfer Eff.AtInstruction{pc} ->
+  Jump Eff.AtInstruction{pc} ->
     [tab i ("Jump: " ++ show pc)]
-  Transfer Eff.AtRoutineHeader {routine,numActuals} ->
+  Jump Eff.AtRoutineHeader {routine,numActuals} ->
     [tab i ("JumpCall: " ++ show routine ++ ", #actuals: " ++ show numActuals)]
-  Transfer Eff.AtReturnFromCall{caller,result} ->
+  Jump Eff.AtReturnFromCall{caller,result} ->
     [tab i ("JumpReturn: " ++ show caller ++ ", result: " ++ show result)]
   Seq a s -> tab i (show a ++ ";") : pretty i s
   FullSeq s1 s2 -> pretty i s1 ++ pretty i s2
