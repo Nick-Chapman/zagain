@@ -54,7 +54,7 @@ compileEffect story smallStep = do
         Eff.AtInstruction (Const addr) ->
           addr `Set.member` addressesToInline || addr `elem` xInline
         Eff.AtRoutineHeader{ routine = Const{} } -> True
-        --Eff.AtReturnFromCall{ caller = Const{} } -> True -- never kicks in yet
+        Eff.AtReturnFromCall{ caller = Const{} } -> True
         _ -> False
 
   let static = Static { story, smallStep, shouldInline }
@@ -101,8 +101,11 @@ compileRoutine static routine = do
       [LocRoutine start] ++
       [ loc
       | (addr,op) <- body
-      , loc <- [LocOp addr] ++ if isCall op then [LocReturn addr] else []
-      , not $ shouldInline (makeControl loc)
+      , loc <-
+          (let locOp = LocOp addr in
+             if shouldInline (makeControl locOp) then [] else [locOp])
+          ++
+          if isCall op then [LocReturn addr] else []
       ]
   CompiledRoutine <$> sequence
     [ runGen (compileLoc static loc) | loc <- locations]
@@ -132,12 +135,12 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
           --Seq (Inlining control) <$>
             compileK s { control } smallStep kJump
         | otherwise -> do
-            pure (flushStack s (Jump control))
+            pure (flushState s (Jump control))
 
     -- compile0: compile an effect, in isolation, to a program which will not jump
     compile0 :: State -> Effect () -> Gen (Prog 'WontJump)
     compile0 s eff = do
-      compileK s eff $ \s () -> pure (flushStack s Null)
+      compileK s eff $ \s () -> pure (flushState s Null)
 
     -- compileK: compile an effect, given a continuation, to a program which may or notjump
     compileK :: forall jumpiness effectType. State -> Effect effectType -> (State -> effectType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
@@ -189,11 +192,21 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (MakeRoutineFrame n)  <$> k s ()
 
       Eff.PushFrame addr -> do
-        Seq PushFrame <$> Seq (PushReturnAddress addr) <$> k s ()
+        Seq PushFrame <$> if
+          | eagerStack -> Seq (PushReturnAddress addr) <$> k s ()
+          | otherwise -> do
+              let State{retStack} = s
+              k s { retStack = addr : retStack } ()
 
       Eff.PopFrame -> do
-        name <- genId "return_address_"
-        Seq PopFrame <$> Seq (PopReturnAddress name) <$> k s (Variable name)
+        Seq PopFrame <$> do
+          let State{retStack} = s
+          case retStack of
+            [] -> do
+              name <- genId "return_address_"
+              Seq (PopReturnAddress name) <$> k s (Variable name)
+            addr:retStack -> do
+              k s { retStack } addr
 
       Eff.GetLocal n -> k s (GetLocal n)
 
@@ -219,14 +232,14 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.PushStack v -> if
         | eagerStack -> Seq (PushStack v) <$> k s ()
         | otherwise -> do
-          let State{stack} = s
-          k s { stack = v : stack } ()
+          let State{tmpStack} = s
+          k s { tmpStack = v : tmpStack } ()
 
       Eff.PopStack -> do
-        let State{stack} = s
-        case stack of
-          v:stack -> do
-            k s { stack } v
+        let State{tmpStack} = s
+        case tmpStack of
+          v:tmpStack -> do
+            k s { tmpStack } v
           [] -> do
             name <- genId "popped"
             Seq (PopStack name) <$> k s (Variable name)
@@ -247,23 +260,26 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             pure $ If pred b1 b2
 
       Eff.Isolate eff -> do
-        first <- compile0 s eff
-        FullSeq first <$> k s ()
+        flushStateK s $ \s -> do
+          first <- compile0 s eff
+          FullSeq first <$> k s ()
 
       Eff.ForeachB xs f -> do
         index <- genId "index"
         elem <- genId "byte"
         let bodyEff = f (Variable index) (Variable elem)
-        body <- compile0 s bodyEff
-        ForeachB (index,elem) xs body <$> k s ()
+        flushStateK s $ \s -> do
+          body <- compile0 s bodyEff
+          ForeachB (index,elem) xs body <$> k s ()
 
       Eff.ForeachBT xs f -> do
         index <- genId "index"
         elem1 <- genId "pos"
         elem2 <- genId "word"
         let bodyEff = f (Variable index) (Variable elem1,Variable elem2)
-        body <- compile0 s bodyEff
-        ForeachBT (index,elem1,elem2) xs body <$> k s ()
+        flushStateK s $ \s -> do
+          body <- compile0 s bodyEff
+          ForeachBT (index,elem1,elem2) xs body <$> k s ()
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -353,7 +369,8 @@ makeControl = \case
 
 data State = State
   { control :: Control Compile
-  , stack :: [Expression Value] -- TODO: need notion of sharable?
+  , tmpStack :: [Expression Value] -- TODO: need notion of sharable?
+  , retStack :: [Expression Addr]
   }
 
 eagerStack :: Bool
@@ -362,15 +379,26 @@ eagerStack = True -- disable the lazy stack optimization
 initState :: Control Compile -> State
 initState control = State
   { control
-  , stack = []
+  , tmpStack = []
+  , retStack = []
   }
 
-flushStack :: State -> Prog j -> Prog j
-flushStack State{stack} s = loop s stack
+
+flushStateK :: State -> (State -> Gen (Prog j)) -> Gen (Prog j)
+flushStateK s k =
+  flushState s <$> k s { tmpStack = [], retStack = [] }
+
+flushState :: State -> Prog j -> Prog j
+flushState State{tmpStack,retStack} s =
+  loopTmpStack (loopRetStack s retStack) tmpStack
   where
-    loop s = \case
+    loopTmpStack s = \case
       [] -> s
-      x:xs -> loop (Seq (PushStack x) s) xs
+      x:xs -> loopTmpStack (Seq (PushStack x) s) xs
+
+    loopRetStack s = \case
+      [] -> s
+      x:xs -> loopRetStack (Seq (PushReturnAddress x) s) xs
 
 --[gen]---------------------------------------------------------------
 
