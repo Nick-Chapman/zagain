@@ -110,7 +110,8 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       let State{control} = s
       if
         | shouldInline control -> do
-            Seq (Inlining control) <$> compileK s { control } smallStep kJump
+         --Seq (Inlining control) <$>
+            compileK s { control } smallStep kJump
         | otherwise -> do
             pure (flushStack s (Jump control))
 
@@ -160,8 +161,8 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
           _ -> do
             error "Fetch routine header at non-constant PC"
 
-      Eff.TraceOperation _addr op -> do
-        Seq (TraceOperation op) <$> k s ()
+      Eff.TraceOperation addr op -> do
+        Seq (TraceOperation addr op) <$> k s ()
 
       Eff.TraceRoutineCall _addr -> do k s ()
 
@@ -477,8 +478,8 @@ tab n s = take n (repeat ' ') ++ s
 data Atom
   = SetByte (Expression Addr) (Expression Byte)
   | Note String
-  | Inlining (Control Compile)
-  | TraceOperation Operation
+  -- | Inlining (Control Compile)
+  | TraceOperation (Expression Addr) Operation
   | GamePrint (Expression String)
   | MakeRoutineFrame Int
   | PushFrame (Expression Addr)
