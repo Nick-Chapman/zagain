@@ -325,7 +325,7 @@ eval mode here op = case op of
     dyn <- evalArgAsDyn arg1
     v2 <- evalArg arg2
     case dyn of
-      DSp{} -> Error "Op.Store/DSp" -- (do _ <- PopStack; pure ()) -- TODO: (from niz) enable code when hit
+      DSp{} -> do Note "Op.Store/DSp"; _ <- PopStack; pure ()
       _ -> pure ()
     setDyn dyn v2
 
