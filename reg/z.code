@@ -609,7 +609,7 @@ LocReturn 020274:
   Let b1 = M[002152];
   Let b2 = M[002153];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 020344:
   PushStack call_result;
   Inlining (AtInstruction {pc = 020350});
@@ -856,7 +856,7 @@ LocReturn 020513:
     Let b4 = M[Offset(Offset(000741,Mul(popped3,9)),7)];
     Let b5 = M[Offset(Offset(Offset(000741,Mul(popped3,9)),7),1)];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 020540
   }
@@ -2567,7 +2567,7 @@ LocOp 022295:
     Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 022306:
   SetLocal 7 call_result;
@@ -2861,7 +2861,7 @@ LocOp 022513:
   Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
   Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
   Let b9 = M[Address(MakeHiLo(b7,b8))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 022523:
   SetLocal 4 call_result;
   Inlining (AtInstruction {pc = 022527});
@@ -2885,7 +2885,7 @@ LocOp 022533:
   Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
   Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 022540:
   SetLocal 4 call_result;
   Inlining (AtInstruction {pc = 022545});
@@ -2943,7 +2943,7 @@ LocOp 022565:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(3),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(3),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 022572:
   SetLocal 4 call_result;
@@ -2986,7 +2986,7 @@ LocOp 022582:
         Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
         Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
         Let b7 = M[Address(MakeHiLo(b5,b6))];
-        "TODO:getPropsA"
+        "getPropsA"
       }
     }
   }
@@ -3016,7 +3016,7 @@ LocOp 022612:
       Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b3 = M[Address(MakeHiLo(b1,b2))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 LocReturn 022623:
@@ -9144,7 +9144,7 @@ LocOp 026977:
   Let b9 = M[Offset(Offset(000741,Mul(MakeHiLo(b7,b8),9)),7)];
   Let b10 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b7,b8),9)),7),1)];
   Let b11 = M[Address(MakeHiLo(b9,b10))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 026998:
   TraceOperation (Loadb (Var (Local 3)) (Var (Local 5)) (Local 6));
   Let b1 = M[Offset(Address(GetLocal(3)),GetLocal(5))];
@@ -9188,7 +9188,7 @@ LocOp 027024:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 027046:
   TraceOperation (Mul (Var (Local 5)) (Con 2) Sp);
   PushStack Mul(GetLocal(5),2);
@@ -9223,7 +9223,7 @@ LocOp 027046:
     Let b12 = M[000865];
     Let b13 = M[000866];
     Let b14 = M[Address(MakeHiLo(b12,b13))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 027111
   }
@@ -9444,7 +9444,7 @@ LocOp 027229:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 LocReturn 027244:
@@ -9570,7 +9570,7 @@ LocOp 027316:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 --[68]--------------------------------------------------
@@ -10562,7 +10562,7 @@ LocOp 027941:
       Let b5 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 LocReturn 027963:
@@ -10588,7 +10588,7 @@ LocOp 027974:
     Let b3 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 027991:
   PushStack call_result;
@@ -11195,7 +11195,7 @@ LocOp 028769:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 028843
   }
@@ -11647,7 +11647,7 @@ LocOp 029223:
       Let b14 = M[Offset(Offset(000741,Mul(MakeHiLo(b12,b13),9)),7)];
       Let b15 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b12,b13),9)),7),1)];
       Let b16 = M[Address(MakeHiLo(b14,b15))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Let b17 = M[Offset(Offset(000741,Mul(Widen(b10),9)),6)];
       if (EqualAny(List(Widen(b17),MakeHiLo(b6,b7)))) {
@@ -11664,7 +11664,7 @@ LocOp 029223:
         Let b22 = M[Offset(Offset(000741,Mul(MakeHiLo(b20,b21),9)),7)];
         Let b23 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b20,b21),9)),7),1)];
         Let b24 = M[Address(MakeHiLo(b22,b23))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         "unlink/loop"
       }
@@ -11696,7 +11696,7 @@ LocOp 029223:
       Let b33 = M[Offset(Offset(000741,Mul(MakeHiLo(b31,b32),9)),7)];
       Let b34 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b31,b32),9)),7),1)];
       Let b35 = M[Address(MakeHiLo(b33,b34))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Let b36 = M[Offset(Offset(000741,Mul(Widen(b29),9)),6)];
       if (EqualAny(List(Widen(b36),MakeHiLo(b25,b26)))) {
@@ -11713,7 +11713,7 @@ LocOp 029223:
         Let b41 = M[Offset(Offset(000741,Mul(MakeHiLo(b39,b40),9)),7)];
         Let b42 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b39,b40),9)),7),1)];
         Let b43 = M[Address(MakeHiLo(b41,b42))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         "unlink/loop"
       }
@@ -12105,7 +12105,7 @@ LocOp 029570:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 029601:
   PushStack call_result;
   Inlining (AtInstruction {pc = 029608});
@@ -12213,7 +12213,7 @@ LocOp 029676:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 029686:
   PushStack call_result;
@@ -12296,7 +12296,7 @@ LocOp 029767:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 029796:
   SetByte 008949 HiByte(call_result);
@@ -13037,7 +13037,7 @@ LocOp 030651:
   Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
   Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  "TODO:getPropsA"
+  "getPropsA"
 --[131]--------------------------------------------------
 LocRoutine 030734:
   MakeRoutineFrame 0;
@@ -13315,7 +13315,7 @@ LocOp 030965:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 030980:
   TraceOperation (Test_attr (Var (Global 118)) (Con 19) (Branch T (Dloc 030988)));
   Let b1 = M[009053];
@@ -13415,7 +13415,7 @@ LocOp 031047:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 031094
   }
@@ -15419,7 +15419,7 @@ LocOp 032905:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 033015
   }
@@ -15488,7 +15488,7 @@ LocOp 032952:
         Let b6 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
         Let b7 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
         Let b8 = M[Address(MakeHiLo(b6,b7))];
-        "TODO:getPropsA"
+        "getPropsA"
       }
     } else {
       Jump: 032988
@@ -16302,7 +16302,7 @@ LocOp 033523:
   Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
   Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 033558:
   TraceOperation (Call (Floc 038124) [Var (Global 118)] Sp);
   Let b1 = M[009053];
@@ -16661,7 +16661,7 @@ LocOp 033811:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 --[203]--------------------------------------------------
 LocRoutine 033820:
   MakeRoutineFrame 0;
@@ -18524,7 +18524,7 @@ LocOp 035514:
   Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 035533:
   PushStack call_result;
   Inlining (AtInstruction {pc = 035539});
@@ -18635,7 +18635,7 @@ LocOp 035585:
     PopStack popped2;
     if (IsZeroByte(LoByte(popped2))) {
       PopStack popped3;
-      Note "TODO: re-push value on stack!";
+      Note "re-push value on stack!";
       PushStack popped3;
       Inlining (AtInstruction {pc = 035596});
       TraceOperation (Jz (Var Sp) (Branch T (Dloc 035610)));
@@ -19383,7 +19383,7 @@ LocOp 036112:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 036122:
   PushStack call_result;
@@ -19408,7 +19408,7 @@ LocOp 036130:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocOp 036146:
   TraceOperation (Get_prop (Var (Global 0)) (Con 17) Sp);
@@ -19417,7 +19417,7 @@ LocOp 036146:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 036150:
   PushStack call_result;
   Jump: 036155
@@ -19438,7 +19438,7 @@ LocOp 036155:
       Let b5 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       PopFrame return_address_8;
       JumpReturn: return_address_8, result: 1
@@ -19550,7 +19550,7 @@ LocOp 036253:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 036271
   }
@@ -19579,7 +19579,7 @@ LocOp 036271:
       Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b4 = M[Address(MakeHiLo(b2,b3))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   } else {
     Jump: 036297
@@ -19589,7 +19589,7 @@ LocOp 036285:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 036292:
   TraceOperation (Print_paddr (Var (Local 4)));
   GamePrint GetText(PackedAddress Z3(GetLocal(4)));
@@ -20112,7 +20112,7 @@ LocOp 036607:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 LocOp 036633:
@@ -20138,7 +20138,7 @@ LocReturn 036633:
     Let b4 = M[Offset(Offset(000741,Mul(popped3,9)),7)];
     Let b5 = M[Offset(Offset(Offset(000741,Mul(popped3,9)),7),1)];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 036656:
   PushStack call_result;
@@ -20245,7 +20245,7 @@ LocOp 036719:
         Let b3 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
         Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
         Let b5 = M[Address(MakeHiLo(b3,b4))];
-        "TODO:getPropsA"
+        "getPropsA"
       }
     } else {
       Jump: 036739
@@ -20631,7 +20631,7 @@ LocOp 037055:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 037063:
   PushStack call_result;
   Inlining (AtInstruction {pc = 037069});
@@ -20639,7 +20639,7 @@ LocReturn 037063:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 --[266]--------------------------------------------------
 LocRoutine 037076:
   MakeRoutineFrame 0;
@@ -21299,7 +21299,7 @@ LocOp 037427:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Inlining (AtInstruction {pc = 037431});
     TraceOperation (Je [Var (Local 1),Var (Global 128)] (Branch F (Dloc 037444)));
@@ -21345,7 +21345,7 @@ LocOp 037454:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Inlining (AtInstruction {pc = 037431});
     TraceOperation (Je [Var (Local 1),Var (Global 128)] (Branch F (Dloc 037444)));
@@ -21575,7 +21575,7 @@ LocOp 037584:
     Let b8 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
     Let b9 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
     Let b10 = M[Address(MakeHiLo(b8,b9))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 037601
   }
@@ -21683,7 +21683,7 @@ LocOp 037656:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 037668
   }
@@ -21967,7 +21967,7 @@ LocOp 037885:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 037889:
   PushStack call_result;
   Inlining (AtInstruction {pc = 037894});
@@ -22190,7 +22190,7 @@ LocOp 038023:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 038038:
   PushStack call_result;
   Inlining (AtInstruction {pc = 038046});
@@ -22216,7 +22216,7 @@ LocOp 038055:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 038069:
   PushStack call_result;
   Inlining (AtInstruction {pc = 038077});
@@ -22402,7 +22402,7 @@ LocOp 038147:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 --[285]--------------------------------------------------
 LocRoutine 038178:
   MakeRoutineFrame 2;
@@ -22422,7 +22422,7 @@ LocOp 038183:
   Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b4 = M[Address(MakeHiLo(b2,b3))];
-  "TODO:getPropsA"
+  "getPropsA"
 --[286]--------------------------------------------------
 LocRoutine 038192:
   MakeRoutineFrame 1;
@@ -25404,7 +25404,7 @@ LocOp 041968:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 041980:
   PushStack call_result;
   Inlining (AtInstruction {pc = 041986});
@@ -26119,7 +26119,7 @@ LocReturn 043060:
       Let b6 = M[002701];
       Let b7 = M[002702];
       Let b8 = M[Address(MakeHiLo(b6,b7))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Let b9 = M[Offset(Offset(000741,Mul(Widen(b4),9)),6)];
       if (EqualAny(List(Widen(b9),218))) {
@@ -26134,7 +26134,7 @@ LocReturn 043060:
         Let b12 = M[002701];
         Let b13 = M[002702];
         Let b14 = M[Address(MakeHiLo(b12,b13))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         "unlink/loop"
       }
@@ -26151,7 +26151,7 @@ LocOp 043144:
     Let b4 = M[002701];
     Let b5 = M[002702];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     PopFrame return_address_7;
     JumpReturn: return_address_7, result: 0
@@ -26271,7 +26271,7 @@ LocOp 043233:
         Let b9 = M[002701];
         Let b10 = M[002702];
         Let b11 = M[Address(MakeHiLo(b9,b10))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         Let b12 = M[Offset(Offset(000741,Mul(Widen(b5),9)),6)];
         if (EqualAny(List(Widen(b12),218))) {
@@ -26294,7 +26294,7 @@ LocOp 043233:
           Let b17 = M[002701];
           Let b18 = M[002702];
           Let b19 = M[Address(MakeHiLo(b17,b18))];
-          "TODO:getPropsA"
+          "getPropsA"
         } else {
           "unlink/loop"
         }
@@ -26305,7 +26305,7 @@ LocOp 043233:
       Let b20 = M[002701];
       Let b21 = M[002702];
       Let b22 = M[Address(MakeHiLo(b20,b21))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   } else {
     Jump: 043264
@@ -26338,7 +26338,7 @@ LocOp 043264:
         Let b6 = M[002701];
         Let b7 = M[002702];
         Let b8 = M[Address(MakeHiLo(b6,b7))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         Jump: 043323
       }
@@ -26352,7 +26352,7 @@ LocOp 043264:
         Let b10 = M[002701];
         Let b11 = M[002702];
         Let b12 = M[Address(MakeHiLo(b10,b11))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         Jump: 043323
       }
@@ -26383,7 +26383,7 @@ LocOp 043375:
       Let b3 = M[002701];
       Let b4 = M[002702];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Jump: 043390
     }
@@ -26608,7 +26608,7 @@ LocReturn 043695:
   Let b1 = M[002701];
   Let b2 = M[002702];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 043705:
   PushStack call_result;
   Inlining (AtInstruction {pc = 043710});
@@ -27415,7 +27415,7 @@ LocOp 044904:
       Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
       Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
       Let b9 = M[Address(MakeHiLo(b7,b8))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       PopFrame return_address_10;
       JumpReturn: return_address_10, result: 0
@@ -28611,7 +28611,7 @@ LocOp 047183:
     Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b6,b7),9)),7)];
     Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b6,b7),9)),7),1)];
     Let b12 = M[Address(MakeHiLo(b10,b11))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     SetByte 008997 HiByte(Sub(MakeHiLo(b2,b3),1));
     SetByte 008998 LoByte(Sub(MakeHiLo(b2,b3),1));
@@ -32382,7 +32382,7 @@ LocOp 054029:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 054053:
   TraceOperation (Store (Con 2) (Var (Local 3)));
   SetLocal 2 GetLocal(3);
@@ -32659,7 +32659,7 @@ LocOp 054224:
       Let b3 = M[001774];
       Let b4 = M[001775];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Jump: 054311
     }
@@ -32743,7 +32743,7 @@ LocOp 054553:
     Let b2 = M[001774];
     Let b3 = M[001775];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 054629
   }
@@ -32767,7 +32767,7 @@ LocReturn 054583:
   Let b3 = M[001774];
   Let b4 = M[001775];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 054629:
   TraceOperation (Insert_obj (Var (Global 118)) (Con 114));
   Let b1 = M[009053];
@@ -32785,7 +32785,7 @@ LocOp 054629:
     Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
     Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
     Let b9 = M[Address(MakeHiLo(b7,b8))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Let b10 = M[Offset(Offset(000741,Mul(Widen(b3),9)),6)];
     if (EqualAny(List(Widen(b10),MakeHiLo(b1,b2)))) {
@@ -32802,7 +32802,7 @@ LocOp 054629:
       Let b15 = M[Offset(Offset(000741,Mul(MakeHiLo(b13,b14),9)),7)];
       Let b16 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b13,b14),9)),7),1)];
       Let b17 = M[Address(MakeHiLo(b15,b16))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       "unlink/loop"
     }
@@ -33166,7 +33166,7 @@ LocReturn 055273:
     Let b10 = M[001774];
     Let b11 = M[001775];
     Let b12 = M[Address(MakeHiLo(b10,b11))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Let b13 = M[Offset(Offset(000741,Mul(Widen(b5),9)),6)];
     if (EqualAny(List(Widen(b13),113))) {
@@ -33187,7 +33187,7 @@ LocReturn 055273:
       Let b19 = M[001774];
       Let b20 = M[001775];
       Let b21 = M[Address(MakeHiLo(b19,b20))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       "unlink/loop"
     }
@@ -33235,7 +33235,7 @@ LocReturn 055393:
   Let b4 = M[001774];
   Let b5 = M[001775];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 055410:
   PushStack call_result;
   Inlining (AtInstruction {pc = 055415});
@@ -33257,7 +33257,7 @@ LocOp 055417:
     Let b3 = M[001774];
     Let b4 = M[001775];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 055508
   }
@@ -33463,7 +33463,7 @@ LocOp 055655:
             Let b10 = M[001774];
             Let b11 = M[001775];
             Let b12 = M[Address(MakeHiLo(b10,b11))];
-            "TODO:getPropsA"
+            "getPropsA"
           }
         } else {
           PopFrame return_address_13;
@@ -33899,7 +33899,7 @@ LocOp 056335:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     PopFrame return_address_8;
     JumpReturn: return_address_8, result: 0
@@ -35145,7 +35145,7 @@ LocOp 057792:
     Let b3 = M[001738];
     Let b4 = M[001739];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     PopFrame return_address_6;
     JumpReturn: return_address_6, result: 0
@@ -38242,7 +38242,7 @@ LocOp 061723:
     Let b2 = M[001495];
     Let b3 = M[001496];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 061739
   }
@@ -38851,7 +38851,7 @@ LocOp 062484:
         Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7)];
         Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7),1)];
         Let b12 = M[Address(MakeHiLo(b10,b11))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         Jump: 062568
       }
@@ -40000,7 +40000,7 @@ LocOp 064011:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 064015:
   PushStack call_result;
   Inlining (AtInstruction {pc = 064020});
@@ -40250,7 +40250,7 @@ LocOp 064131:
     Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7)];
     Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7),1)];
     Let b12 = M[Address(MakeHiLo(b10,b11))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocOp 064159:
   TraceOperation (Ret (Var (Local 2)));
@@ -40282,7 +40282,7 @@ LocOp 064171:
   Let b3 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 064197:
   TraceOperation (Store (Con 46) (Con 0));
   SetByte 008877 0;
@@ -41700,7 +41700,7 @@ LocOp 065199:
   Let b4 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b5 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065212:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065220});
@@ -41745,7 +41745,7 @@ LocReturn 065234:
   Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
   Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065253:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065260});
@@ -41774,7 +41774,7 @@ LocOp 065271:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065378:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065384});
@@ -41782,7 +41782,7 @@ LocReturn 065378:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065388:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065393});
@@ -41797,7 +41797,7 @@ LocOp 065395:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 065410
   }
@@ -41829,7 +41829,7 @@ LocOp 065419:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065423:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065428});
@@ -41954,7 +41954,7 @@ LocOp 065495:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 065514:
   TraceOperation (Jl (Var (Local 1)) (Con 0) (Branch F (Dloc 065525)));
   if (LessThan(GetLocal(1),0)) {
@@ -41968,7 +41968,7 @@ LocOp 065514:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 065525
   }
@@ -42142,7 +42142,7 @@ LocOp 065631:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065659:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065665});
@@ -42170,7 +42170,7 @@ LocOp 065680:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 065688:
   PushStack call_result;
@@ -42197,7 +42197,7 @@ LocOp 065703:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "TODO:getPropsA"
+    "getPropsA"
   } else {
     Jump: 065716
   }
@@ -42273,7 +42273,7 @@ LocOp 065757:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065778:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065783});
@@ -42314,7 +42314,7 @@ LocReturn 065797:
   Let b1 = M[001738];
   Let b2 = M[001739];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 065813:
   PushStack call_result;
   Inlining (AtInstruction {pc = 065819});
@@ -42341,7 +42341,7 @@ LocOp 065831:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocOp 065841:
   TraceOperation (Jl (Var (Local 4)) (Var (Global 152)) (Branch T (Dloc 065831)));
   Let b1 = M[009121];
@@ -42356,7 +42356,7 @@ LocOp 065841:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "TODO:getPropsA"
+    "getPropsA"
   }
 LocReturn 065865:
   PushStack call_result;
@@ -42426,7 +42426,7 @@ LocOp 065977:
   Let b1 = M[001738];
   Let b2 = M[001739];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 --[482]--------------------------------------------------
 LocRoutine 065990:
   MakeRoutineFrame 2;
@@ -42965,7 +42965,7 @@ LocOp 066275:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 066283:
   PushStack call_result;
   Inlining (AtInstruction {pc = 066289});
@@ -43142,14 +43142,14 @@ LocOp 066391:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Inlining (AtInstruction {pc = 066398});
       TraceOperation (Get_prop (Var (Local 2)) (Con 12) Sp);
       Let b6 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b7 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b8 = M[Address(MakeHiLo(b6,b7))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 LocReturn 066425:
@@ -43322,7 +43322,7 @@ LocOp 066510:
         Let b4 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
         Let b5 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
         Let b6 = M[Address(MakeHiLo(b4,b5))];
-        "TODO:getPropsA"
+        "getPropsA"
       }
     }
   } else {
@@ -43343,7 +43343,7 @@ LocOp 066510:
         Let b9 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
         Let b10 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
         Let b11 = M[Address(MakeHiLo(b9,b10))];
-        "TODO:getPropsA"
+        "getPropsA"
       }
     }
   }
@@ -43438,7 +43438,7 @@ LocReturn 066573:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "TODO:getPropsA"
+  "getPropsA"
 LocReturn 066587:
   PushStack call_result;
   Inlining (AtInstruction {pc = 066594});
@@ -44014,7 +44014,7 @@ LocOp 067511:
       Let b12 = M[Offset(Offset(000741,Mul(MakeHiLo(b10,b11),9)),7)];
       Let b13 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b10,b11),9)),7),1)];
       Let b14 = M[Address(MakeHiLo(b12,b13))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Jump: 067713
     }
@@ -44063,7 +44063,7 @@ LocOp 067511:
         Let b21 = M[Offset(Offset(000741,Mul(MakeHiLo(b19,b20),9)),7)];
         Let b22 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b19,b20),9)),7),1)];
         Let b23 = M[Address(MakeHiLo(b21,b22))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         Jump: 067713
       }
@@ -44167,7 +44167,7 @@ LocOp 067827:
           Let b11 = M[001738];
           Let b12 = M[001739];
           Let b13 = M[Address(MakeHiLo(b11,b12))];
-          "TODO:getPropsA"
+          "getPropsA"
         } else {
           Let b14 = M[Offset(Offset(000741,Mul(Widen(b9),9)),6)];
           if (EqualAny(List(Widen(b14),208))) {
@@ -44182,7 +44182,7 @@ LocOp 067827:
             Let b17 = M[001738];
             Let b18 = M[001739];
             Let b19 = M[Address(MakeHiLo(b17,b18))];
-            "TODO:getPropsA"
+            "getPropsA"
           } else {
             "unlink/loop"
           }
@@ -44193,7 +44193,7 @@ LocOp 067827:
         Let b20 = M[001738];
         Let b21 = M[001739];
         Let b22 = M[Address(MakeHiLo(b20,b21))];
-        "TODO:getPropsA"
+        "getPropsA"
       }
     } else {
       Let b23 = M[Offset(Offset(000741,Mul(Widen(b4),9)),6)];
@@ -44223,7 +44223,7 @@ LocOp 067827:
             Let b31 = M[001738];
             Let b32 = M[001739];
             Let b33 = M[Address(MakeHiLo(b31,b32))];
-            "TODO:getPropsA"
+            "getPropsA"
           } else {
             Let b34 = M[Offset(Offset(000741,Mul(Widen(b29),9)),6)];
             if (EqualAny(List(Widen(b34),208))) {
@@ -44238,7 +44238,7 @@ LocOp 067827:
               Let b37 = M[001738];
               Let b38 = M[001739];
               Let b39 = M[Address(MakeHiLo(b37,b38))];
-              "TODO:getPropsA"
+              "getPropsA"
             } else {
               "unlink/loop"
             }
@@ -44249,7 +44249,7 @@ LocOp 067827:
           Let b40 = M[001738];
           Let b41 = M[001739];
           Let b42 = M[Address(MakeHiLo(b40,b41))];
-          "TODO:getPropsA"
+          "getPropsA"
         }
       } else {
         "unlink/loop"
@@ -44275,7 +44275,7 @@ LocOp 067827:
         Let b48 = M[001738];
         Let b49 = M[001739];
         Let b50 = M[Address(MakeHiLo(b48,b49))];
-        "TODO:getPropsA"
+        "getPropsA"
       } else {
         Let b51 = M[Offset(Offset(000741,Mul(Widen(b46),9)),6)];
         if (EqualAny(List(Widen(b51),208))) {
@@ -44290,7 +44290,7 @@ LocOp 067827:
           Let b54 = M[001738];
           Let b55 = M[001739];
           Let b56 = M[Address(MakeHiLo(b54,b55))];
-          "TODO:getPropsA"
+          "getPropsA"
         } else {
           "unlink/loop"
         }
@@ -44301,7 +44301,7 @@ LocOp 067827:
       Let b57 = M[001738];
       Let b58 = M[001739];
       Let b59 = M[Address(MakeHiLo(b57,b58))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 LocOp 067854:
@@ -44323,14 +44323,14 @@ LocOp 067854:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "TODO:getPropsA"
+      "getPropsA"
     } else {
       Inlining (AtInstruction {pc = 067864});
       TraceOperation (Get_prop (Var (Local 2)) (Con 12) Sp);
       Let b6 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b7 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b8 = M[Address(MakeHiLo(b6,b7))];
-      "TODO:getPropsA"
+      "getPropsA"
     }
   }
 LocOp 067872:
@@ -45276,7 +45276,7 @@ LocOp 080649:
   Let b1 = M[001486];
   Let b2 = M[001487];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "TODO:getPropsA"
+  "getPropsA"
 --[509]--------------------------------------------------
 LocRoutine 080698:
   MakeRoutineFrame 4;

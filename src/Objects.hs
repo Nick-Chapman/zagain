@@ -255,7 +255,7 @@ getPropLen v = do
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getNextProp mode x p = do
-  -- TODO: stop being so complicated. Assume descendning order and avoid search
+  -- TODO: stop being so complicated. Assume descending order and avoid search
   props <- getPropertyTable mode x
   xs <-
     sequence
@@ -291,7 +291,7 @@ dubPlus1 b = do
 
 data Prop p = Prop -- TODO: using this type isn't very helpful
   { propNumber :: Value p
-  , numBytes :: Value p -- TODO: just a byte?
+  , numBytes :: Value p
   , dataAddr :: Addr p
   , dataBytes :: [Byte p]
   }
@@ -304,7 +304,7 @@ getPropsA = \case
   Interpreting -> real_getPropsA
 
 hack_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
-hack_getPropsA _a = Error "TODO:getPropsA"
+hack_getPropsA _a = Error "getPropsA" -- TODO: need while-effect!
 
 real_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
 real_getPropsA a1 = do

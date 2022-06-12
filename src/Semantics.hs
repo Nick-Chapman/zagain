@@ -178,7 +178,7 @@ eval mode here = \case
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     case dyn of
-      DSp{} -> Note "TODO: re-push value on stack!" -- TODO: code the correct thing!
+      DSp{} -> Note "re-push value on stack!" -- TODO: code it!
       _ -> pure ()
     setTarget target v
 
@@ -362,10 +362,9 @@ eval mode here = \case
     branchMaybe label res
 
   Op.Read_char target -> do
-    Debug("TODO: Read_char",target)
-    pure ()
+    Error (show ("Read_char",target))
 
-  Op.Buffer_mode{} -> pure ()
+  Op.Buffer_mode{} -> pure () -- TODO: change to Note, so we see in generated code
   Op.Erase_window{} -> pure ()
   Op.Output_stream1{} -> pure ()
   Op.Output_stream2{} -> pure ()
@@ -375,13 +374,13 @@ eval mode here = \case
   Op.Split_window{} -> pure ()
 
   Op.Input_stream{} -> undefined
-
   Op.Nop -> undefined
-  Op.Pop -> Note "Pop"
-  Op.Restore{} -> Note "Restore" -- TODO: do it properly
-  Op.Save{} -> Note "Save" -- TODO: do it properly
   Op.Show_status -> undefined
-  Op.Verify{} -> Note "Verify" -- TODO: anything to do here?
+
+  Op.Pop -> Note "Pop"
+  Op.Restore{} -> Note "Restore"
+  Op.Save{} -> Note "Save"
+  Op.Verify{} -> Note "Verify"
 
 writeBytes :: Addr p -> [Byte p] -> Eff p ()
 writeBytes a bs =
