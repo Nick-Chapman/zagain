@@ -65,12 +65,9 @@ data Eff p x where
   GetControl :: Eff p (Control p)
   SetControl :: Control p -> Eff p ()
 
-  -- TODO: merge back Push/Pop Frame & CallStack
   MakeRoutineFrame :: Int -> Eff p ()
-  PushFrame :: Eff p ()
-  PopFrame :: Eff p ()
-  PushCallStack :: Addr p -> Eff p () -- TODO: rename {Push,Pop}ReturnAddress ?
-  PopCallStack :: Eff p (Addr p)
+  PushFrame :: Addr p -> Eff p ()
+  PopFrame :: Eff p (Addr p)
 
   GetLocal :: Byte p -> Eff p (Value p)
   SetLocal :: Byte p -> Value p -> Eff p ()

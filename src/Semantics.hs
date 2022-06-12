@@ -52,8 +52,7 @@ eval mode here = \case
     p <- IsZeroAddress routine >>= If
     if p then LitV 0 >>= setTarget target else do
       actuals <- mapM evalArg args
-      PushFrame
-      PushCallStack here
+      PushFrame here
       setActuals actuals
       numActuals <- LitB $ fromIntegral (length actuals)
       TraceRoutineCall routine -- for dynamic discovery
@@ -444,8 +443,7 @@ evalGlobal b = do
 
 returnValue :: Phase p => Value p -> Eff p ()
 returnValue result = do
-  PopFrame
-  caller <- PopCallStack
+  caller <- PopFrame
   SetControl AtReturnFromCall { caller, result }
 
 setTarget :: Target -> Value p -> Eff p ()

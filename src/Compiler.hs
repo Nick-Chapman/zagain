@@ -167,18 +167,12 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.MakeRoutineFrame n -> do
         Seq (MakeRoutineFrame n)  <$> k s ()
 
-      Eff.PushFrame -> do
-        Seq PushFrame <$> k s ()
+      Eff.PushFrame addr -> do
+        Seq PushFrame <$> Seq (PushReturnAddress addr) <$> k s ()
 
       Eff.PopFrame -> do
-        Seq PopFrame <$> k s ()
-
-      Eff.PushCallStack addr -> do
-        Seq (PushReturnAddress addr) <$> k s ()
-
-      Eff.PopCallStack -> do
         name <- genId "return_address"
-        Seq (PopReturnAddress name) <$> k s (Variable name)
+        Seq PopFrame <$> Seq (PopReturnAddress name) <$> k s (Variable name)
 
       Eff.GetLocal n -> k s (GetLocal n)
 

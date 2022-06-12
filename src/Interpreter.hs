@@ -96,30 +96,24 @@ runEffect screenWidth seed story smallStep = do
       SetControl pcMode -> k s { pcMode } ()
 
       MakeRoutineFrame{} -> k s () -- nothing to do in interpreter
-      PushFrame -> do
-        let State{stack,locals,frames} = s
+
+      PushFrame addr -> do
+        let State{stack,locals,frames,callstack} = s
         k s { frames = Frame { stack, locals } : frames
             , stack = []
             , locals = Map.empty
+            , callstack = addr : callstack
             } ()
 
       PopFrame -> do
-        let State{frames} = s
+        let State{frames,callstack} = s
         case frames of
           [] -> error "PopFrame, frames=[]"
           Frame{stack,locals}:frames -> do
-            k s { stack, locals, frames } ()
-
-      PushCallStack addr -> do
-        let State{callstack} = s
-        k s { callstack = addr : callstack } ()
-
-      PopCallStack -> do
-        let State{callstack} = s
-        case callstack of
-          [] -> error "PopCallStack[]"
-          pc:callstack -> do
-            k s { callstack } pc
+            case callstack of
+              [] -> error "PopFrame, callstack[]"
+              addr:callstack -> do
+                k s { stack, locals, frames, callstack } addr
 
       GetLocal n -> do
         let State{locals} = s
