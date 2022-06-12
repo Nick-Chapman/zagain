@@ -56,7 +56,7 @@ runEffect screenWidth seed story smallStep = do
 
       Error s -> error ("runEffect: " ++ s)
       Debug a -> A.Debug (show a) (k s ())
-      Note a -> A.Debug (show a) (k s ()) -- TODO: or do nothing?
+      Note a -> A.Debug ("Note: " ++ show a) (k s ())
 
       StoryHeader -> do
         k s header

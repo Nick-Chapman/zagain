@@ -56,7 +56,7 @@ reg/zork.trace: $(exe) z.script src/*.hs Makefile
 	bash -c '$(exe) -nodebug -trace -walk <(head -2 z.script) > $@'
 
 reg/zork.walk: $(exe) z.script src/*.hs Makefile
-	$(exe) -nodebug -walk z.script > $@
+	$(exe) -walk z.script > $@
 
 reg/zork.dis: $(exe) src/*.hs Makefile
 	$(exe) dis -walk z.script > $@
@@ -65,7 +65,7 @@ reg/zork.code: $(exe) src/*.hs Makefile
 	$(exe) comp > $@
 
 reg/h.walk: $(exe) h.script src/*.hs Makefile
-	$(exe) story/hitchhiker-r59-s851108.z3 -nodebug -walk h.script > $@
+	$(exe) story/hitchhiker-r59-s851108.z3 -walk h.script > $@
 
 reg/h.dis: $(exe) src/*.hs Makefile
 	$(exe) dis story/hitchhiker-r59-s851108.z3 -walk h.script > $@
