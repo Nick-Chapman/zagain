@@ -434,7 +434,7 @@ pretty :: Int -> Prog j -> [String]
 pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]
-  Error msg -> [tab i (show msg)]
+  Error msg -> [tab i ("Error: " ++ msg)]
   Jump Eff.AtInstruction{pc} ->
     [tab i ("Jump: " ++ show pc)]
   Jump Eff.AtRoutineHeader {routine,numActuals} ->

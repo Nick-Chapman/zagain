@@ -545,7 +545,7 @@ LocReturn 020274:
   Let b1 = M[002152];
   Let b2 = M[002153];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 020344:
   PushStack call_result;
   TraceOperation 020350 (Test_attr (Var (Global 0)) (Con 3) (Branch T (Dloc 020360)));
@@ -603,7 +603,7 @@ LocOp 020360:
       PushFrame 020372;
       JumpCall: 032260, #actuals: 0
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 020372:
@@ -763,7 +763,7 @@ LocReturn 020513:
     Let b4 = M[Offset(Offset(000741,Mul(popped3,9)),7)];
     Let b5 = M[Offset(Offset(Offset(000741,Mul(popped3,9)),7),1)];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 020540
   }
@@ -2289,7 +2289,7 @@ LocOp 022295:
     Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 022306:
   SetLocal 7 call_result;
@@ -2550,7 +2550,7 @@ LocOp 022513:
   Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
   Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
   Let b9 = M[Address(MakeHiLo(b7,b8))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 022523:
   SetLocal 4 call_result;
   TraceOperation 022527 (Jz (Var (Local 4)) (Branch T (Dloc 022533)));
@@ -2571,7 +2571,7 @@ LocOp 022533:
   Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
   Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 022540:
   SetLocal 4 call_result;
   TraceOperation 022545 (Jz (Var (Local 4)) (Branch T (Dloc 022551)));
@@ -2621,7 +2621,7 @@ LocOp 022565:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(3),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(3),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 022572:
   SetLocal 4 call_result;
@@ -2657,7 +2657,7 @@ LocOp 022582:
         Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
         Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
         Let b7 = M[Address(MakeHiLo(b5,b6))];
-        "getPropsA"
+        Error: getPropsA
       }
     }
   }
@@ -2683,7 +2683,7 @@ LocOp 022612:
       Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b3 = M[Address(MakeHiLo(b1,b2))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 LocReturn 022623:
@@ -8057,7 +8057,7 @@ LocOp 026977:
   Let b9 = M[Offset(Offset(000741,Mul(MakeHiLo(b7,b8),9)),7)];
   Let b10 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b7,b8),9)),7),1)];
   Let b11 = M[Address(MakeHiLo(b9,b10))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 026998:
   TraceOperation 026998 (Loadb (Var (Local 3)) (Var (Local 5)) (Local 6));
   Let b1 = M[Offset(Address(GetLocal(3)),GetLocal(5))];
@@ -8098,7 +8098,7 @@ LocOp 027024:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 027046:
   TraceOperation 027046 (Mul (Var (Local 5)) (Con 2) Sp);
   PushStack Mul(GetLocal(5),2);
@@ -8127,7 +8127,7 @@ LocOp 027046:
     Let b12 = M[000865];
     Let b13 = M[000866];
     Let b14 = M[Address(MakeHiLo(b12,b13))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 027111
   }
@@ -8328,7 +8328,7 @@ LocOp 027229:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 LocReturn 027244:
@@ -8441,7 +8441,7 @@ LocOp 027316:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 --[68]--------------------------------------------------
@@ -9319,7 +9319,7 @@ LocOp 027941:
       Let b5 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 LocReturn 027963:
@@ -9343,7 +9343,7 @@ LocOp 027974:
     Let b3 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 027991:
   PushStack call_result;
@@ -9876,7 +9876,7 @@ LocOp 028769:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 028843
   }
@@ -10276,7 +10276,7 @@ LocOp 029223:
       Let b14 = M[Offset(Offset(000741,Mul(MakeHiLo(b12,b13),9)),7)];
       Let b15 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b12,b13),9)),7),1)];
       Let b16 = M[Address(MakeHiLo(b14,b15))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       Let b17 = M[Offset(Offset(000741,Mul(Widen(b10),9)),6)];
       if (EqualAny(List(Widen(b17),MakeHiLo(b6,b7)))) {
@@ -10292,9 +10292,9 @@ LocOp 029223:
         Let b22 = M[Offset(Offset(000741,Mul(MakeHiLo(b20,b21),9)),7)];
         Let b23 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b20,b21),9)),7),1)];
         Let b24 = M[Address(MakeHiLo(b22,b23))];
-        "getPropsA"
+        Error: getPropsA
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -10320,7 +10320,7 @@ LocOp 029223:
       Let b33 = M[Offset(Offset(000741,Mul(MakeHiLo(b31,b32),9)),7)];
       Let b34 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b31,b32),9)),7),1)];
       Let b35 = M[Address(MakeHiLo(b33,b34))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       Let b36 = M[Offset(Offset(000741,Mul(Widen(b29),9)),6)];
       if (EqualAny(List(Widen(b36),MakeHiLo(b25,b26)))) {
@@ -10336,9 +10336,9 @@ LocOp 029223:
         Let b41 = M[Offset(Offset(000741,Mul(MakeHiLo(b39,b40),9)),7)];
         Let b42 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b39,b40),9)),7),1)];
         Let b43 = M[Address(MakeHiLo(b41,b42))];
-        "getPropsA"
+        Error: getPropsA
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -10694,7 +10694,7 @@ LocOp 029570:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 029601:
   PushStack call_result;
   TraceOperation 029608 (Jz (Var Sp) (Branch F (Dloc 029655)));
@@ -10788,7 +10788,7 @@ LocOp 029676:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 029686:
   PushStack call_result;
@@ -10863,7 +10863,7 @@ LocOp 029767:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 029796:
   SetByte 008949 HiByte(call_result);
@@ -11339,7 +11339,7 @@ LocOp 030358:
         PopFrame return_address_14;
         JumpReturn: return_address_14, result: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -11537,7 +11537,7 @@ LocOp 030651:
   Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
   Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  "getPropsA"
+  Error: getPropsA
 --[131]--------------------------------------------------
 LocRoutine 030734:
   MakeRoutineFrame 0;
@@ -11737,7 +11737,7 @@ LocOp 030921:
       SetLocal 1 MakeHiLo(b8,b9);
       JumpCall: 027746, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 030926:
@@ -11787,7 +11787,7 @@ LocOp 030965:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 030980:
   TraceOperation 030980 (Test_attr (Var (Global 118)) (Con 19) (Branch T (Dloc 030988)));
   Let b1 = M[009053];
@@ -11880,7 +11880,7 @@ LocOp 031047:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 031094
   }
@@ -13675,7 +13675,7 @@ LocOp 032905:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 033015
   }
@@ -13736,7 +13736,7 @@ LocOp 032952:
         Let b6 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
         Let b7 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
         Let b8 = M[Address(MakeHiLo(b6,b7))];
-        "getPropsA"
+        Error: getPropsA
       }
     } else {
       Jump: 032988
@@ -13944,7 +13944,7 @@ LocOp 033081:
             JumpReturn: return_address_29, result: 1
           }
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -14460,7 +14460,7 @@ LocOp 033523:
   Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
   Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 033558:
   TraceOperation 033558 (Call (Floc 038124) [Var (Global 118)] Sp);
   Let b1 = M[009053];
@@ -14577,7 +14577,7 @@ LocOp 033600:
       SetLocal 1 MakeHiLo(b18,b19);
       JumpCall: 037050, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 033606:
@@ -14787,7 +14787,7 @@ LocOp 033811:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 --[203]--------------------------------------------------
 LocRoutine 033820:
   MakeRoutineFrame 0;
@@ -15203,7 +15203,7 @@ LocOp 034333:
       TraceOperation 034336 (Jump 034303);
       Jump: 034303
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[218]--------------------------------------------------
@@ -16462,7 +16462,7 @@ LocOp 035514:
   Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 035533:
   PushStack call_result;
   TraceOperation 035539 Ret_popped;
@@ -17217,7 +17217,7 @@ LocOp 036112:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 036122:
   PushStack call_result;
@@ -17240,7 +17240,7 @@ LocOp 036130:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocOp 036146:
   TraceOperation 036146 (Get_prop (Var (Global 0)) (Con 17) Sp);
@@ -17249,7 +17249,7 @@ LocOp 036146:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 036150:
   PushStack call_result;
   Jump: 036155
@@ -17268,7 +17268,7 @@ LocOp 036155:
       Let b5 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       PopFrame return_address_8;
       JumpReturn: return_address_8, result: 1
@@ -17371,7 +17371,7 @@ LocOp 036253:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 036271
   }
@@ -17397,7 +17397,7 @@ LocOp 036271:
       Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b4 = M[Address(MakeHiLo(b2,b3))];
-      "getPropsA"
+      Error: getPropsA
     }
   } else {
     Jump: 036297
@@ -17407,7 +17407,7 @@ LocOp 036285:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 036292:
   TraceOperation 036292 (Print_paddr (Var (Local 4)));
   GamePrint GetText(PackedAddress Z3(GetLocal(4)));
@@ -17859,7 +17859,7 @@ LocOp 036607:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 LocOp 036633:
@@ -17882,7 +17882,7 @@ LocReturn 036633:
     Let b4 = M[Offset(Offset(000741,Mul(popped3,9)),7)];
     Let b5 = M[Offset(Offset(Offset(000741,Mul(popped3,9)),7),1)];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 036656:
   PushStack call_result;
@@ -17975,7 +17975,7 @@ LocOp 036719:
         Let b3 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
         Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
         Let b5 = M[Address(MakeHiLo(b3,b4))];
-        "getPropsA"
+        Error: getPropsA
       }
     } else {
       Jump: 036739
@@ -18319,14 +18319,14 @@ LocOp 037055:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 037063:
   PushStack call_result;
   TraceOperation 037069 (Put_prop (Var (Local 1)) (Con 13) (Con 0));
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 --[266]--------------------------------------------------
 LocRoutine 037076:
   MakeRoutineFrame 0;
@@ -18693,7 +18693,7 @@ LocOp 037316:
       PushFrame 037322;
       JumpCall: 020688, #actuals: 0
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 037322:
@@ -18836,7 +18836,7 @@ LocOp 037389:
       PopFrame return_address_13;
       JumpReturn: return_address_13, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[271]--------------------------------------------------
@@ -18912,7 +18912,7 @@ LocOp 037427:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     TraceOperation 037431 (Je [Var (Local 1),Var (Global 128)] (Branch F (Dloc 037444)));
     Let b5 = M[009073];
@@ -18952,7 +18952,7 @@ LocOp 037454:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     TraceOperation 037431 (Je [Var (Local 1),Var (Global 128)] (Branch F (Dloc 037444)));
     Let b5 = M[009073];
@@ -19154,7 +19154,7 @@ LocOp 037584:
     Let b8 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
     Let b9 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
     Let b10 = M[Address(MakeHiLo(b8,b9))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 037601
   }
@@ -19249,7 +19249,7 @@ LocOp 037656:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 037668
   }
@@ -19331,7 +19331,7 @@ LocOp 037708:
         TraceOperation 037714 (Jump 037720);
         Jump: 037720
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -19357,7 +19357,7 @@ LocOp 037717:
       SetByte Offset(Offset(000741,Mul(GetLocal(1),9)),6) b2;
       Jump: 037720
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 037720:
@@ -19497,7 +19497,7 @@ LocOp 037885:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 037889:
   PushStack call_result;
   TraceOperation 037894 (Call (Floc 037050) [Var (Local 1)] Sp);
@@ -19699,7 +19699,7 @@ LocOp 038023:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 038038:
   PushStack call_result;
   TraceOperation 038046 Ret_popped;
@@ -19724,7 +19724,7 @@ LocOp 038055:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 038069:
   PushStack call_result;
   TraceOperation 038077 Ret_popped;
@@ -19892,7 +19892,7 @@ LocOp 038147:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 --[285]--------------------------------------------------
 LocRoutine 038178:
   MakeRoutineFrame 2;
@@ -19911,7 +19911,7 @@ LocOp 038183:
   Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b4 = M[Address(MakeHiLo(b2,b3))];
-  "getPropsA"
+  Error: getPropsA
 --[286]--------------------------------------------------
 LocRoutine 038192:
   MakeRoutineFrame 1;
@@ -20844,7 +20844,7 @@ LocReturn 039422:
       PopFrame return_address_9;
       JumpReturn: return_address_9, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 039432:
@@ -20956,7 +20956,7 @@ LocOp 039509:
         PopFrame return_address_8;
         JumpReturn: return_address_8, result: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -21135,7 +21135,7 @@ LocReturn 039636:
           PopFrame return_address_10;
           JumpReturn: return_address_10, result: 1
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -21167,7 +21167,7 @@ LocReturn 039636:
           PopFrame return_address_17;
           JumpReturn: return_address_17, result: 1
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     }
@@ -21451,7 +21451,7 @@ LocOp 040068:
         SetLocal 1 227;
         JumpCall: 038192, #actuals: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -21494,11 +21494,11 @@ LocOp 040068:
           SetLocal 1 227;
           JumpCall: 038192, #actuals: 1
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 040077:
@@ -21571,7 +21571,7 @@ LocOp 040128:
         SetLocal 1 229;
         JumpCall: 038192, #actuals: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -21608,11 +21608,11 @@ LocOp 040128:
           SetLocal 1 229;
           JumpCall: 038192, #actuals: 1
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 040134:
@@ -22578,7 +22578,7 @@ LocOp 041968:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 041980:
   PushStack call_result;
   TraceOperation 041986 (Get_sibling (Var (Local 2)) (Local 2) (Branch T (Dloc 041990)));
@@ -23210,7 +23210,7 @@ LocReturn 043060:
       Let b6 = M[002701];
       Let b7 = M[002702];
       Let b8 = M[Address(MakeHiLo(b6,b7))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       Let b9 = M[Offset(Offset(000741,Mul(Widen(b4),9)),6)];
       if (EqualAny(List(Widen(b9),218))) {
@@ -23224,9 +23224,9 @@ LocReturn 043060:
         Let b12 = M[002701];
         Let b13 = M[002702];
         Let b14 = M[Address(MakeHiLo(b12,b13))];
-        "getPropsA"
+        Error: getPropsA
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -23240,7 +23240,7 @@ LocOp 043144:
     Let b4 = M[002701];
     Let b5 = M[002702];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     PopFrame return_address_7;
     JumpReturn: return_address_7, result: 0
@@ -23298,7 +23298,7 @@ LocOp 043211:
           PopFrame return_address_18;
           JumpReturn: return_address_18, result: MakeHiLo(b16,b17)
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -23342,7 +23342,7 @@ LocOp 043233:
         Let b9 = M[002701];
         Let b10 = M[002702];
         Let b11 = M[Address(MakeHiLo(b9,b10))];
-        "getPropsA"
+        Error: getPropsA
       } else {
         Let b12 = M[Offset(Offset(000741,Mul(Widen(b5),9)),6)];
         if (EqualAny(List(Widen(b12),218))) {
@@ -23362,9 +23362,9 @@ LocOp 043233:
           Let b17 = M[002701];
           Let b18 = M[002702];
           Let b19 = M[Address(MakeHiLo(b17,b18))];
-          "getPropsA"
+          Error: getPropsA
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -23372,7 +23372,7 @@ LocOp 043233:
       Let b20 = M[002701];
       Let b21 = M[002702];
       Let b22 = M[Address(MakeHiLo(b20,b21))];
-      "getPropsA"
+      Error: getPropsA
     }
   } else {
     Jump: 043264
@@ -23399,7 +23399,7 @@ LocOp 043264:
         Let b6 = M[002701];
         Let b7 = M[002702];
         Let b8 = M[Address(MakeHiLo(b6,b7))];
-        "getPropsA"
+        Error: getPropsA
       } else {
         Jump: 043323
       }
@@ -23411,7 +23411,7 @@ LocOp 043264:
         Let b10 = M[002701];
         Let b11 = M[002702];
         Let b12 = M[Address(MakeHiLo(b10,b11))];
-        "getPropsA"
+        Error: getPropsA
       } else {
         Jump: 043323
       }
@@ -23440,7 +23440,7 @@ LocOp 043375:
       Let b3 = M[002701];
       Let b4 = M[002702];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       Jump: 043390
     }
@@ -23530,7 +23530,7 @@ LocReturn 043411:
             PopFrame return_address_15;
             JumpReturn: return_address_15, result: 1
           } else {
-            "unlink/loop"
+            Error: unlink/loop
           }
         }
       } else {
@@ -23639,7 +23639,7 @@ LocReturn 043695:
   Let b1 = M[002701];
   Let b2 = M[002702];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 043705:
   PushStack call_result;
   TraceOperation 043710 (Store (Con 157) (Con 1));
@@ -23742,7 +23742,7 @@ LocOp 043715:
           JumpReturn: return_address_29, result: 1
         }
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -24304,7 +24304,7 @@ LocReturn 044825:
             SetByte Offset(Offset(000741,Mul(MakeHiLo(b6,b7),9)),6) 144;
             Jump: 044885
           } else {
-            "unlink/loop"
+            Error: unlink/loop
           }
         }
       } else {
@@ -24348,7 +24348,7 @@ LocOp 044904:
       Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
       Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
       Let b9 = M[Address(MakeHiLo(b7,b8))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       PopFrame return_address_10;
       JumpReturn: return_address_10, result: 0
@@ -24419,7 +24419,7 @@ LocOp 044935:
         JumpReturn: return_address_21, result: 1
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[338]--------------------------------------------------
@@ -24863,7 +24863,7 @@ LocOp 045628:
         TraceOperation 045638 (Jump 045622);
         Jump: 045622
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -24892,7 +24892,7 @@ LocOp 045628:
         TraceOperation 045638 (Jump 045622);
         Jump: 045622
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -24936,7 +24936,7 @@ LocOp 045647:
         TraceOperation 045657 (Jump 045641);
         Jump: 045641
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -24967,7 +24967,7 @@ LocOp 045647:
         TraceOperation 045657 (Jump 045641);
         Jump: 045641
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -25158,7 +25158,7 @@ LocOp 046246:
           PopFrame return_address_11;
           JumpReturn: return_address_11, result: 1
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     }
@@ -25327,7 +25327,7 @@ LocOp 046791:
         SetLocal 1 28522;
         JumpCall: 021638, #actuals: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -25415,7 +25415,7 @@ LocOp 047183:
     Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b6,b7),9)),7)];
     Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b6,b7),9)),7),1)];
     Let b12 = M[Address(MakeHiLo(b10,b11))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     SetByte 008997 HiByte(Sub(MakeHiLo(b2,b3),1));
     SetByte 008998 LoByte(Sub(MakeHiLo(b2,b3),1));
@@ -25543,7 +25543,7 @@ LocReturn 047333:
         JumpReturn: return_address_13, result: 0
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[354]--------------------------------------------------
@@ -26555,7 +26555,7 @@ LocOp 049196:
             PopFrame return_address_17;
             JumpReturn: return_address_17, result: 1
           } else {
-            "unlink/loop"
+            Error: unlink/loop
           }
         }
       } else {
@@ -27291,7 +27291,7 @@ LocReturn 051076:
       PopFrame return_address_17;
       JumpReturn: return_address_17, result: MakeHiLo(b15,b16)
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 051220:
@@ -27382,7 +27382,7 @@ LocOp 051384:
         PopFrame return_address_13;
         JumpReturn: return_address_13, result: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -28736,7 +28736,7 @@ LocOp 054029:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 054053:
   TraceOperation 054053 (Store (Con 2) (Var (Local 3)));
   SetLocal 2 GetLocal(3);
@@ -28916,7 +28916,7 @@ LocReturn 054158:
         PopFrame return_address_13;
         JumpReturn: return_address_13, result: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -28972,7 +28972,7 @@ LocOp 054224:
       Let b3 = M[001774];
       Let b4 = M[001775];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       Jump: 054311
     }
@@ -29046,7 +29046,7 @@ LocOp 054553:
     Let b2 = M[001774];
     Let b3 = M[001775];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 054629
   }
@@ -29067,7 +29067,7 @@ LocReturn 054583:
   Let b3 = M[001774];
   Let b4 = M[001775];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 054629:
   TraceOperation 054629 (Insert_obj (Var (Global 118)) (Con 114));
   Let b1 = M[009053];
@@ -29084,7 +29084,7 @@ LocOp 054629:
     Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
     Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
     Let b9 = M[Address(MakeHiLo(b7,b8))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Let b10 = M[Offset(Offset(000741,Mul(Widen(b3),9)),6)];
     if (EqualAny(List(Widen(b10),MakeHiLo(b1,b2)))) {
@@ -29100,9 +29100,9 @@ LocOp 054629:
       Let b15 = M[Offset(Offset(000741,Mul(MakeHiLo(b13,b14),9)),7)];
       Let b16 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b13,b14),9)),7),1)];
       Let b17 = M[Address(MakeHiLo(b15,b16))];
-      "getPropsA"
+      Error: getPropsA
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 054708:
@@ -29211,7 +29211,7 @@ LocOp 054977:
             JumpReturn: return_address_22, result: 1
           }
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -29421,7 +29421,7 @@ LocReturn 055273:
     Let b10 = M[001774];
     Let b11 = M[001775];
     Let b12 = M[Address(MakeHiLo(b10,b11))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Let b13 = M[Offset(Offset(000741,Mul(Widen(b5),9)),6)];
     if (EqualAny(List(Widen(b13),113))) {
@@ -29440,9 +29440,9 @@ LocReturn 055273:
       Let b19 = M[001774];
       Let b20 = M[001775];
       Let b21 = M[Address(MakeHiLo(b19,b20))];
-      "getPropsA"
+      Error: getPropsA
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[394]--------------------------------------------------
@@ -29483,7 +29483,7 @@ LocReturn 055393:
   Let b4 = M[001774];
   Let b5 = M[001775];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 055410:
   PushStack call_result;
   TraceOperation 055415 Ret_popped;
@@ -29503,7 +29503,7 @@ LocOp 055417:
     Let b3 = M[001774];
     Let b4 = M[001775];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 055508
   }
@@ -29620,7 +29620,7 @@ LocOp 055635:
           TraceOperation 055651 (Jump 055635);
           Jump: 055635
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -29652,7 +29652,7 @@ LocOp 055635:
           TraceOperation 055651 (Jump 055635);
           Jump: 055635
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     }
@@ -29687,7 +29687,7 @@ LocOp 055655:
             Let b10 = M[001774];
             Let b11 = M[001775];
             Let b12 = M[Address(MakeHiLo(b10,b11))];
-            "getPropsA"
+            Error: getPropsA
           }
         } else {
           PopFrame return_address_13;
@@ -30082,7 +30082,7 @@ LocOp 056335:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     PopFrame return_address_8;
     JumpReturn: return_address_8, result: 0
@@ -30144,7 +30144,7 @@ LocReturn 056473:
       PopFrame return_address_9;
       JumpReturn: return_address_9, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 056483:
@@ -31174,7 +31174,7 @@ LocOp 057792:
     Let b3 = M[001738];
     Let b4 = M[001739];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     PopFrame return_address_6;
     JumpReturn: return_address_6, result: 0
@@ -31613,7 +31613,7 @@ LocReturn 058815:
       PopFrame return_address_7;
       JumpReturn: return_address_7, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[422]--------------------------------------------------
@@ -32219,7 +32219,7 @@ LocOp 059621:
       SetLocal 1 142;
       JumpCall: 030906, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 059651:
@@ -32741,7 +32741,7 @@ LocReturn 060203:
       SetLocal 2 MakeHiLo(b10,b11);
       JumpCall: 066488, #actuals: 2
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 060212:
@@ -32815,7 +32815,7 @@ LocReturn 060212:
         Jump: 060240
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 060240:
@@ -33016,7 +33016,7 @@ LocReturn 060491:
       SetLocal 1 142;
       JumpCall: 038192, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 060500:
@@ -33131,7 +33131,7 @@ LocReturn 060622:
       SetLocal 1 141;
       JumpCall: 038192, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 060631:
@@ -33514,7 +33514,7 @@ LocReturn 061174:
       PopFrame return_address_7;
       JumpReturn: return_address_7, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 061184:
@@ -33547,7 +33547,7 @@ LocOp 061184:
         PushFrame 061228;
         JumpCall: 061720, #actuals: 0
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -33630,7 +33630,7 @@ LocOp 061235:
           JumpReturn: return_address_25, result: 1
         }
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -33887,7 +33887,7 @@ LocOp 061632:
           SetByte Offset(Offset(000741,Mul(MakeHiLo(b7,b8),9)),6) b6;
           Jump: 061646
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -33927,7 +33927,7 @@ LocOp 061723:
     Let b2 = M[001495];
     Let b3 = M[001496];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 061739
   }
@@ -33965,7 +33965,7 @@ LocOp 061745:
       SetLocal 1 87;
       JumpCall: 030906, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 061751:
@@ -34060,7 +34060,7 @@ LocOp 062021:
       PopFrame return_address_8;
       JumpReturn: return_address_8, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 062025:
@@ -34416,7 +34416,7 @@ LocOp 062462:
       PopFrame return_address_9;
       JumpReturn: return_address_9, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 062466:
@@ -34471,7 +34471,7 @@ LocOp 062484:
         Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7)];
         Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7),1)];
         Let b12 = M[Address(MakeHiLo(b10,b11))];
-        "getPropsA"
+        Error: getPropsA
       } else {
         Jump: 062568
       }
@@ -34599,7 +34599,7 @@ LocOp 062631:
             PopFrame return_address_13;
             JumpReturn: return_address_13, result: 1
           } else {
-            "unlink/loop"
+            Error: unlink/loop
           }
         }
       } else {
@@ -34846,7 +34846,7 @@ LocOp 062849:
       PopFrame return_address_7;
       JumpReturn: return_address_7, result: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 062853:
@@ -35506,7 +35506,7 @@ LocOp 064011:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 064015:
   PushStack call_result;
   TraceOperation 064020 (Jz (Var Sp) (Branch T (Dloc 064026)));
@@ -35725,7 +35725,7 @@ LocOp 064131:
     Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7)];
     Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7),1)];
     Let b12 = M[Address(MakeHiLo(b10,b11))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocOp 064159:
   TraceOperation 064159 (Ret (Var (Local 2)));
@@ -35756,7 +35756,7 @@ LocOp 064171:
   Let b3 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 064197:
   TraceOperation 064197 (Store (Con 46) (Con 0));
   SetByte 008877 0;
@@ -36350,7 +36350,7 @@ LocOp 064628:
       SetLocal 1 MakeHiLo(b10,b11);
       JumpCall: 064236, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 064631:
@@ -36940,7 +36940,7 @@ LocOp 065153:
       SetLocal 1 GetLocal(4);
       JumpCall: 038192, #actuals: 1
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 065162:
@@ -36996,7 +36996,7 @@ LocOp 065199:
   Let b4 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b5 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065212:
   PushStack call_result;
   TraceOperation 065220 (Storew (Var Sp) (Con 0) (Con 1));
@@ -37035,7 +37035,7 @@ LocReturn 065234:
   Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
   Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065253:
   PushStack call_result;
   TraceOperation 065260 Rfalse;
@@ -37063,14 +37063,14 @@ LocOp 065271:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065378:
   PushStack call_result;
   TraceOperation 065384 (Get_prop (Var (Local 1)) (Con 17) Sp);
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065388:
   PushStack call_result;
   TraceOperation 065393 (Ret (Var (Local 3)));
@@ -37083,7 +37083,7 @@ LocOp 065395:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 065410
   }
@@ -37114,7 +37114,7 @@ LocOp 065419:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065423:
   PushStack call_result;
   TraceOperation 065428 (Sub (Var (Local 2)) (Var Sp) (Local 3));
@@ -37223,7 +37223,7 @@ LocOp 065495:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 065514:
   TraceOperation 065514 (Jl (Var (Local 1)) (Con 0) (Branch F (Dloc 065525)));
   if (LessThan(GetLocal(1),0)) {
@@ -37235,7 +37235,7 @@ LocOp 065514:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 065525
   }
@@ -37391,7 +37391,7 @@ LocOp 065631:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065659:
   PushStack call_result;
   TraceOperation 065665 (Jump 065591);
@@ -37415,7 +37415,7 @@ LocOp 065680:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 065688:
   PushStack call_result;
@@ -37439,7 +37439,7 @@ LocOp 065703:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    "getPropsA"
+    Error: getPropsA
   } else {
     Jump: 065716
   }
@@ -37508,7 +37508,7 @@ LocOp 065757:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065778:
   PushStack call_result;
   TraceOperation 065783 Rtrue;
@@ -37547,7 +37547,7 @@ LocReturn 065797:
   Let b1 = M[001738];
   Let b2 = M[001739];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 065813:
   PushStack call_result;
   TraceOperation 065819 (Jz (Var Sp) (Branch T (Dloc 065828)));
@@ -37571,7 +37571,7 @@ LocOp 065831:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocOp 065841:
   TraceOperation 065841 (Jl (Var (Local 4)) (Var (Global 152)) (Branch T (Dloc 065831)));
   Let b1 = M[009121];
@@ -37585,7 +37585,7 @@ LocOp 065841:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    "getPropsA"
+    Error: getPropsA
   }
 LocReturn 065865:
   PushStack call_result;
@@ -37644,7 +37644,7 @@ LocOp 065977:
   Let b1 = M[001738];
   Let b2 = M[001739];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 --[482]--------------------------------------------------
 LocRoutine 065990:
   MakeRoutineFrame 2;
@@ -38039,7 +38039,7 @@ LocOp 066204:
           TraceOperation 066226 (Jump 066030);
           Jump: 066030
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -38125,7 +38125,7 @@ LocOp 066275:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 066283:
   PushStack call_result;
   TraceOperation 066289 (Jz (Var Sp) (Branch T (Dloc 066357)));
@@ -38191,7 +38191,7 @@ LocReturn 066283:
           Jump: 066357
         }
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   }
@@ -38238,7 +38238,7 @@ LocOp 066365:
         PopFrame return_address_11;
         JumpReturn: return_address_11, result: 1
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -38281,13 +38281,13 @@ LocOp 066391:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       TraceOperation 066398 (Get_prop (Var (Local 2)) (Con 12) Sp);
       Let b6 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b7 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b8 = M[Address(MakeHiLo(b6,b7))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 LocReturn 066425:
@@ -38347,7 +38347,7 @@ LocOp 066434:
         Jump: 066450
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 066450:
@@ -38442,7 +38442,7 @@ LocOp 066510:
         Let b4 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
         Let b5 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
         Let b6 = M[Address(MakeHiLo(b4,b5))];
-        "getPropsA"
+        Error: getPropsA
       }
     }
   } else {
@@ -38460,7 +38460,7 @@ LocOp 066510:
         Let b9 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
         Let b10 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
         Let b11 = M[Address(MakeHiLo(b9,b10))];
-        "getPropsA"
+        Error: getPropsA
       }
     }
   }
@@ -38506,7 +38506,7 @@ LocOp 066541:
         Jump: 066554
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocOp 066554:
@@ -38547,7 +38547,7 @@ LocReturn 066573:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  "getPropsA"
+  Error: getPropsA
 LocReturn 066587:
   PushStack call_result;
   TraceOperation 066594 (Loadw (Var Sp) (Con 0) Sp);
@@ -38964,7 +38964,7 @@ LocReturn 067310:
         SetByte Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),6) b7;
         Jump: 067366
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -39035,7 +39035,7 @@ LocOp 067511:
       Let b12 = M[Offset(Offset(000741,Mul(MakeHiLo(b10,b11),9)),7)];
       Let b13 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b10,b11),9)),7),1)];
       Let b14 = M[Address(MakeHiLo(b12,b13))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       Jump: 067713
     }
@@ -39075,12 +39075,12 @@ LocOp 067511:
         Let b21 = M[Offset(Offset(000741,Mul(MakeHiLo(b19,b20),9)),7)];
         Let b22 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b19,b20),9)),7),1)];
         Let b23 = M[Address(MakeHiLo(b21,b22))];
-        "getPropsA"
+        Error: getPropsA
       } else {
         Jump: 067713
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 LocReturn 067704:
@@ -39167,7 +39167,7 @@ LocOp 067827:
           Let b11 = M[001738];
           Let b12 = M[001739];
           Let b13 = M[Address(MakeHiLo(b11,b12))];
-          "getPropsA"
+          Error: getPropsA
         } else {
           Let b14 = M[Offset(Offset(000741,Mul(Widen(b9),9)),6)];
           if (EqualAny(List(Widen(b14),208))) {
@@ -39181,9 +39181,9 @@ LocOp 067827:
             Let b17 = M[001738];
             Let b18 = M[001739];
             Let b19 = M[Address(MakeHiLo(b17,b18))];
-            "getPropsA"
+            Error: getPropsA
           } else {
-            "unlink/loop"
+            Error: unlink/loop
           }
         }
       } else {
@@ -39191,7 +39191,7 @@ LocOp 067827:
         Let b20 = M[001738];
         Let b21 = M[001739];
         Let b22 = M[Address(MakeHiLo(b20,b21))];
-        "getPropsA"
+        Error: getPropsA
       }
     } else {
       Let b23 = M[Offset(Offset(000741,Mul(Widen(b4),9)),6)];
@@ -39218,7 +39218,7 @@ LocOp 067827:
             Let b31 = M[001738];
             Let b32 = M[001739];
             Let b33 = M[Address(MakeHiLo(b31,b32))];
-            "getPropsA"
+            Error: getPropsA
           } else {
             Let b34 = M[Offset(Offset(000741,Mul(Widen(b29),9)),6)];
             if (EqualAny(List(Widen(b34),208))) {
@@ -39232,9 +39232,9 @@ LocOp 067827:
               Let b37 = M[001738];
               Let b38 = M[001739];
               Let b39 = M[Address(MakeHiLo(b37,b38))];
-              "getPropsA"
+              Error: getPropsA
             } else {
-              "unlink/loop"
+              Error: unlink/loop
             }
           }
         } else {
@@ -39242,10 +39242,10 @@ LocOp 067827:
           Let b40 = M[001738];
           Let b41 = M[001739];
           Let b42 = M[Address(MakeHiLo(b40,b41))];
-          "getPropsA"
+          Error: getPropsA
         }
       } else {
-        "unlink/loop"
+        Error: unlink/loop
       }
     }
   } else {
@@ -39265,7 +39265,7 @@ LocOp 067827:
         Let b48 = M[001738];
         Let b49 = M[001739];
         Let b50 = M[Address(MakeHiLo(b48,b49))];
-        "getPropsA"
+        Error: getPropsA
       } else {
         Let b51 = M[Offset(Offset(000741,Mul(Widen(b46),9)),6)];
         if (EqualAny(List(Widen(b51),208))) {
@@ -39279,9 +39279,9 @@ LocOp 067827:
           Let b54 = M[001738];
           Let b55 = M[001739];
           Let b56 = M[Address(MakeHiLo(b54,b55))];
-          "getPropsA"
+          Error: getPropsA
         } else {
-          "unlink/loop"
+          Error: unlink/loop
         }
       }
     } else {
@@ -39289,7 +39289,7 @@ LocOp 067827:
       Let b57 = M[001738];
       Let b58 = M[001739];
       Let b59 = M[Address(MakeHiLo(b57,b58))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 LocOp 067854:
@@ -39308,13 +39308,13 @@ LocOp 067854:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      "getPropsA"
+      Error: getPropsA
     } else {
       TraceOperation 067864 (Get_prop (Var (Local 2)) (Con 12) Sp);
       Let b6 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b7 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b8 = M[Address(MakeHiLo(b6,b7))];
-      "getPropsA"
+      Error: getPropsA
     }
   }
 LocOp 067872:
@@ -39367,7 +39367,7 @@ LocOp 067879:
             TraceOperation 067898 (Jump 067854);
             Jump: 067854
           } else {
-            "unlink/loop"
+            Error: unlink/loop
           }
         }
       } else {
@@ -39421,7 +39421,7 @@ LocOp 067908:
       TraceOperation 067919 (Jump 067854);
       Jump: 067854
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[492]--------------------------------------------------
@@ -40108,7 +40108,7 @@ LocOp 073167:
         }
       }
     } else {
-      "unlink/loop"
+      Error: unlink/loop
     }
   }
 --[503]--------------------------------------------------
@@ -40175,7 +40175,7 @@ LocOp 080649:
   Let b1 = M[001486];
   Let b2 = M[001487];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  "getPropsA"
+  Error: getPropsA
 --[509]--------------------------------------------------
 LocRoutine 080698:
   MakeRoutineFrame 4;
