@@ -152,7 +152,7 @@ tryDecodeRoutine story a = do
   case disRoutineM story a of
     Nothing -> Nothing
     Just Routine{finish,illegal,unused,defs=_} -> if
-      | length illegal == 0 && length unused < 5
+      | length illegal == 0 && length unused <= 2
         -> Just finish
       | otherwise
         -> Nothing

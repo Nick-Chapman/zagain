@@ -11,7 +11,7 @@ Memory Map:
 113664 End of story file
 --------------------------------------
 Found 275 routines by walkthrough
-Found 580 routines by speculative disassembly
+Found 577 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=10094
@@ -12578,24 +12578,12 @@ gap=515
 106823 Inc_chk (Var (Global 52)) (Var (Global 163)) (Branch F (Dloc 112431))
 106828 Rtrue
 --------------------------------------------------
-gap=1323
-108152 RoutineHeader [13136,8472,6454,-26016]
--- unused: [1,2,3,4]
-108161 Dec_chk (Con 101) (Var (Global 194)) (Branch F (Dloc 102788))
-108166 Insert_obj (Var (Global 113)) (Con 24)
-108169 Jump 128657
---------------------------------------------------
-gap=278
+gap=1621
 108450 RoutineHeader []
 108451 Dec_chk (Con 58) (Var (Global 90)) (Branch F (Dloc 108507))
 108455 Rfalse
 --------------------------------------------------
-gap=128
-108584 RoutineHeader [27253,4505,-11755,17700]
--- unused: [1,2,3,4]
-108593 Print_ret "914"
---------------------------------------------------
-gap=1122
+gap=1264
 109720 RoutineHeader []
 109721 Ret (Con 24211)
 --------------------------------------------------
@@ -12620,11 +12608,6 @@ gap=19
 111866 RoutineHeader []
 111867 Jump 118562
 --------------------------------------------------
-gap=136
-112006 RoutineHeader [-23499,-9951,-21190,2652]
--- unused: [1,2,3,4]
-112015 Ret_popped
---------------------------------------------------
-gap=8
+gap=154
 112024 RoutineHeader []
 112025 Jump 118720
