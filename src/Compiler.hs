@@ -77,7 +77,8 @@ compileRoutine story smallStep routine = do
     shouldInline :: Control Compile -> Bool
     shouldInline control =
       case control of
-        Eff.AtInstruction (Const control) -> (control `elem` addressesToInline)
+        Eff.AtInstruction (Const addr) -> (addr `elem` addressesToInline)
+        Eff.AtRoutineHeader{ routine = Const{} } -> True
         _ -> False
 
   let
