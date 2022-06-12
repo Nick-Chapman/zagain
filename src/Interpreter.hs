@@ -42,7 +42,10 @@ runEffect screenWidth seed story smallStep = do
 
     oob who = OOB_Error ("runEffect:"++who)
 
-    header@Header{zv,initialPC} = Story.header story
+    header@Header{zv,initialPC,staticMem} = Story.header story
+
+    isStaticAddress :: Addr -> Bool
+    isStaticAddress a = a <= 63 || a > staticMem
 
     k0 State{count,lastCount} () = A.Stop (count-lastCount)
 
@@ -134,8 +137,9 @@ runEffect screenWidth seed story smallStep = do
         k s b
 
       SetByte a b -> do
-        let State{overrides} = s
-        k s { overrides = Map.insert a b overrides } ()
+        if isStaticAddress a then error (show ("SetByte, staticAddress",a)) else do
+          let State{overrides} = s
+          k s { overrides = Map.insert a b overrides } ()
 
       PushStack v -> do
         let State{stack} = s

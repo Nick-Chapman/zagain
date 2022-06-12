@@ -20732,16 +20732,14 @@ LocRoutine 029356:
   Jump: 029357
 LocOp 029357:
   TraceOperation 029357 (Loadw (Con 0) (Con 8) Sp);
-  Let b1 = M[000016];
-  Let b2 = M[000017];
-  PushStack MakeHiLo(b1,b2);
+  PushStack 0;
   TraceOperation 029361 (Or (Var Sp) (Con 1) Sp);
-  PopStack popped3;
-  PushStack Or(popped3,1);
+  PopStack popped1;
+  PushStack Or(popped1,1);
   TraceOperation 029365 (Storew (Con 0) (Con 8) (Var Sp));
-  PopStack popped4;
-  SetByte 000016 HiByte(popped4);
-  SetByte 000017 LoByte(popped4);
+  PopStack popped2;
+  SetByte 000016 HiByte(popped2);
+  SetByte 000017 LoByte(popped2);
   TraceOperation 029370 (Call (Floc 029414) [Con -11788] Sp);
   PushFrame 029370;
   SetLocal 1 -11788;
@@ -20774,19 +20772,17 @@ LocReturn 029385:
 LocReturn 029392:
   PushStack call_result;
   TraceOperation 029397 (Loadw (Con 0) (Con 8) Sp);
-  Let b1 = M[000016];
-  Let b2 = M[000017];
-  PushStack MakeHiLo(b1,b2);
+  PushStack 0;
   TraceOperation 029401 (And (Var Sp) (Con -2) Sp);
-  PopStack popped3;
-  PushStack And(popped3,-2);
+  PopStack popped1;
+  PushStack And(popped1,-2);
   TraceOperation 029407 (Storew (Con 0) (Con 8) (Var Sp));
-  PopStack popped4;
-  SetByte 000016 HiByte(popped4);
-  SetByte 000017 LoByte(popped4);
+  PopStack popped2;
+  SetByte 000016 HiByte(popped2);
+  SetByte 000017 LoByte(popped2);
   TraceOperation 029412 Rtrue;
-  PopFrame return_address_5;
-  JumpReturn: return_address_5, result: 1
+  PopFrame return_address_3;
+  JumpReturn: return_address_3, result: 1
 --[91]--------------------------------------------------
 LocRoutine 029414:
   MakeRoutineFrame 1;
@@ -20821,12 +20817,10 @@ LocRoutine 029450:
   Jump: 029455
 LocOp 029455:
   TraceOperation 029455 (Loadw (Con 0) (Con 1) Sp);
-  Let b1 = M[000002];
-  Let b2 = M[000003];
-  PushStack MakeHiLo(b1,b2);
+  PushStack 59;
   TraceOperation 029459 (And (Var Sp) (Con 2047) (Local 2));
-  PopStack popped3;
-  SetLocal 2 And(popped3,2047);
+  PopStack popped1;
+  SetLocal 2 And(popped1,2047);
   TraceOperation 029465 (Print "THE HITCHHIKER'S GUIDE TO THE GALAXY\nInfocom interactive fiction - a science fiction story\nCopyright (c) 1984 by Infocom, Inc. All rights reserved.\n");
   GamePrint "THE HITCHHIKER'S GUIDE TO THE GALAXY\nInfocom interactive fiction - a science fiction story\nCopyright (c) 1984 by Infocom, Inc. All rights reserved.\n";
   TraceOperation 029596 (Print "Release ");
@@ -86396,8 +86390,9 @@ LocRoutine 092514:
   Jump: 092523
 LocOp 092523:
   TraceOperation 092523 (Remove_obj (Con 10241));
-  Let b1 = M[027388];
-  if (IsZero(Widen(b1))) {
+  Let b1 = M[001423];
+  if (Equal(Widen(b1),10241)) {
+    SetByte 001423 4;
     SetByte 027388 0;
     TraceOperation 092526 (Or (Var (Global 176)) (Con 46) (Global 22));
     Let b2 = M[008260];
@@ -86415,29 +86410,7 @@ LocOp 092523:
       Jump: 088023
     }
   } else {
-    Let b7 = M[Offset(Offset(000751,Mul(Widen(b1),9)),6)];
-    if (Equal(Widen(b7),10241)) {
-      Let b8 = M[027389];
-      SetByte Offset(Offset(000751,Mul(Widen(b1),9)),6) LoByte(Widen(b8));
-      SetByte 027388 0;
-      TraceOperation 092526 (Or (Var (Global 176)) (Con 46) (Global 22));
-      Let b9 = M[008260];
-      Let b10 = M[008261];
-      SetByte 007952 HiByte(Or(MakeHiLo(b9,b10),46));
-      SetByte 007953 LoByte(Or(MakeHiLo(b9,b10),46));
-      TraceOperation 092530 (Je [Var (Global 174),Var (Local 1)] (Branch F (Dloc 088023)));
-      Let b11 = M[008256];
-      Let b12 = M[008257];
-      if (Equal(MakeHiLo(b11,b12),GetLocal(1))) {
-        TraceOperation 092535 Rfalse;
-        PopFrame return_address_13;
-        JumpReturn: return_address_13, result: 0
-      } else {
-        Jump: 088023
-      }
-    } else {
-      Error: unlink/loop
-    }
+    Error: unlink/loop
   }
 --[590]--------------------------------------------------
 LocRoutine 092664:
@@ -89613,38 +89586,22 @@ LocOp 097421:
     SetByte Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),5) LoByte(Widen(b4));
     SetByte 000811 b2;
     TraceOperation 097424 (Get_sibling (Con -22336) (Global 138) (Branch F (Dloc 097451)));
-    Let b5 = M[18446744073709547956];
-    SetByte 008184 HiByte(Widen(b5));
-    SetByte 008185 LoByte(Widen(b5));
-    if (IsZero(Widen(b5))) {
-      Jump: 097451
-    } else {
-      TraceOperation 097429 (Print_ret " there.");
-      GamePrint " there.\n";
-      PopFrame return_address_6;
-      JumpReturn: return_address_6, result: 1
-    }
+    SetByte 008184 0;
+    SetByte 008185 0;
+    Jump: 097451
   } else {
-    Let b7 = M[Offset(Offset(000751,Mul(Widen(b3),9)),6)];
-    if (Equal(Widen(b7),MakeHiLo(b1,b2))) {
-      Let b8 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),5)];
-      SetByte Offset(Offset(000751,Mul(Widen(b3),9)),6) LoByte(Widen(b8));
+    Let b5 = M[Offset(Offset(000751,Mul(Widen(b3),9)),6)];
+    if (Equal(Widen(b5),MakeHiLo(b1,b2))) {
+      Let b6 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),5)];
+      SetByte Offset(Offset(000751,Mul(Widen(b3),9)),6) LoByte(Widen(b6));
       SetByte Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),4) 6;
-      Let b9 = M[000811];
-      SetByte Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),5) LoByte(Widen(b9));
+      Let b7 = M[000811];
+      SetByte Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),5) LoByte(Widen(b7));
       SetByte 000811 b2;
       TraceOperation 097424 (Get_sibling (Con -22336) (Global 138) (Branch F (Dloc 097451)));
-      Let b10 = M[18446744073709547956];
-      SetByte 008184 HiByte(Widen(b10));
-      SetByte 008185 LoByte(Widen(b10));
-      if (IsZero(Widen(b10))) {
-        Jump: 097451
-      } else {
-        TraceOperation 097429 (Print_ret " there.");
-        GamePrint " there.\n";
-        PopFrame return_address_11;
-        JumpReturn: return_address_11, result: 1
-      }
+      SetByte 008184 0;
+      SetByte 008185 0;
+      Jump: 097451
     } else {
       Error: unlink/loop
     }

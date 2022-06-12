@@ -12,7 +12,7 @@ import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
 import Operation (Operation(Call))
-import Story (Story(header,size),OOB_Mode(..))
+import Story (Story(header,size),OOB_Mode(..),readStoryByte)
 import Text.Printf (printf)
 import qualified Action (Action(..))
 import qualified Eff (Phase(..),StatusInfo(..))
@@ -102,7 +102,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
   where
     oob who = OOB_Error ("compileLoc:"++who)
 
-    header@Header{zv} = Story.header story
+    header@Header{zv,staticMem} = Story.header story
+
+    isStaticAddress :: Addr -> Bool
+    isStaticAddress a = a <= 63 || a > staticMem
 
     -- continuation (for compilation) which will finish the compiled program with a jump
     kJump :: State -> () -> Gen (Prog 'WillJump)
@@ -181,9 +184,18 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.SetLocal n v -> do
         Seq (SetLocal n v) <$> k s ()
 
-      Eff.GetByte a -> do -- TODO: optimize: lookup in static memory range should happen now
-        name <- genId "b"
-        Seq (Let (Bind name (GetByte a))) <$> k s (Variable name)
+      Eff.GetByte a -> do
+        case a of
+          Const addr
+            | isStaticAddress addr -> do
+                -- We can't be sure that this is real code we are compiling,
+                -- so the address might not be in bounds.
+                -- Hence we can't use the OOB_Error mode for reading the story byte.
+                let b = readStoryByte OOB_Zero story addr
+                k s (Const b)
+          _ -> do
+            name <- genId "b"
+            Seq (Let (Bind name (GetByte a))) <$> k s (Variable name)
 
       Eff.SetByte a b ->
         Seq (SetByte a b) <$> k s ()
