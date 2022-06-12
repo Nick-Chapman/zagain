@@ -4,10 +4,10 @@ module Compiler (compileEffect,dumpCode,runCode) where
 import Action (Action)
 import Control.Monad (ap,liftM)
 import Data.List (intercalate)
+import Data.Set (Set)
 import Decode (fetchOperation,fetchRoutineHeader)
 import Disassemble (Routine(..),disRoutine,branchesOf,routinesBetween)
 import Eff (Phase,Eff,Control)
-import qualified Eff (Eff(..),Control(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
@@ -15,6 +15,8 @@ import Operation (Operation(Call))
 import Story (Story(header,size),OOB_Mode(..),readStoryByte)
 import Text.Printf (printf)
 import qualified Action (Action(..))
+import qualified Data.Set as Set
+import qualified Eff (Eff(..),Control(..))
 import qualified Eff (Phase(..),StatusInfo(..))
 import qualified Primitive as Prim
 
@@ -36,10 +38,57 @@ compileEffect story smallStep = do
   let Header{initialPC=_, staticMem} = Story.header story
   let as = routinesBetween story (staticMem,endOfStory)
   let routines = [ disRoutine story a | a <- as ]
-  Code <$> mapM (compileRoutine story smallStep) routines
 
-compileRoutine :: Story -> Effect () -> Routine -> IO CompiledRoutine
-compileRoutine story smallStep routine = do
+  let addressesToInline = Set.fromList $
+        concat [ routineAddressesToInline r | r <- routines]
+
+  -- Experiment with inlining across routine calls
+  let xInline = [] --[025175]
+
+  let
+    shouldInline :: Control Compile -> Bool
+    shouldInline control =
+      case control of
+        Eff.AtInstruction (Const addr) ->
+          addr `Set.member` addressesToInline || addr `elem` xInline
+        Eff.AtRoutineHeader{ routine = Const{} } -> True
+        --Eff.AtReturnFromCall{ caller = Const{} } -> True -- never kicks in yet
+        _ -> False
+
+  let static = Static { story, smallStep, shouldInline }
+
+  Code <$> sequence
+    [ do compileRoutine static addressesToInline r
+    | r <- routines
+    ]
+
+routineAddressesToInline :: Routine -> [Addr]
+routineAddressesToInline routine = do
+  let Routine{body} = routine
+  let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- body ]
+  let
+    dontInlineSet = case body of
+      [] -> jumpDest
+      (bodyStart,_):_ -> bodyStart : jumpDest
+  let
+    addressesToInline :: [Addr] =
+      [ a
+      | (a,_) <- body
+        -- TODO: we could still inline if there is only a single jump-from location & no fallthrough
+      , a `notElem` dontInlineSet
+      ]
+  addressesToInline
+
+
+data Static = Static
+  { story :: Story
+  , smallStep :: Effect ()
+  , shouldInline :: Control Compile -> Bool
+  }
+
+
+compileRoutine :: Static -> Set Addr -> Routine -> IO CompiledRoutine
+compileRoutine static addressesToInline routine = do
   let Routine{start,body} = routine
   let
     isCall :: Operation -> Bool
@@ -52,46 +101,15 @@ compileRoutine story smallStep routine = do
       | (addr,op) <- body
       , x <- [LocOp addr] ++ if isCall op then [LocReturn addr] else []
       ]
-  let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- body ]
-
-  let
-    dontInlineSet = case body of
-      [] -> jumpDest
-      (bodyStart,_):_ -> bodyStart : jumpDest
-
-  let
-    addressesToInline :: [Addr] =
-      [ a
-      | (a,_) <- body
-        -- TODO: we could still inline if there is only a single jump-from location & no fallthrough
-      , a `notElem` dontInlineSet
-      ]
   let
     nonInlinedLocations :: [Loc] =
       [ control
       | control <- locations
-      , case control of LocOp a -> a `notElem` addressesToInline; _ -> True
+      , case control of LocOp a -> a `Set.notMember` addressesToInline; _ -> True
       ]
   let locationsToCompile = [LocRoutine start] ++ nonInlinedLocations
-  let
-    shouldInline :: Control Compile -> Bool
-    shouldInline control =
-      case control of
-        Eff.AtInstruction (Const addr) -> (addr `elem` addressesToInline)
-        Eff.AtRoutineHeader{ routine = Const{} } -> True
-        _ -> False
-
-  let
-    static = Static { story, smallStep, shouldInline }
-
   CompiledRoutine <$> mapM (runGen . compileLoc static) locationsToCompile
 
-
-data Static = Static
-  { story :: Story
-  , smallStep :: Effect ()
-  , shouldInline :: Control Compile -> Bool
-  }
 
 compileLoc :: Static -> Loc -> Gen Chunk
 compileLoc Static{story,smallStep,shouldInline} loc = do
@@ -114,7 +132,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       let State{control} = s
       if
         | shouldInline control -> do
-         --Seq (Inlining control) <$>
+          --Seq (Inlining control) <$>
             compileK s { control } smallStep kJump
         | otherwise -> do
             pure (flushStack s (Jump control))
@@ -492,7 +510,7 @@ tab n s = take n (repeat ' ') ++ s
 data Atom
   = SetByte (Expression Addr) (Expression Byte)
   | Note String
-  -- | Inlining (Control Compile)
+  | Inlining (Control Compile)
   | TraceOperation (Expression Addr) Operation
   | GamePrint (Expression String)
   | MakeRoutineFrame Int
