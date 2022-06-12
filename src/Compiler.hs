@@ -278,7 +278,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.Offset x y -> prim2 x y Prim.Offset
       Eff.Or x y -> prim2 x y Prim.Or
       Eff.SetBit x y -> prim2 x y Prim.SetBit
-      Eff.ShiftR x y -> prim2 x (Const y) Prim.ShiftR
+      Eff.ShiftR x y -> prim2 x y Prim.ShiftR
       Eff.Sub x y -> prim2 x y Prim.Sub
       Eff.TestBit x y -> prim2 x y Prim.TestBit
 

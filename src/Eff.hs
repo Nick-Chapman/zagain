@@ -117,7 +117,7 @@ data Eff p x where
   PackedAddress :: Value p -> Eff p (Addr p)
   SetBit :: Byte p -> Byte p -> Eff p (Byte p)
   SevenMinus :: Byte p -> Eff p (Byte p)
-  ShiftR :: Byte p -> Int -> Eff p (Byte p) -- TODO: remove special case of non-phase-polymorhpic arg2
+  ShiftR :: Byte p -> Value p -> Eff p (Byte p)
   ShowNumber :: Value p -> Eff p (Text p)
   SingleChar :: Value p -> Eff p (Text p)
   StringBytes :: Text p -> Eff p (Vector p (Byte p))

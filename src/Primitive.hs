@@ -71,7 +71,7 @@ data P2 arg1 arg2 ret where
   Offset :: P2 Addr Value Addr
   Or :: P2 Value Value Value
   SetBit :: P2 Byte Byte Byte
-  ShiftR :: P2 Byte Int Byte
+  ShiftR :: P2 Byte Value Byte
   Sub :: P2 Value Value Value
   TestBit :: P2 Byte Byte Bool
 
@@ -96,6 +96,6 @@ evalP2 = \case
   Offset -> \base off -> base + fromIntegral off
   Or -> (.|.)
   SetBit -> \b n -> b `setBit` fromIntegral n
-  ShiftR -> shiftR
+  ShiftR -> \b v -> b `shiftR` fromIntegral v
   Sub -> (-)
   TestBit -> \b n -> b `testBit` fromIntegral n

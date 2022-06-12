@@ -246,7 +246,8 @@ getPropLen v = do
     vM1 <- Sub v one
     aM1 <- Address vM1
     b <- GetByte aM1
-    shifted <- b `ShiftR` 5
+    five <- LitV 5
+    shifted <- b `ShiftR` five
     seven <- LitB 0x7
     masked <- shifted `BwAnd` seven
     w <- Widen masked
@@ -336,7 +337,8 @@ getPropNumAndSize a1 b1 = do
         fiveBits <- b1 `BwAnd` oneF
         Widen fiveBits
       numBytes <- do
-        shifted <- b1 `ShiftR` 5
+        five <- LitV 5
+        shifted <- b1 `ShiftR` five
         widened <- Widen shifted
         Add widened one
       pure PropNumAndSize{sizeByteSize=1,propNumber,numBytes}
