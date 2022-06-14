@@ -302,6 +302,12 @@ eval mode here op = case op of
     v2 <- evalArg arg2
     Objects.setAttr v1 v2
 
+  Op.Sound_effect arg1 arg2 arg3 -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    v3 <- evalArg arg3
+    Note (here,"Sound_effect",v1,v2,v3)
+
   Op.Sread arg1 arg2 -> do
     Header{zv} <- StoryHeader
     statusInfoM <- if

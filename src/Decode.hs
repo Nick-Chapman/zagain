@@ -145,7 +145,7 @@ decode zv x = do
   Code 243 [t] -> Op.Output_stream1 <$> arg t
   Code 243 [t1,t2] -> Op.Output_stream2 <$> arg t1 <*> arg t2
   Code 244 [t] -> Op.Input_stream <$> arg t
-  -- 245
+  Code 245 [t1,t2,t3] -> Op.Sound_effect <$> arg t1 <*> arg t2 <*> arg t3
   Code 246 [_ignored_mustBe1] -> Op.Read_char <$> target
 
   Code 249 (t1:ts)
