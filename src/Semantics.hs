@@ -29,12 +29,15 @@ smallStep mode = do
 
     AtReturnFromCall{caller,result=v} -> do
       (operation,pc) <- FetchOperation caller
-      setTarget (callTarget operation) v
+      case callTargetM operation of
+        Just target -> setTarget target v
+        Nothing -> pure ()
       SetControl AtInstruction { pc }
 
     where
-      callTarget = \case
-        Op.Call _ _ target -> target
+      callTargetM = \case
+        Op.Call _ _ target -> Just target
+        Op.CallN _ _ -> Nothing
         _ ->  error "callTarget: not a call instruction!"
 
 
@@ -47,16 +50,23 @@ eval mode here op = case op of
   Op.Add arg1 arg2 target -> do evalBin Add arg1 arg2 target
   Op.And arg1 arg2 target -> do evalBin And arg1 arg2 target
 
+  Op.Aread arg1 arg2 target-> do
+    Debug (arg1,arg2,target,"(ignore target), delegate-->Sread")
+    eval mode here (Op.Sread arg1 arg2)
+
   Op.Call func args target -> do
     routine <- evalFunc func
     p <- IsZeroAddress routine >>= If
-    if p then LitV 0 >>= setTarget target else do
-      actuals <- mapM evalArg args
-      PushFrame here
-      setActuals actuals
-      numActuals <- LitB $ fromIntegral (length actuals)
-      TraceRoutineCall routine -- for dynamic discovery
-      SetControl AtRoutineHeader { routine, numActuals }
+    if p then LitV 0 >>= setTarget target else do doCall here routine args
+
+  Op.CallN func args -> do
+    routine <- evalFunc func
+    p <- IsZeroAddress routine >>= If
+    if p then pure () else do doCall here routine args
+
+  Op.Check_arg_count arg label -> do -- TODO: frame must contain num-actuals
+    v <- evalArg arg
+    Debug ("Check_arg_count",arg,v,label)
 
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -379,10 +389,20 @@ eval mode here op = case op of
   Op.Split_window{} -> Note op
   Op.Verify{} -> Note op
 
-  Op.Input_stream{} -> undefined
+  Op.Input_stream{} -> Note op
   Op.Nop -> undefined
   Op.Read_char{} -> do undefined
-  Op.Show_status -> undefined
+  Op.Show_status -> Note op
+
+
+doCall :: Phase p => Addr p -> Addr p -> [Arg] -> Eff p ()
+doCall here routine args = do
+  actuals <- mapM evalArg args
+  PushFrame here
+  setActuals actuals
+  numActuals <- LitB $ fromIntegral (length actuals)
+  TraceRoutineCall routine -- for dynamic discovery
+  SetControl AtRoutineHeader { routine, numActuals }
 
 
 equalAny :: Value p -> Value p -> [Value p] -> Eff p (Pred p)

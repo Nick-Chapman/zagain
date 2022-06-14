@@ -66,6 +66,6 @@ versionOfByte = \case
   2 -> Z2
   3 -> Z3
   4 -> Z4
-  5 -> undefined Z5
+  5 -> Z5
   6 -> undefined Z6
   n -> error (printf "unsupported z-machine version: %s" (show n))

@@ -21,8 +21,11 @@ data Operation
 
   | Add Arg Arg Target
   | And Arg Arg Target
+  | Aread Arg Arg Target
   | Buffer_mode Arg
   | Call Func [Arg] Target
+  | CallN Func [Arg]
+  | Check_arg_count Arg Label
   | Clear_attr Arg Arg
   | Dec Arg
   | Dec_chk Arg Arg Label
@@ -130,8 +133,11 @@ opArgs = \case
   BadOperation _mes -> do []
   Add arg1 arg2 _target -> do [arg1,arg2]
   And arg1 arg2 _target -> do [arg1,arg2]
+  Aread arg1 arg2 _target -> do [arg1,arg2]
   Buffer_mode arg -> do [arg]
   Call _func args _target -> do args
+  CallN _func args -> do args
+  Check_arg_count arg _label -> do [arg]
   Clear_attr arg1 arg2 -> do [arg1,arg2]
   Dec arg -> do [arg]
   Dec_chk arg1 arg2 _label -> do [arg1,arg2]
@@ -207,8 +213,11 @@ opTargetOpt = \case
   BadOperation _mes -> do Nothing
   Add _arg1 _arg2 target -> do Just target
   And _arg1 _arg2 target -> do Just target
+  Aread _arg1 _arg2 target -> do Just target
   Buffer_mode _arg -> do Nothing
   Call _func _args target -> do Just target
+  CallN _func _args -> do Nothing
+  Check_arg_count _arg _label -> do Nothing
   Clear_attr _arg1 _arg2 -> do Nothing
   Dec _arg -> do Nothing
   Dec_chk _arg1 _arg2 _label -> do Nothing
@@ -281,6 +290,7 @@ opTargetOpt = \case
 
 opLabels :: Operation -> [Label]
 opLabels = \case
+  Check_arg_count _arg label -> do [label]
   Dec_chk _arg1 _arg2 label -> do [label]
   Get_child _arg _target label -> do [label]
   Get_sibling _arg _target label -> do [label]

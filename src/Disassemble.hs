@@ -200,6 +200,7 @@ disRoutineM story start = do
           case i of
             Op.BadOperation{} -> Nothing
             Op.Call Op.BadFunc{} _ _ -> Nothing
+            Op.CallN Op.BadFunc{} _ -> Nothing
             _ -> do
               let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOf i)
               let continue = not (isStopping i) || a' `Set.member` bps

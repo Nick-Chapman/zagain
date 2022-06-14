@@ -63,9 +63,11 @@ decode zv x = do
   Code 24 [t1,t2] -> Op.Mod <$> arg t1 <*> arg t2 <*> target
 
   Code 25 [t1,t2]
-    | zv>=Z4 -> do f <- func zv t1; a <- arg t2; t <- target; pure $ Op.Call f [a] t
+    | zv>=Z4 -> do Op.Call <$> func zv t1 <*> mapM arg [t2] <*> target
 
-  Code 26 _ -> wrong [Z5]
+  Code 26 [t1,t2]
+    | zv>=Z5 -> do Op.CallN <$> func zv t1 <*> mapM arg [t2]
+
   Code 27 _ -> wrong [Z5,Z6]
   Code 28 _ -> wrong [Z5,Z6]
   Code 29 _ -> wrong []
@@ -89,7 +91,9 @@ decode zv x = do
   Code 140 [WordConst] -> Op.Jump <$> jumpLocation
   Code 141 [t] -> Op.Print_paddr <$> arg t
   Code 142 [t] -> Op.Load <$> arg t <*> target
-  Code 143 _ -> wrong [Z1,Z4,Z5]
+
+  Code 143 [t] | zv>=Z5 -> do flip Op.CallN [] <$> func zv t
+  Code 143 _ -> wrong [Z1,Z4]
 
   Code n ts | 144<=n && n<=175 -> decode zv (Code (n .&. 0x8f) ts)
 
@@ -112,11 +116,15 @@ decode zv x = do
 
   Code n ts | 192<=n && n<=223 -> decode zv (Code (n .&. 0x1f) ts)
 
-  Code 224 (t1:ts) -> Op.Call <$> func zv t1 <*> mapM arg ts <*> target -- changes in Z4
+  Code 224 (t1:ts) -> Op.Call <$> func zv t1 <*> mapM arg ts <*> target
   Code 225 [t1,t2,t3] -> Op.Storew <$> arg t1 <*> arg t2 <*> arg t3
   Code 226 [t1,t2,t3] -> Op.Storeb <$> arg t1 <*> arg t2 <*> arg t3
   Code 227 [t1,t2,t3] -> Op.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
-  Code 228 [t1,t2] -> Op.Sread <$> arg t1 <*> arg t2 -- changes in Z4/Z5
+
+  Code 228 [t1,t2]
+    | zv<=Z4 -> Op.Sread <$> arg t1 <*> arg t2
+    | otherwise -> Op.Aread <$> arg t1 <*> arg t2 <*> target
+
   Code 229 [t] -> Op.Print_char <$> arg t
   Code 230 [t] -> Op.Print_num <$> arg t
   Code 231 [t] -> Op.Random <$> arg t <*> target
@@ -124,7 +132,10 @@ decode zv x = do
   Code 233 [t] -> Op.Pull <$> arg t -- changes in Z6
   Code 234 [t] -> Op.Split_window <$> arg t
   Code 235 [t] -> Op.Set_window <$> arg t
-  -- 236
+
+  Code 236 (t1:ts)
+    | zv>=Z5 -> do Op.Call <$> func zv t1 <*> mapM arg ts <*> target
+
   Code 237 [t] | zv>=Z4 -> Op.Erase_window <$> arg t
   -- 238
   Code 239 [t1,t2] | zv>=Z4 -> Op.Set_cursor <$> arg t1 <*> arg t2
@@ -136,6 +147,15 @@ decode zv x = do
   Code 244 [t] -> Op.Input_stream <$> arg t
   -- 245
   Code 246 [_ignored_mustBe1] -> Op.Read_char <$> target
+
+  Code 249 (t1:ts)
+    | zv>=Z5 -> do Op.CallN <$> func zv t1 <*> mapM arg ts
+
+  Code 250 (t1:ts)
+    | zv>=Z5 -> do Op.CallN <$> func zv t1 <*> mapM arg ts
+
+  Code 255 [t] -> Op.Check_arg_count <$> arg t <*> label
+
   _ -> wrong []
 
 
@@ -156,7 +176,14 @@ fetchOpCodeAndArgs = do
     VarForm -> do
       x2 <- Fetch.NextByte
       let tys = decodeRandTypes x2
-      pure (Code x tys)
+      case x == 236 || x == 250 of
+        -- two ops have a 2nd byte of opcode types, allowing up to 7 args
+        True -> do
+          x3 <- Fetch.NextByte
+          let tys' = decodeRandTypes x3
+          pure (Code x (tys ++ tys'))
+        False -> do
+          pure (Code x tys)
 
 decodeForm :: Byte -> Form
 decodeForm b = case b `testBit` 7 of
@@ -255,7 +282,12 @@ fetchRoutineHeader :: Fetch RoutineHeader
 fetchRoutineHeader = do
   n <- Fetch.NextByte
   if n > 15 then pure BadRoutineHeader else do
-    ws <- sequence (take (fromIntegral n) (repeat fetchNextWord))
+    ws <- do
+      Header{zv} <- StoryHeader
+      let getDefaultValue = if
+            | zv <= Z4 -> fetchNextWord
+            | otherwise -> pure 0
+      sequence (take (fromIntegral n) (repeat getDefaultValue))
     pure (RoutineHeader ws)
 
 ----------------------------------------------------------------------
