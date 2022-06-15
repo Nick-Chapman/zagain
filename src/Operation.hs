@@ -95,6 +95,7 @@ data Operation
   | Sub Arg Arg Target
   | Test Arg Arg Label
   | Test_attr Arg Arg Label
+  | Tokenize Arg Arg
   | Verify Label
 
   deriving Show
@@ -209,6 +210,7 @@ opArgs = \case
   Sub arg1 arg2 _target -> do [arg1,arg2]
   Test arg1 arg2 _label -> do [arg1,arg2]
   Test_attr arg1 arg2 _label -> do [arg1,arg2]
+  Tokenize arg1 arg2 -> do [arg1,arg2]
   Verify _label -> do []
 
 
@@ -291,6 +293,7 @@ opTargetOpt = \case
   Sub _arg1 _arg2 target -> do Just target
   Test _arg1 _arg2 _label -> do Nothing
   Test_attr _arg1 _arg2 _label -> do Nothing
+  Tokenize _arg1 _arg2 -> do Nothing
   Verify _label -> do Nothing
 
 

@@ -394,6 +394,7 @@ eval mode here op = case op of
   Op.Set_text_style{} -> Note op
   Op.Set_window{} -> Note op
   Op.Split_window{} -> Note op
+  Op.Tokenize{} -> Note op
   Op.Verify{} -> Note op
 
   Op.Input_stream{} -> Note op
