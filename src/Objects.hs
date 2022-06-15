@@ -194,7 +194,7 @@ getProp mode x n = do
       base <- LitA objectTable
       a <- Offset base off
       getWord a
-    Just (Prop{dataAddr,numBytes},_nextAddrHere) -> do
+    Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
       Equal numBytes two >>= If >>= \case
         False -> -- If length not 2, then must be 1. But never seen this case.
@@ -203,33 +203,31 @@ getProp mode x n = do
           getWord dataAddr
 
 
-getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
+getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Addr p)
 getPropAddr mode x n = do
   searchProp mode x n >>= \case
-    Just(Prop{dataAddr},_) -> do DeAddress dataAddr
-    Nothing -> LitV 0
+    Just Prop{dataAddr} -> pure dataAddr
+    Nothing -> LitV 0 >>= Address
 
 
 putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
 putProp mode x n v = do
-  (pr,_) <- do
-    searchProp mode x n >>= \case
-      Nothing -> error (show ("putProp, no such prop",n))
-      Just x -> pure x
-  let Prop{dataAddr,numBytes} = pr
-  two <- LitV 2
-  Equal numBytes two >>= If >>= \case
-    False -> do -- If length not 2, then must be 1. But never seen this case.
-      _ <- undefined
-      lo <- LoByte v
-      SetByte dataAddr lo
-    True -> do
-      hi <- HiByte v
-      lo <- LoByte v
-      one <- LitV 1
-      dataAddrPlusOne <- Offset dataAddr one
-      SetByte dataAddr hi
-      SetByte dataAddrPlusOne lo
+  searchProp mode x n >>= \case
+    Nothing -> error (show ("putProp",n))
+    Just Prop{dataAddr,numBytes} -> do
+      two <- LitV 2
+      Equal numBytes two >>= If >>= \case
+        False -> do -- If length not 2, then must be 1. But never seen this case.
+          _ <- undefined
+          lo <- LoByte v
+          SetByte dataAddr lo
+        True -> do
+          hi <- HiByte v
+          lo <- LoByte v
+          one <- LitV 1
+          dataAddrPlusOne <- Offset dataAddr one
+          SetByte dataAddr hi
+          SetByte dataAddrPlusOne lo
 
 
 getPropLen :: Phase p => Value p -> Eff p (Value p)
@@ -259,12 +257,20 @@ getNextProp mode x n = do
     False -> do
       searchProp mode x n >>= \case
         Nothing -> error (show ("getNextProp",n))
-        Just(_,a) -> do
+        Just Prop{dataAddr,numBytes} -> do
+          a <- Offset dataAddr numBytes
           b <- GetByte a
           getPropNumber b
 
 
-searchProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
+data Prop p = Prop
+  { numBytes :: Value p
+  , dataAddr :: Addr p
+  }
+
+deriving instance Phase p => Show (Prop p)
+
+searchProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
 searchProp mode x n = do
   a1 <- firstPropertyAddr x
   case mode of
@@ -280,10 +286,9 @@ searchProp mode x n = do
               off <- LitV (fromIntegral sizeByteSize)
               dataAddr <- Offset a off
               let p1 = Prop {numBytes,dataAddr}
-              a' <- Offset dataAddr numBytes
               b <- Equal n propNumber >>= If
-              if b then pure (Just (p1,a')) else do
-                loop a' -- TODO: infinite effect
+              if b then pure (Just p1) else do
+                Offset dataAddr numBytes >>= loop -- TODO: infinite effect
       loop a1
 
 
@@ -302,13 +307,6 @@ firstPropertyAddr x = do
       dub <- Mul two v
       Add dub one
 
-
-data Prop p = Prop -- TODO: using this type isn't very helpful
-  { numBytes :: Value p
-  , dataAddr :: Addr p
-  }
-
-deriving instance Phase p => Show (Prop p)
 
 data PropNumAndSize p = PropNumAndSize
   { propNumber :: Value p

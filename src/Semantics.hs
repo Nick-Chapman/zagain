@@ -119,7 +119,7 @@ eval mode here op = case op of
   Op.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getPropAddr mode v1 v2
+    res <- Objects.getPropAddr mode v1 v2 >>= DeAddress
     setTarget target res
 
   Op.Get_prop_len arg target -> do
