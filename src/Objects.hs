@@ -181,16 +181,39 @@ unlink mode this = do
 
 --[properties]--------------------------------------------------------
 
-getPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
+getPropN :: forall p. Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
 getPropN mode x n = do
-  props <- getPropertyTable mode x
-  xs <- sequence
-    [ do b <- Equal n number >>= If; pure (prop,b)
-    | prop@Prop{propNumber=number} <- props
-    ]
-  pure $ case [ prop | (prop,b) <- xs, b ] of
-    [] -> Nothing
-    prop:_ -> Just prop
+  a1 <- propTableAddr x
+  shortNameLen <- GetByte a1
+  size <- dubPlus1 shortNameLen
+  a2 <- Offset a1 size
+  case mode of
+    Compiling -> Error "getPropsA" -- match name in regression code
+    Interpreting -> do
+      let
+        loop :: Phase p => Addr p -> Eff p (Maybe (Prop p))
+        loop a1 = do
+          b1 <- GetByte a1
+          endOfProps <- IsZeroByte b1 >>= If
+          if endOfProps then pure Nothing else do
+            (p1,a') <- getOneProp a1 b1
+            let Prop{propNumber} = p1
+            b <- Equal n propNumber >>= If
+            if b then pure (Just p1) else do
+              loop a' -- TODO: infinite effect
+      loop a2
+
+getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
+getOneProp a1 b1 = do
+    PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
+    off <- LitV (fromIntegral sizeByteSize)
+    dataAddr <- Offset a1 off
+    dataBytes <- getBytes dataAddr numBytes
+    let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
+    a' <- Offset dataAddr numBytes
+    pure (p1,a')
+
+----------------------------------------------------------------------
 
 getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getProp mode x n = do
