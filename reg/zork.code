@@ -22231,10 +22231,54 @@ LocOp 038147:
   TraceOperation 038147 (Get_next_prop (Var (Global 0)) (Var (Local 2)) (Local 2));
   Let b1 = M[008817];
   Let b2 = M[008818];
-  Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
-  Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
-  Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  if (IsZero(GetLocal(2))) {
+    Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
+    Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
+    Let b5 = M[Address(MakeHiLo(b3,b4))];
+    Let b6 = M[Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1))];
+    if (IsZeroByte(b6)) {
+      SetLocal 2 0;
+      TraceOperation 038151 (Jl (Var (Local 2)) (Var (Global 152)) (Branch T Dfalse));
+      Let b7 = M[009121];
+      Let b8 = M[009122];
+      if (LessThan(GetLocal(2),MakeHiLo(b7,b8))) {
+        PopFrame;
+        PopReturnAddress return_address_9;
+        JumpReturn: return_address_9, result: 0
+      } else {
+        TraceOperation 038155 (Get_prop_addr (Var (Global 0)) (Var (Local 2)) (Local 3));
+        Let b10 = M[008817];
+        Let b11 = M[008818];
+        Let b12 = M[Offset(Offset(000741,Mul(MakeHiLo(b10,b11),9)),7)];
+        Let b13 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b10,b11),9)),7),1)];
+        Let b14 = M[Address(MakeHiLo(b12,b13))];
+        Error: getPropsA
+      }
+    } else {
+      SetLocal 2 Widen(BwAnd(b6,31));
+      TraceOperation 038151 (Jl (Var (Local 2)) (Var (Global 152)) (Branch T Dfalse));
+      Let b15 = M[009121];
+      Let b16 = M[009122];
+      if (LessThan(GetLocal(2),MakeHiLo(b15,b16))) {
+        PopFrame;
+        PopReturnAddress return_address_17;
+        JumpReturn: return_address_17, result: 0
+      } else {
+        TraceOperation 038155 (Get_prop_addr (Var (Global 0)) (Var (Local 2)) (Local 3));
+        Let b18 = M[008817];
+        Let b19 = M[008818];
+        Let b20 = M[Offset(Offset(000741,Mul(MakeHiLo(b18,b19),9)),7)];
+        Let b21 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b18,b19),9)),7),1)];
+        Let b22 = M[Address(MakeHiLo(b20,b21))];
+        Error: getPropsA
+      }
+    }
+  } else {
+    Let b23 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
+    Let b24 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
+    Let b25 = M[Address(MakeHiLo(b23,b24))];
+    Error: getPropsA
+  }
 --------------------------------------------------
 LocRoutine 038178:
   MakeRoutineFrame 2;
@@ -42401,10 +42445,36 @@ LocOp 065831:
   TraceOperation 065831 (Get_next_prop (Var (Global 0)) (Var (Local 4)) (Local 4));
   Let b1 = M[008817];
   Let b2 = M[008818];
-  Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
-  Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
-  Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  if (IsZero(GetLocal(4))) {
+    Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
+    Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
+    Let b5 = M[Address(MakeHiLo(b3,b4))];
+    Let b6 = M[Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1))];
+    if (IsZeroByte(b6)) {
+      SetLocal 4 0;
+      TraceOperation 065835 (Jz (Var (Local 4)) (Branch F (Dloc 065841)));
+      if (IsZero(GetLocal(4))) {
+        TraceOperation 065838 (Jump 065878);
+        Jump: 065878
+      } else {
+        Jump: 065841
+      }
+    } else {
+      SetLocal 4 Widen(BwAnd(b6,31));
+      TraceOperation 065835 (Jz (Var (Local 4)) (Branch F (Dloc 065841)));
+      if (IsZero(GetLocal(4))) {
+        TraceOperation 065838 (Jump 065878);
+        Jump: 065878
+      } else {
+        Jump: 065841
+      }
+    }
+  } else {
+    Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
+    Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
+    Let b9 = M[Address(MakeHiLo(b7,b8))];
+    Error: getPropsA
+  }
 LocOp 065841:
   TraceOperation 065841 (Jl (Var (Local 4)) (Var (Global 152)) (Branch T (Dloc 065831)));
   Let b1 = M[009121];

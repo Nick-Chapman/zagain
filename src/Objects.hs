@@ -184,7 +184,7 @@ unlink mode this = do
 getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getProp mode x n = do
   Header{objectTable} <- StoryHeader
-  getPropN mode x n >>= \case
+  searchPropN mode x n >>= \case
     Nothing -> do
       -- get property default
       m1 <- LitV (-1)
@@ -194,7 +194,7 @@ getProp mode x n = do
       base <- LitA objectTable
       a <- Offset base off
       getWord a
-    Just (Prop{dataBytes}) -> do
+    Just (Prop{dataBytes},_nextAddrHere) -> do
       case dataBytes of
         [hi,lo] -> MakeHiLo hi lo
         [_b] -> undefined -- Widen _b -- not hit yet
@@ -203,15 +203,15 @@ getProp mode x n = do
 
 getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getPropAddr mode x n = do
-  getPropN mode x n >>= \case
-    Just(Prop{dataAddr}) -> do DeAddress dataAddr
+  searchPropN mode x n >>= \case
+    Just(Prop{dataAddr},_) -> do DeAddress dataAddr
     Nothing -> LitV 0
 
 
 putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
 putProp mode x n v = do
-  pr <- do
-    getPropN mode x n >>= \case
+  (pr,_) <- do
+    searchPropN mode x n >>= \case
       Nothing -> Error "putProp, no such prop"
       Just x -> pure x
   let Prop{dataBytes,dataAddr} = pr
@@ -228,8 +228,8 @@ putProp mode x n v = do
     _ -> Error "expected 1 or 2 bytes for prop value"
 
 
-getPropN :: forall p. Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
-getPropN mode x n = do
+searchPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
+searchPropN mode x n = do
   a1 <- propTableAddr x
   shortNameLen <- GetByte a1
   size <- dubPlus1 shortNameLen
@@ -238,7 +238,6 @@ getPropN mode x n = do
     Compiling -> Error "getPropsA" -- match name in regression code
     Interpreting -> do
       let
-        loop :: Phase p => Addr p -> Eff p (Maybe (Prop p))
         loop a1 = do
           b1 <- GetByte a1
           endOfProps <- IsZeroByte b1 >>= If
@@ -246,19 +245,9 @@ getPropN mode x n = do
             (p1,a') <- getOneProp a1 b1
             let Prop{propNumber} = p1
             b <- Equal n propNumber >>= If
-            if b then pure (Just p1) else do
+            if b then pure (Just (p1,a')) else do
               loop a' -- TODO: infinite effect
       loop a2
-  where
-    getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
-    getOneProp a1 b1 = do
-      PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
-      off <- LitV (fromIntegral sizeByteSize)
-      dataAddr <- Offset a1 off
-      dataBytes <- getBytes dataAddr numBytes
-      let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
-      a' <- Offset dataAddr numBytes
-      pure (p1,a')
 
 
 getPropLen :: Phase p => Value p -> Eff p (Value p)
@@ -279,52 +268,43 @@ getPropLen v = do
 
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
-getNextProp mode x p = do
-  -- TODO: stop being so complicated. Assume descending order and avoid search
-  props <- getPropertyTable mode x
-  xs <-
-    sequence
-    [ do
-        b1 <- IsZero p >>= If
-        b2 <- LessThan n p >>= If
-        pure (prop,b1,b2)
-    | prop@Prop{propNumber=n} <- props
-    ]
-  let bigger = [ n | (Prop{propNumber=n},b1,b2) <- xs, b1 || b2 ]
-  case bigger of
-    [] -> LitV 0
-    fst:_ -> pure fst -- assume the first is the biggest
+getNextProp mode x n = do
 
-  where
-    getPropertyTable :: Phase p => Mode -> Value p -> Eff p [Prop p]
-    getPropertyTable mode x = do
+  IsZero n >>= If >>= \case
+    True -> do
       a1 <- propTableAddr x
       shortNameLen <- GetByte a1
       size <- dubPlus1 shortNameLen
       a2 <- Offset a1 size
-      getPropsA mode a2
+      b2 <- GetByte a2
+      IsZeroByte b2 >>= If >>= \case -- TODO: avoid this test
+        True -> LitV 0 -- It is possible for there to be no properties.
+        False -> getPropNum a2 b2
 
-    getPropsA :: Phase p => Mode -> Addr p -> Eff p [Prop p]
-    getPropsA = \case
-      Compiling -> hack_getPropsA
-      Interpreting -> real_getPropsA
+    False -> do
+      searchPropN mode x n >>= \case
+        Nothing -> undefined -- because there must be that prop
+        Just(_,a1) -> do
+          b1 <- GetByte a1
+          getPropNum a1 b1
 
-    hack_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
-    hack_getPropsA _a = Error "getPropsA"
 
-    real_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
-    real_getPropsA a1 = do
-      b1 <- GetByte a1
-      endOfProps <- IsZeroByte b1 >>= If
-      if endOfProps then pure [] else do
-        PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
-        off <- LitV (fromIntegral sizeByteSize)
-        dataAddr <- Offset a1 off
-        dataBytes <- getBytes dataAddr numBytes
-        let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
-        a' <- Offset dataAddr numBytes
-        more <- real_getPropsA a'
-        pure (p1:more)
+getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
+getOneProp a1 b1 = do
+  PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
+  off <- LitV (fromIntegral sizeByteSize)
+  dataAddr <- Offset a1 off
+  dataBytes <- getBytes dataAddr numBytes
+  let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
+  a' <- Offset dataAddr numBytes
+  pure (p1,a')
+
+
+getPropNum :: Phase p => Addr p -> Byte p -> Eff p (Value p)
+getPropNum a1 b1 = do
+  PropNumAndSize{propNumber} <- getPropNumAndSize a1 b1 -- TODO: simp
+  pure propNumber
+
 
 dubPlus1 :: Phase p => Byte p -> Eff p (Value p)
 dubPlus1 b = do
@@ -334,11 +314,12 @@ dubPlus1 b = do
   dub <- Mul two v
   Add dub one
 
+
 data Prop p = Prop -- TODO: using this type isn't very helpful
   { propNumber :: Value p
   , numBytes :: Value p
   , dataAddr :: Addr p
-  , dataBytes :: [Byte p]
+  , dataBytes :: [Byte p] -- TODO: dont embed. make caller get it
   }
 
 deriving instance Phase p => Show (Prop p)
@@ -392,7 +373,7 @@ getBytes a n = do
     b <- GetByte a
     a' <- Offset a one
     n' <- Sub n one
-    bs <- getBytes a' n'
+    bs <- getBytes a' n' -- TODO: infinite effect!
     pure (b:bs)
 
 
