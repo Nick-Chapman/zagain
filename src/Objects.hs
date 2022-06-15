@@ -251,32 +251,24 @@ getPropLen v = do
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getNextProp mode x n = do
-
   IsZero n >>= If >>= \case
     True -> do
-      a1 <- propTableAddr x
-      shortNameLen <- GetByte a1
-      size <- dubPlus1 shortNameLen
-      a2 <- Offset a1 size
-      b2 <- GetByte a2
-      IsZeroByte b2 >>= If >>= \case -- TODO: avoid this test
+      a <- firstPropertyAddr x
+      b <- GetByte a
+      IsZeroByte b >>= If >>= \case -- TODO: avoid this test
         True -> LitV 0 -- It is possible for there to be no properties.
-        False -> getPropNumber b2
-
+        False -> getPropNumber b
     False -> do
       searchPropN mode x n >>= \case
         Nothing -> error (show ("getNextProp",n))
-        Just(_,a1) -> do
-          b1 <- GetByte a1
-          getPropNumber b1
+        Just(_,a) -> do
+          b <- GetByte a
+          getPropNumber b
 
 
 searchPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
 searchPropN mode x n = do
-  a1 <- propTableAddr x
-  shortNameLen <- GetByte a1
-  size <- dubPlus1 shortNameLen
-  a2 <- Offset a1 size
+  a2 <- firstPropertyAddr x
   case mode of
     Compiling -> Error "getPropsA" -- match name in regression code
     Interpreting -> do
@@ -301,14 +293,21 @@ searchPropN mode x n = do
       a' <- Offset dataAddr numBytes
       pure (p1,a')
 
-dubPlus1 :: Phase p => Byte p -> Eff p (Value p)
-dubPlus1 b = do
-  v <- Widen b
-  one <- LitV 1
-  two <- LitV 2
-  dub <- Mul two v
-  Add dub one
 
+firstPropertyAddr :: Phase p => Value p -> Eff p (Addr p)
+firstPropertyAddr x = do
+  a <- propTableAddr x
+  shortNameLen <- GetByte a
+  size <- dubPlus1 shortNameLen
+  Offset a size
+  where
+    dubPlus1 :: Phase p => Byte p -> Eff p (Value p)
+    dubPlus1 b = do
+      v <- Widen b
+      one <- LitV 1
+      two <- LitV 2
+      dub <- Mul two v
+      Add dub one
 
 
 data Prop p = Prop -- TODO: using this type isn't very helpful
@@ -398,4 +397,3 @@ objectIdSize :: ObjectTableFormat -> Numbers.Value
 objectIdSize = \case
   Small -> 1
   Large -> 2
-
