@@ -29,13 +29,7 @@ fetchOperation = do
   fetchOpCodeAndArgs >>= decode zv
 
 decode :: Zversion -> OpCodeAndArgs -> Fetch Operation
-decode zv x = do
- let
-    wrong :: [Zversion] -> Fetch Operation
-    wrong versions =
-      pure $ Op.BadOperation $ printf
-      "op-code and args: %s for unsupported version: %s"  (show x) (show versions)
- case x of
+decode zv op = case op of
 
   Code 1 ts -> Op.Je <$> mapM arg ts <*> label
   Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
@@ -68,11 +62,11 @@ decode zv x = do
   Code 26 [t1,t2]
     | zv>=Z5 -> do Op.CallN <$> func zv t1 <*> mapM arg [t2]
 
-  Code 27 _ -> wrong [Z5,Z6]
-  Code 28 _ -> wrong [Z5,Z6]
-  Code 29 _ -> wrong []
-  Code 30 _ -> wrong []
-  Code 31 _ -> wrong []
+  Code 27 _ -> bad op --Z5,Z6
+  Code 28 _ -> bad op --Z5,Z6
+  Code 29 _ -> bad op
+  Code 30 _ -> bad op
+  Code 31 _ -> bad op
 
   Code n ts | 32<=n && n<=127 -> decode zv (Code (n .&. 0x1f) ts)
 
@@ -93,7 +87,7 @@ decode zv x = do
   Code 142 [t] -> Op.Load <$> arg t <*> target
 
   Code 143 [t] | zv>=Z5 -> do flip Op.CallN [] <$> func zv t
-  Code 143 _ -> wrong [Z1,Z4]
+  Code 143 _ -> bad op --Z1,Z4
 
   Code n ts | 144<=n && n<=175 -> decode zv (Code (n .&. 0x8f) ts)
 
@@ -114,7 +108,7 @@ decode zv x = do
 
   Code 190 args -> do x <- NextByte; decodeExtended zv (Code x args)
 
-  Code 191 _ -> wrong [Z5]
+  Code 191 _ -> bad op --Z5
 
   Code n ts | 192<=n && n<=223 -> decode zv (Code (n .&. 0x1f) ts)
 
@@ -158,7 +152,7 @@ decode zv x = do
 
   Code 255 [t] -> Op.Check_arg_count <$> arg t <*> label
 
-  _ -> wrong []
+  _ -> bad op
 
 
 decodeExtended :: Zversion -> OpCodeAndArgs -> Fetch Operation
