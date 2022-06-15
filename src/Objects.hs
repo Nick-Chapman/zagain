@@ -1,10 +1,10 @@
 
 -- | Semantics of z-machine object-table operations.
 module Objects
-  ( getShortName
-  , testAttr, setAttr, clearAttr
+  ( testAttr, setAttr, clearAttr
   , FamilyMember(Parent,Sibling,Child), getFM
   , insertObj, removeObj
+  , getShortName
   , getProp, getPropAddr, putProp, getPropLen, getNextProp
   ) where
 
@@ -13,46 +13,6 @@ import Eff (Eff(..),Phase(..),Mode(..))
 import Header (Header(..))
 import Numbers (Zversion(..))
 import qualified Numbers (Value)
-
---[convs]-----------------------------------------------------
-
-getWord :: Phase p => Addr p -> Eff p (Value p)
-getWord a = do
-  hi <- GetByte a
-  one <- LitV 1
-  a1 <- Offset a one
-  lo <- GetByte a1
-  MakeHiLo hi lo
-
-objectAddr :: Phase p => Value p -> Eff p (Addr p)
-objectAddr o = do
-  Header{objectTable} <- StoryHeader
-  f <- objectTableFormat
-  let objectEntrySize = numByesForAttribute f + (3 * objectIdSize f) + 2
-  size <- LitV objectEntrySize
-  otBase <- LitA objectTable
-  objectsOffset <- LitV (2 * numProps f - objectEntrySize)
-  base <- Offset otBase objectsOffset
-  off <- Mul o size
-  Offset base off
-
-propTableAddr :: Phase p => Value p -> Eff p (Addr p)
-propTableAddr x = do
-  base <- objectAddr x
-  f <- objectTableFormat
-  off <- LitV (numByesForAttribute f + (3 * objectIdSize f))
-  a <- Offset base off
-  getWord a >>= Address
-
-getShortName :: Phase p => Value p -> Eff p (Text p)
-getShortName x = do
-  a1 <- propTableAddr x
-  shortNameLen <- GetByte a1
-  p <- IsZeroByte shortNameLen >>= If
-  if p then LitS "" else do
-    one <- LitV 1
-    a2 <- Offset a1 one
-    GetText a2
 
 --[attributes]--------------------------------------------------------
 
@@ -180,6 +140,17 @@ unlink mode this = do
                 setFM Sibling x thisSib
 
 --[properties]--------------------------------------------------------
+
+getShortName :: Phase p => Value p -> Eff p (Text p)
+getShortName x = do
+  a1 <- propTableAddr x
+  shortNameLen <- GetByte a1
+  p <- IsZeroByte shortNameLen >>= If
+  if p then LitS "" else do
+    one <- LitV 1
+    a2 <- Offset a1 one
+    GetText a2
+
 
 getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getProp mode x n = do
@@ -361,6 +332,38 @@ getPropNumber b1 = do
       mask6 <- LitB 0x3f
       sixBits <- b1 `BwAnd` mask6
       Widen sixBits
+
+
+--[objects/prop-table base addresses]---------------------------------
+
+propTableAddr :: Phase p => Value p -> Eff p (Addr p)
+propTableAddr x = do
+  base <- objectAddr x
+  f <- objectTableFormat
+  off <- LitV (numByesForAttribute f + (3 * objectIdSize f))
+  a <- Offset base off
+  getWord a >>= Address
+
+objectAddr :: Phase p => Value p -> Eff p (Addr p)
+objectAddr o = do
+  Header{objectTable} <- StoryHeader
+  f <- objectTableFormat
+  let objectEntrySize = numByesForAttribute f + (3 * objectIdSize f) + 2
+  size <- LitV objectEntrySize
+  otBase <- LitA objectTable
+  objectsOffset <- LitV (2 * numProps f - objectEntrySize)
+  base <- Offset otBase objectsOffset
+  off <- Mul o size
+  Offset base off
+
+getWord :: Phase p => Addr p -> Eff p (Value p)
+getWord a = do
+  hi <- GetByte a
+  one <- LitV 1
+  a1 <- Offset a one
+  lo <- GetByte a1
+  MakeHiLo hi lo
+
 
 --[objectTableFormat]-------------------------------------------------
 
