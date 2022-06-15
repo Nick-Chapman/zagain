@@ -80,6 +80,7 @@ data Operation
   | Rfalse
   | Rtrue
   | Save Label
+  | Save_undo Label
   | Set_attr Arg Arg
   | Set_cursor Arg Arg
   | Set_text_style Arg
@@ -193,6 +194,7 @@ opArgs = \case
   Rfalse -> do []
   Rtrue -> do []
   Save _label -> do []
+  Save_undo _label -> do []
   Set_attr arg1 arg2 -> do [arg1,arg2]
   Set_cursor arg1 arg2 -> do [arg1,arg2]
   Set_text_style arg -> do [arg]
@@ -274,6 +276,7 @@ opTargetOpt = \case
   Rfalse -> do Nothing
   Rtrue -> do Nothing
   Save _label -> do Nothing
+  Save_undo _label -> do Nothing
   Set_attr _arg1 _arg2 -> do Nothing
   Set_cursor _arg1 _arg2 -> do Nothing
   Set_text_style _arg -> do Nothing
@@ -305,6 +308,7 @@ opLabels = \case
   Jz _arg label -> do [label]
   Restore label -> do [label]
   Save label -> do [label]
+  Save_undo label -> do [label]
   Test _arg1 _arg2 label -> do [label]
   Test_attr _arg1 _arg2 label -> do [label]
   Verify label -> do [label]

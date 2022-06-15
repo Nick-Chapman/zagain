@@ -389,6 +389,7 @@ eval mode here op = case op of
   Op.Pop -> Note op
   Op.Restore{} -> Note op
   Op.Save{} -> Note op
+  Op.Save_undo{} -> Note op
   Op.Set_cursor{} -> Note op
   Op.Set_text_style{} -> Note op
   Op.Set_window{} -> Note op

@@ -111,7 +111,9 @@ decode zv x = do
   Code 187 [] -> pure Op.New_line
   Code 188 [] -> pure Op.Show_status -- illegal from Z4
   Code 189 [] -> Op.Verify <$> label
-  Code 190 _ -> wrong [Z5] -- code for extended opcodes
+
+  Code 190 args -> do x <- NextByte; decodeExtended zv (Code x args)
+
   Code 191 _ -> wrong [Z5]
 
   Code n ts | 192<=n && n<=223 -> decode zv (Code (n .&. 0x1f) ts)
@@ -157,6 +159,16 @@ decode zv x = do
   Code 255 [t] -> Op.Check_arg_count <$> arg t <*> label
 
   _ -> wrong []
+
+
+decodeExtended :: Zversion -> OpCodeAndArgs -> Fetch Operation
+decodeExtended _zv = \case
+  Code 9 [] -> Op.Save_undo <$> label
+  op -> bad op
+
+
+bad :: OpCodeAndArgs -> Fetch Operation
+bad x = pure $ Op.BadOperation $ printf "unexpected op-code/args: %s" (show x)
 
 
 data Form = LongForm | ShortForm | VarForm
