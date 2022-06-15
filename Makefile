@@ -11,25 +11,25 @@ code: .reg reg/zork.code reg/h.code
 diff:
 	git diff reg
 
-reg/zork.trace: $(exe) z.script src/*.hs Makefile
-	bash -c '$(exe) -nodebug -trace -walk <(head -2 z.script) > $@'
+reg/zork.trace: $(exe) z.script src/*.hs
+	$(exe) -nodebug -trace -type 'open mailbox' -type 'read leaflet' > $@
 
-reg/zork.walk: $(exe) z.script src/*.hs Makefile
+reg/zork.walk: $(exe) z.script src/*.hs
 	$(exe) -walk z.script > $@
 
-reg/zork.dis: $(exe) src/*.hs Makefile
+reg/zork.dis: $(exe) src/*.hs
 	$(exe) dis -walk z.script > $@
 
-reg/zork.code: $(exe) src/*.hs Makefile
+reg/zork.code: $(exe) src/*.hs
 	$(exe) comp > $@
 
-reg/h.walk: $(exe) h.script src/*.hs Makefile
+reg/h.walk: $(exe) h.script src/*.hs
 	$(exe) story/hitchhiker-r59-s851108.z3 -walk h.script > $@
 
-reg/h.dis: $(exe) src/*.hs Makefile
+reg/h.dis: $(exe) src/*.hs
 	$(exe) dis story/hitchhiker-r59-s851108.z3 -walk h.script > $@
 
-reg/h.code: $(exe) src/*.hs Makefile
+reg/h.code: $(exe) src/*.hs
 	$(exe) comp story/hitchhiker-r59-s851108.z3 > $@
 
 .reg:
