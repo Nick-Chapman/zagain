@@ -282,7 +282,8 @@ searchProp mode x n = do
           IsZeroByte b >>= If >>= \case
             True -> pure Nothing
             False -> do
-              PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a b
+              propNumber <- getPropNumber b
+              PropSize{sizeByteSize,numBytes} <- getPropSize a b
               off <- LitV (fromIntegral sizeByteSize)
               dataAddr <- Offset a off
               let p1 = Prop {numBytes,dataAddr}
@@ -308,16 +309,14 @@ firstPropertyAddr x = do
       Add dub one
 
 
-data PropNumAndSize p = PropNumAndSize
-  { propNumber :: Value p
-  , numBytes :: Value p
+data PropSize p = PropSize
+  { numBytes :: Value p
   , sizeByteSize :: Int
   }
 
-getPropNumAndSize :: Phase p => Addr p -> Byte p -> Eff p (PropNumAndSize p)
-getPropNumAndSize a1 b1 = do
+getPropSize :: Phase p => Addr p -> Byte p -> Eff p (PropSize p)
+getPropSize a1 b1 = do
   one <- LitV 1
-  propNumber <- getPropNumber b1
   objectTableFormat >>= \case
     Small -> do
       numBytes <- do
@@ -325,14 +324,14 @@ getPropNumAndSize a1 b1 = do
         shifted <- b1 `ShiftR` five
         widened <- Widen shifted
         Add widened one
-      pure PropNumAndSize{sizeByteSize=1,propNumber,numBytes}
+      pure PropSize{sizeByteSize=1,numBytes}
     Large -> do
       (LitB 7 >>= TestBit b1) >>= If >>= \case
         False -> do
           numBytes <- do
             b6 <- (LitB 6 >>= TestBit b1) >>= If
             LitV (case b6 of False -> 1; True -> 2)
-          pure PropNumAndSize{sizeByteSize=1,propNumber,numBytes}
+          pure PropSize{sizeByteSize=1,numBytes}
         True -> do
           numBytes <- do
             a2 <- Offset a1 one
@@ -340,7 +339,7 @@ getPropNumAndSize a1 b1 = do
             mask6 <- LitB 0x3f
             sixBits <- b2 `BwAnd` mask6
             Widen sixBits
-          pure PropNumAndSize{sizeByteSize=2,propNumber,numBytes}
+          pure PropSize{sizeByteSize=2,numBytes}
 
 
 getPropNumber :: Byte p -> Eff p (Value p)
