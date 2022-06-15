@@ -397,7 +397,7 @@ eval mode here op = case op of
 
   Op.Input_stream{} -> Note op
   Op.Nop -> undefined
-  Op.Read_char{} -> do undefined
+  Op.Read_char{} -> Note op
   Op.Show_status -> Note op
 
 
