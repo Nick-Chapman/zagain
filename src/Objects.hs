@@ -5,7 +5,7 @@ module Objects
   , testAttr, setAttr, clearAttr
   , FamilyMember(Parent,Sibling,Child), getFM
   , insertObj, removeObj
-  , getProp, putProp, getPropAddr, getPropLen, getNextProp
+  , getProp, getPropAddr, putProp, getPropLen, getNextProp
   ) where
 
 import Control.Monad (when)
@@ -174,12 +174,59 @@ unlink mode this = do
             sib <- getFM Sibling x
             b <- Equal sib this >>= If
             case b of
-              False -> loop sib -- TODO: infinite effect is a problem for compilation
+              False -> loop sib -- TODO: infinite effect
               True -> do
                 thisSib <- getFM Sibling this
                 setFM Sibling x thisSib
 
 --[properties]--------------------------------------------------------
+
+getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
+getProp mode x n = do
+  Header{objectTable} <- StoryHeader
+  getPropN mode x n >>= \case
+    Nothing -> do
+      -- get property default
+      m1 <- LitV (-1)
+      nM1 <- Add n m1
+      two <- LitV 2
+      off <- Mul two nM1
+      base <- LitA objectTable
+      a <- Offset base off
+      getWord a
+    Just (Prop{dataBytes}) -> do
+      case dataBytes of
+        [hi,lo] -> MakeHiLo hi lo
+        [_b] -> undefined -- Widen _b -- not hit yet
+        _ -> error "expected 1 or 2 bytes for prop value"
+
+
+getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
+getPropAddr mode x n = do
+  getPropN mode x n >>= \case
+    Just(Prop{dataAddr}) -> do DeAddress dataAddr
+    Nothing -> LitV 0
+
+
+putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
+putProp mode x n v = do
+  pr <- do
+    getPropN mode x n >>= \case
+      Nothing -> Error "putProp, no such prop"
+      Just x -> pure x
+  let Prop{dataBytes,dataAddr} = pr
+  case length dataBytes  of
+    2 -> do
+      hi <- HiByte v
+      lo <- LoByte v
+      one <- LitV 1
+      dataAddrPlusOne <- Offset dataAddr one
+      SetByte dataAddr hi
+      SetByte dataAddrPlusOne lo
+      pure ()
+    1 -> Error "expected 2 bytes for a prop value"
+    _ -> Error "expected 1 or 2 bytes for prop value"
+
 
 getPropN :: forall p. Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
 getPropN mode x n = do
@@ -202,71 +249,24 @@ getPropN mode x n = do
             if b then pure (Just p1) else do
               loop a' -- TODO: infinite effect
       loop a2
+  where
+    getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
+    getOneProp a1 b1 = do
+      PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
+      off <- LitV (fromIntegral sizeByteSize)
+      dataAddr <- Offset a1 off
+      dataBytes <- getBytes dataAddr numBytes
+      let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
+      a' <- Offset dataAddr numBytes
+      pure (p1,a')
 
-getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
-getOneProp a1 b1 = do
-    PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
-    off <- LitV (fromIntegral sizeByteSize)
-    dataAddr <- Offset a1 off
-    dataBytes <- getBytes dataAddr numBytes
-    let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
-    a' <- Offset dataAddr numBytes
-    pure (p1,a')
-
-----------------------------------------------------------------------
-
-getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
-getProp mode x n = do
-  Header{objectTable} <- StoryHeader
-
-  getPropN mode x n >>= \case
-    Nothing -> do
-      -- get property default
-      m1 <- LitV (-1)
-      nM1 <- Add n m1
-      two <- LitV 2
-      off <- Mul two nM1
-      base <- LitA objectTable
-      a <- Offset base off
-      getWord a
-    Just (Prop{dataBytes}) -> do
-      case dataBytes of
-        [hi,lo] -> MakeHiLo hi lo
-        [_b] -> undefined -- Widen _b -- not hit yet
-        _ -> error "expected 1 or 2 bytes for prop value"
-
-putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
-putProp mode x n v = do
-  pr <- do
-    getPropN mode x n >>= \case
-      Nothing -> Error "putProp, no such prop"
-      Just x -> pure x
-
-  let Prop{dataBytes,dataAddr} = pr
-  case length dataBytes  of
-    2 -> do
-      hi <- HiByte v
-      lo <- LoByte v
-      one <- LitV 1
-      dataAddrPlusOne <- Offset dataAddr one
-      SetByte dataAddr hi
-      SetByte dataAddrPlusOne lo
-      pure ()
-    1 -> Error "expected 2 bytes for a prop value"
-    _ -> Error "expected 1 or 2 bytes for prop value"
-
-getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
-getPropAddr mode x n = do
-  getPropN mode x n >>= \case
-    Just(Prop{dataAddr}) -> do DeAddress dataAddr
-    Nothing -> LitV 0
 
 getPropLen :: Phase p => Value p -> Eff p (Value p)
 getPropLen v = do
   b <- IsZero v >>= If
   if b then LitV 0 else do
     one <- LitV 1
-    vM1 <- Sub v one
+    vM1 <- Sub v one -- TODO: step back is more involved for Large (not always 1)
     aM1 <- Address vM1
     b <- GetByte aM1
     five <- LitV 5
@@ -276,6 +276,7 @@ getPropLen v = do
     w <- Widen masked
     one <- LitV 1
     Add one w
+
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getNextProp mode x p = do
@@ -294,16 +295,36 @@ getNextProp mode x p = do
     [] -> LitV 0
     fst:_ -> pure fst -- assume the first is the biggest
 
-getPropertyTable :: Phase p => Mode -> Value p -> Eff p [Prop p]
-getPropertyTable mode x = do
-  a1 <- propTableAddr x
-  shortNameLen <- GetByte a1
-  size <- dubPlus1 shortNameLen
-  a2 <- Offset a1 size
-  props <- getPropsA mode a2
-  --Debug ("getPropertyTable",x,"...")
-  --mapM_ Debug props
-  pure props
+  where
+    getPropertyTable :: Phase p => Mode -> Value p -> Eff p [Prop p]
+    getPropertyTable mode x = do
+      a1 <- propTableAddr x
+      shortNameLen <- GetByte a1
+      size <- dubPlus1 shortNameLen
+      a2 <- Offset a1 size
+      getPropsA mode a2
+
+    getPropsA :: Phase p => Mode -> Addr p -> Eff p [Prop p]
+    getPropsA = \case
+      Compiling -> hack_getPropsA
+      Interpreting -> real_getPropsA
+
+    hack_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
+    hack_getPropsA _a = Error "getPropsA"
+
+    real_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
+    real_getPropsA a1 = do
+      b1 <- GetByte a1
+      endOfProps <- IsZeroByte b1 >>= If
+      if endOfProps then pure [] else do
+        PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
+        off <- LitV (fromIntegral sizeByteSize)
+        dataAddr <- Offset a1 off
+        dataBytes <- getBytes dataAddr numBytes
+        let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
+        a' <- Offset dataAddr numBytes
+        more <- real_getPropsA a'
+        pure (p1:more)
 
 dubPlus1 :: Phase p => Byte p -> Eff p (Value p)
 dubPlus1 b = do
@@ -322,27 +343,6 @@ data Prop p = Prop -- TODO: using this type isn't very helpful
 
 deriving instance Phase p => Show (Prop p)
 
-getPropsA :: Phase p => Mode -> Addr p -> Eff p [Prop p]
-getPropsA = \case
-  Compiling -> hack_getPropsA
-  Interpreting -> real_getPropsA
-
-hack_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
-hack_getPropsA _a = Error "getPropsA" -- TODO: need while-effect!
-
-real_getPropsA :: Phase p => Addr p -> Eff p [Prop p]
-real_getPropsA a1 = do
-  b1 <- GetByte a1
-  endOfProps <- IsZeroByte b1 >>= If
-  if endOfProps then pure [] else do
-    PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
-    off <- LitV (fromIntegral sizeByteSize)
-    dataAddr <- Offset a1 off
-    dataBytes <- getBytes dataAddr numBytes
-    let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
-    a' <- Offset dataAddr numBytes
-    more <- real_getPropsA a' -- TODO: infinite effect is a problem for compilation
-    pure (p1:more)
 
 data PropNumAndSize p = PropNumAndSize
   { propNumber :: Value p
@@ -396,7 +396,7 @@ getBytes a n = do
     pure (b:bs)
 
 
---[odds and sods]-----------------------------------------------------
+--[objectTableFormat]-------------------------------------------------
 
 objectTableFormat :: Eff p ObjectTableFormat
 objectTableFormat = do
