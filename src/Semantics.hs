@@ -402,6 +402,11 @@ eval mode here op = case op of
   Op.Read_char{} -> Note op
   Op.Show_status -> Note op
 
+  Op.Scan_table _ _ _ target _label -> do
+    Note op
+    res <- LitV 0 -- TODO!
+    setTarget target res
+
 
 doCall :: Phase p => Addr p -> Addr p -> [Arg] -> Eff p ()
 doCall here routine args = do

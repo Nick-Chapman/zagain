@@ -143,7 +143,9 @@ decode zv op = case op of
   Code 244 [t] -> Op.Input_stream <$> arg t
   Code 245 [t1,t2,t3] -> Op.Sound_effect <$> arg t1 <*> arg t2 <*> arg t3
   Code 246 [_ignored_mustBe1] -> Op.Read_char <$> target
-
+  Code 247 [t1,t2,t3]
+    | zv>=Z4 -> Op.Scan_table <$> arg t1 <*> arg t2 <*> arg t3 <*> target <*> label
+  -- 248
   Code 249 (t1:ts) | zv>=Z5 -> Op.CallN <$> func zv t1 <*> mapM arg ts
   Code 250 (t1:ts) | zv>=Z5 -> Op.CallN <$> func zv t1 <*> mapM arg ts
   Code 251 [t1,t2] | zv>=Z5 -> Op.Tokenize <$> arg t1 <*> arg t2

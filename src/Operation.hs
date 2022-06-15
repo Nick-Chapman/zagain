@@ -81,6 +81,7 @@ data Operation
   | Rtrue
   | Save Label
   | Save_undo Label
+  | Scan_table Arg Arg Arg Target Label
   | Set_attr Arg Arg
   | Set_cursor Arg Arg
   | Set_text_style Arg
@@ -196,6 +197,7 @@ opArgs = \case
   Rtrue -> do []
   Save _label -> do []
   Save_undo _label -> do []
+  Scan_table arg1 arg2 arg3 _target _label -> do [arg1,arg2,arg3]
   Set_attr arg1 arg2 -> do [arg1,arg2]
   Set_cursor arg1 arg2 -> do [arg1,arg2]
   Set_text_style arg -> do [arg]
@@ -279,6 +281,7 @@ opTargetOpt = \case
   Rtrue -> do Nothing
   Save _label -> do Nothing
   Save_undo _label -> do Nothing
+  Scan_table _arg1 _arg2 _arg3 target _label -> do Just target
   Set_attr _arg1 _arg2 -> do Nothing
   Set_cursor _arg1 _arg2 -> do Nothing
   Set_text_style _arg -> do Nothing
@@ -310,6 +313,7 @@ opLabels = \case
   Jl _arg1 _arg2 label -> do [label]
   Jz _arg label -> do [label]
   Restore label -> do [label]
+  Scan_table _arg1 _arg2 _arg3 _target label -> do [label]
   Save label -> do [label]
   Save_undo label -> do [label]
   Test _arg1 _arg2 label -> do [label]
