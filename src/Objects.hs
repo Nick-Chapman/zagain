@@ -242,10 +242,17 @@ getPropLen v = do
       pure numBytes
 
 
-dataAddrToPropAddr :: Addr p -> Eff p (Addr p)
+dataAddrToPropAddr :: Phase p => Addr p -> Eff p (Addr p)
 dataAddrToPropAddr a = do
-  m1 <- LitV (-1)
-  Offset a m1 -- TODO: step back is more involved for Large (not always 1)
+  aM1 <- LitV (-1) >>= Offset a
+  objectTableFormat >>= \case
+    Small -> pure aM1
+    Large -> do
+      b <- GetByte aM1
+      (LitB 7 >>= TestBit b) >>= If >>= \case
+        False -> pure aM1
+        True -> do
+          LitV (-2) >>= Offset a
 
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
