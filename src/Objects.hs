@@ -255,9 +255,7 @@ getNextProp mode x n = do
     True -> do
       a <- firstPropertyAddr x
       b <- GetByte a
-      IsZeroByte b >>= If >>= \case -- TODO: avoid this test
-        True -> LitV 0 -- It is possible for there to be no properties.
-        False -> getPropNumber b
+      getPropNumber b
     False -> do
       searchPropN mode x n >>= \case
         Nothing -> error (show ("getNextProp",n))
