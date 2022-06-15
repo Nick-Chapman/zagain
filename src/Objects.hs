@@ -187,8 +187,8 @@ getProp mode x n = do
   searchProp mode x n >>= \case
     Nothing -> do
       -- get property default
-      m1 <- LitV (-1)
-      nM1 <- Add n m1
+      one <- LitV 1
+      nM1 <- Sub n one
       two <- LitV 2
       off <- Mul two nM1
       base <- LitA objectTable
@@ -232,19 +232,20 @@ putProp mode x n v = do
 
 getPropLen :: Phase p => Value p -> Eff p (Value p)
 getPropLen v = do
-  b <- IsZero v >>= If
-  if b then LitV 0 else do
-    one <- LitV 1
-    vM1 <- Sub v one -- TODO: step back is more involved for Large (not always 1)
-    aM1 <- Address vM1
-    b <- GetByte aM1
-    five <- LitV 5
-    shifted <- b `ShiftR` five
-    seven <- LitB 0x7
-    masked <- shifted `BwAnd` seven
-    w <- Widen masked
-    one <- LitV 1
-    Add one w
+  IsZero v >>= If >>= \case
+    True -> LitV 0
+    False -> do
+      dataAddr <- Address v
+      a <- dataAddrToPropAddr dataAddr
+      b <- GetByte a
+      PropSize{numBytes} <- getPropSize a b
+      pure numBytes
+
+
+dataAddrToPropAddr :: Addr p -> Eff p (Addr p)
+dataAddrToPropAddr a = do
+  m1 <- LitV (-1)
+  Offset a m1 -- TODO: step back is more involved for Large (not always 1)
 
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
