@@ -194,11 +194,13 @@ getProp mode x n = do
       base <- LitA objectTable
       a <- Offset base off
       getWord a
-    Just (Prop{dataBytes},_nextAddrHere) -> do
-      case dataBytes of
-        [hi,lo] -> MakeHiLo hi lo
-        [_b] -> undefined -- Widen _b -- not hit yet
-        _ -> error "expected 1 or 2 bytes for prop value"
+    Just (Prop{dataAddr,numBytes},_nextAddrHere) -> do
+      two <- LitV 2
+      Equal numBytes two >>= If >>= \case
+        False -> -- If length not 2, then must be 1. But never seen this case.
+          undefined -- GetByte dataAddr >>= Widen
+        True -> do
+          getWord dataAddr
 
 
 getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
@@ -212,20 +214,22 @@ putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
 putProp mode x n v = do
   (pr,_) <- do
     searchPropN mode x n >>= \case
-      Nothing -> Error "putProp, no such prop"
+      Nothing -> error (show ("putProp, no such prop",n))
       Just x -> pure x
-  let Prop{dataBytes,dataAddr} = pr
-  case length dataBytes  of
-    2 -> do
+  let Prop{dataAddr,numBytes} = pr
+  two <- LitV 2
+  Equal numBytes two >>= If >>= \case
+    False -> do -- If length not 2, then must be 1. But never seen this case.
+      _ <- undefined
+      lo <- LoByte v
+      SetByte dataAddr lo
+    True -> do
       hi <- HiByte v
       lo <- LoByte v
       one <- LitV 1
       dataAddrPlusOne <- Offset dataAddr one
       SetByte dataAddr hi
       SetByte dataAddrPlusOne lo
-      pure ()
-    1 -> Error "expected 2 bytes for a prop value"
-    _ -> Error "expected 1 or 2 bytes for prop value"
 
 
 searchPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
@@ -283,7 +287,7 @@ getNextProp mode x n = do
 
     False -> do
       searchPropN mode x n >>= \case
-        Nothing -> undefined -- because there must be that prop
+        Nothing -> error (show ("getNextProp",n))
         Just(_,a1) -> do
           b1 <- GetByte a1
           getPropNum a1 b1
@@ -294,8 +298,7 @@ getOneProp a1 b1 = do
   PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
   off <- LitV (fromIntegral sizeByteSize)
   dataAddr <- Offset a1 off
-  dataBytes <- getBytes dataAddr numBytes
-  let p1 = Prop {propNumber,numBytes,dataAddr,dataBytes}
+  let p1 = Prop {propNumber,numBytes,dataAddr}
   a' <- Offset dataAddr numBytes
   pure (p1,a')
 
@@ -319,7 +322,6 @@ data Prop p = Prop -- TODO: using this type isn't very helpful
   { propNumber :: Value p
   , numBytes :: Value p
   , dataAddr :: Addr p
-  , dataBytes :: [Byte p] -- TODO: dont embed. make caller get it
   }
 
 deriving instance Phase p => Show (Prop p)
@@ -364,17 +366,6 @@ getPropNumAndSize a1 b1 = do
             sixBits <- b2 `BwAnd` mask6
             Widen sixBits
           pure PropNumAndSize{sizeByteSize=2,propNumber,numBytes}
-
-getBytes :: Phase p => Addr p -> Value p -> Eff p [Byte p]
-getBytes a n = do
-  stop <- IsZero n >>= If
-  if stop then pure [] else do
-    one <- LitV 1
-    b <- GetByte a
-    a' <- Offset a one
-    n' <- Sub n one
-    bs <- getBytes a' n' -- TODO: infinite effect!
-    pure (b:bs)
 
 
 --[objectTableFormat]-------------------------------------------------
