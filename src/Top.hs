@@ -15,8 +15,8 @@ import qualified Console (runAction)
 import qualified Eff (Mode(..))
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
-import qualified WalkThrough (runAction)
 import qualified Story
+import qualified WalkThrough (runAction)
 
 main :: IO ()
 main = do
@@ -96,7 +96,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace,wrapSpec},inputs,mayStartCon
                   pure $ Interpreter.runEffect screenWidth seed story eff
               | otherwise -> do
                   let eff = Semantics.smallStep Eff.Compiling
-                  code <- Compiler.compileEffect story eff
+                  code <- Compiler.compileEffect iconf story eff
                   pure $ Compiler.runCode seed code
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a
@@ -108,5 +108,5 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace,wrapSpec},inputs,mayStartCon
     Compile -> do
       story <- loadStory storyFile
       let eff = Semantics.smallStep Eff.Compiling
-      code <- Compiler.compileEffect story eff
+      code <- Compiler.compileEffect iconf story eff
       Compiler.dumpCode code -- to stdout

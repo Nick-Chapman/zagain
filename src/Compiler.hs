@@ -1,8 +1,8 @@
 
 module Compiler (compileEffect,dumpCode,runCode) where
 
-import Action (Action)
-import Control.Monad (ap,liftM)
+import Action (Action,Conf(..))
+import Control.Monad (when,ap,liftM)
 import Data.List (intercalate)
 import Data.Set (Set)
 import Decode (fetchOperation,fetchRoutineHeader)
@@ -32,8 +32,8 @@ instance Phase Compile where
 
 type Effect a = Eff Compile a
 
-compileEffect :: Story -> Effect () -> IO Code
-compileEffect story smallStep = do
+compileEffect :: Conf -> Story -> Effect () -> IO Code
+compileEffect conf story smallStep = do
   let endOfStory :: Addr = fromIntegral (size story)
   let Header{initialPC=_, staticMem} = Story.header story
   let as = routinesBetween story (staticMem,endOfStory)
@@ -57,7 +57,7 @@ compileEffect story smallStep = do
         Eff.AtReturnFromCall{ caller = Const{} } -> True
         _ -> False
 
-  let static = Static { story, smallStep, shouldInline }
+  let static = Static { conf, story, smallStep, shouldInline }
 
   Code <$> sequence
     [ do compileRoutine static r | r <- routines ]
@@ -81,7 +81,8 @@ routineAddressesToInline routine = do
 
 
 data Static = Static
-  { story :: Story
+  { conf :: Conf
+  , story :: Story
   , smallStep :: Effect ()
   , shouldInline :: Control Compile -> Bool
   }
@@ -90,7 +91,7 @@ data Static = Static
 compileRoutine :: Static -> Routine -> IO CompiledRoutine
 compileRoutine static routine = do
   let Routine{start,body} = routine
-  let Static{shouldInline} = static
+  let Static{conf,shouldInline} = static
   let
     isCall :: Operation -> Bool
     isCall = \case
@@ -108,7 +109,7 @@ compileRoutine static routine = do
           if isCall op then [LocReturn addr] else []
       ]
   CompiledRoutine <$> sequence
-    [ runGen (compileLoc static loc) | loc <- locations]
+    [ runGen conf (compileLoc static loc) | loc <- locations]
 
 
 compileLoc :: Static -> Loc -> Gen Chunk
@@ -412,13 +413,15 @@ instance Functor Gen where fmap = liftM
 instance Applicative Gen where pure = return; (<*>) = ap
 instance Monad Gen where return = GRet; (>>=) = GBind
 
-runGen :: Gen a -> IO a
-runGen g = fst <$> loop GenState{u=1} g where
+runGen :: Conf -> Gen a -> IO a
+runGen Conf{debug} g = fst <$> loop GenState{u=1} g where
   loop :: GenState -> Gen a -> IO (a,GenState)
   loop s = \case
     GRet x -> pure (x,s)
     GBind g f -> do (a,s') <- loop s g; loop s' (f a)
-    GDebug msg -> do putStrLn ("**GDebug: " ++ show msg); pure ((),s)
+    GDebug msg -> do
+      when debug $ putStrLn ("**GDebug: " ++ show msg)
+      pure ((),s)
     GenUnique -> let GenState{u} = s in pure (u, GenState {u=u+1})
 
 data GenState = GenState { u :: Int }
