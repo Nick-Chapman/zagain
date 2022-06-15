@@ -232,28 +232,6 @@ putProp mode x n v = do
       SetByte dataAddrPlusOne lo
 
 
-searchPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
-searchPropN mode x n = do
-  a1 <- propTableAddr x
-  shortNameLen <- GetByte a1
-  size <- dubPlus1 shortNameLen
-  a2 <- Offset a1 size
-  case mode of
-    Compiling -> Error "getPropsA" -- match name in regression code
-    Interpreting -> do
-      let
-        loop a1 = do
-          b1 <- GetByte a1
-          endOfProps <- IsZeroByte b1 >>= If
-          if endOfProps then pure Nothing else do
-            (p1,a') <- getOneProp a1 b1
-            let Prop{propNumber} = p1
-            b <- Equal n propNumber >>= If
-            if b then pure (Just (p1,a')) else do
-              loop a' -- TODO: infinite effect
-      loop a2
-
-
 getPropLen :: Phase p => Value p -> Eff p (Value p)
 getPropLen v = do
   b <- IsZero v >>= If
@@ -283,31 +261,45 @@ getNextProp mode x n = do
       b2 <- GetByte a2
       IsZeroByte b2 >>= If >>= \case -- TODO: avoid this test
         True -> LitV 0 -- It is possible for there to be no properties.
-        False -> getPropNum a2 b2
+        False -> getPropNumber b2
 
     False -> do
       searchPropN mode x n >>= \case
         Nothing -> error (show ("getNextProp",n))
         Just(_,a1) -> do
           b1 <- GetByte a1
-          getPropNum a1 b1
+          getPropNumber b1
 
 
-getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
-getOneProp a1 b1 = do
-  PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
-  off <- LitV (fromIntegral sizeByteSize)
-  dataAddr <- Offset a1 off
-  let p1 = Prop {propNumber,numBytes,dataAddr}
-  a' <- Offset dataAddr numBytes
-  pure (p1,a')
-
-
-getPropNum :: Phase p => Addr p -> Byte p -> Eff p (Value p)
-getPropNum a1 b1 = do
-  PropNumAndSize{propNumber} <- getPropNumAndSize a1 b1 -- TODO: simp
-  pure propNumber
-
+searchPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
+searchPropN mode x n = do
+  a1 <- propTableAddr x
+  shortNameLen <- GetByte a1
+  size <- dubPlus1 shortNameLen
+  a2 <- Offset a1 size
+  case mode of
+    Compiling -> Error "getPropsA" -- match name in regression code
+    Interpreting -> do
+      let
+        loop a1 = do
+          b1 <- GetByte a1
+          endOfProps <- IsZeroByte b1 >>= If
+          if endOfProps then pure Nothing else do
+            (p1,a') <- getOneProp a1 b1
+            let Prop{propNumber} = p1
+            b <- Equal n propNumber >>= If
+            if b then pure (Just (p1,a')) else do
+              loop a' -- TODO: infinite effect
+      loop a2
+  where
+    getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
+    getOneProp a1 b1 = do
+      PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
+      off <- LitV (fromIntegral sizeByteSize)
+      dataAddr <- Offset a1 off
+      let p1 = Prop {propNumber,numBytes,dataAddr}
+      a' <- Offset dataAddr numBytes
+      pure (p1,a')
 
 dubPlus1 :: Phase p => Byte p -> Eff p (Value p)
 dubPlus1 b = do
@@ -318,6 +310,7 @@ dubPlus1 b = do
   Add dub one
 
 
+
 data Prop p = Prop -- TODO: using this type isn't very helpful
   { propNumber :: Value p
   , numBytes :: Value p
@@ -325,7 +318,6 @@ data Prop p = Prop -- TODO: using this type isn't very helpful
   }
 
 deriving instance Phase p => Show (Prop p)
-
 
 data PropNumAndSize p = PropNumAndSize
   { propNumber :: Value p
@@ -336,12 +328,9 @@ data PropNumAndSize p = PropNumAndSize
 getPropNumAndSize :: Phase p => Addr p -> Byte p -> Eff p (PropNumAndSize p)
 getPropNumAndSize a1 b1 = do
   one <- LitV 1
+  propNumber <- getPropNumber b1
   objectTableFormat >>= \case
     Small -> do
-      propNumber <- do
-        oneF <- LitB 0x1f
-        fiveBits <- b1 `BwAnd` oneF
-        Widen fiveBits
       numBytes <- do
         five <- LitV 5
         shifted <- b1 `ShiftR` five
@@ -349,10 +338,6 @@ getPropNumAndSize a1 b1 = do
         Add widened one
       pure PropNumAndSize{sizeByteSize=1,propNumber,numBytes}
     Large -> do
-      mask6 <- LitB 0x3f
-      propNumber <- do
-        sixBits <- b1 `BwAnd` mask6
-        Widen sixBits
       (LitB 7 >>= TestBit b1) >>= If >>= \case
         False -> do
           numBytes <- do
@@ -363,10 +348,23 @@ getPropNumAndSize a1 b1 = do
           numBytes <- do
             a2 <- Offset a1 one
             b2 <- GetByte a2
+            mask6 <- LitB 0x3f
             sixBits <- b2 `BwAnd` mask6
             Widen sixBits
           pure PropNumAndSize{sizeByteSize=2,propNumber,numBytes}
 
+
+getPropNumber :: Byte p -> Eff p (Value p)
+getPropNumber b1 = do
+  objectTableFormat >>= \case
+    Small -> do
+      oneF <- LitB 0x1f
+      fiveBits <- b1 `BwAnd` oneF
+      Widen fiveBits
+    Large -> do
+      mask6 <- LitB 0x3f
+      sixBits <- b1 `BwAnd` mask6
+      Widen sixBits
 
 --[objectTableFormat]-------------------------------------------------
 
