@@ -20,9 +20,9 @@ runAction conf action = do
 
 -- replay the .transcript lines...
 replay :: Conf -> [String] -> Action -> HL.InputT IO ()
-replay conf = loop 1
+replay conf@Conf{debug} = loop 1
   where
-    showOld = False
+    showOld = True
     loop :: Int -> [String] -> Action -> HL.InputT IO ()
     loop n = \case
       line:rest -> inner
@@ -31,7 +31,9 @@ replay conf = loop 1
             Stop{} -> do pure ()
             TraceInstruction _ _ _ _ next -> do inner next
             TraceRoutineCall _ next -> do inner next
-            Debug _ next -> do inner next
+            Debug msg next -> do
+              when (debug) $ lift $ putStrLn ("Debug: " ++ msg)
+              inner next
             Output text next -> do
               when showOld $ (lift $ putStr (col AN.Cyan text))
               inner next
