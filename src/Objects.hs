@@ -184,7 +184,7 @@ unlink mode this = do
 getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getProp mode x n = do
   Header{objectTable} <- StoryHeader
-  searchPropN mode x n >>= \case
+  searchProp mode x n >>= \case
     Nothing -> do
       -- get property default
       m1 <- LitV (-1)
@@ -205,7 +205,7 @@ getProp mode x n = do
 
 getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getPropAddr mode x n = do
-  searchPropN mode x n >>= \case
+  searchProp mode x n >>= \case
     Just(Prop{dataAddr},_) -> do DeAddress dataAddr
     Nothing -> LitV 0
 
@@ -213,7 +213,7 @@ getPropAddr mode x n = do
 putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
 putProp mode x n v = do
   (pr,_) <- do
-    searchPropN mode x n >>= \case
+    searchProp mode x n >>= \case
       Nothing -> error (show ("putProp, no such prop",n))
       Just x -> pure x
   let Prop{dataAddr,numBytes} = pr
@@ -257,39 +257,34 @@ getNextProp mode x n = do
       b <- GetByte a
       getPropNumber b
     False -> do
-      searchPropN mode x n >>= \case
+      searchProp mode x n >>= \case
         Nothing -> error (show ("getNextProp",n))
         Just(_,a) -> do
           b <- GetByte a
           getPropNumber b
 
 
-searchPropN :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
-searchPropN mode x n = do
-  a2 <- firstPropertyAddr x
+searchProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p, Addr p))
+searchProp mode x n = do
+  a1 <- firstPropertyAddr x
   case mode of
     Compiling -> Error "getPropsA" -- match name in regression code
     Interpreting -> do
       let
-        loop a1 = do
-          b1 <- GetByte a1
-          endOfProps <- IsZeroByte b1 >>= If
-          if endOfProps then pure Nothing else do
-            (p1,a') <- getOneProp a1 b1
-            let Prop{propNumber} = p1
-            b <- Equal n propNumber >>= If
-            if b then pure (Just (p1,a')) else do
-              loop a' -- TODO: infinite effect
-      loop a2
-  where
-    getOneProp :: Phase p => Addr p -> Byte p -> Eff p (Prop p, Addr p)
-    getOneProp a1 b1 = do
-      PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a1 b1
-      off <- LitV (fromIntegral sizeByteSize)
-      dataAddr <- Offset a1 off
-      let p1 = Prop {propNumber,numBytes,dataAddr}
-      a' <- Offset dataAddr numBytes
-      pure (p1,a')
+        loop a = do
+          b <- GetByte a
+          IsZeroByte b >>= If >>= \case
+            True -> pure Nothing
+            False -> do
+              PropNumAndSize{sizeByteSize,propNumber,numBytes} <- getPropNumAndSize a b
+              off <- LitV (fromIntegral sizeByteSize)
+              dataAddr <- Offset a off
+              let p1 = Prop {numBytes,dataAddr}
+              a' <- Offset dataAddr numBytes
+              b <- Equal n propNumber >>= If
+              if b then pure (Just (p1,a')) else do
+                loop a' -- TODO: infinite effect
+      loop a1
 
 
 firstPropertyAddr :: Phase p => Value p -> Eff p (Addr p)
@@ -309,8 +304,7 @@ firstPropertyAddr x = do
 
 
 data Prop p = Prop -- TODO: using this type isn't very helpful
-  { propNumber :: Value p
-  , numBytes :: Value p
+  { numBytes :: Value p
   , dataAddr :: Addr p
   }
 
