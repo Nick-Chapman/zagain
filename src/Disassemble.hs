@@ -66,6 +66,7 @@ discoverCode story walkthrough = do
   printf "Found %d routines by walkthrough\n" (length ws)
   printf "Found %d routines by speculative disassembly\n" (length cs)
   printf "%d routines lost (in walkthrough but not disassembly)\n" (length lost)
+  --print lost
 
   let foundR = [ (Found, disRoutine story a) | a <- cs ]
   let lostR = [ (Lost, disRoutine story a) | a <- lost ]
@@ -151,8 +152,8 @@ routinesBetween story (start,end) = loop start
 tryDecodeRoutine :: Story -> Addr -> Maybe Addr
 tryDecodeRoutine story a = do
   case disRoutineM story a of
-    Nothing -> Nothing
-    Just Routine{finish,illegal,unused,defs=_} -> if
+    Left{} -> Nothing
+    Right Routine{finish,illegal,unused,defs=_} -> if
       | length illegal == 0 && length unused <= 2
         -> Just finish
       | otherwise
@@ -176,37 +177,39 @@ data Routine = Routine
 disRoutine :: Story -> Addr -> Routine
 disRoutine s a =
   case disRoutineM s a of
-    Just r -> r
-    Nothing -> error "disRoutine"
+    Right r -> r
+    Left m -> error (show("disRoutine",a,m))
 
 
-disRoutineM :: Story -> Addr -> Maybe Routine
+type Result a = Either String a
+
+disRoutineM :: Story -> Addr -> Result Routine
 disRoutineM story start = do
   let (header,a0) = runFetch OOB_Zero start story fetchRoutineHeader
   case header of
-    Op.BadRoutineHeader{} -> Nothing
+    Op.BadRoutineHeader{} -> Left (show header)
     Op.RoutineHeader xs -> do
       case (loop Set.empty [] a0) of
-        Nothing -> Nothing
-        Just (body,finish) -> do
+        Left m -> Left m
+        Right (body,finish) -> do
           let defs = [ b | b <- [1::Byte .. fromIntegral (length xs) ] ]
           let refs = sort $ nub [ b | (_,op) <- body, b <- opLocals op ]
           let illegal = refs \\ defs
           let unused = defs \\ refs
-          Just $ Routine { start, header, body, finish, defs, refs, illegal, unused }
+          Right $ Routine { start, header, body, finish, defs, refs, illegal, unused }
       where
-        loop :: Set Addr -> [(Addr,Operation)] -> Addr -> Maybe ([(Addr,Operation)], Addr)
+        loop :: Set Addr -> [(Addr,Operation)] -> Addr -> Result ([(Addr,Operation)], Addr)
         loop bps acc a = do
           let (i,a') = runFetch OOB_Zero a story fetchOperation
           case i of
-            Op.BadOperation{} -> Nothing
-            Op.Call Op.BadFunc{} _ _ -> Nothing
-            Op.CallN Op.BadFunc{} _ -> Nothing
+            Op.BadOperation{} -> Left (show (a,i))
+            Op.Call Op.BadFunc{} _ _ -> Left (show (a,i))
+            Op.CallN Op.BadFunc{} _ -> Left (show (a,i))
             _ -> do
               let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOf i)
               let continue = not (isStopping i) || a' `Set.member` bps
               if continue then loop bps' ((a,i):acc) a' else
-                Just (reverse((a,i):acc),a')
+                Right (reverse((a,i):acc),a')
 
 
 branchesOf :: Operation -> [Addr]
