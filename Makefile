@@ -1,6 +1,20 @@
 
 top: trace walk dis code diff
 
+
+judo: frotz.walk my.walk
+	git diff --no-index frotz.walk my.walk
+
+STORY = ~/z/story/judo-night.1-080706.z5
+SCRIPT = j.script
+
+my.walk: $(exe) $(SCRIPT) Makefile src/*.hs
+	bash -c 'stack run -- $(STORY) -wrap 80 -walk <(head -20 j.script) > my.walk'
+
+frotz.walk: $(SCRIPT) Makefile
+	(echo 'k'; cat $(SCRIPT)) | ~/code/other/frotz/dfrotz $(STORY) > frotz.walk
+
+
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
 trace: .reg reg/zork.trace
