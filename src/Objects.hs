@@ -184,7 +184,7 @@ getPropAddr mode x n = do
 putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
 putProp mode x n v = do
   searchProp mode x n >>= \case
-    Nothing -> error (show ("putProp",n))
+    Nothing -> Error (show ("putProp",n))
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
       Equal numBytes two >>= If >>= \case
