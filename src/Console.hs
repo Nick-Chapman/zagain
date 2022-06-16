@@ -5,13 +5,23 @@ import Action (Action(..),Conf(..),StatusLine(..))
 import Control.Monad (when)
 import Control.Monad.Trans.Class (lift)
 import Data.Set (Set)
-import Numbers (Style)
+import Numbers (Style(..))
 import Text.Printf (printf)
 import TextDisplay(lineWrap)
 import qualified Data.Set as Set
-import qualified System.Console.ANSI as AN
 import qualified System.Console.Haskeline as HL
 import qualified System.Console.Haskeline.History as HL
+
+import System.Console.ANSI
+  ( Color(Cyan,Red,Magenta)
+  , SGR(SetColor,Reset)
+  , ConsoleLayer(Foreground)
+  , ColorIntensity(Vivid)
+  , ConsoleIntensity(BoldIntensity)
+  , SGR(SetConsoleIntensity,SetSwapForegroundBackground,SetItalicized)
+  , ConsoleIntensity(NormalIntensity)
+  , setSGRCode
+  )
 
 runAction :: Conf -> Action -> IO ()
 runAction conf action = do
@@ -23,9 +33,9 @@ runAction conf action = do
 
 -- replay the .transcript lines...
 replay :: Conf -> [String] -> Action -> HL.InputT IO ()
-replay conf@Conf{debug} = loop 1
+replay conf@Conf{debug=_debug} = loop 1
   where
-    showOld = True
+    showOld = False
     loop :: Int -> [String] -> Action -> HL.InputT IO ()
     loop n = \case
       line:rest -> inner
@@ -34,13 +44,13 @@ replay conf@Conf{debug} = loop 1
             Stop{} -> do pure ()
             TraceInstruction _ _ _ _ next -> do inner next
             TraceRoutineCall _ next -> do inner next
-            Debug msg next -> do
-              when (debug) $ lift $ putStrLn ("Debug: " ++ msg)
+            Debug _msg next -> do
+              --when (_debug) $ lift $ putStrLn ("Debug: " ++ _msg)
               inner next
             TextStyle _sb next ->
               inner next
             Output text next -> do
-              when showOld $ (lift $ putStr (wrapCol AN.Cyan text))
+              when showOld $ (lift $ putStr text)
               inner next
             Input _ _ f -> do
               lift $ printf "[%i] %s\n" n line
@@ -56,7 +66,7 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop styles0 []
     loop styles buf = \case
       Stop{} -> do
         let text = concat (reverse buf)
-        lift $ put AN.Cyan (wrap text)
+        lift $ put gameCol (wrap text)
       TraceInstruction stateString count a op next -> do
         when mojo $ do
           lift $ printf "%d %s\n" count stateString
@@ -65,23 +75,23 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop styles0 []
         loop styles buf next
       TraceRoutineCall _ next -> do loop styles buf next
       Debug msg next -> do
-        when (debug) $ lift $ put AN.Red ("Debug: " ++ msg ++ "\n")
+        when (debug) $ lift $ put debugCol ("Debug: " ++ msg ++ "\n")
         loop styles buf next
       TextStyle sb next -> do
         let (styles',note) = changeStyle sb styles
         loop styles' buf (Output note next)
       Output text next -> do
         when (not bufferOutput) $ do
-          lift $ put AN.Cyan text
+          lift $ put gameCol text
         loop styles (if bufferOutput then text:buf else buf) next
       Input statusLineM _count f -> do
         let (text,prompt) = splitFinalPrompt (concat (reverse buf))
-        lift $ put AN.Cyan (wrap text)
+        lift $ put gameCol (wrap text)
         case statusLineM of
           Nothing -> pure ()
           Just statusLine ->
-            lift $ put AN.Magenta (makeStatusLine statusLine ++ "\n")
-        let xprompt = wrapCol AN.Cyan (prompt ++ " ")
+            lift $ put statusLineCol (makeStatusLine statusLine ++ "\n")
+        let xprompt = wrapCol gameCol (prompt ++ " ")
         HL.getInputLine xprompt >>= \case
           Nothing -> pure () -- Ctr-D
           Just line -> do
@@ -89,10 +99,9 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop styles0 []
             HL.getHistory >>= lift . writeTranscript
             loop styles [] (f line)
 
-
-put :: AN.Color -> String -> IO ()
-put col str = putStr (wrapCol col str)
-
+    gameCol = Cyan
+    debugCol = Red
+    statusLineCol = Magenta
 
 data Styles = Styles { set :: Set Style }
 
@@ -102,14 +111,32 @@ styles0 = Styles Set.empty
 changeStyle :: (Style,Bool) -> Styles -> (Styles,String)
 changeStyle (s,goal) current@Styles{set} = do
   case (s `Set.member` set, goal) of
-    (False,False) ->
-      (current,"")
-    (False,True) ->
-      (current { set = Set.insert s set },printf "{%s}" (show s))
-    (True,False) ->
-      (current { set = Set.delete s set },printf "{%s-off}" (show s))
-    (True,True) ->
-      (current,"")
+    (False,False) -> (current,"")
+    (False,True) -> (current { set = Set.insert s set },styleOn s)
+    (True,False) -> (current { set = Set.delete s set },styleOff s)
+    (True,True) -> (current,"")
+
+styleOn,styleOff :: Style -> String
+
+styleOn = \case
+  Reverse -> setSGRCode [SetSwapForegroundBackground True]
+  Fixed -> "{fixed}" -- we are already using a fixed with font
+  Italic -> setSGRCode [SetItalicized True]
+  Bold -> setSGRCode [SetConsoleIntensity BoldIntensity]
+
+styleOff = \case
+  Reverse -> setSGRCode [SetSwapForegroundBackground False]
+  Fixed -> "{fixed-off}" -- we are already using a fixed with font
+  Italic -> setSGRCode [SetItalicized False]
+  Bold -> setSGRCode [SetConsoleIntensity NormalIntensity]
+
+put :: Color -> String -> IO ()
+put col str = putStr (wrapCol col str)
+
+wrapCol :: Color -> String -> String
+wrapCol c s =
+  setSGRCode [SetColor Foreground Vivid c] <> s <>
+  setSGRCode [Reset] --SetColor Foreground Vivid White]
 
 makeStatusLine :: StatusLine -> String
 makeStatusLine StatusLine{left=xs,right=ys} = do
@@ -124,13 +151,6 @@ splitFinalPrompt :: String -> (String,String)
 splitFinalPrompt s = do
   let (xs,ys) = span (not . (== '\n')) (reverse s)
   (reverse ys, reverse xs)
-
-
-wrapCol :: AN.Color -> String -> String
-wrapCol c s =
-  AN.setSGRCode [AN.SetColor AN.Foreground AN.Vivid c] <> s <>
-  AN.setSGRCode [AN.SetColor AN.Foreground AN.Vivid AN.White]
-
 
 -- keep transcript in opposite order from HL standard (newest at end of file)
 
