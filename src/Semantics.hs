@@ -378,10 +378,12 @@ eval mode here op = case op of
     res <- Objects.testAttr v1 v2
     branchMaybe label res
 
+  Op.Nop -> undefined
+  Op.Not{} -> undefined
+
   Op.Buffer_mode{} -> Note op
   Op.Erase_window{} -> Note op
   Op.Input_stream{} -> Note op
-  Op.Nop -> undefined
   Op.Output_stream1{} -> Note op
   Op.Output_stream2{} -> Note op
   Op.Pop -> Note op
