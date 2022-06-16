@@ -379,7 +379,7 @@ eval mode here op = case op of
     branchMaybe label res
 
   Op.Nop -> undefined
-  Op.Not{} -> undefined
+  Op.Not{} -> undefined -- TODO: judo
 
   Op.Buffer_mode{} -> Note op
   Op.Erase_window{} -> Note op
@@ -410,6 +410,9 @@ eval mode here op = case op of
     setTarget target res
 
   -- TODO: screen support. WIP
+
+  Op.Set_colour arg1 arg2 -> do
+    undefined arg1 arg2 -- TODO: judo
 
   Op.Set_cursor arg1 arg2 -> do
     v1 <- evalArg arg1

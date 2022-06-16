@@ -84,6 +84,7 @@ data Operation
   | Save_undo Label
   | Scan_table Arg Arg Arg Target Label
   | Set_attr Arg Arg
+  | Set_colour Arg Arg
   | Set_cursor Arg Arg
   | Set_text_style Arg
   | Set_window Arg
@@ -201,6 +202,7 @@ opArgs = \case
   Save_undo _label -> do []
   Scan_table arg1 arg2 arg3 _target _label -> do [arg1,arg2,arg3]
   Set_attr arg1 arg2 -> do [arg1,arg2]
+  Set_colour arg1 arg2 -> do [arg1,arg2]
   Set_cursor arg1 arg2 -> do [arg1,arg2]
   Set_text_style arg -> do [arg]
   Set_window arg -> do [arg]
@@ -286,6 +288,7 @@ opTargetOpt = \case
   Save_undo _label -> do Nothing
   Scan_table _arg1 _arg2 _arg3 target _label -> do Just target
   Set_attr _arg1 _arg2 -> do Nothing
+  Set_colour _arg1 _arg2 -> do Nothing
   Set_cursor _arg1 _arg2 -> do Nothing
   Set_text_style _arg -> do Nothing
   Set_window _arg -> do Nothing

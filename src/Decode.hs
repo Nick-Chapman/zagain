@@ -62,7 +62,9 @@ decode zv op = case op of
   Code 26 [t1,t2]
     | zv>=Z5 -> do Op.CallN <$> func zv t1 <*> mapM arg [t2]
 
-  Code 27 _ -> bad op --Z5,Z6
+  Code 27 [t1,t2]
+    | zv>=Z5 -> do Op.Set_colour <$> arg t1 <*> arg t2
+
   Code 28 _ -> bad op --Z5,Z6
   Code 29 _ -> bad op
   Code 30 _ -> bad op
