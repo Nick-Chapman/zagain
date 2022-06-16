@@ -127,6 +127,7 @@ collectRoutineCalls = loop
       TraceInstruction _ _ _ _ next -> loop coms next
       TraceRoutineCall addr next -> do addr : loop coms next -- collect
       Debug _ next -> loop coms next
+      TextStyle _ next -> loop coms next
       Output _ next -> loop coms next
       Input _ _ f -> do
         case coms of

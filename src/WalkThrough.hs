@@ -21,6 +21,8 @@ runAction Conf{debug,seeTrace,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 
           printf "%d %s %s\n" count (show a) (show op)
         loop n xs buf next
       TraceRoutineCall _ next -> do loop n xs buf next
+      TextStyle _sb next -> do -- ignore the text style
+        loop n xs buf next
       Output text next -> do
         when (not bufferOutput) $ putStr text
         loop n xs (if bufferOutput then text:buf else buf) next

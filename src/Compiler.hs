@@ -150,6 +150,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.Bind e f -> compileK s e $ \s a -> compileK s (f a) k
 
       Eff.GamePrint mes -> do Seq (GamePrint mes) <$> k s ()
+      Eff.TextStyle{} -> undefined
 
       Eff.Error msg -> do pure $ Error msg
       Eff.Debug msg -> do GDebug msg; k s ()

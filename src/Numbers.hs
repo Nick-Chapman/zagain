@@ -4,7 +4,8 @@ module Numbers
   ( Zversion(..)
   , Byte
   , Addr, makeByteAddress, makeWordAddress, makePackedAddress
-  , Value, makeHiLo,
+  , Value, makeHiLo
+  , Style(..)
   ) where
 
 import Data.Bits (Bits)
@@ -53,3 +54,6 @@ instance Show Value where
 
 makeHiLo :: Byte -> Byte -> Value
 makeHiLo hi lo = 256 * fromIntegral hi + fromIntegral lo
+
+data Style = Reverse | Bold | Italic | Fixed
+  deriving (Eq,Ord,Show)

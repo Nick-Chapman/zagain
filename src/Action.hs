@@ -2,7 +2,7 @@
 -- | The (inter)action of z-machine execution with input/output.
 module Action (Conf(..),Action(..),StatusLine(..)) where
 
-import Numbers (Addr)
+import Numbers (Addr,Style)
 import Operation (Operation)
 
 data Conf = Conf
@@ -23,3 +23,4 @@ data Action
   | Debug String Action
   | Input (Maybe StatusLine) Int (String -> Action)
   | Stop Int
+  | TextStyle (Style,Bool) Action

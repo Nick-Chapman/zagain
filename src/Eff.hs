@@ -4,6 +4,7 @@ module Eff (Eff(..),Phase(..),Mode(..),Control(..),StatusInfo(..)) where
 
 import Control.Monad (ap,liftM)
 import Header (Header)
+import Numbers (Style)
 import Operation (Operation,RoutineHeader)
 import qualified Numbers (Addr,Byte,Value)
 
@@ -44,7 +45,9 @@ deriving instance Phase p => Show (StatusInfo p)
 data Eff p x where
   Ret :: x -> Eff p x
   Bind :: Eff p x -> (x -> Eff p y) -> Eff p y
+
   GamePrint :: Text p -> Eff p ()
+  TextStyle :: (Style,Bool) -> Eff p ()
 
   Error :: String -> Eff p a -- runtime error
   Debug :: Show x => x -> Eff p () -- runtime debug

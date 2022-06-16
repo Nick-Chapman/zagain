@@ -5,7 +5,7 @@ module Semantics (smallStep) where
 --import Dictionary (Dict(..))
 import Eff (Eff(..),Phase(..),Mode,Control(..),StatusInfo(..))
 import Header (Header(..))
-import Numbers (Zversion(..))
+import Numbers (Zversion(..),Style(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
 import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
 import Text.Printf (printf)
@@ -63,10 +63,6 @@ eval mode here op = case op of
     routine <- evalFunc func
     p <- IsZeroAddress routine >>= If
     if p then pure () else do doCall here routine args
-
-  Op.Check_arg_count arg label -> do -- TODO: frame must contain num-actuals
-    v <- evalArg arg
-    Debug ("Check_arg_count",arg,v,label)
 
   Op.Clear_attr arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -384,28 +380,64 @@ eval mode here op = case op of
 
   Op.Buffer_mode{} -> Note op
   Op.Erase_window{} -> Note op
+  Op.Input_stream{} -> Note op
+  Op.Nop -> undefined
   Op.Output_stream1{} -> Note op
   Op.Output_stream2{} -> Note op
   Op.Pop -> Note op
+  Op.Read_char{} -> Note op
   Op.Restore{} -> Note op
-  Op.Save{} -> Note op
   Op.Save_undo{} -> Note op
-  Op.Set_cursor{} -> Note op
-  Op.Set_text_style{} -> Note op
-  Op.Set_window{} -> Note op
-  Op.Split_window{} -> Note op
+  Op.Save{} -> Note op
+  Op.Show_status -> Note op
   Op.Tokenize{} -> Note op
   Op.Verify{} -> Note op
 
-  Op.Input_stream{} -> Note op
-  Op.Nop -> undefined
-  Op.Read_char{} -> Note op
-  Op.Show_status -> Note op
+  -- TODO: partial/hacked support for some z5 ops
 
-  Op.Scan_table _ _ _ target _label -> do
-    Note op
-    res <- LitV 0 -- TODO!
+  Op.Check_arg_count arg label -> do -- TODO: frame must contain num-actuals
+    v <- evalArg arg
+    Debug ("Check_arg_count",arg,v,label)
+
+  Op.Scan_table arg1 arg2 arg3 target label -> do --TODO
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    v3 <- evalArg arg3
+    Note (op,"-->",v1,v2,v3,target,label)
+    res <- LitV 0
     setTarget target res
+
+  -- TODO: screen support. WIP
+
+  Op.Set_cursor arg1 arg2 -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    Note (op,"-->",v1,v2)
+
+  Op.Set_text_style arg -> do
+    evalArg arg >>= setTextStyle
+
+  Op.Set_window arg1 -> do
+    v1 <- evalArg arg1
+    Note (op,"-->",v1)
+
+  Op.Split_window arg1 -> do
+    v1 <- evalArg arg1
+    Note (op,"-->",v1)
+
+
+setTextStyle :: Value p -> Eff p ()
+setTextStyle v = do
+  -- This might not be quite right. It will turn off styles whose bit is not set.
+  -- when perhaps this should only happen in the case of 0 turning all off.
+  sequence_ [ Isolate (changeOneStyle style pos) | (style,pos) <- supported ]
+  where
+    supported = [ (Reverse,1), (Bold,2), (Italic,3), (Fixed,4) ]
+    changeOneStyle style pos = do
+      lo <- LoByte v
+      pos <- LitB pos
+      bool <- lo `TestBit` pos >>= If
+      TextStyle (style,bool)
 
 
 doCall :: Phase p => Addr p -> Addr p -> [Arg] -> Eff p ()
