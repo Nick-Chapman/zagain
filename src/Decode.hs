@@ -98,8 +98,16 @@ decode zv op = case op of
   Code 178 [] -> Op.Print <$> ztext
   Code 179 [] -> Op.Print_ret <$> ztext
   Code 180 [] -> pure Op.Nop
-  Code 181 [] -> Op.Save <$> label -- changes in Z4/Z5
-  Code 182 [] -> Op.Restore <$> label -- changes in Z4/Z5
+  Code 181 []
+    | zv<Z4 -> Op.Save <$> label
+    | zv==Z4 -> bad op -- changes to target from Z4
+    | zv>Z4 -> bad op -- illegal from Z5
+
+  Code 182 []
+    | zv<Z4 -> Op.Restore <$> label
+    | zv==Z4 -> bad op -- changes to target from Z4
+    | zv>Z4 -> bad op -- illegal from Z5
+
   Code 183 [] -> pure Op.Restart
   Code 184 [] -> pure Op.Ret_popped
   Code 185 [] -> pure Op.Pop -- changes in Z5/Z6
@@ -159,7 +167,7 @@ decode zv op = case op of
 
 decodeExtended :: Zversion -> OpCodeAndArgs -> Fetch Operation
 decodeExtended _zv = \case
-  Code 9 [] -> Op.Save_undo <$> label
+  Code 9 [] -> Op.Save_undo <$> target
   op -> bad op
 
 

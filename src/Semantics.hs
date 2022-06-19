@@ -53,6 +53,8 @@ eval mode here op = case op of
   Op.Aread arg1 arg2 target-> do
     Debug (arg1,arg2,target,"(ignore target), delegate-->Sread")
     eval mode here (Op.Sread arg1 arg2)
+    --LitV 13 >>= setTarget target -- TODO: hmm
+    pure ()
 
   Op.Call func args target -> do
     routine <- evalFunc func
@@ -389,17 +391,30 @@ eval mode here op = case op of
   Op.Pop -> Note op
   Op.Read_char{} -> Note op
   Op.Restore{} -> Note op
-  Op.Save_undo{} -> Note op
+
+  Op.Save_undo target -> do
+    --Note (here,op,"-->",target)
+    LitV (-1) >>= setTarget target
+
   Op.Save{} -> Note op
   Op.Show_status -> Note op
-  Op.Tokenize{} -> Note op
+
+  Op.Tokenize arg1 arg2 -> do
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    Note (here,op,"-->",v1,v2)
+
   Op.Verify{} -> Note op
 
   -- TODO: partial/hacked support for some z5 ops
 
-  Op.Check_arg_count arg label -> do -- TODO: frame must contain num-actuals
+  Op.Check_arg_count arg label -> do
     v <- evalArg arg
-    Debug ("Check_arg_count",arg,v,label)
+    n <- GetNumActuals >>= Widen
+    res <- GreaterThanEqual n v >>= If
+    Debug ("Check_arg_count",arg,label,"-->",n,v,res)
+    branchMaybe label res
+    pure ()
 
   Op.Scan_table arg1 arg2 arg3 target label -> do --TODO
     v1 <- evalArg arg1
@@ -448,9 +463,10 @@ setTextStyle v = do
 doCall :: Phase p => Addr p -> Addr p -> [Arg] -> Eff p ()
 doCall here routine args = do
   actuals <- mapM evalArg args
-  PushFrame here
-  setActuals actuals
   numActuals <- LitB $ fromIntegral (length actuals)
+  PushFrame here numActuals
+  --Debug("PushFrame",numActuals)
+  setActuals actuals
   TraceRoutineCall routine -- for dynamic discovery
   SetControl AtRoutineHeader { routine, numActuals }
 

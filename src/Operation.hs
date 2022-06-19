@@ -81,7 +81,8 @@ data Operation
   | Rfalse
   | Rtrue
   | Save Label
-  | Save_undo Label
+--  | Save_target Target -- TODO: Z4
+  | Save_undo Target
   | Scan_table Arg Arg Arg Target Label
   | Set_attr Arg Arg
   | Set_colour Arg Arg
@@ -199,7 +200,7 @@ opArgs = \case
   Rfalse -> do []
   Rtrue -> do []
   Save _label -> do []
-  Save_undo _label -> do []
+  Save_undo _target -> do []
   Scan_table arg1 arg2 arg3 _target _label -> do [arg1,arg2,arg3]
   Set_attr arg1 arg2 -> do [arg1,arg2]
   Set_colour arg1 arg2 -> do [arg1,arg2]
@@ -285,7 +286,7 @@ opTargetOpt = \case
   Rfalse -> do Nothing
   Rtrue -> do Nothing
   Save _label -> do Nothing
-  Save_undo _label -> do Nothing
+  Save_undo target -> do Just target
   Scan_table _arg1 _arg2 _arg3 target _label -> do Just target
   Set_attr _arg1 _arg2 -> do Nothing
   Set_colour _arg1 _arg2 -> do Nothing
@@ -321,7 +322,6 @@ opLabels = \case
   Restore label -> do [label]
   Scan_table _arg1 _arg2 _arg3 _target label -> do [label]
   Save label -> do [label]
-  Save_undo label -> do [label]
   Test _arg1 _arg2 label -> do [label]
   Test_attr _arg1 _arg2 label -> do [label]
   Verify label -> do [label]

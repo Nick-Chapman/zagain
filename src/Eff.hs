@@ -69,8 +69,10 @@ data Eff p x where
   SetControl :: Control p -> Eff p ()
 
   MakeRoutineFrame :: Int -> Eff p ()
-  PushFrame :: Addr p -> Eff p ()
+  PushFrame :: Addr p -> Byte p -> Eff p ()
   PopFrame :: Eff p (Addr p)
+
+  GetNumActuals :: Eff p (Byte p)
 
   GetLocal :: Byte p -> Eff p (Value p)
   SetLocal :: Byte p -> Value p -> Eff p ()

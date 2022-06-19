@@ -101,12 +101,13 @@ runEffect screenWidth seed story smallStep = do
 
       MakeRoutineFrame{} -> k s () -- nothing to do in interpreter
 
-      PushFrame addr -> do
-        let State{stack,locals,frames,callstack} = s
-        k s { frames = Frame { stack, locals } : frames
+      PushFrame addr numActuals' -> do
+        let State{stack,locals,frames,callstack,numActuals} = s
+        k s { frames = Frame { stack, locals, numActuals } : frames
             , stack = []
             , locals = Map.empty
             , callstack = addr : callstack
+            , numActuals = numActuals'
             } ()
 
       PopFrame -> do
@@ -118,6 +119,10 @@ runEffect screenWidth seed story smallStep = do
               [] -> error "PopFrame, callstack[]"
               addr:callstack -> do
                 k s { stack, locals, frames, callstack } addr
+
+      GetNumActuals -> do
+        let State{numActuals} = s
+        k s numActuals
 
       GetLocal n -> do
         let State{locals} = s
@@ -241,6 +246,7 @@ data State = State
   , callstack :: [Addr]
   , overrides :: Map Addr Byte
   , seed :: Word
+  , numActuals :: Byte
   }
 
 {-instance Show State where
@@ -269,7 +275,9 @@ initState screenWidth seed pcMode = do
         , frames = []
         , callstack = []
         , overrides = Map.fromList [(33,screenWidth)]
+--        , overrides = Map.fromList [(1,128),(33,83)]
         , seed
+        , numActuals = 0
         }
 
 -- pulled from wikipedia "Linear congruential generator"
@@ -283,5 +291,6 @@ stepRandom x = (x * a  + c) `mod` m
 data Frame = Frame
   { stack :: [Value]
   , locals :: Map Byte Value
+  , numActuals :: Byte
   }
   deriving Show

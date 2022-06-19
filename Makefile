@@ -7,19 +7,23 @@ judo: frotz.walk my.walk
 
 STORY = ~/z/story/judo-night.1-080706.z5
 SCRIPT = j.script
+LEN = 100000
 
 my.walk: $(exe) $(SCRIPT) Makefile src/*.hs
-	bash -c 'stack run -- $(STORY) -wrap 80 -walk <(head -20 j.script) > my.walk'
+	bash -c 'stack run -- $(STORY) -wrap 80 -walk <(head -20 j.script) | head -$(LEN) > my.walk'
 
-frotz.walk: $(SCRIPT) Makefile
-	(echo 'k'; cat $(SCRIPT)) | ~/code/other/frotz/dfrotz $(STORY) > frotz.walk
+frotz.walk: dfrotz $(SCRIPT) Makefile
+	(echo 'k'; cat $(SCRIPT)) | ~/code/other/frotz/dfrotz $(STORY) | head -$(LEN) > frotz.walk
+
+dfrotz:
+	(cd ~/code/other/frotz; make dumb)
 
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
 trace: .reg reg/zork.trace
 walk: .reg reg/zork.walk reg/h.walk
-dis: .reg reg/zork.dis reg/h.dis
+dis: .reg reg/zork.dis reg/h.dis reg/judo.dis
 code: .reg reg/zork.code reg/h.code
 
 diff:
@@ -45,6 +49,9 @@ reg/h.dis: $(exe) src/*.hs
 
 reg/h.code: $(exe) src/*.hs
 	$(exe) comp -nodebug story/hitchhiker-r59-s851108.z3 > $@
+
+reg/judo.dis: $(exe) src/*.hs
+	$(exe) dis story/judo-night.1-080706.z5 > $@
 
 .reg:
 	mkdir -p reg

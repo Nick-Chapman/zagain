@@ -15,6 +15,8 @@ runAction Conf{debug,seeTrace,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 
     loop :: Int -> [String] -> [String] -> Action -> IO ()
     loop n xs buf = \case
       TraceInstruction stateString count a op next -> do
+        --printf "%8d : %s\n" count (show a)
+        --printf "%s\n" (show a)
         when mojo $ do
           printf "%d %s\n" count stateString
         when seeTrace $ do

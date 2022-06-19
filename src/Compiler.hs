@@ -194,7 +194,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.MakeRoutineFrame n -> do
         Seq (MakeRoutineFrame n)  <$> k s ()
 
-      Eff.PushFrame addr -> do
+      Eff.PushFrame addr _numActuals-> do
         Seq PushFrame <$> if
           | eagerStack -> Seq (PushReturnAddress addr) <$> k s ()
           | otherwise -> do
@@ -210,6 +210,8 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
               Seq (PopReturnAddress name) <$> k s (Variable name)
             addr:retStack -> do
               k s { retStack } addr
+
+      Eff.GetNumActuals{} -> undefined
 
       Eff.GetLocal n -> k s (GetLocal n)
 
