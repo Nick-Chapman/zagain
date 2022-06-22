@@ -419,11 +419,9 @@ eval mode here op = case op of
 
   Op.Scan_table arg1 arg2 arg3 target label -> do --TODO
     v1 <- evalArg arg1
-    v2 <- evalArg arg2
+    v2 <- evalArg arg2 >>= Address
     v3 <- evalArg arg3
-    Note (op,"-->",v1,v2,v3,target,label)
-    res <- LitV 0
-    setTarget target res
+    scanTable v1 v2 v3 target label
 
   -- TODO: screen support. WIP
 
@@ -640,3 +638,23 @@ setDyn dyn v = case dyn of
   DGlobal b -> do
     a <- globalAddr b
     setWord a v
+
+
+scanTable :: Phase p => Value p -> Addr p -> Value p -> Target -> Label -> Eff p ()
+scanTable x table len target label = do
+  IsZero len >>= If >>= \case
+    True -> do
+      res <- LitV 0
+      setTarget target res
+      branchMaybe label False
+    False -> do
+      w <- getWord table
+      Equal x w >>= If >>= \case
+        True -> do
+          res <- DeAddress table
+          setTarget target res
+          branchMaybe label True
+        False -> do
+          table <- LitV 2 >>= Offset table
+          len <- LitV 1 >>= Sub len
+          scanTable x table len target label
