@@ -9,6 +9,7 @@ data Conf = Conf
   { debug :: Bool
   , seeTrace :: Bool
   , mojo :: Bool
+  , frotz :: Bool
   , showInput :: Bool
   , bufferOutput :: Bool
   , wrapSpec :: Maybe Int

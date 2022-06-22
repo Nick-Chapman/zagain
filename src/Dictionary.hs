@@ -5,11 +5,12 @@ module Dictionary (Dict(..),fetchDict) where
 import Decode (ztext)
 import Fetch (Fetch(..))
 import Header (Header(..))
-import Numbers (Byte,Addr,Value,makeHiLo)
+import Numbers (Byte,Addr,Value,makeHiLo,Zversion)
 import qualified Data.Char as Char (chr)
 
 data Dict = Dict
-  { base :: Addr
+  { zv :: Zversion
+  , base :: Addr
   , seps :: String
   , entryLength :: Int
   , numEntries :: Int
@@ -19,7 +20,7 @@ data Dict = Dict
 
 fetchDict :: Fetch Dict
 fetchDict = do
-  Header{dictionary=base} <- StoryHeader
+  Header{zv,dictionary=base} <- StoryHeader
   WithPC base $ do
     n <- fromIntegral <$> NextByte
     bs <- sequence $ take n (repeat NextByte)
@@ -30,7 +31,7 @@ fetchDict = do
                       | i <- [1::Int .. numEntries]
                       , let a :: Addr = base + fromIntegral (n + 4 + entryLength * (i-1))
                       ]
-    pure $ Dict {base,seps,entryLength,numEntries,strings}
+    pure $ Dict {zv,base,seps,entryLength,numEntries,strings}
 
 fetchWord :: Fetch Value
 fetchWord = do

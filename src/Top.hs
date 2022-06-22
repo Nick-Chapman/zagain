@@ -48,6 +48,7 @@ config0 = Config
     { debug = True
     , seeTrace = False
     , mojo = False
+    , frotz = False
     , showInput = True
     , bufferOutput = True
     , wrapSpec = Nothing
@@ -66,6 +67,7 @@ parseCommandLine = loop config0
       "-viacomp":more -> loop c { viaCompiler = True } more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
+      "-frotz":more -> loop c { iconf = iconf { frotz = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
       "-noinp":more -> loop c { iconf = iconf { showInput = False }} more
       "-wrap":i:more -> loop c { iconf = iconf { wrapSpec = Just (read i) }} more

@@ -394,7 +394,7 @@ eval mode here op = case op of
 
   Op.Save_undo target -> do
     --Note (here,op,"-->",target)
-    LitV (-1) >>= setTarget target
+    LitV (-1) >>= setTarget target -- means feature is not supported
 
   Op.Save{} -> Note op
   Op.Show_status -> Note op
@@ -403,6 +403,7 @@ eval mode here op = case op of
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     Note (here,op,"-->",v1,v2)
+    --eval mode here (Op.Sread arg1 arg2) -- TODO: Tokenize -> Sread
 
   Op.Verify{} -> Note op
 

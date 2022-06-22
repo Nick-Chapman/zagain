@@ -1,0 +1,351 @@
+
+
+
+
+
+
+"Sorry, in a rush love... just make sure tea's ready when I get back from horse riding... bye!"
+
+Flipping heck! You were just on you way out to Friday night judo. You love Friday night judo. But now you'd better not leave until you get the tea sorted, or else there'll be trouble at mill.
+
+Judo Night
+An Interactive Fiction by Nick Chapman
+Release 1 / Serial number 080706 / Inform 7 build 5T18 (I6/v6.31 lib 6/12N) 
+
+kitchen
+The kitchen is a room you are quite unfamiliar with. She indoors (who seems to be outdoors more and more these days) does things in here. You see some domestic items: Small stove; small worktop; small larder. The back door is to the south. North leads through to the rest of the house.
+
+On the worktop are a piece of paper and a box of matches (closed).
+
+On the stove is a cooking pot (in which is a quantity of cold water).
+
+>                                                                                                                                                                                                                                                               kitchen0/1[1]i
+
+
+You are carrying:
+  some car keys
+
+>                                                                                                                                                                                                                                                               kitchen0/2[2]read paper
+
+
+TODO: (1) Soup for tea (2) Judo.
+
+>                                                                                                                                                                                                                                                               kitchen0/3[3]x pot
+
+
+A small cast iron cooking pot.
+
+>                                                                                                                                                                                                                                                               kitchen0/4[4]x water
+
+
+Looking closer you can see that it is stock not water.
+
+>                                                                                                                                                                                                                                                               kitchen0/5[5]x larder
+
+
+Normally a good place to find some food, except you ate all of it. Well, nearly all of it...
+
+>                                                                                                                                                                                                                                                               kitchen0/6[6]search larder
+
+
+In the larder is a carrot.
+
+>                                                                                                                                                                                                                                                               kitchen0/7[7]take carrot
+
+
+Taken.
+
+>                                                                                                                                                                                                                                                               kitchen0/8[8]put carrot in pot
+
+
+You put the carrot into the cooking pot.
+
+>                                                                                                                                                                                                                                                               kitchen0/9[9]switch on gas
+
+
+You switch the knob on.
+
+>                                                                                                                                                                                                                                                               kitchen0/10[10]z
+
+
+Time passes.
+
+>                                                                                                                                                                                                                                                               kitchen0/11[11]z
+
+
+Time passes.
+
+>                                                                                                                                                                                                                                                               kitchen0/12[12]z
+
+
+Time passes.
+
+There is a smell of gas here.
+
+>                                                                                                                                                                                                                                                               kitchen0/13[13]z
+
+
+Time passes.
+
+There is a smell of gas here.
+
+>                                                                                                                                                                                                                                                               kitchen0/14[14]z
+
+
+Time passes.
+
+There is a strong smell of gas here.
+
+>                                                                                                                                                                                                                                                               kitchen0/15[15]switch off gas
+
+
+You switch the knob off.
+
+There is a strong smell of gas here.
+
+>                                                                                                                                                                                                                                                               kitchen0/16[16]open door
+
+
+You open the back door.
+
+There is a smell of gas here.
+
+>                                                                                                                                                                                                                                                               kitchen0/17[17]n
+
+
+
+dining room
+A pleasingly square room with a large window on the east wall, and an old-fashioned wardrobe standing against the west wall. The front room is to the north and the kitchen to the south. Makes this room a bit of a walkway requiring frequent hoovering. So she indoors says anyway.
+
+You can see a reclaimed-wood table here.
+
+>                                                                                                                                                                                                                                                               dining room0/18[18]open wardrobe
+
+
+You open the old-fashioned wardrobe, revealing a judo gi and a orange belt.
+
+>                                                                                                                                                                                                                                                               dining room0/19[19]take gi and belt
+
+
+judo gi: Taken.
+orange belt: Taken.
+
+>                                                                                                                                                                                                                                                               dining room0/20[20]wear gi
+
+
+As you slip on the gi you feel something hard in the pocket. You had forgotten the gi even had a pocket!
+
+>                                                                                                                                                                                                                                                               dining room0/21[21]look in pocket
+
+
+In the pocket is a candle stub.
+
+>                                                                                                                                                                                                                                                               dining room0/22[22]n
+
+
+
+front room
+This is your favorite room of the house: Comfy sofa, open fireplace, nice bottle of wine... but you digress. That was last night. Tonight it's Friday night judo... if you can manage to get the tea on. To the north is the front door. The rest of the house is south.
+
+You can see a wine bottle (empty) and a sofa here.
+
+>                                                                                                                                                                                                                                                               front room0/23[23]x bottle
+
+
+Was all drunk last night.
+
+>                                                                                                                                                                                                                                                               front room0/24[24]x sofa
+
+
+Oh, so comfy.
+
+>                                                                                                                                                                                                                                                               front room0/25[25]x fireplace
+
+
+Still slightly warm from the night before. The fireplace is your favorite part of your favorite room. There's nothing quite like a proper open fire.
+
+>                                                                                                                                                                                                                                                               front room0/26[26]search fireplace
+
+
+In the fireplace is a smouldering ember (alight).
+
+>                                                                                                                                                                                                                                                               front room0/27[27]take stub
+
+
+Taken.
+
+>                                                                                                                                                                                                                                                               front room0/28[28]light candle from ember
+
+
+The candle stub is now alight.
+
+>                                                                                                                                                                                                                                                               front room0/29[29]open door
+
+
+You open the front door.
+
+>                                                                                                                                                                                                                                                               front room0/30[30]n
+
+
+You better hadn't go out until you've got the tea sorted.
+
+>                                                                                                                                                                                                                                                               front room0/31[31]s
+
+
+
+dining room
+You can see a reclaimed-wood table here.
+
+>                                                                                                                                                                                                                                                               dining room0/32[32]s
+
+
+
+kitchen
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which are a carrot and a quantity of cold stock).
+
+>                                                                                                                                                                                                                                                               kitchen0/33[33]turn on gas
+
+
+You switch the knob on.
+
+>                                                                                                                                                                                                                                                               kitchen0/34[34]light gas from stub
+
+
+The stove is now alight.
+
+>                                                                                                                                                                                                                                                               kitchen0/35[35]l
+
+
+kitchen
+The kitchen is a room you are quite unfamiliar with. She indoors (who seems to be outdoors more and more these days) does things in here. You see some domestic items: Small stove; small worktop; small larder. The back door is to the south. North leads through to the rest of the house.
+
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which are a carrot and a quantity of tepid stock).
+
+>                                                                                                                                                                                                                                                               kitchen0/36[36]l
+
+
+kitchen
+The kitchen is a room you are quite unfamiliar with. She indoors (who seems to be outdoors more and more these days) does things in here. You see some domestic items: Small stove; small worktop; small larder. The back door is to the south. North leads through to the rest of the house.
+
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which are a carrot and a quantity of warm stock).
+
+>                                                                                                                                                                                                                                                               kitchen0/37[37]l
+
+
+kitchen
+The kitchen is a room you are quite unfamiliar with. She indoors (who seems to be outdoors more and more these days) does things in here. You see some domestic items: Small stove; small worktop; small larder. The back door is to the south. North leads through to the rest of the house.
+
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which are a carrot and a quantity of hot stock).
+
+>                                                                                                                                                                                                                                                               kitchen0/38[38]l
+
+
+kitchen
+The kitchen is a room you are quite unfamiliar with. She indoors (who seems to be outdoors more and more these days) does things in here. You see some domestic items: Small stove; small worktop; small larder. The back door is to the south. North leads through to the rest of the house.
+
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which are a carrot and a quantity of boiling stock).
+
+>                                                                                                                                                                                                                                                               kitchen0/39[39]l
+
+
+kitchen
+The kitchen is a room you are quite unfamiliar with. She indoors (who seems to be outdoors more and more these days) does things in here. You see some domestic items: Small stove; small worktop; small larder. The back door is to the south. North leads through to the rest of the house.
+
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which are a carrot and a quantity of boiling stock).
+
+>                                                                                                                                                                                                                                                               kitchen0/40[40]l
+
+
+kitchen
+The kitchen is a room you are quite unfamiliar with. She indoors (who seems to be outdoors more and more these days) does things in here. You see some domestic items: Small stove; small worktop; small larder. The back door is to the south. North leads through to the rest of the house.
+
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which is carrot soup).
+
+>                                                                                                                                                                                                                                                               kitchen0/41[41]n
+
+
+
+dining room
+You can see a reclaimed-wood table here.
+
+>                                                                                                                                                                                                                                                               dining room0/42[42]n
+
+
+
+front room
+You can see a wine bottle (empty) and a sofa here.
+
+The candle stub burns out.
+
+>                                                                                                                                                                                                                                                               front room0/43[43]n
+
+
+Err, haven't you forgotten something?
+
+>                                                                                                                                                                                                                                                               front room0/44[44]n
+
+
+Kitchen safety?...
+
+>                                                                                                                                                                                                                                                               front room0/45[45]s
+
+
+
+dining room
+You can see a reclaimed-wood table here.
+
+>                                                                                                                                                                                                                                                               dining room0/46[46]s
+
+
+
+kitchen
+On the worktop are a todo list and a box of matches (closed).
+
+On the stove is a cooking pot (in which is carrot soup).
+
+>                                                                                                                                                                                                                                                               kitchen0/47[47]switch off stove
+
+
+You switch the knob off.
+
+>                                                                                                                                                                                                                                                               kitchen0/48[48]n
+
+
+
+dining room
+You can see a reclaimed-wood table here.
+
+>                                                                                                                                                                                                                                                               dining room0/49[49]n
+
+
+
+front room
+You can see a wine bottle (empty) and a sofa here.
+
+>                                                                                                                                                                                                                                                               front room0/50[50]n
+
+
+
+
+    *** At last you're off to Friday night judo. Hurrah! ***
+
+
+In that game you scored 0 out of a possible 0, in 50 turns.
+
+
+Would you like to RESTART, RESTORE a saved game or QUIT?
+>                                                                                                                                                                                                                                                                finish0/50

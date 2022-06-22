@@ -139,12 +139,13 @@ runEffect screenWidth seed story smallStep = do
               case Map.lookup a overrides of
                 Just b -> (True,b)
                 Nothing -> (False,readStoryByte (oob "GetByte") story a)
-        --A.Debug (show ("GetByte",a,"->",b)) $
+        --A.Debug (printf "GET: %s --> %s" (show a) (show b)) $
         k s b
 
       SetByte a b -> do
         if isStaticAddress a then error (show ("SetByte, staticAddress",a)) else do
           let State{overrides} = s
+          --A.Debug (printf "SET: %s --> %s" (show b) (show a)) $
           k s { overrides = Map.insert a b overrides } ()
 
       PushStack v -> do
@@ -274,8 +275,10 @@ initState screenWidth seed pcMode = do
         , locals = Map.empty
         , frames = []
         , callstack = []
-        , overrides = Map.fromList [(33,screenWidth)]
---        , overrides = Map.fromList [(1,128),(33,83)]
+        , overrides = Map.fromList
+          [ (0x21,screenWidth)
+          -- , (0x32,1),(0x33,1) -- standard interpreter 1.1 -- TODO: investigate why causes judo text to be garbled.
+          ]
         , seed
         , numActuals = 0
         }

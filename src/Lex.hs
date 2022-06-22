@@ -6,7 +6,7 @@ import Data.List (intercalate)
 import Data.List.Extra (lower)
 import Data.List.Split (splitOn)
 import Dictionary (Dict(..))
-import Numbers (Byte,Addr)
+import Numbers (Byte,Addr,Zversion(..))
 
 tokenize :: String -> (Byte,[(Byte,String)],String)
 tokenize str = do
@@ -28,8 +28,10 @@ tokenize str = do
 
 lookupInDict :: Dict -> String -> Addr
 lookupInDict dict word = do
-  let Dict{base,seps,entryLength,strings} = dict
-  let key = lower (take 6 word)
+  let Dict{zv,base,seps,entryLength,strings} = dict
+  --let n = if zv <= Z3 then 6 else 6 -- THE BUG
+  let n = if zv <= Z3 then 6 else 9 -- bugfix for "open wardrobe" failing in judo
+  let key = lower (take n word)
   case [ i | (i,s) <- zip [1..] strings, s == key ] of
     [] -> 0
     xs@(_:_:_) -> error (show ("multi dict match!",word,xs))

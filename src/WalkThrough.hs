@@ -8,15 +8,15 @@ import Text.Printf (printf)
 import TextDisplay(lineWrap)
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{debug,seeTrace,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 xs []
+runAction Conf{debug,seeTrace,frotz,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 xs []
   where
     wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
 
     loop :: Int -> [String] -> [String] -> Action -> IO ()
     loop n xs buf = \case
       TraceInstruction stateString count a op next -> do
-        --printf "%8d : %s\n" count (show a)
-        --printf "%s\n" (show a)
+        when frotz $ do
+          printf "%8d : %s\n" count (show a)
         when mojo $ do
           printf "%d %s\n" count stateString
         when seeTrace $ do

@@ -168,6 +168,7 @@ decode zv op = case op of
 decodeExtended :: Zversion -> OpCodeAndArgs -> Fetch Operation
 decodeExtended _zv = \case
   Code 9 [] -> Op.Save_undo <$> target
+  --Code 9 [] -> do _ <- NextByte; Op.Save_undo <$> target -- TODO: match frotz bug?
   op -> bad op
 
 
