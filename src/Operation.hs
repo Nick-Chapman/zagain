@@ -90,6 +90,7 @@ data Operation
   | Set_text_style Arg
   | Set_window Arg
   | Show_status
+  | Sound_effect1 Arg
   | Sound_effect Arg Arg Arg
   | Split_window Arg
   | Sread Arg Arg
@@ -208,6 +209,7 @@ opArgs = \case
   Set_text_style arg -> do [arg]
   Set_window arg -> do [arg]
   Show_status -> do []
+  Sound_effect1 arg -> do [arg]
   Sound_effect arg1 arg2 arg3 -> do [arg1,arg2,arg3]
   Split_window arg -> do [arg]
   Sread arg1 arg2 -> do [arg1,arg2]
@@ -294,6 +296,7 @@ opTargetOpt = \case
   Set_text_style _arg -> do Nothing
   Set_window _arg -> do Nothing
   Show_status-> do Nothing
+  Sound_effect1 _arg -> do Nothing
   Sound_effect _arg1 _arg2 _arg3 -> do Nothing
   Split_window _arg -> do Nothing
   Sread _arg1 _arg2 -> do Nothing

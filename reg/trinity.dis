@@ -11,7 +11,7 @@ Memory Map:
 262065 End of story file
 --------------------------------------
 Found 19 routines by walkthrough
-Found 1842 routines by speculative disassembly
+Found 1843 routines by speculative disassembly
 1 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=38844
@@ -4930,7 +4930,32 @@ gap=3
 083666 Print "n"
 083669 Print_ret ".]"
 --------------------------------------------------
-gap=162
+gap=2
+083676 RoutineHeader [1,1]
+083681 Add (Var (Global 154)) (Var (Local 1)) (Global 154)
+083685 Je [Var (Global 68),Con 2] (Branch T Dtrue)
+083689 Jz (Var (Local 2)) (Branch T (Dloc 083693))
+083692 New_line
+083693 Set_text_style (Con 2)
+083696 Print "[Your score just went up by "
+083715 Print_num (Var (Local 1))
+083718 Print " point"
+083723 Je [Var (Local 1),Con 1] (Branch T (Dloc 083730))
+083727 Print "s"
+083730 Print_paddr (Var (Global 22))
+083732 Print "total is now "
+083741 Print_num (Var (Global 154))
+083744 Print " out of 100.]"
+083757 Set_text_style (Con 0)
+083760 New_line
+083761 Set_text_style (Con 0)
+083764 Sound_effect1 (Con 1)
+083767 Jz (Var (Global 68)) (Branch F Dtrue)
+083770 Store (Con 84) (Con 1)
+083773 New_line
+083774 Print_ret "[NOTE: You can turn score notification on or off at any time with the NOTIFY command.]"
+--------------------------------------------------
+gap=1
 083836 RoutineHeader []
 083837 Call (Floc 068936) [] Sp
 083841 Jz (Var Sp) (Branch T (Dloc 083846))
