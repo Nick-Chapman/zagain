@@ -1,0 +1,327 @@
+
+
+                                                                                                                                                                                                                                                               
+Copyright (C)1986 Infocom, Inc. All rights reserved.
+
+[Press any key to begin.]
+                                                                                                                                                                                                                                                               
+Sharp words between the superpowers. Tanks in East Berlin. And now, reports the BBC, rumors of a satellite blackout. It's enough to spoil your continental breakfast.
+
+But the world will have to wait. This is the last day of your $599 London Getaway Package, and you're determined to soak up as much of that authentic English ambience as you can. So you've left the tour bus behind, ditched the camera and escaped to Hyde Park for a contemplative stroll through the Kensington Gardens.
+
+Palace Gate
+
+A tide of perambulators surges north along the crowded Broad Walk. Shaded glades stretch away to the northeast, and a hint of color marks the western edge of the Flower Walk.
+Palace GatePalace Gate
+>[1]go east
+
+
+The east wind makes it difficult to walk straight.
+
+Flower Walk
+
+Gaily colored flower beds line the walks bending north and west, filling the air with a gentle fragrance. A little path leads northwest, between the trees.
+
+You can see a soccer ball half-hidden among the blossoms.
+
+The spires of the Albert Memorial are all too visible to the south. Passing tourists hoot with laughter at the dreadful sight; nannies hide their faces and roll quickly away.
+Flower WalkFlower Walk
+>[2]take ball
+
+
+You take the soccer ball off the flower beds.
+
+[Your score just went up by 1 point. The total is now 1 out of 100.]
+
+[NOTE: You can turn score notification on or off at any time with the NOTIFY command.]
+
+>[3]nw
+
+
+The Wabe
+
+This grassy clearing is only twenty feet across, and perfectly circular. Paths wander off in many directions through the surrounding thicket.
+
+A shaft of golden sunlight falls across a handsome antique sundial, erected at the exact center of the clearing.
+The WabeThe Wabe
+>[4]examine sundial
+
+
+The perimeter of the sundial is inscribed with seven curious symbols and a compass rose, with the legend "TEMPUS EDAX RERUM" emblazoned across the bottom. A triangular gnomon casts a fingerlike shadow that is creeping slowly towards the first symbol.
+                                           "And 'the wabe' is the grass-plot round    a sun-dial, I suppose?" said Alice,       surprised at her own ingenuity.                                                    "Of course it is. It's called 'wabe,'      you know, because it goes a long way      before it, and a long way behind it --"                                                                    -- Lewis Carroll                                           
+["And 'the wabe' is the grass-plot round 
+  a sun-dial, I suppose?" said Alice,    
+  surprised at her own ingenuity.        
+
+ "Of course it is. It's called 'wabe,'   
+  you know, because it goes a long way   
+  before it, and a long way behind it --"
+
+                         -- Lewis Carroll]
+
+
+>[5]examine gnomon
+
+
+It's a triangular piece of metal, about a quarter-inch thick and four inches long, screwed into the center of the sundial.
+
+>[6]unscrew gnomon and take it
+
+
+You can feel the gnomon getting more and more wobbly as you unscrew it. A final twist, and it falls with a clatter onto the face of the sundial.
+
+You take the gnomon off the sundial.
+
+[Your score just went up by 5 points. The total is now 6 out of 100.]
+
+>[7]ne
+
+
+Lancaster Walk
+
+An impressive sculpture of a horse and rider dominates this bustling intersection. The Walk continues north and south; lesser paths curve off in many directions.
+
+A broad field of grass, meticulously manicured, extends to the east. Beyond it you can see the Long Water glittering between the trees.
+
+A printed notice is stuck into the grass.
+Lancaster WalkLancaster Walk
+>[8]n
+
+
+Lancaster Gate
+
+A crooked old tree shades the perambulators as they roll south down the Lancaster Walk. Shady paths lead west along an iron fence, and southwest between the trees.
+
+There's an old woman under the tree, struggling to open an umbrella. The stiff east wind isn't making it easy for her.
+Lancaster GateLancaster Gate
+>[9]z
+
+
+Time passes.
+
+A strong gust of wind snatches the umbrella out of the old woman's hands and sweeps it into the branches of the tree.
+
+The woman circles the tree a few times, gazing helplessly upward. That umbrella obviously means a lot to her, for a wistful tear is running down her cheek. But nobody except you seems to notice her loss.
+
+After a few moments, the old woman dries her eyes, gives the tree a vicious little kick and shuffles away down the Lancaster Walk.
+
+>[10]throw ball at the umbrella
+
+
+The soccer ball lodges itself in the tree beside the umbrella.
+
+The umbrella teeters uncertainly for a moment, then tumbles out of the tree and lands at your feet.
+
+>[11]take umbrella
+
+
+As you pick up the umbrella and smooth the wrinkles, you notice a touristy slogan printed around the outside: "All prams lead to the Kensington Gardens."
+
+[Your score just went up by 5 points. The total is now 11 out of 100.]
+
+>[12]w
+
+
+Inverness Terrace
+
+Crowded walkways lead east and west along an iron fence. Narrow paths wander south into the Gardens.
+
+A young boy sits nearby, listening to a pair of headphones and idly blowing soap bubbles. There's a dish full of soapy water by his side.
+
+The boy dips the bubble wand in the dish and swishes it around.
+Inverness TerraceInverness Terrace
+>[13]w
+
+
+Black Lion Gate
+
+Nannies and tourists hurry through the Lancaster Gate to join the perambulators rolling south down the Broad Walk. Less crowded paths wind east along an iron fence, and southeast between the trees.
+
+A careless nanny has left her perambulator unattended.
+Black Lion GateBlack Lion Gate
+>[14]open pram
+
+
+You open the perambulator.
+
+>[15]push pram south
+
+
+Broad Walk
+
+A brooding statue of Queen Victoria faces east, where the waters of the Round Pond sparkle in the afternoon sun. Your eyes follow the crowded Broad Walk north and south until its borders are lost amid the bustle of perambulators. Small paths curve northeast and southeast, between the trees.
+
+The perambulator rolls to a stop.
+
+A cloud of pigeons fills the air! They circle overhead and congregate around a nearby bench, where an aged woman is selling bags of crumbs.
+
+"Feed the birds! Thirty p!" Her voice quavers with heartbreak.
+Broad WalkBroad Walk
+>[16]give coin too woman
+
+
+[The word "too" isn't in the vocabulary that you can use.]
+
+>[17]give coin to woman
+
+
+[taking the seven-sided coin out of your pocket first]
+
+"Bless yer," coos the bird woman, taking your money with a practiced snatch. "Twenty p's the change." She holds out a bag of crumbs and a small coin for you.
+
+[Your score just went up by 1 point. The total is now 12 out of 100.]
+
+"Take yer bag and change, guv'ner!"
+
+>[18]take bag and change
+
+
+The bag of crumbs: Taken.
+The small coin: Taken.
+
+>[19]put coin in pocket
+
+
+You put the small coin in your pocket.
+
+>[20]feed pigeons
+
+
+[with the bag of crumbs]
+
+You take a handful of crumbs out of the bag. They fall between your fingers and tumble across the ground.
+
+As the wild birds gobble down the crumbs, a glint of red catches your eye. Frowning, you stoop down for a closer look... and gasp with astonishment!
+
+The ruby at your feet is bigger than a walnut, with finely cut facets that sparkle with crimson fire. It must have been in the bag of crumbs.
+
+>[21]take ruby
+
+
+As you reach down to touch the ruby, a very large bird races out from behind a tree. It snatches away the ruby with its beak, zigzags through a group of tourists and disappears to the east. If you didn't know better, you'd swear that bird was a roadrunner.
+
+"It's time!" shrieks the bird woman.
+
+The east wind softens to a whisper and dies away.
+
+Blowing leaves settle to the ground, and the trees are still. Then a fresh gust blows in from the west.
+
+>[22]push pram east
+
+
+"Thirty p! Thirty p a bag!" cries the bird woman.
+
+Round Pond
+
+Ducks and swans bob on the sparkling surface of the Round Pond. They share the water with an impressive fleet of toy boats, directed by the excited shouts of children.
+
+Crowded paths radiate from the Pond in many directions.
+
+The perambulator rolls to a stop.
+
+The large bird you saw before is here! You catch a glimpse of the ruby in its beak as it races between the wheels of a perambulator and disappears to the east.
+Round PondRound Pond
+>[23]examine boats
+
+
+The toy boats are crafted of paper and sticks. They bob freely among the wild birds, who can barely conceal their outrage.
+
+One of the toy boats on the Round Pond catches your eye. The west wind blows it closer, and you realize that the white sails are actually wings. It's a folded paper bird, floating just within reach.
+
+>[24]take paper bird and unfold it
+
+
+You lean over the edge of the Round Pond, and pluck the paper bird out of the water.
+
+[Your score just went up by 3 points. The total is now 15 out of 100.]
+
+You gently unfold the paper bird to its full size.
+
+>[25]examine paper
+
+
+The words "Long Water, Four O'Clock" are scrawled on the piece of paper.
+
+>[26]look at watch
+
+
+Your wristwatch says it's 3:36:15 pm.
+
+>[27]push pram east
+
+
+Lancaster Walk
+
+A printed notice is stuck into the grass.
+
+The perambulator rolls to a stop.
+
+The large bird you saw before is here! You catch a glimpse of the ruby in its beak as it dodges a startled nanny and disappears to the east.
+Lancaster WalkLancaster Walk
+>[28]get in pram
+
+
+With great difficulty, and much to the amusement of passersby, you jam yourself into the unfortunate perambulator.
+Lancaster Walk, in the perambulatorLancaster Walk, in the perambulator
+>[29]open umbrella
+
+
+The west wind fills the umbrella the moment you open it. You and your perambulator are blown helplessly eastward onto the grass.
+
+You zoom down a long slope, barely missing several trees and boulders. Peering over the top of the perambulator, you see the Long Water coming closer and closer. Unable to stop, and too stupid to let go of the umbrella, you bravely close your eyes and pinch your nose shut.
+
+Crash!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Long Water
+
+You're on a shady path that winds along the western shore of the Long Water. Looking south, you can see the graceful arch of a bridge, and beyond it the cool expanse of the river Serpentine.
+
+A charming statue stands nearby.
+
+You see a gnomon, a bag of crumbs, a piece of paper and a broken perambulator here.
+
+Painfully, you regain your footing and snap the umbrella shut.
+Long WaterLong Water
+>[30]get all
+
+
+The gnomon: Taken.
+The bag of crumbs: Taken.
+The piece of paper: Taken.
+The broken perambulator: The broken perambulator topples over on its side again. It's quite useless.
+
+The west wind is still. Everything is very quiet.
+
+>[31]look at watch
+
+
+Your wristwatch says it's 3:59:45 pm.
+
+(That's odd. The "seconds" display has stopped working.)
+
+A gleam overhead catches your eye.
+
+Oh, dear. A missile is hanging motionless in the sky.
+
+>
