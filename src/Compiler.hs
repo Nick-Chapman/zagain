@@ -264,7 +264,11 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
-      Eff.While{} -> undefined
+      Eff.While test _step init -> do -- TODO: use _step
+        name <- genId "whileVar"
+        compileK s (test (Variable name)) $ \s test -> do -- TODO: not right
+          Seq (Let (Bind name init)) <$>
+            While (test) <$> k s (Variable name)
 
       Eff.Isolate eff -> do
         flushStateK s $ \s -> do
@@ -496,6 +500,10 @@ data Prog :: Jumpiness -> * where
   If :: Expression Bool -> Prog j -> Prog j -> Prog j
   ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Prog 'WontJump -> Prog j -> Prog j
   ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Prog 'WontJump -> Prog j -> Prog j
+  While :: (--Identifier Value
+           Expression Bool
+           --, Expression Value
+           ) -> Prog j -> Prog j
 
 pretty :: Int -> Prog j -> [String]
 pretty i = \case
@@ -526,6 +534,13 @@ pretty i = \case
     , [tab i "} else {"]
     , pretty (i+2) s2 ++ [tab i "}"]
     ]
+  While (test) following -> concat
+    [ [tab i "while (" ++ show (test) ++ ") {"]
+--    , pretty (i+2) undefined
+    , [tab i "}"]
+    ]
+    ++ pretty i following
+
   ForeachB (index,elem) xs body following -> concat
     [ [tab i ("ForeachB: " ++ show (index,elem) ++ " in (" ++ show xs ++ ") {")]
     , pretty (i+2) body
