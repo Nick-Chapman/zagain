@@ -6,17 +6,17 @@ dev: niz.walk my.walk
 	git diff --no-index niz.walk my.walk
 
 STORY = ~/z/story/trinity.12-860926.z4
-SCRIPT = trinity.script
+SCRIPT = trinity.script.long
 LEN = 100000
 
 
-my.walk: $(exe) $(SCRIPT) Makefile src/*.hs
+my.walk: $(exe) $(SCRIPT).me Makefile src/*.hs
 	stack build
-	bash -c '($(exe) $(STORY) -niz -walk $(SCRIPT) -nodebug | head -$(LEN) > my.walk 2>&1) || true'
+	bash -c '($(exe) $(STORY) -walk $(SCRIPT).me -nodebug | head -$(LEN) > my.walk 2>&1) || true'
 
 
 niz.walk: $(SCRIPT) Makefile
-	cat $(SCRIPT) | niz -trace -no-line-wrap -hide-unimplemented $(STORY) | sed 's/  *(/ (/g' | sed 's/  *"/ "/g'| head -$(LEN) > niz.walk
+	cat $(SCRIPT) | niz -no-line-wrap -hide-unimplemented $(STORY) | sed 's/  *(/ (/g' | sed 's/  *"/ "/g'| head -$(LEN) > niz.walk
 
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
