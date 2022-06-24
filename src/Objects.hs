@@ -126,18 +126,26 @@ unlink mode this = do
       False -> do
         case mode of
           Compiling -> Error "unlink/loop"
-          Interpreting -> loop child
-      where
-        loop x = do
-          b <- IsZero x >>= If
-          if b then error "unlink loop, failed to find unlinkee" else do
-            sib <- getFM Sibling x
-            b <- Equal sib this >>= If
-            case b of
-              False -> loop sib -- TODO: infinite effect
-              True -> do
-                thisSib <- getFM Sibling this
-                setFM Sibling x thisSib
+          Interpreting -> do
+            x <- while
+              (\x -> not <$> do sib <- getFM Sibling x; Equal sib this >>= If)
+              (\x -> getFM Sibling x)
+              child
+
+            thisSib <- getFM Sibling this
+            setFM Sibling x thisSib
+
+while
+  :: Phase p
+  => (Value p -> Eff p Bool)
+  -> (Value p -> Eff p (Value p))
+  -> Value p
+  -> Eff p (Value p)
+while test step x =
+  test x >>= \case
+    False -> pure x
+    True -> step x >>= while test step
+
 
 --[properties]--------------------------------------------------------
 
