@@ -79,7 +79,7 @@ data Operation
   | Put_prop Arg Arg Arg
   | Quit
   | Random Arg Target
-  | Read_char Target
+  | Read_char Arg Target -- arg will always be 1
   | Remove_obj Arg
   | Restart
   | Restore Label
@@ -210,7 +210,7 @@ opArgs = \case
   Put_prop arg1 arg2 arg3 -> do [arg1,arg2,arg3]
   Quit -> do []
   Random arg _target -> do [arg]
-  Read_char _target -> do []
+  Read_char arg _target -> do [arg]
   Remove_obj arg -> do [arg]
   Restart -> do []
   Restore _label -> do []
@@ -297,7 +297,7 @@ opTargetOpt = \case
   Put_prop _arg1 _arg2 _arg3 -> do Nothing
   Quit -> do Nothing
   Random _arg target -> do Just target
-  Read_char target -> do Just target
+  Read_char _arg target -> do Just target
   Remove_obj _arg -> do Nothing
   Restart -> do Nothing
   Restore _label -> do Nothing

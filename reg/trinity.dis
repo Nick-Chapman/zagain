@@ -11,8 +11,8 @@ Memory Map:
 262065 End of story file
 --------------------------------------
 Found 19 routines by walkthrough
-Found 1843 routines by speculative disassembly
-1 routines lost (in walkthrough but not disassembly)
+Found 1838 routines by speculative disassembly
+0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=38844
 038844 RoutineHeader []
@@ -275,14 +275,11 @@ gap=3
 065063 New_line
 065064 Print "[Press any key to begin.]"
 065087 New_line
-065088 Read_char (Local 1)
-065091 Je [Con 176,Con 0] (Branch F Dfalse)
-065096 Je [Con 0,Con 0] (Branch T (Dloc 067210))
-065101 Inc (Con 1)
-065103 Jump 065099
+065088 Read_char (Con 1) (Local 1)
+065092 Rtrue
 --------------------------------------------------
-gap=-10 **OVERLAP**
-**LOST**065096 RoutineHeader [0]
+gap=3
+065096 RoutineHeader [0]
 065099 Call (Floc 065108) [] (Local 1)
 065103 Jump 065099
 --------------------------------------------------
@@ -8998,8 +8995,21 @@ gap=0
 098596 Call (Floc 167164) [] Sp
 098600 Rtrue
 --------------------------------------------------
-gap=49
-098650 RoutineHeader []
+gap=3
+098604 RoutineHeader [0]
+098607 Erase_window (Con -1)
+098611 Split_window (Con 13)
+098614 Set_window (Con 1)
+098617 Buffer_mode (Con 0)
+098620 Sub (Var (Global 162)) (Con 21) Sp
+098624 Set_cursor (Con 11) (Var Sp)
+098628 Set_text_style (Con 2)
+098631 Print_paddr (Var (Global 70))
+098633 Set_text_style (Con 0)
+098636 Set_window (Con 0)
+098639 Read_char (Con 1) (Local 1)
+098643 Erase_window (Con -1)
+098647 Call (Floc 066016) [] Sp
 098651 Call (Floc 088980) [] Sp
 098655 Rtrue
 --------------------------------------------------
@@ -23691,33 +23701,120 @@ gap=3
 184782 Print_obj (Var (Global 109))
 184784 Print_ret " makes you uneasy. It's as if your eyes can't decide whether it's really there or not."
 --------------------------------------------------
-gap=129
-184962 RoutineHeader [10272]
--- unused: [1]
-184965 Inc_chk (Var (Global 167)) (Var (Global 27)) (Branch F (Dloc 188378))
-184970 And (Con 128) (Var (Global 149)) (Global 51)
-184974 Print_paddr (Con 363)
+gap=3
+184836 RoutineHeader [0,0]
+184841 Call (Floc 146332) [] Sp
+184845 Jz (Var Sp) (Branch F Dfalse)
+184848 Insert_obj (Con 376) (Con 248)
+184853 Call (Floc 097428) [Con 24939,Con -1] Sp
+184862 Put_prop (Con 376) (Con 44) (Con -18720)
+184869 Store (Con 124) (Con 0)
+184872 Store (Con 132) (Con 0)
+184875 Call (Floc 097364) [Con 25180] Sp
+184882 Call (Floc 097364) [Con 24885] Sp
+184889 Call (Floc 097364) [Con 24795] Sp
+184896 Call (Floc 097428) [Con 25497,Con -1] Sp
+184905 Call (Floc 097428) [Con 26121,Con -1] Sp
+184914 Call (Floc 097428) [Con 26856,Con -1] Sp
+184923 Call (Floc 097428) [Con 26892,Con -1] Sp
+184932 Call (Floc 097428) [Con 31774,Con -1] Sp
+184941 Jg (Var (Global 125)) (Con 1) (Branch F (Dloc 184953))
+184945 Print "As y"
+184950 Jump 184956
+184953 Print "Y"
+184956 Print "ou wade to the threshold "
+184973 Jg (Var (Global 125)) (Con 1) (Branch F (Dloc 185018))
 184977 Print "a familiar "
 184986 Print_obj (Con 376)
 184989 Print " flutters past"
 185000 Call (Floc 150364) [] Sp
 185004 Print " as it slips through "
 185015 Jump 185021
---------------------------------------------------
-gap=170
-185188 RoutineHeader []
+185018 Print "of "
+185021 Call (Floc 066356) [Con 415] Sp
+185028 Print_paddr (Var (Global 66))
+185030 Print "All color abruptly drains from the landscape. Trees, sky and sun flatten into a spherical shell, with you at the very center. A hissing in your ears becomes a rumble, then a roar as the walls of the shell collapse inward, faster and faster"
+185173 Print_paddr (Var (Global 66))
+185175 Loadb (Con 0) (Con 30) Sp
+185179 Je [Var Sp,Con 5] (Branch F (Dloc 185195))
+185183 Inc (Con 1)
+185185 Call (Floc 071388) [] Sp
 185189 Set_text_style (Con 4)
 185192 Jump 185198
---------------------------------------------------
-gap=159
-185354 RoutineHeader [18610]
--- unused: [1]
-185357 Print_addr (Con 37)
+185195 Print "\""
+185198 Print "This way, please."
+185209 Call (Floc 185616) [Var (Local 1)] Sp
+185215 New_line
+185216 Jz (Var (Local 1)) (Branch F (Dloc 185225))
+185219 Print "\""
+185222 Jump 185232
+185225 Call (Floc 071388) [] Sp
+185229 Set_text_style (Con 4)
+185232 Print "This way,"
+185239 Set_text_style (Con 0)
+185242 Jz (Var (Local 1)) (Branch F (Dloc 185251))
+185245 Print "\""
+185248 Jump 185255
+185251 Call (Floc 071388) [] Sp
+185255 Print " the voice urges. "
+185268 Jz (Var (Local 1)) (Branch F (Dloc 185277))
+185271 Print "\""
+185274 Jump 185284
+185277 Call (Floc 071388) [] Sp
+185281 Set_text_style (Con 4)
+185284 Print "Be quick."
+185293 Set_text_style (Con 0)
+185296 Jz (Var (Local 1)) (Branch F (Dloc 185305))
+185299 Print "\""
+185302 Jump 185309
+185305 Call (Floc 071388) [] Sp
+185309 Call (Floc 185652) [] Sp
+185313 Print "\"No!\" your mind shudders. \"That's not a "
+185344 Print_obj (Con 86)
+185346 Print "!\""
+185351 New_line
+185352 New_line
+185353 Jz (Var (Local 1)) (Branch F (Dloc 185362))
+185356 Print "\""
 185359 Jump 185369
---------------------------------------------------
-gap=172
-185534 RoutineHeader [-4801,-1]
--- unused: [1,2]
+185362 Call (Floc 071388) [] Sp
+185366 Set_text_style (Con 4)
+185369 Print "It's a perfectly legitimate "
+185388 Print_obj (Con 86)
+185390 Print ","
+185393 Set_text_style (Con 0)
+185396 Jz (Var (Local 1)) (Branch F (Dloc 185405))
+185399 Print "\""
+185402 Jump 185409
+185405 Call (Floc 071388) [] Sp
+185409 Print " retorts the voice with cold amusement. "
+185434 Jz (Var (Local 1)) (Branch F (Dloc 185443))
+185437 Print "\""
+185440 Jump 185450
+185443 Call (Floc 071388) [] Sp
+185447 Set_text_style (Con 4)
+185450 Print "Now come along."
+185463 Set_text_style (Con 0)
+185466 Jz (Var (Local 1)) (Branch F (Dloc 185475))
+185469 Print "\""
+185472 Jump 185479
+185475 Call (Floc 071388) [] Sp
+185479 Call (Floc 069824) [] Sp
+185483 Erase_window (Con -1)
+185487 Split_window (Con 14)
+185490 Set_window (Con 1)
+185493 Buffer_mode (Con 0)
+185496 Set_cursor (Con 10) (Con 25)
+185500 Call (Floc 251132) [] Sp
+185504 Set_cursor (Con 12) (Con 29)
+185508 Call (Floc 084116) [] Sp
+185512 Set_cursor (Con 13) (Con 15)
+185516 Call (Floc 084140) [] Sp
+185520 Set_cursor (Con 14) (Con 21)
+185524 Call (Floc 084188) [] Sp
+185528 Set_window (Con 0)
+185531 Read_char (Con 1) (Local 2)
+185535 Erase_window (Con -1)
 185539 Call (Floc 066016) [] Sp
 185543 New_line
 185544 Print "You step out of the "
@@ -36730,22 +36827,71 @@ gap=3
 250484 RoutineHeader []
 250485 Print_ret "[Screen too narrow.]"
 --------------------------------------------------
-gap=4
-250508 RoutineHeader []
-250509 Je [Con 0,Var (Global 50)] (Branch F (Dloc 250591))
-250514 Test (Var (Global 120)) (Con 244) (Branch T (Dloc 257941))
+gap=0
+250504 RoutineHeader [0]
+250507 Loadb (Con 0) (Con 33) Sp
+250511 Jl (Var Sp) (Con 79) (Branch F (Dloc 250520))
+250515 Call (Floc 250484) [] Sp
 250519 Rtrue
---------------------------------------------------
-gap=276
-250796 RoutineHeader []
-250797 Jump 275003
---------------------------------------------------
-gap=202
-251002 RoutineHeader []
-251003 Jump 275220
---------------------------------------------------
-gap=118
-251124 RoutineHeader []
+250520 Erase_window (Con -1)
+250524 Split_window (Con 23)
+250527 Set_window (Con 1)
+250530 Buffer_mode (Con 0)
+250533 Set_cursor (Con 2) (Con 25)
+250537 Call (Floc 251132) [] Sp
+250541 Set_text_style (Con 0)
+250544 Set_cursor (Con 3) (Con 32)
+250548 Print "by Brian Moriarty"
+250563 Set_cursor (Con 5) (Con 37)
+250567 Print "Testing"
+250574 Set_cursor (Con 6) (Con 4)
+250578 Print "Gary Brennan    Amy Briggs    Suzanne Frank    Max Buxton    Liz Cyr-Jones"
+250637 Set_cursor (Con 8) (Con 13)
+250641 Print "Packaging"
+250650 Set_cursor (Con 8) (Con 33)
+250654 Print "Project Manager"
+250667 Set_cursor (Con 8) (Con 58)
+250671 Print "Copywriter"
+250680 Set_cursor (Con 9) (Con 10)
+250684 Print "Carl Genatossio"
+250697 Set_cursor (Con 9) (Con 35)
+250701 Print "Jon Palace"
+250710 Set_cursor (Con 9) (Con 55)
+250714 Print "Elizabeth Langosy"
+250729 Set_cursor (Con 11) (Con 12)
+250733 Print "Illustrator"
+250742 Set_cursor (Con 11) (Con 35)
+250746 Print "Photography"
+250755 Set_cursor (Con 11) (Con 58)
+250759 Print "Inner Cover"
+250770 Set_cursor (Con 12) (Con 11)
+250774 Print "Richard Howell"
+250787 Set_cursor (Con 12) (Con 35)
+250791 Print "Steve Grohe"
+250802 Set_cursor (Con 12) (Con 56)
+250806 Print "Charles Freeman"
+250819 Set_cursor (Con 14) (Con 14)
+250823 Print "Sundial"
+250830 Set_cursor (Con 14) (Con 35)
+250834 Print "Map & Crane"
+250847 Set_cursor (Con 14) (Con 53)
+250851 Print "Production Coordinator"
+250868 Set_cursor (Con 15) (Con 9)
+250872 Print "Geoff Hodgkinson       Meredith Lightbown        Angela Raup"
+250915 Set_cursor (Con 17) (Con 28)
+250919 Print "Microcomputer Interpreters"
+250940 Set_cursor (Con 18) (Con 19)
+250944 Print "Duncan Blanchard    Ed Black    Linde Simpson"
+250979 Set_cursor (Con 19) (Con 12)
+250983 Print "Andy Kaluzniacki    Paul Gross    Mike Morton    Richard Lay"
+251030 Set_cursor (Con 21) (Con 18)
+251034 Print "Interactive Fiction Plus(TM) Development System"
+251073 Set_cursor (Con 22) (Con 21)
+251077 Print "Marc Blank    Dave Lebling    Stu Galley"
+251110 Set_window (Con 0)
+251113 Read_char (Con 1) (Local 1)
+251117 Erase_window (Con -1)
+251121 Call (Floc 066016) [] Sp
 251125 Call (Floc 088980) [] Sp
 251129 Rtrue
 --------------------------------------------------

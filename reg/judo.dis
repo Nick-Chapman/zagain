@@ -97,9 +97,11 @@ gap=2
 024732 Jump 024719
 024735 Rtrue
 --------------------------------------------------
-gap=10
-024746 RoutineHeader [0,0]
--- unused: [1]
+gap=0
+024736 RoutineHeader [0,0]
+024737 Jz (Var (Local 1)) (Branch T (Dloc 024743))
+024740 Set_window (Var (Local 1))
+024743 Read_char (Con 1) (Local 2)
 024747 Ret (Var (Local 2))
 --------------------------------------------------
 gap=15
