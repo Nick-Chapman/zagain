@@ -384,8 +384,10 @@ eval mode here op = case op of
     res <- Objects.testAttr v1 v2
     branchMaybe label res
 
-  Op.Nop -> undefined
-  Op.Not{} -> undefined -- TODO: judo
+  Op.Nop -> Note (here,op)
+  Op.Not arg target -> do
+    v <- evalArg arg
+    Note (here,op,":",v,"-->",target)
 
   Op.Buffer_mode{} -> Note op
   Op.Erase_window{} -> Note op
@@ -432,7 +434,9 @@ eval mode here op = case op of
   -- TODO: screen support. WIP
 
   Op.Set_colour arg1 arg2 -> do
-    undefined arg1 arg2 -- TODO: judo
+    v1 <- evalArg arg1
+    v2 <- evalArg arg2
+    Note (op,"-->",v1,v2)
 
   Op.Set_cursor arg1 arg2 -> do
     v1 <- evalArg arg1

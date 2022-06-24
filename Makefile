@@ -24,7 +24,7 @@ exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 trace: .reg reg/zork.trace
 walk: .reg reg/zork.walk reg/h.walk reg/judo.walk reg/trinity.walk
 dis: .reg reg/zork.dis reg/h.dis reg/judo.dis reg/trinity.dis
-code: .reg reg/zork.code reg/h.code reg/trinity.code
+code: .reg reg/zork.code reg/h.code reg/judo.code reg/trinity.code
 
 diff:
 	git diff reg
@@ -55,6 +55,9 @@ reg/judo.dis: $(exe) src/*.hs
 
 reg/judo.walk: $(exe) h.script src/*.hs
 	$(exe) -nodebug story/judo-night.1-080706.z5 -walk j.script.long > $@
+
+reg/judo.code: $(exe) src/*.hs
+	$(exe) code -nodebug story/judo-night.1-080706.z5 > $@
 
 reg/trinity.dis: $(exe) src/*.hs
 	$(exe) dis story/trinity.12-860926.z4 > $@

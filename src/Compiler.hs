@@ -211,7 +211,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             addr:retStack -> do
               k s { retStack } addr
 
-      Eff.GetNumActuals{} -> undefined
+      Eff.GetNumActuals -> k s NumActuals
 
       Eff.GetLocal n -> k s (GetLocal n)
 
