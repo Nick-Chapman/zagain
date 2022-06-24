@@ -17,6 +17,7 @@ module Operation
   ) where
 
 import Data.List (intercalate)
+import Data.List.Extra (replace)
 import Numbers (Byte,Addr,Value)
 
 niz :: Bool
@@ -353,7 +354,7 @@ showOp = if niz then showOpForNiz else show
 
 showOpForNiz :: Operation -> String
 showOpForNiz op = -- TODO: map string for ops which are named differently in niz
-  brac (show op)
+  rename (brac (show op))
   where
     brac s = if needBracket then "(" ++ s ++ ")" else s
 
@@ -363,3 +364,20 @@ showOpForNiz op = -- TODO: map string for ops which are named differently in niz
       New_line -> False
       Ret_popped -> False
       _ -> True
+
+    rename = compose (map sed mapping)
+
+    compose = foldl (.) id
+
+    mapping =
+      [ ("Loadb", "Load_byte")
+      , ("Loadw", "Load_word")
+      , ("Dec_chk", "Dec_check")
+      , ("Inc_chk", "Inc_check")
+      , ("(Ret", "(Return")
+      , (" T ", " true ")
+      , (" F ", " false ")
+      , ("And", "And_")
+      ]
+
+    sed (a,b) s = replace a b s
