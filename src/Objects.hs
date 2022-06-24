@@ -127,24 +127,13 @@ unlink mode this = do
         case mode of
           Compiling -> Error "unlink/loop"
           Interpreting -> do
-            x <- while
+            x <- While
               (\x -> not <$> do sib <- getFM Sibling x; Equal sib this >>= If)
               (\x -> getFM Sibling x)
               child
 
             thisSib <- getFM Sibling this
             setFM Sibling x thisSib
-
-while
-  :: Phase p
-  => (Value p -> Eff p Bool)
-  -> (Value p -> Eff p (Value p))
-  -> Value p
-  -> Eff p (Value p)
-while test step x =
-  test x >>= \case
-    False -> pure x
-    True -> step x >>= while test step
 
 
 --[properties]--------------------------------------------------------

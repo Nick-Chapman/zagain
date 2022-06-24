@@ -264,6 +264,8 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
+      Eff.While{} -> undefined
+
       Eff.Isolate eff -> do
         flushStateK s $ \s -> do
           first <- compile0 s eff

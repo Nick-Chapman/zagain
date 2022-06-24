@@ -86,6 +86,12 @@ data Eff p x where
   If :: Pred p -> Eff p Bool
   Isolate :: Eff p () -> Eff p ()
 
+  While ::
+    (Value p -> Eff p Bool) ->
+    (Value p -> Eff p (Value p)) ->
+    Value p ->
+    Eff p (Value p)
+
   ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
 
