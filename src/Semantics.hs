@@ -7,7 +7,7 @@ import Eff (Eff(..),Phase(..),Mode,Control(..),StatusInfo(..))
 import Header (Header(..))
 import Numbers (Zversion(..),Style(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
-import Operation (Operation,RoutineHeader,Func(..),Arg(..),Target(..),Label(..),Dest(..))
+import Operation (Operation,RoutineHeader,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..))
 import Text.Printf (printf)
 import qualified Objects
 import qualified Operation as Op
@@ -56,12 +56,12 @@ eval mode here op = case op of
     --LitV 13 >>= setTarget target -- TODO: hmm
     pure ()
 
-  Op.Call func args target -> do
+  Op.Call func (Args args) target -> do
     routine <- evalFunc func
     p <- IsZeroAddress routine >>= If
     if p then LitV 0 >>= setTarget target else do doCall here routine args
 
-  Op.CallN func args -> do
+  Op.CallN func (Args args) -> do
     routine <- evalFunc func
     p <- IsZeroAddress routine >>= If
     if p then pure () else do doCall here routine args
@@ -154,9 +154,9 @@ eval mode here op = case op of
     v2 <- evalArg arg2
     Objects.insertObj mode v1 v2
 
-  Op.Je [] _ -> error "Je/[]"
-  Op.Je [_] _ -> error "Je/[_]"
-  Op.Je (arg1:arg2:args) label -> do
+  Op.Je (Args []) _ -> error "Je/[]"
+  Op.Je (Args [_]) _ -> error "Je/[_]"
+  Op.Je (Args (arg1:arg2:args)) label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     vs <- mapM evalArg args

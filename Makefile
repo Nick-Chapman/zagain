@@ -1,6 +1,24 @@
 
 top: trace walk dis code diff
 
+
+dev: niz.walk my.walk
+	git diff --no-index niz.walk my.walk
+
+STORY = ~/z/story/trinity.12-860926.z4
+SCRIPT = t.script
+LEN = 100000
+
+
+my.walk: $(exe) $(SCRIPT) Makefile src/*.hs
+	stack build
+	bash -c '($(exe) $(STORY) -walk $(SCRIPT) -nodebug | head -$(LEN) > my.walk 2>&1) || true'
+
+
+niz.walk: $(SCRIPT) Makefile
+	cat $(SCRIPT) | niz -no-line-wrap -hide-unimplemented $(STORY) | sed 's/  *(/ (/g' | sed 's/  *"/ "/g'| head -$(LEN) > niz.walk
+
+
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
 trace: .reg reg/zork.trace

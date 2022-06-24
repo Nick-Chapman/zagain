@@ -3,6 +3,7 @@
 module Operation
   ( Operation(..)
   , Func(..)
+  , Args(..)
   , Arg(..)
   , Target(..)
   , Label(..)
@@ -12,23 +13,28 @@ module Operation
   , opLocals
   , opTargets
   , opLabels
+  , showOp
   ) where
 
+import Data.List (intercalate)
 import Numbers (Byte,Addr,Value)
+
+niz :: Bool
+niz = False
 
 data Operation
   = BadOperation String
 
   | Add Arg Arg Target
-  | And Arg Arg Target
+  | And Arg Arg Target -- And_ in niz
   | Aread Arg Arg Target
   | Buffer_mode Arg
-  | Call Func [Arg] Target
-  | CallN Func [Arg]
+  | Call Func Args Target
+  | CallN Func Args
   | Check_arg_count Arg Label
   | Clear_attr Arg Arg
   | Dec Arg
-  | Dec_chk Arg Arg Label
+  | Dec_chk Arg Arg Label -- Dec_check in niz
   | Div Arg Arg Target
   | Erase_window Arg
   | Get_child Arg Target Label
@@ -39,18 +45,18 @@ data Operation
   | Get_prop_len Arg Target
   | Get_sibling Arg Target Label
   | Inc Arg
-  | Inc_chk Arg Arg Label
+  | Inc_chk Arg Arg Label -- Inc_check in niz
   | Input_stream Arg
   | Insert_obj Arg Arg
-  | Je [Arg] Label
+  | Je Args Label
   | Jg Arg Arg Label
   | Jin Arg Arg Label
   | Jl Arg Arg Label
   | Jump Addr
   | Jz Arg Label
   | Load Arg Target
-  | Loadb Arg Arg Target
-  | Loadw Arg Arg Target
+  | Loadb Arg Arg Target -- Load_byte in niz
+  | Loadw Arg Arg Target -- Load_word in niz
   | Mod Arg Arg Target
   | Mul Arg Arg Target
   | New_line
@@ -76,7 +82,7 @@ data Operation
   | Remove_obj Arg
   | Restart
   | Restore Label
-  | Ret Arg
+  | Ret Arg -- Return in niz
   | Ret_popped
   | Rfalse
   | Rtrue
@@ -108,6 +114,16 @@ data Operation
 data Func = Floc Addr | Fvar Target | BadFunc
   deriving Show
 
+newtype Args = Args [Arg]
+
+instance Show Args where
+  show (Args xs) = if niz then showArgsForNiz xs else show xs
+    where
+      showArgsForNiz :: [Arg] -> String
+      showArgsForNiz xs =
+        "(" ++ intercalate " " (map seeArg xs) ++ ")"
+        where seeArg x = "(" ++ show x ++ ")"
+
 data Arg = Con Value | Var Target
   deriving Show
 
@@ -122,6 +138,7 @@ data Dest = Dfalse | Dtrue | Dloc Addr
 
 data Sense = T | F
   deriving Show
+--instance Show Sense where show = \case T -> "true"; F -> "false"
 
 data RoutineHeader = BadRoutineHeader | RoutineHeader [Value]
   deriving Show
@@ -143,8 +160,8 @@ opArgs = \case
   And arg1 arg2 _target -> do [arg1,arg2]
   Aread arg1 arg2 _target -> do [arg1,arg2]
   Buffer_mode arg -> do [arg]
-  Call _func args _target -> do args
-  CallN _func args -> do args
+  Call _func (Args args) _target -> do args
+  CallN _func (Args args) -> do args
   Check_arg_count arg _label -> do [arg]
   Clear_attr arg1 arg2 -> do [arg1,arg2]
   Dec arg -> do [arg]
@@ -162,7 +179,7 @@ opArgs = \case
   Inc_chk arg1 arg2 _label -> do [arg1,arg2]
   Input_stream arg -> do [arg]
   Insert_obj arg1 arg2 -> do [arg1,arg2]
-  Je args _label -> do args
+  Je (Args args) _label -> do args
   Jg arg1 arg2 _label -> do [arg1,arg2]
   Jin arg1 arg2 _label -> do [arg1,arg2]
   Jl arg1 arg2 _label -> do [arg1,arg2]
@@ -329,3 +346,20 @@ opLabels = \case
   Test_attr _arg1 _arg2 label -> do [label]
   Verify label -> do [label]
   _ -> do []
+
+
+showOp :: Operation -> String
+showOp = if niz then showOpForNiz else show
+
+showOpForNiz :: Operation -> String
+showOpForNiz op = -- TODO: map string for ops which are named differently in niz
+  brac (show op)
+  where
+    brac s = if needBracket then "(" ++ s ++ ")" else s
+
+    needBracket = case op of
+      Rtrue -> False
+      Rfalse -> False
+      New_line -> False
+      Ret_popped -> False
+      _ -> True

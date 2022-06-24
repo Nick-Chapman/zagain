@@ -4,11 +4,12 @@ module WalkThrough (runAction) where
 
 import Action (Conf(..),Action(..))
 import Control.Monad (when)
+import Operation (showOp)
 import Text.Printf (printf)
-import TextDisplay(lineWrap)
+import TextDisplay (lineWrap)
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{debug,seeTrace,frotz,mojo,showInput,bufferOutput,wrapSpec} xs = loop 0 1 xs []
+runAction Conf{debug,seeTrace,niz,frotz,mojo,showInput,bufferOutput,wrapSpec} xs = loop 0 1 xs []
   where
     indenting = False
 
@@ -19,6 +20,8 @@ runAction Conf{debug,seeTrace,frotz,mojo,showInput,bufferOutput,wrapSpec} xs = l
       Tab next -> loop (i+1) n xs buf next
       UnTab next -> loop (i-1) n xs buf next
       TraceInstruction stateString count a op next -> do
+        when niz $ do
+          tab $ printf "(Decode %d %s %s)\n" count (show a) (showOp op)
         when frotz $ do
           tab $ printf "%8d : %s\n" count (show a)
         when mojo $ do

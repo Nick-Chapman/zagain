@@ -8,6 +8,7 @@ import Operation (Operation)
 data Conf = Conf
   { debug :: Bool
   , seeTrace :: Bool
+  , niz :: Bool
   , mojo :: Bool
   , frotz :: Bool
   , showInput :: Bool

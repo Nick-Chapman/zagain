@@ -10,9 +10,12 @@ module Numbers
 
 import Data.Bits (Bits)
 import Data.Int (Int16)
-import Data.Word (Word8)
+import Data.Word (Word8,Word16)
 import GHC.Ix (Ix)
 import Text.Printf (printf)
+
+niz :: Bool
+niz = False
 
 data Zversion = Z1 | Z2 | Z3 | Z4 | Z5 | Z6
   deriving (Eq,Ord,Show)
@@ -21,7 +24,6 @@ newtype Byte = EightBits Word8
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits)
 
 instance Show Byte where
-  --show (EightBits w8) = printf "0x%02x" w8
   show (EightBits w8) = printf "%i" w8
 
 newtype Addr = StoryIndex Word
@@ -43,13 +45,14 @@ asUnsigned v = if
   | otherwise -> fromIntegral v
 
 instance Show Addr where
-  --show (StoryIndex i) = printf "[%05x]" i
+  show (StoryIndex i) | niz = printf "%05i" i
   show (StoryIndex i) = printf "%06i" i
 
 newtype Value = Value Int16 -- 16 bit signed values used for z-machine computations
   deriving (Ord,Eq,Integral,Real,Enum,Num,Bits,Ix)
 
 instance Show Value where
+  show (Value x) | niz = show (fromIntegral x :: Word16)
   show (Value x) = show x
 
 makeHiLo :: Byte -> Byte -> Value

@@ -47,6 +47,8 @@ config0 = Config
   iconf0 = Action.Conf
     { debug = True
     , seeTrace = False
+    -- niz/mojo/frotz show trace in style to match alternative interpreters
+    , niz = False
     , mojo = False
     , frotz = False
     , showInput = True
@@ -66,6 +68,7 @@ parseCommandLine = loop config0
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
       "-viacomp":more -> loop c { viaCompiler = True } more
       "-trace":more -> loop c { iconf = iconf { seeTrace = True }} more
+      "-niz":more -> loop c { iconf = iconf { niz = True }} more
       "-mojo":more -> loop c { iconf = iconf { mojo = True }} more
       "-frotz":more -> loop c { iconf = iconf { frotz = True }} more
       "-nobuf":more -> loop c { iconf = iconf { bufferOutput = False }} more
@@ -79,7 +82,7 @@ parseCommandLine = loop config0
         loop c { storyFile } more
 
 run :: Config -> IO ()
-run Config{mode,storyFile,iconf=iconf@Conf{seeTrace,wrapSpec},inputs,mayStartConsole,viaCompiler} = do
+run Config{mode,storyFile,iconf=iconf@Conf{niz,seeTrace,wrapSpec},inputs,mayStartConsole,viaCompiler} = do
   case mode of
     Dictionary -> do
       story <- loadStory storyFile
@@ -87,12 +90,19 @@ run Config{mode,storyFile,iconf=iconf@Conf{seeTrace,wrapSpec},inputs,mayStartCon
       print dict
     Run -> do
       let seed = 888
-      let screenWidth = case wrapSpec of Nothing -> 255; Just w -> fromIntegral w
+      let screenWidth =
+            case wrapSpec of
+              Nothing -> 255 -- 80 to match niz
+              Just w -> fromIntegral w
       story <- loadStory storyFile
       a <- if | not viaCompiler -> do
-                  when seeTrace $
+                  when niz $ do
+                    -- TODO: remove this hack and actually show info from the header
+                    putStrLn "[release/serial: 12/860926, z-version: .z4}"
+                  when seeTrace $ do
                     putStrLn "[release/serial: 88/840726, z-version: .z3}"
-                  printf "\n\n"
+                  when (not niz) $
+                    printf "\n\n"
                   let eff = Semantics.smallStep Eff.Interpreting
                   let _ = print (Story.header story)
                   pure $ Interpreter.runEffect screenWidth seed story eff

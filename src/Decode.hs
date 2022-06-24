@@ -12,7 +12,7 @@ import Data.Bits (testBit,(.&.),(.|.),shiftL,shiftR)
 import Fetch (Fetch(..))
 import Header (Header(..))
 import Numbers (Zversion(..),Byte,Addr,Value,makeWordAddress,makePackedAddress,makeHiLo)
-import Operation (Operation,Func(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
+import Operation (Operation,Func(..),Args(..),Arg(..),Target(..),Label(..),Dest(..),Sense(T,F),RoutineHeader(..))
 import Text.Printf (printf)
 import qualified Data.Char as Char
 import qualified Operation as Op
@@ -31,7 +31,7 @@ fetchOperation = do
 decode :: Zversion -> OpCodeAndArgs -> Fetch Operation
 decode zv op = case op of
 
-  Code 1 ts -> Op.Je <$> mapM arg ts <*> label
+  Code 1 ts -> Op.Je <$> args ts <*> label
   Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
   Code 3 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
   Code 4 [t1,t2] -> Op.Dec_chk <$> arg t1 <*> arg t2 <*> label
@@ -57,10 +57,10 @@ decode zv op = case op of
   Code 24 [t1,t2] -> Op.Mod <$> arg t1 <*> arg t2 <*> target
 
   Code 25 [t1,t2]
-    | zv>=Z4 -> do Op.Call <$> func zv t1 <*> mapM arg [t2] <*> target
+    | zv>=Z4 -> do Op.Call <$> func zv t1 <*> args [t2] <*> target
 
   Code 26 [t1,t2]
-    | zv>=Z5 -> do Op.CallN <$> func zv t1 <*> mapM arg [t2]
+    | zv>=Z5 -> do Op.CallN <$> func zv t1 <*> args [t2]
 
   Code 27 [t1,t2]
     | zv>=Z5 -> do Op.Set_colour <$> arg t1 <*> arg t2
@@ -80,7 +80,7 @@ decode zv op = case op of
   Code 133 [t] -> Op.Inc <$> arg t
   Code 134 [t] -> Op.Dec <$> arg t
   Code 135 [t] -> Op.Print_addr <$> arg t
-  Code 136 [t] | zv>=Z4 -> flip Op.Call [] <$> func zv t <*> target
+  Code 136 [t] | zv>=Z4 -> flip Op.Call (Args []) <$> func zv t <*> target
   Code 137 [t] -> Op.Remove_obj <$> arg t
   Code 138 [t] -> Op.Print_obj <$> arg t
   Code 139 [t] -> Op.Ret <$> arg t
@@ -88,7 +88,7 @@ decode zv op = case op of
   Code 141 [t] -> Op.Print_paddr <$> arg t
   Code 142 [t] -> Op.Load <$> arg t <*> target
 
-  Code 143 [t] | zv>=Z5 -> do flip Op.CallN [] <$> func zv t
+  Code 143 [t] | zv>=Z5 -> do flip Op.CallN (Args []) <$> func zv t
   Code 143 _ -> bad op --Z1,Z4
 
   Code n ts | 144<=n && n<=175 -> decode zv (Code (n .&. 0x8f) ts)
@@ -122,7 +122,7 @@ decode zv op = case op of
 
   Code n ts | 192<=n && n<=223 -> decode zv (Code (n .&. 0x1f) ts)
 
-  Code 224 (t1:ts) -> Op.Call <$> func zv t1 <*> mapM arg ts <*> target
+  Code 224 (t1:ts) -> Op.Call <$> func zv t1 <*> args ts <*> target
   Code 225 [t1,t2,t3] -> Op.Storew <$> arg t1 <*> arg t2 <*> arg t3
   Code 226 [t1,t2,t3] -> Op.Storeb <$> arg t1 <*> arg t2 <*> arg t3
   Code 227 [t1,t2,t3] -> Op.Put_prop <$> arg t1 <*> arg t2 <*> arg t3
@@ -140,7 +140,7 @@ decode zv op = case op of
   Code 235 [t] -> Op.Set_window <$> arg t
 
   Code 236 (t1:ts)
-    | zv>=Z5 -> do Op.Call <$> func zv t1 <*> mapM arg ts <*> target
+    | zv>=Z5 -> do Op.Call <$> func zv t1 <*> args ts <*> target
 
   Code 237 [t] | zv>=Z4 -> Op.Erase_window <$> arg t
   -- 238
@@ -158,13 +158,16 @@ decode zv op = case op of
     | zv>=Z4 -> Op.Scan_table <$> arg t1 <*> arg t2 <*> arg t3 <*> target <*> label
 
   Code 248 [t] | zv>=Z5 -> Op.Not <$> arg t <*> target
-  Code 249 (t1:ts) | zv>=Z5 -> Op.CallN <$> func zv t1 <*> mapM arg ts
-  Code 250 (t1:ts) | zv>=Z5 -> Op.CallN <$> func zv t1 <*> mapM arg ts
+  Code 249 (t1:ts) | zv>=Z5 -> Op.CallN <$> func zv t1 <*> args ts
+  Code 250 (t1:ts) | zv>=Z5 -> Op.CallN <$> func zv t1 <*> args ts
   Code 251 [t1,t2] | zv>=Z5 -> Op.Tokenize <$> arg t1 <*> arg t2
   Code 255 [t] | zv>=Z5 -> Op.Check_arg_count <$> arg t <*> label
 
   _ -> bad op
 
+
+args :: [RandType] -> Fetch Args
+args xs = Args <$> mapM arg xs
 
 decodeExtended :: Zversion -> OpCodeAndArgs -> Fetch Operation
 decodeExtended _zv = \case
