@@ -173,12 +173,8 @@ runEffect screenWidth seed story smallStep = do
 
       Isolate eff -> loop s eff k
 
-      While test step x0 -> loop s (whileEffect x0) k
-        where
-          whileEffect x = do
-            test x >>= \case
-              False -> pure x
-              True -> step x >>= whileEffect
+      Fixpoint x f -> loop s (fixpoint x) k
+        where fixpoint = f fixpoint
 
       ForeachB xs f -> do
         loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k

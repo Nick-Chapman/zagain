@@ -264,11 +264,20 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
-      Eff.While test _step init -> do -- TODO: use _step
-        name <- genId "whileVar"
-        compileK s (test (Variable name)) $ \s test -> do -- TODO: not right
-          Seq (Let (Bind name init)) <$>
-            While (test) <$> k s (Variable name)
+      Eff.Fixpoint init f -> do
+        flushStateK s $ \s -> do
+          var <- genId "loop_var"
+          label <- genLabel
+          let
+            tieback :: Expression Value -> Effect ()
+            tieback _ = do
+              Eff.Note "tieback" -- TODO: somehow: Assign var; Goto label
+          let eff :: Effect () = f tieback (Variable var)
+          let body :: Gen (Prog jumpiness) = compileK s eff k
+          Seq (Let (Bind var init)) <$> do
+            Labelled label <$> do
+              Seq (Note "fixpoint") <$> do
+                body
 
       Eff.Isolate eff -> do
         flushStateK s $ \s -> do
@@ -365,6 +374,11 @@ genId :: String -> Gen (Identifier a)
 genId tag = do
   u <- GenUnique
   pure $ Identifier tag u
+
+genLabel :: Gen Label
+genLabel = do
+  u <- GenUnique
+  pure $ Label u
 
 
 --[state]-------------------------------------------------------------
@@ -490,26 +504,37 @@ data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
 data Jumpiness = WillJump | WontJump
 
+
+newtype Label = Label Int
+  deriving Show
+
 data Prog :: Jumpiness -> * where
   Null :: Prog 'WontJump
   Quit :: Prog j
   Error :: String -> Prog j
+
+  Labelled :: Label -> Prog j -> Prog j
+  Goto :: Label -> Prog 'WillJump
+
   Jump :: Control Compile -> Prog 'WillJump
   Seq :: Atom ->  Prog j -> Prog j
   FullSeq :: Prog 'WontJump ->  Prog j -> Prog j
   If :: Expression Bool -> Prog j -> Prog j -> Prog j
   ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Prog 'WontJump -> Prog j -> Prog j
   ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Prog 'WontJump -> Prog j -> Prog j
-  While :: (--Identifier Value
-           Expression Bool
-           --, Expression Value
-           ) -> Prog j -> Prog j
 
 pretty :: Int -> Prog j -> [String]
 pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]
   Error msg -> [tab i ("Error: " ++ msg)]
+  Labelled label prog -> concat
+    [ [tab i (show label ++ ": {") ]
+    , pretty (i+2) prog
+    , [tab i "}"]
+    ]
+  Goto label ->
+    [tab i ("Goto: " ++ show label)]
   Jump Eff.AtInstruction{pc} ->
     [tab i ("Jump: " ++ show pc)]
   Jump Eff.AtRoutineHeader {routine,numActuals} ->
@@ -532,15 +557,8 @@ pretty i = \case
     [ [tab i "if (" ++ show e ++ ") {"]
     , pretty (i+2) s1
     , [tab i "} else {"]
-    , pretty (i+2) s2 ++ [tab i "}"]
+    , pretty (i+2) s2 ++ [tab i "}"] -- TODO: odd format
     ]
-  While (test) following -> concat
-    [ [tab i "while (" ++ show (test) ++ ") {"]
---    , pretty (i+2) undefined
-    , [tab i "}"]
-    ]
-    ++ pretty i following
-
   ForeachB (index,elem) xs body following -> concat
     [ [tab i ("ForeachB: " ++ show (index,elem) ++ " in (" ++ show xs ++ ") {")]
     , pretty (i+2) body
@@ -576,6 +594,7 @@ data Atom
   | Tokenize (Expression String) TokenizeIdents
   | LetRandom (Identifier Value) (Expression Value)
   | Let Bind
+  | Assign Bind
   deriving Show
 
 data Bind where

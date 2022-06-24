@@ -125,15 +125,15 @@ unlink mode this = do
         setFM Child oldP thisSib
       False -> do
         case mode of
-          Compiling -> Error "unlink/loop"
+          Compiling -> Error "unlink/loop" -- TODO: removing this is my goal!
           Interpreting -> do
-            x <- While
-              (\x -> do sib <- getFM Sibling x; Equal sib this >>= Not)
-              (\x -> getFM Sibling x)
-              child
-
-            thisSib <- getFM Sibling this
-            setFM Sibling x thisSib
+            Fixpoint child $ \loop x -> do
+              sib <- getFM Sibling x
+              Equal sib this >>= If >>= \case
+                False -> loop sib
+                True -> do
+                  thisSib <- getFM Sibling this
+                  setFM Sibling x thisSib
 
 
 --[properties]--------------------------------------------------------
