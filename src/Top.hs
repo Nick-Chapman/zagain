@@ -63,7 +63,7 @@ parseCommandLine = loop config0
       [] -> pure c
       "dict":more -> loop c { mode = Dictionary } more
       "dis":more -> loop c { mode = Disassemble } more
-      "comp":more -> loop c { mode = Compile } more
+      "code":more -> loop c { mode = Compile } more
       "-noconsole":more -> loop c { mayStartConsole = False } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
       "-viacomp":more -> loop c { viaCompiler = True } more

@@ -3,7 +3,7 @@
 module Semantics (smallStep) where
 
 --import Dictionary (Dict(..))
-import Eff (Eff(..),Phase(..),Mode,Control(..),StatusInfo(..))
+import Eff (Eff(..),Phase(..),Mode(..),Control(..),StatusInfo(..))
 import Header (Header(..))
 import Numbers (Zversion(..),Style(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
@@ -425,7 +425,9 @@ eval mode here op = case op of
     v1 <- evalArg arg1
     v2 <- evalArg arg2 >>= Address
     v3 <- evalArg arg3
-    scanTable v1 v2 v3 target label
+    case mode of
+      Interpreting -> scanTable v1 v2 v3 target label
+      Compiling -> Error "scanTable"
 
   -- TODO: screen support. WIP
 
