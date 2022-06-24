@@ -19,6 +19,7 @@ data P1 arg ret where
   IsZeroByte :: P1 Byte Bool
   LoByte :: P1 Value Byte
   LookupInDict :: Dict -> P1 String Addr
+  Not :: P1 Bool Bool
   PackedAddress :: Zversion -> P1 Value Addr
   SevenMinus :: P1 Byte Byte
   ShowNumber :: P1 Value String
@@ -41,6 +42,7 @@ evalP1 = \case
   IsZeroByte -> (== 0)
   LoByte -> \v -> fromIntegral (v .&. 0xff)
   LookupInDict dict-> Lex.lookupInDict dict
+  Not -> not
   PackedAddress zv -> makePackedAddress zv
   SevenMinus -> \v -> 7-v
   ShowNumber -> show

@@ -128,7 +128,7 @@ unlink mode this = do
           Compiling -> Error "unlink/loop"
           Interpreting -> do
             x <- While
-              (\x -> not <$> do sib <- getFM Sibling x; Equal sib this >>= If)
+              (\x -> do sib <- getFM Sibling x; Equal sib this >>= Not)
               (\x -> getFM Sibling x)
               child
 

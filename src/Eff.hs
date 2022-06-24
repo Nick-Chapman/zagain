@@ -87,7 +87,7 @@ data Eff p x where
   Isolate :: Eff p () -> Eff p ()
 
   While ::
-    (Value p -> Eff p Bool) ->
+    (Value p -> Eff p (Pred p)) ->
     (Value p -> Eff p (Value p)) ->
     Value p ->
     Eff p (Value p)
@@ -124,6 +124,7 @@ data Eff p x where
   MinusByte :: Byte p -> Byte p -> Eff p (Byte p)
   Mod :: Value p -> Value p -> Eff p (Value p)
   Mul :: Value p -> Value p -> Eff p (Value p)
+  Not :: Pred p -> Eff p (Pred p)
   Offset :: Addr p -> Value p -> Eff p (Addr p)
   Or :: Value p -> Value p -> Eff p (Value p)
   PackedAddress :: Value p -> Eff p (Addr p)

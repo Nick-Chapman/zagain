@@ -303,6 +303,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.IsZeroAddress x -> prim1 x Prim.IsZeroAddress
       Eff.IsZeroByte x -> prim1 x Prim.IsZeroByte
       Eff.LoByte x -> prim1 x Prim.LoByte
+      Eff.Not x -> prim1 x Prim.Not
       Eff.PackedAddress x -> prim1 x (Prim.PackedAddress zv)
       Eff.SevenMinus x -> prim1 x Prim.SevenMinus
       Eff.ShowNumber x -> prim1 x Prim.ShowNumber

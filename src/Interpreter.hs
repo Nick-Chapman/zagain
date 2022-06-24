@@ -201,6 +201,7 @@ runEffect screenWidth seed story smallStep = do
       IsZeroByte x -> prim1 x Prim.IsZeroByte
       LoByte x -> prim1 x Prim.LoByte
       LookupInDict x -> prim1 x (Prim.LookupInDict dict)
+      Not x -> prim1 x Prim.Not
       PackedAddress x -> prim1 x (Prim.PackedAddress zv)
       SevenMinus x -> prim1 x Prim.SevenMinus
       ShowNumber x -> prim1 x Prim.ShowNumber
