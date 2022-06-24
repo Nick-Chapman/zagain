@@ -20,7 +20,7 @@ import qualified Eff (Phase(..))
 import qualified Primitive as Prim
 import Primitive (evalP1,evalP2)
 
-data Interpret
+data Interpret -- TODO: rename DuringInterpretation
 
 instance Phase Interpret where
   type Addr Interpret = Addr
@@ -29,6 +29,7 @@ instance Phase Interpret where
   type Text Interpret = String
   type Value Interpret = Value
   type Vector Interpret a = [a]
+  type Code Interpret = Effect ()
 
 type Effect x = Eff Interpret x
 
@@ -174,7 +175,9 @@ runEffect screenWidth seed story smallStep = do
       Isolate eff -> loop s eff k
 
       Fixpoint x f -> loop s (fixpoint x) k
-        where fixpoint = f fixpoint
+        where fixpoint = f (pure . fixpoint)
+
+      Jump e -> loop s e k
 
       ForeachB xs f -> do
         loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k

@@ -20,7 +20,7 @@ import qualified Eff (Eff(..),Control(..))
 import qualified Eff (Phase(..),StatusInfo(..))
 import qualified Primitive as Prim
 
-data Compile
+data Compile -- TOOD: rename DuringCompiation ?
 
 instance Phase Compile where
   type Addr Compile = Expression Addr
@@ -29,6 +29,7 @@ instance Phase Compile where
   type Text Compile = Expression String
   type Value Compile = Expression Value
   type Vector Compile a = Expression [a]
+  type Code Compile = (Identifier Value, Expression Value, Label)
 
 type Effect a = Eff Compile a
 
@@ -146,7 +147,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
     -- compileK: compile an effect, given a continuation, to a program which may or notjump
     compileK :: forall jumpiness effectType. State -> Effect effectType -> (State -> effectType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
     compileK s e k = case e of
-      Eff.Ret x -> k s x
+      Eff.Ret x -> k s x -- TODO: avoid need for Eff.
       Eff.Bind e f -> compileK s e $ \s a -> compileK s (f a) k
 
       Eff.GamePrint mes -> do Seq (GamePrint mes) <$> k s ()
@@ -268,16 +269,15 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         flushStateK s $ \s -> do
           var <- genId "loop_var"
           label <- genLabel
-          let
-            tieback :: Expression Value -> Effect ()
-            tieback _ = do
-              Eff.Note "tieback" -- TODO: somehow: Assign var; Goto label
+          let tieback exp = do pure (var,exp,label)
           let eff :: Effect () = f tieback (Variable var)
           let body :: Gen (Prog jumpiness) = compileK s eff k
           Seq (Let (Bind var init)) <$> do
             Labelled label <$> do
-              Seq (Note "fixpoint") <$> do
-                body
+              body
+
+      Eff.Jump (var,exp,label) -> do
+        Seq (Assign (Bind var exp)) <$> pure (Goto label)
 
       Eff.Isolate eff -> do
         flushStateK s $ \s -> do
@@ -485,7 +485,7 @@ dumpCode Code{routines} = do
     | CompiledRoutine{chunks} <- routines
     ]
 
-data Code = Code
+data Code = Code -- TODO: move to sep module
   { routines :: [CompiledRoutine]
   }
 
@@ -514,7 +514,7 @@ data Prog :: Jumpiness -> * where
   Error :: String -> Prog j
 
   Labelled :: Label -> Prog j -> Prog j
-  Goto :: Label -> Prog 'WillJump
+  Goto :: Label -> Prog j -- 'WillJump -- TODO: ???
 
   Jump :: Control Compile -> Prog 'WillJump
   Seq :: Atom ->  Prog j -> Prog j

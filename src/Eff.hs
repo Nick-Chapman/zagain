@@ -26,6 +26,7 @@ class
   type Text p
   type Value p
   type Vector p a
+  type Code p
 
 data Control p
   = AtRoutineHeader { routine :: Addr p, numActuals :: Byte p }
@@ -88,8 +89,10 @@ data Eff p x where
 
   Fixpoint
     :: Value p
-    -> ((Value p -> Eff p ()) -> (Value p -> Eff p ()))
+    -> ((Value p -> Eff p (Code p)) -> (Value p -> Eff p ()))
     -> Eff p () -- TODO: generalize () to x ?
+
+  Jump :: Code p -> Eff p ()
 
   ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
