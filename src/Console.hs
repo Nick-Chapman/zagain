@@ -41,6 +41,8 @@ replay conf@Conf{debug=_debug} = loop 1
       line:rest -> inner
         where
           inner = \case
+            Tab a -> do inner a
+            UnTab a -> do inner a
             Stop{} -> do pure ()
             TraceInstruction _ _ _ _ next -> do inner next
             TraceRoutineCall _ next -> do inner next
@@ -64,6 +66,8 @@ repl Conf{debug,seeTrace,mojo,bufferOutput,wrapSpec} = loop styles0 []
     wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
     loop :: Styles -> [String] -> Action -> HL.InputT IO ()
     loop styles buf = \case
+      Tab a -> do loop styles buf a
+      UnTab a -> do loop styles buf a
       Stop{} -> do
         let text = concat (reverse buf)
         lift $ put gameCol (wrap text)

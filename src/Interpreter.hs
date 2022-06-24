@@ -101,7 +101,7 @@ runEffect screenWidth seed story smallStep = do
 
       MakeRoutineFrame{} -> k s () -- nothing to do in interpreter
 
-      PushFrame addr numActuals' -> do
+      PushFrame addr numActuals' -> A.Tab $ do
         let State{stack,locals,frames,callstack,numActuals} = s
         k s { frames = Frame { stack, locals, numActuals } : frames
             , stack = []
@@ -110,7 +110,7 @@ runEffect screenWidth seed story smallStep = do
             , numActuals = numActuals'
             } ()
 
-      PopFrame -> do
+      PopFrame -> A.UnTab $ do
         let State{frames,callstack} = s
         case frames of
           [] -> error "PopFrame, frames=[]"

@@ -121,6 +121,8 @@ collectRoutineCalls = loop
   where
     loop :: [String] -> Action -> [Addr]
     loop coms = \case
+      Tab a -> loop coms a
+      UnTab a -> loop coms a
       Stop{} ->
         case coms of
           _:_ -> error "collectRoutineCalls: inputs left over"

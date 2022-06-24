@@ -8,29 +8,33 @@ import Text.Printf (printf)
 import TextDisplay(lineWrap)
 
 runAction :: Conf -> [String] -> Action -> IO ()
-runAction Conf{debug,seeTrace,frotz,mojo,showInput,bufferOutput,wrapSpec} xs = loop 1 xs []
+runAction Conf{debug,seeTrace,frotz,mojo,showInput,bufferOutput,wrapSpec} xs = loop 0 1 xs []
   where
+    indenting = False
+
     wrap = case wrapSpec of Just w -> lineWrap w; Nothing -> id
 
-    loop :: Int -> [String] -> [String] -> Action -> IO ()
-    loop n xs buf = \case
+    loop :: Int -> Int -> [String] -> [String] -> Action -> IO ()
+    loop i n xs buf = \case
+      Tab next -> loop (i+1) n xs buf next
+      UnTab next -> loop (i-1) n xs buf next
       TraceInstruction stateString count a op next -> do
         when frotz $ do
-          printf "%8d : %s\n" count (show a)
+          tab $ printf "%8d : %s\n" count (show a)
         when mojo $ do
-          printf "%d %s\n" count stateString
+          tab $ printf "%d %s\n" count stateString
         when seeTrace $ do
-          printf "%d %s %s\n" count (show a) (show op)
-        loop n xs buf next
-      TraceRoutineCall _ next -> do loop n xs buf next
+          tab $ printf "%d %s %s\n" count (show a) (show op)
+        loop i n xs buf next
+      TraceRoutineCall _ next -> do loop i n xs buf next
       TextStyle _sb next -> do -- ignore the text style
-        loop n xs buf next
+        loop i n xs buf next
       Output text next -> do
         when (not bufferOutput) $ putStr text
-        loop n xs (if bufferOutput then text:buf else buf) next
+        loop i n xs (if bufferOutput then text:buf else buf) next
       Debug msg next -> do
         when (debug) $ putStrLn ("Debug: " ++ msg)
-        loop n xs buf next
+        loop i n xs buf next
       Input _ count f -> do -- ignore the status line
         flushBuffer count buf
         case xs of
@@ -40,11 +44,17 @@ runAction Conf{debug,seeTrace,frotz,mojo,showInput,bufferOutput,wrapSpec} xs = l
           input:xs -> do
             when showInput $ do
               printf "[%d]%s\n\n\n" n input
-            loop (n+1) xs [] (f input)
+            loop i (n+1) xs [] (f input)
       Stop count -> do
         flushBuffer count buf
         --printf "[the game ended]\n"
         pure ()
+
+      where
+        tab s = putStr $ if
+          | indenting -> take (2*i) (repeat ' ') ++ s
+          | otherwise -> s
+
 
     flushBuffer :: Int -> [String] -> IO ()
     flushBuffer count buf = do
