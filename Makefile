@@ -6,7 +6,7 @@ dev: niz.walk my.walk
 	git diff --no-index niz.walk my.walk
 
 STORY = ~/z/story/trinity.12-860926.z4
-SCRIPT = t.script
+SCRIPT = trinity.script
 LEN = 100000
 
 
@@ -59,7 +59,7 @@ reg/judo.walk: $(exe) h.script src/*.hs
 reg/trinity.dis: $(exe) src/*.hs
 	$(exe) dis story/trinity.12-860926.z4 > $@
 
-reg/trinity.walk: $(exe) h.script src/*.hs
+reg/trinity.walk: $(exe) trinity.script src/*.hs
 	$(exe) -nodebug story/trinity.12-860926.z4 -walk trinity.script > $@
 
 .reg:
