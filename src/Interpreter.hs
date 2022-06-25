@@ -170,6 +170,8 @@ runEffect screenWidth seed story smallStep = do
         -- dont call "k" but instead "k0"
         k0 s ()
 
+      IteString pred a b -> k s (if pred then a else b)
+
       If pred -> k s pred
 
       Isolate eff -> loop s eff k

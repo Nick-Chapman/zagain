@@ -238,7 +238,7 @@ eval mode here op = case op of
     s <- ShowNumber v
     GamePrint s
 
-  Op.Print_obj arg -> Isolate $ do
+  Op.Print_obj arg -> do
     v <- evalArg arg
     shortName <- Objects.getShortName v
     GamePrint shortName

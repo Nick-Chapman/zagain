@@ -5698,45 +5698,42 @@ LocOp 031283:
   Let b3 = M[Offset(Offset(000378,Mul(MakeHiLo(b1,b2),14)),12)];
   Let b4 = M[Offset(Offset(Offset(000378,Mul(MakeHiLo(b1,b2),14)),12),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  if (IsZeroByte(b5)) {
-    GamePrint "";
-  } else {
-    GamePrint GetText(Offset(Address(MakeHiLo(b3,b4)),1));
-  }
+  Let ite_res6 = Ite((IsZeroByte(b5),"",GetText(Offset(Address(MakeHiLo(b3,b4)),1))));
+  GamePrint ite_res6;
   TraceOperation 031285 (Inc_chk (Var (Global 184)) (Con 165) (Branch T (Dloc 034360)));
-  Let b6 = M[007574];
-  Let b7 = M[007575];
-  if (IsZeroByte(b7)) {
-    PopStack popped8;
-    PushStack Add(popped8,1);
-    if (GreaterThanEqual(popped8,165)) {
+  Let b7 = M[007574];
+  Let b8 = M[007575];
+  if (IsZeroByte(b8)) {
+    PopStack popped9;
+    PushStack Add(popped9,1);
+    if (GreaterThanEqual(popped9,165)) {
     }
   } else {
-    if (LessThanByte(b7,16)) {
-      SetLocal b7 Add(GetLocal(b7),1);
-      if (GreaterThanEqual(GetLocal(b7),165)) {
+    if (LessThanByte(b8,16)) {
+      SetLocal b8 Add(GetLocal(b8),1);
+      if (GreaterThanEqual(GetLocal(b8),165)) {
       }
     } else {
-      Let b9 = M[Offset(007206,Mul(2,Widen(MinusByte(b7,16))))];
-      Let b10 = M[Offset(Offset(007206,Mul(2,Widen(MinusByte(b7,16)))),1)];
-      SetByte Offset(007206,Mul(2,Widen(MinusByte(b7,16)))) HiByte(Add(MakeHiLo(b9,b10),1));
-      SetByte Offset(Offset(007206,Mul(2,Widen(MinusByte(b7,16)))),1) LoByte(Add(MakeHiLo(b9,b10),1));
-      if (GreaterThanEqual(MakeHiLo(b9,b10),165)) {
+      Let b10 = M[Offset(007206,Mul(2,Widen(MinusByte(b8,16))))];
+      Let b11 = M[Offset(Offset(007206,Mul(2,Widen(MinusByte(b8,16)))),1)];
+      SetByte Offset(007206,Mul(2,Widen(MinusByte(b8,16)))) HiByte(Add(MakeHiLo(b10,b11),1));
+      SetByte Offset(Offset(007206,Mul(2,Widen(MinusByte(b8,16)))),1) LoByte(Add(MakeHiLo(b10,b11),1));
+      if (GreaterThanEqual(MakeHiLo(b10,b11),165)) {
       }
     }
   }
   TraceOperation 031290 (Je [Var (Global 49),Con 255] (Branch F (Dloc 033156)));
-  Let b11 = M[007304];
-  Let b12 = M[007305];
-  if (Equal(MakeHiLo(b11,b12),255)) {
+  Let b12 = M[007304];
+  Let b13 = M[007305];
+  if (Equal(MakeHiLo(b12,b13),255)) {
     TraceOperation 031295 (Print_paddr (Con 28705));
     GamePrint GetText(114820);
     TraceOperation 031298 New_line;
     GamePrint "\n";
     TraceOperation 031299 Rtrue;
     PopFrame;
-    PopReturnAddress return_address_13;
-    JumpReturn: return_address_13, result: 1
+    PopReturnAddress return_address_14;
+    JumpReturn: return_address_14, result: 1
   } else {
     Jump: 033156
   }
@@ -70274,15 +70271,12 @@ LocOp 081540:
   Let b1 = M[Offset(Offset(000378,Mul(GetLocal(1),14)),12)];
   Let b2 = M[Offset(Offset(Offset(000378,Mul(GetLocal(1),14)),12),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  if (IsZeroByte(b3)) {
-    GamePrint "";
-  } else {
-    GamePrint GetText(Offset(Address(MakeHiLo(b1,b2)),1));
-  }
+  Let ite_res4 = Ite((IsZeroByte(b3),"",GetText(Offset(Address(MakeHiLo(b1,b2)),1))));
+  GamePrint ite_res4;
   TraceOperation 081542 Rtrue;
   PopFrame;
-  PopReturnAddress return_address_4;
-  JumpReturn: return_address_4, result: 1
+  PopReturnAddress return_address_5;
+  JumpReturn: return_address_5, result: 1
 --------------------------------------------------
 LocRoutine 081544:
   MakeRoutineFrame 8;
@@ -77170,17 +77164,14 @@ LocOp 087367:
   Let b6 = M[Offset(Offset(000378,Mul(MakeHiLo(b4,b5),14)),12)];
   Let b7 = M[Offset(Offset(Offset(000378,Mul(MakeHiLo(b4,b5),14)),12),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  if (IsZeroByte(b8)) {
-    GamePrint "";
-  } else {
-    GamePrint GetText(Offset(Address(MakeHiLo(b6,b7)),1));
-  }
+  Let ite_res9 = Ite((IsZeroByte(b8),"",GetText(Offset(Address(MakeHiLo(b6,b7)),1))));
+  GamePrint ite_res9;
   TraceOperation 087376 (Loadw (Con 99) (Var (Global 134)) (Local 2));
-  Let b9 = M[007474];
-  Let b10 = M[007475];
-  Let b11 = M[Offset(000099,Mul(2,MakeHiLo(b9,b10)))];
-  Let b12 = M[Offset(Offset(000099,Mul(2,MakeHiLo(b9,b10))),1)];
-  SetLocal 2 MakeHiLo(b11,b12);
+  Let b10 = M[007474];
+  Let b11 = M[007475];
+  Let b12 = M[Offset(000099,Mul(2,MakeHiLo(b10,b11)))];
+  Let b13 = M[Offset(Offset(000099,Mul(2,MakeHiLo(b10,b11))),1)];
+  SetLocal 2 MakeHiLo(b12,b13);
   TraceOperation 087380 (Print "'.\n");
   GamePrint "'.\n";
   TraceOperation 087385 (Jump 087953);
@@ -100926,19 +100917,16 @@ LocOp 111701:
     Let b1 = M[Offset(Offset(000378,Mul(GetLocal(2),14)),12)];
     Let b2 = M[Offset(Offset(Offset(000378,Mul(GetLocal(2),14)),12),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    if (IsZeroByte(b3)) {
-      GamePrint "";
-    } else {
-      GamePrint GetText(Offset(Address(MakeHiLo(b1,b2)),1));
-    }
+    Let ite_res4 = Ite((IsZeroByte(b3),"",GetText(Offset(Address(MakeHiLo(b1,b2)),1))));
+    GamePrint ite_res4;
     TraceOperation 111712 (Print_paddr (Con -31231));
     GamePrint GetText(137220);
     TraceOperation 111715 New_line;
     GamePrint "\n";
     TraceOperation 111716 Rtrue;
     PopFrame;
-    PopReturnAddress return_address_4;
-    JumpReturn: return_address_4, result: 1
+    PopReturnAddress return_address_5;
+    JumpReturn: return_address_5, result: 1
   } else {
     Jump: 111717
   }
@@ -101589,11 +101577,8 @@ LocOp 112700:
     Let b1 = M[Offset(Offset(000378,Mul(GetLocal(2),14)),12)];
     Let b2 = M[Offset(Offset(Offset(000378,Mul(GetLocal(2),14)),12),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    if (IsZeroByte(b3)) {
-      GamePrint "";
-    } else {
-      GamePrint GetText(Offset(Address(MakeHiLo(b1,b2)),1));
-    }
+    Let ite_res4 = Ite((IsZeroByte(b3),"",GetText(Offset(Address(MakeHiLo(b1,b2)),1))));
+    GamePrint ite_res4;
     TraceOperation 112705 (Jump 112715);
     Jump: 112715
   }
@@ -103804,15 +103789,12 @@ LocOp 132697:
   Let b3 = M[Offset(Offset(000378,Mul(MakeHiLo(b1,b2),14)),12)];
   Let b4 = M[Offset(Offset(Offset(000378,Mul(MakeHiLo(b1,b2),14)),12),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  if (IsZeroByte(b5)) {
-    GamePrint "";
-  } else {
-    GamePrint GetText(Offset(Address(MakeHiLo(b3,b4)),1));
-  }
+  Let ite_res6 = Ite((IsZeroByte(b5),"",GetText(Offset(Address(MakeHiLo(b3,b4)),1))));
+  GamePrint ite_res6;
   TraceOperation 132699 Rfalse;
   PopFrame;
-  PopReturnAddress return_address_6;
-  JumpReturn: return_address_6, result: 0
+  PopReturnAddress return_address_7;
+  JumpReturn: return_address_7, result: 0
 --------------------------------------------------
 LocRoutine 132990:
   MakeRoutineFrame 2;
@@ -103953,43 +103935,40 @@ LocOp 136477:
   Let b3 = M[Offset(Offset(000378,Mul(MakeHiLo(b1,b2),14)),12)];
   Let b4 = M[Offset(Offset(Offset(000378,Mul(MakeHiLo(b1,b2),14)),12),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  if (IsZeroByte(b5)) {
-    GamePrint "";
-  } else {
-    GamePrint GetText(Offset(Address(MakeHiLo(b3,b4)),1));
-  }
+  Let ite_res6 = Ite((IsZeroByte(b5),"",GetText(Offset(Address(MakeHiLo(b3,b4)),1))));
+  GamePrint ite_res6;
   TraceOperation 136479 (Inc_chk (Var (Global 184)) (Con 165) (Branch F Dfalse));
-  Let b6 = M[007574];
-  Let b7 = M[007575];
-  if (IsZeroByte(b7)) {
-    PopStack popped8;
-    PushStack Add(popped8,1);
-    if (GreaterThanEqual(popped8,165)) {} else {
+  Let b7 = M[007574];
+  Let b8 = M[007575];
+  if (IsZeroByte(b8)) {
+    PopStack popped9;
+    PushStack Add(popped9,1);
+    if (GreaterThanEqual(popped9,165)) {} else {
       PopFrame;
-      PopReturnAddress return_address_9;
+      PopReturnAddress return_address_10;
     }
   } else {
-    if (LessThanByte(b7,16)) {
-      SetLocal b7 Add(GetLocal(b7),1);
-      if (GreaterThanEqual(GetLocal(b7),165)) {} else {
+    if (LessThanByte(b8,16)) {
+      SetLocal b8 Add(GetLocal(b8),1);
+      if (GreaterThanEqual(GetLocal(b8),165)) {} else {
         PopFrame;
-        PopReturnAddress return_address_10;
+        PopReturnAddress return_address_11;
       }
     } else {
-      Let b11 = M[Offset(007206,Mul(2,Widen(MinusByte(b7,16))))];
-      Let b12 = M[Offset(Offset(007206,Mul(2,Widen(MinusByte(b7,16)))),1)];
-      SetByte Offset(007206,Mul(2,Widen(MinusByte(b7,16)))) HiByte(Add(MakeHiLo(b11,b12),1));
-      SetByte Offset(Offset(007206,Mul(2,Widen(MinusByte(b7,16)))),1) LoByte(Add(MakeHiLo(b11,b12),1));
-      if (GreaterThanEqual(MakeHiLo(b11,b12),165)) {} else {
+      Let b12 = M[Offset(007206,Mul(2,Widen(MinusByte(b8,16))))];
+      Let b13 = M[Offset(Offset(007206,Mul(2,Widen(MinusByte(b8,16)))),1)];
+      SetByte Offset(007206,Mul(2,Widen(MinusByte(b8,16)))) HiByte(Add(MakeHiLo(b12,b13),1));
+      SetByte Offset(Offset(007206,Mul(2,Widen(MinusByte(b8,16)))),1) LoByte(Add(MakeHiLo(b12,b13),1));
+      if (GreaterThanEqual(MakeHiLo(b12,b13),165)) {} else {
         PopFrame;
-        PopReturnAddress return_address_13;
+        PopReturnAddress return_address_14;
       }
     }
   }
   TraceOperation 136484 (Get_next_prop (Con 45) (Con 42) (Global 218));
-  Let b14 = M[001020];
-  Let b15 = M[001021];
-  Let b16 = M[Address(MakeHiLo(b14,b15))];
+  Let b15 = M[001020];
+  Let b16 = M[001021];
+  Let b17 = M[Address(MakeHiLo(b15,b16))];
   Error: getPropsA
 --------------------------------------------------
 LocRoutine 136566:

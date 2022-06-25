@@ -84,6 +84,9 @@ data Eff p x where
   Random :: Value p -> Eff p (Value p)
   Quit :: Eff p ()
 
+  --Ite :: Pred p -> x -> x -> Eff p x -- TODO: possible?
+  IteString :: Pred p -> (Text p) -> (Text p) -> Eff p (Text p)
+
   If :: Pred p -> Eff p Bool
   Isolate :: Eff p () -> Eff p ()
 

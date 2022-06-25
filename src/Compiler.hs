@@ -257,6 +257,13 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Eff.Quit -> do
         pure Quit
 
+      Eff.IteString pred a b -> do
+        case pred of
+          Const pred -> k s (if pred then a else b)
+          _ -> do
+            name <- genId "ite_res"
+            Seq (Let (Bind name (Ite pred a b))) <$> k s (Variable name)
+
       Eff.If pred -> do
         case pred of
           Const pred -> k s pred
@@ -623,6 +630,7 @@ data Expression a where
   GetLocal :: Expression Byte -> Expression Value
   GetText :: Expression Addr -> Expression String
   LookupInDict :: Expression String -> Expression Addr
+  Ite :: Expression Bool -> Expression a -> Expression a -> Expression a
 
 instance Show a => Show (Expression a) where
   show = \case
@@ -636,6 +644,7 @@ instance Show a => Show (Expression a) where
     GetLocal n -> "GetLocal(" ++ show n ++ ")"
     GetText a -> "GetText(" ++ show a ++ ")"
     LookupInDict x -> "LookupInDict(" ++ show x ++ ")"
+    Ite i t e -> "Ite(" ++ show (i,t,e) ++ ")"
 
 data Identifier a where
   Identifier :: String -> Int -> Identifier a

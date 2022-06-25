@@ -138,16 +138,16 @@ unlink mode this = do -- TODO: do isolate here instead of in insertObj/removeObj
 
 --[properties]--------------------------------------------------------
 
-getShortName :: Phase p => Value p -> Eff p (Text p)
-getShortName x = do -- TODO: needs isolation by caller
+getShortName :: forall p. Phase p => Value p -> Eff p (Text p)
+getShortName x = do
   a1 <- propTableAddr x
   shortNameLen <- GetByte a1
-  p <- IsZeroByte shortNameLen >>= If
-  if p then LitS "" else do
-    one <- LitV 1
-    a2 <- Offset a1 one
-    GetText a2
-
+  p <- IsZeroByte shortNameLen
+  one <- LitV 1
+  a2 <- Offset a1 one
+  left <- LitS ""
+  right <- GetText a2
+  IteString p left right
 
 getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
 getProp mode x n = do
