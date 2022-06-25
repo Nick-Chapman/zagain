@@ -255,7 +255,7 @@ eval mode here op = case op of
     one <- LitV 1
     returnValue one
 
-  Op.Pull arg -> do -- TODO: Isolate
+  Op.Pull arg -> Isolate $ do
     dyn <- evalArgAsDyn arg
     v1 <- PopStack
     setDyn dyn v1
