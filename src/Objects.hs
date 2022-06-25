@@ -16,7 +16,7 @@ import qualified Numbers (Value)
 
 --[attributes]--------------------------------------------------------
 
-testAttr :: Phase p => Value p -> Value p -> Eff p Bool
+testAttr :: Phase p => Value p -> Value p -> Eff p Bool -- TODO: needs isolation, no. but return Pred to make it clear it is caller's responsibility
 testAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -99,7 +99,7 @@ setFM fm x y = do
       SetByte a1 lo
 
 insertObj :: Phase p => Mode -> Value p -> Value p -> Eff p ()
-insertObj mode x dest = do
+insertObj mode x dest = Isolate $ do
   unlink mode x
   setFM Parent x dest
   oldChild <- getFM Child dest
@@ -107,13 +107,13 @@ insertObj mode x dest = do
   setFM Child dest x
 
 removeObj :: Phase p => Mode -> Value p -> Eff p ()
-removeObj mode x = do
+removeObj mode x = Isolate $ do
   unlink mode x
   zero <- LitV 0
   setFM Parent x zero
 
 unlink :: Phase p => Mode -> Value p -> Eff p ()
-unlink mode this = do
+unlink mode this = do -- TODO: do isolate here instead of in insertObj/removeObj?
   oldP <- getFM Parent this
   b <- not <$> (IsZero oldP >>= If)
   when b $ do
@@ -139,7 +139,7 @@ unlink mode this = do
 --[properties]--------------------------------------------------------
 
 getShortName :: Phase p => Value p -> Eff p (Text p)
-getShortName x = do
+getShortName x = do -- TODO: needs isolation by caller
   a1 <- propTableAddr x
   shortNameLen <- GetByte a1
   p <- IsZeroByte shortNameLen >>= If
@@ -164,7 +164,7 @@ getProp mode x n = do
       getWord a
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
-      Equal numBytes two >>= If >>= \case
+      Equal numBytes two >>= If >>= \case -- TODO: think about isolation!
         False -> -- If length not 2, then must be 1. But never seen this case.
           undefined -- GetByte dataAddr >>= Widen
         True -> do
@@ -184,7 +184,7 @@ putProp mode x n v = do
     Nothing -> Error (show ("putProp",n))
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
-      Equal numBytes two >>= If >>= \case
+      Equal numBytes two >>= If >>= \case -- TODO: consider isolation
         False -> do -- If length not 2, then must be 1. But never seen this case.
           _ <- undefined
           lo <- LoByte v
@@ -217,14 +217,14 @@ dataAddrToPropAddr a = do
     Small -> pure aM1
     Large -> do
       b <- GetByte aM1
-      (LitB 7 >>= TestBit b) >>= If >>= \case
+      (LitB 7 >>= TestBit b) >>= If >>= \case -- TODO: isolation?
         False -> pure aM1
         True -> do
           LitV (-2) >>= Offset a
 
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
-getNextProp mode x n = do
+getNextProp mode x n = do -- TODO: caller needs to isolate
   IsZero n >>= If >>= \case
     True -> do
       a <- firstPropertyAddr x
@@ -291,7 +291,7 @@ data PropSize p = PropSize
   }
 
 getPropSize :: Phase p => Addr p -> Byte p -> Eff p (PropSize p)
-getPropSize a1 b1 = do
+getPropSize a1 b1 = do -- TODO: caller needs to isolate
   one <- LitV 1
   objectTableFormat >>= \case
     Small -> do

@@ -71,14 +71,14 @@ eval mode here op = case op of
     v2 <- evalArg arg2
     Objects.clearAttr v1 v2
 
-  Op.Dec arg -> do
+  Op.Dec arg -> Isolate $ do
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     one <- LitV 1
     v' <- Sub v one
     setDyn dyn v'
 
-  Op.Dec_chk arg1 arg2 label -> do
+  Op.Dec_chk arg1 arg2 label -> Isolate $ do
     dyn <- evalArgAsDyn arg1
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
@@ -120,7 +120,7 @@ eval mode here op = case op of
     res <- Objects.getPropAddr mode v1 v2 >>= DeAddress
     setTarget target res
 
-  Op.Get_prop_len arg target -> do
+  Op.Get_prop_len arg target -> Isolate $ do
     v1 <- evalArg arg
     res <- Objects.getPropLen v1
     setTarget target res
@@ -132,14 +132,14 @@ eval mode here op = case op of
     b <- IsZero res >>= If
     branchMaybe label (not b)
 
-  Op.Inc arg -> do
+  Op.Inc arg -> Isolate $ do
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     one <- LitV 1
     v' <- Add v one
     setDyn dyn v'
 
-  Op.Inc_chk arg1 arg2 label -> do
+  Op.Inc_chk arg1 arg2 label -> Isolate $ do
     dyn <- evalArgAsDyn arg1
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
@@ -187,7 +187,7 @@ eval mode here op = case op of
 
   Op.Jz arg label -> do evalArg arg >>= IsZero >>= If >>= branchMaybe label
 
-  Op.Load arg target -> do
+  Op.Load arg target -> Isolate $ do
     dyn <- evalArgAsDyn arg
     v <- evalDyn dyn
     case dyn of
@@ -238,7 +238,7 @@ eval mode here op = case op of
     s <- ShowNumber v
     GamePrint s
 
-  Op.Print_obj arg -> do
+  Op.Print_obj arg -> Isolate $ do
     v <- evalArg arg
     shortName <- Objects.getShortName v
     GamePrint shortName
@@ -255,7 +255,7 @@ eval mode here op = case op of
     one <- LitV 1
     returnValue one
 
-  Op.Pull arg -> do
+  Op.Pull arg -> do -- TODO: Isolate
     dyn <- evalArgAsDyn arg
     v1 <- PopStack
     setDyn dyn v1
@@ -344,7 +344,7 @@ eval mode here op = case op of
       a <- Offset pBuf2 off
       writeBytes a [hi,lo,n,pos]
 
-  Op.Store arg1 arg2 -> do
+  Op.Store arg1 arg2 -> Isolate $ do
     dyn <- evalArgAsDyn arg1
     v2 <- evalArg arg2
     case dyn of
@@ -462,7 +462,7 @@ setTextStyle v = do
   sequence_ [ Isolate (changeOneStyle style pos) | (style,pos) <- supported ]
   where
     supported = [ (Reverse,1), (Bold,2), (Italic,3), (Fixed,4) ]
-    changeOneStyle style pos = do
+    changeOneStyle style pos = do -- TODO: Isolate
       lo <- LoByte v
       pos <- LitB pos
       bool <- lo `TestBit` pos >>= If
@@ -522,7 +522,7 @@ evalFunc :: Phase p => Func -> Eff p (Addr p)
 evalFunc = \case
   BadFunc -> error "failed to decode called function"
   Floc addr -> LitA addr
-  Fvar var -> do
+  Fvar var -> do -- TODO: in combination with caller testing against 0, cause code dup
     v <- evalTarget var
     a <- PackedAddress v
     --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
@@ -623,7 +623,7 @@ evalArgAsDyn arg = do
   lo <- LoByte v
   makeDyn lo
 
-makeDyn :: Byte p -> Eff p (Dyn (Byte p))
+makeDyn :: Byte p -> Eff p (Dyn (Byte p)) -- TODO: needs isolation
 makeDyn b = do
   q <- IsZeroByte b >>= If
   case q of
@@ -651,7 +651,7 @@ setDyn dyn v = case dyn of
 
 
 scanTable :: Phase p => Value p -> Addr p -> Value p -> Target -> Label -> Eff p ()
-scanTable x table len target label = do
+scanTable x table len target label = do -- TODO: isolate
   IsZero len >>= If >>= \case
     True -> do
       res <- LitV 0
