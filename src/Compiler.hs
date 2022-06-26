@@ -4,7 +4,7 @@ module Compiler (compileEffect,dumpCode,runCode) where
 import Action (Action,Conf(..))
 import Control.Monad (when,ap,liftM)
 import Data.List (intercalate)
-import Data.Set (Set)
+import Data.Set (Set,(\\))
 import Decode (fetchOperation,fetchRoutineHeader)
 import Disassemble (Routine(..),disRoutine,branchesOf,routinesBetween)
 import Eff (Phase,Eff,Control)
@@ -40,10 +40,7 @@ compileEffect conf story smallStep = do
   let as = routinesBetween story (staticMem,endOfStory)
   let routines = [ disRoutine story a | a <- as ]
 
-  let
-    addressesToInline :: Set Addr =
-      Set.fromList $
-        concat [ routineAddressesToInline r | r <- routines]
+  let addressesToInline = allAddressesToInline routines
 
   -- Experiment with inlining across routine calls
   let xInline = [] -- [025175]
@@ -63,30 +60,24 @@ compileEffect conf story smallStep = do
   Code <$> sequence
     [ do compileRoutine static r | r <- routines ]
 
-routineAddressesToInline :: Routine -> [Addr]
-routineAddressesToInline routine = do
-  let Routine{body} = routine
-  let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- body ]
+
+allAddressesToInline :: [Routine] -> Set Addr
+allAddressesToInline routines = do
+  let allAddress :: Set Addr = Set.fromList [ a | Routine{body} <- routines, (a,_) <- body ]
+  let jumpDest :: [Addr] = concat [ branchesOf op | Routine{body} <- routines, (_,op) <- body ]
   let followIndirectCall :: [Addr] =
         [ a
-        | ((_,op),(a,_)) <- zip body (tail body)
+        | Routine{body} <- routines
+        , ((_,op),(a,_)) <- zip body (tail body)
         , case op of
             Call (Fvar{}) _ _ -> True
             CallN (Fvar{}) _ -> True
             _ -> False
         ]
-  let
-    dontInlineSet = case body of
-      [] -> jumpDest ++ followIndirectCall
-      (bodyStart,_):_ -> bodyStart : jumpDest ++ followIndirectCall
-  let
-    addressesToInline :: [Addr] =
-      [ a
-      | (a,_) <- body
-        -- TODO: we could still inline if there is only a single jump-from location & no fallthrough
-      , a `notElem` dontInlineSet
-      ]
-  addressesToInline
+  let routineFirstInstructions :: [Addr] =
+        [ a | Routine{body} <- routines, (a,_) <- case body of [] -> []; x:_ -> [x] ]
+  let dontInline = Set.fromList (jumpDest ++ followIndirectCall ++ routineFirstInstructions)
+  allAddress \\ dontInline
 
 
 data Static = Static
