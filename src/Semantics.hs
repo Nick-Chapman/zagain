@@ -100,8 +100,8 @@ eval mode here op = case op of
   Op.Get_next_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getNextProp mode v1 v2
-    setTarget target res
+    Objects.getNextProp mode v1 v2 $ \res ->
+      setTarget target res
 
   Op.Get_parent arg target -> do
     v <- evalArg arg
@@ -111,14 +111,15 @@ eval mode here op = case op of
   Op.Get_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getProp mode v1 v2
-    setTarget target res
+    Objects.getProp mode v1 v2 $ \res ->
+      setTarget target res
 
   Op.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.getPropAddr mode v1 v2 >>= DeAddress
-    setTarget target res
+    Objects.getPropAddr mode v1 v2 $ \a -> do
+      res <- DeAddress a
+      setTarget target res
 
   Op.Get_prop_len arg target -> Isolate $ do
     v1 <- evalArg arg

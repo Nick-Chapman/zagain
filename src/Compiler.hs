@@ -29,7 +29,7 @@ instance Phase Compile where
   type Text Compile = Expression String
   type Value Compile = Expression Value
   type Vector Compile a = Expression [a]
-  type Code Compile = (Identifier Value, Expression Value, Label)
+  type Code Compile = (Bind, Label)
 
 type Effect a = Eff Compile a
 
@@ -272,19 +272,30 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
-      Eff.Fixpoint init f -> do
+      Eff.FixpointV init f -> do
         flushStateK s $ \s -> do
           var <- genId "loop_var"
           label <- genLabel
-          let tieback exp = do pure (var,exp,label)
+          let tieback exp = do pure (Bind var exp,label)
           let eff :: Effect () = f tieback (Variable var)
           let body :: Gen (Prog jumpiness) = compileK s eff k
           Seq (Let (Bind var init)) <$> do
             Labelled label <$> do
               body
 
-      Eff.Jump (var,exp,label) -> do
-        Seq (Assign (Bind var exp)) <$> pure (Goto label)
+      Eff.FixpointA init f -> do
+        flushStateK s $ \s -> do
+          var <- genId "loop_var"
+          label <- genLabel
+          let tieback exp = do pure (Bind var exp,label)
+          let eff :: Effect () = f tieback (Variable var)
+          let body :: Gen (Prog jumpiness) = compileK s eff k
+          Seq (Let (Bind var init)) <$> do
+            Labelled label <$> do
+              body
+
+      Eff.Link (bind,label) -> do
+        Seq (Assign bind) <$> pure (Goto label)
 
       Eff.Isolate eff -> do
         flushStateK s $ \s -> do

@@ -176,10 +176,13 @@ runEffect screenWidth seed story smallStep = do
 
       Isolate eff -> loop s eff k
 
-      Fixpoint x f -> loop s (fixpoint x) k
+      FixpointV x f -> loop s (fixpoint x) k
         where fixpoint = f (pure . fixpoint)
 
-      Jump e -> loop s e k
+      FixpointA x f -> loop s (fixpoint x) k
+        where fixpoint = f (pure . fixpoint)
+
+      Link e -> loop s e k
 
       ForeachB xs f -> do
         loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k

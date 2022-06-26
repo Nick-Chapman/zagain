@@ -90,12 +90,17 @@ data Eff p x where
   If :: Pred p -> Eff p Bool
   Isolate :: Eff p () -> Eff p ()
 
-  Fixpoint
+  FixpointV
     :: Value p
     -> ((Value p -> Eff p (Code p)) -> (Value p -> Eff p ()))
-    -> Eff p () -- TODO: generalize () to x ?
+    -> Eff p ()
 
-  Jump :: Code p -> Eff p ()
+  FixpointA
+    :: Addr p
+    -> ((Addr p -> Eff p (Code p)) -> (Addr p -> Eff p ()))
+    -> Eff p ()
+
+  Link :: Code p -> Eff p ()
 
   ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()

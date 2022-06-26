@@ -127,10 +127,10 @@ unlink mode this = do -- TODO: do isolate here instead of in insertObj/removeObj
         case mode of
           --Compiling -> Error "unlink/loop" -- TODO: removing this is my goal!
           _Interpreting -> do
-            Fixpoint child $ \loop x -> do
+            FixpointV child $ \loop x -> do
               sib <- getFM Sibling x
               Equal sib this >>= If >>= \case
-                False -> loop sib >>= Jump
+                False -> loop sib >>= Link
                 True -> do
                   thisSib <- getFM Sibling this
                   setFM Sibling x thisSib
@@ -149,10 +149,10 @@ getShortName x = do
   right <- GetText a2
   IteString p left right
 
-getProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
-getProp mode x n = do
+getProp :: Phase p => Mode -> Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
+getProp mode x n k = do
   Header{objectTable} <- StoryHeader
-  searchProp mode x n >>= \case
+  searchProp mode x n $ \case
     Nothing -> do
       -- get property default
       one <- LitV 1
@@ -161,26 +161,26 @@ getProp mode x n = do
       off <- Mul two nM1
       base <- LitA objectTable
       a <- Offset base off
-      getWord a
+      getWord a >>= k
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
-      Equal numBytes two >>= If >>= \case -- TODO: think about isolation!
+      Equal numBytes two >>= If >>= \case
         False -> -- If length not 2, then must be 1. But never seen this case.
-          undefined -- GetByte dataAddr >>= Widen
+          undefined -- GetByte dataAddr >>= Widen >>= k
         True -> do
-          getWord dataAddr
+          getWord dataAddr >>= k
 
 
-getPropAddr :: Phase p => Mode -> Value p -> Value p -> Eff p (Addr p)
-getPropAddr mode x n = do
-  searchProp mode x n >>= \case
-    Just Prop{dataAddr} -> pure dataAddr
-    Nothing -> LitV 0 >>= Address
+getPropAddr :: Phase p => Mode -> Value p -> Value p -> (Addr p -> Eff p ()) -> Eff p ()
+getPropAddr mode x n k = do
+  searchProp mode x n $ \case
+    Just Prop{dataAddr} -> k dataAddr
+    Nothing -> LitV 0 >>= Address >>= k
 
 
 putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
 putProp mode x n v = do
-  searchProp mode x n >>= \case
+  searchProp mode x n $ \case
     Nothing -> Error (show ("putProp",n))
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
@@ -222,21 +222,20 @@ dataAddrToPropAddr a = do
         True -> do
           LitV (-2) >>= Offset a
 
-
-getNextProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Value p)
-getNextProp mode x n = do -- TODO: caller needs to isolate
-  IsZero n >>= If >>= \case
+getNextProp :: Phase p => Mode -> Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
+getNextProp mode x n k = do
+  IsZero n >>= If >>= \case -- TODO: consider isolation
     True -> do
       a <- firstPropertyAddr x
       b <- GetByte a
-      getPropNumber b
+      getPropNumber b >>= k
     False -> do
-      searchProp mode x n >>= \case
+      searchProp mode x n $ \case
         Nothing -> error (show ("getNextProp",n))
         Just Prop{dataAddr,numBytes} -> do
           a <- Offset dataAddr numBytes
           b <- GetByte a
-          getPropNumber b
+          getPropNumber b >>= k
 
 
 data Prop p = Prop
@@ -246,27 +245,26 @@ data Prop p = Prop
 
 deriving instance Phase p => Show (Prop p)
 
-searchProp :: Phase p => Mode -> Value p -> Value p -> Eff p (Maybe (Prop p))
-searchProp mode x n = do
+searchProp :: Phase p => Mode -> Value p -> Value p -> (Maybe (Prop p) -> Eff p ()) -> Eff p ()
+searchProp mode x n k = do
   a1 <- firstPropertyAddr x
   case mode of
     Compiling -> Error "getPropsA" -- match name in regression code
     Interpreting -> do
-      let
-        loop a = do
-          b <- GetByte a
-          IsZeroByte b >>= If >>= \case
-            True -> pure Nothing
-            False -> do
-              propNumber <- getPropNumber b
-              PropSize{sizeByteSize,numBytes} <- getPropSize a b
-              off <- LitV (fromIntegral sizeByteSize)
-              dataAddr <- Offset a off
-              let p1 = Prop {numBytes,dataAddr}
-              b <- Equal n propNumber >>= If
-              if b then pure (Just p1) else do
-                Offset dataAddr numBytes >>= loop -- TODO: infinite effect
-      loop a1
+      FixpointA a1 $ \loop a -> do
+        b <- GetByte a
+        IsZeroByte b >>= If >>= \case
+          True -> k Nothing
+          False -> do
+            propNumber <- getPropNumber b
+            PropSize{sizeByteSize,numBytes} <- getPropSize a b
+            off <- LitV (fromIntegral sizeByteSize)
+            dataAddr <- Offset a off
+            let p1 = Prop {numBytes,dataAddr}
+            b <- Equal n propNumber >>= If
+            if b then k (Just p1) else do
+              Offset dataAddr numBytes >>= \a' ->
+                loop a' >>= Link
 
 
 firstPropertyAddr :: Phase p => Value p -> Eff p (Addr p)
@@ -291,7 +289,7 @@ data PropSize p = PropSize
   }
 
 getPropSize :: Phase p => Addr p -> Byte p -> Eff p (PropSize p)
-getPropSize a1 b1 = do -- TODO: caller needs to isolate
+getPropSize a1 b1 = do
   one <- LitV 1
   objectTableFormat >>= \case
     Small -> do
