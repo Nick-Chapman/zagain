@@ -95,7 +95,7 @@ compileRoutine static routine = do
   let
     isCall :: Operation -> Bool
     isCall = \case
-      --Operation.CallN{} -> True -- TODO: this is missing! expect extra code!
+      Operation.CallN{} -> True
       Operation.Call{} -> True
       _ -> False
   let
