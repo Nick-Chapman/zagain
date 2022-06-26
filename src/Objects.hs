@@ -150,7 +150,7 @@ getShortName x = do
   IteString p left right
 
 getProp :: Phase p => Mode -> Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
-getProp mode x n k = do
+getProp mode x n k = Isolate $ do
   Header{objectTable} <- StoryHeader
   searchProp mode x n $ \case
     Nothing -> do
@@ -165,28 +165,27 @@ getProp mode x n k = do
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
       Equal numBytes two >>= If >>= \case
-        False -> -- If length not 2, then must be 1. But never seen this case.
-          undefined -- GetByte dataAddr >>= Widen >>= k
+        False -> -- If length not 2, then must be 1.
+          GetByte dataAddr >>= Widen >>= k
         True -> do
           getWord dataAddr >>= k
 
 
 getPropAddr :: Phase p => Mode -> Value p -> Value p -> (Addr p -> Eff p ()) -> Eff p ()
-getPropAddr mode x n k = do
+getPropAddr mode x n k = Isolate $ do
   searchProp mode x n $ \case
     Just Prop{dataAddr} -> k dataAddr
     Nothing -> LitV 0 >>= Address >>= k
 
 
 putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
-putProp mode x n v = do
+putProp mode x n v = Isolate $ do
   searchProp mode x n $ \case
     Nothing -> Error (show ("putProp",n))
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
       Equal numBytes two >>= If >>= \case -- TODO: consider isolation
-        False -> do -- If length not 2, then must be 1. But never seen this case.
-          _ <- undefined
+        False -> do -- If length not 2, then must be 1.
           lo <- LoByte v
           SetByte dataAddr lo
         True -> do
@@ -223,15 +222,15 @@ dataAddrToPropAddr a = do
           LitV (-2) >>= Offset a
 
 getNextProp :: Phase p => Mode -> Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
-getNextProp mode x n k = do
-  IsZero n >>= If >>= \case -- TODO: consider isolation
+getNextProp mode x n k = Isolate $ do
+  IsZero n >>= If >>= \case
     True -> do
       a <- firstPropertyAddr x
       b <- GetByte a
       getPropNumber b >>= k
     False -> do
       searchProp mode x n $ \case
-        Nothing -> error (show ("getNextProp",n))
+        Nothing -> Error (show ("getNextProp",n))
         Just Prop{dataAddr,numBytes} -> do
           a <- Offset dataAddr numBytes
           b <- GetByte a
@@ -249,8 +248,8 @@ searchProp :: Phase p => Mode -> Value p -> Value p -> (Maybe (Prop p) -> Eff p 
 searchProp mode x n k = do
   a1 <- firstPropertyAddr x
   case mode of
-    Compiling -> Error "getPropsA" -- match name in regression code
-    Interpreting -> do
+    --Compiling -> Error "getPropsA" -- match name in regression code
+    _Interpreting -> do
       FixpointA a1 $ \loop a -> do
         b <- GetByte a
         IsZeroByte b >>= If >>= \case

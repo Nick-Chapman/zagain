@@ -172,7 +172,24 @@ LocOp 016045:
   Let b3 = M[002828];
   Let b4 = M[002829];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      SetByte 008298 0;
+      SetByte 008299 0;
+    } else {
+      if (Equal(MakeHiLo(b1,b2),Widen(BwAnd(b8,31)))) {
+        SetByte 008298 HiByte(DeAddress(Offset(loop_var6,1)));
+        SetByte 008299 LoByte(DeAddress(Offset(loop_var6,1)));
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 016049 (Jz (Con 256) (Branch F (Dloc 012702)));
+  Jump: 012702
 --------------------------------------------------
 LocRoutine 016408:
   MakeRoutineFrame 0;
@@ -572,7 +589,60 @@ LocOp 020231:
   Let b5 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b6 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  Error: getPropsA
+  Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+  Label 9: {
+    Let b10 = M[loop_var8];
+    if (IsZeroByte(b10)) {
+      Let b11 = M[Offset(000698,Mul(2,Sub(MakeHiLo(b3,b4),1)))];
+      Let b12 = M[Offset(Offset(000698,Mul(2,Sub(MakeHiLo(b3,b4),1))),1)];
+      SetByte 008206 b11;
+      SetByte 008207 b12;
+    } else {
+      if (Equal(MakeHiLo(b3,b4),Widen(BwAnd(b10,31)))) {
+        if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
+          Let b13 = M[Offset(loop_var8,1)];
+          Let b14 = M[Offset(Offset(loop_var8,1),1)];
+          SetByte 008206 b13;
+          SetByte 008207 b14;
+        } else {
+          Let b15 = M[Offset(loop_var8,1)];
+          SetByte 008206 HiByte(Widen(b15));
+          SetByte 008207 LoByte(Widen(b15));
+        }
+      } else {
+        Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+        Goto: Label 9
+      }
+    }
+  }
+  TraceOperation 020235 (Je [Var (Global 233),Con 0] (Branch F (Dloc 020286)));
+  Let b16 = M[008374];
+  Let b17 = M[008375];
+  if (Equal(MakeHiLo(b16,b17),0)) {
+    TraceOperation 020239 (Dec (Var (Global 212)));
+    Let b18 = M[008332];
+    Let b19 = M[008333];
+    if (IsZeroByte(b19)) {
+      PopStack popped20;
+      PushStack Sub(popped20,1);
+    } else {
+      if (LessThanByte(b19,16)) {
+        SetLocal b19 Sub(GetLocal(b19),1);
+      } else {
+        Let b21 = M[Offset(007908,Mul(2,Widen(MinusByte(b19,16))))];
+        Let b22 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b19,16)))),1)];
+        SetByte Offset(007908,Mul(2,Widen(MinusByte(b19,16)))) HiByte(Sub(MakeHiLo(b21,b22),1));
+        SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b19,16)))),1) LoByte(Sub(MakeHiLo(b21,b22),1));
+      }
+    }
+    TraceOperation 020241 Ret_popped;
+    PopStack popped23;
+    PopFrame;
+    PopReturnAddress return_address_24;
+    JumpReturn: return_address_24, result: popped23
+  } else {
+    Jump: 020286
+  }
 --------------------------------------------------
 LocRoutine 020662:
   MakeRoutineFrame 4;
@@ -1813,7 +1883,40 @@ LocOp 021567:
   Let b5 = M[Offset(Offset(000751,Mul(popped4,9)),7)];
   Let b6 = M[Offset(Offset(Offset(000751,Mul(popped4,9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  Error: getPropsA
+  Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+  Label 9: {
+    Let b10 = M[loop_var8];
+    if (IsZeroByte(b10)) {
+      Let b11 = M[000754];
+      Let b12 = M[000755];
+      PushStack MakeHiLo(b11,b12);
+    } else {
+      if (Equal(29,Widen(BwAnd(b10,31)))) {
+        if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
+          Let b13 = M[Offset(loop_var8,1)];
+          Let b14 = M[Offset(Offset(loop_var8,1),1)];
+          PushStack MakeHiLo(b13,b14);
+        } else {
+          Let b15 = M[Offset(loop_var8,1)];
+          PushStack Widen(b15);
+        }
+      } else {
+        Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+        Goto: Label 9
+      }
+    }
+  }
+  TraceOperation 021574 (Call (Fvar Sp) [Con 6] (Local 7));
+  PopStack popped16;
+  if (IsZeroAddress(PackedAddress Z3(popped16))) {
+    SetLocal 7 0;
+    Jump: 021579
+  } else {
+    PushFrame;
+    PushReturnAddress 021574;
+    SetLocal 1 6;
+    JumpCall: PackedAddress Z3(popped16), #actuals: 1
+  }
 LocReturn 021574:
   SetLocal 7 call_result;
   Jump: 021579
@@ -2536,7 +2639,39 @@ LocOp 022138:
   Let b7 = M[Offset(Offset(000751,Mul(MakeHiLo(b5,b6),9)),7)];
   Let b8 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b5,b6),9)),7),1)];
   Let b9 = M[Address(MakeHiLo(b7,b8))];
-  Error: getPropsA
+  Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+  Label 11: {
+    Let b12 = M[loop_var10];
+    if (IsZeroByte(b12)) {
+      Let b13 = M[000754];
+      Let b14 = M[000755];
+      PushStack MakeHiLo(b13,b14);
+    } else {
+      if (Equal(29,Widen(BwAnd(b12,31)))) {
+        if (Equal(Add(Widen(ShiftR(b12,5)),1),2)) {
+          Let b15 = M[Offset(loop_var10,1)];
+          Let b16 = M[Offset(Offset(loop_var10,1),1)];
+          PushStack MakeHiLo(b15,b16);
+        } else {
+          Let b17 = M[Offset(loop_var10,1)];
+          PushStack Widen(b17);
+        }
+      } else {
+        Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+        Goto: Label 11
+      }
+    }
+  }
+  TraceOperation 022148 (Call (Floc 022288) [Con -12392,Var Sp] (Local 4));
+  PopStack popped18;
+  PushFrame;
+  PushReturnAddress 022148;
+  SetLocal 1 -12392;
+  SetLocal 2 popped18;
+  MakeRoutineFrame 4;
+  SetLocal 4 0;
+  SetLocal 3 0;
+  Jump: 022297
 LocReturn 022148:
   SetLocal 4 call_result;
   TraceOperation 022156 (Jz (Var (Local 4)) (Branch T (Dloc 022162)));
@@ -2579,7 +2714,39 @@ LocOp 022176:
   Let b5 = M[Offset(Offset(000751,Mul(popped4,9)),7)];
   Let b6 = M[Offset(Offset(Offset(000751,Mul(popped4,9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  Error: getPropsA
+  Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+  Label 9: {
+    Let b10 = M[loop_var8];
+    if (IsZeroByte(b10)) {
+      Let b11 = M[000754];
+      Let b12 = M[000755];
+      PushStack MakeHiLo(b11,b12);
+    } else {
+      if (Equal(29,Widen(BwAnd(b10,31)))) {
+        if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
+          Let b13 = M[Offset(loop_var8,1)];
+          Let b14 = M[Offset(Offset(loop_var8,1),1)];
+          PushStack MakeHiLo(b13,b14);
+        } else {
+          Let b15 = M[Offset(loop_var8,1)];
+          PushStack Widen(b15);
+        }
+      } else {
+        Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+        Goto: Label 9
+      }
+    }
+  }
+  TraceOperation 022183 (Call (Floc 022288) [Con -12390,Var Sp,Con 1] (Local 4));
+  PopStack popped16;
+  PushFrame;
+  PushReturnAddress 022183;
+  SetLocal 1 -12390;
+  SetLocal 2 popped16;
+  SetLocal 3 1;
+  MakeRoutineFrame 4;
+  SetLocal 4 0;
+  Jump: 022297
 LocReturn 022183:
   SetLocal 4 call_result;
   TraceOperation 022192 (Jz (Var (Local 4)) (Branch T (Dloc 022198)));
@@ -2624,7 +2791,39 @@ LocOp 022216:
     Let b1 = M[Offset(Offset(000751,Mul(GetLocal(3),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000751,Mul(GetLocal(3),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Error: getPropsA
+    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Label 5: {
+      Let b6 = M[loop_var4];
+      if (IsZeroByte(b6)) {
+        Let b7 = M[000754];
+        Let b8 = M[000755];
+        PushStack MakeHiLo(b7,b8);
+      } else {
+        if (Equal(29,Widen(BwAnd(b6,31)))) {
+          if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
+            Let b9 = M[Offset(loop_var4,1)];
+            Let b10 = M[Offset(Offset(loop_var4,1),1)];
+            PushStack MakeHiLo(b9,b10);
+          } else {
+            Let b11 = M[Offset(loop_var4,1)];
+            PushStack Widen(b11);
+          }
+        } else {
+          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Goto: Label 5
+        }
+      }
+    }
+    TraceOperation 022223 (Call (Floc 022288) [Con -12383,Var Sp] (Local 4));
+    PopStack popped12;
+    PushFrame;
+    PushReturnAddress 022223;
+    SetLocal 1 -12383;
+    SetLocal 2 popped12;
+    MakeRoutineFrame 4;
+    SetLocal 4 0;
+    SetLocal 3 0;
+    Jump: 022297
   }
 LocReturn 022223:
   SetLocal 4 call_result;
@@ -2648,7 +2847,39 @@ LocOp 022237:
       Let b1 = M[Offset(Offset(000751,Mul(GetLocal(2),9)),7)];
       Let b2 = M[Offset(Offset(Offset(000751,Mul(GetLocal(2),9)),7),1)];
       Let b3 = M[Address(MakeHiLo(b1,b2))];
-      Error: getPropsA
+      Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+      Label 5: {
+        Let b6 = M[loop_var4];
+        if (IsZeroByte(b6)) {
+          Let b7 = M[000754];
+          Let b8 = M[000755];
+          PushStack MakeHiLo(b7,b8);
+        } else {
+          if (Equal(29,Widen(BwAnd(b6,31)))) {
+            if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
+              Let b9 = M[Offset(loop_var4,1)];
+              Let b10 = M[Offset(Offset(loop_var4,1),1)];
+              PushStack MakeHiLo(b9,b10);
+            } else {
+              Let b11 = M[Offset(loop_var4,1)];
+              PushStack Widen(b11);
+            }
+          } else {
+            Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+            Goto: Label 5
+          }
+        }
+      }
+      TraceOperation 022248 (Call (Floc 022288) [Con -12380,Var Sp] (Local 4));
+      PopStack popped12;
+      PushFrame;
+      PushReturnAddress 022248;
+      SetLocal 1 -12380;
+      SetLocal 2 popped12;
+      MakeRoutineFrame 4;
+      SetLocal 4 0;
+      SetLocal 3 0;
+      Jump: 022297
     }
   }
 LocReturn 022248:
@@ -9014,7 +9245,67 @@ LocOp 027015:
   Let b4 = M[Offset(Offset(000751,Mul(popped3,9)),7)];
   Let b5 = M[Offset(Offset(Offset(000751,Mul(popped3,9)),7),1)];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  Error: getPropsA
+  Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+  Label 8: {
+    Let b9 = M[loop_var7];
+    if (IsZeroByte(b9)) {
+      Let b10 = M[000726];
+      Let b11 = M[000727];
+      SetLocal 3 MakeHiLo(b10,b11);
+    } else {
+      if (Equal(15,Widen(BwAnd(b9,31)))) {
+        if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
+          Let b12 = M[Offset(loop_var7,1)];
+          Let b13 = M[Offset(Offset(loop_var7,1),1)];
+          SetLocal 3 MakeHiLo(b12,b13);
+        } else {
+          Let b14 = M[Offset(loop_var7,1)];
+          SetLocal 3 Widen(b14);
+        }
+      } else {
+        Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+        Goto: Label 8
+      }
+    }
+  }
+  TraceOperation 027023 (Add (Var (Local 7)) (Con 1) (Local 5));
+  SetLocal 5 Add(GetLocal(7),1);
+  TraceOperation 027027 (Storew (Var (Local 1)) (Var (Global 162)) (Var (Local 5)));
+  Let b15 = M[008232];
+  Let b16 = M[008233];
+  SetByte Offset(Address(GetLocal(1)),Mul(2,MakeHiLo(b15,b16))) HiByte(GetLocal(5));
+  SetByte Offset(Offset(Address(GetLocal(1)),Mul(2,MakeHiLo(b15,b16))),1) LoByte(GetLocal(5));
+  TraceOperation 027032 (Storew (Var (Local 1)) (Var (Local 5)) (Var (Local 3)));
+  SetByte Offset(Address(GetLocal(1)),Mul(2,GetLocal(5))) HiByte(GetLocal(3));
+  SetByte Offset(Offset(Address(GetLocal(1)),Mul(2,GetLocal(5))),1) LoByte(GetLocal(3));
+  TraceOperation 027037 (Store (Con 171) (Var (Global 171)));
+  Let b17 = M[008250];
+  Let b18 = M[008251];
+  SetByte 008218 b17;
+  SetByte 008219 b18;
+  TraceOperation 027040 (Store (Con 170) (Var (Global 170)));
+  Let b19 = M[008248];
+  Let b20 = M[008249];
+  SetByte 008216 b19;
+  SetByte 008217 b20;
+  TraceOperation 027043 (Store (Con 169) (Var (Global 168)));
+  Let b21 = M[008244];
+  Let b22 = M[008245];
+  SetByte 008214 b21;
+  SetByte 008215 b22;
+  TraceOperation 027046 (Store (Con 187) (Con 0));
+  SetByte 008250 0;
+  SetByte 008251 0;
+  TraceOperation 027049 (Store (Con 186) (Con 0));
+  SetByte 008248 0;
+  SetByte 008249 0;
+  TraceOperation 027052 (Store (Con 184) (Con 0));
+  SetByte 008244 0;
+  SetByte 008245 0;
+  TraceOperation 027055 Rtrue;
+  PopFrame;
+  PopReturnAddress return_address_23;
+  JumpReturn: return_address_23, result: 1
 LocOp 027056:
   TraceOperation 027056 (Jz (Var (Local 2)) (Branch T (Dloc 027075)));
   if (IsZero(GetLocal(2))) {
@@ -9595,7 +9886,36 @@ LocOp 027449:
   Let b9 = M[Offset(Offset(000751,Mul(MakeHiLo(b7,b8),9)),7)];
   Let b10 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b7,b8),9)),7),1)];
   Let b11 = M[Address(MakeHiLo(b9,b10))];
-  Error: getPropsA
+  Let loop_var12 = Offset(Address(MakeHiLo(b9,b10)),Add(Mul(2,Widen(b11)),1));
+  Label 13: {
+    Let b14 = M[loop_var12];
+    if (IsZeroByte(b14)) {
+      SetLocal 3 0;
+    } else {
+      if (Equal(24,Widen(BwAnd(b14,31)))) {
+        SetLocal 3 DeAddress(Offset(loop_var12,1));
+      } else {
+        Assign loop_var12 = Offset(Offset(loop_var12,1),Add(Widen(ShiftR(b14,5)),1));
+        Goto: Label 13
+      }
+    }
+  }
+  TraceOperation 027460 (Jz (Var (Local 3)) (Branch T (Dloc 027496)));
+  if (IsZero(GetLocal(3))) {
+    Jump: 027496
+  } else {
+    TraceOperation 027463 (Get_prop_len (Var (Local 3)) Sp);
+    if (IsZero(GetLocal(3))) {
+      PushStack 0;
+    } else {
+      Let b15 = M[Offset(Address(GetLocal(3)),-1)];
+      PushStack Add(Widen(ShiftR(b15,5)),1);
+    }
+    TraceOperation 027466 (Sub (Var Sp) (Con 1) (Local 4));
+    PopStack popped16;
+    SetLocal 4 Sub(popped16,1);
+    Jump: 027470
+  }
 LocOp 027470:
   TraceOperation 027470 (Loadb (Var (Local 3)) (Var (Local 5)) (Local 6));
   Let b1 = M[Offset(Address(GetLocal(3)),GetLocal(5))];
@@ -9641,7 +9961,41 @@ LocOp 027496:
   Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      SetLocal 3 0;
+    } else {
+      if (Equal(25,Widen(BwAnd(b8,31)))) {
+        SetLocal 3 DeAddress(Offset(loop_var6,1));
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 027500 (Jz (Var (Local 3)) (Branch T (Dloc 027591)));
+  if (IsZero(GetLocal(3))) {
+    Jump: 027591
+  } else {
+    TraceOperation 027504 (Get_prop_len (Var (Local 3)) Sp);
+    if (IsZero(GetLocal(3))) {
+      PushStack 0;
+    } else {
+      Let b9 = M[Offset(Address(GetLocal(3)),-1)];
+      PushStack Add(Widen(ShiftR(b9,5)),1);
+    }
+    TraceOperation 027507 (Div (Var Sp) (Con 4) Sp);
+    PopStack popped10;
+    PushStack Div(popped10,4);
+    TraceOperation 027511 (Sub (Var Sp) (Con 1) (Local 4));
+    PopStack popped11;
+    SetLocal 4 Sub(popped11,1);
+    TraceOperation 027515 (Store (Con 5) (Con 0));
+    SetLocal 5 0;
+    Jump: 027518
+  }
 LocOp 027518:
   TraceOperation 027518 (Mul (Var (Local 5)) (Con 2) Sp);
   PushStack Mul(GetLocal(5),2);
@@ -9675,7 +10029,74 @@ LocOp 027518:
     Let b14 = M[001190];
     Let b15 = M[001191];
     Let b16 = M[Address(MakeHiLo(b14,b15))];
-    Error: getPropsA
+    Let loop_var17 = Offset(Address(MakeHiLo(b14,b15)),Add(Mul(2,Widen(b16)),1));
+    Label 18: {
+      Let b19 = M[loop_var17];
+      if (IsZeroByte(b19)) {
+        Error: ("putProp",29)
+      } else {
+        if (Equal(29,Widen(BwAnd(b19,31)))) {
+          if (Equal(Add(Widen(ShiftR(b19,5)),1),2)) {
+            SetByte Offset(loop_var17,1) HiByte(popped13);
+            SetByte Offset(Offset(loop_var17,1),1) LoByte(popped13);
+          } else {
+            SetByte Offset(loop_var17,1) LoByte(popped13);
+          }
+        } else {
+          Assign loop_var17 = Offset(Offset(loop_var17,1),Add(Widen(ShiftR(b19,5)),1));
+          Goto: Label 18
+        }
+      }
+    }
+    TraceOperation 027550 (Get_prop_addr (Con 48) (Con 29) Sp);
+    Let b20 = M[001190];
+    Let b21 = M[001191];
+    Let b22 = M[Address(MakeHiLo(b20,b21))];
+    Let loop_var23 = Offset(Address(MakeHiLo(b20,b21)),Add(Mul(2,Widen(b22)),1));
+    Label 24: {
+      Let b25 = M[loop_var23];
+      if (IsZeroByte(b25)) {
+        PushStack 0;
+      } else {
+        if (Equal(29,Widen(BwAnd(b25,31)))) {
+          PushStack DeAddress(Offset(loop_var23,1));
+        } else {
+          Assign loop_var23 = Offset(Offset(loop_var23,1),Add(Widen(ShiftR(b25,5)),1));
+          Goto: Label 24
+        }
+      }
+    }
+    TraceOperation 027554 (Sub (Var Sp) (Con 5) (Local 8));
+    PopStack popped26;
+    SetLocal 8 Sub(popped26,5);
+    TraceOperation 027558 (Loadw (Var (Global 171)) (Con 0) Sp);
+    Let b27 = M[008250];
+    Let b28 = M[008251];
+    Let b29 = M[Offset(Address(MakeHiLo(b27,b28)),0)];
+    Let b30 = M[Offset(Offset(Address(MakeHiLo(b27,b28)),0),1)];
+    PushStack MakeHiLo(b29,b30);
+    TraceOperation 027562 (Storew (Var (Local 8)) (Con 0) (Var Sp));
+    PopStack popped31;
+    SetByte Offset(Address(GetLocal(8)),0) HiByte(popped31);
+    SetByte Offset(Offset(Address(GetLocal(8)),0),1) LoByte(popped31);
+    TraceOperation 027567 (Loadw (Var (Global 171)) (Con 1) Sp);
+    Let b32 = M[008250];
+    Let b33 = M[008251];
+    Let b34 = M[Offset(Address(MakeHiLo(b32,b33)),2)];
+    Let b35 = M[Offset(Offset(Address(MakeHiLo(b32,b33)),2),1)];
+    PushStack MakeHiLo(b34,b35);
+    TraceOperation 027571 (Storew (Var (Local 8)) (Con 1) (Var Sp));
+    PopStack popped36;
+    SetByte Offset(Address(GetLocal(8)),2) HiByte(popped36);
+    SetByte Offset(Offset(Address(GetLocal(8)),2),1) LoByte(popped36);
+    TraceOperation 027576 (Call (Floc 027780) [Con 48,Var (Local 1)] Sp);
+    PushFrame;
+    PushReturnAddress 027576;
+    SetLocal 1 48;
+    SetLocal 2 GetLocal(1);
+    MakeRoutineFrame 3;
+    SetLocal 3 0;
+    Jump: 027787
   } else {
     Jump: 027586
   }
@@ -9871,7 +10292,35 @@ LocOp 027687:
     Let b1 = M[Offset(Offset(000751,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000751,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Error: getPropsA
+    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Label 5: {
+      Let b6 = M[loop_var4];
+      if (IsZeroByte(b6)) {
+        PushStack 0;
+      } else {
+        if (Equal(31,Widen(BwAnd(b6,31)))) {
+          PushStack DeAddress(Offset(loop_var4,1));
+        } else {
+          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Goto: Label 5
+        }
+      }
+    }
+    TraceOperation 027695 (Jz (Var Sp) (Branch T (Dloc 027715)));
+    PopStack popped7;
+    if (IsZero(popped7)) {
+      Jump: 027715
+    } else {
+      TraceOperation 027698 (Call (Floc 028496) [Var (Local 1),Var (Local 2)] Sp);
+      PushFrame;
+      PushReturnAddress 027698;
+      SetLocal 1 GetLocal(1);
+      SetLocal 2 GetLocal(2);
+      MakeRoutineFrame 4;
+      SetLocal 4 0;
+      SetLocal 3 0;
+      Jump: 028505
+    }
   }
 LocReturn 027698:
   PushStack call_result;
@@ -11013,7 +11462,45 @@ LocOp 028505:
       Let b5 = M[Offset(Offset(000751,Mul(GetLocal(1),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000751,Mul(GetLocal(1),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      Error: getPropsA
+      Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+      Label 9: {
+        Let b10 = M[loop_var8];
+        if (IsZeroByte(b10)) {
+          SetLocal 3 0;
+        } else {
+          if (Equal(31,Widen(BwAnd(b10,31)))) {
+            SetLocal 3 DeAddress(Offset(loop_var8,1));
+          } else {
+            Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+            Goto: Label 9
+          }
+        }
+      }
+      TraceOperation 028516 (Get_prop_len (Var (Local 3)) Sp);
+      if (IsZero(GetLocal(3))) {
+        PushStack 0;
+      } else {
+        Let b11 = M[Offset(Address(GetLocal(3)),-1)];
+        PushStack Add(Widen(ShiftR(b11,5)),1);
+      }
+      TraceOperation 028519 (Div (Var Sp) (Con 2) Sp);
+      PopStack popped12;
+      PushStack Div(popped12,2);
+      TraceOperation 028523 (Sub (Var Sp) (Con 1) Sp);
+      PopStack popped13;
+      PushStack Sub(popped13,1);
+      TraceOperation 028527 (Call (Floc 028252) [Var (Global 171),Var (Local 3),Var Sp] Sp);
+      Let b14 = M[008250];
+      Let b15 = M[008251];
+      PopStack popped16;
+      PushFrame;
+      PushReturnAddress 028527;
+      SetLocal 1 MakeHiLo(b14,b15);
+      SetLocal 2 GetLocal(3);
+      SetLocal 3 popped16;
+      MakeRoutineFrame 4;
+      SetLocal 4 1;
+      Jump: 028261
     }
   }
 LocReturn 028527:
@@ -11038,7 +11525,49 @@ LocOp 028538:
     Let b3 = M[Offset(Offset(000751,Mul(GetLocal(1),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000751,Mul(GetLocal(1),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Error: getPropsA
+    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Label 7: {
+      Let b8 = M[loop_var6];
+      if (IsZeroByte(b8)) {
+        SetLocal 3 0;
+      } else {
+        if (Equal(30,Widen(BwAnd(b8,31)))) {
+          SetLocal 3 DeAddress(Offset(loop_var6,1));
+        } else {
+          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Goto: Label 7
+        }
+      }
+    }
+    TraceOperation 028545 (Jz (Var (Local 3)) (Branch T Dfalse));
+    if (IsZero(GetLocal(3))) {
+      PopFrame;
+      PopReturnAddress return_address_9;
+      JumpReturn: return_address_9, result: 0
+    } else {
+      TraceOperation 028548 (Get_prop_len (Var (Local 3)) Sp);
+      if (IsZero(GetLocal(3))) {
+        PushStack 0;
+      } else {
+        Let b10 = M[Offset(Address(GetLocal(3)),-1)];
+        PushStack Add(Widen(ShiftR(b10,5)),1);
+      }
+      TraceOperation 028551 (Sub (Var Sp) (Con 1) Sp);
+      PopStack popped11;
+      PushStack Sub(popped11,1);
+      TraceOperation 028555 (Call (Floc 028292) [Var (Global 170),Var (Local 3),Var Sp] Sp);
+      Let b12 = M[008248];
+      Let b13 = M[008249];
+      PopStack popped14;
+      PushFrame;
+      PushReturnAddress 028555;
+      SetLocal 1 MakeHiLo(b12,b13);
+      SetLocal 2 GetLocal(3);
+      SetLocal 3 popped14;
+      MakeRoutineFrame 4;
+      SetLocal 4 0;
+      Jump: 028301
+    }
   }
 LocReturn 028555:
   PushStack call_result;
@@ -12800,7 +13329,40 @@ LocOp 030471:
   Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      Let b9 = M[000754];
+      Let b10 = M[000755];
+      PushStack MakeHiLo(b9,b10);
+    } else {
+      if (Equal(29,Widen(BwAnd(b8,31)))) {
+        if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+          Let b11 = M[Offset(loop_var6,1)];
+          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          PushStack MakeHiLo(b11,b12);
+        } else {
+          Let b13 = M[Offset(loop_var6,1)];
+          PushStack Widen(b13);
+        }
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 030475 (Call (Fvar Sp) [Con 2] Sp);
+  PopStack popped14;
+  if (IsZeroAddress(PackedAddress Z3(popped14))) {
+    PushStack 0;
+    Jump: 030480
+  } else {
+    PushFrame;
+    PushReturnAddress 030475;
+    SetLocal 1 2;
+    JumpCall: PackedAddress Z3(popped14), #actuals: 1
+  }
 LocReturn 030475:
   PushStack call_result;
   Jump: 030480
@@ -14416,7 +14978,49 @@ LocOp 031952:
   Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      Let b9 = M[000722];
+      Let b10 = M[000723];
+      PushStack MakeHiLo(b9,b10);
+    } else {
+      if (Equal(13,Widen(BwAnd(b8,31)))) {
+        if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+          Let b11 = M[Offset(loop_var6,1)];
+          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          PushStack MakeHiLo(b11,b12);
+        } else {
+          Let b13 = M[Offset(loop_var6,1)];
+          PushStack Widen(b13);
+        }
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 031956 (Jz (Var Sp) (Branch T (Dloc 031967)));
+  PopStack popped14;
+  if (IsZero(popped14)) {
+    Jump: 031967
+  } else {
+    TraceOperation 031959 (Call (Floc 022042) [Con 120,Var (Global 201)] Sp);
+    Let b15 = M[008310];
+    Let b16 = M[008311];
+    PushFrame;
+    PushReturnAddress 031959;
+    SetLocal 1 120;
+    SetLocal 2 MakeHiLo(b15,b16);
+    MakeRoutineFrame 7;
+    SetLocal 7 0;
+    SetLocal 6 0;
+    SetLocal 5 0;
+    SetLocal 4 0;
+    SetLocal 3 0;
+    Jump: 022057
+  }
 LocReturn 031959:
   PushStack call_result;
   TraceOperation 031966 Rtrue;
@@ -19006,7 +19610,112 @@ LocReturn 036056:
   Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      Let b9 = M[000740];
+      Let b10 = M[000741];
+      PushStack MakeHiLo(b9,b10);
+    } else {
+      if (Equal(22,Widen(BwAnd(b8,31)))) {
+        if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+          Let b11 = M[Offset(loop_var6,1)];
+          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          PushStack MakeHiLo(b11,b12);
+        } else {
+          Let b13 = M[Offset(loop_var6,1)];
+          PushStack Widen(b13);
+        }
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 036066 (Add (Var (Local 1)) (Var Sp) (Local 1));
+  PopStack popped14;
+  SetLocal 1 Add(GetLocal(1),popped14);
+  TraceOperation 036070 (Get_prop (Var (Global 202)) (Con 22) Sp);
+  Let b15 = M[008312];
+  Let b16 = M[008313];
+  Let b17 = M[Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),7)];
+  Let b18 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),7),1)];
+  Let b19 = M[Address(MakeHiLo(b17,b18))];
+  Let loop_var20 = Offset(Address(MakeHiLo(b17,b18)),Add(Mul(2,Widen(b19)),1));
+  Label 21: {
+    Let b22 = M[loop_var20];
+    if (IsZeroByte(b22)) {
+      Let b23 = M[000740];
+      Let b24 = M[000741];
+      PushStack MakeHiLo(b23,b24);
+    } else {
+      if (Equal(22,Widen(BwAnd(b22,31)))) {
+        if (Equal(Add(Widen(ShiftR(b22,5)),1),2)) {
+          Let b25 = M[Offset(loop_var20,1)];
+          Let b26 = M[Offset(Offset(loop_var20,1),1)];
+          PushStack MakeHiLo(b25,b26);
+        } else {
+          Let b27 = M[Offset(loop_var20,1)];
+          PushStack Widen(b27);
+        }
+      } else {
+        Assign loop_var20 = Offset(Offset(loop_var20,1),Add(Widen(ShiftR(b22,5)),1));
+        Goto: Label 21
+      }
+    }
+  }
+  TraceOperation 036074 (Sub (Var (Local 1)) (Var Sp) (Local 1));
+  PopStack popped28;
+  SetLocal 1 Sub(GetLocal(1),popped28);
+  TraceOperation 036078 (Get_prop (Var (Global 202)) (Con 23) Sp);
+  Let b29 = M[008312];
+  Let b30 = M[008313];
+  Let b31 = M[Offset(Offset(000751,Mul(MakeHiLo(b29,b30),9)),7)];
+  Let b32 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b29,b30),9)),7),1)];
+  Let b33 = M[Address(MakeHiLo(b31,b32))];
+  Let loop_var34 = Offset(Address(MakeHiLo(b31,b32)),Add(Mul(2,Widen(b33)),1));
+  Label 35: {
+    Let b36 = M[loop_var34];
+    if (IsZeroByte(b36)) {
+      Let b37 = M[000742];
+      Let b38 = M[000743];
+      PushStack MakeHiLo(b37,b38);
+    } else {
+      if (Equal(23,Widen(BwAnd(b36,31)))) {
+        if (Equal(Add(Widen(ShiftR(b36,5)),1),2)) {
+          Let b39 = M[Offset(loop_var34,1)];
+          Let b40 = M[Offset(Offset(loop_var34,1),1)];
+          PushStack MakeHiLo(b39,b40);
+        } else {
+          Let b41 = M[Offset(loop_var34,1)];
+          PushStack Widen(b41);
+        }
+      } else {
+        Assign loop_var34 = Offset(Offset(loop_var34,1),Add(Widen(ShiftR(b36,5)),1));
+        Goto: Label 35
+      }
+    }
+  }
+  TraceOperation 036082 (Jg (Var (Local 1)) (Var Sp) (Branch F (Dloc 036105)));
+  PopStack popped42;
+  if (GreaterThan(GetLocal(1),popped42)) {
+    TraceOperation 036086 (Test_attr (Var (Global 202)) (Con 12) (Branch F (Dloc 036096)));
+    Let b43 = M[008312];
+    Let b44 = M[008313];
+    Let b45 = M[Offset(Offset(000751,Mul(MakeHiLo(b43,b44),9)),1)];
+    if (TestBit(b45,3)) {
+      TraceOperation 036090 (Call (Floc 031422) [] Sp);
+      PushFrame;
+      PushReturnAddress 036090;
+      MakeRoutineFrame 0;
+      Jump: 031423
+    } else {
+      Jump: 036096
+    }
+  } else {
+    Jump: 036105
+  }
 LocReturn 036090:
   PushStack call_result;
   TraceOperation 036095 Ret_popped;
@@ -19399,7 +20108,38 @@ LocOp 036317:
     Let b6 = M[Offset(Offset(000751,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    Error: getPropsA
+    Let loop_var9 = Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1));
+    Label 10: {
+      Let b11 = M[loop_var9];
+      if (IsZeroByte(b11)) {
+        Let b12 = M[000722];
+        Let b13 = M[000723];
+        PushStack MakeHiLo(b12,b13);
+      } else {
+        if (Equal(13,Widen(BwAnd(b11,31)))) {
+          if (Equal(Add(Widen(ShiftR(b11,5)),1),2)) {
+            Let b14 = M[Offset(loop_var9,1)];
+            Let b15 = M[Offset(Offset(loop_var9,1),1)];
+            PushStack MakeHiLo(b14,b15);
+          } else {
+            Let b16 = M[Offset(loop_var9,1)];
+            PushStack Widen(b16);
+          }
+        } else {
+          Assign loop_var9 = Offset(Offset(loop_var9,1),Add(Widen(ShiftR(b11,5)),1));
+          Goto: Label 10
+        }
+      }
+    }
+    TraceOperation 036325 (Print_paddr (Var Sp));
+    PopStack popped17;
+    GamePrint GetText(PackedAddress Z3(popped17));
+    TraceOperation 036327 New_line;
+    GamePrint "\n";
+    TraceOperation 036328 Rtrue;
+    PopFrame;
+    PopReturnAddress return_address_18;
+    JumpReturn: return_address_18, result: 1
   } else {
     Jump: 036329
   }
@@ -23828,7 +24568,48 @@ LocOp 040139:
   Let b5 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b6 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  Error: getPropsA
+  Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+  Label 9: {
+    Let b10 = M[loop_var8];
+    if (IsZeroByte(b10)) {
+      SetLocal 1 0;
+    } else {
+      if (Equal(MakeHiLo(b3,b4),Widen(BwAnd(b10,31)))) {
+        SetLocal 1 DeAddress(Offset(loop_var8,1));
+      } else {
+        Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+        Goto: Label 9
+      }
+    }
+  }
+  TraceOperation 040143 (Jz (Var (Local 1)) (Branch T (Dloc 040308)));
+  if (IsZero(GetLocal(1))) {
+    Jump: 040308
+  } else {
+    TraceOperation 040147 (Get_prop_len (Var (Local 1)) (Local 2));
+    if (IsZero(GetLocal(1))) {
+      SetLocal 2 0;
+    } else {
+      Let b11 = M[Offset(Address(GetLocal(1)),-1)];
+      SetLocal 2 Add(Widen(ShiftR(b11,5)),1);
+    }
+    TraceOperation 040150 (Je [Var (Local 2),Con 1] (Branch F (Dloc 040165)));
+    if (Equal(GetLocal(2),1)) {
+      TraceOperation 040154 (Loadb (Var (Local 1)) (Con 0) Sp);
+      Let b12 = M[Offset(Address(GetLocal(1)),0)];
+      PushStack Widen(b12);
+      TraceOperation 040158 (Call (Floc 042574) [Var Sp] Sp);
+      PopStack popped13;
+      PushFrame;
+      PushReturnAddress 040158;
+      SetLocal 1 popped13;
+      MakeRoutineFrame 2;
+      SetLocal 2 1;
+      Jump: 042579
+    } else {
+      Jump: 040165
+    }
+  }
 LocReturn 040158:
   PushStack call_result;
   TraceOperation 040164 Ret_popped;
@@ -25570,7 +26351,37 @@ LocOp 041555:
   Let b1 = M[Offset(Offset(000751,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000751,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Error: getPropsA
+  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Label 5: {
+    Let b6 = M[loop_var4];
+    if (IsZeroByte(b6)) {
+      Let b7 = M[000740];
+      Let b8 = M[000741];
+      PushStack MakeHiLo(b7,b8);
+    } else {
+      if (Equal(22,Widen(BwAnd(b6,31)))) {
+        if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
+          Let b9 = M[Offset(loop_var4,1)];
+          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          PushStack MakeHiLo(b9,b10);
+        } else {
+          Let b11 = M[Offset(loop_var4,1)];
+          PushStack Widen(b11);
+        }
+      } else {
+        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Goto: Label 5
+      }
+    }
+  }
+  TraceOperation 041559 (Add (Var (Local 3)) (Var Sp) Sp);
+  PopStack popped12;
+  PushStack Add(GetLocal(3),popped12);
+  TraceOperation 041563 Ret_popped;
+  PopStack popped13;
+  PopFrame;
+  PopReturnAddress return_address_14;
+  JumpReturn: return_address_14, result: popped13
 --------------------------------------------------
 LocRoutine 041564:
   MakeRoutineFrame 4;
@@ -25746,7 +26557,40 @@ LocOp 041681:
     Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Error: getPropsA
+    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Label 7: {
+      Let b8 = M[loop_var6];
+      if (IsZeroByte(b8)) {
+        Let b9 = M[000754];
+        Let b10 = M[000755];
+        PushStack MakeHiLo(b9,b10);
+      } else {
+        if (Equal(29,Widen(BwAnd(b8,31)))) {
+          if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+            Let b11 = M[Offset(loop_var6,1)];
+            Let b12 = M[Offset(Offset(loop_var6,1),1)];
+            PushStack MakeHiLo(b11,b12);
+          } else {
+            Let b13 = M[Offset(loop_var6,1)];
+            PushStack Widen(b13);
+          }
+        } else {
+          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Goto: Label 7
+        }
+      }
+    }
+    TraceOperation 041688 (Call (Fvar Sp) [Con 3] Sp);
+    PopStack popped14;
+    if (IsZeroAddress(PackedAddress Z3(popped14))) {
+      PushStack 0;
+      Jump: 041693
+    } else {
+      PushFrame;
+      PushReturnAddress 041688;
+      SetLocal 1 3;
+      JumpCall: PackedAddress Z3(popped14), #actuals: 1
+    }
   }
 LocReturn 041688:
   PushStack call_result;
@@ -25772,7 +26616,40 @@ LocOp 041696:
     Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Error: getPropsA
+    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Label 7: {
+      Let b8 = M[loop_var6];
+      if (IsZeroByte(b8)) {
+        Let b9 = M[000752];
+        Let b10 = M[000753];
+        SetLocal 3 MakeHiLo(b9,b10);
+      } else {
+        if (Equal(28,Widen(BwAnd(b8,31)))) {
+          if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+            Let b11 = M[Offset(loop_var6,1)];
+            Let b12 = M[Offset(Offset(loop_var6,1),1)];
+            SetLocal 3 MakeHiLo(b11,b12);
+          } else {
+            Let b13 = M[Offset(loop_var6,1)];
+            SetLocal 3 Widen(b13);
+          }
+        } else {
+          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Goto: Label 7
+        }
+      }
+    }
+    TraceOperation 041703 (Jz (Var (Local 3)) (Branch T (Dloc 041712)));
+    if (IsZero(GetLocal(3))) {
+      Jump: 041712
+    } else {
+      TraceOperation 041706 (Print_paddr (Var (Local 3)));
+      GamePrint GetText(PackedAddress Z3(GetLocal(3)));
+      TraceOperation 041708 New_line;
+      GamePrint "\n";
+      TraceOperation 041709 (Jump 041721);
+      Jump: 041721
+    }
   }
 LocOp 041712:
   TraceOperation 041712 (Get_prop (Var (Global 0)) (Con 29) Sp);
@@ -25781,7 +26658,40 @@ LocOp 041712:
   Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      Let b9 = M[000754];
+      Let b10 = M[000755];
+      PushStack MakeHiLo(b9,b10);
+    } else {
+      if (Equal(29,Widen(BwAnd(b8,31)))) {
+        if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+          Let b11 = M[Offset(loop_var6,1)];
+          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          PushStack MakeHiLo(b11,b12);
+        } else {
+          Let b13 = M[Offset(loop_var6,1)];
+          PushStack Widen(b13);
+        }
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 041716 (Call (Fvar Sp) [Con 4] Sp);
+  PopStack popped14;
+  if (IsZeroAddress(PackedAddress Z3(popped14))) {
+    PushStack 0;
+    Jump: 041721
+  } else {
+    PushFrame;
+    PushReturnAddress 041716;
+    SetLocal 1 4;
+    JumpCall: PackedAddress Z3(popped14), #actuals: 1
+  }
 LocReturn 041716:
   PushStack call_result;
   Jump: 041721
@@ -25801,11 +26711,44 @@ LocOp 041721:
       Let b5 = M[Offset(Offset(000751,Mul(GetLocal(4),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000751,Mul(GetLocal(4),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      Error: getPropsA
+      Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+      Label 9: {
+        Let b10 = M[loop_var8];
+        if (IsZeroByte(b10)) {
+          Let b11 = M[000754];
+          Let b12 = M[000755];
+          PushStack MakeHiLo(b11,b12);
+        } else {
+          if (Equal(29,Widen(BwAnd(b10,31)))) {
+            if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
+              Let b13 = M[Offset(loop_var8,1)];
+              Let b14 = M[Offset(Offset(loop_var8,1),1)];
+              PushStack MakeHiLo(b13,b14);
+            } else {
+              Let b15 = M[Offset(loop_var8,1)];
+              PushStack Widen(b15);
+            }
+          } else {
+            Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+            Goto: Label 9
+          }
+        }
+      }
+      TraceOperation 041733 (Call (Fvar Sp) [Con 3] Sp);
+      PopStack popped16;
+      if (IsZeroAddress(PackedAddress Z3(popped16))) {
+        PushStack 0;
+        Jump: 041738
+      } else {
+        PushFrame;
+        PushReturnAddress 041733;
+        SetLocal 1 3;
+        JumpCall: PackedAddress Z3(popped16), #actuals: 1
+      }
     } else {
       PopFrame;
-      PopReturnAddress return_address_8;
-      JumpReturn: return_address_8, result: 1
+      PopReturnAddress return_address_17;
+      JumpReturn: return_address_17, result: 1
     }
   }
 LocReturn 041733:
@@ -25932,7 +26875,40 @@ LocOp 041801:
     Let b1 = M[Offset(Offset(000751,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000751,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Error: getPropsA
+    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Label 5: {
+      Let b6 = M[loop_var4];
+      if (IsZeroByte(b6)) {
+        Let b7 = M[000738];
+        Let b8 = M[000739];
+        PushStack MakeHiLo(b7,b8);
+      } else {
+        if (Equal(21,Widen(BwAnd(b6,31)))) {
+          if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
+            Let b9 = M[Offset(loop_var4,1)];
+            Let b10 = M[Offset(Offset(loop_var4,1),1)];
+            PushStack MakeHiLo(b9,b10);
+          } else {
+            Let b11 = M[Offset(loop_var4,1)];
+            PushStack Widen(b11);
+          }
+        } else {
+          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Goto: Label 5
+        }
+      }
+    }
+    TraceOperation 041808 (Call (Fvar Sp) [Con 5] Sp);
+    PopStack popped12;
+    if (IsZeroAddress(PackedAddress Z3(popped12))) {
+      PushStack 0;
+      Jump: 041813
+    } else {
+      PushFrame;
+      PushReturnAddress 041808;
+      SetLocal 1 5;
+      JumpCall: PackedAddress Z3(popped12), #actuals: 1
+    }
   } else {
     Jump: 041816
   }
@@ -25961,7 +26937,35 @@ LocOp 041816:
       Let b2 = M[Offset(Offset(000751,Mul(GetLocal(1),9)),7)];
       Let b3 = M[Offset(Offset(Offset(000751,Mul(GetLocal(1),9)),7),1)];
       Let b4 = M[Address(MakeHiLo(b2,b3))];
-      Error: getPropsA
+      Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+      Label 6: {
+        Let b7 = M[loop_var5];
+        if (IsZeroByte(b7)) {
+          Let b8 = M[000724];
+          Let b9 = M[000725];
+          SetLocal 4 MakeHiLo(b8,b9);
+        } else {
+          if (Equal(14,Widen(BwAnd(b7,31)))) {
+            if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
+              Let b10 = M[Offset(loop_var5,1)];
+              Let b11 = M[Offset(Offset(loop_var5,1),1)];
+              SetLocal 4 MakeHiLo(b10,b11);
+            } else {
+              Let b12 = M[Offset(loop_var5,1)];
+              SetLocal 4 Widen(b12);
+            }
+          } else {
+            Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+            Goto: Label 6
+          }
+        }
+      }
+      TraceOperation 041827 (Jz (Var (Local 4)) (Branch F (Dloc 041837)));
+      if (IsZero(GetLocal(4))) {
+        Jump: 041830
+      } else {
+        Jump: 041837
+      }
     }
   } else {
     Jump: 041842
@@ -25971,7 +26975,35 @@ LocOp 041830:
   Let b1 = M[Offset(Offset(000751,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000751,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Error: getPropsA
+  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Label 5: {
+    Let b6 = M[loop_var4];
+    if (IsZeroByte(b6)) {
+      Let b7 = M[000752];
+      Let b8 = M[000753];
+      SetLocal 4 MakeHiLo(b7,b8);
+    } else {
+      if (Equal(28,Widen(BwAnd(b6,31)))) {
+        if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
+          Let b9 = M[Offset(loop_var4,1)];
+          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          SetLocal 4 MakeHiLo(b9,b10);
+        } else {
+          Let b11 = M[Offset(loop_var4,1)];
+          SetLocal 4 Widen(b11);
+        }
+      } else {
+        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Goto: Label 5
+      }
+    }
+  }
+  TraceOperation 041834 (Jz (Var (Local 4)) (Branch T (Dloc 041842)));
+  if (IsZero(GetLocal(4))) {
+    Jump: 041842
+  } else {
+    Jump: 041837
+  }
 LocOp 041837:
   TraceOperation 041837 (Print_paddr (Var (Local 4)));
   GamePrint GetText(PackedAddress Z3(GetLocal(4)));
@@ -26354,7 +27386,45 @@ LocOp 042147:
       Let b3 = M[Offset(Offset(000751,Mul(GetLocal(4),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000751,Mul(GetLocal(4),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      Error: getPropsA
+      Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+      Label 7: {
+        Let b8 = M[loop_var6];
+        if (IsZeroByte(b8)) {
+          Let b9 = M[000724];
+          Let b10 = M[000725];
+          SetLocal 7 MakeHiLo(b9,b10);
+        } else {
+          if (Equal(14,Widen(BwAnd(b8,31)))) {
+            if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+              Let b11 = M[Offset(loop_var6,1)];
+              Let b12 = M[Offset(Offset(loop_var6,1),1)];
+              SetLocal 7 MakeHiLo(b11,b12);
+            } else {
+              Let b13 = M[Offset(loop_var6,1)];
+              SetLocal 7 Widen(b13);
+            }
+          } else {
+            Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+            Goto: Label 7
+          }
+        }
+      }
+      TraceOperation 042159 (Jz (Var (Local 7)) (Branch T (Dloc 042200)));
+      if (IsZero(GetLocal(7))) {
+        Jump: 042200
+      } else {
+        TraceOperation 042162 (Test_attr (Var (Local 4)) (Con 27) (Branch T (Dloc 042169)));
+        Let b14 = M[Offset(Offset(000751,Mul(GetLocal(4),9)),3)];
+        if (TestBit(b14,4)) {
+          Jump: 042169
+        } else {
+          TraceOperation 042166 (Print_paddr (Var (Local 7)));
+          GamePrint GetText(PackedAddress Z3(GetLocal(7)));
+          TraceOperation 042168 New_line;
+          GamePrint "\n";
+          Jump: 042169
+        }
+      }
     }
   }
 LocOp 042169:
@@ -26379,7 +27449,57 @@ LocReturn 042169:
     Let b4 = M[Offset(Offset(000751,Mul(popped3,9)),7)];
     Let b5 = M[Offset(Offset(Offset(000751,Mul(popped3,9)),7),1)];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    Error: getPropsA
+    Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+    Label 8: {
+      Let b9 = M[loop_var7];
+      if (IsZeroByte(b9)) {
+        Let b10 = M[000738];
+        Let b11 = M[000739];
+        PushStack MakeHiLo(b10,b11);
+      } else {
+        if (Equal(21,Widen(BwAnd(b9,31)))) {
+          if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
+            Let b12 = M[Offset(loop_var7,1)];
+            Let b13 = M[Offset(Offset(loop_var7,1),1)];
+            PushStack MakeHiLo(b12,b13);
+          } else {
+            Let b14 = M[Offset(loop_var7,1)];
+            PushStack Widen(b14);
+          }
+        } else {
+          Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+          Goto: Label 8
+        }
+      }
+    }
+    TraceOperation 042185 (Jz (Var Sp) (Branch F (Dloc 042200)));
+    PopStack popped15;
+    if (IsZero(popped15)) {
+      TraceOperation 042188 (Get_child (Var (Local 4)) Sp (Branch F (Dloc 042200)));
+      Let b16 = M[Offset(Offset(000751,Mul(GetLocal(4),9)),6)];
+      PushStack Widen(b16);
+      if (IsZero(Widen(b16))) {
+        Jump: 042200
+      } else {
+        TraceOperation 042192 (Call (Floc 042074) [Var (Local 4),Var (Local 2),Con 0] Sp);
+        PushFrame;
+        PushReturnAddress 042192;
+        SetLocal 1 GetLocal(4);
+        SetLocal 2 GetLocal(2);
+        SetLocal 3 0;
+        MakeRoutineFrame 10;
+        SetLocal 10 0;
+        SetLocal 9 0;
+        SetLocal 8 0;
+        SetLocal 7 0;
+        SetLocal 6 0;
+        SetLocal 5 1;
+        SetLocal 4 0;
+        Jump: 042095
+      }
+    } else {
+      Jump: 042200
+    }
   }
 LocReturn 042192:
   PushStack call_result;
@@ -26492,7 +27612,36 @@ LocOp 042254:
         Let b3 = M[Offset(Offset(000751,Mul(GetLocal(4),9)),7)];
         Let b4 = M[Offset(Offset(Offset(000751,Mul(GetLocal(4),9)),7),1)];
         Let b5 = M[Address(MakeHiLo(b3,b4))];
-        Error: getPropsA
+        Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+        Label 7: {
+          Let b8 = M[loop_var6];
+          if (IsZeroByte(b8)) {
+            Let b9 = M[000724];
+            Let b10 = M[000725];
+            PushStack MakeHiLo(b9,b10);
+          } else {
+            if (Equal(14,Widen(BwAnd(b8,31)))) {
+              if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+                Let b11 = M[Offset(loop_var6,1)];
+                Let b12 = M[Offset(Offset(loop_var6,1),1)];
+                PushStack MakeHiLo(b11,b12);
+              } else {
+                Let b13 = M[Offset(loop_var6,1)];
+                PushStack Widen(b13);
+              }
+            } else {
+              Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+              Goto: Label 7
+            }
+          }
+        }
+        TraceOperation 042270 (Jz (Var Sp) (Branch F (Dloc 042353)));
+        PopStack popped14;
+        if (IsZero(popped14)) {
+          Jump: 042274
+        } else {
+          Jump: 042353
+        }
       }
     } else {
       Jump: 042274
@@ -27102,7 +28251,40 @@ LocReturn 042598:
   Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      Let b9 = M[000754];
+      Let b10 = M[000755];
+      PushStack MakeHiLo(b9,b10);
+    } else {
+      if (Equal(29,Widen(BwAnd(b8,31)))) {
+        if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+          Let b11 = M[Offset(loop_var6,1)];
+          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          PushStack MakeHiLo(b11,b12);
+        } else {
+          Let b13 = M[Offset(loop_var6,1)];
+          PushStack Widen(b13);
+        }
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 042607 (Call (Fvar Sp) [Con 2] Sp);
+  PopStack popped14;
+  if (IsZeroAddress(PackedAddress Z3(popped14))) {
+    PushStack 0;
+    Jump: 042612
+  } else {
+    PushFrame;
+    PushReturnAddress 042607;
+    SetLocal 1 2;
+    JumpCall: PackedAddress Z3(popped14), #actuals: 1
+  }
 LocReturn 042607:
   PushStack call_result;
   Jump: 042612
@@ -29175,27 +30357,80 @@ LocOp 043437:
     Let b5 = M[Address(MakeHiLo(b3,b4))];
     Let b6 = M[Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1))];
     SetLocal 2 Widen(BwAnd(b6,31));
-    TraceOperation 043441 (Jl (Var (Local 2)) (Var (Global 87)) (Branch T Dfalse));
-    Let b7 = M[008082];
-    Let b8 = M[008083];
-    if (LessThan(GetLocal(2),MakeHiLo(b7,b8))) {
-      PopFrame;
-      PopReturnAddress return_address_9;
-      JumpReturn: return_address_9, result: 0
-    } else {
-      TraceOperation 043445 (Get_prop_addr (Var (Global 0)) (Var (Local 2)) (Local 3));
-      Let b10 = M[007908];
-      Let b11 = M[007909];
-      Let b12 = M[Offset(Offset(000751,Mul(MakeHiLo(b10,b11),9)),7)];
-      Let b13 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b10,b11),9)),7),1)];
-      Let b14 = M[Address(MakeHiLo(b12,b13))];
-      Error: getPropsA
-    }
   } else {
-    Let b15 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
-    Let b16 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
-    Let b17 = M[Address(MakeHiLo(b15,b16))];
-    Error: getPropsA
+    Let b7 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
+    Let b8 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
+    Let b9 = M[Address(MakeHiLo(b7,b8))];
+    Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+    Label 11: {
+      Let b12 = M[loop_var10];
+      if (IsZeroByte(b12)) {
+        Error: ("getNextProp",GetLocal(2))
+      } else {
+        if (Equal(GetLocal(2),Widen(BwAnd(b12,31)))) {
+          Let b13 = M[Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1))];
+          SetLocal 2 Widen(BwAnd(b13,31));
+        } else {
+          Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+          Goto: Label 11
+        }
+      }
+    }
+  }
+  TraceOperation 043441 (Jl (Var (Local 2)) (Var (Global 87)) (Branch T Dfalse));
+  Let b14 = M[008082];
+  Let b15 = M[008083];
+  if (LessThan(GetLocal(2),MakeHiLo(b14,b15))) {
+    PopFrame;
+    PopReturnAddress return_address_16;
+    JumpReturn: return_address_16, result: 0
+  } else {
+    TraceOperation 043445 (Get_prop_addr (Var (Global 0)) (Var (Local 2)) (Local 3));
+    Let b17 = M[007908];
+    Let b18 = M[007909];
+    Let b19 = M[Offset(Offset(000751,Mul(MakeHiLo(b17,b18),9)),7)];
+    Let b20 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b17,b18),9)),7),1)];
+    Let b21 = M[Address(MakeHiLo(b19,b20))];
+    Let loop_var22 = Offset(Address(MakeHiLo(b19,b20)),Add(Mul(2,Widen(b21)),1));
+    Label 23: {
+      Let b24 = M[loop_var22];
+      if (IsZeroByte(b24)) {
+        SetLocal 3 0;
+      } else {
+        if (Equal(GetLocal(2),Widen(BwAnd(b24,31)))) {
+          SetLocal 3 DeAddress(Offset(loop_var22,1));
+        } else {
+          Assign loop_var22 = Offset(Offset(loop_var22,1),Add(Widen(ShiftR(b24,5)),1));
+          Goto: Label 23
+        }
+      }
+    }
+    TraceOperation 043449 (Get_prop_len (Var (Local 3)) Sp);
+    if (IsZero(GetLocal(3))) {
+      PushStack 0;
+    } else {
+      Let b25 = M[Offset(Address(GetLocal(3)),-1)];
+      PushStack Add(Widen(ShiftR(b25,5)),1);
+    }
+    TraceOperation 043452 (Je [Var Sp,Con 5] (Branch F (Dloc 043437)));
+    PopStack popped26;
+    if (Equal(popped26,5)) {
+      TraceOperation 043457 (Loadb (Var (Local 3)) (Con 1) Sp);
+      Let b27 = M[Offset(Address(GetLocal(3)),1)];
+      PushStack Widen(b27);
+      TraceOperation 043461 (Je [Var Sp,Var (Local 1)] (Branch F (Dloc 043437)));
+      PopStack popped28;
+      if (Equal(popped28,GetLocal(1))) {
+        TraceOperation 043466 (Ret (Var (Local 2)));
+        PopFrame;
+        PopReturnAddress return_address_29;
+        JumpReturn: return_address_29, result: GetLocal(2)
+      } else {
+        Jump: 043437
+      }
+    } else {
+      Jump: 043437
+    }
   }
 --------------------------------------------------
 LocRoutine 043468:
@@ -29322,7 +30557,47 @@ LocOp 043529:
   Let b1 = M[Offset(Offset(000751,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000751,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Error: getPropsA
+  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Label 5: {
+    Let b6 = M[loop_var4];
+    if (IsZeroByte(b6)) {
+      SetLocal 3 0;
+    } else {
+      if (Equal(24,Widen(BwAnd(b6,31)))) {
+        SetLocal 3 DeAddress(Offset(loop_var4,1));
+      } else {
+        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Goto: Label 5
+      }
+    }
+  }
+  TraceOperation 043533 (Jz (Var (Local 3)) (Branch T Dfalse));
+  if (IsZero(GetLocal(3))) {
+    PopFrame;
+    PopReturnAddress return_address_7;
+    JumpReturn: return_address_7, result: 0
+  } else {
+    TraceOperation 043536 (Get_prop_len (Var (Local 3)) Sp);
+    if (IsZero(GetLocal(3))) {
+      PushStack 0;
+    } else {
+      Let b8 = M[Offset(Address(GetLocal(3)),-1)];
+      PushStack Add(Widen(ShiftR(b8,5)),1);
+    }
+    TraceOperation 043539 (Sub (Var Sp) (Con 1) Sp);
+    PopStack popped9;
+    PushStack Sub(popped9,1);
+    TraceOperation 043543 (Call (Floc 028292) [Var (Local 1),Var (Local 3),Var Sp] Sp);
+    PopStack popped10;
+    PushFrame;
+    PushReturnAddress 043543;
+    SetLocal 1 GetLocal(1);
+    SetLocal 2 GetLocal(3);
+    SetLocal 3 popped10;
+    MakeRoutineFrame 4;
+    SetLocal 4 0;
+    Jump: 028301
+  }
 LocReturn 043543:
   PushStack call_result;
   TraceOperation 043551 Ret_popped;
@@ -33030,7 +34305,34 @@ LocOp 046927:
     Let b1 = M[001037];
     Let b2 = M[001038];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Error: getPropsA
+    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Label 5: {
+      Let b6 = M[loop_var4];
+      if (IsZeroByte(b6)) {
+        Error: ("putProp",29)
+      } else {
+        if (Equal(29,Widen(BwAnd(b6,31)))) {
+          if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
+            SetByte Offset(loop_var4,1) 92;
+            SetByte Offset(Offset(loop_var4,1),1) 22;
+          } else {
+            SetByte Offset(loop_var4,1) 22;
+          }
+        } else {
+          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Goto: Label 5
+        }
+      }
+    }
+    TraceOperation 046938 (Call (Floc 043644) [Con 31,Con 24] Sp);
+    PushFrame;
+    PushReturnAddress 046938;
+    SetLocal 1 31;
+    SetLocal 2 24;
+    MakeRoutineFrame 4;
+    SetLocal 4 0;
+    SetLocal 3 0;
+    Jump: 043653
   } else {
     Jump: 047142
   }
@@ -34573,7 +35875,43 @@ LocOp 048671:
   Let b1 = M[001037];
   Let b2 = M[001038];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Error: getPropsA
+  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Label 5: {
+    Let b6 = M[loop_var4];
+    if (IsZeroByte(b6)) {
+      Error: ("putProp",29)
+    } else {
+      if (Equal(29,Widen(BwAnd(b6,31)))) {
+        if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
+          SetByte Offset(loop_var4,1) 88;
+          SetByte Offset(Offset(loop_var4,1),1) 144;
+        } else {
+          SetByte Offset(loop_var4,1) 144;
+        }
+      } else {
+        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Goto: Label 5
+      }
+    }
+  }
+  TraceOperation 048679 (Store (Con 90) (Con 0));
+  SetByte 008056 0;
+  SetByte 008057 0;
+  TraceOperation 048682 (Store (Con 86) (Con 0));
+  SetByte 008048 0;
+  SetByte 008049 0;
+  TraceOperation 048685 (Store (Con 223) (Con 0));
+  SetByte 008322 0;
+  SetByte 008323 0;
+  TraceOperation 048688 (Call (Floc 043644) [Con 24,Con 31] Sp);
+  PushFrame;
+  PushReturnAddress 048688;
+  SetLocal 1 24;
+  SetLocal 2 31;
+  MakeRoutineFrame 4;
+  SetLocal 4 0;
+  SetLocal 3 0;
+  Jump: 043653
 LocReturn 048688:
   PushStack call_result;
   TraceOperation 048695 (Call (Floc 043644) [Con 97,Con 31] Sp);
@@ -53199,7 +54537,76 @@ LocOp 079362:
   Let b3 = M[Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Error: getPropsA
+  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Label 7: {
+    Let b8 = M[loop_var6];
+    if (IsZeroByte(b8)) {
+      Let b9 = M[000740];
+      Let b10 = M[000741];
+      PushStack MakeHiLo(b9,b10);
+    } else {
+      if (Equal(22,Widen(BwAnd(b8,31)))) {
+        if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
+          Let b11 = M[Offset(loop_var6,1)];
+          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          PushStack MakeHiLo(b11,b12);
+        } else {
+          Let b13 = M[Offset(loop_var6,1)];
+          PushStack Widen(b13);
+        }
+      } else {
+        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Goto: Label 7
+      }
+    }
+  }
+  TraceOperation 079366 (Jl (Var Sp) (Con 5) (Branch F (Dloc 079394)));
+  PopStack popped14;
+  if (LessThan(popped14,5)) {
+    TraceOperation 079370 (Insert_obj (Var (Global 201)) (Con 219));
+    Let b15 = M[008310];
+    Let b16 = M[008311];
+    Let b17 = M[Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),4)];
+    if (IsZero(Widen(b17))) {
+      SetByte Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),4) 219;
+      Let b18 = M[002728];
+      SetByte Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),5) LoByte(Widen(b18));
+      SetByte 002728 b16;
+    } else {
+      Let b19 = M[Offset(Offset(000751,Mul(Widen(b17),9)),6)];
+      if (Equal(Widen(b19),MakeHiLo(b15,b16))) {
+        Let b20 = M[Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),5)];
+        SetByte Offset(Offset(000751,Mul(Widen(b17),9)),6) LoByte(Widen(b20));
+        SetByte Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),4) 219;
+        Let b21 = M[002728];
+        SetByte Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),5) LoByte(Widen(b21));
+        SetByte 002728 b16;
+      } else {
+        Let loop_var22 = Widen(b19);
+        Label 23: {
+          Let b24 = M[Offset(Offset(000751,Mul(loop_var22,9)),5)];
+          if (Equal(Widen(b24),MakeHiLo(b15,b16))) {
+            Let b25 = M[Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),5)];
+            SetByte Offset(Offset(000751,Mul(loop_var22,9)),5) LoByte(Widen(b25));
+            SetByte Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),4) 219;
+            Let b26 = M[002728];
+            SetByte Offset(Offset(000751,Mul(MakeHiLo(b15,b16),9)),5) LoByte(Widen(b26));
+            SetByte 002728 b16;
+          } else {
+            Assign loop_var22 = Widen(b24);
+            Goto: Label 23
+          }
+        }
+      }
+    }
+    TraceOperation 079373 (Print_ret "It falls through the hole and vanishes.");
+    GamePrint "It falls through the hole and vanishes.\n";
+    PopFrame;
+    PopReturnAddress return_address_27;
+    JumpReturn: return_address_27, result: 1
+  } else {
+    Jump: 079394
+  }
 LocOp 079394:
   TraceOperation 079394 (Print_ret "It doesn't fit through the hole.");
   GamePrint "It doesn't fit through the hole.\n";
@@ -61541,7 +62948,35 @@ LocOp 091496:
       Let b2 = M[001037];
       Let b3 = M[001038];
       Let b4 = M[Address(MakeHiLo(b2,b3))];
-      Error: getPropsA
+      Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+      Label 6: {
+        Let b7 = M[loop_var5];
+        if (IsZeroByte(b7)) {
+          Error: ("putProp",29)
+        } else {
+          if (Equal(29,Widen(BwAnd(b7,31)))) {
+            if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
+              SetByte Offset(loop_var5,1) 179;
+              SetByte Offset(Offset(loop_var5,1),1) 74;
+            } else {
+              SetByte Offset(loop_var5,1) 74;
+            }
+          } else {
+            Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+            Goto: Label 6
+          }
+        }
+      }
+      TraceOperation 091512 (Print "As you step out of the boat, the plume of water lowers it away. The crowd, unaware of the autopilot, bursts into a round of admiring applause.");
+      GamePrint "As you step out of the boat, the plume of water lowers it away. The crowd, unaware of the autopilot, bursts into a round of admiring applause.";
+      TraceOperation 091595 New_line;
+      GamePrint "\n";
+      TraceOperation 091596 New_line;
+      GamePrint "\n";
+      TraceOperation 091597 Rtrue;
+      PopFrame;
+      PopReturnAddress return_address_8;
+      JumpReturn: return_address_8, result: 1
     }
   } else {
     Jump: 091598
@@ -61755,7 +63190,173 @@ LocOp 091870:
     Let b7 = M[001037];
     Let b8 = M[001038];
     Let b9 = M[Address(MakeHiLo(b7,b8))];
-    Error: getPropsA
+    Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+    Label 11: {
+      Let b12 = M[loop_var10];
+      if (IsZeroByte(b12)) {
+        Error: ("putProp",29)
+      } else {
+        if (Equal(29,Widen(BwAnd(b12,31)))) {
+          if (Equal(Add(Widen(ShiftR(b12,5)),1),2)) {
+            SetByte Offset(loop_var10,1) 88;
+            SetByte Offset(Offset(loop_var10,1),1) 144;
+          } else {
+            SetByte Offset(loop_var10,1) 144;
+          }
+        } else {
+          Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+          Goto: Label 11
+        }
+      }
+    }
+    TraceOperation 091885 (Insert_obj (Con 194) (Var (Global 0)));
+    Let b13 = M[007908];
+    Let b14 = M[007909];
+    Let b15 = M[002501];
+    if (IsZero(Widen(b15))) {
+      SetByte 002501 b14;
+      Let b16 = M[Offset(Offset(000751,Mul(MakeHiLo(b13,b14),9)),6)];
+      SetByte 002502 LoByte(Widen(b16));
+      SetByte Offset(Offset(000751,Mul(MakeHiLo(b13,b14),9)),6) 194;
+    } else {
+      Let b17 = M[Offset(Offset(000751,Mul(Widen(b15),9)),6)];
+      if (Equal(Widen(b17),194)) {
+        Let b18 = M[002502];
+        SetByte Offset(Offset(000751,Mul(Widen(b15),9)),6) LoByte(Widen(b18));
+        SetByte 002501 b14;
+        Let b19 = M[Offset(Offset(000751,Mul(MakeHiLo(b13,b14),9)),6)];
+        SetByte 002502 LoByte(Widen(b19));
+        SetByte Offset(Offset(000751,Mul(MakeHiLo(b13,b14),9)),6) 194;
+      } else {
+        Let loop_var20 = Widen(b17);
+        Label 21: {
+          Let b22 = M[Offset(Offset(000751,Mul(loop_var20,9)),5)];
+          if (Equal(Widen(b22),194)) {
+            Let b23 = M[002502];
+            SetByte Offset(Offset(000751,Mul(loop_var20,9)),5) LoByte(Widen(b23));
+            SetByte 002501 b14;
+            Let b24 = M[Offset(Offset(000751,Mul(MakeHiLo(b13,b14),9)),6)];
+            SetByte 002502 LoByte(Widen(b24));
+            SetByte Offset(Offset(000751,Mul(MakeHiLo(b13,b14),9)),6) 194;
+          } else {
+            Assign loop_var20 = Widen(b22);
+            Goto: Label 21
+          }
+        }
+      }
+    }
+    TraceOperation 091888 (Insert_obj (Con 52) (Con 194));
+    Let b25 = M[001223];
+    if (IsZero(Widen(b25))) {
+      SetByte 001223 194;
+      Let b26 = M[002503];
+      SetByte 001224 LoByte(Widen(b26));
+      SetByte 002503 52;
+    } else {
+      Let b27 = M[Offset(Offset(000751,Mul(Widen(b25),9)),6)];
+      if (Equal(Widen(b27),52)) {
+        Let b28 = M[001224];
+        SetByte Offset(Offset(000751,Mul(Widen(b25),9)),6) LoByte(Widen(b28));
+        SetByte 001223 194;
+        Let b29 = M[002503];
+        SetByte 001224 LoByte(Widen(b29));
+        SetByte 002503 52;
+      } else {
+        Let loop_var30 = Widen(b27);
+        Label 31: {
+          Let b32 = M[Offset(Offset(000751,Mul(loop_var30,9)),5)];
+          if (Equal(Widen(b32),52)) {
+            Let b33 = M[001224];
+            SetByte Offset(Offset(000751,Mul(loop_var30,9)),5) LoByte(Widen(b33));
+            SetByte 001223 194;
+            Let b34 = M[002503];
+            SetByte 001224 LoByte(Widen(b34));
+            SetByte 002503 52;
+          } else {
+            Assign loop_var30 = Widen(b32);
+            Goto: Label 31
+          }
+        }
+      }
+    }
+    TraceOperation 091891 (Insert_obj (Con 27) (Var (Global 0)));
+    Let b35 = M[007908];
+    Let b36 = M[007909];
+    Let b37 = M[000998];
+    if (IsZero(Widen(b37))) {
+      SetByte 000998 b36;
+      Let b38 = M[Offset(Offset(000751,Mul(MakeHiLo(b35,b36),9)),6)];
+      SetByte 000999 LoByte(Widen(b38));
+      SetByte Offset(Offset(000751,Mul(MakeHiLo(b35,b36),9)),6) 27;
+    } else {
+      Let b39 = M[Offset(Offset(000751,Mul(Widen(b37),9)),6)];
+      if (Equal(Widen(b39),27)) {
+        Let b40 = M[000999];
+        SetByte Offset(Offset(000751,Mul(Widen(b37),9)),6) LoByte(Widen(b40));
+        SetByte 000998 b36;
+        Let b41 = M[Offset(Offset(000751,Mul(MakeHiLo(b35,b36),9)),6)];
+        SetByte 000999 LoByte(Widen(b41));
+        SetByte Offset(Offset(000751,Mul(MakeHiLo(b35,b36),9)),6) 27;
+      } else {
+        Let loop_var42 = Widen(b39);
+        Label 43: {
+          Let b44 = M[Offset(Offset(000751,Mul(loop_var42,9)),5)];
+          if (Equal(Widen(b44),27)) {
+            Let b45 = M[000999];
+            SetByte Offset(Offset(000751,Mul(loop_var42,9)),5) LoByte(Widen(b45));
+            SetByte 000998 b36;
+            Let b46 = M[Offset(Offset(000751,Mul(MakeHiLo(b35,b36),9)),6)];
+            SetByte 000999 LoByte(Widen(b46));
+            SetByte Offset(Offset(000751,Mul(MakeHiLo(b35,b36),9)),6) 27;
+          } else {
+            Assign loop_var42 = Widen(b44);
+            Goto: Label 43
+          }
+        }
+      }
+    }
+    TraceOperation 091894 (Insert_obj (Con 51) (Con 27));
+    Let b47 = M[001214];
+    if (IsZero(Widen(b47))) {
+      SetByte 001214 27;
+      Let b48 = M[001000];
+      SetByte 001215 LoByte(Widen(b48));
+      SetByte 001000 51;
+    } else {
+      Let b49 = M[Offset(Offset(000751,Mul(Widen(b47),9)),6)];
+      if (Equal(Widen(b49),51)) {
+        Let b50 = M[001215];
+        SetByte Offset(Offset(000751,Mul(Widen(b47),9)),6) LoByte(Widen(b50));
+        SetByte 001214 27;
+        Let b51 = M[001000];
+        SetByte 001215 LoByte(Widen(b51));
+        SetByte 001000 51;
+      } else {
+        Let loop_var52 = Widen(b49);
+        Label 53: {
+          Let b54 = M[Offset(Offset(000751,Mul(loop_var52,9)),5)];
+          if (Equal(Widen(b54),51)) {
+            Let b55 = M[001215];
+            SetByte Offset(Offset(000751,Mul(loop_var52,9)),5) LoByte(Widen(b55));
+            SetByte 001214 27;
+            Let b56 = M[001000];
+            SetByte 001215 LoByte(Widen(b56));
+            SetByte 001000 51;
+          } else {
+            Assign loop_var52 = Widen(b54);
+            Goto: Label 53
+          }
+        }
+      }
+    }
+    TraceOperation 091897 (Call (Floc 022320) [Con -25112,Con 8] Sp);
+    PushFrame;
+    PushReturnAddress 091897;
+    SetLocal 1 -25112;
+    SetLocal 2 8;
+    MakeRoutineFrame 3;
+    SetLocal 3 0;
+    Jump: 022327
   } else {
     Jump: 092083
   }
