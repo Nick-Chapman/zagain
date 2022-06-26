@@ -382,7 +382,7 @@ eval mode here op = case op of
   Op.Test_attr arg1 arg2 label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    res <- Objects.testAttr v1 v2
+    res <- Objects.testAttr v1 v2 >>= If
     branchMaybe label res
 
   Op.Nop -> Note (here,op)

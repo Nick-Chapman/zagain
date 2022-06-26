@@ -16,7 +16,7 @@ import qualified Numbers (Value)
 
 --[attributes]--------------------------------------------------------
 
-testAttr :: Phase p => Value p -> Value p -> Eff p Bool -- TODO: needs isolation, no. but return Pred to make it clear it is caller's responsibility
+testAttr :: Phase p => Value p -> Value p -> Eff p (Pred p)
 testAttr x n = do
   base <- objectAddr x
   d <- Div8 n
@@ -24,7 +24,7 @@ testAttr x n = do
   m' <- SevenMinus m
   a <- Offset base d
   b <- GetByte a
-  b `TestBit` m' >>= If
+  b `TestBit` m'
 
 setAttr :: Phase p => Value p -> Value p -> Eff p ()
 setAttr x n = do
