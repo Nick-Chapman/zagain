@@ -99,7 +99,7 @@ setFM fm x y = do
       SetByte a1 lo
 
 insertObj :: Phase p => Value p -> Value p -> Eff p ()
-insertObj x dest = Isolate $ do
+insertObj x dest = do
   unlink x
   setFM Parent x dest
   oldChild <- getFM Child dest
@@ -107,13 +107,13 @@ insertObj x dest = Isolate $ do
   setFM Child dest x
 
 removeObj :: Phase p => Value p -> Eff p ()
-removeObj x = Isolate $ do
+removeObj x = do
   unlink x
   zero <- LitV 0
   setFM Parent x zero
 
 unlink :: Phase p => Value p -> Eff p ()
-unlink this = do -- TODO: do isolate here instead of in insertObj/removeObj?
+unlink this = Isolate $ do
   oldP <- getFM Parent this
   b <- not <$> (IsZero oldP >>= If)
   when b $ do
@@ -213,7 +213,7 @@ dataAddrToPropAddr a = do
     Small -> pure aM1
     Large -> do
       b <- GetByte aM1
-      (LitB 7 >>= TestBit b) >>= If >>= \case -- TODO: isolation?
+      (LitB 7 >>= TestBit b) >>= If >>= \case
         False -> pure aM1
         True -> do
           LitV (-2) >>= Offset a
