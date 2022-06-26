@@ -2729,8 +2729,7 @@ LocOp 022297:
       TraceOperation 022303 (Call (Fvar (Local 2)) [Var (Local 3)] Sp);
       if (IsZeroAddress(PackedAddress Z3(GetLocal(2)))) {
         PushStack 0;
-        TraceOperation 022308 (Jump 022315);
-        Jump: 022315
+        Jump: 022308
       } else {
         PushFrame;
         PushReturnAddress 022303;
@@ -2741,6 +2740,8 @@ LocOp 022297:
   }
 LocReturn 022303:
   PushStack call_result;
+  Jump: 022308
+LocOp 022308:
   TraceOperation 022308 (Jump 022315);
   Jump: 022315
 LocOp 022311:
@@ -2984,15 +2985,7 @@ LocOp 022455:
     PopStack popped4;
     if (IsZeroAddress(PackedAddress Z3(popped4))) {
       PushStack 0;
-      TraceOperation 022476 (Jz (Var Sp) (Branch T (Dloc 022482)));
-      PopStack popped5;
-      if (IsZero(popped5)) {
-        Jump: 022482
-      } else {
-        TraceOperation 022479 (Store (Con 4) (Con 1));
-        SetLocal 4 1;
-        Jump: 022482
-      }
+      Jump: 022476
     } else {
       PushFrame;
       PushReturnAddress 022472;
@@ -3001,6 +2994,8 @@ LocOp 022455:
   }
 LocReturn 022472:
   PushStack call_result;
+  Jump: 022476
+LocOp 022476:
   TraceOperation 022476 (Jz (Var Sp) (Branch T (Dloc 022482)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -12808,6 +12803,8 @@ LocOp 030471:
   Error: getPropsA
 LocReturn 030475:
   PushStack call_result;
+  Jump: 030480
+LocOp 030480:
   TraceOperation 030480 Rtrue;
   PopFrame;
   PopReturnAddress return_address_1;
@@ -23869,18 +23866,7 @@ LocOp 040178:
     PopStack popped3;
     if (IsZeroAddress(PackedAddress Z3(popped3))) {
       SetLocal 5 0;
-      TraceOperation 040190 (Jz (Var (Local 5)) (Branch T (Dloc 040200)));
-      if (IsZero(GetLocal(5))) {
-        Jump: 040200
-      } else {
-        TraceOperation 040193 (Call (Floc 042574) [Var (Local 5)] Sp);
-        PushFrame;
-        PushReturnAddress 040193;
-        SetLocal 1 GetLocal(5);
-        MakeRoutineFrame 2;
-        SetLocal 2 1;
-        Jump: 042579
-      }
+      Jump: 040190
     } else {
       PushFrame;
       PushReturnAddress 040186;
@@ -23891,6 +23877,8 @@ LocOp 040178:
   }
 LocReturn 040186:
   SetLocal 5 call_result;
+  Jump: 040190
+LocOp 040190:
   TraceOperation 040190 (Jz (Var (Local 5)) (Branch T (Dloc 040200)));
   if (IsZero(GetLocal(5))) {
     Jump: 040200
@@ -25762,6 +25750,8 @@ LocOp 041681:
   }
 LocReturn 041688:
   PushStack call_result;
+  Jump: 041693
+LocOp 041693:
   TraceOperation 041693 (Jz (Var Sp) (Branch F Dtrue));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -25820,6 +25810,8 @@ LocOp 041721:
   }
 LocReturn 041733:
   PushStack call_result;
+  Jump: 041738
+LocOp 041738:
   TraceOperation 041738 Rtrue;
   PopFrame;
   PopReturnAddress return_address_1;
@@ -25946,6 +25938,8 @@ LocOp 041801:
   }
 LocReturn 041808:
   PushStack call_result;
+  Jump: 041813
+LocOp 041813:
   TraceOperation 041813 (Jz (Var Sp) (Branch F Dtrue));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -27111,6 +27105,8 @@ LocReturn 042598:
   Error: getPropsA
 LocReturn 042607:
   PushStack call_result;
+  Jump: 042612
+LocOp 042612:
   TraceOperation 042612 (Jz (Var (Local 2)) (Branch T Dtrue));
   if (IsZero(GetLocal(2))) {
     PopFrame;

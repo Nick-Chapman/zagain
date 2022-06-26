@@ -557,8 +557,7 @@ LocOp 024835:
   if (Equal(MakeHiLo(b1,b2),3)) {
     TraceOperation 024839 (CallN (Fvar (Local 3)) [Var (Local 4),Var (Local 5)]);
     if (IsZeroAddress(PackedAddress Z5(GetLocal(3)))) {
-      TraceOperation 024844 (Jump 024871);
-      Jump: 024871
+      Jump: 024844
     } else {
       PushFrame;
       PushReturnAddress 024839;
@@ -569,6 +568,9 @@ LocOp 024835:
   } else {
     Jump: 024847
   }
+LocOp 024844:
+  TraceOperation 024844 (Jump 024871);
+  Jump: 024871
 LocOp 024847:
   TraceOperation 024847 (Je [Var (Global 239),Con 2,Con 1] (Branch F (Dloc 024871)));
   Let b1 = M[007684];
@@ -2289,15 +2291,17 @@ LocOp 026149:
   TraceOperation 026155 (CallN (Fvar Sp) []);
   PopStack popped5;
   if (IsZeroAddress(PackedAddress Z5(popped5))) {
-    TraceOperation 026157 Rtrue;
-    PopFrame;
-    PopReturnAddress return_address_6;
-    JumpReturn: return_address_6, result: 1
+    Jump: 026157
   } else {
     PushFrame;
     PushReturnAddress 026155;
     JumpCall: PackedAddress Z5(popped5), #actuals: 0
   }
+LocOp 026157:
+  TraceOperation 026157 Rtrue;
+  PopFrame;
+  PopReturnAddress return_address_1;
+  JumpReturn: return_address_1, result: 1
 --------------------------------------------------
 LocRoutine 026160:
   MakeRoutineFrame 0;
@@ -11640,16 +11644,7 @@ LocReturn 038547:
       Let b6 = M[007479];
       if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b5,b6)))) {
         PushStack 0;
-        TraceOperation 038567 (Jz (Var Sp) (Branch F (Dloc 038573)));
-        PopStack popped7;
-        if (IsZero(popped7)) {
-          TraceOperation 038570 (Clear_attr (Var (Local 6)) (Con 29));
-          Let b8 = M[Offset(Offset(000378,Mul(GetLocal(6),14)),3)];
-          SetByte Offset(Offset(000378,Mul(GetLocal(6),14)),3) ClearBit(b8,2);
-          Jump: 038573
-        } else {
-          Jump: 038573
-        }
+        Jump: 038567
       } else {
         PushFrame;
         PushReturnAddress 038563;
@@ -11660,6 +11655,8 @@ LocReturn 038547:
   }
 LocReturn 038563:
   PushStack call_result;
+  Jump: 038567
+LocOp 038567:
   TraceOperation 038567 (Jz (Var Sp) (Branch F (Dloc 038573)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -11686,24 +11683,7 @@ LocOp 038584:
   Let b2 = M[007397];
   if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b1,b2)))) {
     SetLocal 1 0;
-    TraceOperation 038593 (Jz (Var (Local 1)) (Branch F (Dloc 038610)));
-    if (IsZero(GetLocal(1))) {
-      TraceOperation 038596 (Print_paddr (Con 28510));
-      GamePrint GetText(114040);
-      TraceOperation 038599 (And (Var (Local 2)) (Con 1) Sp);
-      PushStack And(GetLocal(2),1);
-      TraceOperation 038603 (Jz (Var Sp) (Branch T (Dloc 038607)));
-      PopStack popped3;
-      if (IsZero(popped3)) {
-        Jump: 038607
-      } else {
-        TraceOperation 038606 New_line;
-        GamePrint "\n";
-        Jump: 038607
-      }
-    } else {
-      Jump: 038610
-    }
+    Jump: 038593
   } else {
     PushFrame;
     PushReturnAddress 038584;
@@ -11715,6 +11695,8 @@ LocOp 038584:
   }
 LocReturn 038584:
   SetLocal 1 call_result;
+  Jump: 038593
+LocOp 038593:
   TraceOperation 038593 (Jz (Var (Local 1)) (Branch F (Dloc 038610)));
   if (IsZero(GetLocal(1))) {
     TraceOperation 038596 (Print_paddr (Con 28510));
@@ -12280,8 +12262,7 @@ LocOp 039042:
     Let b4 = M[007397];
     if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b3,b4)))) {
       SetLocal 8 0;
-      TraceOperation 039061 (Jump 039042);
-      Jump: 039042
+      Jump: 039061
     } else {
       Let b5 = M[007398];
       Let b6 = M[007399];
@@ -12296,6 +12277,8 @@ LocOp 039042:
   }
 LocReturn 039052:
   SetLocal 8 call_result;
+  Jump: 039061
+LocOp 039061:
   TraceOperation 039061 (Jump 039042);
   Jump: 039042
 LocOp 039064:
@@ -15519,24 +15502,14 @@ LocReturn 041675:
     TraceOperation 041693 (Call (Fvar (Local 2)) [Var Sp,Var Sp] (Local 3));
     if (IsZeroAddress(PackedAddress Z5(GetLocal(2)))) {
       SetLocal 3 0;
-      TraceOperation 041699 (Je [Var (Local 3),Con -1] (Branch F Dtrue));
-      if (Equal(GetLocal(3),-1)) {
-        TraceOperation 041705 Rfalse;
-        PopFrame;
-        PopReturnAddress return_address_2;
-        JumpReturn: return_address_2, result: 0
-      } else {
-        PopFrame;
-        PopReturnAddress return_address_3;
-        JumpReturn: return_address_3, result: 1
-      }
+      Jump: 041699
     } else {
-      PopStack popped4;
-      PopStack popped5;
+      PopStack popped2;
+      PopStack popped3;
       PushFrame;
       PushReturnAddress 041693;
-      SetLocal 1 popped4;
-      SetLocal 2 popped5;
+      SetLocal 1 popped2;
+      SetLocal 2 popped3;
       JumpCall: PackedAddress Z5(GetLocal(2)), #actuals: 2
     }
   } else {
@@ -15544,6 +15517,8 @@ LocReturn 041675:
   }
 LocReturn 041693:
   SetLocal 3 call_result;
+  Jump: 041699
+LocOp 041699:
   TraceOperation 041699 (Je [Var (Local 3),Con -1] (Branch F Dtrue));
   if (Equal(GetLocal(3),-1)) {
     TraceOperation 041705 Rfalse;
@@ -19038,19 +19013,7 @@ LocOp 044505:
     Let b4 = M[007369];
     if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b3,b4)))) {
       PushStack 0;
-      TraceOperation 044515 (Je [Var Sp,Con -1] (Branch F (Dloc 044527)));
-      PopStack popped5;
-      if (Equal(popped5,-1)) {
-        TraceOperation 044521 (Store (Con 153) (Var (Global 138)));
-        Let b6 = M[007482];
-        Let b7 = M[007483];
-        SetByte 007480 b6;
-        SetByte 007481 b7;
-        TraceOperation 044524 (Jump 043964);
-        Jump: 043964
-      } else {
-        Jump: 044527
-      }
+      Jump: 044515
     } else {
       PushFrame;
       PushReturnAddress 044512;
@@ -19061,6 +19024,8 @@ LocOp 044505:
   }
 LocReturn 044512:
   PushStack call_result;
+  Jump: 044515
+LocOp 044515:
   TraceOperation 044515 (Je [Var Sp,Con -1] (Branch F (Dloc 044527)));
   PopStack popped1;
   if (Equal(popped1,-1)) {
@@ -21841,11 +21806,7 @@ LocReturn 048649:
     Let b3 = M[007517];
     if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b2,b3)))) {
       PushStack 0;
-      TraceOperation 048665 Ret_popped;
-      PopStack popped4;
-      PopFrame;
-      PopReturnAddress return_address_5;
-      JumpReturn: return_address_5, result: popped4
+      Jump: 048665
     } else {
       PushFrame;
       PushReturnAddress 048662;
@@ -21854,6 +21815,8 @@ LocReturn 048649:
   }
 LocReturn 048662:
   PushStack call_result;
+  Jump: 048665
+LocOp 048665:
   TraceOperation 048665 Ret_popped;
   PopStack popped1;
   PopFrame;
@@ -23722,15 +23685,7 @@ LocOp 050085:
     Let b4 = M[007367];
     if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b3,b4)))) {
       PushStack 0;
-      TraceOperation 050094 (Jz (Var Sp) (Branch F Dtrue));
-      PopStack popped5;
-      if (IsZero(popped5)) {
-        Jump: 050097
-      } else {
-        PopFrame;
-        PopReturnAddress return_address_6;
-        JumpReturn: return_address_6, result: 1
-      }
+      Jump: 050094
     } else {
       PushFrame;
       PushReturnAddress 050091;
@@ -23739,6 +23694,8 @@ LocOp 050085:
   }
 LocReturn 050091:
   PushStack call_result;
+  Jump: 050094
+LocOp 050094:
   TraceOperation 050094 (Jz (Var Sp) (Branch F Dtrue));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -25096,15 +25053,7 @@ LocReturn 050978:
     Let b4 = M[007485];
     if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b3,b4)))) {
       SetLocal 4 0;
-      TraceOperation 050997 (Jl (Var (Local 4)) (Con 0) (Branch T (Dloc 051003)));
-      if (LessThan(GetLocal(4),0)) {
-        Jump: 051003
-      } else {
-        TraceOperation 051001 (Ret (Var (Local 4)));
-        PopFrame;
-        PopReturnAddress return_address_5;
-        JumpReturn: return_address_5, result: GetLocal(4)
-      }
+      Jump: 050997
     } else {
       PushFrame;
       PushReturnAddress 050991;
@@ -25115,6 +25064,8 @@ LocReturn 050978:
   }
 LocReturn 050991:
   SetLocal 4 call_result;
+  Jump: 050997
+LocOp 050997:
   TraceOperation 050997 (Jl (Var (Local 4)) (Con 0) (Branch T (Dloc 051003)));
   if (LessThan(GetLocal(4),0)) {
     Jump: 051003
@@ -66633,8 +66584,7 @@ LocOp 078566:
   if (IsZero(GetLocal(11))) {
     TraceOperation 078569 (CallN (Fvar (Local 10)) [Var (Local 4)]);
     if (IsZeroAddress(PackedAddress Z5(GetLocal(10)))) {
-      TraceOperation 078572 (Jump 078578);
-      Jump: 078578
+      Jump: 078572
     } else {
       PushFrame;
       PushReturnAddress 078569;
@@ -66644,6 +66594,9 @@ LocOp 078566:
   } else {
     Jump: 078575
   }
+LocOp 078572:
+  TraceOperation 078572 (Jump 078578);
+  Jump: 078578
 LocOp 078575:
   TraceOperation 078575 (CallN (Fvar (Local 10)) [Var (Local 5)]);
   if (IsZeroAddress(PackedAddress Z5(GetLocal(10)))) {
@@ -66853,20 +66806,12 @@ LocOp 078692:
         TraceOperation 078715 (Call (Fvar (Local 2)) [Var Sp] Sp);
         if (IsZeroAddress(PackedAddress Z5(GetLocal(2)))) {
           PushStack 0;
-          TraceOperation 078719 (Jz (Var Sp) (Branch F Dtrue));
-          PopStack popped9;
-          if (IsZero(popped9)) {
-            Jump: 078722
-          } else {
-            PopFrame;
-            PopReturnAddress return_address_10;
-            JumpReturn: return_address_10, result: 1
-          }
+          Jump: 078719
         } else {
-          PopStack popped11;
+          PopStack popped9;
           PushFrame;
           PushReturnAddress 078715;
-          SetLocal 1 popped11;
+          SetLocal 1 popped9;
           JumpCall: PackedAddress Z5(GetLocal(2)), #actuals: 1
         }
       }
@@ -66878,6 +66823,8 @@ LocOp 078692:
   }
 LocReturn 078715:
   PushStack call_result;
+  Jump: 078719
+LocOp 078719:
   TraceOperation 078719 (Jz (Var Sp) (Branch F Dtrue));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -69126,6 +69073,12 @@ LocOp 080531:
   TraceOperation 080537 (CallN (Floc 080308) []);
   PushFrame;
   PushReturnAddress 080537;
+  MakeRoutineFrame 0;
+  Jump: 080309
+LocOp 080542:
+  TraceOperation 080542 (CallN (Floc 080308) []);
+  PushFrame;
+  PushReturnAddress 080542;
   MakeRoutineFrame 0;
   Jump: 080309
 LocOp 080548:
@@ -74397,16 +74350,7 @@ LocOp 084650:
     TraceOperation 084653 (Call (Fvar (Local 3)) [Var (Local 1)] Sp);
     if (IsZeroAddress(PackedAddress Z5(GetLocal(3)))) {
       PushStack 0;
-      TraceOperation 084657 (Jz (Var Sp) (Branch F (Dloc 084661)));
-      PopStack popped1;
-      if (IsZero(popped1)) {
-        TraceOperation 084660 Rfalse;
-        PopFrame;
-        PopReturnAddress return_address_2;
-        JumpReturn: return_address_2, result: 0
-      } else {
-        Jump: 084661
-      }
+      Jump: 084657
     } else {
       PushFrame;
       PushReturnAddress 084653;
@@ -74416,6 +74360,8 @@ LocOp 084650:
   }
 LocReturn 084653:
   PushStack call_result;
+  Jump: 084657
+LocOp 084657:
   TraceOperation 084657 (Jz (Var Sp) (Branch F (Dloc 084661)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -74434,16 +74380,7 @@ LocOp 084661:
     TraceOperation 084664 (Call (Fvar (Local 3)) [Var (Local 2)] Sp);
     if (IsZeroAddress(PackedAddress Z5(GetLocal(3)))) {
       PushStack 0;
-      TraceOperation 084668 (Jz (Var Sp) (Branch F (Dloc 084672)));
-      PopStack popped1;
-      if (IsZero(popped1)) {
-        TraceOperation 084671 Rfalse;
-        PopFrame;
-        PopReturnAddress return_address_2;
-        JumpReturn: return_address_2, result: 0
-      } else {
-        Jump: 084672
-      }
+      Jump: 084668
     } else {
       PushFrame;
       PushReturnAddress 084664;
@@ -74453,6 +74390,8 @@ LocOp 084661:
   }
 LocReturn 084664:
   PushStack call_result;
+  Jump: 084668
+LocOp 084668:
   TraceOperation 084668 (Jz (Var Sp) (Branch F (Dloc 084672)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -74501,13 +74440,7 @@ LocOp 084689:
       TraceOperation 084697 (Call (Fvar (Local 3)) [Var (Local 6)] Sp);
       if (IsZeroAddress(PackedAddress Z5(GetLocal(3)))) {
         PushStack 0;
-        TraceOperation 084701 (Jz (Var Sp) (Branch T (Dloc 084733)));
-        PopStack popped2;
-        if (IsZero(popped2)) {
-          Jump: 084733
-        } else {
-          Jump: 084704
-        }
+        Jump: 084701
       } else {
         PushFrame;
         PushReturnAddress 084697;
@@ -74520,6 +74453,8 @@ LocOp 084689:
   }
 LocReturn 084697:
   PushStack call_result;
+  Jump: 084701
+LocOp 084701:
   TraceOperation 084701 (Jz (Var Sp) (Branch T (Dloc 084733)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -74834,13 +74769,7 @@ LocOp 084928:
       TraceOperation 084936 (Call (Fvar (Local 3)) [Var (Local 5)] Sp);
       if (IsZeroAddress(PackedAddress Z5(GetLocal(3)))) {
         PushStack 0;
-        TraceOperation 084940 (Jz (Var Sp) (Branch T (Dloc 085151)));
-        PopStack popped2;
-        if (IsZero(popped2)) {
-          Jump: 085151
-        } else {
-          Jump: 084944
-        }
+        Jump: 084940
       } else {
         PushFrame;
         PushReturnAddress 084936;
@@ -74853,6 +74782,8 @@ LocOp 084928:
   }
 LocReturn 084936:
   PushStack call_result;
+  Jump: 084940
+LocOp 084940:
   TraceOperation 084940 (Jz (Var Sp) (Branch T (Dloc 085151)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -74923,6 +74854,8 @@ LocOp 085004:
   }
 LocReturn 085025:
   PushStack call_result;
+  Jump: 085029
+LocOp 085029:
   TraceOperation 085029 (Jz (Var Sp) (Branch T (Dloc 085049)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -75042,6 +74975,8 @@ LocReturn 085091:
   }
 LocReturn 085122:
   PushStack call_result;
+  Jump: 085126
+LocOp 085126:
   TraceOperation 085126 (Jz (Var Sp) (Branch T (Dloc 085146)));
   PopStack popped1;
   if (IsZero(popped1)) {
@@ -77217,13 +77152,7 @@ LocOp 087609:
   if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b1,b2)))) {
     SetByte 007232 0;
     SetByte 007233 0;
-    TraceOperation 087613 (Or (Var (Global 125)) (Con 117) (Global 25));
-    Let b3 = M[007456];
-    Let b4 = M[007457];
-    SetByte 007256 HiByte(Or(MakeHiLo(b3,b4),117));
-    SetByte 007257 LoByte(Or(MakeHiLo(b3,b4),117));
-    TraceOperation 087617 (Jump 087953);
-    Jump: 087953
+    Jump: 087613
   } else {
     PushFrame;
     PushReturnAddress 087609;
@@ -77233,6 +77162,8 @@ LocOp 087609:
 LocReturn 087609:
   SetByte 007232 HiByte(call_result);
   SetByte 007233 LoByte(call_result);
+  Jump: 087613
+LocOp 087613:
   TraceOperation 087613 (Or (Var (Global 125)) (Con 117) (Global 25));
   Let b1 = M[007456];
   Let b2 = M[007457];
@@ -77368,13 +77299,7 @@ LocOp 087851:
   if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b12,b13)))) {
     SetByte 007268 0;
     SetByte 007269 0;
-    TraceOperation 087869 (Or (Var (Global 125)) (Con 117) (Global 151));
-    Let b14 = M[007456];
-    Let b15 = M[007457];
-    SetByte 007508 HiByte(Or(MakeHiLo(b14,b15),117));
-    SetByte 007509 LoByte(Or(MakeHiLo(b14,b15),117));
-    TraceOperation 087873 (Jump 087953);
-    Jump: 087953
+    Jump: 087869
   } else {
     PushFrame;
     PushReturnAddress 087865;
@@ -77384,6 +77309,8 @@ LocOp 087851:
 LocReturn 087865:
   SetByte 007268 HiByte(call_result);
   SetByte 007269 LoByte(call_result);
+  Jump: 087869
+LocOp 087869:
   TraceOperation 087869 (Or (Var (Global 125)) (Con 117) (Global 151));
   Let b1 = M[007456];
   Let b2 = M[007457];
@@ -84910,8 +84837,7 @@ LocOp 098318:
   } else {
     TraceOperation 098321 (CallN (Fvar (Local 3)) [Var (Local 1),Var (Local 2)]);
     if (IsZeroAddress(PackedAddress Z5(GetLocal(3)))) {
-      TraceOperation 098326 (Jump 098335);
-      Jump: 098335
+      Jump: 098326
     } else {
       PushFrame;
       PushReturnAddress 098321;
@@ -84920,6 +84846,9 @@ LocOp 098318:
       JumpCall: PackedAddress Z5(GetLocal(3)), #actuals: 2
     }
   }
+LocOp 098326:
+  TraceOperation 098326 (Jump 098335);
+  Jump: 098335
 LocOp 098329:
   TraceOperation 098329 (CallN (Floc 098520) [Var (Local 1),Var (Local 2)]);
   PushFrame;
@@ -84954,36 +84883,29 @@ LocOp 098337:
   Let b2 = M[007613];
   if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b1,b2)))) {
     PushStack 0;
-    TraceOperation 098355 (Mul (Var (Global 201)) (Var Sp) Sp);
-    Let b3 = M[007608];
-    Let b4 = M[007609];
-    PopStack popped5;
-    PushStack Mul(MakeHiLo(b3,b4),popped5);
-    TraceOperation 098359 Ret_popped;
-    PopStack popped6;
-    PopFrame;
-    PopReturnAddress return_address_7;
-    JumpReturn: return_address_7, result: popped6
+    Jump: 098355
   } else {
-    Let b8 = M[007604];
-    Let b9 = M[007605];
-    Let b10 = M[007606];
-    Let b11 = M[007607];
-    PopStack popped12;
-    PopStack popped13;
-    Let b14 = M[007608];
-    Let b15 = M[007609];
+    Let b3 = M[007604];
+    Let b4 = M[007605];
+    Let b5 = M[007606];
+    Let b6 = M[007607];
+    PopStack popped7;
+    PopStack popped8;
+    Let b9 = M[007608];
+    Let b10 = M[007609];
     PushFrame;
     PushReturnAddress 098345;
-    SetLocal 1 MakeHiLo(b8,b9);
-    SetLocal 2 MakeHiLo(b10,b11);
-    SetLocal 3 popped12;
-    SetLocal 4 popped13;
-    SetLocal 5 MakeHiLo(b14,b15);
+    SetLocal 1 MakeHiLo(b3,b4);
+    SetLocal 2 MakeHiLo(b5,b6);
+    SetLocal 3 popped7;
+    SetLocal 4 popped8;
+    SetLocal 5 MakeHiLo(b9,b10);
     JumpCall: PackedAddress Z5(MakeHiLo(b1,b2)), #actuals: 5
   }
 LocReturn 098345:
   PushStack call_result;
+  Jump: 098355
+LocOp 098355:
   TraceOperation 098355 (Mul (Var (Global 201)) (Var Sp) Sp);
   Let b1 = M[007608];
   Let b2 = M[007609];
@@ -85014,25 +84936,23 @@ LocOp 098361:
   Let b2 = M[007611];
   if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b1,b2)))) {
     PushStack 0;
-    TraceOperation 098376 Ret_popped;
-    PopStack popped3;
-    PopFrame;
-    PopReturnAddress return_address_4;
-    JumpReturn: return_address_4, result: popped3
+    Jump: 098376
   } else {
-    Let b5 = M[007604];
-    Let b6 = M[007605];
-    PopStack popped7;
-    PopStack popped8;
+    Let b3 = M[007604];
+    Let b4 = M[007605];
+    PopStack popped5;
+    PopStack popped6;
     PushFrame;
     PushReturnAddress 098369;
-    SetLocal 1 MakeHiLo(b5,b6);
-    SetLocal 2 popped7;
-    SetLocal 3 popped8;
+    SetLocal 1 MakeHiLo(b3,b4);
+    SetLocal 2 popped5;
+    SetLocal 3 popped6;
     JumpCall: PackedAddress Z5(MakeHiLo(b1,b2)), #actuals: 3
   }
 LocReturn 098369:
   PushStack call_result;
+  Jump: 098376
+LocOp 098376:
   TraceOperation 098376 Ret_popped;
   PopStack popped1;
   PopFrame;
@@ -86844,28 +86764,21 @@ LocOp 100111:
     TraceOperation 100122 (Call (Fvar (Local 6)) [Var Sp,Var Sp] Sp);
     if (IsZeroAddress(PackedAddress Z5(GetLocal(6)))) {
       PushStack 0;
-      TraceOperation 100128 (Je [Var Sp,Con -1] (Branch T (Dloc 100136)));
-      PopStack popped1;
-      if (Equal(popped1,-1)) {
-        Jump: 100136
-      } else {
-        TraceOperation 100134 (Ret (Var (Local 4)));
-        PopFrame;
-        PopReturnAddress return_address_2;
-        JumpReturn: return_address_2, result: GetLocal(4)
-      }
+      Jump: 100128
     } else {
-      PopStack popped3;
-      PopStack popped4;
+      PopStack popped1;
+      PopStack popped2;
       PushFrame;
       PushReturnAddress 100122;
-      SetLocal 1 popped3;
-      SetLocal 2 popped4;
+      SetLocal 1 popped1;
+      SetLocal 2 popped2;
       JumpCall: PackedAddress Z5(GetLocal(6)), #actuals: 2
     }
   }
 LocReturn 100122:
   PushStack call_result;
+  Jump: 100128
+LocOp 100128:
   TraceOperation 100128 (Je [Var Sp,Con -1] (Branch T (Dloc 100136)));
   PopStack popped1;
   if (Equal(popped1,-1)) {
@@ -94508,17 +94421,19 @@ LocOp 105571:
   Let b1 = M[007466];
   Let b2 = M[007467];
   if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b1,b2)))) {
-    TraceOperation 105574 (Get_prop (Con 196) (Con 150) (Global 75));
-    Let b3 = M[003134];
-    Let b4 = M[003135];
-    Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Error: getPropsA
+    Jump: 105574
   } else {
     PushFrame;
     PushReturnAddress 105571;
     SetLocal 1 84;
     JumpCall: PackedAddress Z5(MakeHiLo(b1,b2)), #actuals: 1
   }
+LocOp 105574:
+  TraceOperation 105574 (Get_prop (Con 196) (Con 150) (Global 75));
+  Let b1 = M[003134];
+  Let b2 = M[003135];
+  Let b3 = M[Address(MakeHiLo(b1,b2))];
+  Error: getPropsA
 --------------------------------------------------
 LocRoutine 105714:
   MakeRoutineFrame 0;
@@ -94554,17 +94469,19 @@ LocOp 105805:
   Let b1 = M[007466];
   Let b2 = M[007467];
   if (IsZeroAddress(PackedAddress Z5(MakeHiLo(b1,b2)))) {
-    TraceOperation 105808 (Get_prop (Con 89) (Con 222) (Global 180));
-    Let b3 = M[001636];
-    Let b4 = M[001637];
-    Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Error: getPropsA
+    Jump: 105808
   } else {
     PushFrame;
     PushReturnAddress 105805;
     SetLocal 1 84;
     JumpCall: PackedAddress Z5(MakeHiLo(b1,b2)), #actuals: 1
   }
+LocOp 105808:
+  TraceOperation 105808 (Get_prop (Con 89) (Con 222) (Global 180));
+  Let b1 = M[001636];
+  Let b2 = M[001637];
+  Let b3 = M[Address(MakeHiLo(b1,b2))];
+  Error: getPropsA
 --------------------------------------------------
 LocRoutine 105816:
   MakeRoutineFrame 4;
@@ -99355,18 +99272,7 @@ LocReturn 110212:
       TraceOperation 110241 (Call (Fvar (Local 1)) [Var (Local 3),Var (Local 4),Var (Local 5),Var (Local 6),Var (Local 7),Var (Local 8)] (Local 9));
       if (IsZeroAddress(PackedAddress Z5(GetLocal(1)))) {
         SetLocal 9 0;
-        TraceOperation 110252 (Store (Con 251) (Var (Global 234)));
-        Let b10 = M[007674];
-        Let b11 = M[007675];
-        SetByte 007676 b10;
-        SetByte 007677 b11;
-        TraceOperation 110255 (Store (Con 250) (Var (Local 12)));
-        SetByte 007674 HiByte(GetLocal(12));
-        SetByte 007675 LoByte(GetLocal(12));
-        TraceOperation 110258 (Ret (Var (Local 9)));
-        PopFrame;
-        PopReturnAddress return_address_12;
-        JumpReturn: return_address_12, result: GetLocal(9)
+        Jump: 110252
       } else {
         PushFrame;
         PushReturnAddress 110241;
@@ -99386,6 +99292,8 @@ LocReturn 110212:
   }
 LocReturn 110241:
   SetLocal 9 call_result;
+  Jump: 110252
+LocOp 110252:
   TraceOperation 110252 (Store (Con 251) (Var (Global 234)));
   Let b1 = M[007674];
   Let b2 = M[007675];
@@ -99881,8 +99789,7 @@ LocOp 110742:
     PopStack popped5;
     if (IsZeroAddress(PackedAddress Z5(popped5))) {
       SetLocal 11 0;
-      TraceOperation 110756 (Jump 110869);
-      Jump: 110869
+      Jump: 110756
     } else {
       PushFrame;
       PushReturnAddress 110753;
@@ -99893,6 +99800,8 @@ LocOp 110742:
   }
 LocReturn 110753:
   SetLocal 11 call_result;
+  Jump: 110756
+LocOp 110756:
   TraceOperation 110756 (Jump 110869);
   Jump: 110869
 LocOp 110759:
@@ -99908,8 +99817,7 @@ LocOp 110759:
     PopStack popped5;
     if (IsZeroAddress(PackedAddress Z5(popped5))) {
       SetLocal 11 0;
-      TraceOperation 110771 (Jump 110869);
-      Jump: 110869
+      Jump: 110771
     } else {
       PushFrame;
       PushReturnAddress 110767;
@@ -99921,6 +99829,8 @@ LocOp 110759:
   }
 LocReturn 110767:
   SetLocal 11 call_result;
+  Jump: 110771
+LocOp 110771:
   TraceOperation 110771 (Jump 110869);
   Jump: 110869
 LocOp 110774:
@@ -99936,8 +99846,7 @@ LocOp 110774:
     PopStack popped5;
     if (IsZeroAddress(PackedAddress Z5(popped5))) {
       SetLocal 11 0;
-      TraceOperation 110788 (Jump 110869);
-      Jump: 110869
+      Jump: 110788
     } else {
       PushFrame;
       PushReturnAddress 110782;
@@ -99950,6 +99859,8 @@ LocOp 110774:
   }
 LocReturn 110782:
   SetLocal 11 call_result;
+  Jump: 110788
+LocOp 110788:
   TraceOperation 110788 (Jump 110869);
   Jump: 110869
 LocOp 110791:
@@ -99965,8 +99876,7 @@ LocOp 110791:
     PopStack popped5;
     if (IsZeroAddress(PackedAddress Z5(popped5))) {
       SetLocal 11 0;
-      TraceOperation 110806 (Jump 110869);
-      Jump: 110869
+      Jump: 110806
     } else {
       PushFrame;
       PushReturnAddress 110799;
@@ -99980,6 +99890,8 @@ LocOp 110791:
   }
 LocReturn 110799:
   SetLocal 11 call_result;
+  Jump: 110806
+LocOp 110806:
   TraceOperation 110806 (Jump 110869);
   Jump: 110869
 LocOp 110809:
@@ -99995,8 +99907,7 @@ LocOp 110809:
     PopStack popped5;
     if (IsZeroAddress(PackedAddress Z5(popped5))) {
       SetLocal 11 0;
-      TraceOperation 110826 (Jump 110869);
-      Jump: 110869
+      Jump: 110826
     } else {
       PushFrame;
       PushReturnAddress 110817;
@@ -100011,6 +99922,8 @@ LocOp 110809:
   }
 LocReturn 110817:
   SetLocal 11 call_result;
+  Jump: 110826
+LocOp 110826:
   TraceOperation 110826 (Jump 110869);
   Jump: 110869
 LocOp 110829:
@@ -100026,8 +99939,7 @@ LocOp 110829:
     PopStack popped5;
     if (IsZeroAddress(PackedAddress Z5(popped5))) {
       SetLocal 11 0;
-      TraceOperation 110847 (Jump 110869);
-      Jump: 110869
+      Jump: 110847
     } else {
       PushFrame;
       PushReturnAddress 110837;
@@ -100043,6 +99955,8 @@ LocOp 110829:
   }
 LocReturn 110837:
   SetLocal 11 call_result;
+  Jump: 110847
+LocOp 110847:
   TraceOperation 110847 (Jump 110869);
   Jump: 110869
 LocOp 110850:
@@ -103415,10 +103329,7 @@ LocOp 130593:
     TraceOperation 130601 (Call (Fvar (Local 2)) [Con 139] (Local 2));
     if (IsZeroAddress(PackedAddress Z5(GetLocal(2)))) {
       SetLocal 2 0;
-      TraceOperation 130605 Rfalse;
-      PopFrame;
-      PopReturnAddress return_address_7;
-      JumpReturn: return_address_7, result: 0
+      Jump: 130605
     } else {
       PushFrame;
       PushReturnAddress 130601;
@@ -103430,6 +103341,8 @@ LocOp 130593:
   }
 LocReturn 130601:
   SetLocal 2 call_result;
+  Jump: 130605
+LocOp 130605:
   TraceOperation 130605 Rfalse;
   PopFrame;
   PopReturnAddress return_address_1;

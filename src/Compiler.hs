@@ -11,7 +11,7 @@ import Eff (Phase,Eff,Control)
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Addr,Byte,Value)
-import Operation (Operation(Call))
+import Operation (Operation(Call,CallN),Func(Fvar))
 import Story (Story(header,size),OOB_Mode(..),readStoryByte)
 import Text.Printf (printf)
 import qualified Action (Action(..))
@@ -67,10 +67,18 @@ routineAddressesToInline :: Routine -> [Addr]
 routineAddressesToInline routine = do
   let Routine{body} = routine
   let jumpDest :: [Addr] = concat [branchesOf op | (_,op) <- body ]
+  let followIndirectCall :: [Addr] =
+        [ a
+        | ((_,op),(a,_)) <- zip body (tail body)
+        , case op of
+            Call (Fvar{}) _ _ -> True
+            CallN (Fvar{}) _ -> True
+            _ -> False
+        ]
   let
     dontInlineSet = case body of
-      [] -> jumpDest
-      (bodyStart,_):_ -> bodyStart : jumpDest
+      [] -> jumpDest ++ followIndirectCall
+      (bodyStart,_):_ -> bodyStart : jumpDest ++ followIndirectCall
   let
     addressesToInline :: [Addr] =
       [ a
@@ -96,6 +104,7 @@ compileRoutine static routine = do
   let
     isCall :: Operation -> Bool
     isCall = \case
+      --Operation.CallN{} -> True -- TODO: this is missing! expect extra code!
       Operation.Call{} -> True
       _ -> False
   let
