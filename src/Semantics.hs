@@ -100,7 +100,7 @@ eval mode here op = case op of
   Op.Get_next_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    Objects.getNextProp mode v1 v2 $ \res ->
+    Objects.getNextProp v1 v2 $ \res ->
       setTarget target res
 
   Op.Get_parent arg target -> do
@@ -111,13 +111,13 @@ eval mode here op = case op of
   Op.Get_prop arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    Objects.getProp mode v1 v2 $ \res ->
+    Objects.getProp v1 v2 $ \res ->
       setTarget target res
 
   Op.Get_prop_addr arg1 arg2 target -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    Objects.getPropAddr mode v1 v2 $ \a -> do
+    Objects.getPropAddr v1 v2 $ \a -> do
       res <- DeAddress a
       setTarget target res
 
@@ -153,7 +153,7 @@ eval mode here op = case op of
   Op.Insert_obj arg1 arg2 -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2
-    Objects.insertObj mode v1 v2
+    Objects.insertObj v1 v2
 
   Op.Je (Args []) _ -> error "Je/[]"
   Op.Je (Args [_]) _ -> error "Je/[_]"
@@ -267,7 +267,7 @@ eval mode here op = case op of
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     v3 <- evalArg arg3
-    Objects.putProp mode v1 v2 v3
+    Objects.putProp v1 v2 v3
 
   Op.Quit -> do
     Quit
@@ -280,7 +280,7 @@ eval mode here op = case op of
 
   Op.Remove_obj arg -> do
     v <- evalArg arg
-    Objects.removeObj mode v
+    Objects.removeObj v
 
   Op.Restart -> do -- TODO: implementation is not stack safe!
     Header{initialPC} <- StoryHeader

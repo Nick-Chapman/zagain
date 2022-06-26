@@ -9,7 +9,7 @@ module Objects
   ) where
 
 import Control.Monad (when)
-import Eff (Eff(..),Phase(..),Mode(..))
+import Eff (Eff(..),Phase(..))
 import Header (Header(..))
 import Numbers (Zversion(..))
 import qualified Numbers (Value)
@@ -98,22 +98,22 @@ setFM fm x y = do
       lo <- LoByte y
       SetByte a1 lo
 
-insertObj :: Phase p => Mode -> Value p -> Value p -> Eff p ()
-insertObj mode x dest = Isolate $ do
-  unlink mode x
+insertObj :: Phase p => Value p -> Value p -> Eff p ()
+insertObj x dest = Isolate $ do
+  unlink x
   setFM Parent x dest
   oldChild <- getFM Child dest
   setFM Sibling x oldChild
   setFM Child dest x
 
-removeObj :: Phase p => Mode -> Value p -> Eff p ()
-removeObj mode x = Isolate $ do
-  unlink mode x
+removeObj :: Phase p => Value p -> Eff p ()
+removeObj x = Isolate $ do
+  unlink x
   zero <- LitV 0
   setFM Parent x zero
 
-unlink :: Phase p => Mode -> Value p -> Eff p ()
-unlink mode this = do -- TODO: do isolate here instead of in insertObj/removeObj?
+unlink :: Phase p => Value p -> Eff p ()
+unlink this = do -- TODO: do isolate here instead of in insertObj/removeObj?
   oldP <- getFM Parent this
   b <- not <$> (IsZero oldP >>= If)
   when b $ do
@@ -124,16 +124,13 @@ unlink mode this = do -- TODO: do isolate here instead of in insertObj/removeObj
         thisSib <- getFM Sibling this
         setFM Child oldP thisSib
       False -> do
-        case mode of
-          --Compiling -> Error "unlink/loop" -- TODO: removing this is my goal!
-          _Interpreting -> do
-            FixpointV child $ \loop x -> do
-              sib <- getFM Sibling x
-              Equal sib this >>= If >>= \case
-                False -> loop sib >>= Link
-                True -> do
-                  thisSib <- getFM Sibling this
-                  setFM Sibling x thisSib
+        FixpointV child $ \loop x -> do
+          sib <- getFM Sibling x
+          Equal sib this >>= If >>= \case
+            False -> loop sib >>= Link
+            True -> do
+              thisSib <- getFM Sibling this
+              setFM Sibling x thisSib
 
 
 --[properties]--------------------------------------------------------
@@ -149,10 +146,10 @@ getShortName x = do
   right <- GetText a2
   IteString p left right
 
-getProp :: Phase p => Mode -> Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
-getProp mode x n k = Isolate $ do
+getProp :: Phase p => Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
+getProp x n k = Isolate $ do
   Header{objectTable} <- StoryHeader
-  searchProp mode x n $ \case
+  searchProp x n $ \case
     Nothing -> do
       -- get property default
       one <- LitV 1
@@ -171,20 +168,20 @@ getProp mode x n k = Isolate $ do
           getWord dataAddr >>= k
 
 
-getPropAddr :: Phase p => Mode -> Value p -> Value p -> (Addr p -> Eff p ()) -> Eff p ()
-getPropAddr mode x n k = Isolate $ do
-  searchProp mode x n $ \case
+getPropAddr :: Phase p => Value p -> Value p -> (Addr p -> Eff p ()) -> Eff p ()
+getPropAddr x n k = Isolate $ do
+  searchProp x n $ \case
     Just Prop{dataAddr} -> k dataAddr
     Nothing -> LitV 0 >>= Address >>= k
 
 
-putProp :: Phase p => Mode -> Value p -> Value p -> Value p -> Eff p ()
-putProp mode x n v = Isolate $ do
-  searchProp mode x n $ \case
+putProp :: Phase p => Value p -> Value p -> Value p -> Eff p ()
+putProp x n v = Isolate $ do
+  searchProp x n $ \case
     Nothing -> Error (show ("putProp",n))
     Just Prop{dataAddr,numBytes} -> do
       two <- LitV 2
-      Equal numBytes two >>= If >>= \case -- TODO: consider isolation
+      Equal numBytes two >>= If >>= \case
         False -> do -- If length not 2, then must be 1.
           lo <- LoByte v
           SetByte dataAddr lo
@@ -221,15 +218,15 @@ dataAddrToPropAddr a = do
         True -> do
           LitV (-2) >>= Offset a
 
-getNextProp :: Phase p => Mode -> Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
-getNextProp mode x n k = Isolate $ do
+getNextProp :: Phase p => Value p -> Value p -> (Value p -> Eff p ()) -> Eff p ()
+getNextProp x n k = Isolate $ do
   IsZero n >>= If >>= \case
     True -> do
       a <- firstPropertyAddr x
       b <- GetByte a
       getPropNumber b >>= k
     False -> do
-      searchProp mode x n $ \case
+      searchProp x n $ \case
         Nothing -> Error (show ("getNextProp",n))
         Just Prop{dataAddr,numBytes} -> do
           a <- Offset dataAddr numBytes
@@ -244,26 +241,23 @@ data Prop p = Prop
 
 deriving instance Phase p => Show (Prop p)
 
-searchProp :: Phase p => Mode -> Value p -> Value p -> (Maybe (Prop p) -> Eff p ()) -> Eff p ()
-searchProp mode x n k = do
+searchProp :: Phase p => Value p -> Value p -> (Maybe (Prop p) -> Eff p ()) -> Eff p ()
+searchProp x n k = do
   a1 <- firstPropertyAddr x
-  case mode of
-    --Compiling -> Error "getPropsA" -- match name in regression code
-    _Interpreting -> do
-      FixpointA a1 $ \loop a -> do
-        b <- GetByte a
-        IsZeroByte b >>= If >>= \case
-          True -> k Nothing
-          False -> do
-            propNumber <- getPropNumber b
-            PropSize{sizeByteSize,numBytes} <- getPropSize a b
-            off <- LitV (fromIntegral sizeByteSize)
-            dataAddr <- Offset a off
-            let p1 = Prop {numBytes,dataAddr}
-            b <- Equal n propNumber >>= If
-            if b then k (Just p1) else do
-              Offset dataAddr numBytes >>= \a' ->
-                loop a' >>= Link
+  FixpointA a1 $ \loop a -> do
+    b <- GetByte a
+    IsZeroByte b >>= If >>= \case
+      True -> k Nothing
+      False -> do
+        propNumber <- getPropNumber b
+        PropSize{sizeByteSize,numBytes} <- getPropSize a b
+        off <- LitV (fromIntegral sizeByteSize)
+        dataAddr <- Offset a off
+        let p1 = Prop {numBytes,dataAddr}
+        b <- Equal n propNumber >>= If
+        if b then k (Just p1) else do
+          Offset dataAddr numBytes >>= \a' ->
+            loop a' >>= Link
 
 
 firstPropertyAddr :: Phase p => Value p -> Eff p (Addr p)
