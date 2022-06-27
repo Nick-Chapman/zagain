@@ -320,8 +320,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
           ForeachBT (index,elem1,elem2) xs body <$> k s ()
 
       Eff.IndexVecB vec n -> do
-        let res = Join (Binary Prim.IndexList vec n)
-        k s res
+        k s (Join (Binary Prim.IndexList vec n))
+
+      Eff.IndexVecT vec n -> do
+        k s (Join (Binary Prim.IndexList vec n))
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -380,9 +382,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       Eff.Tokenize x -> do
         a <- genId "num_tokens_"
-        b <- genId "position_words_"
-        c <- genId "canonicalized"
-        Seq (Tokenize x (a,b,c)) <$> k s (Variable a,Variable b,Variable c)
+        b <- genId "positions"
+        c <- genId "words"
+        d <- genId "canonicalized"
+        Seq (Tokenize x (a,b,c,d)) <$> k s (Variable a,Variable b,Variable c,Variable d)
 
       where
         prim1 :: (Show x) => Expression r ~ effectType => Expression x -> Prim.P1 x r -> Gen (Prog jumpiness)
@@ -631,7 +634,8 @@ type StatusInfo = Maybe (Eff.StatusInfo DuringCompilation)
 
 type TokenizeIdents =
   ( Identifier Byte
-  , Identifier [(Expression Byte,Expression String)]
+  , Identifier [Expression Byte]
+  , Identifier [Expression String]
   , Identifier String
   )
 

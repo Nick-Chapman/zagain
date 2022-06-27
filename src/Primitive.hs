@@ -26,7 +26,7 @@ data P1 arg ret where
   SingleChar :: P1 Value String
   StringBytes :: P1 String [Byte]
   StringLength :: P1 String Byte
-  Tokenize :: P1 String (Byte,[(Byte,String)],String)
+  Tokenize :: P1 String (Byte,[Byte],[String],String)
   Widen :: P1 Byte Value
 
 deriving instance Show (P1 a b)

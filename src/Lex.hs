@@ -8,7 +8,7 @@ import Data.List.Split (splitOn)
 import Dictionary (Dict(..))
 import Numbers (Byte,Addr,Zversion(..))
 
-tokenize :: String -> (Byte,[(Byte,String)],String)
+tokenize :: String -> (Byte,[Byte],[String],String)
 tokenize str = do
   let toks = [ w | w <- splitOn " " str, w /= "" ] -- TODO: also split on "," etc, but still treat as words
   let
@@ -22,9 +22,9 @@ tokenize str = do
       reverse offsetsR
   -- TODO: Better if we didn't change inter-word whitespace
   let canonicalized = intercalate " " toks ++ "\0" -- what actually needs this?
-  let positionedWords = zip offsets toks
-  let n = fromIntegral (length positionedWords)
-  (n, positionedWords, canonicalized)
+  let n = fromIntegral (length offsets)
+  (n, offsets, toks, canonicalized)
+
 
 lookupInDict :: Dict -> String -> Addr
 lookupInDict dict word = do

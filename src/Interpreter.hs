@@ -193,6 +193,9 @@ runEffect screenWidth seed story smallStep = do
       IndexVecB vec n ->
         prim2 vec n Prim.IndexList
 
+      IndexVecT vec n ->
+        prim2 vec n Prim.IndexList
+
       LitA a -> k s a
       LitB b -> k s b
       LitS x -> k s x

@@ -322,7 +322,8 @@ eval here op = case op of
     rawTyped <- ReadInputFromUser statusInfoM
     tBuf <- evalArg arg1 >>= Address
     pBuf <- evalArg arg2 >>= Address
-    (n,positionedWords,canoicalizedTyped) <- Tokenize rawTyped
+    (n,offsets,words,canoicalizedTyped) <- Tokenize rawTyped
+    nw <- Widen n -- TODO: avoid need to widen
     one <- LitV 1
     tBuf1 <- Offset tBuf one
     foreachTextByte canoicalizedTyped $ \off b -> do
@@ -332,7 +333,7 @@ eval here op = case op of
     SetByte pBuf1 n
     two <- LitV 2
     pBuf2 <- Offset pBuf two
-    ForeachBT positionedWords $ \i (pos,word) -> do -- TODO: recode to use FixPoint
+    foreachBT nw offsets words $ \i (pos,word) -> do
       dictAddr <- LookupInDict word
       dictAddrV <- DeAddress dictAddr
       (hi,lo) <- splitWord dictAddrV
@@ -670,5 +671,20 @@ foreachTextByte text f = do
       False -> do
         b <- IndexVecB textBytes n
         f n b
+        n' <- LitV 1 >>= Add n
+        loop n' >>= Link
+
+
+foreachBT :: Value p -> Vector p (Byte p) -> Vector p (Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
+foreachBT len offsets words f = do
+  zero <- LitV 0
+  FixpointV zero $ \loop n -> do
+    Equal n len >>= If >>= \case
+      True -> pure ()
+      False -> do
+        offset <- IndexVecB offsets n
+        word <- IndexVecT words n
+        let bt = (offset,word)
+        f n bt
         n' <- LitV 1 >>= Add n
         loop n' >>= Link

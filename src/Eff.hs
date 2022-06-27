@@ -103,6 +103,7 @@ data Eff p x where
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
 
   IndexVecB :: Vector p (Byte p) -> Value p -> Eff p (Byte p)
+  IndexVecT :: Vector p (Text p) -> Value p -> Eff p (Text p)
 
   LitA :: Numbers.Addr -> Eff p (Addr p)
   LitB :: Numbers.Byte -> Eff p (Byte p)
@@ -146,5 +147,5 @@ data Eff p x where
   StringLength :: Text p -> Eff p (Byte p)
   Sub :: Value p -> Value p -> Eff p (Value p)
   TestBit :: Byte p -> Byte p -> Eff p (Pred p)
-  Tokenize :: Text p -> Eff p (Byte p,Vector p (Byte p,Text p),Text p)
+  Tokenize :: Text p -> Eff p (Byte p,Vector p (Byte p),Vector p (Text p),Text p)
   Widen :: Byte p -> Eff p (Value p)
