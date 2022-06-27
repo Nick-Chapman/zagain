@@ -262,22 +262,6 @@ data State = State
   , numActuals :: Byte
   }
 
-{-instance Show State where
-  show State{pcMode,locals,stack} = printf "[%s] (%d) locals:%s, stack:#%d%s" (show pcMode) num x depth y
-    where
-      x = concat
-        [ " " ++ printf "%05s" (show v)
-        | i <- [1.. fromIntegral num]
-        , let v::Value = maybe 11111 id $ Map.lookup i locals
-        ]
-      y = concat
-        [ " " ++ printf "%05s" (show v)
-        | v <- stack
-        ]
-      num::Int =
-        fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
-      depth = length stack-}
-
 initState :: Byte -> Word -> Control DuringInterpretation -> State
 initState screenWidth seed pcMode = do
   State { pcMode
