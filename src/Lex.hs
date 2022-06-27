@@ -10,7 +10,7 @@ import Numbers (Byte,Addr,Zversion(..))
 
 tokenize :: String -> (Byte,[(Byte,String)],String)
 tokenize str = do
-  let toks = [ w | w <- splitOn " " str, w /= "" ]
+  let toks = [ w | w <- splitOn " " str, w /= "" ] -- TODO: also split on "," etc, but still treat as words
   let
     offsets :: [Byte] = do
       let lens :: [Byte] = [ fromIntegral (length w) | w <- toks ]

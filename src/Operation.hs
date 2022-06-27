@@ -65,7 +65,7 @@ data Operation
   | Not Arg Target
   | Or Arg Arg Target
   | Output_stream1 Arg
-  | Output_stream2 Arg Arg
+  | Output_stream2 Arg Arg -- TODO: combine Output_stream[12]
   | Pop
   | Print String
   | Print_addr Arg
@@ -97,7 +97,7 @@ data Operation
   | Set_text_style Arg
   | Set_window Arg
   | Show_status
-  | Sound_effect1 Arg
+  | Sound_effect1 Arg -- TODO: Combine Sound_effect[13]
   | Sound_effect Arg Arg Arg
   | Split_window Arg
   | Sread Arg Arg
@@ -353,7 +353,7 @@ showOp :: Operation -> String
 showOp = if niz then showOpForNiz else show
 
 showOpForNiz :: Operation -> String
-showOpForNiz op = -- TODO: map string for ops which are named differently in niz
+showOpForNiz op =
   rename (brac (show op))
   where
     brac s = if needBracket then "(" ++ s ++ ")" else s

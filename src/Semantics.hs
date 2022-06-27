@@ -275,14 +275,13 @@ eval mode here op = case op of
   Op.Random arg target -> do
     v1 <- evalArg arg
     res <- Random v1
-    --Debug ("random",v1,"->",res)
     setTarget target res
 
   Op.Remove_obj arg -> do
     v <- evalArg arg
     Objects.removeObj v
 
-  Op.Restart -> do -- TODO: implementation is not stack safe!
+  Op.Restart -> do -- implementation is not stack safe!
     Header{initialPC} <- StoryHeader
     pc <- LitA initialPC
     SetControl AtInstruction { pc }
@@ -414,25 +413,22 @@ eval mode here op = case op of
 
   Op.Verify{} -> Note op
 
-  -- TODO: partial/hacked support for some z5 ops
-
   Op.Check_arg_count arg label -> do
     v <- evalArg arg
     n <- GetNumActuals >>= Widen
     res <- GreaterThanEqual n v >>= If
-    Debug ("Check_arg_count",arg,label,"-->",n,v,res)
     branchMaybe label res
     pure ()
 
-  Op.Scan_table arg1 arg2 arg3 target label -> do --TODO
+  Op.Scan_table arg1 arg2 arg3 target label -> do
     v1 <- evalArg arg1
     v2 <- evalArg arg2 >>= Address
     v3 <- evalArg arg3
     case mode of
       Interpreting -> scanTable v1 v2 v3 target label
-      Compiling -> Error "scanTable"
+      Compiling -> Error "scanTable" -- TODO: once scanTable uses Fixpoint
 
-  -- TODO: screen support. WIP
+  -- screen support... (WIP)
 
   Op.Set_colour arg1 arg2 -> do
     v1 <- evalArg arg1
@@ -463,7 +459,7 @@ setTextStyle v = do
   sequence_ [ Isolate (changeOneStyle style pos) | (style,pos) <- supported ]
   where
     supported = [ (Reverse,1), (Bold,2), (Italic,3), (Fixed,4) ]
-    changeOneStyle style pos = do -- TODO: Isolate
+    changeOneStyle style pos = do
       lo <- LoByte v
       pos <- LitB pos
       bool <- lo `TestBit` pos >>= If
@@ -475,7 +471,6 @@ doCall here routine args = do
   actuals <- mapM evalArg args
   numActuals <- LitB $ fromIntegral (length actuals)
   PushFrame here numActuals
-  --Debug("PushFrame",numActuals)
   setActuals actuals
   TraceRoutineCall routine -- for dynamic discovery
   SetControl AtRoutineHeader { routine, numActuals }
@@ -523,11 +518,7 @@ evalFunc :: Phase p => Func -> Eff p (Addr p)
 evalFunc = \case
   BadFunc -> error "failed to decode called function"
   Floc addr -> LitA addr
-  Fvar var -> do -- TODO: in combination with caller testing against 0, cause code dup
-    v <- evalTarget var
-    a <- PackedAddress v
-    --Debug ("evalFunc/var",a) -- TODO: show dynamically reachable code
-    pure a
+  Fvar var -> evalTarget var >>= PackedAddress
 
 evalArg :: Phase p => Arg -> Eff p (Value p)
 evalArg = \case
@@ -543,7 +534,6 @@ evalTarget = \case
 evalGlobal :: Phase p => Byte p -> Eff p (Value p)
 evalGlobal b = do
   res <- globalAddr b >>= getWord
-  --Debug ("evalGlobal",b,"->",res)
   pure res
 
 returnValue :: Phase p => Value p -> Eff p ()
@@ -624,7 +614,7 @@ evalArgAsDyn arg = do
   lo <- LoByte v
   makeDyn lo
 
-makeDyn :: Byte p -> Eff p (Dyn (Byte p)) -- TODO: needs isolation
+makeDyn :: Byte p -> Eff p (Dyn (Byte p))
 makeDyn b = do
   q <- IsZeroByte b >>= If
   case q of
@@ -652,7 +642,7 @@ setDyn dyn v = case dyn of
 
 
 scanTable :: Phase p => Value p -> Addr p -> Value p -> Target -> Label -> Eff p ()
-scanTable x table len target label = do -- TODO: isolate
+scanTable x table len target label = do
   IsZero len >>= If >>= \case
     True -> do
       res <- LitV 0
@@ -668,4 +658,4 @@ scanTable x table len target label = do -- TODO: isolate
         False -> do
           table <- LitV 2 >>= Offset table
           len <- LitV 1 >>= Sub len
-          scanTable x table len target label
+          scanTable x table len target label -- TODO: recode loop to use Fixpoint

@@ -20,7 +20,7 @@ import qualified Eff (Eff(..),Control(..))
 import qualified Eff (Phase(..),StatusInfo(..))
 import qualified Primitive as Prim
 
-data Compile -- TOOD: rename DuringCompiation ?
+data Compile -- TODO: rename DuringCompiation ?
 
 instance Phase Compile where
   type Addr Compile = Expression Addr
@@ -147,7 +147,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
     -- compileK: compile an effect, given a continuation, to a program which may or notjump
     compileK :: forall jumpiness effectType. State -> Effect effectType -> (State -> effectType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
     compileK s e k = case e of
-      Eff.Ret x -> k s x -- TODO: avoid need for Eff.
+      Eff.Ret x -> k s x
       Eff.Bind e f -> compileK s e $ \s a -> compileK s (f a) k
 
       Eff.GamePrint mes -> do Seq (GamePrint mes) <$> k s ()
@@ -165,7 +165,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (ReadInputFromUser statusLine name) <$> k s (Variable name)
 
       Eff.GetText a -> do
-        -- TODO: make special case for constant addresses
+        -- TODO: make special case for static addresses.
         k s (GetText a)
 
       Eff.GetControl -> let State{control} = s in k s control
@@ -526,13 +526,13 @@ data Jumpiness = WillJump | WontJump
 newtype Label = Label Int
   deriving Show
 
-data Prog :: Jumpiness -> * where
+data Prog :: Jumpiness -> * where -- TODO: kill jumpiness
   Null :: Prog 'WontJump
   Quit :: Prog j
   Error :: String -> Prog j
 
   Labelled :: Label -> Prog j -> Prog j
-  Goto :: Label -> Prog j -- 'WillJump -- TODO: ???
+  Goto :: Label -> Prog j -- 'WillJump
 
   Jump :: Control Compile -> Prog 'WillJump
   Seq :: Atom ->  Prog j -> Prog j
@@ -575,7 +575,7 @@ pretty i = \case
     [ [tab i "if (" ++ show e ++ ") {"]
     , pretty (i+2) s1
     , [tab i "} else {"]
-    , pretty (i+2) s2 ++ [tab i "}"] -- TODO: odd format
+    , pretty (i+2) s2 ++ [tab i "}"] -- TODO: fix odd format
     ]
   ForeachB (index,elem) xs body following -> concat
     [ [tab i ("ForeachB: " ++ show (index,elem) ++ " in (" ++ show xs ++ ") {")]

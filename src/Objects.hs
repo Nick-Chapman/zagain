@@ -244,7 +244,7 @@ deriving instance Phase p => Show (Prop p)
 searchProp :: Phase p => Value p -> Value p -> (Maybe (Prop p) -> Eff p ()) -> Eff p ()
 searchProp x n k = do
   a1 <- firstPropertyAddr x
-  FixpointA a1 $ \loop a -> do
+  FixpointA a1 $ \loop a -> do -- TODO: recode to use FixpointV
     b <- GetByte a
     IsZeroByte b >>= If >>= \case
       True -> k Nothing

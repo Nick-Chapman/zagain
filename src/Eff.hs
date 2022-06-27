@@ -12,7 +12,7 @@ instance Functor (Eff p) where fmap = liftM
 instance Applicative (Eff p) where pure = return; (<*>) = ap
 instance Monad (Eff p) where return = Ret; (>>=) = Bind
 
-data Mode = Compiling | Interpreting -- TODO: temp while have infinite effects
+data Mode = Compiling | Interpreting -- TODO: temp while have infinite effects. kill very soon!
 
 class
   ( Show (Addr p)
@@ -84,7 +84,6 @@ data Eff p x where
   Random :: Value p -> Eff p (Value p)
   Quit :: Eff p ()
 
-  --Ite :: Pred p -> x -> x -> Eff p x -- TODO: possible?
   IteString :: Pred p -> (Text p) -> (Text p) -> Eff p (Text p)
 
   If :: Pred p -> Eff p Bool
@@ -95,7 +94,7 @@ data Eff p x where
     -> ((Value p -> Eff p (Code p)) -> (Value p -> Eff p ()))
     -> Eff p ()
 
-  FixpointA
+  FixpointA -- TODO: replace use with FixpointV
     :: Addr p
     -> ((Addr p -> Eff p (Code p)) -> (Addr p -> Eff p ()))
     -> Eff p ()
