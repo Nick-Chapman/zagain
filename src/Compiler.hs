@@ -575,7 +575,8 @@ pretty i = \case
     [ [tab i "if (" ++ show e ++ ") {"]
     , pretty (i+2) s1
     , [tab i "} else {"]
-    , pretty (i+2) s2 ++ [tab i "}"] -- TODO: fix odd format
+    , pretty (i+2) s2
+    , [tab i "}"]
     ]
   ForeachB (index,elem) xs body following -> concat
     [ [tab i ("ForeachB: " ++ show (index,elem) ++ " in (" ++ show xs ++ ") {")]
