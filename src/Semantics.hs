@@ -425,8 +425,8 @@ eval mode here op = case op of
     v2 <- evalArg arg2 >>= Address
     v3 <- evalArg arg3
     case mode of
-      Interpreting -> scanTable v1 v2 v3 target label
-      Compiling -> Error "scanTable" -- TODO: once scanTable uses Fixpoint
+      _Interpreting -> scanTable v1 v2 v3 target label
+      --Compiling -> Error "scanTable" -- TODO: once scanTable uses Fixpoint
 
   -- screen support... (WIP)
 
