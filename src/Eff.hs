@@ -102,6 +102,8 @@ data Eff p x where
   ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p () -- TODO: kill Foreach*
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
 
+  IndexVecB :: Vector p (Byte p) -> Value p -> Eff p (Byte p)
+
   LitA :: Numbers.Addr -> Eff p (Addr p)
   LitB :: Numbers.Byte -> Eff p (Byte p)
   LitS :: String -> Eff p (Text p)

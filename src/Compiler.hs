@@ -147,7 +147,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
     -- compileK: compile an effect, given a continuation, to a program which may or notjump
     compileK :: forall jumpiness effectType. State -> Effect effectType -> (State -> effectType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
     compileK s e k = case e of
-      Eff.Ret x -> k s x
+      Eff.Ret x -> k s x -- TODO: avoid need for "Eff." prefix everywhere
       Eff.Bind e f -> compileK s e $ \s a -> compileK s (f a) k
 
       Eff.GamePrint mes -> do Seq (GamePrint mes) <$> k s ()
@@ -318,6 +318,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         flushStateK s $ \s -> do
           body <- compile0 s bodyEff
           ForeachBT (index,elem1,elem2) xs body <$> k s ()
+
+      Eff.IndexVecB vec n -> do
+        let res = Join (Binary Prim.IndexList vec n)
+        k s res
 
       Eff.LitA a -> k s (Const a)
       Eff.LitB b -> k s (Const b)
@@ -632,6 +636,7 @@ type TokenizeIdents =
   )
 
 data Expression a where
+  Join :: Expression (Expression a) -> Expression a
   Const :: a -> Expression a
   NumActuals :: Expression Byte
   CallResult :: Expression Value
@@ -646,6 +651,7 @@ data Expression a where
 
 instance Show a => Show (Expression a) where
   show = \case
+    Join e -> show e
     Const a -> show a
     NumActuals -> "num_actuals"
     CallResult -> "call_result"

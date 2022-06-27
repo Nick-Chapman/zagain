@@ -323,10 +323,9 @@ eval here op = case op of
     tBuf <- evalArg arg1 >>= Address
     pBuf <- evalArg arg2 >>= Address
     (n,positionedWords,canoicalizedTyped) <- Tokenize rawTyped
-    textBytes <- StringBytes canoicalizedTyped
     one <- LitV 1
     tBuf1 <- Offset tBuf one
-    ForeachB textBytes $ \off b -> do -- TODO: recode to use FixPoint
+    foreachTextByte canoicalizedTyped $ \off b -> do
       a <- Offset tBuf1 off
       SetByte a b
     pBuf1 <- Offset pBuf one
@@ -658,3 +657,18 @@ scanTable x table len target label = do
           False -> do
             n' <- LitV 1 >>= Add n
             loop n' >>= Link
+
+
+foreachTextByte :: Text p -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
+foreachTextByte text f = do
+  textBytes <- StringBytes text
+  numTextBytes <- StringLength text >>= Widen
+  zero <- LitV 0
+  FixpointV zero $ \loop n -> do
+    Equal n numTextBytes >>= If >>= \case
+      True -> pure ()
+      False -> do
+        b <- IndexVecB textBytes n
+        f n b
+        n' <- LitV 1 >>= Add n
+        loop n' >>= Link

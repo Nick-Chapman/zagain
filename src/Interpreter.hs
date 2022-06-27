@@ -190,6 +190,9 @@ runEffect screenWidth seed story smallStep = do
       ForeachBT xs f -> do
         loop s (sequence_ [ f i x | (i,x) <- zip [0..] xs ]) k
 
+      IndexVecB vec n ->
+        prim2 vec n Prim.IndexList
+
       LitA a -> k s a
       LitB b -> k s b
       LitS x -> k s x
