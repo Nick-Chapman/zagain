@@ -585,7 +585,7 @@ pretty i = \case
     ]
     ++ pretty i following
   ForeachBT (index,elem1,elem2) xs body following -> concat
-    [ [tab i ("ForeachB: " ++ show (index,elem1,elem2) ++ " in (" ++ show xs ++ ") {")]
+    [ [tab i ("ForeachBT: " ++ show (index,elem1,elem2) ++ " in (" ++ show xs ++ ") {")]
     , pretty (i+2) body
     , [tab i "}"]
     ]

@@ -3468,7 +3468,7 @@ LocOp 022791:
     SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),index20) byte21;
   }
   SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-  ForeachB: (index22,pos23,word24) in (position_words_17) {
+  ForeachBT: (index22,pos23,word24) in (position_words_17) {
     Let lookee25 = LookupInDict(word24);
     SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,index22)),0) HiByte(DeAddress(lookee25));
     SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,index22)),1) LoByte(DeAddress(lookee25));
@@ -20815,7 +20815,7 @@ LocOp 037085:
     SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),index20) byte21;
   }
   SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-  ForeachB: (index22,pos23,word24) in (position_words_17) {
+  ForeachBT: (index22,pos23,word24) in (position_words_17) {
     Let lookee25 = LookupInDict(word24);
     SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,index22)),0) HiByte(DeAddress(lookee25));
     SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,index22)),1) LoByte(DeAddress(lookee25));
@@ -31580,7 +31580,7 @@ LocOp 052474:
     SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),index20) byte21;
   }
   SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-  ForeachB: (index22,pos23,word24) in (position_words_17) {
+  ForeachBT: (index22,pos23,word24) in (position_words_17) {
     Let lookee25 = LookupInDict(word24);
     SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,index22)),0) HiByte(DeAddress(lookee25));
     SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,index22)),1) LoByte(DeAddress(lookee25));
