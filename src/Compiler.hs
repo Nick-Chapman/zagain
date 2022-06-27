@@ -538,7 +538,7 @@ data Prog :: Jumpiness -> * where -- TODO: kill jumpiness
   Seq :: Atom ->  Prog j -> Prog j
   FullSeq :: Prog 'WontJump ->  Prog j -> Prog j
   If :: Expression Bool -> Prog j -> Prog j -> Prog j
-  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Prog 'WontJump -> Prog j -> Prog j
+  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Prog 'WontJump -> Prog j -> Prog j -- TODO: kill Foreach*
   ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Prog 'WontJump -> Prog j -> Prog j
 
 pretty :: Int -> Prog j -> [String]

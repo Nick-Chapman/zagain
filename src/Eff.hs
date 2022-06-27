@@ -101,7 +101,7 @@ data Eff p x where
 
   Link :: Code p -> Eff p ()
 
-  ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p ()
+  ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p () -- TODO: kill Foreach*
   ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
 
   LitA :: Numbers.Addr -> Eff p (Addr p)

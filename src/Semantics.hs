@@ -327,14 +327,14 @@ eval mode here op = case op of
     textBytes <- StringBytes canoicalizedTyped
     one <- LitV 1
     tBuf1 <- Offset tBuf one
-    ForeachB textBytes $ \off b -> do
+    ForeachB textBytes $ \off b -> do -- TODO: recode to use FixPoint
       a <- Offset tBuf1 off
       SetByte a b
     pBuf1 <- Offset pBuf one
     SetByte pBuf1 n
     two <- LitV 2
     pBuf2 <- Offset pBuf two
-    ForeachBT positionedWords $ \i (pos,word) -> do
+    ForeachBT positionedWords $ \i (pos,word) -> do -- TODO: recode to use FixPoint
       dictAddr <- LookupInDict word
       dictAddrV <- DeAddress dictAddr
       (hi,lo) <- splitWord dictAddrV
