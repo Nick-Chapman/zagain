@@ -640,22 +640,24 @@ setDyn dyn v = case dyn of
     a <- globalAddr b
     setWord a v
 
-
 scanTable :: Phase p => Value p -> Addr p -> Value p -> Target -> Label -> Eff p ()
 scanTable x table len target label = do
-  IsZero len >>= If >>= \case
-    True -> do
-      res <- LitV 0
-      setTarget target res
-      branchMaybe label False
-    False -> do
-      w <- getWord table
-      Equal x w >>= If >>= \case
-        True -> do
-          res <- DeAddress table
-          setTarget target res
-          branchMaybe label True
-        False -> do
-          table <- LitV 2 >>= Offset table
-          len <- LitV 1 >>= Sub len
-          scanTable x table len target label -- TODO: recode loop to use Fixpoint
+  zero <- LitV 0
+  FixpointV zero $ \loop n -> do
+    Equal n len >>= If >>= \case
+      True -> do
+        res <- LitV 0
+        setTarget target res
+        branchMaybe label False
+      False -> do
+        off <- LitV 2 >>= Mul n
+        table <- Offset table off
+        w <- getWord table
+        Equal x w >>= If >>= \case
+          True -> do
+            res <- DeAddress table
+            setTarget target res
+            branchMaybe label True
+          False -> do
+            n' <- LitV 1 >>= Add n
+            loop n' >>= Link
