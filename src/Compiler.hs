@@ -20,18 +20,18 @@ import qualified Eff (Eff(..),Control(..))
 import qualified Eff (Phase(..),StatusInfo(..))
 import qualified Primitive as Prim
 
-data Compile -- TODO: rename DuringCompiation ?
+data DuringCompilation
 
-instance Phase Compile where
-  type Addr Compile = Expression Addr
-  type Byte Compile = Expression Byte
-  type Pred Compile = Expression Bool
-  type Text Compile = Expression String
-  type Value Compile = Expression Value
-  type Vector Compile a = Expression [a]
-  type Code Compile = (Bind, Label)
+instance Phase DuringCompilation where
+  type Addr DuringCompilation = Expression Addr
+  type Byte DuringCompilation = Expression Byte
+  type Pred DuringCompilation = Expression Bool
+  type Text DuringCompilation = Expression String
+  type Value DuringCompilation = Expression Value
+  type Vector DuringCompilation a = Expression [a]
+  type Code DuringCompilation = (Bind, Label)
 
-type Effect a = Eff Compile a
+type Effect a = Eff DuringCompilation a
 
 compileEffect :: Conf -> Story -> Effect () -> IO Code
 compileEffect conf story smallStep = do
@@ -46,7 +46,7 @@ compileEffect conf story smallStep = do
   let xInline = [] -- [025175]
 
   let
-    shouldInline :: Control Compile -> Bool
+    shouldInline :: Control DuringCompilation -> Bool
     shouldInline control =
       case control of
         Eff.AtInstruction (Const addr) ->
@@ -84,7 +84,7 @@ data Static = Static
   { conf :: Conf
   , story :: Story
   , smallStep :: Effect ()
-  , shouldInline :: Control Compile -> Bool
+  , shouldInline :: Control DuringCompilation -> Bool
   }
 
 
@@ -401,7 +401,7 @@ genLabel = do
 
 --[state]-------------------------------------------------------------
 
-makeControl :: Loc -> Control Compile
+makeControl :: Loc -> Control DuringCompilation
 makeControl = \case
   LocRoutine a ->
     Eff.AtRoutineHeader { routine = Const a, numActuals = NumActuals }
@@ -412,7 +412,7 @@ makeControl = \case
 
 
 data State = State
-  { control :: Control Compile
+  { control :: Control DuringCompilation
   , tmpStack :: [Expression Value] -- TODO: need notion of sharable?
   , retStack :: [Expression Addr]
   }
@@ -420,7 +420,7 @@ data State = State
 eagerStack :: Bool
 eagerStack = True -- disable the lazy stack optimization
 
-initState :: Control Compile -> State
+initState :: Control DuringCompilation -> State
 initState control = State
   { control
   , tmpStack = []
@@ -534,7 +534,7 @@ data Prog :: Jumpiness -> * where -- TODO: kill jumpiness
   Labelled :: Label -> Prog j -> Prog j
   Goto :: Label -> Prog j -- 'WillJump
 
-  Jump :: Control Compile -> Prog 'WillJump
+  Jump :: Control DuringCompilation -> Prog 'WillJump
   Seq :: Atom ->  Prog j -> Prog j
   FullSeq :: Prog 'WontJump ->  Prog j -> Prog j
   If :: Expression Bool -> Prog j -> Prog j -> Prog j
@@ -596,7 +596,7 @@ tab n s = take n (repeat ' ') ++ s
 data Atom
   = SetByte (Expression Addr) (Expression Byte)
   | Note String
-  | Inlining (Control Compile)
+  | Inlining (Control DuringCompilation)
   | TraceOperation (Expression Addr) Operation
   | GamePrint (Expression String)
   | MakeRoutineFrame Int
@@ -622,7 +622,7 @@ instance Show Bind where
   show = \case
     Bind x e -> show x ++ " = " ++ show e
 
-type StatusInfo = Maybe (Eff.StatusInfo Compile)
+type StatusInfo = Maybe (Eff.StatusInfo DuringCompilation)
 
 type TokenizeIdents =
   ( Identifier Byte
