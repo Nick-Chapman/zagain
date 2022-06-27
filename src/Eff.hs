@@ -99,9 +99,6 @@ data Eff p x where
 
   Link :: Code p -> Eff p ()
 
-  ForeachB :: Vector p (Byte p) -> (Value p -> Byte p -> Eff p ()) -> Eff p () -- TODO: kill Foreach*
-  ForeachBT :: Vector p (Byte p,Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
-
   IndexVecB :: Vector p (Byte p) -> Value p -> Eff p (Byte p)
   IndexVecT :: Vector p (Text p) -> Value p -> Eff p (Text p)
 

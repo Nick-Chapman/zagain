@@ -302,23 +302,6 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
           first <- compile0 s eff
           FullSeq first <$> k s ()
 
-      Eff.ForeachB xs f -> do
-        index <- genId "index"
-        elem <- genId "byte"
-        let bodyEff = f (Variable index) (Variable elem)
-        flushStateK s $ \s -> do
-          body <- compile0 s bodyEff
-          ForeachB (index,elem) xs body <$> k s ()
-
-      Eff.ForeachBT xs f -> do
-        index <- genId "index"
-        elem1 <- genId "pos"
-        elem2 <- genId "word"
-        let bodyEff = f (Variable index) (Variable elem1,Variable elem2)
-        flushStateK s $ \s -> do
-          body <- compile0 s bodyEff
-          ForeachBT (index,elem1,elem2) xs body <$> k s ()
-
       Eff.IndexVecB vec n -> do
         k s (Join (Binary Prim.IndexList vec n))
 
@@ -545,8 +528,6 @@ data Prog :: Jumpiness -> * where -- TODO: kill jumpiness
   Seq :: Atom ->  Prog j -> Prog j
   FullSeq :: Prog 'WontJump ->  Prog j -> Prog j
   If :: Expression Bool -> Prog j -> Prog j -> Prog j
-  ForeachB :: (Identifier Value, Identifier Byte) -> Expression [Expression Byte] -> Prog 'WontJump -> Prog j -> Prog j -- TODO: kill Foreach*
-  ForeachBT :: (Identifier Value, Identifier Byte, Identifier String) -> Expression [(Expression Byte,Expression String)] -> Prog 'WontJump -> Prog j -> Prog j
 
 pretty :: Int -> Prog j -> [String]
 pretty i = \case
@@ -585,18 +566,6 @@ pretty i = \case
     , pretty (i+2) s2
     , [tab i "}"]
     ]
-  ForeachB (index,elem) xs body following -> concat
-    [ [tab i ("ForeachB: " ++ show (index,elem) ++ " in (" ++ show xs ++ ") {")]
-    , pretty (i+2) body
-    , [tab i "}"]
-    ]
-    ++ pretty i following
-  ForeachBT (index,elem1,elem2) xs body following -> concat
-    [ [tab i ("ForeachBT: " ++ show (index,elem1,elem2) ++ " in (" ++ show xs ++ ") {")]
-    , pretty (i+2) body
-    , [tab i "}"]
-    ]
-    ++ pretty i following
 
 tab :: Int -> String -> String
 tab n s = take n (repeat ' ') ++ s
