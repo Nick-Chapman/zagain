@@ -1,6 +1,6 @@
 
 -- | The computation effect of z-machine execution.
-module Eff (Eff(..),Phase(..),Mode(..),Control(..),StatusInfo(..)) where
+module Eff (Eff(..),Phase(..),Control(..),StatusInfo(..)) where
 
 import Control.Monad (ap,liftM)
 import Header (Header)
@@ -11,8 +11,6 @@ import qualified Numbers (Addr,Byte,Value)
 instance Functor (Eff p) where fmap = liftM
 instance Applicative (Eff p) where pure = return; (<*>) = ap
 instance Monad (Eff p) where return = Ret; (>>=) = Bind
-
-data Mode = Compiling | Interpreting -- TODO: temp while have infinite effects. kill very soon!
 
 class
   ( Show (Addr p)

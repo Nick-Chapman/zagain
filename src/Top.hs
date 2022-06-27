@@ -12,7 +12,6 @@ import System.Environment (getArgs)
 import Text.Printf (printf)
 import qualified Compiler (compileEffect,dumpCode,runCode)
 import qualified Console (runAction)
-import qualified Eff (Mode(..))
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
 import qualified Story
@@ -103,11 +102,11 @@ run Config{mode,storyFile,iconf=iconf@Conf{niz,seeTrace,wrapSpec},inputs,mayStar
                     putStrLn "[release/serial: 88/840726, z-version: .z3}"
                   when (not niz) $
                     printf "\n\n"
-                  let eff = Semantics.smallStep Eff.Interpreting
+                  let eff = Semantics.smallStep
                   let _ = print (Story.header story)
                   pure $ Interpreter.runEffect screenWidth seed story eff
               | otherwise -> do
-                  let eff = Semantics.smallStep Eff.Compiling
+                  let eff = Semantics.smallStep
                   code <- Compiler.compileEffect iconf story eff
                   pure $ Compiler.runCode seed code
       case inputs of
@@ -119,6 +118,6 @@ run Config{mode,storyFile,iconf=iconf@Conf{niz,seeTrace,wrapSpec},inputs,mayStar
       pure ()
     Compile -> do
       story <- loadStory storyFile
-      let eff = Semantics.smallStep Eff.Compiling
+      let eff = Semantics.smallStep
       code <- Compiler.compileEffect iconf story eff
       Compiler.dumpCode code -- to stdout

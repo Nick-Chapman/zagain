@@ -15,7 +15,6 @@ import Data.List.Extra (notNull)
 import Data.Ord (comparing)
 import Data.Set (Set)
 import Decode (fetchOperation,fetchRoutineHeader)
-import Eff (Mode(..))
 import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr)
@@ -111,7 +110,7 @@ dumpRoutine r = do
 dynamicDiscovery :: Story -> [String] -> [Addr]
 dynamicDiscovery story walkthrough = do
   let seed = 888
-  let eff = Semantics.smallStep Interpreting
+  let eff = Semantics.smallStep
   let screenWidth = 80
   let action = Interpreter.runEffect screenWidth seed story eff
   collectRoutineCalls walkthrough action

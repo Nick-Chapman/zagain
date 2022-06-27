@@ -2,8 +2,7 @@
 -- | Semantics of z-machine operations.
 module Semantics (smallStep) where
 
---import Dictionary (Dict(..))
-import Eff (Eff(..),Phase(..),Mode(..),Control(..),StatusInfo(..))
+import Eff (Eff(..),Phase(..),Control(..),StatusInfo(..))
 import Header (Header(..))
 import Numbers (Zversion(..),Style(..))
 import Objects (FamilyMember(Parent,Sibling,Child))
@@ -12,15 +11,15 @@ import Text.Printf (printf)
 import qualified Objects
 import qualified Operation as Op
 
-smallStep :: Phase p => Mode -> Eff p ()
-smallStep mode = do
+smallStep :: Phase p => Eff p ()
+smallStep = do
   GetControl >>= \case
 
     AtInstruction{pc=here} -> do
       (operation,pc) <- FetchOperation here
       SetControl AtInstruction { pc }
       TraceOperation here operation
-      eval mode here operation
+      eval here operation
 
     AtRoutineHeader{routine,numActuals} -> do
       (rh,pc) <- FetchRoutineHeader routine
@@ -41,8 +40,8 @@ smallStep mode = do
         _ ->  error "callTarget: not a call instruction!"
 
 
-eval :: Phase p => Mode -> Addr p -> Operation -> Eff p ()
-eval mode here op = case op of
+eval :: Phase p => Addr p -> Operation -> Eff p ()
+eval here op = case op of
 
   Op.BadOperation mes -> do
     error (printf "At [%s] %s" (show here) mes)
@@ -52,7 +51,7 @@ eval mode here op = case op of
 
   Op.Aread arg1 arg2 target-> do
     Debug (arg1,arg2,target,"(ignore target), delegate-->Sread")
-    eval mode here (Op.Sread arg1 arg2)
+    eval here (Op.Sread arg1 arg2)
     --LitV 13 >>= setTarget target -- TODO: hmm
     pure ()
 
@@ -409,7 +408,7 @@ eval mode here op = case op of
     v1 <- evalArg arg1
     v2 <- evalArg arg2
     Note (here,op,"-->",v1,v2)
-    --eval mode here (Op.Sread arg1 arg2) -- TODO: Tokenize -> Sread
+    --eval here (Op.Sread arg1 arg2) -- TODO: Tokenize -> Sread
 
   Op.Verify{} -> Note op
 
@@ -424,9 +423,7 @@ eval mode here op = case op of
     v1 <- evalArg arg1
     v2 <- evalArg arg2 >>= Address
     v3 <- evalArg arg3
-    case mode of
-      _Interpreting -> scanTable v1 v2 v3 target label
-      --Compiling -> Error "scanTable" -- TODO: once scanTable uses Fixpoint
+    scanTable v1 v2 v3 target label
 
   -- screen support... (WIP)
 
