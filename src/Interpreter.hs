@@ -20,18 +20,18 @@ import qualified Eff (Phase(..))
 import qualified Primitive as Prim
 import Primitive (evalP1,evalP2)
 
-data Interpret -- TODO: rename DuringInterpretation
+data DuringInterpretation
 
-instance Phase Interpret where
-  type Addr Interpret = Addr
-  type Byte Interpret = Byte
-  type Pred Interpret = Bool
-  type Text Interpret = String
-  type Value Interpret = Value
-  type Vector Interpret a = [a]
-  type Code Interpret = Effect ()
+instance Phase DuringInterpretation where
+  type Addr DuringInterpretation = Addr
+  type Byte DuringInterpretation = Byte
+  type Pred DuringInterpretation = Bool
+  type Text DuringInterpretation = String
+  type Value DuringInterpretation = Value
+  type Vector DuringInterpretation a = [a]
+  type Code DuringInterpretation = Effect ()
 
-type Effect x = Eff Interpret x
+type Effect x = Eff DuringInterpretation x
 
 --[interpreter for execution effects]----------------------------------
 
@@ -250,7 +250,7 @@ runEffect screenWidth seed story smallStep = do
 --[interpreter state]-------------------------------------------------
 
 data State = State
-  { pcMode :: Control Interpret
+  { pcMode :: Control DuringInterpretation
   , lastCount :: Int
   , count :: Int
   , stack :: [Value]
@@ -278,7 +278,7 @@ data State = State
         fromIntegral $ maximum (0 : [ k | k <- Map.keys locals ])
       depth = length stack-}
 
-initState :: Byte -> Word -> Control Interpret -> State
+initState :: Byte -> Word -> Control DuringInterpretation -> State
 initState screenWidth seed pcMode = do
   State { pcMode
         , lastCount = 0
