@@ -124,7 +124,7 @@ unlink this = Isolate $ do
         thisSib <- getFM Sibling this
         setFM Child oldP thisSib
       False -> do
-        FixpointV child $ \loop x -> do
+        Fixpoint child $ \loop x -> do
           sib <- getFM Sibling x
           Equal sib this >>= If >>= \case
             False -> loop sib >>= Link
@@ -244,7 +244,9 @@ deriving instance Phase p => Show (Prop p)
 searchProp :: Phase p => Value p -> Value p -> (Maybe (Prop p) -> Eff p ()) -> Eff p ()
 searchProp x n k = do
   a1 <- firstPropertyAddr x
-  FixpointA a1 $ \loop a -> do -- TODO: recode to use FixpointV
+  v1 <- DeAddress a1
+  Fixpoint v1 $ \loop v -> do
+    a <- Address v
     b <- GetByte a
     IsZeroByte b >>= If >>= \case
       True -> k Nothing
@@ -256,8 +258,9 @@ searchProp x n k = do
         let p1 = Prop {numBytes,dataAddr}
         b <- Equal n propNumber >>= If
         if b then k (Just p1) else do
-          Offset dataAddr numBytes >>= \a' ->
-            loop a' >>= Link
+          Offset dataAddr numBytes >>= \a' -> do
+            v' <- DeAddress a'
+            loop v' >>= Link
 
 
 firstPropertyAddr :: Phase p => Value p -> Eff p (Addr p)

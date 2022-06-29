@@ -87,14 +87,9 @@ data Eff p x where
   If :: Pred p -> Eff p Bool
   Isolate :: Eff p () -> Eff p ()
 
-  FixpointV
+  Fixpoint
     :: Value p
     -> ((Value p -> Eff p (Code p)) -> (Value p -> Eff p ()))
-    -> Eff p ()
-
-  FixpointA -- TODO: replace use with FixpointV
-    :: Addr p
-    -> ((Addr p -> Eff p (Code p)) -> (Addr p -> Eff p ()))
     -> Eff p ()
 
   Link :: Code p -> Eff p ()

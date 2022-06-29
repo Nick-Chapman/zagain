@@ -542,21 +542,21 @@ LocReturn 020274:
   Let b1 = M[002152];
   Let b2 = M[002153];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Error: ("putProp",6)
     } else {
       if (Equal(6,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          SetByte Offset(loop_var4,1) 0;
-          SetByte Offset(Offset(loop_var4,1),1) 4;
+          SetByte Offset(Address(loop_var4),1) 0;
+          SetByte Offset(Offset(Address(loop_var4),1),1) 4;
         } else {
-          SetByte Offset(loop_var4,1) 4;
+          SetByte Offset(Address(loop_var4),1) 4;
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -870,9 +870,9 @@ LocReturn 020513:
     Let b4 = M[Offset(Offset(000741,Mul(popped3,9)),7)];
     Let b5 = M[Offset(Offset(Offset(000741,Mul(popped3,9)),7),1)];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+    Let loop_var7 = DeAddress(Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1)));
     Label 8: {
-      Let b9 = M[loop_var7];
+      Let b9 = M[Address(loop_var7)];
       if (IsZeroByte(b9)) {
         Let b10 = M[000696];
         Let b11 = M[000697];
@@ -880,15 +880,15 @@ LocReturn 020513:
       } else {
         if (Equal(5,Widen(BwAnd(b9,31)))) {
           if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
-            Let b12 = M[Offset(loop_var7,1)];
-            Let b13 = M[Offset(Offset(loop_var7,1),1)];
+            Let b12 = M[Offset(Address(loop_var7),1)];
+            Let b13 = M[Offset(Offset(Address(loop_var7),1),1)];
             SetLocal 4 MakeHiLo(b12,b13);
           } else {
-            Let b14 = M[Offset(loop_var7,1)];
+            Let b14 = M[Offset(Address(loop_var7),1)];
             SetLocal 4 Widen(b14);
           }
         } else {
-          Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+          Assign loop_var7 = DeAddress(Offset(Offset(Address(loop_var7),1),Add(Widen(ShiftR(b9,5)),1)));
           Goto: Label 8
         }
       }
@@ -2550,9 +2550,9 @@ LocOp 022295:
     Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+    Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
     Label 9: {
-      Let b10 = M[loop_var8];
+      Let b10 = M[Address(loop_var8)];
       if (IsZeroByte(b10)) {
         Let b11 = M[000720];
         Let b12 = M[000721];
@@ -2560,15 +2560,15 @@ LocOp 022295:
       } else {
         if (Equal(17,Widen(BwAnd(b10,31)))) {
           if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
-            Let b13 = M[Offset(loop_var8,1)];
-            Let b14 = M[Offset(Offset(loop_var8,1),1)];
+            Let b13 = M[Offset(Address(loop_var8),1)];
+            Let b14 = M[Offset(Offset(Address(loop_var8),1),1)];
             PushStack MakeHiLo(b13,b14);
           } else {
-            Let b15 = M[Offset(loop_var8,1)];
+            Let b15 = M[Offset(Address(loop_var8),1)];
             PushStack Widen(b15);
           }
         } else {
-          Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+          Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
           Goto: Label 9
         }
       }
@@ -2856,9 +2856,9 @@ LocOp 022513:
   Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
   Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
   Let b9 = M[Address(MakeHiLo(b7,b8))];
-  Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+  Let loop_var10 = DeAddress(Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1)));
   Label 11: {
-    Let b12 = M[loop_var10];
+    Let b12 = M[Address(loop_var10)];
     if (IsZeroByte(b12)) {
       Let b13 = M[000720];
       Let b14 = M[000721];
@@ -2866,15 +2866,15 @@ LocOp 022513:
     } else {
       if (Equal(17,Widen(BwAnd(b12,31)))) {
         if (Equal(Add(Widen(ShiftR(b12,5)),1),2)) {
-          Let b15 = M[Offset(loop_var10,1)];
-          Let b16 = M[Offset(Offset(loop_var10,1),1)];
+          Let b15 = M[Offset(Address(loop_var10),1)];
+          Let b16 = M[Offset(Offset(Address(loop_var10),1),1)];
           PushStack MakeHiLo(b15,b16);
         } else {
-          Let b17 = M[Offset(loop_var10,1)];
+          Let b17 = M[Offset(Address(loop_var10),1)];
           PushStack Widen(b17);
         }
       } else {
-        Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+        Assign loop_var10 = DeAddress(Offset(Offset(Address(loop_var10),1),Add(Widen(ShiftR(b12,5)),1)));
         Goto: Label 11
       }
     }
@@ -2911,9 +2911,9 @@ LocOp 022533:
   Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
   Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+  Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
   Label 9: {
-    Let b10 = M[loop_var8];
+    Let b10 = M[Address(loop_var8)];
     if (IsZeroByte(b10)) {
       Let b11 = M[000720];
       Let b12 = M[000721];
@@ -2921,15 +2921,15 @@ LocOp 022533:
     } else {
       if (Equal(17,Widen(BwAnd(b10,31)))) {
         if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
-          Let b13 = M[Offset(loop_var8,1)];
-          Let b14 = M[Offset(Offset(loop_var8,1),1)];
+          Let b13 = M[Offset(Address(loop_var8),1)];
+          Let b14 = M[Offset(Offset(Address(loop_var8),1),1)];
           PushStack MakeHiLo(b13,b14);
         } else {
-          Let b15 = M[Offset(loop_var8,1)];
+          Let b15 = M[Offset(Address(loop_var8),1)];
           PushStack Widen(b15);
         }
       } else {
-        Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+        Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
         Goto: Label 9
       }
     }
@@ -2993,9 +2993,9 @@ LocOp 022565:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(3),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(3),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
     Label 5: {
-      Let b6 = M[loop_var4];
+      Let b6 = M[Address(loop_var4)];
       if (IsZeroByte(b6)) {
         Let b7 = M[000720];
         Let b8 = M[000721];
@@ -3003,15 +3003,15 @@ LocOp 022565:
       } else {
         if (Equal(17,Widen(BwAnd(b6,31)))) {
           if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-            Let b9 = M[Offset(loop_var4,1)];
-            Let b10 = M[Offset(Offset(loop_var4,1),1)];
+            Let b9 = M[Offset(Address(loop_var4),1)];
+            Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
             PushStack MakeHiLo(b9,b10);
           } else {
-            Let b11 = M[Offset(loop_var4,1)];
+            Let b11 = M[Offset(Address(loop_var4),1)];
             PushStack Widen(b11);
           }
         } else {
-          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
           Goto: Label 5
         }
       }
@@ -3063,9 +3063,9 @@ LocOp 022582:
         Let b5 = M[Offset(Offset(000741,Mul(popped4,9)),7)];
         Let b6 = M[Offset(Offset(Offset(000741,Mul(popped4,9)),7),1)];
         Let b7 = M[Address(MakeHiLo(b5,b6))];
-        Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+        Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
         Label 9: {
-          Let b10 = M[loop_var8];
+          Let b10 = M[Address(loop_var8)];
           if (IsZeroByte(b10)) {
             Let b11 = M[000690];
             Let b12 = M[000691];
@@ -3073,15 +3073,15 @@ LocOp 022582:
           } else {
             if (Equal(2,Widen(BwAnd(b10,31)))) {
               if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
-                Let b13 = M[Offset(loop_var8,1)];
-                Let b14 = M[Offset(Offset(loop_var8,1),1)];
+                Let b13 = M[Offset(Address(loop_var8),1)];
+                Let b14 = M[Offset(Offset(Address(loop_var8),1),1)];
                 PushStack MakeHiLo(b13,b14);
               } else {
-                Let b15 = M[Offset(loop_var8,1)];
+                Let b15 = M[Offset(Address(loop_var8),1)];
                 PushStack Widen(b15);
               }
             } else {
-              Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+              Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
               Goto: Label 9
             }
           }
@@ -3123,9 +3123,9 @@ LocOp 022612:
       Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
       Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
       Let b3 = M[Address(MakeHiLo(b1,b2))];
-      Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+      Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
       Label 5: {
-        Let b6 = M[loop_var4];
+        Let b6 = M[Address(loop_var4)];
         if (IsZeroByte(b6)) {
           Let b7 = M[000720];
           Let b8 = M[000721];
@@ -3133,15 +3133,15 @@ LocOp 022612:
         } else {
           if (Equal(17,Widen(BwAnd(b6,31)))) {
             if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-              Let b9 = M[Offset(loop_var4,1)];
-              Let b10 = M[Offset(Offset(loop_var4,1),1)];
+              Let b9 = M[Offset(Address(loop_var4),1)];
+              Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
               PushStack MakeHiLo(b9,b10);
             } else {
-              Let b11 = M[Offset(loop_var4,1)];
+              Let b11 = M[Offset(Address(loop_var4),1)];
               PushStack Widen(b11);
             }
           } else {
-            Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+            Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
             Goto: Label 5
           }
         }
@@ -8943,16 +8943,16 @@ LocOp 026977:
   Let b9 = M[Offset(Offset(000741,Mul(MakeHiLo(b7,b8),9)),7)];
   Let b10 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b7,b8),9)),7),1)];
   Let b11 = M[Address(MakeHiLo(b9,b10))];
-  Let loop_var12 = Offset(Address(MakeHiLo(b9,b10)),Add(Mul(2,Widen(b11)),1));
+  Let loop_var12 = DeAddress(Offset(Address(MakeHiLo(b9,b10)),Add(Mul(2,Widen(b11)),1)));
   Label 13: {
-    Let b14 = M[loop_var12];
+    Let b14 = M[Address(loop_var12)];
     if (IsZeroByte(b14)) {
       SetLocal 3 0;
     } else {
       if (Equal(5,Widen(BwAnd(b14,31)))) {
-        SetLocal 3 DeAddress(Offset(loop_var12,1));
+        SetLocal 3 DeAddress(Offset(Address(loop_var12),1));
       } else {
-        Assign loop_var12 = Offset(Offset(loop_var12,1),Add(Widen(ShiftR(b14,5)),1));
+        Assign loop_var12 = DeAddress(Offset(Offset(Address(loop_var12),1),Add(Widen(ShiftR(b14,5)),1)));
         Goto: Label 13
       }
     }
@@ -9018,16 +9018,16 @@ LocOp 027024:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       SetLocal 3 0;
     } else {
       if (Equal(4,Widen(BwAnd(b8,31)))) {
-        SetLocal 3 DeAddress(Offset(loop_var6,1));
+        SetLocal 3 DeAddress(Offset(Address(loop_var6),1));
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -9081,21 +9081,21 @@ LocOp 027046:
     Let b12 = M[000865];
     Let b13 = M[000866];
     Let b14 = M[Address(MakeHiLo(b12,b13))];
-    Let loop_var15 = Offset(Address(MakeHiLo(b12,b13)),Add(Mul(2,Widen(b14)),1));
+    Let loop_var15 = DeAddress(Offset(Address(MakeHiLo(b12,b13)),Add(Mul(2,Widen(b14)),1)));
     Label 16: {
-      Let b17 = M[loop_var15];
+      Let b17 = M[Address(loop_var15)];
       if (IsZeroByte(b17)) {
         Error: ("putProp",17)
       } else {
         if (Equal(17,Widen(BwAnd(b17,31)))) {
           if (Equal(Add(Widen(ShiftR(b17,5)),1),2)) {
-            SetByte Offset(loop_var15,1) HiByte(popped11);
-            SetByte Offset(Offset(loop_var15,1),1) LoByte(popped11);
+            SetByte Offset(Address(loop_var15),1) HiByte(popped11);
+            SetByte Offset(Offset(Address(loop_var15),1),1) LoByte(popped11);
           } else {
-            SetByte Offset(loop_var15,1) LoByte(popped11);
+            SetByte Offset(Address(loop_var15),1) LoByte(popped11);
           }
         } else {
-          Assign loop_var15 = Offset(Offset(loop_var15,1),Add(Widen(ShiftR(b17,5)),1));
+          Assign loop_var15 = DeAddress(Offset(Offset(Address(loop_var15),1),Add(Widen(ShiftR(b17,5)),1)));
           Goto: Label 16
         }
       }
@@ -9104,16 +9104,16 @@ LocOp 027046:
     Let b18 = M[000865];
     Let b19 = M[000866];
     Let b20 = M[Address(MakeHiLo(b18,b19))];
-    Let loop_var21 = Offset(Address(MakeHiLo(b18,b19)),Add(Mul(2,Widen(b20)),1));
+    Let loop_var21 = DeAddress(Offset(Address(MakeHiLo(b18,b19)),Add(Mul(2,Widen(b20)),1)));
     Label 22: {
-      Let b23 = M[loop_var21];
+      Let b23 = M[Address(loop_var21)];
       if (IsZeroByte(b23)) {
         PushStack 0;
       } else {
         if (Equal(17,Widen(BwAnd(b23,31)))) {
-          PushStack DeAddress(Offset(loop_var21,1));
+          PushStack DeAddress(Offset(Address(loop_var21),1));
         } else {
-          Assign loop_var21 = Offset(Offset(loop_var21,1),Add(Widen(ShiftR(b23,5)),1));
+          Assign loop_var21 = DeAddress(Offset(Offset(Address(loop_var21),1),Add(Widen(ShiftR(b23,5)),1)));
           Goto: Label 22
         }
       }
@@ -9377,16 +9377,16 @@ LocOp 027233:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
     Label 5: {
-      Let b6 = M[loop_var4];
+      Let b6 = M[Address(loop_var4)];
       if (IsZeroByte(b6)) {
         PushStack 0;
       } else {
         if (Equal(18,Widen(BwAnd(b6,31)))) {
-          PushStack DeAddress(Offset(loop_var4,1));
+          PushStack DeAddress(Offset(Address(loop_var4),1));
         } else {
-          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
           Goto: Label 5
         }
       }
@@ -10431,16 +10431,16 @@ LocOp 027941:
       Let b5 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+      Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
       Label 9: {
-        Let b10 = M[loop_var8];
+        Let b10 = M[Address(loop_var8)];
         if (IsZeroByte(b10)) {
           SetLocal 3 0;
         } else {
           if (Equal(18,Widen(BwAnd(b10,31)))) {
-            SetLocal 3 DeAddress(Offset(loop_var8,1));
+            SetLocal 3 DeAddress(Offset(Address(loop_var8),1));
           } else {
-            Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+            Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
             Goto: Label 9
           }
         }
@@ -10494,16 +10494,16 @@ LocOp 027974:
     Let b3 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
     Label 7: {
-      Let b8 = M[loop_var6];
+      Let b8 = M[Address(loop_var6)];
       if (IsZeroByte(b8)) {
         SetLocal 3 0;
       } else {
         if (Equal(16,Widen(BwAnd(b8,31)))) {
-          SetLocal 3 DeAddress(Offset(loop_var6,1));
+          SetLocal 3 DeAddress(Offset(Address(loop_var6),1));
         } else {
-          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
           Goto: Label 7
         }
       }
@@ -11137,9 +11137,9 @@ LocOp 028769:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    Let loop_var9 = Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1));
+    Let loop_var9 = DeAddress(Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1)));
     Label 10: {
-      Let b11 = M[loop_var9];
+      Let b11 = M[Address(loop_var9)];
       if (IsZeroByte(b11)) {
         Let b12 = M[000700];
         Let b13 = M[000701];
@@ -11147,15 +11147,15 @@ LocOp 028769:
       } else {
         if (Equal(7,Widen(BwAnd(b11,31)))) {
           if (Equal(Add(Widen(ShiftR(b11,5)),1),2)) {
-            Let b14 = M[Offset(loop_var9,1)];
-            Let b15 = M[Offset(Offset(loop_var9,1),1)];
+            Let b14 = M[Offset(Address(loop_var9),1)];
+            Let b15 = M[Offset(Offset(Address(loop_var9),1),1)];
             PushStack MakeHiLo(b14,b15);
           } else {
-            Let b16 = M[Offset(loop_var9,1)];
+            Let b16 = M[Offset(Address(loop_var9),1)];
             PushStack Widen(b16);
           }
         } else {
-          Assign loop_var9 = Offset(Offset(loop_var9,1),Add(Widen(ShiftR(b11,5)),1));
+          Assign loop_var9 = DeAddress(Offset(Offset(Address(loop_var9),1),Add(Widen(ShiftR(b11,5)),1)));
           Goto: Label 10
         }
       }
@@ -11573,9 +11573,9 @@ LocOp 029223:
   Let b21 = M[Offset(Offset(000741,Mul(MakeHiLo(b19,b20),9)),7)];
   Let b22 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b19,b20),9)),7),1)];
   Let b23 = M[Address(MakeHiLo(b21,b22))];
-  Let loop_var24 = Offset(Address(MakeHiLo(b21,b22)),Add(Mul(2,Widen(b23)),1));
+  Let loop_var24 = DeAddress(Offset(Address(MakeHiLo(b21,b22)),Add(Mul(2,Widen(b23)),1)));
   Label 25: {
-    Let b26 = M[loop_var24];
+    Let b26 = M[Address(loop_var24)];
     if (IsZeroByte(b26)) {
       Let b27 = M[000720];
       Let b28 = M[000721];
@@ -11583,15 +11583,15 @@ LocOp 029223:
     } else {
       if (Equal(17,Widen(BwAnd(b26,31)))) {
         if (Equal(Add(Widen(ShiftR(b26,5)),1),2)) {
-          Let b29 = M[Offset(loop_var24,1)];
-          Let b30 = M[Offset(Offset(loop_var24,1),1)];
+          Let b29 = M[Offset(Address(loop_var24),1)];
+          Let b30 = M[Offset(Offset(Address(loop_var24),1),1)];
           PushStack MakeHiLo(b29,b30);
         } else {
-          Let b31 = M[Offset(loop_var24,1)];
+          Let b31 = M[Offset(Address(loop_var24),1)];
           PushStack Widen(b31);
         }
       } else {
-        Assign loop_var24 = Offset(Offset(loop_var24,1),Add(Widen(ShiftR(b26,5)),1));
+        Assign loop_var24 = DeAddress(Offset(Offset(Address(loop_var24),1),Add(Widen(ShiftR(b26,5)),1)));
         Goto: Label 25
       }
     }
@@ -12003,16 +12003,16 @@ LocOp 029570:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       SetLocal 4 0;
     } else {
       if (Equal(GetLocal(1),Widen(BwAnd(b8,31)))) {
-        SetLocal 4 DeAddress(Offset(loop_var6,1));
+        SetLocal 4 DeAddress(Offset(Address(loop_var6),1));
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -12143,16 +12143,16 @@ LocOp 029676:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
     Label 7: {
-      Let b8 = M[loop_var6];
+      Let b8 = M[Address(loop_var6)];
       if (IsZeroByte(b8)) {
         SetLocal 3 0;
       } else {
         if (Equal(18,Widen(BwAnd(b8,31)))) {
-          SetLocal 3 DeAddress(Offset(loop_var6,1));
+          SetLocal 3 DeAddress(Offset(Address(loop_var6),1));
         } else {
-          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
           Goto: Label 7
         }
       }
@@ -12244,9 +12244,9 @@ LocOp 029767:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    Let loop_var9 = Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1));
+    Let loop_var9 = DeAddress(Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1)));
     Label 10: {
-      Let b11 = M[loop_var9];
+      Let b11 = M[Address(loop_var9)];
       if (IsZeroByte(b11)) {
         Let b12 = M[000706];
         Let b13 = M[000707];
@@ -12254,15 +12254,15 @@ LocOp 029767:
       } else {
         if (Equal(10,Widen(BwAnd(b11,31)))) {
           if (Equal(Add(Widen(ShiftR(b11,5)),1),2)) {
-            Let b14 = M[Offset(loop_var9,1)];
-            Let b15 = M[Offset(Offset(loop_var9,1),1)];
+            Let b14 = M[Offset(Address(loop_var9),1)];
+            Let b15 = M[Offset(Offset(Address(loop_var9),1),1)];
             PushStack MakeHiLo(b14,b15);
           } else {
-            Let b16 = M[Offset(loop_var9,1)];
+            Let b16 = M[Offset(Address(loop_var9),1)];
             PushStack Widen(b16);
           }
         } else {
-          Assign loop_var9 = Offset(Offset(loop_var9,1),Add(Widen(ShiftR(b11,5)),1));
+          Assign loop_var9 = DeAddress(Offset(Offset(Address(loop_var9),1),Add(Widen(ShiftR(b11,5)),1)));
           Goto: Label 10
         }
       }
@@ -13420,9 +13420,9 @@ LocOp 030965:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Let b9 = M[000702];
       Let b10 = M[000703];
@@ -13430,15 +13430,15 @@ LocOp 030965:
     } else {
       if (Equal(8,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          Let b11 = M[Offset(loop_var6,1)];
-          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          Let b11 = M[Offset(Address(loop_var6),1)];
+          Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
           PushStack MakeHiLo(b11,b12);
         } else {
-          Let b13 = M[Offset(loop_var6,1)];
+          Let b13 = M[Offset(Address(loop_var6),1)];
           PushStack Widen(b13);
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -13454,9 +13454,9 @@ LocOp 030965:
     Let b17 = M[Offset(Offset(000741,Mul(MakeHiLo(b15,b16),9)),7)];
     Let b18 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b15,b16),9)),7),1)];
     Let b19 = M[Address(MakeHiLo(b17,b18))];
-    Let loop_var20 = Offset(Address(MakeHiLo(b17,b18)),Add(Mul(2,Widen(b19)),1));
+    Let loop_var20 = DeAddress(Offset(Address(MakeHiLo(b17,b18)),Add(Mul(2,Widen(b19)),1)));
     Label 21: {
-      Let b22 = M[loop_var20];
+      Let b22 = M[Address(loop_var20)];
       if (IsZeroByte(b22)) {
         Let b23 = M[000702];
         Let b24 = M[000703];
@@ -13464,15 +13464,15 @@ LocOp 030965:
       } else {
         if (Equal(8,Widen(BwAnd(b22,31)))) {
           if (Equal(Add(Widen(ShiftR(b22,5)),1),2)) {
-            Let b25 = M[Offset(loop_var20,1)];
-            Let b26 = M[Offset(Offset(loop_var20,1),1)];
+            Let b25 = M[Offset(Address(loop_var20),1)];
+            Let b26 = M[Offset(Offset(Address(loop_var20),1),1)];
             PushStack MakeHiLo(b25,b26);
           } else {
-            Let b27 = M[Offset(loop_var20,1)];
+            Let b27 = M[Offset(Address(loop_var20),1)];
             PushStack Widen(b27);
           }
         } else {
-          Assign loop_var20 = Offset(Offset(loop_var20,1),Add(Widen(ShiftR(b22,5)),1));
+          Assign loop_var20 = DeAddress(Offset(Offset(Address(loop_var20),1),Add(Widen(ShiftR(b22,5)),1)));
           Goto: Label 21
         }
       }
@@ -13580,16 +13580,16 @@ LocOp 031047:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+    Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
     Label 9: {
-      Let b10 = M[loop_var8];
+      Let b10 = M[Address(loop_var8)];
       if (IsZeroByte(b10)) {
         SetLocal 1 0;
       } else {
         if (Equal(5,Widen(BwAnd(b10,31)))) {
-          SetLocal 1 DeAddress(Offset(loop_var8,1));
+          SetLocal 1 DeAddress(Offset(Address(loop_var8),1));
         } else {
-          Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+          Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
           Goto: Label 9
         }
       }
@@ -14581,16 +14581,16 @@ LocOp 032065:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       SetLocal 1 0;
     } else {
       if (Equal(22,Widen(BwAnd(b8,31)))) {
-        SetLocal 1 DeAddress(Offset(loop_var6,1));
+        SetLocal 1 DeAddress(Offset(Address(loop_var6),1));
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -15432,9 +15432,9 @@ LocOp 032905:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    Let loop_var9 = Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1));
+    Let loop_var9 = DeAddress(Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1)));
     Label 10: {
-      Let b11 = M[loop_var9];
+      Let b11 = M[Address(loop_var9)];
       if (IsZeroByte(b11)) {
         Let b12 = M[000706];
         Let b13 = M[000707];
@@ -15442,15 +15442,15 @@ LocOp 032905:
       } else {
         if (Equal(10,Widen(BwAnd(b11,31)))) {
           if (Equal(Add(Widen(ShiftR(b11,5)),1),2)) {
-            Let b14 = M[Offset(loop_var9,1)];
-            Let b15 = M[Offset(Offset(loop_var9,1),1)];
+            Let b14 = M[Offset(Address(loop_var9),1)];
+            Let b15 = M[Offset(Offset(Address(loop_var9),1),1)];
             PushStack MakeHiLo(b14,b15);
           } else {
-            Let b16 = M[Offset(loop_var9,1)];
+            Let b16 = M[Offset(Address(loop_var9),1)];
             PushStack Widen(b16);
           }
         } else {
-          Assign loop_var9 = Offset(Offset(loop_var9,1),Add(Widen(ShiftR(b11,5)),1));
+          Assign loop_var9 = DeAddress(Offset(Offset(Address(loop_var9),1),Add(Widen(ShiftR(b11,5)),1)));
           Goto: Label 10
         }
       }
@@ -15534,9 +15534,9 @@ LocOp 032952:
         Let b6 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
         Let b7 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
         Let b8 = M[Address(MakeHiLo(b6,b7))];
-        Let loop_var9 = Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1));
+        Let loop_var9 = DeAddress(Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1)));
         Label 10: {
-          Let b11 = M[loop_var9];
+          Let b11 = M[Address(loop_var9)];
           if (IsZeroByte(b11)) {
             Let b12 = M[000714];
             Let b13 = M[000715];
@@ -15544,15 +15544,15 @@ LocOp 032952:
           } else {
             if (Equal(14,Widen(BwAnd(b11,31)))) {
               if (Equal(Add(Widen(ShiftR(b11,5)),1),2)) {
-                Let b14 = M[Offset(loop_var9,1)];
-                Let b15 = M[Offset(Offset(loop_var9,1),1)];
+                Let b14 = M[Offset(Address(loop_var9),1)];
+                Let b15 = M[Offset(Offset(Address(loop_var9),1),1)];
                 SetLocal 2 MakeHiLo(b14,b15);
               } else {
-                Let b16 = M[Offset(loop_var9,1)];
+                Let b16 = M[Offset(Address(loop_var9),1)];
                 SetLocal 2 Widen(b16);
               }
             } else {
-              Assign loop_var9 = Offset(Offset(loop_var9,1),Add(Widen(ShiftR(b11,5)),1));
+              Assign loop_var9 = DeAddress(Offset(Offset(Address(loop_var9),1),Add(Widen(ShiftR(b11,5)),1)));
               Goto: Label 10
             }
           }
@@ -16257,9 +16257,9 @@ LocReturn 033521:
   Let b4 = M[Offset(Offset(000741,Mul(MakeHiLo(b2,b3),9)),7)];
   Let b5 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b2,b3),9)),7),1)];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+  Let loop_var7 = DeAddress(Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1)));
   Label 8: {
-    Let b9 = M[loop_var7];
+    Let b9 = M[Address(loop_var7)];
     if (IsZeroByte(b9)) {
       Let b10 = M[000716];
       Let b11 = M[000717];
@@ -16267,15 +16267,15 @@ LocReturn 033521:
     } else {
       if (Equal(15,Widen(BwAnd(b9,31)))) {
         if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
-          Let b12 = M[Offset(loop_var7,1)];
-          Let b13 = M[Offset(Offset(loop_var7,1),1)];
+          Let b12 = M[Offset(Address(loop_var7),1)];
+          Let b13 = M[Offset(Offset(Address(loop_var7),1),1)];
           PushStack MakeHiLo(b12,b13);
         } else {
-          Let b14 = M[Offset(loop_var7,1)];
+          Let b14 = M[Offset(Address(loop_var7),1)];
           PushStack Widen(b14);
         }
       } else {
-        Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+        Assign loop_var7 = DeAddress(Offset(Offset(Address(loop_var7),1),Add(Widen(ShiftR(b9,5)),1)));
         Goto: Label 8
       }
     }
@@ -16289,9 +16289,9 @@ LocReturn 033521:
   Let b18 = M[Offset(Offset(000741,Mul(MakeHiLo(b16,b17),9)),7)];
   Let b19 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b16,b17),9)),7),1)];
   Let b20 = M[Address(MakeHiLo(b18,b19))];
-  Let loop_var21 = Offset(Address(MakeHiLo(b18,b19)),Add(Mul(2,Widen(b20)),1));
+  Let loop_var21 = DeAddress(Offset(Address(MakeHiLo(b18,b19)),Add(Mul(2,Widen(b20)),1)));
   Label 22: {
-    Let b23 = M[loop_var21];
+    Let b23 = M[Address(loop_var21)];
     if (IsZeroByte(b23)) {
       Let b24 = M[000706];
       Let b25 = M[000707];
@@ -16299,15 +16299,15 @@ LocReturn 033521:
     } else {
       if (Equal(10,Widen(BwAnd(b23,31)))) {
         if (Equal(Add(Widen(ShiftR(b23,5)),1),2)) {
-          Let b26 = M[Offset(loop_var21,1)];
-          Let b27 = M[Offset(Offset(loop_var21,1),1)];
+          Let b26 = M[Offset(Address(loop_var21),1)];
+          Let b27 = M[Offset(Offset(Address(loop_var21),1),1)];
           PushStack MakeHiLo(b26,b27);
         } else {
-          Let b28 = M[Offset(loop_var21,1)];
+          Let b28 = M[Offset(Address(loop_var21),1)];
           PushStack Widen(b28);
         }
       } else {
-        Assign loop_var21 = Offset(Offset(loop_var21,1),Add(Widen(ShiftR(b23,5)),1));
+        Assign loop_var21 = DeAddress(Offset(Offset(Address(loop_var21),1),Add(Widen(ShiftR(b23,5)),1)));
         Goto: Label 22
       }
     }
@@ -16655,9 +16655,9 @@ LocOp 033811:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Let b9 = M[000702];
       Let b10 = M[000703];
@@ -16665,15 +16665,15 @@ LocOp 033811:
     } else {
       if (Equal(8,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          Let b11 = M[Offset(loop_var6,1)];
-          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          Let b11 = M[Offset(Address(loop_var6),1)];
+          Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
           PushStack MakeHiLo(b11,b12);
         } else {
-          Let b13 = M[Offset(loop_var6,1)];
+          Let b13 = M[Offset(Address(loop_var6),1)];
           PushStack Widen(b13);
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -18469,16 +18469,16 @@ LocOp 035514:
   Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b7 = M[Address(MakeHiLo(b5,b6))];
-  Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+  Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
   Label 9: {
-    Let b10 = M[loop_var8];
+    Let b10 = M[Address(loop_var8)];
     if (IsZeroByte(b10)) {
       SetLocal 1 0;
     } else {
       if (Equal(MakeHiLo(b3,b4),Widen(BwAnd(b10,31)))) {
-        SetLocal 1 DeAddress(Offset(loop_var8,1));
+        SetLocal 1 DeAddress(Offset(Address(loop_var8),1));
       } else {
-        Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+        Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
         Goto: Label 9
       }
     }
@@ -19259,9 +19259,9 @@ LocOp 036112:
     Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7)];
     Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b4,b5),9)),7),1)];
     Let b8 = M[Address(MakeHiLo(b6,b7))];
-    Let loop_var9 = Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1));
+    Let loop_var9 = DeAddress(Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1)));
     Label 10: {
-      Let b11 = M[loop_var9];
+      Let b11 = M[Address(loop_var9)];
       if (IsZeroByte(b11)) {
         Let b12 = M[000720];
         Let b13 = M[000721];
@@ -19269,15 +19269,15 @@ LocOp 036112:
       } else {
         if (Equal(17,Widen(BwAnd(b11,31)))) {
           if (Equal(Add(Widen(ShiftR(b11,5)),1),2)) {
-            Let b14 = M[Offset(loop_var9,1)];
-            Let b15 = M[Offset(Offset(loop_var9,1),1)];
+            Let b14 = M[Offset(Address(loop_var9),1)];
+            Let b15 = M[Offset(Offset(Address(loop_var9),1),1)];
             PushStack MakeHiLo(b14,b15);
           } else {
-            Let b16 = M[Offset(loop_var9,1)];
+            Let b16 = M[Offset(Address(loop_var9),1)];
             PushStack Widen(b16);
           }
         } else {
-          Assign loop_var9 = Offset(Offset(loop_var9,1),Add(Widen(ShiftR(b11,5)),1));
+          Assign loop_var9 = DeAddress(Offset(Offset(Address(loop_var9),1),Add(Widen(ShiftR(b11,5)),1)));
           Goto: Label 10
         }
       }
@@ -19318,9 +19318,9 @@ LocOp 036130:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
     Label 7: {
-      Let b8 = M[loop_var6];
+      Let b8 = M[Address(loop_var6)];
       if (IsZeroByte(b8)) {
         Let b9 = M[000708];
         Let b10 = M[000709];
@@ -19328,15 +19328,15 @@ LocOp 036130:
       } else {
         if (Equal(11,Widen(BwAnd(b8,31)))) {
           if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-            Let b11 = M[Offset(loop_var6,1)];
-            Let b12 = M[Offset(Offset(loop_var6,1),1)];
+            Let b11 = M[Offset(Address(loop_var6),1)];
+            Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
             SetLocal 3 MakeHiLo(b11,b12);
           } else {
-            Let b13 = M[Offset(loop_var6,1)];
+            Let b13 = M[Offset(Address(loop_var6),1)];
             SetLocal 3 Widen(b13);
           }
         } else {
-          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
           Goto: Label 7
         }
       }
@@ -19360,9 +19360,9 @@ LocOp 036146:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Let b9 = M[000720];
       Let b10 = M[000721];
@@ -19370,15 +19370,15 @@ LocOp 036146:
     } else {
       if (Equal(17,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          Let b11 = M[Offset(loop_var6,1)];
-          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          Let b11 = M[Offset(Address(loop_var6),1)];
+          Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
           PushStack MakeHiLo(b11,b12);
         } else {
-          Let b13 = M[Offset(loop_var6,1)];
+          Let b13 = M[Offset(Address(loop_var6),1)];
           PushStack Widen(b13);
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -19413,9 +19413,9 @@ LocOp 036155:
       Let b5 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
       Let b6 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
       Let b7 = M[Address(MakeHiLo(b5,b6))];
-      Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+      Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
       Label 9: {
-        Let b10 = M[loop_var8];
+        Let b10 = M[Address(loop_var8)];
         if (IsZeroByte(b10)) {
           Let b11 = M[000720];
           Let b12 = M[000721];
@@ -19423,15 +19423,15 @@ LocOp 036155:
         } else {
           if (Equal(17,Widen(BwAnd(b10,31)))) {
             if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
-              Let b13 = M[Offset(loop_var8,1)];
-              Let b14 = M[Offset(Offset(loop_var8,1),1)];
+              Let b13 = M[Offset(Address(loop_var8),1)];
+              Let b14 = M[Offset(Offset(Address(loop_var8),1),1)];
               PushStack MakeHiLo(b13,b14);
             } else {
-              Let b15 = M[Offset(loop_var8,1)];
+              Let b15 = M[Offset(Address(loop_var8),1)];
               PushStack Widen(b15);
             }
           } else {
-            Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+            Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
             Goto: Label 9
           }
         }
@@ -19565,9 +19565,9 @@ LocOp 036253:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
     Label 5: {
-      Let b6 = M[loop_var4];
+      Let b6 = M[Address(loop_var4)];
       if (IsZeroByte(b6)) {
         Let b7 = M[000704];
         Let b8 = M[000705];
@@ -19575,15 +19575,15 @@ LocOp 036253:
       } else {
         if (Equal(9,Widen(BwAnd(b6,31)))) {
           if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-            Let b9 = M[Offset(loop_var4,1)];
-            Let b10 = M[Offset(Offset(loop_var4,1),1)];
+            Let b9 = M[Offset(Address(loop_var4),1)];
+            Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
             PushStack MakeHiLo(b9,b10);
           } else {
-            Let b11 = M[Offset(loop_var4,1)];
+            Let b11 = M[Offset(Address(loop_var4),1)];
             PushStack Widen(b11);
           }
         } else {
-          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
           Goto: Label 5
         }
       }
@@ -19627,9 +19627,9 @@ LocOp 036271:
       Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
       Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
       Let b4 = M[Address(MakeHiLo(b2,b3))];
-      Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+      Let loop_var5 = DeAddress(Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1)));
       Label 6: {
-        Let b7 = M[loop_var5];
+        Let b7 = M[Address(loop_var5)];
         if (IsZeroByte(b7)) {
           Let b8 = M[000714];
           Let b9 = M[000715];
@@ -19637,15 +19637,15 @@ LocOp 036271:
         } else {
           if (Equal(14,Widen(BwAnd(b7,31)))) {
             if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
-              Let b10 = M[Offset(loop_var5,1)];
-              Let b11 = M[Offset(Offset(loop_var5,1),1)];
+              Let b10 = M[Offset(Address(loop_var5),1)];
+              Let b11 = M[Offset(Offset(Address(loop_var5),1),1)];
               SetLocal 4 MakeHiLo(b10,b11);
             } else {
-              Let b12 = M[Offset(loop_var5,1)];
+              Let b12 = M[Offset(Address(loop_var5),1)];
               SetLocal 4 Widen(b12);
             }
           } else {
-            Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+            Assign loop_var5 = DeAddress(Offset(Offset(Address(loop_var5),1),Add(Widen(ShiftR(b7,5)),1)));
             Goto: Label 6
           }
         }
@@ -19665,9 +19665,9 @@ LocOp 036285:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000708];
       Let b8 = M[000709];
@@ -19675,15 +19675,15 @@ LocOp 036285:
     } else {
       if (Equal(11,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           SetLocal 4 MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           SetLocal 4 Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -20114,9 +20114,9 @@ LocOp 036607:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+      Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
       Label 7: {
-        Let b8 = M[loop_var6];
+        Let b8 = M[Address(loop_var6)];
         if (IsZeroByte(b8)) {
           Let b9 = M[000714];
           Let b10 = M[000715];
@@ -20124,15 +20124,15 @@ LocOp 036607:
         } else {
           if (Equal(14,Widen(BwAnd(b8,31)))) {
             if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-              Let b11 = M[Offset(loop_var6,1)];
-              Let b12 = M[Offset(Offset(loop_var6,1),1)];
+              Let b11 = M[Offset(Address(loop_var6),1)];
+              Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
               SetLocal 8 MakeHiLo(b11,b12);
             } else {
-              Let b13 = M[Offset(loop_var6,1)];
+              Let b13 = M[Offset(Address(loop_var6),1)];
               SetLocal 8 Widen(b13);
             }
           } else {
-            Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+            Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
             Goto: Label 7
           }
         }
@@ -20179,9 +20179,9 @@ LocReturn 036633:
     Let b4 = M[Offset(Offset(000741,Mul(popped3,9)),7)];
     Let b5 = M[Offset(Offset(Offset(000741,Mul(popped3,9)),7),1)];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+    Let loop_var7 = DeAddress(Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1)));
     Label 8: {
-      Let b9 = M[loop_var7];
+      Let b9 = M[Address(loop_var7)];
       if (IsZeroByte(b9)) {
         Let b10 = M[000704];
         Let b11 = M[000705];
@@ -20189,15 +20189,15 @@ LocReturn 036633:
       } else {
         if (Equal(9,Widen(BwAnd(b9,31)))) {
           if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
-            Let b12 = M[Offset(loop_var7,1)];
-            Let b13 = M[Offset(Offset(loop_var7,1),1)];
+            Let b12 = M[Offset(Address(loop_var7),1)];
+            Let b13 = M[Offset(Offset(Address(loop_var7),1),1)];
             PushStack MakeHiLo(b12,b13);
           } else {
-            Let b14 = M[Offset(loop_var7,1)];
+            Let b14 = M[Offset(Address(loop_var7),1)];
             PushStack Widen(b14);
           }
         } else {
-          Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+          Assign loop_var7 = DeAddress(Offset(Offset(Address(loop_var7),1),Add(Widen(ShiftR(b9,5)),1)));
           Goto: Label 8
         }
       }
@@ -20332,9 +20332,9 @@ LocOp 036719:
         Let b3 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
         Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
         Let b5 = M[Address(MakeHiLo(b3,b4))];
-        Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+        Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
         Label 7: {
-          Let b8 = M[loop_var6];
+          Let b8 = M[Address(loop_var6)];
           if (IsZeroByte(b8)) {
             Let b9 = M[000714];
             Let b10 = M[000715];
@@ -20342,15 +20342,15 @@ LocOp 036719:
           } else {
             if (Equal(14,Widen(BwAnd(b8,31)))) {
               if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-                Let b11 = M[Offset(loop_var6,1)];
-                Let b12 = M[Offset(Offset(loop_var6,1),1)];
+                Let b11 = M[Offset(Address(loop_var6),1)];
+                Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
                 PushStack MakeHiLo(b11,b12);
               } else {
-                Let b13 = M[Offset(loop_var6,1)];
+                Let b13 = M[Offset(Address(loop_var6),1)];
                 PushStack Widen(b13);
               }
             } else {
-              Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+              Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
               Goto: Label 7
             }
           }
@@ -20718,9 +20718,9 @@ LocOp 037055:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000712];
       Let b8 = M[000713];
@@ -20728,15 +20728,15 @@ LocOp 037055:
     } else {
       if (Equal(13,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           SetLocal 2 MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           SetLocal 2 Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -20760,21 +20760,21 @@ LocReturn 037063:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Error: ("putProp",13)
     } else {
       if (Equal(13,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          SetByte Offset(loop_var4,1) 0;
-          SetByte Offset(Offset(loop_var4,1),1) 0;
+          SetByte Offset(Address(loop_var4),1) 0;
+          SetByte Offset(Offset(Address(loop_var4),1),1) 0;
         } else {
-          SetByte Offset(loop_var4,1) 0;
+          SetByte Offset(Address(loop_var4),1) 0;
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -21419,9 +21419,9 @@ LocOp 037459:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000716];
       Let b8 = M[000717];
@@ -21429,15 +21429,15 @@ LocOp 037459:
     } else {
       if (Equal(15,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -21619,9 +21619,9 @@ LocOp 037584:
     Let b8 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
     Let b9 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
     Let b10 = M[Address(MakeHiLo(b8,b9))];
-    Let loop_var11 = Offset(Address(MakeHiLo(b8,b9)),Add(Mul(2,Widen(b10)),1));
+    Let loop_var11 = DeAddress(Offset(Address(MakeHiLo(b8,b9)),Add(Mul(2,Widen(b10)),1)));
     Label 12: {
-      Let b13 = M[loop_var11];
+      Let b13 = M[Address(loop_var11)];
       if (IsZeroByte(b13)) {
         Let b14 = M[000698];
         Let b15 = M[000699];
@@ -21629,15 +21629,15 @@ LocOp 037584:
       } else {
         if (Equal(6,Widen(BwAnd(b13,31)))) {
           if (Equal(Add(Widen(ShiftR(b13,5)),1),2)) {
-            Let b16 = M[Offset(loop_var11,1)];
-            Let b17 = M[Offset(Offset(loop_var11,1),1)];
+            Let b16 = M[Offset(Address(loop_var11),1)];
+            Let b17 = M[Offset(Offset(Address(loop_var11),1),1)];
             SetLocal 5 MakeHiLo(b16,b17);
           } else {
-            Let b18 = M[Offset(loop_var11,1)];
+            Let b18 = M[Offset(Address(loop_var11),1)];
             SetLocal 5 Widen(b18);
           }
         } else {
-          Assign loop_var11 = Offset(Offset(loop_var11,1),Add(Widen(ShiftR(b13,5)),1));
+          Assign loop_var11 = DeAddress(Offset(Offset(Address(loop_var11),1),Add(Widen(ShiftR(b13,5)),1)));
           Goto: Label 12
         }
       }
@@ -21746,9 +21746,9 @@ LocOp 037656:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+    Let loop_var5 = DeAddress(Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1)));
     Label 6: {
-      Let b7 = M[loop_var5];
+      Let b7 = M[Address(loop_var5)];
       if (IsZeroByte(b7)) {
         Let b8 = M[000708];
         Let b9 = M[000709];
@@ -21756,15 +21756,15 @@ LocOp 037656:
       } else {
         if (Equal(11,Widen(BwAnd(b7,31)))) {
           if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
-            Let b10 = M[Offset(loop_var5,1)];
-            Let b11 = M[Offset(Offset(loop_var5,1),1)];
+            Let b10 = M[Offset(Address(loop_var5),1)];
+            Let b11 = M[Offset(Offset(Address(loop_var5),1),1)];
             PushStack MakeHiLo(b10,b11);
           } else {
-            Let b12 = M[Offset(loop_var5,1)];
+            Let b12 = M[Offset(Address(loop_var5),1)];
             PushStack Widen(b12);
           }
         } else {
-          Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+          Assign loop_var5 = DeAddress(Offset(Offset(Address(loop_var5),1),Add(Widen(ShiftR(b7,5)),1)));
           Goto: Label 6
         }
       }
@@ -22031,9 +22031,9 @@ LocOp 037885:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Let b9 = M[000720];
       Let b10 = M[000721];
@@ -22041,15 +22041,15 @@ LocOp 037885:
     } else {
       if (Equal(17,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          Let b11 = M[Offset(loop_var6,1)];
-          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          Let b11 = M[Offset(Address(loop_var6),1)];
+          Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
           PushStack MakeHiLo(b11,b12);
         } else {
-          Let b13 = M[Offset(loop_var6,1)];
+          Let b13 = M[Offset(Address(loop_var6),1)];
           PushStack Widen(b13);
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -22293,16 +22293,16 @@ LocOp 038023:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       SetLocal 3 0;
     } else {
       if (Equal(18,Widen(BwAnd(b6,31)))) {
-        SetLocal 3 DeAddress(Offset(loop_var4,1));
+        SetLocal 3 DeAddress(Offset(Address(loop_var4),1));
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -22355,16 +22355,16 @@ LocOp 038055:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       SetLocal 3 0;
     } else {
       if (Equal(5,Widen(BwAnd(b6,31)))) {
-        SetLocal 3 DeAddress(Offset(loop_var4,1));
+        SetLocal 3 DeAddress(Offset(Address(loop_var4),1));
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -22553,17 +22553,17 @@ LocOp 038147:
     Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b9 = M[Address(MakeHiLo(b7,b8))];
-    Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+    Let loop_var10 = DeAddress(Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1)));
     Label 11: {
-      Let b12 = M[loop_var10];
+      Let b12 = M[Address(loop_var10)];
       if (IsZeroByte(b12)) {
         Error: ("getNextProp",GetLocal(2))
       } else {
         if (Equal(GetLocal(2),Widen(BwAnd(b12,31)))) {
-          Let b13 = M[Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1))];
+          Let b13 = M[Offset(Offset(Address(loop_var10),1),Add(Widen(ShiftR(b12,5)),1))];
           SetLocal 2 Widen(BwAnd(b13,31));
         } else {
-          Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+          Assign loop_var10 = DeAddress(Offset(Offset(Address(loop_var10),1),Add(Widen(ShiftR(b12,5)),1)));
           Goto: Label 11
         }
       }
@@ -22583,16 +22583,16 @@ LocOp 038147:
     Let b19 = M[Offset(Offset(000741,Mul(MakeHiLo(b17,b18),9)),7)];
     Let b20 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b17,b18),9)),7),1)];
     Let b21 = M[Address(MakeHiLo(b19,b20))];
-    Let loop_var22 = Offset(Address(MakeHiLo(b19,b20)),Add(Mul(2,Widen(b21)),1));
+    Let loop_var22 = DeAddress(Offset(Address(MakeHiLo(b19,b20)),Add(Mul(2,Widen(b21)),1)));
     Label 23: {
-      Let b24 = M[loop_var22];
+      Let b24 = M[Address(loop_var22)];
       if (IsZeroByte(b24)) {
         SetLocal 3 0;
       } else {
         if (Equal(GetLocal(2),Widen(BwAnd(b24,31)))) {
-          SetLocal 3 DeAddress(Offset(loop_var22,1));
+          SetLocal 3 DeAddress(Offset(Address(loop_var22),1));
         } else {
-          Assign loop_var22 = Offset(Offset(loop_var22,1),Add(Widen(ShiftR(b24,5)),1));
+          Assign loop_var22 = DeAddress(Offset(Offset(Address(loop_var22),1),Add(Widen(ShiftR(b24,5)),1)));
           Goto: Label 23
         }
       }
@@ -22642,21 +22642,21 @@ LocOp 038183:
   Let b2 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b4 = M[Address(MakeHiLo(b2,b3))];
-  Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+  Let loop_var5 = DeAddress(Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1)));
   Label 6: {
-    Let b7 = M[loop_var5];
+    Let b7 = M[Address(loop_var5)];
     if (IsZeroByte(b7)) {
       Error: ("putProp",11)
     } else {
       if (Equal(11,Widen(BwAnd(b7,31)))) {
         if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
-          SetByte Offset(loop_var5,1) HiByte(GetLocal(2));
-          SetByte Offset(Offset(loop_var5,1),1) LoByte(GetLocal(2));
+          SetByte Offset(Address(loop_var5),1) HiByte(GetLocal(2));
+          SetByte Offset(Offset(Address(loop_var5),1),1) LoByte(GetLocal(2));
         } else {
-          SetByte Offset(loop_var5,1) LoByte(GetLocal(2));
+          SetByte Offset(Address(loop_var5),1) LoByte(GetLocal(2));
         }
       } else {
-        Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+        Assign loop_var5 = DeAddress(Offset(Offset(Address(loop_var5),1),Add(Widen(ShiftR(b7,5)),1)));
         Goto: Label 6
       }
     }
@@ -25398,9 +25398,9 @@ LocOp 041968:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000710];
       Let b8 = M[000711];
@@ -25408,15 +25408,15 @@ LocOp 041968:
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -26216,21 +26216,21 @@ LocReturn 043060:
     Let b12 = M[002701];
     Let b13 = M[002702];
     Let b14 = M[Address(MakeHiLo(b12,b13))];
-    Let loop_var15 = Offset(Address(MakeHiLo(b12,b13)),Add(Mul(2,Widen(b14)),1));
+    Let loop_var15 = DeAddress(Offset(Address(MakeHiLo(b12,b13)),Add(Mul(2,Widen(b14)),1)));
     Label 16: {
-      Let b17 = M[loop_var15];
+      Let b17 = M[Address(loop_var15)];
       if (IsZeroByte(b17)) {
         Error: ("putProp",11)
       } else {
         if (Equal(11,Widen(BwAnd(b17,31)))) {
           if (Equal(Add(Widen(ShiftR(b17,5)),1),2)) {
-            SetByte Offset(loop_var15,1) 155;
-            SetByte Offset(Offset(loop_var15,1),1) 236;
+            SetByte Offset(Address(loop_var15),1) 155;
+            SetByte Offset(Offset(Address(loop_var15),1),1) 236;
           } else {
-            SetByte Offset(loop_var15,1) 236;
+            SetByte Offset(Address(loop_var15),1) 236;
           }
         } else {
-          Assign loop_var15 = Offset(Offset(loop_var15,1),Add(Widen(ShiftR(b17,5)),1));
+          Assign loop_var15 = DeAddress(Offset(Offset(Address(loop_var15),1),Add(Widen(ShiftR(b17,5)),1)));
           Goto: Label 16
         }
       }
@@ -26261,21 +26261,21 @@ LocOp 043144:
     Let b4 = M[002701];
     Let b5 = M[002702];
     Let b6 = M[Address(MakeHiLo(b4,b5))];
-    Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+    Let loop_var7 = DeAddress(Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1)));
     Label 8: {
-      Let b9 = M[loop_var7];
+      Let b9 = M[Address(loop_var7)];
       if (IsZeroByte(b9)) {
         Error: ("putProp",11)
       } else {
         if (Equal(11,Widen(BwAnd(b9,31)))) {
           if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
-            SetByte Offset(loop_var7,1) 156;
-            SetByte Offset(Offset(loop_var7,1),1) 3;
+            SetByte Offset(Address(loop_var7),1) 156;
+            SetByte Offset(Offset(Address(loop_var7),1),1) 3;
           } else {
-            SetByte Offset(loop_var7,1) 3;
+            SetByte Offset(Address(loop_var7),1) 3;
           }
         } else {
-          Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+          Assign loop_var7 = DeAddress(Offset(Offset(Address(loop_var7),1),Add(Widen(ShiftR(b9,5)),1)));
           Goto: Label 8
         }
       }
@@ -26403,21 +26403,21 @@ LocOp 043253:
   Let b1 = M[002701];
   Let b2 = M[002702];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Error: ("putProp",11)
     } else {
       if (Equal(11,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          SetByte Offset(loop_var4,1) 156;
-          SetByte Offset(Offset(loop_var4,1),1) 14;
+          SetByte Offset(Address(loop_var4),1) 156;
+          SetByte Offset(Offset(Address(loop_var4),1),1) 14;
         } else {
-          SetByte Offset(loop_var4,1) 14;
+          SetByte Offset(Address(loop_var4),1) 14;
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -26461,21 +26461,21 @@ LocOp 043310:
     Let b2 = M[002701];
     Let b3 = M[002702];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+    Let loop_var5 = DeAddress(Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1)));
     Label 6: {
-      Let b7 = M[loop_var5];
+      Let b7 = M[Address(loop_var5)];
       if (IsZeroByte(b7)) {
         Error: ("putProp",11)
       } else {
         if (Equal(11,Widen(BwAnd(b7,31)))) {
           if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
-            SetByte Offset(loop_var5,1) 156;
-            SetByte Offset(Offset(loop_var5,1),1) 36;
+            SetByte Offset(Address(loop_var5),1) 156;
+            SetByte Offset(Offset(Address(loop_var5),1),1) 36;
           } else {
-            SetByte Offset(loop_var5,1) 36;
+            SetByte Offset(Address(loop_var5),1) 36;
           }
         } else {
-          Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+          Assign loop_var5 = DeAddress(Offset(Offset(Address(loop_var5),1),Add(Widen(ShiftR(b7,5)),1)));
           Goto: Label 6
         }
       }
@@ -26524,21 +26524,21 @@ LocOp 043323:
     Let b12 = M[002701];
     Let b13 = M[002702];
     Let b14 = M[Address(MakeHiLo(b12,b13))];
-    Let loop_var15 = Offset(Address(MakeHiLo(b12,b13)),Add(Mul(2,Widen(b14)),1));
+    Let loop_var15 = DeAddress(Offset(Address(MakeHiLo(b12,b13)),Add(Mul(2,Widen(b14)),1)));
     Label 16: {
-      Let b17 = M[loop_var15];
+      Let b17 = M[Address(loop_var15)];
       if (IsZeroByte(b17)) {
         Error: ("putProp",11)
       } else {
         if (Equal(11,Widen(BwAnd(b17,31)))) {
           if (Equal(Add(Widen(ShiftR(b17,5)),1),2)) {
-            SetByte Offset(loop_var15,1) 156;
-            SetByte Offset(Offset(loop_var15,1),1) 36;
+            SetByte Offset(Address(loop_var15),1) 156;
+            SetByte Offset(Offset(Address(loop_var15),1),1) 36;
           } else {
-            SetByte Offset(loop_var15,1) 36;
+            SetByte Offset(Address(loop_var15),1) 36;
           }
         } else {
-          Assign loop_var15 = Offset(Offset(loop_var15,1),Add(Widen(ShiftR(b17,5)),1));
+          Assign loop_var15 = DeAddress(Offset(Offset(Address(loop_var15),1),Add(Widen(ShiftR(b17,5)),1)));
           Goto: Label 16
         }
       }
@@ -26553,21 +26553,21 @@ LocOp 043345:
   Let b1 = M[002701];
   Let b2 = M[002702];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Error: ("putProp",11)
     } else {
       if (Equal(11,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          SetByte Offset(loop_var4,1) 156;
-          SetByte Offset(Offset(loop_var4,1),1) 59;
+          SetByte Offset(Address(loop_var4),1) 156;
+          SetByte Offset(Offset(Address(loop_var4),1),1) 59;
         } else {
-          SetByte Offset(loop_var4,1) 59;
+          SetByte Offset(Address(loop_var4),1) 59;
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -26621,9 +26621,9 @@ LocOp 043375:
       Let b3 = M[002701];
       Let b4 = M[002702];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+      Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
       Label 7: {
-        Let b8 = M[loop_var6];
+        Let b8 = M[Address(loop_var6)];
         if (IsZeroByte(b8)) {
           Let b9 = M[000708];
           Let b10 = M[000709];
@@ -26631,15 +26631,15 @@ LocOp 043375:
         } else {
           if (Equal(11,Widen(BwAnd(b8,31)))) {
             if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-              Let b11 = M[Offset(loop_var6,1)];
-              Let b12 = M[Offset(Offset(loop_var6,1),1)];
+              Let b11 = M[Offset(Address(loop_var6),1)];
+              Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
               PushStack MakeHiLo(b11,b12);
             } else {
-              Let b13 = M[Offset(loop_var6,1)];
+              Let b13 = M[Offset(Address(loop_var6),1)];
               PushStack Widen(b13);
             }
           } else {
-            Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+            Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
             Goto: Label 7
           }
         }
@@ -26853,9 +26853,9 @@ LocReturn 043695:
   Let b1 = M[002701];
   Let b2 = M[002702];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000720];
       Let b8 = M[000721];
@@ -26863,15 +26863,15 @@ LocReturn 043695:
     } else {
       if (Equal(17,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -27697,9 +27697,9 @@ LocOp 044904:
       Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7)];
       Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b5,b6),9)),7),1)];
       Let b9 = M[Address(MakeHiLo(b7,b8))];
-      Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+      Let loop_var10 = DeAddress(Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1)));
       Label 11: {
-        Let b12 = M[loop_var10];
+        Let b12 = M[Address(loop_var10)];
         if (IsZeroByte(b12)) {
           Let b13 = M[000716];
           Let b14 = M[000717];
@@ -27707,15 +27707,15 @@ LocOp 044904:
         } else {
           if (Equal(15,Widen(BwAnd(b12,31)))) {
             if (Equal(Add(Widen(ShiftR(b12,5)),1),2)) {
-              Let b15 = M[Offset(loop_var10,1)];
-              Let b16 = M[Offset(Offset(loop_var10,1),1)];
+              Let b15 = M[Offset(Address(loop_var10),1)];
+              Let b16 = M[Offset(Offset(Address(loop_var10),1),1)];
               PushStack MakeHiLo(b15,b16);
             } else {
-              Let b17 = M[Offset(loop_var10,1)];
+              Let b17 = M[Offset(Address(loop_var10),1)];
               PushStack Widen(b17);
             }
           } else {
-            Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+            Assign loop_var10 = DeAddress(Offset(Offset(Address(loop_var10),1),Add(Widen(ShiftR(b12,5)),1)));
             Goto: Label 11
           }
         }
@@ -32580,9 +32580,9 @@ LocOp 054029:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000710];
       Let b8 = M[000711];
@@ -32590,15 +32590,15 @@ LocOp 054029:
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -32829,9 +32829,9 @@ LocOp 054224:
       Let b3 = M[001774];
       Let b4 = M[001775];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+      Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
       Label 7: {
-        Let b8 = M[loop_var6];
+        Let b8 = M[Address(loop_var6)];
         if (IsZeroByte(b8)) {
           Let b9 = M[000708];
           Let b10 = M[000709];
@@ -32839,15 +32839,15 @@ LocOp 054224:
         } else {
           if (Equal(11,Widen(BwAnd(b8,31)))) {
             if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-              Let b11 = M[Offset(loop_var6,1)];
-              Let b12 = M[Offset(Offset(loop_var6,1),1)];
+              Let b11 = M[Offset(Address(loop_var6),1)];
+              Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
               PushStack MakeHiLo(b11,b12);
             } else {
-              Let b13 = M[Offset(loop_var6,1)];
+              Let b13 = M[Offset(Address(loop_var6),1)];
               PushStack Widen(b13);
             }
           } else {
-            Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+            Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
             Goto: Label 7
           }
         }
@@ -32983,9 +32983,9 @@ LocOp 054528:
           Let b9 = M[001774];
           Let b10 = M[001775];
           Let b11 = M[Address(MakeHiLo(b9,b10))];
-          Let loop_var12 = Offset(Address(MakeHiLo(b9,b10)),Add(Mul(2,Widen(b11)),1));
+          Let loop_var12 = DeAddress(Offset(Address(MakeHiLo(b9,b10)),Add(Mul(2,Widen(b11)),1)));
           Label 13: {
-            Let b14 = M[loop_var12];
+            Let b14 = M[Address(loop_var12)];
             if (IsZeroByte(b14)) {
               Let b15 = M[000700];
               Let b16 = M[000701];
@@ -32993,15 +32993,15 @@ LocOp 054528:
             } else {
               if (Equal(7,Widen(BwAnd(b14,31)))) {
                 if (Equal(Add(Widen(ShiftR(b14,5)),1),2)) {
-                  Let b17 = M[Offset(loop_var12,1)];
-                  Let b18 = M[Offset(Offset(loop_var12,1),1)];
+                  Let b17 = M[Offset(Address(loop_var12),1)];
+                  Let b18 = M[Offset(Offset(Address(loop_var12),1),1)];
                   PushStack MakeHiLo(b17,b18);
                 } else {
-                  Let b19 = M[Offset(loop_var12,1)];
+                  Let b19 = M[Offset(Address(loop_var12),1)];
                   PushStack Widen(b19);
                 }
               } else {
-                Assign loop_var12 = Offset(Offset(loop_var12,1),Add(Widen(ShiftR(b14,5)),1));
+                Assign loop_var12 = DeAddress(Offset(Offset(Address(loop_var12),1),Add(Widen(ShiftR(b14,5)),1)));
                 Goto: Label 13
               }
             }
@@ -33013,9 +33013,9 @@ LocOp 054528:
             Let b21 = M[001774];
             Let b22 = M[001775];
             Let b23 = M[Address(MakeHiLo(b21,b22))];
-            Let loop_var24 = Offset(Address(MakeHiLo(b21,b22)),Add(Mul(2,Widen(b23)),1));
+            Let loop_var24 = DeAddress(Offset(Address(MakeHiLo(b21,b22)),Add(Mul(2,Widen(b23)),1)));
             Label 25: {
-              Let b26 = M[loop_var24];
+              Let b26 = M[Address(loop_var24)];
               if (IsZeroByte(b26)) {
                 Let b27 = M[000700];
                 Let b28 = M[000701];
@@ -33023,15 +33023,15 @@ LocOp 054528:
               } else {
                 if (Equal(7,Widen(BwAnd(b26,31)))) {
                   if (Equal(Add(Widen(ShiftR(b26,5)),1),2)) {
-                    Let b29 = M[Offset(loop_var24,1)];
-                    Let b30 = M[Offset(Offset(loop_var24,1),1)];
+                    Let b29 = M[Offset(Address(loop_var24),1)];
+                    Let b30 = M[Offset(Offset(Address(loop_var24),1),1)];
                     PushStack MakeHiLo(b29,b30);
                   } else {
-                    Let b31 = M[Offset(loop_var24,1)];
+                    Let b31 = M[Offset(Address(loop_var24),1)];
                     PushStack Widen(b31);
                   }
                 } else {
-                  Assign loop_var24 = Offset(Offset(loop_var24,1),Add(Widen(ShiftR(b26,5)),1));
+                  Assign loop_var24 = DeAddress(Offset(Offset(Address(loop_var24),1),Add(Widen(ShiftR(b26,5)),1)));
                   Goto: Label 25
                 }
               }
@@ -33044,21 +33044,21 @@ LocOp 054528:
             Let b34 = M[001774];
             Let b35 = M[001775];
             Let b36 = M[Address(MakeHiLo(b34,b35))];
-            Let loop_var37 = Offset(Address(MakeHiLo(b34,b35)),Add(Mul(2,Widen(b36)),1));
+            Let loop_var37 = DeAddress(Offset(Address(MakeHiLo(b34,b35)),Add(Mul(2,Widen(b36)),1)));
             Label 38: {
-              Let b39 = M[loop_var37];
+              Let b39 = M[Address(loop_var37)];
               if (IsZeroByte(b39)) {
                 Error: ("putProp",7)
               } else {
                 if (Equal(7,Widen(BwAnd(b39,31)))) {
                   if (Equal(Add(Widen(ShiftR(b39,5)),1),2)) {
-                    SetByte Offset(loop_var37,1) HiByte(popped33);
-                    SetByte Offset(Offset(loop_var37,1),1) LoByte(popped33);
+                    SetByte Offset(Address(loop_var37),1) HiByte(popped33);
+                    SetByte Offset(Offset(Address(loop_var37),1),1) LoByte(popped33);
                   } else {
-                    SetByte Offset(loop_var37,1) LoByte(popped33);
+                    SetByte Offset(Address(loop_var37),1) LoByte(popped33);
                   }
                 } else {
-                  Assign loop_var37 = Offset(Offset(loop_var37,1),Add(Widen(ShiftR(b39,5)),1));
+                  Assign loop_var37 = DeAddress(Offset(Offset(Address(loop_var37),1),Add(Widen(ShiftR(b39,5)),1)));
                   Goto: Label 38
                 }
               }
@@ -33103,21 +33103,21 @@ LocReturn 054583:
   Let b3 = M[001774];
   Let b4 = M[001775];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Error: ("putProp",11)
     } else {
       if (Equal(11,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          SetByte Offset(loop_var6,1) b1;
-          SetByte Offset(Offset(loop_var6,1),1) b2;
+          SetByte Offset(Address(loop_var6),1) b1;
+          SetByte Offset(Offset(Address(loop_var6),1),1) b2;
         } else {
-          SetByte Offset(loop_var6,1) b2;
+          SetByte Offset(Address(loop_var6),1) b2;
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -33161,9 +33161,9 @@ LocOp 054629:
   Let b13 = M[Offset(Offset(000741,Mul(MakeHiLo(b11,b12),9)),7)];
   Let b14 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b11,b12),9)),7),1)];
   Let b15 = M[Address(MakeHiLo(b13,b14))];
-  Let loop_var16 = Offset(Address(MakeHiLo(b13,b14)),Add(Mul(2,Widen(b15)),1));
+  Let loop_var16 = DeAddress(Offset(Address(MakeHiLo(b13,b14)),Add(Mul(2,Widen(b15)),1)));
   Label 17: {
-    Let b18 = M[loop_var16];
+    Let b18 = M[Address(loop_var16)];
     if (IsZeroByte(b18)) {
       Let b19 = M[000710];
       Let b20 = M[000711];
@@ -33171,15 +33171,15 @@ LocOp 054629:
     } else {
       if (Equal(12,Widen(BwAnd(b18,31)))) {
         if (Equal(Add(Widen(ShiftR(b18,5)),1),2)) {
-          Let b21 = M[Offset(loop_var16,1)];
-          Let b22 = M[Offset(Offset(loop_var16,1),1)];
+          Let b21 = M[Offset(Address(loop_var16),1)];
+          Let b22 = M[Offset(Offset(Address(loop_var16),1),1)];
           PushStack MakeHiLo(b21,b22);
         } else {
-          Let b23 = M[Offset(loop_var16,1)];
+          Let b23 = M[Offset(Address(loop_var16),1)];
           PushStack Widen(b23);
         }
       } else {
-        Assign loop_var16 = Offset(Offset(loop_var16,1),Add(Widen(ShiftR(b18,5)),1));
+        Assign loop_var16 = DeAddress(Offset(Offset(Address(loop_var16),1),Add(Widen(ShiftR(b18,5)),1)));
         Goto: Label 17
       }
     }
@@ -33635,21 +33635,21 @@ LocReturn 055273:
   Let b16 = M[001774];
   Let b17 = M[001775];
   Let b18 = M[Address(MakeHiLo(b16,b17))];
-  Let loop_var19 = Offset(Address(MakeHiLo(b16,b17)),Add(Mul(2,Widen(b18)),1));
+  Let loop_var19 = DeAddress(Offset(Address(MakeHiLo(b16,b17)),Add(Mul(2,Widen(b18)),1)));
   Label 20: {
-    Let b21 = M[loop_var19];
+    Let b21 = M[Address(loop_var19)];
     if (IsZeroByte(b21)) {
       Error: ("putProp",11)
     } else {
       if (Equal(11,Widen(BwAnd(b21,31)))) {
         if (Equal(Add(Widen(ShiftR(b21,5)),1),2)) {
-          SetByte Offset(loop_var19,1) b14;
-          SetByte Offset(Offset(loop_var19,1),1) b15;
+          SetByte Offset(Address(loop_var19),1) b14;
+          SetByte Offset(Offset(Address(loop_var19),1),1) b15;
         } else {
-          SetByte Offset(loop_var19,1) b15;
+          SetByte Offset(Address(loop_var19),1) b15;
         }
       } else {
-        Assign loop_var19 = Offset(Offset(loop_var19,1),Add(Widen(ShiftR(b21,5)),1));
+        Assign loop_var19 = DeAddress(Offset(Offset(Address(loop_var19),1),Add(Widen(ShiftR(b21,5)),1)));
         Goto: Label 20
       }
     }
@@ -33708,21 +33708,21 @@ LocReturn 055393:
   Let b4 = M[001774];
   Let b5 = M[001775];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+  Let loop_var7 = DeAddress(Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1)));
   Label 8: {
-    Let b9 = M[loop_var7];
+    Let b9 = M[Address(loop_var7)];
     if (IsZeroByte(b9)) {
       Error: ("putProp",11)
     } else {
       if (Equal(11,Widen(BwAnd(b9,31)))) {
         if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
-          SetByte Offset(loop_var7,1) b2;
-          SetByte Offset(Offset(loop_var7,1),1) b3;
+          SetByte Offset(Address(loop_var7),1) b2;
+          SetByte Offset(Offset(Address(loop_var7),1),1) b3;
         } else {
-          SetByte Offset(loop_var7,1) b3;
+          SetByte Offset(Address(loop_var7),1) b3;
         }
       } else {
-        Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+        Assign loop_var7 = DeAddress(Offset(Offset(Address(loop_var7),1),Add(Widen(ShiftR(b9,5)),1)));
         Goto: Label 8
       }
     }
@@ -33752,9 +33752,9 @@ LocOp 055417:
     Let b3 = M[001774];
     Let b4 = M[001775];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
     Label 7: {
-      Let b8 = M[loop_var6];
+      Let b8 = M[Address(loop_var6)];
       if (IsZeroByte(b8)) {
         Let b9 = M[000708];
         Let b10 = M[000709];
@@ -33762,15 +33762,15 @@ LocOp 055417:
       } else {
         if (Equal(11,Widen(BwAnd(b8,31)))) {
           if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-            Let b11 = M[Offset(loop_var6,1)];
-            Let b12 = M[Offset(Offset(loop_var6,1),1)];
+            Let b11 = M[Offset(Address(loop_var6),1)];
+            Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
             PushStack MakeHiLo(b11,b12);
           } else {
-            Let b13 = M[Offset(loop_var6,1)];
+            Let b13 = M[Offset(Address(loop_var6),1)];
             PushStack Widen(b13);
           }
         } else {
-          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
           Goto: Label 7
         }
       }
@@ -33952,9 +33952,9 @@ LocOp 055655:
             Let b10 = M[001774];
             Let b11 = M[001775];
             Let b12 = M[Address(MakeHiLo(b10,b11))];
-            Let loop_var13 = Offset(Address(MakeHiLo(b10,b11)),Add(Mul(2,Widen(b12)),1));
+            Let loop_var13 = DeAddress(Offset(Address(MakeHiLo(b10,b11)),Add(Mul(2,Widen(b12)),1)));
             Label 14: {
-              Let b15 = M[loop_var13];
+              Let b15 = M[Address(loop_var13)];
               if (IsZeroByte(b15)) {
                 Let b16 = M[000708];
                 Let b17 = M[000709];
@@ -33962,15 +33962,15 @@ LocOp 055655:
               } else {
                 if (Equal(11,Widen(BwAnd(b15,31)))) {
                   if (Equal(Add(Widen(ShiftR(b15,5)),1),2)) {
-                    Let b18 = M[Offset(loop_var13,1)];
-                    Let b19 = M[Offset(Offset(loop_var13,1),1)];
+                    Let b18 = M[Offset(Address(loop_var13),1)];
+                    Let b19 = M[Offset(Offset(Address(loop_var13),1),1)];
                     PushStack MakeHiLo(b18,b19);
                   } else {
-                    Let b20 = M[Offset(loop_var13,1)];
+                    Let b20 = M[Offset(Address(loop_var13),1)];
                     PushStack Widen(b20);
                   }
                 } else {
-                  Assign loop_var13 = Offset(Offset(loop_var13,1),Add(Widen(ShiftR(b15,5)),1));
+                  Assign loop_var13 = DeAddress(Offset(Offset(Address(loop_var13),1),Add(Widen(ShiftR(b15,5)),1)));
                   Goto: Label 14
                 }
               }
@@ -34471,21 +34471,21 @@ LocOp 056335:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+    Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
     Label 9: {
-      Let b10 = M[loop_var8];
+      Let b10 = M[Address(loop_var8)];
       if (IsZeroByte(b10)) {
         Error: ("putProp",12)
       } else {
         if (Equal(12,Widen(BwAnd(b10,31)))) {
           if (Equal(Add(Widen(ShiftR(b10,5)),1),2)) {
-            SetByte Offset(loop_var8,1) 0;
-            SetByte Offset(Offset(loop_var8,1),1) 0;
+            SetByte Offset(Address(loop_var8),1) 0;
+            SetByte Offset(Offset(Address(loop_var8),1),1) 0;
           } else {
-            SetByte Offset(loop_var8,1) 0;
+            SetByte Offset(Address(loop_var8),1) 0;
           }
         } else {
-          Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+          Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
           Goto: Label 9
         }
       }
@@ -34496,21 +34496,21 @@ LocOp 056335:
     Let b13 = M[Offset(Offset(000741,Mul(MakeHiLo(b11,b12),9)),7)];
     Let b14 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b11,b12),9)),7),1)];
     Let b15 = M[Address(MakeHiLo(b13,b14))];
-    Let loop_var16 = Offset(Address(MakeHiLo(b13,b14)),Add(Mul(2,Widen(b15)),1));
+    Let loop_var16 = DeAddress(Offset(Address(MakeHiLo(b13,b14)),Add(Mul(2,Widen(b15)),1)));
     Label 17: {
-      Let b18 = M[loop_var16];
+      Let b18 = M[Address(loop_var16)];
       if (IsZeroByte(b18)) {
         Error: ("putProp",11)
       } else {
         if (Equal(11,Widen(BwAnd(b18,31)))) {
           if (Equal(Add(Widen(ShiftR(b18,5)),1),2)) {
-            SetByte Offset(loop_var16,1) 158;
-            SetByte Offset(Offset(loop_var16,1),1) 122;
+            SetByte Offset(Address(loop_var16),1) 158;
+            SetByte Offset(Offset(Address(loop_var16),1),1) 122;
           } else {
-            SetByte Offset(loop_var16,1) 122;
+            SetByte Offset(Address(loop_var16),1) 122;
           }
         } else {
-          Assign loop_var16 = Offset(Offset(loop_var16,1),Add(Widen(ShiftR(b18,5)),1));
+          Assign loop_var16 = DeAddress(Offset(Offset(Address(loop_var16),1),Add(Widen(ShiftR(b18,5)),1)));
           Goto: Label 17
         }
       }
@@ -35756,9 +35756,9 @@ LocOp 057792:
     Let b3 = M[001738];
     Let b4 = M[001739];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
     Label 7: {
-      Let b8 = M[loop_var6];
+      Let b8 = M[Address(loop_var6)];
       if (IsZeroByte(b8)) {
         Let b9 = M[000710];
         Let b10 = M[000711];
@@ -35766,15 +35766,15 @@ LocOp 057792:
       } else {
         if (Equal(12,Widen(BwAnd(b8,31)))) {
           if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-            Let b11 = M[Offset(loop_var6,1)];
-            Let b12 = M[Offset(Offset(loop_var6,1),1)];
+            Let b11 = M[Offset(Address(loop_var6),1)];
+            Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
             SetLocal 1 MakeHiLo(b11,b12);
           } else {
-            Let b13 = M[Offset(loop_var6,1)];
+            Let b13 = M[Offset(Address(loop_var6),1)];
             SetLocal 1 Widen(b13);
           }
         } else {
-          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
           Goto: Label 7
         }
       }
@@ -38940,9 +38940,9 @@ LocOp 061723:
     Let b2 = M[001495];
     Let b3 = M[001496];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+    Let loop_var5 = DeAddress(Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1)));
     Label 6: {
-      Let b7 = M[loop_var5];
+      Let b7 = M[Address(loop_var5)];
       if (IsZeroByte(b7)) {
         Let b8 = M[000714];
         Let b9 = M[000715];
@@ -38950,15 +38950,15 @@ LocOp 061723:
       } else {
         if (Equal(14,Widen(BwAnd(b7,31)))) {
           if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
-            Let b10 = M[Offset(loop_var5,1)];
-            Let b11 = M[Offset(Offset(loop_var5,1),1)];
+            Let b10 = M[Offset(Address(loop_var5),1)];
+            Let b11 = M[Offset(Offset(Address(loop_var5),1),1)];
             PushStack MakeHiLo(b10,b11);
           } else {
-            Let b12 = M[Offset(loop_var5,1)];
+            Let b12 = M[Offset(Address(loop_var5),1)];
             PushStack Widen(b12);
           }
         } else {
-          Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+          Assign loop_var5 = DeAddress(Offset(Offset(Address(loop_var5),1),Add(Widen(ShiftR(b7,5)),1)));
           Goto: Label 6
         }
       }
@@ -39562,9 +39562,9 @@ LocOp 062484:
         Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7)];
         Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7),1)];
         Let b12 = M[Address(MakeHiLo(b10,b11))];
-        Let loop_var13 = Offset(Address(MakeHiLo(b10,b11)),Add(Mul(2,Widen(b12)),1));
+        Let loop_var13 = DeAddress(Offset(Address(MakeHiLo(b10,b11)),Add(Mul(2,Widen(b12)),1)));
         Label 14: {
-          Let b15 = M[loop_var13];
+          Let b15 = M[Address(loop_var13)];
           if (IsZeroByte(b15)) {
             Let b16 = M[000700];
             Let b17 = M[000701];
@@ -39572,15 +39572,15 @@ LocOp 062484:
           } else {
             if (Equal(7,Widen(BwAnd(b15,31)))) {
               if (Equal(Add(Widen(ShiftR(b15,5)),1),2)) {
-                Let b18 = M[Offset(loop_var13,1)];
-                Let b19 = M[Offset(Offset(loop_var13,1),1)];
+                Let b18 = M[Offset(Address(loop_var13),1)];
+                Let b19 = M[Offset(Offset(Address(loop_var13),1),1)];
                 PushStack MakeHiLo(b18,b19);
               } else {
-                Let b20 = M[Offset(loop_var13,1)];
+                Let b20 = M[Offset(Address(loop_var13),1)];
                 PushStack Widen(b20);
               }
             } else {
-              Assign loop_var13 = Offset(Offset(loop_var13,1),Add(Widen(ShiftR(b15,5)),1));
+              Assign loop_var13 = DeAddress(Offset(Offset(Address(loop_var13),1),Add(Widen(ShiftR(b15,5)),1)));
               Goto: Label 14
             }
           }
@@ -40326,21 +40326,21 @@ LocOp 063286:
       Let b8 = M[Offset(Offset(000741,Mul(MakeHiLo(b6,b7),9)),7)];
       Let b9 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b6,b7),9)),7),1)];
       Let b10 = M[Address(MakeHiLo(b8,b9))];
-      Let loop_var11 = Offset(Address(MakeHiLo(b8,b9)),Add(Mul(2,Widen(b10)),1));
+      Let loop_var11 = DeAddress(Offset(Address(MakeHiLo(b8,b9)),Add(Mul(2,Widen(b10)),1)));
       Label 12: {
-        Let b13 = M[loop_var11];
+        Let b13 = M[Address(loop_var11)];
         if (IsZeroByte(b13)) {
           Error: ("putProp",17)
         } else {
           if (Equal(17,Widen(BwAnd(b13,31)))) {
             if (Equal(Add(Widen(ShiftR(b13,5)),1),2)) {
-              SetByte Offset(loop_var11,1) 0;
-              SetByte Offset(Offset(loop_var11,1),1) 0;
+              SetByte Offset(Address(loop_var11),1) 0;
+              SetByte Offset(Offset(Address(loop_var11),1),1) 0;
             } else {
-              SetByte Offset(loop_var11,1) 0;
+              SetByte Offset(Address(loop_var11),1) 0;
             }
           } else {
-            Assign loop_var11 = Offset(Offset(loop_var11,1),Add(Widen(ShiftR(b13,5)),1));
+            Assign loop_var11 = DeAddress(Offset(Offset(Address(loop_var11),1),Add(Widen(ShiftR(b13,5)),1)));
             Goto: Label 12
           }
         }
@@ -40787,9 +40787,9 @@ LocOp 064011:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(4),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(4),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000720];
       Let b8 = M[000721];
@@ -40797,15 +40797,15 @@ LocOp 064011:
     } else {
       if (Equal(17,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -41029,9 +41029,9 @@ LocOp 064131:
     Let b10 = M[Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7)];
     Let b11 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b8,b9),9)),7),1)];
     Let b12 = M[Address(MakeHiLo(b10,b11))];
-    Let loop_var13 = Offset(Address(MakeHiLo(b10,b11)),Add(Mul(2,Widen(b12)),1));
+    Let loop_var13 = DeAddress(Offset(Address(MakeHiLo(b10,b11)),Add(Mul(2,Widen(b12)),1)));
     Label 14: {
-      Let b15 = M[loop_var13];
+      Let b15 = M[Address(loop_var13)];
       if (IsZeroByte(b15)) {
         Let b16 = M[000700];
         Let b17 = M[000701];
@@ -41039,15 +41039,15 @@ LocOp 064131:
       } else {
         if (Equal(7,Widen(BwAnd(b15,31)))) {
           if (Equal(Add(Widen(ShiftR(b15,5)),1),2)) {
-            Let b18 = M[Offset(loop_var13,1)];
-            Let b19 = M[Offset(Offset(loop_var13,1),1)];
+            Let b18 = M[Offset(Address(loop_var13),1)];
+            Let b19 = M[Offset(Offset(Address(loop_var13),1),1)];
             PushStack MakeHiLo(b18,b19);
           } else {
-            Let b20 = M[Offset(loop_var13,1)];
+            Let b20 = M[Offset(Address(loop_var13),1)];
             PushStack Widen(b20);
           }
         } else {
-          Assign loop_var13 = Offset(Offset(loop_var13,1),Add(Widen(ShiftR(b15,5)),1));
+          Assign loop_var13 = DeAddress(Offset(Offset(Address(loop_var13),1),Add(Widen(ShiftR(b15,5)),1)));
           Goto: Label 14
         }
       }
@@ -41091,9 +41091,9 @@ LocOp 064171:
   Let b3 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Let b9 = M[000700];
       Let b10 = M[000701];
@@ -41101,15 +41101,15 @@ LocOp 064171:
     } else {
       if (Equal(7,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          Let b11 = M[Offset(loop_var6,1)];
-          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          Let b11 = M[Offset(Address(loop_var6),1)];
+          Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
           SetLocal 3 MakeHiLo(b11,b12);
         } else {
-          Let b13 = M[Offset(loop_var6,1)];
+          Let b13 = M[Offset(Address(loop_var6),1)];
           SetLocal 3 Widen(b13);
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -42383,21 +42383,21 @@ LocOp 065199:
   Let b4 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b5 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b6 = M[Address(MakeHiLo(b4,b5))];
-  Let loop_var7 = Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1));
+  Let loop_var7 = DeAddress(Offset(Address(MakeHiLo(b4,b5)),Add(Mul(2,Widen(b6)),1)));
   Label 8: {
-    Let b9 = M[loop_var7];
+    Let b9 = M[Address(loop_var7)];
     if (IsZeroByte(b9)) {
       Error: ("putProp",7)
     } else {
       if (Equal(7,Widen(BwAnd(b9,31)))) {
         if (Equal(Add(Widen(ShiftR(b9,5)),1),2)) {
-          SetByte Offset(loop_var7,1) HiByte(popped3);
-          SetByte Offset(Offset(loop_var7,1),1) LoByte(popped3);
+          SetByte Offset(Address(loop_var7),1) HiByte(popped3);
+          SetByte Offset(Offset(Address(loop_var7),1),1) LoByte(popped3);
         } else {
-          SetByte Offset(loop_var7,1) LoByte(popped3);
+          SetByte Offset(Address(loop_var7),1) LoByte(popped3);
         }
       } else {
-        Assign loop_var7 = Offset(Offset(loop_var7,1),Add(Widen(ShiftR(b9,5)),1));
+        Assign loop_var7 = DeAddress(Offset(Offset(Address(loop_var7),1),Add(Widen(ShiftR(b9,5)),1)));
         Goto: Label 8
       }
     }
@@ -42463,21 +42463,21 @@ LocReturn 065234:
   Let b6 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
   Let b7 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
   Let b8 = M[Address(MakeHiLo(b6,b7))];
-  Let loop_var9 = Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1));
+  Let loop_var9 = DeAddress(Offset(Address(MakeHiLo(b6,b7)),Add(Mul(2,Widen(b8)),1)));
   Label 10: {
-    Let b11 = M[loop_var9];
+    Let b11 = M[Address(loop_var9)];
     if (IsZeroByte(b11)) {
       Error: ("putProp",7)
     } else {
       if (Equal(7,Widen(BwAnd(b11,31)))) {
         if (Equal(Add(Widen(ShiftR(b11,5)),1),2)) {
-          SetByte Offset(loop_var9,1) HiByte(popped5);
-          SetByte Offset(Offset(loop_var9,1),1) LoByte(popped5);
+          SetByte Offset(Address(loop_var9),1) HiByte(popped5);
+          SetByte Offset(Offset(Address(loop_var9),1),1) LoByte(popped5);
         } else {
-          SetByte Offset(loop_var9,1) LoByte(popped5);
+          SetByte Offset(Address(loop_var9),1) LoByte(popped5);
         }
       } else {
-        Assign loop_var9 = Offset(Offset(loop_var9,1),Add(Widen(ShiftR(b11,5)),1));
+        Assign loop_var9 = DeAddress(Offset(Offset(Address(loop_var9),1),Add(Widen(ShiftR(b11,5)),1)));
         Goto: Label 10
       }
     }
@@ -42518,21 +42518,21 @@ LocOp 065271:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Error: ("putProp",7)
     } else {
       if (Equal(7,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          SetByte Offset(loop_var4,1) HiByte(GetLocal(2));
-          SetByte Offset(Offset(loop_var4,1),1) LoByte(GetLocal(2));
+          SetByte Offset(Address(loop_var4),1) HiByte(GetLocal(2));
+          SetByte Offset(Offset(Address(loop_var4),1),1) LoByte(GetLocal(2));
         } else {
-          SetByte Offset(loop_var4,1) LoByte(GetLocal(2));
+          SetByte Offset(Address(loop_var4),1) LoByte(GetLocal(2));
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -42570,9 +42570,9 @@ LocReturn 065378:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000720];
       Let b8 = M[000721];
@@ -42580,15 +42580,15 @@ LocReturn 065378:
     } else {
       if (Equal(17,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -42619,9 +42619,9 @@ LocOp 065395:
     Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b3 = M[Address(MakeHiLo(b1,b2))];
-    Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+    Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
     Label 5: {
-      Let b6 = M[loop_var4];
+      Let b6 = M[Address(loop_var4)];
       if (IsZeroByte(b6)) {
         Let b7 = M[000720];
         Let b8 = M[000721];
@@ -42629,15 +42629,15 @@ LocOp 065395:
       } else {
         if (Equal(17,Widen(BwAnd(b6,31)))) {
           if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-            Let b9 = M[Offset(loop_var4,1)];
-            Let b10 = M[Offset(Offset(loop_var4,1),1)];
+            Let b9 = M[Offset(Address(loop_var4),1)];
+            Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
             PushStack MakeHiLo(b9,b10);
           } else {
-            Let b11 = M[Offset(loop_var4,1)];
+            Let b11 = M[Offset(Address(loop_var4),1)];
             PushStack Widen(b11);
           }
         } else {
-          Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+          Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
           Goto: Label 5
         }
       }
@@ -42687,9 +42687,9 @@ LocOp 065419:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000700];
       Let b8 = M[000701];
@@ -42697,15 +42697,15 @@ LocOp 065419:
     } else {
       if (Equal(7,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           SetLocal 2 MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           SetLocal 2 Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -42835,9 +42835,9 @@ LocOp 065495:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Let b9 = M[000700];
       Let b10 = M[000701];
@@ -42845,15 +42845,15 @@ LocOp 065495:
     } else {
       if (Equal(7,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          Let b11 = M[Offset(loop_var6,1)];
-          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          Let b11 = M[Offset(Address(loop_var6),1)];
+          Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
           SetLocal 1 MakeHiLo(b11,b12);
         } else {
-          Let b13 = M[Offset(loop_var6,1)];
+          Let b13 = M[Offset(Address(loop_var6),1)];
           SetLocal 1 Widen(b13);
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -42868,21 +42868,21 @@ LocOp 065495:
     Let b16 = M[Offset(Offset(000741,Mul(MakeHiLo(b14,b15),9)),7)];
     Let b17 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b14,b15),9)),7),1)];
     Let b18 = M[Address(MakeHiLo(b16,b17))];
-    Let loop_var19 = Offset(Address(MakeHiLo(b16,b17)),Add(Mul(2,Widen(b18)),1));
+    Let loop_var19 = DeAddress(Offset(Address(MakeHiLo(b16,b17)),Add(Mul(2,Widen(b18)),1)));
     Label 20: {
-      Let b21 = M[loop_var19];
+      Let b21 = M[Address(loop_var19)];
       if (IsZeroByte(b21)) {
         Error: ("putProp",7)
       } else {
         if (Equal(7,Widen(BwAnd(b21,31)))) {
           if (Equal(Add(Widen(ShiftR(b21,5)),1),2)) {
-            SetByte Offset(loop_var19,1) HiByte(GetLocal(1));
-            SetByte Offset(Offset(loop_var19,1),1) LoByte(GetLocal(1));
+            SetByte Offset(Address(loop_var19),1) HiByte(GetLocal(1));
+            SetByte Offset(Offset(Address(loop_var19),1),1) LoByte(GetLocal(1));
           } else {
-            SetByte Offset(loop_var19,1) LoByte(GetLocal(1));
+            SetByte Offset(Address(loop_var19),1) LoByte(GetLocal(1));
           }
         } else {
-          Assign loop_var19 = Offset(Offset(loop_var19,1),Add(Widen(ShiftR(b21,5)),1));
+          Assign loop_var19 = DeAddress(Offset(Offset(Address(loop_var19),1),Add(Widen(ShiftR(b21,5)),1)));
           Goto: Label 20
         }
       }
@@ -42903,21 +42903,21 @@ LocOp 065514:
     Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b5 = M[Address(MakeHiLo(b3,b4))];
-    Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+    Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
     Label 7: {
-      Let b8 = M[loop_var6];
+      Let b8 = M[Address(loop_var6)];
       if (IsZeroByte(b8)) {
         Error: ("putProp",7)
       } else {
         if (Equal(7,Widen(BwAnd(b8,31)))) {
           if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-            SetByte Offset(loop_var6,1) HiByte(GetLocal(1));
-            SetByte Offset(Offset(loop_var6,1),1) LoByte(GetLocal(1));
+            SetByte Offset(Address(loop_var6),1) HiByte(GetLocal(1));
+            SetByte Offset(Offset(Address(loop_var6),1),1) LoByte(GetLocal(1));
           } else {
-            SetByte Offset(loop_var6,1) LoByte(GetLocal(1));
+            SetByte Offset(Address(loop_var6),1) LoByte(GetLocal(1));
           }
         } else {
-          Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+          Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
           Goto: Label 7
         }
       }
@@ -43090,9 +43090,9 @@ LocOp 065631:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000700];
       Let b8 = M[000701];
@@ -43100,15 +43100,15 @@ LocOp 065631:
     } else {
       if (Equal(7,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -43170,9 +43170,9 @@ LocOp 065680:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+    Let loop_var5 = DeAddress(Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1)));
     Label 6: {
-      Let b7 = M[loop_var5];
+      Let b7 = M[Address(loop_var5)];
       if (IsZeroByte(b7)) {
         Let b8 = M[000720];
         Let b9 = M[000721];
@@ -43180,15 +43180,15 @@ LocOp 065680:
       } else {
         if (Equal(17,Widen(BwAnd(b7,31)))) {
           if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
-            Let b10 = M[Offset(loop_var5,1)];
-            Let b11 = M[Offset(Offset(loop_var5,1),1)];
+            Let b10 = M[Offset(Address(loop_var5),1)];
+            Let b11 = M[Offset(Offset(Address(loop_var5),1),1)];
             PushStack MakeHiLo(b10,b11);
           } else {
-            Let b12 = M[Offset(loop_var5,1)];
+            Let b12 = M[Offset(Address(loop_var5),1)];
             PushStack Widen(b12);
           }
         } else {
-          Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+          Assign loop_var5 = DeAddress(Offset(Offset(Address(loop_var5),1),Add(Widen(ShiftR(b7,5)),1)));
           Goto: Label 6
         }
       }
@@ -43229,9 +43229,9 @@ LocOp 065703:
     Let b2 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
     Let b3 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
     Let b4 = M[Address(MakeHiLo(b2,b3))];
-    Let loop_var5 = Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1));
+    Let loop_var5 = DeAddress(Offset(Address(MakeHiLo(b2,b3)),Add(Mul(2,Widen(b4)),1)));
     Label 6: {
-      Let b7 = M[loop_var5];
+      Let b7 = M[Address(loop_var5)];
       if (IsZeroByte(b7)) {
         Let b8 = M[000720];
         Let b9 = M[000721];
@@ -43239,15 +43239,15 @@ LocOp 065703:
       } else {
         if (Equal(17,Widen(BwAnd(b7,31)))) {
           if (Equal(Add(Widen(ShiftR(b7,5)),1),2)) {
-            Let b10 = M[Offset(loop_var5,1)];
-            Let b11 = M[Offset(Offset(loop_var5,1),1)];
+            Let b10 = M[Offset(Address(loop_var5),1)];
+            Let b11 = M[Offset(Offset(Address(loop_var5),1),1)];
             PushStack MakeHiLo(b10,b11);
           } else {
-            Let b12 = M[Offset(loop_var5,1)];
+            Let b12 = M[Offset(Address(loop_var5),1)];
             PushStack Widen(b12);
           }
         } else {
-          Assign loop_var5 = Offset(Offset(loop_var5,1),Add(Widen(ShiftR(b7,5)),1));
+          Assign loop_var5 = DeAddress(Offset(Offset(Address(loop_var5),1),Add(Widen(ShiftR(b7,5)),1)));
           Goto: Label 6
         }
       }
@@ -43343,9 +43343,9 @@ LocOp 065757:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000700];
       Let b8 = M[000701];
@@ -43353,15 +43353,15 @@ LocOp 065757:
     } else {
       if (Equal(7,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           SetLocal 2 MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           SetLocal 2 Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -43375,21 +43375,21 @@ LocOp 065757:
     Let b13 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b14 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b15 = M[Address(MakeHiLo(b13,b14))];
-    Let loop_var16 = Offset(Address(MakeHiLo(b13,b14)),Add(Mul(2,Widen(b15)),1));
+    Let loop_var16 = DeAddress(Offset(Address(MakeHiLo(b13,b14)),Add(Mul(2,Widen(b15)),1)));
     Label 17: {
-      Let b18 = M[loop_var16];
+      Let b18 = M[Address(loop_var16)];
       if (IsZeroByte(b18)) {
         Error: ("putProp",7)
       } else {
         if (Equal(7,Widen(BwAnd(b18,31)))) {
           if (Equal(Add(Widen(ShiftR(b18,5)),1),2)) {
-            SetByte Offset(loop_var16,1) HiByte(popped12);
-            SetByte Offset(Offset(loop_var16,1),1) LoByte(popped12);
+            SetByte Offset(Address(loop_var16),1) HiByte(popped12);
+            SetByte Offset(Offset(Address(loop_var16),1),1) LoByte(popped12);
           } else {
-            SetByte Offset(loop_var16,1) LoByte(popped12);
+            SetByte Offset(Address(loop_var16),1) LoByte(popped12);
           }
         } else {
-          Assign loop_var16 = Offset(Offset(loop_var16,1),Add(Widen(ShiftR(b18,5)),1));
+          Assign loop_var16 = DeAddress(Offset(Offset(Address(loop_var16),1),Add(Widen(ShiftR(b18,5)),1)));
           Goto: Label 17
         }
       }
@@ -43398,9 +43398,9 @@ LocOp 065757:
     Let b19 = M[Offset(Offset(000741,Mul(GetLocal(1),9)),7)];
     Let b20 = M[Offset(Offset(Offset(000741,Mul(GetLocal(1),9)),7),1)];
     Let b21 = M[Address(MakeHiLo(b19,b20))];
-    Let loop_var22 = Offset(Address(MakeHiLo(b19,b20)),Add(Mul(2,Widen(b21)),1));
+    Let loop_var22 = DeAddress(Offset(Address(MakeHiLo(b19,b20)),Add(Mul(2,Widen(b21)),1)));
     Label 23: {
-      Let b24 = M[loop_var22];
+      Let b24 = M[Address(loop_var22)];
       if (IsZeroByte(b24)) {
         Let b25 = M[000720];
         Let b26 = M[000721];
@@ -43408,15 +43408,15 @@ LocOp 065757:
       } else {
         if (Equal(17,Widen(BwAnd(b24,31)))) {
           if (Equal(Add(Widen(ShiftR(b24,5)),1),2)) {
-            Let b27 = M[Offset(loop_var22,1)];
-            Let b28 = M[Offset(Offset(loop_var22,1),1)];
+            Let b27 = M[Offset(Address(loop_var22),1)];
+            Let b28 = M[Offset(Offset(Address(loop_var22),1),1)];
             PushStack MakeHiLo(b27,b28);
           } else {
-            Let b29 = M[Offset(loop_var22,1)];
+            Let b29 = M[Offset(Address(loop_var22),1)];
             PushStack Widen(b29);
           }
         } else {
-          Assign loop_var22 = Offset(Offset(loop_var22,1),Add(Widen(ShiftR(b24,5)),1));
+          Assign loop_var22 = DeAddress(Offset(Offset(Address(loop_var22),1),Add(Widen(ShiftR(b24,5)),1)));
           Goto: Label 23
         }
       }
@@ -43484,9 +43484,9 @@ LocReturn 065797:
   Let b1 = M[001738];
   Let b2 = M[001739];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000710];
       Let b8 = M[000711];
@@ -43494,15 +43494,15 @@ LocReturn 065797:
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           SetLocal 2 MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           SetLocal 2 Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -43552,17 +43552,17 @@ LocOp 065831:
     Let b7 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
     Let b8 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
     Let b9 = M[Address(MakeHiLo(b7,b8))];
-    Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+    Let loop_var10 = DeAddress(Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1)));
     Label 11: {
-      Let b12 = M[loop_var10];
+      Let b12 = M[Address(loop_var10)];
       if (IsZeroByte(b12)) {
         Error: ("getNextProp",GetLocal(4))
       } else {
         if (Equal(GetLocal(4),Widen(BwAnd(b12,31)))) {
-          Let b13 = M[Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1))];
+          Let b13 = M[Offset(Offset(Address(loop_var10),1),Add(Widen(ShiftR(b12,5)),1))];
           SetLocal 4 Widen(BwAnd(b13,31));
         } else {
-          Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+          Assign loop_var10 = DeAddress(Offset(Offset(Address(loop_var10),1),Add(Widen(ShiftR(b12,5)),1)));
           Goto: Label 11
         }
       }
@@ -43588,16 +43588,16 @@ LocOp 065841:
     Let b5 = M[Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7)];
     Let b6 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b3,b4),9)),7),1)];
     Let b7 = M[Address(MakeHiLo(b5,b6))];
-    Let loop_var8 = Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1));
+    Let loop_var8 = DeAddress(Offset(Address(MakeHiLo(b5,b6)),Add(Mul(2,Widen(b7)),1)));
     Label 9: {
-      Let b10 = M[loop_var8];
+      Let b10 = M[Address(loop_var8)];
       if (IsZeroByte(b10)) {
         SetLocal 5 0;
       } else {
         if (Equal(GetLocal(4),Widen(BwAnd(b10,31)))) {
-          SetLocal 5 DeAddress(Offset(loop_var8,1));
+          SetLocal 5 DeAddress(Offset(Address(loop_var8),1));
         } else {
-          Assign loop_var8 = Offset(Offset(loop_var8,1),Add(Widen(ShiftR(b10,5)),1));
+          Assign loop_var8 = DeAddress(Offset(Offset(Address(loop_var8),1),Add(Widen(ShiftR(b10,5)),1)));
           Goto: Label 9
         }
       }
@@ -43684,21 +43684,21 @@ LocOp 065977:
   Let b1 = M[001738];
   Let b2 = M[001739];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Error: ("putProp",12)
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          SetByte Offset(loop_var4,1) HiByte(GetLocal(3));
-          SetByte Offset(Offset(loop_var4,1),1) LoByte(GetLocal(3));
+          SetByte Offset(Address(loop_var4),1) HiByte(GetLocal(3));
+          SetByte Offset(Offset(Address(loop_var4),1),1) LoByte(GetLocal(3));
         } else {
-          SetByte Offset(loop_var4,1) LoByte(GetLocal(3));
+          SetByte Offset(Address(loop_var4),1) LoByte(GetLocal(3));
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -44189,9 +44189,9 @@ LocOp 066275:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000710];
       Let b8 = M[000711];
@@ -44199,15 +44199,15 @@ LocOp 066275:
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -44376,9 +44376,9 @@ LocOp 066398:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000710];
       Let b8 = M[000711];
@@ -44386,15 +44386,15 @@ LocOp 066398:
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -44577,9 +44577,9 @@ LocOp 066514:
       Let b3 = M[Offset(Offset(000741,Mul(GetLocal(5),9)),7)];
       Let b4 = M[Offset(Offset(Offset(000741,Mul(GetLocal(5),9)),7),1)];
       Let b5 = M[Address(MakeHiLo(b3,b4))];
-      Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+      Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
       Label 7: {
-        Let b8 = M[loop_var6];
+        Let b8 = M[Address(loop_var6)];
         if (IsZeroByte(b8)) {
           Let b9 = M[000710];
           Let b10 = M[000711];
@@ -44587,15 +44587,15 @@ LocOp 066514:
         } else {
           if (Equal(12,Widen(BwAnd(b8,31)))) {
             if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-              Let b11 = M[Offset(loop_var6,1)];
-              Let b12 = M[Offset(Offset(loop_var6,1),1)];
+              Let b11 = M[Offset(Address(loop_var6),1)];
+              Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
               PushStack MakeHiLo(b11,b12);
             } else {
-              Let b13 = M[Offset(loop_var6,1)];
+              Let b13 = M[Offset(Address(loop_var6),1)];
               PushStack Widen(b13);
             }
           } else {
-            Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+            Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
             Goto: Label 7
           }
         }
@@ -44702,9 +44702,9 @@ LocReturn 066573:
   Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7)];
   Let b4 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),7),1)];
   Let b5 = M[Address(MakeHiLo(b3,b4))];
-  Let loop_var6 = Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1));
+  Let loop_var6 = DeAddress(Offset(Address(MakeHiLo(b3,b4)),Add(Mul(2,Widen(b5)),1)));
   Label 7: {
-    Let b8 = M[loop_var6];
+    Let b8 = M[Address(loop_var6)];
     if (IsZeroByte(b8)) {
       Let b9 = M[000700];
       Let b10 = M[000701];
@@ -44712,15 +44712,15 @@ LocReturn 066573:
     } else {
       if (Equal(7,Widen(BwAnd(b8,31)))) {
         if (Equal(Add(Widen(ShiftR(b8,5)),1),2)) {
-          Let b11 = M[Offset(loop_var6,1)];
-          Let b12 = M[Offset(Offset(loop_var6,1),1)];
+          Let b11 = M[Offset(Address(loop_var6),1)];
+          Let b12 = M[Offset(Offset(Address(loop_var6),1),1)];
           SetLocal 2 MakeHiLo(b11,b12);
         } else {
-          Let b13 = M[Offset(loop_var6,1)];
+          Let b13 = M[Offset(Address(loop_var6),1)];
           SetLocal 2 Widen(b13);
         }
       } else {
-        Assign loop_var6 = Offset(Offset(loop_var6,1),Add(Widen(ShiftR(b8,5)),1));
+        Assign loop_var6 = DeAddress(Offset(Offset(Address(loop_var6),1),Add(Widen(ShiftR(b8,5)),1)));
         Goto: Label 7
       }
     }
@@ -45262,21 +45262,21 @@ LocOp 067511:
     Let b18 = M[Offset(Offset(000741,Mul(MakeHiLo(b16,b17),9)),7)];
     Let b19 = M[Offset(Offset(Offset(000741,Mul(MakeHiLo(b16,b17),9)),7),1)];
     Let b20 = M[Address(MakeHiLo(b18,b19))];
-    Let loop_var21 = Offset(Address(MakeHiLo(b18,b19)),Add(Mul(2,Widen(b20)),1));
+    Let loop_var21 = DeAddress(Offset(Address(MakeHiLo(b18,b19)),Add(Mul(2,Widen(b20)),1)));
     Label 22: {
-      Let b23 = M[loop_var21];
+      Let b23 = M[Address(loop_var21)];
       if (IsZeroByte(b23)) {
         Error: ("putProp",17)
       } else {
         if (Equal(17,Widen(BwAnd(b23,31)))) {
           if (Equal(Add(Widen(ShiftR(b23,5)),1),2)) {
-            SetByte Offset(loop_var21,1) 122;
-            SetByte Offset(Offset(loop_var21,1),1) 213;
+            SetByte Offset(Address(loop_var21),1) 122;
+            SetByte Offset(Offset(Address(loop_var21),1),1) 213;
           } else {
-            SetByte Offset(loop_var21,1) 213;
+            SetByte Offset(Address(loop_var21),1) 213;
           }
         } else {
-          Assign loop_var21 = Offset(Offset(loop_var21,1),Add(Widen(ShiftR(b23,5)),1));
+          Assign loop_var21 = DeAddress(Offset(Offset(Address(loop_var21),1),Add(Widen(ShiftR(b23,5)),1)));
           Goto: Label 22
         }
       }
@@ -45441,21 +45441,21 @@ LocOp 067841:
   Let b1 = M[001738];
   Let b2 = M[001739];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Error: ("putProp",12)
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          SetByte Offset(loop_var4,1) 0;
-          SetByte Offset(Offset(loop_var4,1),1) 0;
+          SetByte Offset(Address(loop_var4),1) 0;
+          SetByte Offset(Offset(Address(loop_var4),1),1) 0;
         } else {
-          SetByte Offset(loop_var4,1) 0;
+          SetByte Offset(Address(loop_var4),1) 0;
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -45501,9 +45501,9 @@ LocOp 067864:
   Let b1 = M[Offset(Offset(000741,Mul(GetLocal(2),9)),7)];
   Let b2 = M[Offset(Offset(Offset(000741,Mul(GetLocal(2),9)),7),1)];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       Let b7 = M[000710];
       Let b8 = M[000711];
@@ -45511,15 +45511,15 @@ LocOp 067864:
     } else {
       if (Equal(12,Widen(BwAnd(b6,31)))) {
         if (Equal(Add(Widen(ShiftR(b6,5)),1),2)) {
-          Let b9 = M[Offset(loop_var4,1)];
-          Let b10 = M[Offset(Offset(loop_var4,1),1)];
+          Let b9 = M[Offset(Address(loop_var4),1)];
+          Let b10 = M[Offset(Offset(Address(loop_var4),1),1)];
           PushStack MakeHiLo(b9,b10);
         } else {
-          Let b11 = M[Offset(loop_var4,1)];
+          Let b11 = M[Offset(Address(loop_var4),1)];
           PushStack Widen(b11);
         }
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -46149,18 +46149,18 @@ LocOp 080649:
   Let b1 = M[001486];
   Let b2 = M[001487];
   Let b3 = M[Address(MakeHiLo(b1,b2))];
-  Let loop_var4 = Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1));
+  Let loop_var4 = DeAddress(Offset(Address(MakeHiLo(b1,b2)),Add(Mul(2,Widen(b3)),1)));
   Label 5: {
-    Let b6 = M[loop_var4];
+    Let b6 = M[Address(loop_var4)];
     if (IsZeroByte(b6)) {
       SetByte 008873 0;
       SetByte 008874 0;
     } else {
       if (Equal(72,Widen(BwAnd(b6,31)))) {
-        SetByte 008873 HiByte(DeAddress(Offset(loop_var4,1)));
-        SetByte 008874 LoByte(DeAddress(Offset(loop_var4,1)));
+        SetByte 008873 HiByte(DeAddress(Offset(Address(loop_var4),1)));
+        SetByte 008874 LoByte(DeAddress(Offset(Address(loop_var4),1)));
       } else {
-        Assign loop_var4 = Offset(Offset(loop_var4,1),Add(Widen(ShiftR(b6,5)),1));
+        Assign loop_var4 = DeAddress(Offset(Offset(Address(loop_var4),1),Add(Widen(ShiftR(b6,5)),1)));
         Goto: Label 5
       }
     }
@@ -46169,9 +46169,9 @@ LocOp 080649:
   Let b7 = M[002998];
   Let b8 = M[002999];
   Let b9 = M[Address(MakeHiLo(b7,b8))];
-  Let loop_var10 = Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1));
+  Let loop_var10 = DeAddress(Offset(Address(MakeHiLo(b7,b8)),Add(Mul(2,Widen(b9)),1)));
   Label 11: {
-    Let b12 = M[loop_var10];
+    Let b12 = M[Address(loop_var10)];
     if (IsZeroByte(b12)) {
       Let b13 = M[000884];
       Let b14 = M[000885];
@@ -46180,17 +46180,17 @@ LocOp 080649:
     } else {
       if (Equal(99,Widen(BwAnd(b12,31)))) {
         if (Equal(Add(Widen(ShiftR(b12,5)),1),2)) {
-          Let b15 = M[Offset(loop_var10,1)];
-          Let b16 = M[Offset(Offset(loop_var10,1),1)];
+          Let b15 = M[Offset(Address(loop_var10),1)];
+          Let b16 = M[Offset(Offset(Address(loop_var10),1),1)];
           SetByte 008849 b15;
           SetByte 008850 b16;
         } else {
-          Let b17 = M[Offset(loop_var10,1)];
+          Let b17 = M[Offset(Address(loop_var10),1)];
           SetByte 008849 HiByte(Widen(b17));
           SetByte 008850 LoByte(Widen(b17));
         }
       } else {
-        Assign loop_var10 = Offset(Offset(loop_var10,1),Add(Widen(ShiftR(b12,5)),1));
+        Assign loop_var10 = DeAddress(Offset(Offset(Address(loop_var10),1),Add(Widen(ShiftR(b12,5)),1)));
         Goto: Label 11
       }
     }

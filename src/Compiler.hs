@@ -272,18 +272,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             b2 <- k s False
             pure $ If pred b1 b2
 
-      Eff.FixpointV init f -> do
-        flushStateK s $ \s -> do
-          var <- genId "loop_var"
-          label <- genLabel
-          let tieback exp = do pure (Bind var exp,label)
-          let eff :: Effect () = f tieback (Variable var)
-          let body :: Gen (Prog jumpiness) = compileK s eff k
-          Seq (Let (Bind var init)) <$> do
-            Labelled label <$> do
-              body
-
-      Eff.FixpointA init f -> do
+      Eff.Fixpoint init f -> do
         flushStateK s $ \s -> do
           var <- genId "loop_var"
           label <- genLabel

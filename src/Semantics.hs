@@ -639,7 +639,7 @@ setDyn dyn v = case dyn of
 scanTable :: Phase p => Value p -> Addr p -> Value p -> Target -> Label -> Eff p ()
 scanTable x table len target label = do
   zero <- LitV 0
-  FixpointV zero $ \loop n -> do
+  Fixpoint zero $ \loop n -> do
     Equal n len >>= If >>= \case
       True -> do
         res <- LitV 0
@@ -664,7 +664,7 @@ foreachTextByte text f = do
   textBytes <- StringBytes text
   numTextBytes <- StringLength text >>= Widen
   zero <- LitV 0
-  FixpointV zero $ \loop n -> do
+  Fixpoint zero $ \loop n -> do
     Equal n numTextBytes >>= If >>= \case
       True -> pure ()
       False -> do
@@ -677,7 +677,7 @@ foreachTextByte text f = do
 foreachBT :: Value p -> Vector p (Byte p) -> Vector p (Text p) -> (Value p -> (Byte p,Text p) -> Eff p ()) -> Eff p ()
 foreachBT len offsets words f = do
   zero <- LitV 0
-  FixpointV zero $ \loop n -> do
+  Fixpoint zero $ \loop n -> do
     Equal n len >>= If >>= \case
       True -> pure ()
       False -> do
