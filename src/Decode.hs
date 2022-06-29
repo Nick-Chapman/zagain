@@ -148,8 +148,8 @@ decode zv op = case op of
   -- 240
   Code 241 [t] | zv>=Z4 -> Op.Set_text_style <$> arg t
   Code 242 [t] | zv>=Z4 -> Op.Buffer_mode <$> arg t
-  Code 243 [t] -> Op.Output_stream1 <$> arg t
-  Code 243 [t1,t2] -> Op.Output_stream2 <$> arg t1 <*> arg t2
+  Code 243 [t] -> Op.Output_stream <$> arg t <*> pure Nothing
+  Code 243 [t1,t2] -> Op.Output_stream <$> arg t1 <*> (Just <$> arg t2)
   Code 244 [t] -> Op.Input_stream <$> arg t
   Code 245 [t1] -> Op.Sound_effect1 <$> arg t1
   Code 245 [t1,t2,t3] -> Op.Sound_effect <$> arg t1 <*> arg t2 <*> arg t3

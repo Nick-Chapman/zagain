@@ -548,9 +548,9 @@ gap=2
 066075 Buffer_mode (Con 0)
 066078 Set_text_style (Con 0)
 066081 Set_text_style (Con 1)
-066084 Output_stream2 (Con 3) (Var (Global 168))
+066084 Output_stream (Con 3) (Just (Var (Global 168)))
 066088 Call (Floc 066160) [] Sp
-066092 Output_stream1 (Con -3)
+066092 Output_stream (Con -3) Nothing
 066096 Div (Var (Global 223)) (Con 2) Sp
 066100 Sub (Var (Global 162)) (Var Sp) Sp
 066104 Set_cursor (Con 1) (Var Sp)
@@ -1208,9 +1208,9 @@ gap=2
 068807 Loadb (Con 0) (Con 30) Sp
 068811 Je [Var Sp,Con 5] (Branch F (Dloc 068817))
 068815 Inc (Con 3)
-068817 Output_stream2 (Con 3) (Var (Global 168))
+068817 Output_stream (Con 3) (Just (Var (Global 168)))
 068821 Print_paddr (Var (Local 1))
-068823 Output_stream1 (Con -3)
+068823 Output_stream (Con -3) Nothing
 068827 Loadw (Var (Global 168)) (Con 0) (Local 4)
 068831 Inc (Con 4)
 068833 Jl (Var (Local 4)) (Con 2) (Branch T Dtrue)
@@ -1727,7 +1727,7 @@ gap=0
 070665 Set_text_style (Con 0)
 070668 Set_window (Con 0)
 070671 Split_window (Con 1)
-070674 Output_stream1 (Con -1)
+070674 Output_stream (Con -1) Nothing
 070678 Store (Con 4) (Con 2)
 070681 New_line
 070682 Print "["
@@ -1745,7 +1745,7 @@ gap=0
 070721 Inc (Con 4)
 070723 Jump 070687
 070726 New_line
-070727 Output_stream1 (Con 1)
+070727 Output_stream (Con 1) Nothing
 070730 Rtrue
 --------------------------------------------------
 gap=1
@@ -1936,9 +1936,9 @@ gap=1
 --------------------------------------------------
 gap=0
 071388 RoutineHeader []
-071389 Output_stream1 (Con -1)
+071389 Output_stream (Con -1) Nothing
 071393 Print "\""
-071396 Output_stream1 (Con 1)
+071396 Output_stream (Con 1) Nothing
 071399 Rtrue
 --------------------------------------------------
 gap=0
@@ -4973,7 +4973,7 @@ gap=1
 083908 Ret (Con 2)
 083910 Print "[Scripting on.]"
 083927 New_line
-083928 Output_stream1 (Con 2)
+083928 Output_stream (Con 2) Nothing
 083931 Call (Floc 083980) [Con -2537] Sp
 083938 Rtrue
 --------------------------------------------------
@@ -4983,19 +4983,19 @@ gap=1
 083945 Jz (Var Sp) (Branch T (Dloc 083950))
 083948 Ret (Con 2)
 083950 Call (Floc 083980) [Con -2536] Sp
-083957 Output_stream1 (Con -2)
+083957 Output_stream (Con -2) Nothing
 083961 Print_ret "[Scripting off.]"
 --------------------------------------------------
 gap=2
 083980 RoutineHeader [0]
-083983 Output_stream1 (Con -1)
+083983 Output_stream (Con -1) Nothing
 083987 New_line
 083988 Print "Here "
 083993 Print_paddr (Var (Local 1))
 083995 Print "s a transcript of interaction with"
 084018 New_line
 084019 Call (Floc 084028) [] Sp
-084023 Output_stream1 (Con 1)
+084023 Output_stream (Con 1) Nothing
 084026 Rtrue
 --------------------------------------------------
 gap=1

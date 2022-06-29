@@ -503,8 +503,8 @@ LocRoutine 024812:
   }
   Jump: 024813
 LocOp 024813:
-  TraceOperation 024813 (Output_stream2 (Con 3) (Var (Local 1)));
-  Note "Output_stream2 (Con 3) (Var (Local 1))";
+  TraceOperation 024813 (Output_stream (Con 3) (Just (Var (Local 1))));
+  Note "Output_stream (Con 3) (Just (Var (Local 1)))";
   TraceOperation 024817 (Call (Floc 112940) [Var (Local 3)] Sp);
   PushFrame;
   PushReturnAddress 024817;
@@ -587,8 +587,8 @@ LocOp 024866:
 LocReturn 024866:
   Jump: 024871
 LocOp 024871:
-  TraceOperation 024871 (Output_stream1 (Con -3));
-  Note "Output_stream1 (Con -3)";
+  TraceOperation 024871 (Output_stream (Con -3) Nothing);
+  Note "Output_stream (Con -3) Nothing";
   TraceOperation 024875 (Loadw (Var (Local 1)) (Con 0) Sp);
   Let b1 = M[Offset(Address(GetLocal(1)),0)];
   Let b2 = M[Offset(Offset(Address(GetLocal(1)),0),1)];
@@ -2089,8 +2089,8 @@ LocReturn 025844:
   PopReturnAddress return_address_2;
   JumpReturn: return_address_2, result: popped1
 LocOp 025852:
-  TraceOperation 025852 (Output_stream1 (Con 2));
-  Note "Output_stream1 (Con 2)";
+  TraceOperation 025852 (Output_stream (Con 2) Nothing);
+  Note "Output_stream (Con 2) Nothing";
   TraceOperation 025855 (Loadw (Con 0) (Con 8) Sp);
   PushStack 80;
   TraceOperation 025859 (And (Var Sp) (Con 1) Sp);
@@ -2198,8 +2198,8 @@ LocOp 025912:
   SetLocal 3 0;
   Jump: 041041
 LocReturn 025912:
-  TraceOperation 025918 (Output_stream1 (Con -2));
-  Note "Output_stream1 (Con -2)";
+  TraceOperation 025918 (Output_stream (Con -2) Nothing);
+  Note "Output_stream (Con -2) Nothing";
   TraceOperation 025922 (Loadw (Con 0) (Con 8) Sp);
   PushStack 80;
   TraceOperation 025926 (And (Var Sp) (Con 1) Sp);
@@ -79776,8 +79776,8 @@ LocOp 081671:
       TraceOperation 081677 (Storew (Con 17763) (Con 0) (Con 160));
       SetByte 017763 0;
       SetByte 017764 160;
-      TraceOperation 081683 (Output_stream2 (Con 3) (Con 17763));
-      Note "Output_stream2 (Con 3) (Con 17763)";
+      TraceOperation 081683 (Output_stream (Con 3) (Just (Con 17763)));
+      Note "Output_stream (Con 3) (Just (Con 17763))";
       TraceOperation 081688 (Jz (Var (Local 3)) (Branch T (Dloc 081699)));
       if (IsZero(GetLocal(3))) {
         Jump: 081699
@@ -79804,8 +79804,8 @@ LocOp 081699:
 LocReturn 081699:
   Jump: 081704
 LocOp 081704:
-  TraceOperation 081704 (Output_stream1 (Con -3));
-  Note "Output_stream1 (Con -3)";
+  TraceOperation 081704 (Output_stream (Con -3) Nothing);
+  Note "Output_stream (Con -3) Nothing";
   TraceOperation 081708 (Add (Con 17763) (Con 2) Sp);
   PushStack 17765;
   TraceOperation 081714 (Call (Floc 027056) [Var Sp] Sp);
@@ -114655,12 +114655,12 @@ LocOp 110263:
 LocOp 110274:
   TraceOperation 110274 (Je [Var (Local 2),Con 71] (Branch F (Dloc 110293)));
   if (Equal(GetLocal(2),71)) {
-    TraceOperation 110278 (Output_stream2 (Con 3) (Var (Local 3)));
-    Note "Output_stream2 (Con 3) (Var (Local 3))";
+    TraceOperation 110278 (Output_stream (Con 3) (Just (Var (Local 3))));
+    Note "Output_stream (Con 3) (Just (Var (Local 3)))";
     TraceOperation 110282 (Print_paddr (Var (Local 1)));
     GamePrint GetText(PackedAddress Z5(GetLocal(1)));
-    TraceOperation 110284 (Output_stream1 (Con -3));
-    Note "Output_stream1 (Con -3)";
+    TraceOperation 110284 (Output_stream (Con -3) Nothing);
+    Note "Output_stream (Con -3) Nothing";
     TraceOperation 110288 (Loadw (Var (Local 3)) (Con 0) Sp);
     Let b1 = M[Offset(Address(GetLocal(3)),0)];
     Let b2 = M[Offset(Offset(Address(GetLocal(3)),0),1)];

@@ -129,7 +129,7 @@ gap=2
 --------------------------------------------------
 gap=1
 024812 RoutineHeader [0,0,0,0,0]
-024813 Output_stream2 (Con 3) (Var (Local 1))
+024813 Output_stream (Con 3) (Just (Var (Local 1)))
 024817 Call (Floc 112940) [Var (Local 3)] Sp
 024823 Pull (Con 255)
 024826 Je [Var (Global 239),Con 4] (Branch F (Dloc 024835))
@@ -143,7 +143,7 @@ gap=1
 024856 CallN (Floc 080988) [Var (Local 3),Var (Local 4),Con 1]
 024863 Jump 024871
 024866 CallN (Floc 082048) [Var (Local 3)]
-024871 Output_stream1 (Con -3)
+024871 Output_stream (Con -3) Nothing
 024875 Loadw (Var (Local 1)) (Con 0) Sp
 024879 Jg (Var Sp) (Var (Local 2)) (Branch F (Dloc 024886))
 024883 Print_paddr (Con 28442)
@@ -487,7 +487,7 @@ gap=3
 025841 Jz (Var (Global 119)) (Branch T (Dloc 025852))
 025844 Call (Floc 041040) [Con 5,Con 1] Sp
 025851 Ret_popped
-025852 Output_stream1 (Con 2)
+025852 Output_stream (Con 2) Nothing
 025855 Loadw (Con 0) (Con 8) Sp
 025859 And (Var Sp) (Con 1) Sp
 025863 Jz (Var Sp) (Branch F (Dloc 025874))
@@ -507,7 +507,7 @@ gap=1
 025904 Call (Floc 041040) [Con 6,Con 1] Sp
 025911 Ret_popped
 025912 CallN (Floc 041040) [Con 6,Con 2]
-025918 Output_stream1 (Con -2)
+025918 Output_stream (Con -2) Nothing
 025922 Loadw (Con 0) (Con 8) Sp
 025926 And (Var Sp) (Con 1) Sp
 025930 Jz (Var Sp) (Branch T (Dloc 025941))
@@ -14113,12 +14113,12 @@ gap=1
 081671 Jz (Var (Global 19)) (Branch T (Dloc 081728))
 081674 Jz (Var (Local 7)) (Branch T (Dloc 081728))
 081677 Storew (Con 17763) (Con 0) (Con 160)
-081683 Output_stream2 (Con 3) (Con 17763)
+081683 Output_stream (Con 3) (Just (Con 17763))
 081688 Jz (Var (Local 3)) (Branch T (Dloc 081699))
 081691 CallN (Floc 080944) [Var (Local 3)]
 081696 Jump 081704
 081699 CallN (Floc 081240) [Var (Local 1)]
-081704 Output_stream1 (Con -3)
+081704 Output_stream (Con -3) Nothing
 081708 Add (Con 17763) (Con 2) Sp
 081714 Call (Floc 027056) [Var Sp] Sp
 081720 Mul (Con 3) (Var Sp) Sp
@@ -20319,9 +20319,9 @@ gap=1
 110271 Print_paddr (Var (Local 1))
 110273 Rtrue
 110274 Je [Var (Local 2),Con 71] (Branch F (Dloc 110293))
-110278 Output_stream2 (Con 3) (Var (Local 3))
+110278 Output_stream (Con 3) (Just (Var (Local 3)))
 110282 Print_paddr (Var (Local 1))
-110284 Output_stream1 (Con -3)
+110284 Output_stream (Con -3) Nothing
 110288 Loadw (Var (Local 3)) (Con 0) Sp
 110292 Ret_popped
 110293 Jump 110614

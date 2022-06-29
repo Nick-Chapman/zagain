@@ -64,8 +64,7 @@ data Operation
   | Nop
   | Not Arg Target
   | Or Arg Arg Target
-  | Output_stream1 Arg
-  | Output_stream2 Arg Arg -- TODO: combine Output_stream[12]
+  | Output_stream Arg (Maybe Arg)
   | Pop
   | Print String
   | Print_addr Arg
@@ -195,8 +194,8 @@ opArgs = \case
   Nop -> do []
   Not arg _target -> do [arg]
   Or arg1 arg2 _target -> do [arg1,arg2]
-  Output_stream1 arg -> do [arg]
-  Output_stream2 arg1 arg2 -> do [arg1,arg2]
+  Output_stream arg Nothing -> do [arg]
+  Output_stream arg1 (Just arg2) -> do [arg1,arg2]
   Pop -> do []
   Print _string -> do []
   Print_addr arg -> do [arg]
@@ -282,8 +281,7 @@ opTargetOpt = \case
   Nop -> do Nothing
   Not _arg target -> do Just target
   Or _arg1 _arg2 target -> do Just target
-  Output_stream1 _arg1 -> do Nothing
-  Output_stream2 _arg1 _arg2 -> do Nothing
+  Output_stream _arg1 _arg2opt -> do Nothing
   Pop -> do Nothing
   Print _string -> do Nothing
   Print_addr _arg -> do Nothing

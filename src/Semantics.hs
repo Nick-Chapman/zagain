@@ -391,8 +391,7 @@ eval here op = case op of
   Op.Buffer_mode{} -> Note op
   Op.Erase_window{} -> Note op
   Op.Input_stream{} -> Note op
-  Op.Output_stream1{} -> Note op
-  Op.Output_stream2{} -> Note op
+  Op.Output_stream{} -> Note op
   Op.Pop -> Note op
   Op.Read_char{} -> Note op
   Op.Restore{} -> Note op
