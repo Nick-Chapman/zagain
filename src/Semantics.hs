@@ -323,7 +323,7 @@ eval here op = case op of
     tBuf <- evalArg arg1 >>= Address
     pBuf <- evalArg arg2 >>= Address
     (n,offsets,words,canoicalizedTyped) <- Tokenize rawTyped
-    nw <- Widen n -- TODO: avoid need to widen
+    nw <- Widen n
     one <- LitV 1
     tBuf1 <- Offset tBuf one
     foreachTextByte canoicalizedTyped $ \off b -> do
