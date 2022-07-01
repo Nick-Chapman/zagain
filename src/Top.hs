@@ -10,7 +10,8 @@ import Fetch (runFetch)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
 import Text.Printf (printf)
-import qualified Compiler (compileEffect,dumpCode,runCode)
+import Code (dumpCode,runCode)
+import Compiler (compileEffect)
 import qualified Console (runAction)
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
@@ -107,8 +108,8 @@ run Config{mode,storyFile,iconf=iconf@Conf{niz,seeTrace,wrapSpec},inputs,mayStar
                   pure $ Interpreter.runEffect screenWidth seed story eff
               | otherwise -> do
                   let eff = Semantics.smallStep
-                  code <- Compiler.compileEffect iconf story eff
-                  pure $ Compiler.runCode seed code
+                  code <- compileEffect iconf story eff
+                  pure $ runCode seed code
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a
         _ -> WalkThrough.runAction iconf inputs a
@@ -119,5 +120,5 @@ run Config{mode,storyFile,iconf=iconf@Conf{niz,seeTrace,wrapSpec},inputs,mayStar
     Compile -> do
       story <- loadStory storyFile
       let eff = Semantics.smallStep
-      code <- Compiler.compileEffect iconf story eff
-      Compiler.dumpCode code -- to stdout
+      code <- compileEffect iconf story eff
+      dumpCode code -- to stdout

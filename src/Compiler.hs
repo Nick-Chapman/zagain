@@ -1,9 +1,9 @@
 
-module Compiler (compileEffect,dumpCode,runCode) where
+module Compiler (compileEffect) where
 
-import Action (Action,Conf(..))
+import Action (Conf(..))
+import Code (Code(..),CompiledRoutine(..),Chunk(..),Prog(..),Atom(..),Bind(..),Label(..),Loc(..),Expression(..),Identifier(..))
 import Control.Monad (when,ap,liftM)
-import Data.List (intercalate)
 import Data.Set (Set,(\\))
 import Decode (fetchOperation,fetchRoutineHeader)
 import Disassemble (Routine(..),disRoutine,branchesOf,routinesBetween)
@@ -13,11 +13,9 @@ import Header (Header(..))
 import Numbers (Addr,Byte,Value)
 import Operation (Operation(Call,CallN),Func(Fvar))
 import Story (Story(header,size),OOB_Mode(..),readStoryByte)
-import Text.Printf (printf)
-import qualified Action (Action(..))
 import qualified Data.Set as Set
 import qualified Eff (Eff(..),Control(..))
-import qualified Eff (Phase(..),StatusInfo(..))
+import qualified Eff (Phase(..))
 import qualified Primitive as Prim
 
 data DuringCompilation
@@ -483,168 +481,3 @@ makeBinary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y 
 makeBinary p2 x y = case (x,y) of
   (Const x,Const y) | doConstFolding -> Const (Prim.evalP2 p2 x y)
   _ -> Binary p2 x y
-
---[code]--------------------------------------------------------------
-
-runCode :: Word -> Code -> Action
-runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
-
-dumpCode :: Code -> IO ()
-dumpCode Code{routines} = do
-  printf "Code for %d routines\n" (length routines)
-  sequence_
-    [ do
-        printf "--------------------------------------------------\n"
-        mapM_ print chunks
-    | CompiledRoutine{chunks} <- routines
-    ]
-
-data Code = Code -- TODO: move to sep module
-  { routines :: [CompiledRoutine]
-  }
-
-data CompiledRoutine = CompiledRoutine
-  { chunks :: [Chunk]
-  }
-
-data Chunk = Chunk { label :: Loc Addr, body :: Prog }
-
-instance Show Chunk where
-  show Chunk{ label, body } =
-    intercalate "\n" ((show label ++ ":") : pretty 2 body)
-
-data Loc a = LocRoutine a | LocOp a | LocReturn a deriving Show
-
-seeLoc :: Show a => Loc a -> String
-seeLoc = \case
-  LocOp a -> show a
-  LocReturn a -> "(return) " ++ show a
-  LocRoutine a -> "(routine) " ++ show a
-
-newtype Label = Label Int
-  deriving Show
-
-data Prog where
-  Null :: Prog
-  Quit :: Prog
-  Error :: String -> Prog
-  Labelled :: Label -> Prog -> Prog
-  Goto :: Label -> Prog
-  JumpIndirect :: Loc (Expression Addr) -> Prog
-  Jump :: Loc Addr -> Prog
-  Seq :: Atom ->  Prog -> Prog
-  FullSeq :: Prog -> Prog -> Prog
-  If :: Expression Bool -> Prog -> Prog -> Prog
-
-pretty :: Int -> Prog -> [String]
-pretty i = \case
-  Null -> []
-  Quit -> [tab i "Quit"]
-  Error msg -> [tab i ("Error: " ++ msg)]
-  Labelled label prog -> concat
-    [ [tab i (show label ++ ": {") ]
-    , pretty (i+2) prog
-    , [tab i "}"]
-    ]
-  Goto label ->
-    [tab i ("Goto: " ++ show label)]
-  JumpIndirect a ->
-    [tab i ("JumpIndirect: " ++ seeLoc a)]
-  Jump a ->
-    [tab i ("Jump: " ++ seeLoc a)]
-  Seq a s -> tab i (show a ++ ";") : pretty i s
-  FullSeq s1 s2 -> pretty i s1 ++ pretty i s2
-  If e s1 Null -> concat
-    [ [tab i "if (" ++ show e ++ ") {"]
-    , pretty (i+2) s1
-    , [tab i "}"]
-    ]
-  If e Null s2 -> concat
-    [ [tab i "if (" ++ show e ++ ") {} else {"]
-    , pretty (i+2) s2
-    , [tab i "}"]
-    ]
-  If e s1 s2 -> concat
-    [ [tab i "if (" ++ show e ++ ") {"]
-    , pretty (i+2) s1
-    , [tab i "} else {"]
-    , pretty (i+2) s2
-    , [tab i "}"]
-    ]
-
-tab :: Int -> String -> String
-tab n s = take n (repeat ' ') ++ s
-
-data Atom
-  = SetByte (Expression Addr) (Expression Byte)
-  | Note String
-  | TraceOperation (Expression Addr) Operation
-  | GamePrint (Expression String)
-  | MakeRoutineFrame Int
-  | PushFrame
-  | PopFrame
-  | PushReturnAddress (Expression Addr)
-  | PopReturnAddress (Identifier Addr)
-  | PushStack (Expression Value)
-  | PopStack (Identifier Value)
-  | SetLocal (Expression Byte) (Expression Value)
-  | ReadInputFromUser StatusInfo (Identifier String)
-  | StringBytes (Expression String) (Identifier [Expression Byte])
-  | Tokenize (Expression String) TokenizeIdents
-  | LetRandom (Identifier Value) (Expression Value)
-  | Let Bind
-  | Assign Bind
-  | SetNumberActuals (Expression Byte)
-  | SetResult (Expression Value)
-  deriving Show
-
-data Bind where
-  Bind :: Show x => Identifier x -> Expression x -> Bind
-
-instance Show Bind where
-  show = \case
-    Bind x e -> show x ++ " = " ++ show e
-
-type StatusInfo = Maybe (Eff.StatusInfo (Expression String) (Expression Value))
-
-type TokenizeIdents =
-  ( Identifier Byte
-  , Identifier [Expression Byte]
-  , Identifier [Expression String]
-  , Identifier String
-  )
-
-data Expression a where
-  Join :: Expression (Expression a) -> Expression a
-  Const :: a -> Expression a
-  NumActuals :: Expression Byte
-  CallResult :: Expression Value
-  Variable :: Identifier a -> Expression a
-  Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
-  Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
-  GetByte :: Expression Addr -> Expression Byte
-  GetLocal :: Expression Byte -> Expression Value
-  GetText :: Expression Addr -> Expression String
-  LookupInDict :: Expression String -> Expression Addr
-  Ite :: Expression Bool -> Expression a -> Expression a -> Expression a
-
-instance Show a => Show (Expression a) where
-  show = \case
-    Join e -> show e
-    Const a -> show a
-    NumActuals -> "num_actuals"
-    CallResult -> "call_result"
-    Variable v -> show v
-    Unary p1 x -> show p1 ++ "(" ++ show x ++ ")"
-    Binary p2 x y -> show p2 ++ "(" ++ show x ++ "," ++ show y ++ ")"
-    GetByte a -> "M[" ++ show a ++ "]"
-    GetLocal n -> "GetLocal(" ++ show n ++ ")"
-    GetText a -> "GetText(" ++ show a ++ ")"
-    LookupInDict x -> "LookupInDict(" ++ show x ++ ")"
-    Ite i t e -> "Ite(" ++ show (i,t,e) ++ ")"
-
-data Identifier a where
-  Identifier :: String -> Int -> Identifier a
-
-instance Show (Identifier a) where
-  show (Identifier tag i) = tag ++ show i
