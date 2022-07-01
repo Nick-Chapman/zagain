@@ -1,7 +1,7 @@
 
 module Code
   ( Code(..), CompiledRoutine(..), Chunk(..)
-  , Prog(..), Atom(..), Bind(..), Label(..), Loc(..)
+  , Prog(..), Atom(..), Binding(..), Label(..), Loc(..)
   , Expression(..), Identifier(..)
   , runCode, dumpCode
   )
@@ -59,7 +59,7 @@ newtype Label = Label Int
 data Prog where
   Null :: Prog
   Quit :: Prog
-  Error :: String -> Prog
+  ProgError :: String -> Prog
   Labelled :: Label -> Prog -> Prog
   Goto :: Label -> Prog
   JumpIndirect :: Loc (Expression Addr) -> Prog
@@ -72,7 +72,7 @@ pretty :: Int -> Prog -> [String]
 pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]
-  Error msg -> [tab i ("Error: " ++ msg)]
+  ProgError msg -> [tab i ("Error: " ++ msg)]
   Labelled label prog -> concat
     [ [tab i (show label ++ ": {") ]
     , pretty (i+2) prog
@@ -124,18 +124,18 @@ data Atom
   | StringBytes (Expression String) (Identifier [Expression Byte])
   | Tokenize (Expression String) TokenizeIdents
   | LetRandom (Identifier Value) (Expression Value)
-  | Let Bind
-  | Assign Bind
+  | Let Binding
+  | Assign Binding
   | SetNumberActuals (Expression Byte)
   | SetResult (Expression Value)
   deriving Show
 
-data Bind where
-  Bind :: Show x => Identifier x -> Expression x -> Bind
+data Binding where
+  Binding :: Show x => Identifier x -> Expression x -> Binding
 
-instance Show Bind where
+instance Show Binding where
   show = \case
-    Bind x e -> show x ++ " = " ++ show e
+    Binding x e -> show x ++ " = " ++ show e
 
 type StatusInfo = Maybe (Eff.StatusInfo (Expression String) (Expression Value))
 
