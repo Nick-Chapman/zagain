@@ -3,13 +3,11 @@
 module Top (main)  where
 
 import Action (Conf(..))
-import Control.Monad (when)
 import Dictionary (fetchDict)
 import Disassemble (disassemble)
 import Fetch (runFetch)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
-import Text.Printf (printf)
 import Code (dumpCode,runCode)
 import Compiler (compileEffect)
 import qualified Console (runAction)
@@ -82,7 +80,7 @@ parseCommandLine = loop config0
         loop c { storyFile } more
 
 run :: Config -> IO ()
-run Config{mode,storyFile,iconf=iconf@Conf{niz,seeTrace,wrapSpec},inputs,mayStartConsole,viaCompiler} = do
+run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaCompiler} = do
   case mode of
     Dictionary -> do
       story <- loadStory storyFile
@@ -92,17 +90,10 @@ run Config{mode,storyFile,iconf=iconf@Conf{niz,seeTrace,wrapSpec},inputs,mayStar
       let seed = 888
       let screenWidth =
             case wrapSpec of
-              Nothing -> 255 -- 80 to match niz
+              Nothing -> 255
               Just w -> fromIntegral w
       story <- loadStory storyFile
       a <- if | not viaCompiler -> do
-                  when niz $ do
-                    -- TODO: remove this hack and actually show info from the header
-                    putStrLn "[release/serial: 12/860926, z-version: .z4}"
-                  when seeTrace $ do
-                    putStrLn "[release/serial: 88/840726, z-version: .z3}"
-                  when (not niz) $
-                    printf "\n\n"
                   let eff = Semantics.smallStep
                   let _ = print (Story.header story)
                   pure $ Interpreter.runEffect screenWidth seed story eff

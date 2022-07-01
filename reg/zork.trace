@@ -1,6 +1,3 @@
-[release/serial: 88/840726, z-version: .z3}
-
-
 0 020229 Call (Floc 021618) [Con -32752,Con -1] Sp
 1 021625 Call (Floc 021638) [Var (Local 1)] (Local 3)
 2 021649 Add (Var (Global 132)) (Con 180) (Local 3)
