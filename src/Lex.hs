@@ -18,21 +18,24 @@ tokenize s = do
 data Tok = Alpha Byte String -- TODO: dont need
 
 xtokenize :: String -> [Tok] -- TODO: inline into caller
-xtokenize = loop1 (1::Byte) -- TODO: also handle double quotes properly
+xtokenize = loop1 (1::Byte)
   where
     loop1 n = \case
       "" -> []
-      ',':cs -> Alpha n "," : loop1 (n+1) cs
+      ',':cs -> Alpha n [','] : loop1 (n+1) cs
+      '"':cs -> Alpha n ['"'] : loop1 (n+1) cs
       ' ':cs -> loopW (n+1) cs
       c:cs -> loopA (n+1) n [c] cs
     loopA n i acc = \case
       "" -> [Alpha i (reverse acc)]
-      ',':cs -> Alpha i (reverse acc) : Alpha n "," : loop1 (n+1) cs
+      ',':cs -> Alpha i (reverse acc) : Alpha n [','] : loop1 (n+1) cs
+      '"':cs -> Alpha i (reverse acc) : Alpha n ['"'] : loop1 (n+1) cs
       ' ':cs -> Alpha i (reverse acc) : loopW (n+1) cs
       c:cs -> loopA (n+1) i (c:acc) cs
     loopW n = \case
       "" -> []
-      ',':cs -> Alpha n "," : loop1 (n+1) cs
+      ',':cs -> Alpha n [','] : loop1 (n+1) cs
+      '"':cs -> Alpha n ['"'] : loop1 (n+1) cs
       ' ':cs -> loopW (n+1) cs
       c:cs -> loopA (n+1) n [c] cs
 
