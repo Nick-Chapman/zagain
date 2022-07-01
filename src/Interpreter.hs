@@ -268,11 +268,7 @@ initState screenWidth seed pcMode = do
         , locals = Map.empty
         , frames = []
         , callstack = []
-        , overrides = Map.fromList
-          [ -- (0x20,screenHeight) -- TODO:
-            (0x21,screenWidth)
-          -- , (0x32,1),(0x33,1) -- standard interpreter 1.1 -- TODO: investigate why causes judo text to be garbled.
-          ]
+        , overrides = Map.fromList [ (0x21,screenWidth) ]
         , seed
         , numActuals = 0
         }
