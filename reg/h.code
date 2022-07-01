@@ -80,7 +80,8 @@ LocOp 015219:
     Let b10 = M[008373];
     if (Equal(MakeHiLo(b9,b10),0)) {
       TraceOperation 015242 (Print_addr (Con 25));
-      GamePrint GetText(000025);
+      Note "<static Gettext address>";
+      GamePrint "yqx";
       TraceOperation 015244 (Dec_chk (Con 239) (Con 0) (Branch F (Dloc 008738)));
       Let b11 = M[008354];
       Let b12 = M[008355];

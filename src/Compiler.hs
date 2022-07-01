@@ -5,7 +5,7 @@ import Action (Conf(..))
 import Code (Code(..),CompiledRoutine(..),Chunk(..),Prog(Seq),Binding(..),Label(..),Loc(..),Expression(..),Identifier(..))
 import Control.Monad (when,ap,liftM)
 import Data.Set (Set,(\\))
-import Decode (fetchOperation,fetchRoutineHeader)
+import Decode (fetchOperation,fetchRoutineHeader,ztext)
 import Disassemble (Routine(..),disRoutine,branchesOf,routinesBetween)
 import Eff (Phase,Eff(..),Control(..))
 import Fetch (runFetch)
@@ -164,8 +164,13 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (Atom.ReadInputFromUser statusLine name) <$> k s (Variable name)
 
       GetText a -> do
-        -- TODO: make special case for static addresses.
-        k s (GetTextE a)
+        case a of
+          Const a -> do
+            let (text,_) = runFetch (oob "Compiler/GetText") a story ztext
+            Seq (Atom.Note "<static Gettext address>") <$>
+              k s (Const text)
+          _ ->
+            k s (GetTextE a)
 
       GetControl -> let State{control} = s in k s control
       SetControl control -> k s { control } ()

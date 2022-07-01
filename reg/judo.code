@@ -201,7 +201,8 @@ LocRoutine 024564:
   Jump: 024565
 LocOp 024565:
   TraceOperation 024565 (Print_paddr (Con 28418));
-  GamePrint GetText(113672);
+  Note "<static Gettext address>";
+  GamePrint "Standard Rules version 2/080430 by Graham Nelson\n";
   TraceOperation 024568 Rtrue;
   PopFrame;
   PopReturnAddress return_address_1;
@@ -213,7 +214,8 @@ LocRoutine 024572:
   Jump: 024573
 LocOp 024573:
   TraceOperation 024573 (Print_paddr (Con 28429));
-  GamePrint GetText(113716);
+  Note "<static Gettext address>";
+  GamePrint "Standard Rules version 2/080430 by Graham Nelson\n";
   TraceOperation 024576 Rtrue;
   PopFrame;
   PopReturnAddress return_address_1;
@@ -612,7 +614,8 @@ LocOp 024871:
   PopStack popped3;
   if (GreaterThan(popped3,GetLocal(2))) {
     TraceOperation 024883 (Print_paddr (Con 28442));
-    GamePrint GetText(113768);
+    Note "<static Gettext address>";
+    GamePrint "Error: Overflow in VM_PrintToBuffer.\n";
     Jump: 024886
   } else {
     Jump: 024886
@@ -2414,7 +2417,8 @@ LocOp 026115:
   TraceOperation 026115 (Print "Library serial number ");
   GamePrint "Library serial number ";
   TraceOperation 026132 (Print_paddr (Con 28409));
-  GamePrint GetText(113636);
+  Note "<static Gettext address>";
+  GamePrint "080126";
   TraceOperation 026135 (Print "\n");
   GamePrint "\n";
   TraceOperation 026138 (CallN (Floc 024564) []);
@@ -4392,7 +4396,8 @@ LocOp 027569:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),10)) {
     TraceOperation 027573 (Print_paddr (Con 28524));
-    GamePrint GetText(114096);
+    Note "<static Gettext address>";
+    GamePrint "Violence isn't the answer to this one.";
     TraceOperation 027576 New_line;
     GamePrint "\n";
     TraceOperation 027577 Rtrue;
@@ -4409,7 +4414,8 @@ LocOp 027578:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),11)) {
     TraceOperation 027582 (Print_paddr (Con 28531));
-    GamePrint GetText(114124);
+    Note "<static Gettext address>";
+    GamePrint "This dangerous act would achieve little.";
     TraceOperation 027585 New_line;
     GamePrint "\n";
     TraceOperation 027586 Rtrue;
@@ -4440,7 +4446,8 @@ LocOp 027606:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),13)) {
     TraceOperation 027610 (Print_paddr (Con 28538));
-    GamePrint GetText(114152);
+    Note "<static Gettext address>";
+    GamePrint "I don't think much is to be achieved by that.";
     TraceOperation 027613 New_line;
     GamePrint "\n";
     TraceOperation 027614 Rtrue;
@@ -4609,7 +4616,8 @@ LocOp 027752:
     Let b4 = M[007685];
     if (Equal(MakeHiLo(b3,b4),1)) {
       TraceOperation 027763 (Print_paddr (Con 28546));
-      GamePrint GetText(114184);
+      Note "<static Gettext address>";
+      GamePrint "You discover nothing of interest in ";
       TraceOperation 027766 (CallN (Floc 081916) [Var (Local 2)]);
       PushFrame;
       PushReturnAddress 027766;
@@ -4790,7 +4798,8 @@ LocOp 027925:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),18)) {
     TraceOperation 027929 (Print_paddr (Con 28553));
-    GamePrint GetText(114212);
+    Note "<static Gettext address>";
+    GamePrint "There's nothing suitable to drink here.";
     TraceOperation 027932 New_line;
     GamePrint "\n";
     TraceOperation 027933 Rtrue;
@@ -5441,7 +5450,8 @@ LocRoutine 029062:
   Jump: 029063
 LocOp 029063:
   TraceOperation 029063 (Print_paddr (Con 28594));
-  GamePrint GetText(114376);
+  Note "<static Gettext address>";
+  GamePrint " for a while, but don't achieve much.";
   TraceOperation 029066 New_line;
   GamePrint "\n";
   TraceOperation 029067 Rtrue;
@@ -6170,7 +6180,8 @@ LocOp 030903:
   Jump: 031450
 LocOp 030940:
   TraceOperation 030940 (Print_paddr (Con 28699));
-  GamePrint GetText(114796);
+  Note "<static Gettext address>";
+  GamePrint "seem to be something you can lock.";
   TraceOperation 030943 New_line;
   GamePrint "\n";
   TraceOperation 030944 Rtrue;
@@ -6432,7 +6443,8 @@ LocOp 031283:
   Let b13 = M[007305];
   if (Equal(MakeHiLo(b12,b13),255)) {
     TraceOperation 031295 (Print_paddr (Con 28705));
-    GamePrint GetText(114820);
+    Note "<static Gettext address>";
+    GamePrint "You see nothing unexpected in that direction.";
     TraceOperation 031298 New_line;
     GamePrint "\n";
     TraceOperation 031299 Rtrue;
@@ -6472,7 +6484,8 @@ LocOp 031963:
   Let b6 = M[007685];
   if (Equal(MakeHiLo(b5,b6),31)) {
     TraceOperation 031972 (Print_paddr (Con 28846));
-    GamePrint GetText(115384);
+    Note "<static Gettext address>";
+    GamePrint "You seem to have said too little!";
     TraceOperation 031975 New_line;
     GamePrint "\n";
     TraceOperation 031976 Rtrue;
@@ -6503,7 +6516,8 @@ LocOp 032000:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),33)) {
     TraceOperation 032004 (Print_paddr (Con 28852));
-    GamePrint GetText(115408);
+    Note "<static Gettext address>";
+    GamePrint "You can't use multiple objects with that verb.";
     TraceOperation 032007 New_line;
     GamePrint "\n";
     TraceOperation 032008 Rtrue;
@@ -6520,7 +6534,8 @@ LocOp 032009:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),34)) {
     TraceOperation 032013 (Print_paddr (Con 28861));
-    GamePrint GetText(115444);
+    Note "<static Gettext address>";
+    GamePrint "You can only use multiple objects once on a line.";
     TraceOperation 032016 New_line;
     GamePrint "\n";
     TraceOperation 032017 Rtrue;
@@ -6557,7 +6572,8 @@ LocOp 032052:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),36)) {
     TraceOperation 032056 (Print_paddr (Con 28870));
-    GamePrint GetText(115480);
+    Note "<static Gettext address>";
+    GamePrint "You excepted something not included anyway!";
     TraceOperation 032059 New_line;
     GamePrint "\n";
     TraceOperation 032060 Rtrue;
@@ -6574,7 +6590,8 @@ LocOp 032061:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),37)) {
     TraceOperation 032065 (Print_paddr (Con 28878));
-    GamePrint GetText(115512);
+    Note "<static Gettext address>";
+    GamePrint "You can only do that to something animate.";
     TraceOperation 032068 New_line;
     GamePrint "\n";
     TraceOperation 032069 Rtrue;
@@ -6605,7 +6622,8 @@ LocOp 032099:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),39)) {
     TraceOperation 032103 (Print_paddr (Con 28886));
-    GamePrint GetText(115544);
+    Note "<static Gettext address>";
+    GamePrint "That's not something you need to refer to in the course of this game.";
     TraceOperation 032106 New_line;
     GamePrint "\n";
     TraceOperation 032107 Rtrue;
@@ -6654,7 +6672,8 @@ LocOp 032150:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),41)) {
     TraceOperation 032154 (Print_paddr (Con 28898));
-    GamePrint GetText(115592);
+    Note "<static Gettext address>";
+    GamePrint "I didn't understand the way that finished.";
     TraceOperation 032157 New_line;
     GamePrint "\n";
     TraceOperation 032158 Rtrue;
@@ -6774,7 +6793,8 @@ LocOp 032305:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),47)) {
     TraceOperation 032309 (Print_paddr (Con 28906));
-    GamePrint GetText(115624);
+    Note "<static Gettext address>";
+    GamePrint "Sorry, you can only have one item here. Which exactly?";
     TraceOperation 032312 New_line;
     GamePrint "\n";
     TraceOperation 032313 Rtrue;
@@ -6937,7 +6957,8 @@ LocOp 032472:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),51)) {
     TraceOperation 032476 (Print_paddr (Con 28916));
-    GamePrint GetText(115664);
+    Note "<static Gettext address>";
+    GamePrint "(Since something dramatic has happened, your list of commands has been cut short.)";
     TraceOperation 032479 New_line;
     GamePrint "\n";
     TraceOperation 032480 Rtrue;
@@ -7141,7 +7162,8 @@ LocOp 032803:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),64)) {
     TraceOperation 032807 (Print_paddr (Con 28931));
-    GamePrint GetText(115724);
+    Note "<static Gettext address>";
+    GamePrint "You may not name a second object.";
     TraceOperation 032810 New_line;
     GamePrint "\n";
     TraceOperation 032811 Rtrue;
@@ -7172,7 +7194,8 @@ LocOp 032839:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),66)) {
     TraceOperation 032843 (Print_paddr (Con 28937));
-    GamePrint GetText(115748);
+    Note "<static Gettext address>";
+    GamePrint "You may not supply a second noun.";
     TraceOperation 032846 New_line;
     GamePrint "\n";
     TraceOperation 032847 Rtrue;
@@ -7189,7 +7212,8 @@ LocOp 032848:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),67)) {
     TraceOperation 032852 (Print_paddr (Con 28943));
-    GamePrint GetText(115772);
+    Note "<static Gettext address>";
+    GamePrint "You must name something more substantial.";
     TraceOperation 032855 New_line;
     GamePrint "\n";
     TraceOperation 032856 Rtrue;
@@ -7264,7 +7288,8 @@ LocOp 032916:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),70)) {
     TraceOperation 032920 (Print_paddr (Con 28951));
-    GamePrint GetText(115804);
+    Note "<static Gettext address>";
+    GamePrint "The use of UNDO is forbidden in this game.";
     TraceOperation 032923 New_line;
     GamePrint "\n";
     TraceOperation 032924 Rtrue;
@@ -7281,7 +7306,8 @@ LocOp 032925:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),71)) {
     TraceOperation 032929 (Print_paddr (Con 28504));
-    GamePrint GetText(114016);
+    Note "<static Gettext address>";
+    GamePrint "Darkness";
     TraceOperation 032932 (Jump 032987);
     Jump: 032987
   } else {
@@ -7330,7 +7356,8 @@ LocOp 032978:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),73)) {
     TraceOperation 032982 (Print_paddr (Con 28959));
-    GamePrint GetText(115836);
+    Note "<static Gettext address>";
+    GamePrint "That noun did not make sense in this context.";
     TraceOperation 032985 New_line;
     GamePrint "\n";
     TraceOperation 032986 Rtrue;
@@ -7486,7 +7513,8 @@ LocRoutine 033564:
   Jump: 033565
 LocOp 033565:
   TraceOperation 033565 (Print_paddr (Con 28979));
-  GamePrint GetText(115916);
+  Note "<static Gettext address>";
+  GamePrint " cannot be pushed from place to place.\n";
   TraceOperation 033568 (Jump 033617);
   Jump: 033617
 --------------------------------------------------
@@ -7891,7 +7919,8 @@ LocOp 034394:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),3)) {
     TraceOperation 034398 (Print_paddr (Con 29000));
-    GamePrint GetText(116000);
+    Note "<static Gettext address>";
+    GamePrint "Attempt to end transcript failed.";
     TraceOperation 034401 New_line;
     GamePrint "\n";
     TraceOperation 034402 Rtrue;
@@ -7952,7 +7981,8 @@ LocOp 034460:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),3)) {
     TraceOperation 034464 (Print_paddr (Con 29006));
-    GamePrint GetText(116024);
+    Note "<static Gettext address>";
+    GamePrint "Attempt to begin transcript failed.";
     TraceOperation 034467 New_line;
     GamePrint "\n";
     TraceOperation 034468 Rtrue;
@@ -8346,7 +8376,8 @@ LocOp 034834:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),56)) {
     TraceOperation 034838 (Print_paddr (Con 29013));
-    GamePrint GetText(116052);
+    Note "<static Gettext address>";
+    GamePrint "You aren't feeling especially drowsy.";
     TraceOperation 034841 New_line;
     GamePrint "\n";
     TraceOperation 034842 Rtrue;
@@ -8466,7 +8497,8 @@ LocOp 034978:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),60)) {
     TraceOperation 034982 (Print_paddr (Con 29020));
-    GamePrint GetText(116080);
+    Note "<static Gettext address>";
+    GamePrint "Real adventurers do not use such language.";
     TraceOperation 034985 New_line;
     GamePrint "\n";
     TraceOperation 034986 Rtrue;
@@ -8483,7 +8515,8 @@ LocOp 034987:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),61)) {
     TraceOperation 034991 (Print_paddr (Con 29028));
-    GamePrint GetText(116112);
+    Note "<static Gettext address>";
+    GamePrint "There's nothing sensible to swing here.";
     TraceOperation 034994 New_line;
     GamePrint "\n";
     TraceOperation 034995 Rtrue;
@@ -9051,7 +9084,8 @@ LocOp 035618:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),12)) {
     TraceOperation 035622 (Print_paddr (Con 29035));
-    GamePrint GetText(116140);
+    Note "<static Gettext address>";
+    GamePrint "You're carrying too many things already.";
     TraceOperation 035625 New_line;
     GamePrint "\n";
     TraceOperation 035626 Rtrue;
@@ -9289,7 +9323,8 @@ LocOp 035879:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),2)) {
     TraceOperation 035883 (Print_paddr (Con 29043));
-    GamePrint GetText(116172);
+    Note "<static Gettext address>";
+    GamePrint "You lack the nerve when it comes to the crucial moment.";
     TraceOperation 035886 New_line;
     GamePrint "\n";
     TraceOperation 035887 Rtrue;
@@ -9312,7 +9347,8 @@ LocOp 035889:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),69)) {
     TraceOperation 035893 (Print_paddr (Con 29053));
-    GamePrint GetText(116212);
+    Note "<static Gettext address>";
+    GamePrint "You would achieve nothing by this.";
     TraceOperation 035896 New_line;
     GamePrint "\n";
     TraceOperation 035897 Rtrue;
@@ -9499,7 +9535,8 @@ LocOp 036092:
   Jump: 036103
 LocOp 036103:
   TraceOperation 036103 (Print_paddr (Con 29059));
-  GamePrint GetText(116236);
+  Note "<static Gettext address>";
+  GamePrint "seem to be something you can unlock.";
   TraceOperation 036106 New_line;
   GamePrint "\n";
   TraceOperation 036107 Rtrue;
@@ -9631,7 +9668,8 @@ LocOp 036234:
     Let b4 = M[007685];
     if (Equal(MakeHiLo(b3,b4),1)) {
       TraceOperation 036245 (Print_paddr (Con 29066));
-      GamePrint GetText(116264);
+      Note "<static Gettext address>";
+      GamePrint "The game file has verified as intact.";
       TraceOperation 036248 New_line;
       GamePrint "\n";
       TraceOperation 036249 Rtrue;
@@ -9651,7 +9689,8 @@ LocOp 036250:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),2)) {
     TraceOperation 036254 (Print_paddr (Con 29073));
-    GamePrint GetText(116292);
+    Note "<static Gettext address>";
+    GamePrint "The game file did not verify as intact, and may be corrupt.";
     TraceOperation 036257 New_line;
     GamePrint "\n";
     TraceOperation 036258 Rtrue;
@@ -9725,7 +9764,8 @@ LocOp 036301:
   Let b2 = M[007673];
   if (Equal(MakeHiLo(b1,b2),73)) {
     TraceOperation 036305 (Print_paddr (Con 29084));
-    GamePrint GetText(116336);
+    Note "<static Gettext address>";
+    GamePrint "The dreadful truth is, this is not a dream.";
     TraceOperation 036308 New_line;
     GamePrint "\n";
     TraceOperation 036309 Rtrue;
@@ -12443,7 +12483,8 @@ LocOp 037839:
   TraceOperation 037839 (Jz (Var (Local 6)) (Branch F (Dloc 037848)));
   if (IsZero(GetLocal(6))) {
     TraceOperation 037842 (Print_paddr (Con 28510));
-    GamePrint GetText(114040);
+    Note "<static Gettext address>";
+    GamePrint "nothing";
     TraceOperation 037845 (Jump 037983);
     Jump: 037983
   } else {
@@ -13883,7 +13924,8 @@ LocOp 038593:
   TraceOperation 038593 (Jz (Var (Local 1)) (Branch F (Dloc 038610)));
   if (IsZero(GetLocal(1))) {
     TraceOperation 038596 (Print_paddr (Con 28510));
-    GamePrint GetText(114040);
+    Note "<static Gettext address>";
+    GamePrint "nothing";
     TraceOperation 038599 (And (Var (Local 2)) (Con 1) Sp);
     PushStack And(GetLocal(2),1);
     TraceOperation 038603 (Jz (Var Sp) (Branch T (Dloc 038607)));
@@ -16018,7 +16060,8 @@ LocOp 040224:
         Jump: 040243
       } else {
         TraceOperation 040237 (Print_paddr (Con 28518));
-        GamePrint GetText(114072);
+        Note "<static Gettext address>";
+        GamePrint " and ";
         TraceOperation 040240 (Jump 040251);
         Jump: 040251
       }
@@ -16400,7 +16443,8 @@ LocOp 040483:
   Let b1 = M[Offset(Offset(000378,Mul(GetLocal(1),14)),0)];
   if (TestBit(b1,6)) {
     TraceOperation 040487 (Print_paddr (Con 28521));
-    GamePrint GetText(114084);
+    Note "<static Gettext address>";
+    GamePrint "whom ";
     TraceOperation 040490 (Jump 040496);
     Jump: 040496
   } else {
@@ -16408,7 +16452,8 @@ LocOp 040483:
   }
 LocOp 040493:
   TraceOperation 040493 (Print_paddr (Con 28522));
-  GamePrint GetText(114088);
+  Note "<static Gettext address>";
+  GamePrint "which ";
   Jump: 040496
 LocOp 040496:
   TraceOperation 040496 (Store (Con 4) (Con 1));
@@ -16488,7 +16533,8 @@ LocOp 040545:
   Let b1 = M[Offset(Offset(000378,Mul(GetLocal(1),14)),0)];
   if (TestBit(b1,6)) {
     TraceOperation 040549 (Print_paddr (Con 28521));
-    GamePrint GetText(114084);
+    Note "<static Gettext address>";
+    GamePrint "whom ";
     TraceOperation 040552 (Jump 040558);
     Jump: 040558
   } else {
@@ -16496,7 +16542,8 @@ LocOp 040545:
   }
 LocOp 040555:
   TraceOperation 040555 (Print_paddr (Con 28522));
-  GamePrint GetText(114088);
+  Note "<static Gettext address>";
+  GamePrint "which ";
   Jump: 040558
 LocOp 040558:
   TraceOperation 040558 (Store (Con 4) (Con 1));
@@ -23817,7 +23864,8 @@ LocOp 046754:
   PopStack popped1;
   if (LessThan(GetLocal(5),popped1)) {
     TraceOperation 046762 (Print_paddr (Con 28523));
-    GamePrint GetText(114092);
+    Note "<static Gettext address>";
+    GamePrint ", ";
     Jump: 046765
   } else {
     Jump: 046765
@@ -23829,7 +23877,8 @@ LocOp 046765:
   PopStack popped1;
   if (Equal(GetLocal(5),popped1)) {
     TraceOperation 046773 (Print_paddr (Con 28509));
-    GamePrint GetText(114036);
+    Note "<static Gettext address>";
+    GamePrint " or ";
     Jump: 046776
   } else {
     Jump: 046776
@@ -27052,7 +27101,8 @@ LocOp 049593:
   TraceOperation 049593 (Jz (Var (Local 2)) (Branch F (Dloc 049602)));
   if (IsZero(GetLocal(2))) {
     TraceOperation 049596 (Print_paddr (Con 28506));
-    GamePrint GetText(114024);
+    Note "<static Gettext address>";
+    GamePrint "those things";
     TraceOperation 049599 (Jump 049668);
     Jump: 049668
   } else {
@@ -27062,7 +27112,8 @@ LocOp 049602:
   TraceOperation 049602 (Je [Var (Local 2),Con 1] (Branch F (Dloc 049612)));
   if (Equal(GetLocal(2),1)) {
     TraceOperation 049606 (Print_paddr (Con 28508));
-    GamePrint GetText(114032);
+    Note "<static Gettext address>";
+    GamePrint "that";
     TraceOperation 049609 (Jump 049668);
     Jump: 049668
   } else {
@@ -37971,7 +38022,8 @@ LocReturn 056485:
   Jump: 056499
 LocOp 056494:
   TraceOperation 056494 (Print_paddr (Con 29685));
-  GamePrint GetText(118740);
+  Note "<static Gettext address>";
+  GamePrint "I didn't understand that sentence.";
   TraceOperation 056497 New_line;
   GamePrint "\n";
   TraceOperation 056498 Rtrue;
@@ -72827,7 +72879,8 @@ LocOp 076040:
   TraceOperation 076040 (Jg (Var (Local 1)) (Con 10) (Branch F (Dloc 076049)));
   if (GreaterThan(GetLocal(1),10)) {
     TraceOperation 076044 (Print_paddr (Con 29699));
-    GamePrint GetText(118796);
+    Note "<static Gettext address>";
+    GamePrint ">--> The scene change machinery is stuck.";
     TraceOperation 076047 New_line;
     GamePrint "\n";
     TraceOperation 076048 Rtrue;
@@ -78942,7 +78995,8 @@ LocOp 080073:
     SetByte 007390 0;
     SetByte 007391 1;
     TraceOperation 080080 (Print_paddr (Con -31632));
-    GamePrint GetText(135616);
+    Note "<static Gettext address>";
+    GamePrint "Judo Night";
     TraceOperation 080083 (CallN (Floc 041040) [Con 32]);
     PushFrame;
     PushReturnAddress 080083;
@@ -78979,7 +79033,8 @@ LocOp 080093:
     SetByte 007390 0;
     SetByte 007391 2;
     TraceOperation 080100 (Print_paddr (Con -31632));
-    GamePrint GetText(135616);
+    Note "<static Gettext address>";
+    GamePrint "Judo Night";
     TraceOperation 080103 (CallN (Floc 041040) [Con 33]);
     PushFrame;
     PushReturnAddress 080103;
@@ -79016,7 +79071,8 @@ LocOp 080113:
     SetByte 007390 0;
     SetByte 007391 3;
     TraceOperation 080120 (Print_paddr (Con -31632));
-    GamePrint GetText(135616);
+    Note "<static Gettext address>";
+    GamePrint "Judo Night";
     TraceOperation 080123 (CallN (Floc 041040) [Con 34]);
     PushFrame;
     PushReturnAddress 080123;
@@ -80068,7 +80124,8 @@ LocReturn 080822:
   }
 LocReturn 080832:
   TraceOperation 080837 (Print_paddr (Con -31632));
-  GamePrint GetText(135616);
+  Note "<static Gettext address>";
+  GamePrint "Judo Night";
   TraceOperation 080840 (CallN (Floc 025176) [Con 0]);
   PushFrame;
   PushReturnAddress 080840;
@@ -80079,11 +80136,13 @@ LocReturn 080840:
   TraceOperation 080845 New_line;
   GamePrint "\n";
   TraceOperation 080846 (Print_paddr (Con 28413));
-  GamePrint GetText(113652);
+  Note "<static Gettext address>";
+  GamePrint "An Interactive Fiction";
   TraceOperation 080849 (Print " by ");
   GamePrint " by ";
   TraceOperation 080854 (Print_paddr (Con -31596));
-  GamePrint GetText(135760);
+  Note "<static Gettext address>";
+  GamePrint "Nick Chapman";
   TraceOperation 080857 New_line;
   GamePrint "\n";
   TraceOperation 080858 (CallN (Floc 024680) []);
@@ -80096,7 +80155,8 @@ LocReturn 080858:
   TraceOperation 080861 (Print " / Inform 7 build ");
   GamePrint " / Inform 7 build ";
   TraceOperation 080876 (Print_paddr (Con 28407));
-  GamePrint GetText(113628);
+  Note "<static Gettext address>";
+  GamePrint "5T18";
   TraceOperation 080879 (Print " ");
   GamePrint " ";
   TraceOperation 080882 (Print "(I6/v");
@@ -80132,7 +80192,8 @@ LocReturn 080858:
   TraceOperation 080917 (Print " lib ");
   GamePrint " lib ";
   TraceOperation 080922 (Print_paddr (Con 28411));
-  GamePrint GetText(113644);
+  Note "<static Gettext address>";
+  GamePrint "6/12N";
   TraceOperation 080925 (Print ") ");
   GamePrint ") ";
   TraceOperation 080928 New_line;
@@ -80679,7 +80740,8 @@ LocOp 081241:
   TraceOperation 081241 (Jz (Var (Local 1)) (Branch F (Dloc 081248)));
   if (IsZero(GetLocal(1))) {
     TraceOperation 081244 (Print_paddr (Con 28510));
-    GamePrint GetText(114040);
+    Note "<static Gettext address>";
+    GamePrint "nothing";
     TraceOperation 081247 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -80787,7 +80849,8 @@ LocOp 081345:
   TraceOperation 081348 (Jz (Var (Local 1)) (Branch F (Dloc 081355)));
   if (IsZero(GetLocal(1))) {
     TraceOperation 081351 (Print_paddr (Con 28510));
-    GamePrint GetText(114040);
+    Note "<static Gettext address>";
+    GamePrint "nothing";
     TraceOperation 081354 Rtrue;
     PopFrame;
     PopReturnAddress return_address_3;
@@ -80881,7 +80944,8 @@ LocOp 081441:
         Jump: 081460
       } else {
         TraceOperation 081454 (Print_paddr (Con 28503));
-        GamePrint GetText(114012);
+        Note "<static Gettext address>";
+        GamePrint "You";
         TraceOperation 081457 (Jump 081462);
         Jump: 081462
       }
@@ -81473,7 +81537,8 @@ LocOp 081761:
   TraceOperation 081761 (Jz (Var (Local 1)) (Branch F (Dloc 081768)));
   if (IsZero(GetLocal(1))) {
     TraceOperation 081764 (Print_paddr (Con 28510));
-    GamePrint GetText(114040);
+    Note "<static Gettext address>";
+    GamePrint "nothing";
     TraceOperation 081767 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -90339,7 +90404,8 @@ LocOp 086832:
   }
 LocReturn 086855:
   TraceOperation 086860 (Print_paddr (Con 29716));
-  GamePrint GetText(118864);
+  Note "<static Gettext address>";
+  GamePrint ", which is not a player-character.\n";
   TraceOperation 086863 (Jump 087953);
   Jump: 087953
 LocOp 086866:
@@ -90371,7 +90437,8 @@ LocReturn 086883:
   Jump: 081917
 LocReturn 086895:
   TraceOperation 086900 (Print_paddr (Con 29723));
-  GamePrint GetText(118892);
+  Note "<static Gettext address>";
+  GamePrint ", but it didn't seem to have such an exit to change.\n";
   TraceOperation 086903 (Jump 087953);
   Jump: 087953
 LocOp 086906:
@@ -90403,7 +90470,8 @@ LocReturn 086923:
   Jump: 081917
 LocReturn 086935:
   TraceOperation 086940 (Print_paddr (Con 29733));
-  GamePrint GetText(118932);
+  Note "<static Gettext address>";
+  GamePrint ", but it led to a door, not a room.\n";
   TraceOperation 086943 (Jump 087953);
   Jump: 087953
 LocOp 086946:
@@ -90412,7 +90480,8 @@ LocOp 086946:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),5)) {
     TraceOperation 086951 (Print_paddr (Con 29740));
-    GamePrint GetText(118960);
+    Note "<static Gettext address>";
+    GamePrint "Tried to access an inappropriate relation for ";
     TraceOperation 086954 (CallN (Floc 081916) [Var (Local 2)]);
     PushFrame;
     PushReturnAddress 086954;
@@ -90627,7 +90696,8 @@ LocOp 087629:
     }
   }
   TraceOperation 087634 (Print_paddr (Con 30019));
-  GamePrint GetText(120076);
+  Note "<static Gettext address>";
+  GamePrint "Attempt to use a property of the 'nothing' non-object.\n";
   TraceOperation 087637 (Jump 087953);
   Jump: 087953
 --------------------------------------------------
@@ -90646,7 +90716,8 @@ LocOp 087793:
     Jump: 082236
   } else {
     TraceOperation 087798 (Print_paddr (Con 30086));
-    GamePrint GetText(120344);
+    Note "<static Gettext address>";
+    GamePrint "The list-writer has run out of memory.\n";
     TraceOperation 087801 (Jump 087953);
     Jump: 087953
   }
@@ -90656,7 +90727,8 @@ LocRoutine 087812:
   Jump: 087813
 LocOp 087813:
   TraceOperation 087813 (Print_paddr (Con 16895));
-  GamePrint GetText(067580);
+  Note "<static Gettext address>";
+  GamePrint "   c  ";
   TraceOperation 087816 (Clear_attr (Con 72) (Var (Global 125)));
   Let b1 = M[007456];
   Let b2 = M[007457];
@@ -92250,7 +92322,8 @@ LocOp 088685:
   }
 LocOp 088712:
   TraceOperation 088712 (Print_paddr (Con 30168));
-  GamePrint GetText(120672);
+  Note "<static Gettext address>";
+  GamePrint "\n\n*** Fatal programming error: I7 arrays corrupted ***\n\n";
   TraceOperation 088715 Quit;
   Quit
 LocOp 088716:
@@ -93533,7 +93606,8 @@ LocOp 090240:
   TraceOperation 090240 (Je [Var (Local 1),Con 14339] (Branch F (Dloc 090250)));
   if (Equal(GetLocal(1),14339)) {
     TraceOperation 090246 (Print_paddr (Con 32432));
-    GamePrint GetText(129728);
+    Note "<static Gettext address>";
+    GamePrint "set pronouns from items from multiple object lists rule";
     TraceOperation 090249 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93546,7 +93620,8 @@ LocOp 090250:
   TraceOperation 090250 (Je [Var (Local 1),Con 14333] (Branch F (Dloc 090260)));
   if (Equal(GetLocal(1),14333)) {
     TraceOperation 090256 (Print_paddr (Con 32442));
-    GamePrint GetText(129768);
+    Note "<static Gettext address>";
+    GamePrint "announce items from multiple object lists rule";
     TraceOperation 090259 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93585,7 +93660,8 @@ LocOp 090300:
   TraceOperation 090300 (Je [Var (Local 1),Con 14348] (Branch F (Dloc 090310)));
   if (Equal(GetLocal(1),14348)) {
     TraceOperation 090306 (Print_paddr (Con 32450));
-    GamePrint GetText(129800);
+    Note "<static Gettext address>";
+    GamePrint "end action-processing in success rule";
     TraceOperation 090309 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93598,7 +93674,8 @@ LocOp 090310:
   TraceOperation 090310 (Je [Var (Local 1),Con 14444] (Branch F (Dloc 090320)));
   if (Equal(GetLocal(1),14444)) {
     TraceOperation 090316 (Print_paddr (Con 32457));
-    GamePrint GetText(129828);
+    Note "<static Gettext address>";
+    GamePrint "investigate player's awareness before action rule";
     TraceOperation 090319 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93650,7 +93727,8 @@ LocOp 090382:
   TraceOperation 090382 (Je [Var (Local 1),Con 14479] (Branch F (Dloc 090392)));
   if (Equal(GetLocal(1),14479)) {
     TraceOperation 090388 (Print_paddr (Con 32466));
-    GamePrint GetText(129864);
+    Note "<static Gettext address>";
+    GamePrint "investigate player's awareness after action rule";
     TraceOperation 090391 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93676,7 +93754,8 @@ LocOp 090412:
   TraceOperation 090412 (Je [Var (Local 1),Con 14506] (Branch F (Dloc 090422)));
   if (Equal(GetLocal(1),14506)) {
     TraceOperation 090418 (Print_paddr (Con 32475));
-    GamePrint GetText(129900);
+    Note "<static Gettext address>";
+    GamePrint "player aware of his own actions rule";
     TraceOperation 090421 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93689,7 +93768,8 @@ LocOp 090422:
   TraceOperation 090422 (Je [Var (Local 1),Con 14509] (Branch F (Dloc 090432)));
   if (Equal(GetLocal(1),14509)) {
     TraceOperation 090428 (Print_paddr (Con 32481));
-    GamePrint GetText(129924);
+    Note "<static Gettext address>";
+    GamePrint "player aware of actions by visible actors rule";
     TraceOperation 090431 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93702,7 +93782,8 @@ LocOp 090432:
   TraceOperation 090432 (Je [Var (Local 1),Con 14514] (Branch F (Dloc 090442)));
   if (Equal(GetLocal(1),14514)) {
     TraceOperation 090438 (Print_paddr (Con 32489));
-    GamePrint GetText(129956);
+    Note "<static Gettext address>";
+    GamePrint "player aware of actions on visible nouns rule";
     TraceOperation 090441 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93715,7 +93796,8 @@ LocOp 090442:
   TraceOperation 090442 (Je [Var (Local 1),Con 14521] (Branch F (Dloc 090452)));
   if (Equal(GetLocal(1),14521)) {
     TraceOperation 090448 (Print_paddr (Con 32497));
-    GamePrint GetText(129988);
+    Note "<static Gettext address>";
+    GamePrint "player aware of actions on visible second nouns rule";
     TraceOperation 090451 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93741,7 +93823,8 @@ LocOp 090478:
   TraceOperation 090478 (Je [Var (Local 1),Con 14909] (Branch F (Dloc 090488)));
   if (Equal(GetLocal(1),14909)) {
     TraceOperation 090484 (Print_paddr (Con 32506));
-    GamePrint GetText(130024);
+    Note "<static Gettext address>";
+    GamePrint "very unlikely to mean taking what's already carried rule";
     TraceOperation 090487 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93767,7 +93850,8 @@ LocOp 090518:
   TraceOperation 090518 (Je [Var (Local 1),Con 14954] (Branch F (Dloc 090528)));
   if (Equal(GetLocal(1),14954)) {
     TraceOperation 090524 (Print_paddr (Con 32516));
-    GamePrint GetText(130064);
+    Note "<static Gettext address>";
+    GamePrint "standard printing the plural name rule";
     TraceOperation 090527 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93780,7 +93864,8 @@ LocOp 090528:
   TraceOperation 090528 (Je [Var (Local 1),Con 14974] (Branch F (Dloc 090538)));
   if (Equal(GetLocal(1),14974)) {
     TraceOperation 090534 (Print_paddr (Con 32523));
-    GamePrint GetText(130092);
+    Note "<static Gettext address>";
+    GamePrint "standard printing a number of something rule";
     TraceOperation 090537 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93793,7 +93878,8 @@ LocOp 090538:
   TraceOperation 090538 (Je [Var (Local 1),Con 14994] (Branch F (Dloc 090548)));
   if (Equal(GetLocal(1),14994)) {
     TraceOperation 090544 (Print_paddr (Con 32531));
-    GamePrint GetText(130124);
+    Note "<static Gettext address>";
+    GamePrint "look around once light available rule";
     TraceOperation 090547 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93871,7 +93957,8 @@ LocOp 090666:
   TraceOperation 090666 (Je [Var (Local 1),Con 15102] (Branch F (Dloc 090676)));
   if (Equal(GetLocal(1),15102)) {
     TraceOperation 090672 (Print_paddr (Con 32538));
-    GamePrint GetText(130152);
+    Note "<static Gettext address>";
+    GamePrint "standard respond to final question rule";
     TraceOperation 090675 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93884,7 +93971,8 @@ LocOp 090676:
   TraceOperation 090676 (Je [Var (Local 1),Con 15141] (Branch F (Dloc 090686)));
   if (Equal(GetLocal(1),15141)) {
     TraceOperation 090682 (Print_paddr (Con 32545));
-    GamePrint GetText(130180);
+    Note "<static Gettext address>";
+    GamePrint "initialise locale description rule";
     TraceOperation 090685 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93910,7 +93998,8 @@ LocOp 090716:
   TraceOperation 090716 (Je [Var (Local 1),Con 15165] (Branch F (Dloc 090726)));
   if (Equal(GetLocal(1),15165)) {
     TraceOperation 090722 (Print_paddr (Con 32551));
-    GamePrint GetText(130204);
+    Note "<static Gettext address>";
+    GamePrint "interesting locale paragraphs rule";
     TraceOperation 090725 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93936,7 +94025,8 @@ LocOp 090750:
   TraceOperation 090750 (Je [Var (Local 1),Con 15317] (Branch F (Dloc 090760)));
   if (Equal(GetLocal(1),15317)) {
     TraceOperation 090756 (Print_paddr (Con 32557));
-    GamePrint GetText(130228);
+    Note "<static Gettext address>";
+    GamePrint "standard notable locale objects rule";
     TraceOperation 090759 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93949,7 +94039,8 @@ LocOp 090760:
   TraceOperation 090760 (Je [Var (Local 1),Con 15327] (Branch F (Dloc 090770)));
   if (Equal(GetLocal(1),15327)) {
     TraceOperation 090766 (Print_paddr (Con 32563));
-    GamePrint GetText(130252);
+    Note "<static Gettext address>";
+    GamePrint "don't mention player's supporter in room descriptions rule";
     TraceOperation 090769 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93962,7 +94053,8 @@ LocOp 090770:
   TraceOperation 090770 (Je [Var (Local 1),Con 15344] (Branch F (Dloc 090780)));
   if (Equal(GetLocal(1),15344)) {
     TraceOperation 090776 (Print_paddr (Con 32573));
-    GamePrint GetText(130292);
+    Note "<static Gettext address>";
+    GamePrint "don't mention scenery in room descriptions rule";
     TraceOperation 090779 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93975,7 +94067,8 @@ LocOp 090780:
   TraceOperation 090780 (Je [Var (Local 1),Con 15361] (Branch F (Dloc 090790)));
   if (Equal(GetLocal(1),15361)) {
     TraceOperation 090786 (Print_paddr (Con 32581));
-    GamePrint GetText(130324);
+    Note "<static Gettext address>";
+    GamePrint "don't mention undescribed items in room descriptions rule";
     TraceOperation 090789 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -93988,7 +94081,8 @@ LocOp 090790:
   TraceOperation 090790 (Je [Var (Local 1),Con 15378] (Branch F (Dloc 090800)));
   if (Equal(GetLocal(1),15378)) {
     TraceOperation 090796 (Print_paddr (Con 32591));
-    GamePrint GetText(130364);
+    Note "<static Gettext address>";
+    GamePrint "set pronouns from items in room descriptions rule";
     TraceOperation 090799 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94001,7 +94095,8 @@ LocOp 090800:
   TraceOperation 090800 (Je [Var (Local 1),Con 15395] (Branch F (Dloc 090810)));
   if (Equal(GetLocal(1),15395)) {
     TraceOperation 090806 (Print_paddr (Con 32600));
-    GamePrint GetText(130400);
+    Note "<static Gettext address>";
+    GamePrint "offer items to writing a paragraph about rule";
     TraceOperation 090809 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94014,7 +94109,8 @@ LocOp 090810:
   TraceOperation 090810 (Je [Var (Local 1),Con 15423] (Branch F (Dloc 090820)));
   if (Equal(GetLocal(1),15423)) {
     TraceOperation 090816 (Print_paddr (Con 32608));
-    GamePrint GetText(130432);
+    Note "<static Gettext address>";
+    GamePrint "use initial appearance in room descriptions rule";
     TraceOperation 090819 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94027,7 +94123,8 @@ LocOp 090820:
   TraceOperation 090820 (Je [Var (Local 1),Con 15487] (Branch F (Dloc 090830)));
   if (Equal(GetLocal(1),15487)) {
     TraceOperation 090826 (Print_paddr (Con 32616));
-    GamePrint GetText(130464);
+    Note "<static Gettext address>";
+    GamePrint "describe what's on scenery supporters in room descriptions rule";
     TraceOperation 090829 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94066,7 +94163,8 @@ LocOp 090884:
   TraceOperation 090884 (Je [Var (Local 1),Con 15569] (Branch F (Dloc 090894)));
   if (Equal(GetLocal(1),15569)) {
     TraceOperation 090890 (Print_paddr (Con 32627));
-    GamePrint GetText(130508);
+    Note "<static Gettext address>";
+    GamePrint "use inventory to set pronouns rule";
     TraceOperation 090893 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94079,7 +94177,8 @@ LocOp 090894:
   TraceOperation 090894 (Je [Var (Local 1),Con 15577] (Branch F (Dloc 090904)));
   if (Equal(GetLocal(1),15577)) {
     TraceOperation 090900 (Print_paddr (Con 32633));
-    GamePrint GetText(130532);
+    Note "<static Gettext address>";
+    GamePrint "report other people taking inventory rule";
     TraceOperation 090903 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94131,7 +94230,8 @@ LocOp 090988:
   TraceOperation 090988 (Je [Var (Local 1),Con 15626] (Branch F (Dloc 090998)));
   if (Equal(GetLocal(1),15626)) {
     TraceOperation 090994 (Print_paddr (Con 32640));
-    GamePrint GetText(130560);
+    Note "<static Gettext address>";
+    GamePrint "can't take people's possessions rule";
     TraceOperation 090997 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94144,7 +94244,8 @@ LocOp 090998:
   TraceOperation 090998 (Je [Var (Local 1),Con 15646] (Branch F (Dloc 091008)));
   if (Equal(GetLocal(1),15646)) {
     TraceOperation 091004 (Print_paddr (Con 32647));
-    GamePrint GetText(130588);
+    Note "<static Gettext address>";
+    GamePrint "can't take items out of play rule";
     TraceOperation 091007 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94157,7 +94258,8 @@ LocOp 091008:
   TraceOperation 091008 (Je [Var (Local 1),Con 15662] (Branch F (Dloc 091018)));
   if (Equal(GetLocal(1),15662)) {
     TraceOperation 091014 (Print_paddr (Con 32653));
-    GamePrint GetText(130612);
+    Note "<static Gettext address>";
+    GamePrint "can't take what you're inside rule";
     TraceOperation 091017 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94170,7 +94272,8 @@ LocOp 091018:
   TraceOperation 091018 (Je [Var (Local 1),Con 15674] (Branch F (Dloc 091028)));
   if (Equal(GetLocal(1),15674)) {
     TraceOperation 091024 (Print_paddr (Con 32659));
-    GamePrint GetText(130636);
+    Note "<static Gettext address>";
+    GamePrint "can't take what's already taken rule";
     TraceOperation 091027 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94209,7 +94312,8 @@ LocOp 091078:
   TraceOperation 091078 (Je [Var (Local 1),Con 15715] (Branch F (Dloc 091088)));
   if (Equal(GetLocal(1),15715)) {
     TraceOperation 091084 (Print_paddr (Con 32666));
-    GamePrint GetText(130664);
+    Note "<static Gettext address>";
+    GamePrint "can't take what's fixed in place rule";
     TraceOperation 091087 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94222,7 +94326,8 @@ LocOp 091088:
   TraceOperation 091088 (Je [Var (Local 1),Con 15727] (Branch F (Dloc 091098)));
   if (Equal(GetLocal(1),15727)) {
     TraceOperation 091094 (Print_paddr (Con 32673));
-    GamePrint GetText(130692);
+    Note "<static Gettext address>";
+    GamePrint "use player's holdall to avoid exceeding carrying capacity rule";
     TraceOperation 091097 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94235,7 +94340,8 @@ LocOp 091098:
   TraceOperation 091098 (Je [Var (Local 1),Con 15767] (Branch F (Dloc 091108)));
   if (Equal(GetLocal(1),15767)) {
     TraceOperation 091104 (Print_paddr (Con 32684));
-    GamePrint GetText(130736);
+    Note "<static Gettext address>";
+    GamePrint "can't exceed carrying capacity rule";
     TraceOperation 091107 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94274,7 +94380,8 @@ LocOp 091156:
   TraceOperation 091156 (Je [Var (Local 1),Con 15803] (Branch F (Dloc 091166)));
   if (Equal(GetLocal(1),15803)) {
     TraceOperation 091162 (Print_paddr (Con 32690));
-    GamePrint GetText(130760);
+    Note "<static Gettext address>";
+    GamePrint "can't remove what's not inside rule";
     TraceOperation 091165 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94326,7 +94433,8 @@ LocOp 091246:
   TraceOperation 091246 (Je [Var (Local 1),Con 15858] (Branch F (Dloc 091256)));
   if (Equal(GetLocal(1),15858)) {
     TraceOperation 091252 (Print_paddr (Con 32697));
-    GamePrint GetText(130788);
+    Note "<static Gettext address>";
+    GamePrint "can't drop what's already dropped rule";
     TraceOperation 091255 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94352,7 +94460,8 @@ LocOp 091286:
   TraceOperation 091286 (Je [Var (Local 1),Con 15886] (Branch F (Dloc 091296)));
   if (Equal(GetLocal(1),15886)) {
     TraceOperation 091292 (Print_paddr (Con 32704));
-    GamePrint GetText(130816);
+    Note "<static Gettext address>";
+    GamePrint "can't drop clothes being worn rule";
     TraceOperation 091295 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94365,7 +94474,8 @@ LocOp 091296:
   TraceOperation 091296 (Je [Var (Local 1),Con 15905] (Branch F (Dloc 091306)));
   if (Equal(GetLocal(1),15905)) {
     TraceOperation 091302 (Print_paddr (Con 32710));
-    GamePrint GetText(130840);
+    Note "<static Gettext address>";
+    GamePrint "can't drop if this exceeds carrying capacity rule";
     TraceOperation 091305 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94404,7 +94514,8 @@ LocOp 091358:
   TraceOperation 091358 (Je [Var (Local 1),Con 15963] (Branch F (Dloc 091368)));
   if (Equal(GetLocal(1),15963)) {
     TraceOperation 091364 (Print_paddr (Con 32719));
-    GamePrint GetText(130876);
+    Note "<static Gettext address>";
+    GamePrint "convert put to drop where possible rule";
     TraceOperation 091367 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94430,7 +94541,8 @@ LocOp 091398:
   TraceOperation 091398 (Je [Var (Local 1),Con 15996] (Branch F (Dloc 091408)));
   if (Equal(GetLocal(1),15996)) {
     TraceOperation 091404 (Print_paddr (Con 32726));
-    GamePrint GetText(130904);
+    Note "<static Gettext address>";
+    GamePrint "can't put something on itself rule";
     TraceOperation 091407 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94443,7 +94555,8 @@ LocOp 091408:
   TraceOperation 091408 (Je [Var (Local 1),Con 16014] (Branch F (Dloc 091418)));
   if (Equal(GetLocal(1),16014)) {
     TraceOperation 091414 (Print_paddr (Con 32732));
-    GamePrint GetText(130928);
+    Note "<static Gettext address>";
+    GamePrint "can't put onto what's not a supporter rule";
     TraceOperation 091417 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94456,7 +94569,8 @@ LocOp 091418:
   TraceOperation 091418 (Je [Var (Local 1),Con 16028] (Branch F (Dloc 091428)));
   if (Equal(GetLocal(1),16028)) {
     TraceOperation 091424 (Print_paddr (Con 32740));
-    GamePrint GetText(130960);
+    Note "<static Gettext address>";
+    GamePrint "can't put onto something being carried rule";
     TraceOperation 091427 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94469,7 +94583,8 @@ LocOp 091428:
   TraceOperation 091428 (Je [Var (Local 1),Con 16043] (Branch F (Dloc 091438)));
   if (Equal(GetLocal(1),16043)) {
     TraceOperation 091434 (Print_paddr (Con 32748));
-    GamePrint GetText(130992);
+    Note "<static Gettext address>";
+    GamePrint "can't put clothes being worn rule";
     TraceOperation 091437 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94482,7 +94597,8 @@ LocOp 091438:
   TraceOperation 091438 (Je [Var (Local 1),Con 16065] (Branch F (Dloc 091448)));
   if (Equal(GetLocal(1),16065)) {
     TraceOperation 091444 (Print_paddr (Con 32754));
-    GamePrint GetText(131016);
+    Note "<static Gettext address>";
+    GamePrint "can't put if this exceeds carrying capacity rule";
     TraceOperation 091447 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94534,7 +94650,8 @@ LocOp 091524:
   TraceOperation 091524 (Je [Var (Local 1),Con 16124] (Branch F (Dloc 091534)));
   if (Equal(GetLocal(1),16124)) {
     TraceOperation 091530 (Print_paddr (Con 32763));
-    GamePrint GetText(131052);
+    Note "<static Gettext address>";
+    GamePrint "convert insert to drop where possible rule";
     TraceOperation 091533 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94547,7 +94664,8 @@ LocOp 091534:
   TraceOperation 091534 (Je [Var (Local 1),Con 16140] (Branch F (Dloc 091544)));
   if (Equal(GetLocal(1),16140)) {
     TraceOperation 091540 (Print_paddr (Con -32766));
-    GamePrint GetText(131080);
+    Note "<static Gettext address>";
+    GamePrint "can't insert what's not held rule";
     TraceOperation 091543 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94560,7 +94678,8 @@ LocOp 091544:
   TraceOperation 091544 (Je [Var (Local 1),Con 16157] (Branch F (Dloc 091554)));
   if (Equal(GetLocal(1),16157)) {
     TraceOperation 091550 (Print_paddr (Con -32760));
-    GamePrint GetText(131104);
+    Note "<static Gettext address>";
+    GamePrint "can't insert something into itself rule";
     TraceOperation 091553 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94573,7 +94692,8 @@ LocOp 091554:
   TraceOperation 091554 (Je [Var (Local 1),Con 16175] (Branch F (Dloc 091564)));
   if (Equal(GetLocal(1),16175)) {
     TraceOperation 091560 (Print_paddr (Con -32753));
-    GamePrint GetText(131132);
+    Note "<static Gettext address>";
+    GamePrint "can't insert into closed containers rule";
     TraceOperation 091563 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94586,7 +94706,8 @@ LocOp 091564:
   TraceOperation 091564 (Je [Var (Local 1),Con 16192] (Branch F (Dloc 091574)));
   if (Equal(GetLocal(1),16192)) {
     TraceOperation 091570 (Print_paddr (Con -32746));
-    GamePrint GetText(131160);
+    Note "<static Gettext address>";
+    GamePrint "can't insert into what's not a container rule";
     TraceOperation 091573 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94599,7 +94720,8 @@ LocOp 091574:
   TraceOperation 091574 (Je [Var (Local 1),Con 16206] (Branch F (Dloc 091584)));
   if (Equal(GetLocal(1),16206)) {
     TraceOperation 091580 (Print_paddr (Con -32738));
-    GamePrint GetText(131192);
+    Note "<static Gettext address>";
+    GamePrint "can't insert clothes being worn rule";
     TraceOperation 091583 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94612,7 +94734,8 @@ LocOp 091584:
   TraceOperation 091584 (Je [Var (Local 1),Con 16228] (Branch F (Dloc 091594)));
   if (Equal(GetLocal(1),16228)) {
     TraceOperation 091590 (Print_paddr (Con -32731));
-    GamePrint GetText(131220);
+    Note "<static Gettext address>";
+    GamePrint "can't insert if this exceeds carrying capacity rule";
     TraceOperation 091593 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94677,7 +94800,8 @@ LocOp 091702:
   TraceOperation 091702 (Je [Var (Local 1),Con 16301] (Branch F (Dloc 091712)));
   if (Equal(GetLocal(1),16301)) {
     TraceOperation 091708 (Print_paddr (Con -32722));
-    GamePrint GetText(131256);
+    Note "<static Gettext address>";
+    GamePrint "can't eat clothing without removing it first rule";
     TraceOperation 091711 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94716,7 +94840,8 @@ LocOp 091760:
   TraceOperation 091760 (Je [Var (Local 1),Con 14350] (Branch F (Dloc 091770)));
   if (Equal(GetLocal(1),14350)) {
     TraceOperation 091766 (Print_paddr (Con -32713));
-    GamePrint GetText(131292);
+    Note "<static Gettext address>";
+    GamePrint "standard set going variables rule";
     TraceOperation 091769 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94729,7 +94854,8 @@ LocOp 091770:
   TraceOperation 091770 (Je [Var (Local 1),Con 16340] (Branch F (Dloc 091780)));
   if (Equal(GetLocal(1),16340)) {
     TraceOperation 091776 (Print_paddr (Con -32707));
-    GamePrint GetText(131316);
+    Note "<static Gettext address>";
+    GamePrint "can't travel in what's not a vehicle rule";
     TraceOperation 091779 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94742,7 +94868,8 @@ LocOp 091780:
   TraceOperation 091780 (Je [Var (Local 1),Con 16360] (Branch F (Dloc 091790)));
   if (Equal(GetLocal(1),16360)) {
     TraceOperation 091786 (Print_paddr (Con -32699));
-    GamePrint GetText(131348);
+    Note "<static Gettext address>";
+    GamePrint "can't go through undescribed doors rule";
     TraceOperation 091789 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94755,7 +94882,8 @@ LocOp 091790:
   TraceOperation 091790 (Je [Var (Local 1),Con 16384] (Branch F (Dloc 091800)));
   if (Equal(GetLocal(1),16384)) {
     TraceOperation 091796 (Print_paddr (Con -32692));
-    GamePrint GetText(131376);
+    Note "<static Gettext address>";
+    GamePrint "can't go through closed doors rule";
     TraceOperation 091799 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94859,7 +94987,8 @@ LocOp 091994:
   TraceOperation 091994 (Je [Var (Local 1),Con 16725] (Branch F (Dloc 092004)));
   if (Equal(GetLocal(1),16725)) {
     TraceOperation 092000 (Print_paddr (Con -32686));
-    GamePrint GetText(131400);
+    Note "<static Gettext address>";
+    GamePrint "convert enter compass direction into go rule";
     TraceOperation 092003 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94872,7 +95001,8 @@ LocOp 092004:
   TraceOperation 092004 (Je [Var (Local 1),Con 16737] (Branch F (Dloc 092014)));
   if (Equal(GetLocal(1),16737)) {
     TraceOperation 092010 (Print_paddr (Con -32678));
-    GamePrint GetText(131432);
+    Note "<static Gettext address>";
+    GamePrint "can't enter what's already entered rule";
     TraceOperation 092013 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94885,7 +95015,8 @@ LocOp 092014:
   TraceOperation 092014 (Je [Var (Local 1),Con 16749] (Branch F (Dloc 092024)));
   if (Equal(GetLocal(1),16749)) {
     TraceOperation 092020 (Print_paddr (Con -32671));
-    GamePrint GetText(131460);
+    Note "<static Gettext address>";
+    GamePrint "can't enter what's not enterable rule";
     TraceOperation 092023 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94898,7 +95029,8 @@ LocOp 092024:
   TraceOperation 092024 (Je [Var (Local 1),Con 16761] (Branch F (Dloc 092034)));
   if (Equal(GetLocal(1),16761)) {
     TraceOperation 092030 (Print_paddr (Con -32664));
-    GamePrint GetText(131488);
+    Note "<static Gettext address>";
+    GamePrint "can't enter closed containers rule";
     TraceOperation 092033 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94911,7 +95043,8 @@ LocOp 092034:
   TraceOperation 092034 (Je [Var (Local 1),Con 16776] (Branch F (Dloc 092044)));
   if (Equal(GetLocal(1),16776)) {
     TraceOperation 092040 (Print_paddr (Con -32658));
-    GamePrint GetText(131512);
+    Note "<static Gettext address>";
+    GamePrint "can't enter something carried rule";
     TraceOperation 092043 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94924,7 +95057,8 @@ LocOp 092044:
   TraceOperation 092044 (Je [Var (Local 1),Con 16788] (Branch F (Dloc 092054)));
   if (Equal(GetLocal(1),16788)) {
     TraceOperation 092050 (Print_paddr (Con -32652));
-    GamePrint GetText(131536);
+    Note "<static Gettext address>";
+    GamePrint "implicitly pass through other barriers rule";
     TraceOperation 092053 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94963,7 +95097,8 @@ LocOp 092106:
   TraceOperation 092106 (Je [Var (Local 1),Con 16873] (Branch F (Dloc 092116)));
   if (Equal(GetLocal(1),16873)) {
     TraceOperation 092112 (Print_paddr (Con -32644));
-    GamePrint GetText(131568);
+    Note "<static Gettext address>";
+    GamePrint "describe contents entered into rule";
     TraceOperation 092115 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -94989,7 +95124,8 @@ LocOp 092144:
   TraceOperation 092144 (Je [Var (Local 1),Con 16903] (Branch F (Dloc 092154)));
   if (Equal(GetLocal(1),16903)) {
     TraceOperation 092150 (Print_paddr (Con -32638));
-    GamePrint GetText(131592);
+    Note "<static Gettext address>";
+    GamePrint "can't exit when not inside anything rule";
     TraceOperation 092153 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95002,7 +95138,8 @@ LocOp 092154:
   TraceOperation 092154 (Je [Var (Local 1),Con 16919] (Branch F (Dloc 092164)));
   if (Equal(GetLocal(1),16919)) {
     TraceOperation 092160 (Print_paddr (Con -32631));
-    GamePrint GetText(131620);
+    Note "<static Gettext address>";
+    GamePrint "can't exit closed containers rule";
     TraceOperation 092163 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95119,7 +95256,8 @@ LocOp 092384:
   TraceOperation 092384 (Je [Var (Local 1),Con 14411] (Branch F (Dloc 092394)));
   if (Equal(GetLocal(1),14411)) {
     TraceOperation 092390 (Print_paddr (Con -32625));
-    GamePrint GetText(131644);
+    Note "<static Gettext address>";
+    GamePrint "determine visibility ceiling rule";
     TraceOperation 092393 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95158,7 +95296,8 @@ LocOp 092452:
   TraceOperation 092452 (Je [Var (Local 1),Con 17138] (Branch F (Dloc 092462)));
   if (Equal(GetLocal(1),17138)) {
     TraceOperation 092458 (Print_paddr (Con -32619));
-    GamePrint GetText(131668);
+    Note "<static Gettext address>";
+    GamePrint "room description paragraphs about objects rule";
     TraceOperation 092461 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95197,7 +95336,8 @@ LocOp 092512:
   TraceOperation 092512 (Je [Var (Local 1),Con 17198] (Branch F (Dloc 092522)));
   if (Equal(GetLocal(1),17198)) {
     TraceOperation 092518 (Print_paddr (Con -32611));
-    GamePrint GetText(131700);
+    Note "<static Gettext address>";
+    GamePrint "examine undescribed containers rule";
     TraceOperation 092521 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95275,7 +95415,8 @@ LocOp 092658:
   TraceOperation 092658 (Je [Var (Local 1),Con 17279] (Branch F (Dloc 092668)));
   if (Equal(GetLocal(1),17279)) {
     TraceOperation 092664 (Print_paddr (Con -32605));
-    GamePrint GetText(131724);
+    Note "<static Gettext address>";
+    GamePrint "report other people examining rule";
     TraceOperation 092667 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95301,7 +95442,8 @@ LocOp 092694:
   TraceOperation 092694 (Je [Var (Local 1),Con 17298] (Branch F (Dloc 092704)));
   if (Equal(GetLocal(1),17298)) {
     TraceOperation 092700 (Print_paddr (Con -32599));
-    GamePrint GetText(131748);
+    Note "<static Gettext address>";
+    GamePrint "report other people looking under rule";
     TraceOperation 092703 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95314,7 +95456,8 @@ LocOp 092704:
   TraceOperation 092704 (Je [Var (Local 1),Con 17308] (Branch F (Dloc 092714)));
   if (Equal(GetLocal(1),17308)) {
     TraceOperation 092710 (Print_paddr (Con -32592));
-    GamePrint GetText(131776);
+    Note "<static Gettext address>";
+    GamePrint "can't search unless container or supporter rule";
     TraceOperation 092713 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95327,7 +95470,8 @@ LocOp 092714:
   TraceOperation 092714 (Je [Var (Local 1),Con 17322] (Branch F (Dloc 092724)));
   if (Equal(GetLocal(1),17322)) {
     TraceOperation 092720 (Print_paddr (Con -32584));
-    GamePrint GetText(131808);
+    Note "<static Gettext address>";
+    GamePrint "can't search closed opaque containers rule";
     TraceOperation 092723 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95366,7 +95510,8 @@ LocOp 092784:
   TraceOperation 092784 (Je [Var (Local 1),Con 17373] (Branch F (Dloc 092794)));
   if (Equal(GetLocal(1),17373)) {
     TraceOperation 092790 (Print_paddr (Con -32576));
-    GamePrint GetText(131840);
+    Note "<static Gettext address>";
+    GamePrint "report other people searching rule";
     TraceOperation 092793 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95405,7 +95550,8 @@ LocOp 092846:
   TraceOperation 092846 (Je [Var (Local 1),Con 17415] (Branch F (Dloc 092856)));
   if (Equal(GetLocal(1),17415)) {
     TraceOperation 092852 (Print_paddr (Con -32570));
-    GamePrint GetText(131864);
+    Note "<static Gettext address>";
+    GamePrint "can't lock what's already locked rule";
     TraceOperation 092855 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95431,7 +95577,8 @@ LocOp 092884:
   TraceOperation 092884 (Je [Var (Local 1),Con 17445] (Branch F (Dloc 092894)));
   if (Equal(GetLocal(1),17445)) {
     TraceOperation 092890 (Print_paddr (Con -32563));
-    GamePrint GetText(131892);
+    Note "<static Gettext address>";
+    GamePrint "can't lock without the correct key rule";
     TraceOperation 092893 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95483,7 +95630,8 @@ LocOp 092974:
   TraceOperation 092974 (Je [Var (Local 1),Con 17510] (Branch F (Dloc 092984)));
   if (Equal(GetLocal(1),17510)) {
     TraceOperation 092980 (Print_paddr (Con -32556));
-    GamePrint GetText(131920);
+    Note "<static Gettext address>";
+    GamePrint "can't unlock what's already unlocked rule";
     TraceOperation 092983 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95496,7 +95644,8 @@ LocOp 092984:
   TraceOperation 092984 (Je [Var (Local 1),Con 17525] (Branch F (Dloc 092994)));
   if (Equal(GetLocal(1),17525)) {
     TraceOperation 092990 (Print_paddr (Con -32548));
-    GamePrint GetText(131952);
+    Note "<static Gettext address>";
+    GamePrint "can't unlock without the correct key rule";
     TraceOperation 092993 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95535,7 +95684,8 @@ LocOp 093046:
   TraceOperation 093046 (Je [Var (Local 1),Con 17574] (Branch F (Dloc 093056)));
   if (Equal(GetLocal(1),17574)) {
     TraceOperation 093052 (Print_paddr (Con -32541));
-    GamePrint GetText(131980);
+    Note "<static Gettext address>";
+    GamePrint "can't switch on unless switchable rule";
     TraceOperation 093055 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95548,7 +95698,8 @@ LocOp 093056:
   TraceOperation 093056 (Je [Var (Local 1),Con 17586] (Branch F (Dloc 093066)));
   if (Equal(GetLocal(1),17586)) {
     TraceOperation 093062 (Print_paddr (Con -32534));
-    GamePrint GetText(132008);
+    Note "<static Gettext address>";
+    GamePrint "can't switch on what's already on rule";
     TraceOperation 093065 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95574,7 +95725,8 @@ LocOp 093092:
   TraceOperation 093092 (Je [Var (Local 1),Con 17607] (Branch F (Dloc 093102)));
   if (Equal(GetLocal(1),17607)) {
     TraceOperation 093098 (Print_paddr (Con -32527));
-    GamePrint GetText(132036);
+    Note "<static Gettext address>";
+    GamePrint "standard report switching on rule";
     TraceOperation 093101 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95587,7 +95739,8 @@ LocOp 093102:
   TraceOperation 093102 (Je [Var (Local 1),Con 17620] (Branch F (Dloc 093112)));
   if (Equal(GetLocal(1),17620)) {
     TraceOperation 093108 (Print_paddr (Con -32521));
-    GamePrint GetText(132060);
+    Note "<static Gettext address>";
+    GamePrint "can't switch off unless switchable rule";
     TraceOperation 093111 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95600,7 +95753,8 @@ LocOp 093112:
   TraceOperation 093112 (Je [Var (Local 1),Con 17632] (Branch F (Dloc 093122)));
   if (Equal(GetLocal(1),17632)) {
     TraceOperation 093118 (Print_paddr (Con -32514));
-    GamePrint GetText(132088);
+    Note "<static Gettext address>";
+    GamePrint "can't switch off what's already off rule";
     TraceOperation 093121 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95626,7 +95780,8 @@ LocOp 093148:
   TraceOperation 093148 (Je [Var (Local 1),Con 17653] (Branch F (Dloc 093158)));
   if (Equal(GetLocal(1),17653)) {
     TraceOperation 093154 (Print_paddr (Con -32507));
-    GamePrint GetText(132116);
+    Note "<static Gettext address>";
+    GamePrint "standard report switching off rule";
     TraceOperation 093157 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95665,7 +95820,8 @@ LocOp 093218:
   TraceOperation 093218 (Je [Var (Local 1),Con 17695] (Branch F (Dloc 093228)));
   if (Equal(GetLocal(1),17695)) {
     TraceOperation 093224 (Print_paddr (Con -32501));
-    GamePrint GetText(132140);
+    Note "<static Gettext address>";
+    GamePrint "can't open what's already open rule";
     TraceOperation 093227 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95691,7 +95847,8 @@ LocOp 093250:
   TraceOperation 093250 (Je [Var (Local 1),Con 17716] (Branch F (Dloc 093260)));
   if (Equal(GetLocal(1),17716)) {
     TraceOperation 093256 (Print_paddr (Con -32494));
-    GamePrint GetText(132168);
+    Note "<static Gettext address>";
+    GamePrint "reveal any newly visible interior rule";
     TraceOperation 093259 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95730,7 +95887,8 @@ LocOp 093318:
   TraceOperation 093318 (Je [Var (Local 1),Con 17768] (Branch F (Dloc 093328)));
   if (Equal(GetLocal(1),17768)) {
     TraceOperation 093324 (Print_paddr (Con -32487));
-    GamePrint GetText(132196);
+    Note "<static Gettext address>";
+    GamePrint "can't close what's already closed rule";
     TraceOperation 093327 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95769,7 +95927,8 @@ LocOp 093378:
   TraceOperation 093378 (Je [Var (Local 1),Con 17807] (Branch F (Dloc 093388)));
   if (Equal(GetLocal(1),17807)) {
     TraceOperation 093384 (Print_paddr (Con -32480));
-    GamePrint GetText(132224);
+    Note "<static Gettext address>";
+    GamePrint "can't wear what's not clothing rule";
     TraceOperation 093387 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95795,7 +95954,8 @@ LocOp 093418:
   TraceOperation 093418 (Je [Var (Local 1),Con 17833] (Branch F (Dloc 093428)));
   if (Equal(GetLocal(1),17833)) {
     TraceOperation 093424 (Print_paddr (Con -32473));
-    GamePrint GetText(132252);
+    Note "<static Gettext address>";
+    GamePrint "can't wear what's already worn rule";
     TraceOperation 093427 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95834,7 +95994,8 @@ LocOp 093478:
   TraceOperation 093478 (Je [Var (Local 1),Con 17867] (Branch F (Dloc 093488)));
   if (Equal(GetLocal(1),17867)) {
     TraceOperation 093484 (Print_paddr (Con -32466));
-    GamePrint GetText(132280);
+    Note "<static Gettext address>";
+    GamePrint "can't take off what's not worn rule";
     TraceOperation 093487 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95873,7 +96034,8 @@ LocOp 093542:
   TraceOperation 093542 (Je [Var (Local 1),Con 17901] (Branch F (Dloc 093552)));
   if (Equal(GetLocal(1),17901)) {
     TraceOperation 093548 (Print_paddr (Con -32459));
-    GamePrint GetText(132308);
+    Note "<static Gettext address>";
+    GamePrint "can't give what you haven't got rule";
     TraceOperation 093551 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95951,7 +96113,8 @@ LocOp 093678:
   TraceOperation 093678 (Je [Var (Local 1),Con 17985] (Branch F (Dloc 093688)));
   if (Equal(GetLocal(1),17985)) {
     TraceOperation 093684 (Print_paddr (Con -32452));
-    GamePrint GetText(132336);
+    Note "<static Gettext address>";
+    GamePrint "can't show what you haven't got rule";
     TraceOperation 093687 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -95964,7 +96127,8 @@ LocOp 093688:
   TraceOperation 093688 (Je [Var (Local 1),Con 18000] (Branch F (Dloc 093698)));
   if (Equal(GetLocal(1),18000)) {
     TraceOperation 093694 (Print_paddr (Con -32445));
-    GamePrint GetText(132364);
+    Note "<static Gettext address>";
+    GamePrint "convert show to yourself to examine rule";
     TraceOperation 093697 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96003,7 +96167,8 @@ LocOp 093738:
   TraceOperation 093738 (Je [Var (Local 1),Con 18033] (Branch F (Dloc 093748)));
   if (Equal(GetLocal(1),18033)) {
     TraceOperation 093744 (Print_paddr (Con -32438));
-    GamePrint GetText(132392);
+    Note "<static Gettext address>";
+    GamePrint "implicitly remove thrown clothing rule";
     TraceOperation 093747 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96016,7 +96181,8 @@ LocOp 093748:
   TraceOperation 093748 (Je [Var (Local 1),Con 18055] (Branch F (Dloc 093758)));
   if (Equal(GetLocal(1),18055)) {
     TraceOperation 093754 (Print_paddr (Con -32431));
-    GamePrint GetText(132420);
+    Note "<static Gettext address>";
+    GamePrint "futile to throw things at inanimate objects rule";
     TraceOperation 093757 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96133,7 +96299,8 @@ LocOp 093930:
   TraceOperation 093930 (Je [Var (Local 1),Con 18155] (Branch F (Dloc 093940)));
   if (Equal(GetLocal(1),18155)) {
     TraceOperation 093936 (Print_paddr (Con -32423));
-    GamePrint GetText(132452);
+    Note "<static Gettext address>";
+    GamePrint "asking yourself for something rule";
     TraceOperation 093939 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96146,7 +96313,8 @@ LocOp 093940:
   TraceOperation 093940 (Je [Var (Local 1),Con 18170] (Branch F (Dloc 093950)));
   if (Equal(GetLocal(1),18170)) {
     TraceOperation 093946 (Print_paddr (Con -32417));
-    GamePrint GetText(132476);
+    Note "<static Gettext address>";
+    GamePrint "translate asking for to giving rule";
     TraceOperation 093949 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96185,7 +96353,8 @@ LocOp 094006:
   TraceOperation 094006 (Je [Var (Local 1),Con 18207] (Branch F (Dloc 094016)));
   if (Equal(GetLocal(1),18207)) {
     TraceOperation 094012 (Print_paddr (Con -32411));
-    GamePrint GetText(132500);
+    Note "<static Gettext address>";
+    GamePrint "report touching other people rule";
     TraceOperation 094015 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96237,7 +96406,8 @@ LocOp 094098:
   TraceOperation 094098 (Je [Var (Local 1),Con 18263] (Branch F (Dloc 094108)));
   if (Equal(GetLocal(1),18263)) {
     TraceOperation 094104 (Print_paddr (Con -32405));
-    GamePrint GetText(132524);
+    Note "<static Gettext address>";
+    GamePrint "can't pull what's fixed in place rule";
     TraceOperation 094107 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96289,7 +96459,8 @@ LocOp 094178:
   TraceOperation 094178 (Je [Var (Local 1),Con 18312] (Branch F (Dloc 094188)));
   if (Equal(GetLocal(1),18312)) {
     TraceOperation 094184 (Print_paddr (Con -32398));
-    GamePrint GetText(132552);
+    Note "<static Gettext address>";
+    GamePrint "can't push what's fixed in place rule";
     TraceOperation 094187 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96341,7 +96512,8 @@ LocOp 094258:
   TraceOperation 094258 (Je [Var (Local 1),Con 18372] (Branch F (Dloc 094268)));
   if (Equal(GetLocal(1),18372)) {
     TraceOperation 094264 (Print_paddr (Con -32391));
-    GamePrint GetText(132580);
+    Note "<static Gettext address>";
+    GamePrint "can't turn what's fixed in place rule";
     TraceOperation 094267 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96393,7 +96565,8 @@ LocOp 094338:
   TraceOperation 094338 (Je [Var (Local 1),Con 18421] (Branch F (Dloc 094348)));
   if (Equal(GetLocal(1),18421)) {
     TraceOperation 094344 (Print_paddr (Con -32384));
-    GamePrint GetText(132608);
+    Note "<static Gettext address>";
+    GamePrint "can't push unpushable things rule";
     TraceOperation 094347 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96406,7 +96579,8 @@ LocOp 094348:
   TraceOperation 094348 (Je [Var (Local 1),Con 18436] (Branch F (Dloc 094358)));
   if (Equal(GetLocal(1),18436)) {
     TraceOperation 094354 (Print_paddr (Con -32378));
-    GamePrint GetText(132632);
+    Note "<static Gettext address>";
+    GamePrint "can't push to non-directions rule";
     TraceOperation 094357 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96432,7 +96606,8 @@ LocOp 094384:
   TraceOperation 094384 (Je [Var (Local 1),Con 18464] (Branch F (Dloc 094394)));
   if (Equal(GetLocal(1),18464)) {
     TraceOperation 094390 (Print_paddr (Con -32372));
-    GamePrint GetText(132656);
+    Note "<static Gettext address>";
+    GamePrint "standard pushing in directions rule";
     TraceOperation 094393 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96458,7 +96633,8 @@ LocOp 094424:
   TraceOperation 094424 (Je [Var (Local 1),Con 18485] (Branch F (Dloc 094434)));
   if (Equal(GetLocal(1),18485)) {
     TraceOperation 094430 (Print_paddr (Con -32366));
-    GamePrint GetText(132680);
+    Note "<static Gettext address>";
+    GamePrint "innuendo about squeezing people rule";
     TraceOperation 094433 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96822,7 +96998,8 @@ LocOp 095042:
   TraceOperation 095042 (Je [Var (Local 1),Con 13151] (Branch F (Dloc 095052)));
   if (Equal(GetLocal(1),13151)) {
     TraceOperation 095048 (Print_paddr (Con -32360));
-    GamePrint GetText(132704);
+    Note "<static Gettext address>";
+    GamePrint "seed random number generator rule";
     TraceOperation 095051 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96835,7 +97012,8 @@ LocOp 095052:
   TraceOperation 095052 (Je [Var (Local 1),Con 26571] (Branch F (Dloc 095062)));
   if (Equal(GetLocal(1),26571)) {
     TraceOperation 095058 (Print_paddr (Con -32354));
-    GamePrint GetText(132728);
+    Note "<static Gettext address>";
+    GamePrint "update chronological records rule";
     TraceOperation 095061 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -96848,7 +97026,8 @@ LocOp 095062:
   TraceOperation 095062 (Je [Var (Local 1),Con 13158] (Branch F (Dloc 095072)));
   if (Equal(GetLocal(1),13158)) {
     TraceOperation 095068 (Print_paddr (Con -32348));
-    GamePrint GetText(132752);
+    Note "<static Gettext address>";
+    GamePrint "position player in model world rule";
     TraceOperation 095071 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97017,7 +97196,8 @@ LocOp 095354:
   TraceOperation 095354 (Je [Var (Local 1),Con 19431] (Branch F (Dloc 095364)));
   if (Equal(GetLocal(1),19431)) {
     TraceOperation 095360 (Print_paddr (Con -32342));
-    GamePrint GetText(132776);
+    Note "<static Gettext address>";
+    GamePrint "requested actions require persuasion rule";
     TraceOperation 095363 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97043,7 +97223,8 @@ LocOp 095394:
   TraceOperation 095394 (Je [Var (Local 1),Con 6537] (Branch F (Dloc 095404)));
   if (Equal(GetLocal(1),6537)) {
     TraceOperation 095400 (Print_paddr (Con -32335));
-    GamePrint GetText(132804);
+    Note "<static Gettext address>";
+    GamePrint "descend to specific action-processing rule";
     TraceOperation 095403 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97056,7 +97237,8 @@ LocOp 095404:
   TraceOperation 095404 (Je [Var (Local 1),Con 19475] (Branch F (Dloc 095414)));
   if (Equal(GetLocal(1),19475)) {
     TraceOperation 095410 (Print_paddr (Con -32327));
-    GamePrint GetText(132836);
+    Note "<static Gettext address>";
+    GamePrint "work out details of specific action rule";
     TraceOperation 095413 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97082,7 +97264,8 @@ LocOp 095442:
   TraceOperation 095442 (Je [Var (Local 1),Con 9414] (Branch F (Dloc 095452)));
   if (Equal(GetLocal(1),9414)) {
     TraceOperation 095448 (Print_paddr (Con -32320));
-    GamePrint GetText(132864);
+    Note "<static Gettext address>";
+    GamePrint "can't reach inside closed containers rule";
     TraceOperation 095451 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97108,7 +97291,8 @@ LocOp 095480:
   TraceOperation 095480 (Je [Var (Local 1),Con 9420] (Branch F (Dloc 095490)));
   if (Equal(GetLocal(1),9420)) {
     TraceOperation 095486 (Print_paddr (Con -32313));
-    GamePrint GetText(132892);
+    Note "<static Gettext address>";
+    GamePrint "can't reach outside closed containers rule";
     TraceOperation 095489 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97199,7 +97383,8 @@ LocOp 095654:
   TraceOperation 095654 (Je [Var (Local 1),Con 13373] (Branch F (Dloc 095664)));
   if (Equal(GetLocal(1),13373)) {
     TraceOperation 095660 (Print_paddr (Con -32305));
-    GamePrint GetText(132924);
+    Note "<static Gettext address>";
+    GamePrint "immediately restore saved game rule";
     TraceOperation 095663 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97316,7 +97501,8 @@ LocOp 095844:
   TraceOperation 095844 (Je [Var (Local 1),Con 6457] (Branch F (Dloc 095854)));
   if (Equal(GetLocal(1),6457)) {
     TraceOperation 095850 (Print_paddr (Con -32299));
-    GamePrint GetText(132948);
+    Note "<static Gettext address>";
+    GamePrint "switch the story transcript on rule";
     TraceOperation 095853 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97329,7 +97515,8 @@ LocOp 095854:
   TraceOperation 095854 (Je [Var (Local 1),Con 6472] (Branch F (Dloc 095864)));
   if (Equal(GetLocal(1),6472)) {
     TraceOperation 095860 (Print_paddr (Con -32293));
-    GamePrint GetText(132972);
+    Note "<static Gettext address>";
+    GamePrint "switch the story transcript off rule";
     TraceOperation 095863 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97342,7 +97529,8 @@ LocOp 095864:
   TraceOperation 095864 (Je [Var (Local 1),Con 6487] (Branch F (Dloc 095874)));
   if (Equal(GetLocal(1),6487)) {
     TraceOperation 095870 (Print_paddr (Con -32287));
-    GamePrint GetText(132996);
+    Note "<static Gettext address>";
+    GamePrint "announce the story file version rule";
     TraceOperation 095873 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97368,7 +97556,8 @@ LocOp 095898:
   TraceOperation 095898 (Je [Var (Local 1),Con 20028] (Branch F (Dloc 095908)));
   if (Equal(GetLocal(1),20028)) {
     TraceOperation 095904 (Print_paddr (Con -32281));
-    GamePrint GetText(133020);
+    Note "<static Gettext address>";
+    GamePrint "prefer abbreviated room descriptions rule";
     TraceOperation 095907 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97381,7 +97570,8 @@ LocOp 095908:
   TraceOperation 095908 (Je [Var (Local 1),Con 20023] (Branch F (Dloc 095918)));
   if (Equal(GetLocal(1),20023)) {
     TraceOperation 095914 (Print_paddr (Con -32274));
-    GamePrint GetText(133048);
+    Note "<static Gettext address>";
+    GamePrint "prefer unabbreviated room descriptions rule";
     TraceOperation 095917 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97394,7 +97584,8 @@ LocOp 095918:
   TraceOperation 095918 (Je [Var (Local 1),Con 20018] (Branch F (Dloc 095928)));
   if (Equal(GetLocal(1),20018)) {
     TraceOperation 095924 (Print_paddr (Con -32266));
-    GamePrint GetText(133080);
+    Note "<static Gettext address>";
+    GamePrint "prefer sometimes abbreviated room descriptions rule";
     TraceOperation 095927 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97407,7 +97598,8 @@ LocOp 095928:
   TraceOperation 095928 (Je [Var (Local 1),Con 20010] (Branch F (Dloc 095938)));
   if (Equal(GetLocal(1),20010)) {
     TraceOperation 095934 (Print_paddr (Con -32257));
-    GamePrint GetText(133116);
+    Note "<static Gettext address>";
+    GamePrint "switch score notification on rule";
     TraceOperation 095937 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97420,7 +97612,8 @@ LocOp 095938:
   TraceOperation 095938 (Je [Var (Local 1),Con 20014] (Branch F (Dloc 095948)));
   if (Equal(GetLocal(1),20014)) {
     TraceOperation 095944 (Print_paddr (Con -32251));
-    GamePrint GetText(133140);
+    Note "<static Gettext address>";
+    GamePrint "switch score notification off rule";
     TraceOperation 095947 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97433,7 +97626,8 @@ LocOp 095948:
   TraceOperation 095948 (Je [Var (Local 1),Con 20033] (Branch F (Dloc 095958)));
   if (Equal(GetLocal(1),20033)) {
     TraceOperation 095954 (Print_paddr (Con -32245));
-    GamePrint GetText(133164);
+    Note "<static Gettext address>";
+    GamePrint "announce the pronoun meanings rule";
     TraceOperation 095957 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97472,7 +97666,8 @@ LocOp 096010:
   TraceOperation 096010 (Je [Var (Local 1),Con 14504] (Branch F (Dloc 096020)));
   if (Equal(GetLocal(1),14504)) {
     TraceOperation 096016 (Print_paddr (Con -32239));
-    GamePrint GetText(133188);
+    Note "<static Gettext address>";
+    GamePrint "last specific action-processing rule";
     TraceOperation 096019 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97485,7 +97680,8 @@ LocOp 096020:
   TraceOperation 096020 (Je [Var (Local 1),Con 14431] (Branch F (Dloc 096030)));
   if (Equal(GetLocal(1),14431)) {
     TraceOperation 096026 (Print_paddr (Con -32232));
-    GamePrint GetText(133216);
+    Note "<static Gettext address>";
+    GamePrint "Setting action variables for exiting";
     TraceOperation 096029 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97511,7 +97707,8 @@ LocOp 096050:
   TraceOperation 096050 (Je [Var (Local 1),Con 14938] (Branch F (Dloc 096060)));
   if (Equal(GetLocal(1),14938)) {
     TraceOperation 096056 (Print_paddr (Con -32225));
-    GamePrint GetText(133244);
+    Note "<static Gettext address>";
+    GamePrint "After printing the name of something alight while listing contents";
     TraceOperation 096059 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97602,7 +97799,8 @@ LocOp 096188:
   TraceOperation 096188 (Je [Var (Local 1),Con 14725] (Branch F (Dloc 096198)));
   if (Equal(GetLocal(1),14725)) {
     TraceOperation 096194 (Print_paddr (Con -32213));
-    GamePrint GetText(133292);
+    Note "<static Gettext address>";
+    GamePrint "Instead of burning something with something";
     TraceOperation 096197 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97654,7 +97852,8 @@ LocOp 096264:
   TraceOperation 096264 (Je [Var (Local 1),Con 14689] (Branch F (Dloc 096274)));
   if (Equal(GetLocal(1),14689)) {
     TraceOperation 096270 (Print_paddr (Con -32205));
-    GamePrint GetText(133324);
+    Note "<static Gettext address>";
+    GamePrint "Instead of going to the back garden";
     TraceOperation 096273 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97680,7 +97879,8 @@ LocOp 096302:
   TraceOperation 096302 (Je [Var (Local 1),Con 14673] (Branch F (Dloc 096312)));
   if (Equal(GetLocal(1),14673)) {
     TraceOperation 096308 (Print_paddr (Con -32199));
-    GamePrint GetText(133348);
+    Note "<static Gettext address>";
+    GamePrint "Instead of eating the carrot for the first time";
     TraceOperation 096311 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97732,7 +97932,8 @@ LocOp 096392:
   TraceOperation 096392 (Je [Var (Local 1),Con 14741] (Branch F (Dloc 096402)));
   if (Equal(GetLocal(1),14741)) {
     TraceOperation 096398 (Print_paddr (Con -32191));
-    GamePrint GetText(133380);
+    Note "<static Gettext address>";
+    GamePrint "Instead of switching on the stove";
     TraceOperation 096401 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97745,7 +97946,8 @@ LocOp 096402:
   TraceOperation 096402 (Je [Var (Local 1),Con 14753] (Branch F (Dloc 096412)));
   if (Equal(GetLocal(1),14753)) {
     TraceOperation 096408 (Print_paddr (Con -32185));
-    GamePrint GetText(133404);
+    Note "<static Gettext address>";
+    GamePrint "Instead of switching off the stove";
     TraceOperation 096411 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97797,7 +97999,8 @@ LocOp 096500:
   TraceOperation 096500 (Je [Var (Local 1),Con 14710] (Branch F (Dloc 096510)));
   if (Equal(GetLocal(1),14710)) {
     TraceOperation 096506 (Print_paddr (Con -32179));
-    GamePrint GetText(133428);
+    Note "<static Gettext address>";
+    GamePrint "Instead of lighting the gas from something";
     TraceOperation 096509 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97823,7 +98026,8 @@ LocOp 096538:
   TraceOperation 096538 (Je [Var (Local 1),Con 14845] (Branch F (Dloc 096548)));
   if (Equal(GetLocal(1),14845)) {
     TraceOperation 096544 (Print_paddr (Con -32171));
-    GamePrint GetText(133460);
+    Note "<static Gettext address>";
+    GamePrint "After wearing the judo gi for the first time";
     TraceOperation 096547 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97979,7 +98183,8 @@ LocOp 096758:
   TraceOperation 096758 (Je [Var (Local 1),Con 14580] (Branch F (Dloc 096768)));
   if (Equal(GetLocal(1),14580)) {
     TraceOperation 096764 (Print_paddr (Con -32163));
-    GamePrint GetText(133492);
+    Note "<static Gettext address>";
+    GamePrint "Instead of going to the finish when the soup is not in the pot";
     TraceOperation 096767 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -97992,7 +98197,8 @@ LocOp 096768:
   TraceOperation 096768 (Je [Var (Local 1),Con 14652] (Branch F (Dloc 096778)));
   if (Equal(GetLocal(1),14652)) {
     TraceOperation 096774 (Print_paddr (Con -32152));
-    GamePrint GetText(133536);
+    Note "<static Gettext address>";
+    GamePrint "Instead of going to finish when belt is not held or gi is not held";
     TraceOperation 096777 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98005,7 +98211,8 @@ LocOp 096778:
   TraceOperation 096778 (Je [Var (Local 1),Con 14598] (Branch F (Dloc 096788)));
   if (Equal(GetLocal(1),14598)) {
     TraceOperation 096784 (Print_paddr (Con -32140));
-    GamePrint GetText(133584);
+    Note "<static Gettext address>";
+    GamePrint "Instead of going to finish when keys are not held";
     TraceOperation 096787 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98018,7 +98225,8 @@ LocOp 096788:
   TraceOperation 096788 (Je [Var (Local 1),Con 14616] (Branch F (Dloc 096798)));
   if (Equal(GetLocal(1),14616)) {
     TraceOperation 096794 (Print_paddr (Con -32131));
-    GamePrint GetText(133620);
+    Note "<static Gettext address>";
+    GamePrint "Instead of going to finish when stove is alight";
     TraceOperation 096797 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98057,7 +98265,8 @@ LocOp 096854:
   TraceOperation 096854 (Je [Var (Local 1),Con 13158] (Branch F (Dloc 096864)));
   if (Equal(GetLocal(1),13158)) {
     TraceOperation 096860 (Print_paddr (Con -32123));
-    GamePrint GetText(133652);
+    Note "<static Gettext address>";
+    GamePrint "position player in model world rule";
     TraceOperation 096863 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98070,7 +98279,8 @@ LocOp 096864:
   TraceOperation 096864 (Je [Var (Local 1),Con 26571] (Branch F (Dloc 096874)));
   if (Equal(GetLocal(1),26571)) {
     TraceOperation 096870 (Print_paddr (Con -32117));
-    GamePrint GetText(133676);
+    Note "<static Gettext address>";
+    GamePrint "update chronological records rule";
     TraceOperation 096873 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98083,7 +98293,8 @@ LocOp 096874:
   TraceOperation 096874 (Je [Var (Local 1),Con 13151] (Branch F (Dloc 096884)));
   if (Equal(GetLocal(1),13151)) {
     TraceOperation 096880 (Print_paddr (Con -32111));
-    GamePrint GetText(133700);
+    Note "<static Gettext address>";
+    GamePrint "seed random number generator rule";
     TraceOperation 096883 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98226,7 +98437,8 @@ LocOp 097120:
   TraceOperation 097120 (Je [Var (Local 1),Con 26571] (Branch F (Dloc 097130)));
   if (Equal(GetLocal(1),26571)) {
     TraceOperation 097126 (Print_paddr (Con -32105));
-    GamePrint GetText(133724);
+    Note "<static Gettext address>";
+    GamePrint "update chronological records rule";
     TraceOperation 097129 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98356,7 +98568,8 @@ LocOp 097358:
   TraceOperation 097358 (Je [Var (Local 1),Con 14339] (Branch F (Dloc 097368)));
   if (Equal(GetLocal(1),14339)) {
     TraceOperation 097364 (Print_paddr (Con -32099));
-    GamePrint GetText(133748);
+    Note "<static Gettext address>";
+    GamePrint "set pronouns from items from multiple object lists rule";
     TraceOperation 097367 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98369,7 +98582,8 @@ LocOp 097368:
   TraceOperation 097368 (Je [Var (Local 1),Con 14333] (Branch F (Dloc 097378)));
   if (Equal(GetLocal(1),14333)) {
     TraceOperation 097374 (Print_paddr (Con -32089));
-    GamePrint GetText(133788);
+    Note "<static Gettext address>";
+    GamePrint "announce items from multiple object lists rule";
     TraceOperation 097377 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98434,7 +98648,8 @@ LocOp 097470:
   TraceOperation 097470 (Je [Var (Local 1),Con 19431] (Branch F (Dloc 097480)));
   if (Equal(GetLocal(1),19431)) {
     TraceOperation 097476 (Print_paddr (Con -32081));
-    GamePrint GetText(133820);
+    Note "<static Gettext address>";
+    GamePrint "requested actions require persuasion rule";
     TraceOperation 097479 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98460,7 +98675,8 @@ LocOp 097510:
   TraceOperation 097510 (Je [Var (Local 1),Con 6537] (Branch F (Dloc 097520)));
   if (Equal(GetLocal(1),6537)) {
     TraceOperation 097516 (Print_paddr (Con -32074));
-    GamePrint GetText(133848);
+    Note "<static Gettext address>";
+    GamePrint "descend to specific action-processing rule";
     TraceOperation 097519 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98473,7 +98689,8 @@ LocOp 097520:
   TraceOperation 097520 (Je [Var (Local 1),Con 14348] (Branch F (Dloc 097530)));
   if (Equal(GetLocal(1),14348)) {
     TraceOperation 097526 (Print_paddr (Con -32066));
-    GamePrint GetText(133880);
+    Note "<static Gettext address>";
+    GamePrint "end action-processing in success rule";
     TraceOperation 097529 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98486,7 +98703,8 @@ LocOp 097530:
   TraceOperation 097530 (Je [Var (Local 1),Con 19475] (Branch F (Dloc 097540)));
   if (Equal(GetLocal(1),19475)) {
     TraceOperation 097536 (Print_paddr (Con -32059));
-    GamePrint GetText(133908);
+    Note "<static Gettext address>";
+    GamePrint "work out details of specific action rule";
     TraceOperation 097539 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98525,7 +98743,8 @@ LocOp 097596:
   TraceOperation 097596 (Je [Var (Local 1),Con 9414] (Branch F (Dloc 097606)));
   if (Equal(GetLocal(1),9414)) {
     TraceOperation 097602 (Print_paddr (Con -32052));
-    GamePrint GetText(133936);
+    Note "<static Gettext address>";
+    GamePrint "can't reach inside closed containers rule";
     TraceOperation 097605 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98538,7 +98757,8 @@ LocOp 097606:
   TraceOperation 097606 (Je [Var (Local 1),Con 9420] (Branch F (Dloc 097616)));
   if (Equal(GetLocal(1),9420)) {
     TraceOperation 097612 (Print_paddr (Con -32045));
-    GamePrint GetText(133964);
+    Note "<static Gettext address>";
+    GamePrint "can't reach outside closed containers rule";
     TraceOperation 097615 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98577,7 +98797,8 @@ LocOp 097668:
   TraceOperation 097668 (Je [Var (Local 1),Con 14954] (Branch F (Dloc 097678)));
   if (Equal(GetLocal(1),14954)) {
     TraceOperation 097674 (Print_paddr (Con -32037));
-    GamePrint GetText(133996);
+    Note "<static Gettext address>";
+    GamePrint "standard printing the plural name rule";
     TraceOperation 097677 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98590,7 +98811,8 @@ LocOp 097678:
   TraceOperation 097678 (Je [Var (Local 1),Con 14974] (Branch F (Dloc 097688)));
   if (Equal(GetLocal(1),14974)) {
     TraceOperation 097684 (Print_paddr (Con -32030));
-    GamePrint GetText(134024);
+    Note "<static Gettext address>";
+    GamePrint "standard printing a number of something rule";
     TraceOperation 097687 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98616,7 +98838,8 @@ LocOp 097716:
   TraceOperation 097716 (Je [Var (Local 1),Con 14994] (Branch F (Dloc 097726)));
   if (Equal(GetLocal(1),14994)) {
     TraceOperation 097722 (Print_paddr (Con -32022));
-    GamePrint GetText(134056);
+    Note "<static Gettext address>";
+    GamePrint "look around once light available rule";
     TraceOperation 097725 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98707,7 +98930,8 @@ LocOp 097886:
   TraceOperation 097886 (Je [Var (Local 1),Con 15102] (Branch F (Dloc 097896)));
   if (Equal(GetLocal(1),15102)) {
     TraceOperation 097892 (Print_paddr (Con -32015));
-    GamePrint GetText(134084);
+    Note "<static Gettext address>";
+    GamePrint "standard respond to final question rule";
     TraceOperation 097895 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98798,7 +99022,8 @@ LocOp 098036:
   TraceOperation 098036 (Je [Var (Local 1),Con 6457] (Branch F (Dloc 098046)));
   if (Equal(GetLocal(1),6457)) {
     TraceOperation 098042 (Print_paddr (Con -32008));
-    GamePrint GetText(134112);
+    Note "<static Gettext address>";
+    GamePrint "switch the story transcript on rule";
     TraceOperation 098045 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98811,7 +99036,8 @@ LocOp 098046:
   TraceOperation 098046 (Je [Var (Local 1),Con 6472] (Branch F (Dloc 098056)));
   if (Equal(GetLocal(1),6472)) {
     TraceOperation 098052 (Print_paddr (Con -32002));
-    GamePrint GetText(134136);
+    Note "<static Gettext address>";
+    GamePrint "switch the story transcript off rule";
     TraceOperation 098055 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98824,7 +99050,8 @@ LocOp 098056:
   TraceOperation 098056 (Je [Var (Local 1),Con 6487] (Branch F (Dloc 098066)));
   if (Equal(GetLocal(1),6487)) {
     TraceOperation 098062 (Print_paddr (Con -31996));
-    GamePrint GetText(134160);
+    Note "<static Gettext address>";
+    GamePrint "announce the story file version rule";
     TraceOperation 098065 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98850,7 +99077,8 @@ LocOp 098090:
   TraceOperation 098090 (Je [Var (Local 1),Con 20028] (Branch F (Dloc 098100)));
   if (Equal(GetLocal(1),20028)) {
     TraceOperation 098096 (Print_paddr (Con -31990));
-    GamePrint GetText(134184);
+    Note "<static Gettext address>";
+    GamePrint "prefer abbreviated room descriptions rule";
     TraceOperation 098099 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98863,7 +99091,8 @@ LocOp 098100:
   TraceOperation 098100 (Je [Var (Local 1),Con 20023] (Branch F (Dloc 098110)));
   if (Equal(GetLocal(1),20023)) {
     TraceOperation 098106 (Print_paddr (Con -31983));
-    GamePrint GetText(134212);
+    Note "<static Gettext address>";
+    GamePrint "prefer unabbreviated room descriptions rule";
     TraceOperation 098109 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98876,7 +99105,8 @@ LocOp 098110:
   TraceOperation 098110 (Je [Var (Local 1),Con 20018] (Branch F (Dloc 098120)));
   if (Equal(GetLocal(1),20018)) {
     TraceOperation 098116 (Print_paddr (Con -31975));
-    GamePrint GetText(134244);
+    Note "<static Gettext address>";
+    GamePrint "prefer sometimes abbreviated room descriptions rule";
     TraceOperation 098119 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98889,7 +99119,8 @@ LocOp 098120:
   TraceOperation 098120 (Je [Var (Local 1),Con 20010] (Branch F (Dloc 098130)));
   if (Equal(GetLocal(1),20010)) {
     TraceOperation 098126 (Print_paddr (Con -31966));
-    GamePrint GetText(134280);
+    Note "<static Gettext address>";
+    GamePrint "switch score notification on rule";
     TraceOperation 098129 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98902,7 +99133,8 @@ LocOp 098130:
   TraceOperation 098130 (Je [Var (Local 1),Con 20014] (Branch F (Dloc 098140)));
   if (Equal(GetLocal(1),20014)) {
     TraceOperation 098136 (Print_paddr (Con -31960));
-    GamePrint GetText(134304);
+    Note "<static Gettext address>";
+    GamePrint "switch score notification off rule";
     TraceOperation 098139 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -98915,7 +99147,8 @@ LocOp 098140:
   TraceOperation 098140 (Je [Var (Local 1),Con 20033] (Branch F (Dloc 098150)));
   if (Equal(GetLocal(1),20033)) {
     TraceOperation 098146 (Print_paddr (Con -31954));
-    GamePrint GetText(134328);
+    Note "<static Gettext address>";
+    GamePrint "announce the pronoun meanings rule";
     TraceOperation 098149 Rtrue;
     PopFrame;
     PopReturnAddress return_address_1;
@@ -116555,7 +116788,8 @@ LocRoutine 110016:
   Jump: 110017
 LocOp 110017:
   TraceOperation 110017 (Print_paddr (Con -31247));
-  GamePrint GetText(137156);
+  Note "<static Gettext address>";
+  GamePrint "This story file does not use a heap of managed memory.";
   TraceOperation 110020 New_line;
   GamePrint "\n";
   TraceOperation 110021 Rtrue;
@@ -119742,7 +119976,8 @@ LocOp 111701:
     Let ite_res4 = Ite((IsZeroByte(b3),"",GetText(Offset(Address(MakeHiLo(b1,b2)),1))));
     GamePrint ite_res4;
     TraceOperation 111712 (Print_paddr (Con -31231));
-    GamePrint GetText(137220);
+    Note "<static Gettext address>";
+    GamePrint ": 'create' can have 0 to 3 parameters only **]";
     TraceOperation 111715 New_line;
     GamePrint "\n";
     TraceOperation 111716 Rtrue;
@@ -119757,7 +119992,8 @@ LocOp 111717:
   TraceOperation 111717 (Je [Var (Local 1),Con 32] (Branch F (Dloc 111734)));
   if (Equal(GetLocal(1),32)) {
     TraceOperation 111721 (Print_paddr (Con -31221));
-    GamePrint GetText(137260);
+    Note "<static Gettext address>";
+    GamePrint "objectloop broken because the object ";
     TraceOperation 111724 (CallN (Floc 082048) [Var (Local 2)]);
     PushFrame;
     PushReturnAddress 111724;
@@ -119770,7 +120006,8 @@ LocOp 111717:
   }
 LocReturn 111724:
   TraceOperation 111729 (Print_paddr (Con -31214));
-  GamePrint GetText(137288);
+  Note "<static Gettext address>";
+  GamePrint " was moved while the loop passed through it **]";
   TraceOperation 111732 New_line;
   GamePrint "\n";
   TraceOperation 111733 Rtrue;
@@ -119786,7 +120023,8 @@ LocOp 111734:
     TraceOperation 111755 (Print_num (Var (Local 2)));
     GamePrint ShowNumber(GetLocal(2));
     TraceOperation 111758 (Print_paddr (Con -31204));
-    GamePrint GetText(137328);
+    Note "<static Gettext address>";
+    GamePrint ", which is not a valid ZSCII character code for output **]";
     TraceOperation 111761 New_line;
     GamePrint "\n";
     TraceOperation 111762 Rtrue;
@@ -119801,7 +120039,8 @@ LocOp 111763:
   TraceOperation 111763 (Je [Var (Local 1),Con 34] (Branch F (Dloc 111797)));
   if (Equal(GetLocal(1),34)) {
     TraceOperation 111767 (Print_paddr (Con -31191));
-    GamePrint GetText(137380);
+    Note "<static Gettext address>";
+    GamePrint "tried to print (address) on something not the ";
     TraceOperation 111770 (Print_ret "byte address of a string **]");
     GamePrint "byte address of a string **]\n";
     PopFrame;
@@ -119815,7 +120054,8 @@ LocOp 111797:
   TraceOperation 111797 (Je [Var (Local 1),Con 35] (Branch F (Dloc 111819)));
   if (Equal(GetLocal(1),35)) {
     TraceOperation 111801 (Print_paddr (Con -31183));
-    GamePrint GetText(137412);
+    Note "<static Gettext address>";
+    GamePrint "tried to print (string) on something not a ";
     TraceOperation 111804 (Print_ret "string **]");
     GamePrint "string **]\n";
     PopFrame;
@@ -119829,7 +120069,8 @@ LocOp 111819:
   TraceOperation 111819 (Je [Var (Local 1),Con 36] (Branch F (Dloc 111847)));
   if (Equal(GetLocal(1),36)) {
     TraceOperation 111823 (Print_paddr (Con -31175));
-    GamePrint GetText(137444);
+    Note "<static Gettext address>";
+    GamePrint "tried to print (object) on something not an ";
     TraceOperation 111826 (Print_ret "object or class **]");
     GamePrint "object or class **]\n";
     PopFrame;
@@ -120394,7 +120635,8 @@ LocOp 112599:
   Let b2 = M[007685];
   if (Equal(MakeHiLo(b1,b2),19)) {
     TraceOperation 112603 (Print_paddr (Con -31167));
-    GamePrint GetText(137476);
+    Note "<static Gettext address>";
+    GamePrint "give\" or test \"has\" or \"hasnt\" with a non-attribute on the object ";
     TraceOperation 112606 (CallN (Floc 082048) [Var (Local 2)]);
     PushFrame;
     PushReturnAddress 112606;
@@ -120562,7 +120804,8 @@ LocOp 112766:
   }
 LocReturn 112780:
   TraceOperation 112785 (Print_paddr (Con -31155));
-  GamePrint GetText(137524);
+  Note "<static Gettext address>";
+  GamePrint ", but it is longer than 2 bytes so you cannot use \".\"";
   TraceOperation 112788 (Jump 112849);
   Jump: 112849
 LocOp 112791:
