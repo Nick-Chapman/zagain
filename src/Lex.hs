@@ -2,28 +2,39 @@
 -- | primitives for lexing
 module Lex (tokenize,lookupInDict) where
 
-import Data.List (intercalate)
 import Data.List.Extra (lower)
-import Data.List.Split (splitOn)
 import Dictionary (Dict(..))
 import Numbers (Byte,Addr,Zversion(..))
 
-tokenize :: String -> (Byte,[Byte],[String],String)
-tokenize str = do
-  let toks = [ w | w <- splitOn " " str, w /= "" ] -- TODO: also split on "," etc, but still treat as words
-  let
-    offsets :: [Byte] = do
-      let lens :: [Byte] = [ fromIntegral (length w) | w <- toks ]
-      let
-        f :: (Byte,[Byte]) -> Byte -> (Byte,[Byte])
-        f (off,xs) i = (off+i+1, off : xs) --
-      let z = (1,[])
-      let (_,offsetsR) = foldl f z lens
-      reverse offsetsR
-  -- TODO: Better if we didn't change inter-word whitespace
-  let canonicalized = intercalate " " toks ++ "\0" -- what actually needs this?
-  let n = fromIntegral (length offsets)
-  (n, offsets, toks, canonicalized)
+tokenize :: String -> (Byte,[Byte],[String],String) -- TODO: dont return canonicalized
+tokenize s = do
+  let better = xtokenize s -- TODO: inline
+  let offsets = [ offset | Alpha offset _ <- better ]
+  let toks = [ tok | Alpha _ tok <- better ]
+  let n = length better
+  let canonicalized = s ++ "\0" -- TODO: dont add null
+  (fromIntegral n,offsets,toks,canonicalized)
+
+data Tok = Alpha Byte String -- TODO: dont need
+
+xtokenize :: String -> [Tok] -- TODO: inline into caller
+xtokenize = loop1 (1::Byte) -- TODO: also handle double quotes properly
+  where
+    loop1 n = \case
+      "" -> []
+      ',':cs -> Alpha n "," : loop1 (n+1) cs
+      ' ':cs -> loopW (n+1) cs
+      c:cs -> loopA (n+1) n [c] cs
+    loopA n i acc = \case
+      "" -> [Alpha i (reverse acc)]
+      ',':cs -> Alpha i (reverse acc) : Alpha n "," : loop1 (n+1) cs
+      ' ':cs -> Alpha i (reverse acc) : loopW (n+1) cs
+      c:cs -> loopA (n+1) i (c:acc) cs
+    loopW n = \case
+      "" -> []
+      ',':cs -> Alpha n "," : loop1 (n+1) cs
+      ' ':cs -> loopW (n+1) cs
+      c:cs -> loopA (n+1) n [c] cs
 
 
 lookupInDict :: Dict -> String -> Addr
