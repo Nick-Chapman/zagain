@@ -129,7 +129,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
     isStaticAddress a = a <= 63 || a > staticMem
 
     -- continuation (for compilation) which will finish the compiled program with a jump
-    kJump :: State -> () -> Gen (Prog 'WillJump)
+    kJump :: State -> () -> Gen Prog
     kJump s () = do
       let State{control} = s
       if
@@ -140,12 +140,12 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             pure (flushState s (Jump control))
 
     -- compile0: compile an effect, in isolation, to a program which will not jump
-    compile0 :: State -> Effect () -> Gen (Prog 'WontJump)
+    compile0 :: State -> Effect () -> Gen Prog
     compile0 s eff = do
       compileK s eff $ \s () -> pure (flushState s Null)
 
     -- compileK: compile an effect, given a continuation, to a program which may or notjump
-    compileK :: forall jumpiness effectType. State -> Effect effectType -> (State -> effectType -> Gen (Prog jumpiness)) -> Gen (Prog jumpiness)
+    compileK :: forall effectType. State -> Effect effectType -> (State -> effectType -> Gen Prog) -> Gen Prog
     compileK s e k = case e of
       Eff.Ret x -> k s x -- TODO: avoid need for "Eff." prefix everywhere
       Eff.Bind e f -> compileK s e $ \s a -> compileK s (f a) k
@@ -278,7 +278,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
           label <- genLabel
           let tieback exp = do pure (Bind var exp,label)
           let eff :: Effect () = f tieback (Variable var)
-          let body :: Gen (Prog jumpiness) = compileK s eff k
+          let body :: Gen Prog = compileK s eff k
           Seq (Let (Bind var init)) <$> do
             Labelled label <$> do
               body
@@ -360,10 +360,10 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         Seq (Tokenize x (a,b,c,d)) <$> k s (Variable a,Variable b,Variable c,Variable d)
 
       where
-        prim1 :: (Show x) => Expression r ~ effectType => Expression x -> Prim.P1 x r -> Gen (Prog jumpiness)
+        prim1 :: (Show x) => Expression r ~ effectType => Expression x -> Prim.P1 x r -> Gen Prog
         prim1 x p1 = k s (makeUnary p1 x)
 
-        prim2 :: (Show x, Show y) => Expression r ~ effectType => Expression x -> Expression y -> Prim.P2 x y r -> Gen (Prog jumpiness)
+        prim2 :: (Show x, Show y) => Expression r ~ effectType => Expression x -> Expression y -> Prim.P2 x y r -> Gen Prog
         prim2 x y p2 = k s (makeBinary p2 x y)
 
 
@@ -407,11 +407,11 @@ initState control = State
   }
 
 
-flushStateK :: State -> (State -> Gen (Prog j)) -> Gen (Prog j)
+flushStateK :: State -> (State -> Gen Prog) -> Gen Prog
 flushStateK s k =
   flushState s <$> k s { tmpStack = [], retStack = [] }
 
-flushState :: State -> Prog j -> Prog j
+flushState :: State -> Prog -> Prog
 flushState State{tmpStack,retStack} s =
   loopTmpStack (loopRetStack s retStack) tmpStack
   where
@@ -490,7 +490,7 @@ data CompiledRoutine = CompiledRoutine
   { chunks :: [Chunk]
   }
 
-data Chunk = Chunk { label :: Loc, body :: Prog 'WillJump }
+data Chunk = Chunk { label :: Loc, body :: Prog }
 
 instance Show Chunk where
   show Chunk{ label, body } =
@@ -499,26 +499,23 @@ instance Show Chunk where
 data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
 
 
-data Jumpiness = WillJump | WontJump
-
-
 newtype Label = Label Int
   deriving Show
 
-data Prog :: Jumpiness -> * where -- TODO: kill jumpiness
-  Null :: Prog 'WontJump
-  Quit :: Prog j
-  Error :: String -> Prog j
+data Prog where
+  Null :: Prog
+  Quit :: Prog
+  Error :: String -> Prog
 
-  Labelled :: Label -> Prog j -> Prog j
-  Goto :: Label -> Prog j -- 'WillJump
+  Labelled :: Label -> Prog -> Prog
+  Goto :: Label -> Prog
 
-  Jump :: Control DuringCompilation -> Prog 'WillJump
-  Seq :: Atom ->  Prog j -> Prog j
-  FullSeq :: Prog 'WontJump ->  Prog j -> Prog j
-  If :: Expression Bool -> Prog j -> Prog j -> Prog j
+  Jump :: Control DuringCompilation -> Prog
+  Seq :: Atom ->  Prog -> Prog
+  FullSeq :: Prog -> Prog -> Prog
+  If :: Expression Bool -> Prog -> Prog -> Prog
 
-pretty :: Int -> Prog j -> [String]
+pretty :: Int -> Prog -> [String]
 pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]
