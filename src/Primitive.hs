@@ -76,7 +76,7 @@ data P2 arg1 arg2 ret where
   ShiftR :: P2 Byte Value Byte
   Sub :: P2 Value Value Value
   TestBit :: P2 Byte Byte Bool
-  IndexList :: P2 [x] Value x -- TODO: use Array of Vector here (something with const time access)
+  IndexList :: P2 [x] Value x
 
 deriving instance Show (P2 a b r)
 
