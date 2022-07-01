@@ -134,7 +134,6 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       let State{control} = s
       if
         | shouldInline control -> do
-          --Seq (Inlining control) <$>
             compileK s { control } smallStep kJump
         | otherwise -> do
             pure (flushState s (makeJump control))
@@ -579,7 +578,6 @@ tab n s = take n (repeat ' ') ++ s
 data Atom
   = SetByte (Expression Addr) (Expression Byte)
   | Note String
-  | Inlining (Control DuringCompilation)
   | TraceOperation (Expression Addr) Operation
   | GamePrint (Expression String)
   | MakeRoutineFrame Int
@@ -607,7 +605,7 @@ instance Show Bind where
   show = \case
     Bind x e -> show x ++ " = " ++ show e
 
-type StatusInfo = Maybe (Eff.StatusInfo DuringCompilation)
+type StatusInfo = Maybe (Eff.StatusInfo (Expression String) (Expression Value))
 
 type TokenizeIdents =
   ( Identifier Byte

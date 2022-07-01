@@ -33,13 +33,11 @@ data Control p
 
 deriving instance Phase p => Show (Control p)
 
-data StatusInfo p = StatusInfo
-  { room :: Text p
-  , score :: Value p
-  , turns :: Value p
-  }
-
-deriving instance Phase p => Show (StatusInfo p)
+data StatusInfo text value = StatusInfo
+  { room :: text
+  , score :: value
+  , turns :: value
+  } deriving Show
 
 data Eff p x where
   Ret :: x -> Eff p x
@@ -55,7 +53,7 @@ data Eff p x where
   StoryHeader :: Eff p Header
   LookupInDict :: Text p -> Eff p (Addr p)
 
-  ReadInputFromUser :: Maybe (StatusInfo p) -> Eff p (Text p)
+  ReadInputFromUser :: Maybe (StatusInfo (Text p) (Value p)) -> Eff p (Text p)
   GetText :: Addr p -> Eff p (Text p)
 
   FetchRoutineHeader :: Addr p -> Eff p (RoutineHeader, Addr p)
