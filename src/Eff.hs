@@ -27,7 +27,7 @@ class
   type Code p
 
 data Control p
-  = AtRoutineHeader { routine :: Addr p, numActuals :: Byte p }
+  = AtRoutineHeader { routine :: Addr p, numActuals :: Byte p } -- TODO: why phase-poly numActuals?
   | AtInstruction { pc :: Addr p }
   | AtReturnFromCall { caller :: Addr p, result :: Value p }
 

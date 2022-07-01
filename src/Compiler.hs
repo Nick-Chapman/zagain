@@ -113,7 +113,7 @@ compileRoutine static routine = do
     [ runGen conf (compileLoc static loc) | loc <- locations]
 
 
-compileLoc :: Static -> Loc -> Gen Chunk
+compileLoc :: Static -> Loc Addr -> Gen Chunk
 compileLoc Static{story,smallStep,shouldInline} loc = do
 
   let control = makeControl loc
@@ -137,7 +137,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
           --Seq (Inlining control) <$>
             compileK s { control } smallStep kJump
         | otherwise -> do
-            pure (flushState s (Jump control))
+            pure (flushState s (makeJump control))
 
     -- compile0: compile an effect, in isolation, to a program which will not jump
     compile0 :: State -> Effect () -> Gen Prog
@@ -380,7 +380,7 @@ genLabel = do
 
 --[state]-------------------------------------------------------------
 
-makeControl :: Loc -> Control DuringCompilation
+makeControl :: Loc Addr -> Control DuringCompilation
 makeControl = \case
   LocRoutine a ->
     Eff.AtRoutineHeader { routine = Const a, numActuals = NumActuals }
@@ -389,6 +389,24 @@ makeControl = \case
   LocReturn a ->
     Eff.AtReturnFromCall { caller = Const a, result = CallResult }
 
+makeJump :: Control DuringCompilation -> Prog
+makeJump = \case
+  Eff.AtRoutineHeader{routine,numActuals} -> do
+    Seq (SetNumberActuals numActuals) $ do
+      case routine of
+        Const routine -> Jump (LocRoutine routine)
+        _ -> JumpIndirect (LocRoutine routine)
+
+  Eff.AtInstruction{pc} -> do
+    case pc of
+      Const pc -> Jump (LocOp pc)
+      _ -> JumpIndirect (LocOp pc)
+
+  Eff.AtReturnFromCall{caller,result} -> do
+    Seq (SetResult result) $ do
+      case caller of
+        Const caller -> Jump (LocReturn caller) -- normally can't occur; but can when inlining
+        _ -> JumpIndirect (LocReturn caller)
 
 data State = State
   { control :: Control DuringCompilation
@@ -490,14 +508,19 @@ data CompiledRoutine = CompiledRoutine
   { chunks :: [Chunk]
   }
 
-data Chunk = Chunk { label :: Loc, body :: Prog }
+data Chunk = Chunk { label :: Loc Addr, body :: Prog }
 
 instance Show Chunk where
   show Chunk{ label, body } =
     intercalate "\n" ((show label ++ ":") : pretty 2 body)
 
-data Loc = LocRoutine Addr | LocOp Addr | LocReturn Addr deriving Show
+data Loc a = LocRoutine a | LocOp a | LocReturn a deriving Show
 
+seeLoc :: Show a => Loc a -> String
+seeLoc = \case
+  LocOp a -> show a
+  LocReturn a -> "(return) " ++ show a
+  LocRoutine a -> "(routine) " ++ show a
 
 newtype Label = Label Int
   deriving Show
@@ -506,11 +529,10 @@ data Prog where
   Null :: Prog
   Quit :: Prog
   Error :: String -> Prog
-
   Labelled :: Label -> Prog -> Prog
   Goto :: Label -> Prog
-
-  Jump :: Control DuringCompilation -> Prog
+  JumpIndirect :: Loc (Expression Addr) -> Prog
+  Jump :: Loc Addr -> Prog
   Seq :: Atom ->  Prog -> Prog
   FullSeq :: Prog -> Prog -> Prog
   If :: Expression Bool -> Prog -> Prog -> Prog
@@ -527,12 +549,10 @@ pretty i = \case
     ]
   Goto label ->
     [tab i ("Goto: " ++ show label)]
-  Jump Eff.AtInstruction{pc} ->
-    [tab i ("Jump: " ++ show pc)]
-  Jump Eff.AtRoutineHeader {routine,numActuals} ->
-    [tab i ("JumpCall: " ++ show routine ++ ", #actuals: " ++ show numActuals)]
-  Jump Eff.AtReturnFromCall{caller,result} ->
-    [tab i ("JumpReturn: " ++ show caller ++ ", result: " ++ show result)]
+  JumpIndirect a ->
+    [tab i ("JumpIndirect: " ++ seeLoc a)]
+  Jump a ->
+    [tab i ("Jump: " ++ seeLoc a)]
   Seq a s -> tab i (show a ++ ";") : pretty i s
   FullSeq s1 s2 -> pretty i s1 ++ pretty i s2
   If e s1 Null -> concat
@@ -576,6 +596,8 @@ data Atom
   | LetRandom (Identifier Value) (Expression Value)
   | Let Bind
   | Assign Bind
+  | SetNumberActuals (Expression Byte)
+  | SetResult (Expression Value)
   deriving Show
 
 data Bind where
