@@ -4946,7 +4946,7 @@ gap=2
 083757 Set_text_style (Con 0)
 083760 New_line
 083761 Set_text_style (Con 0)
-083764 Sound_effect1 (Con 1)
+083764 Sound_effect (Con 1) Nothing
 083767 Jz (Var (Global 68)) (Branch F Dtrue)
 083770 Store (Con 84) (Con 1)
 083773 New_line
