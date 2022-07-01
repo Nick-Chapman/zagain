@@ -59,7 +59,7 @@ newtype Label = Label Int
 data Prog where
   Null :: Prog
   Quit :: Prog
-  ProgError :: String -> Prog
+  Error :: String -> Prog
   Labelled :: Label -> Prog -> Prog
   Goto :: Label -> Prog
   JumpIndirect :: Loc (Expression Addr) -> Prog
@@ -72,7 +72,7 @@ pretty :: Int -> Prog -> [String]
 pretty i = \case
   Null -> []
   Quit -> [tab i "Quit"]
-  ProgError msg -> [tab i ("Error: " ++ msg)]
+  Error msg -> [tab i ("Error: " ++ msg)]
   Labelled label prog -> concat
     [ [tab i (show label ++ ": {") ]
     , pretty (i+2) prog
@@ -154,10 +154,10 @@ data Expression a where
   Variable :: Identifier a -> Expression a
   Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
-  GetByte :: Expression Addr -> Expression Byte
-  GetLocal :: Expression Byte -> Expression Value
-  GetText :: Expression Addr -> Expression String
-  LookupInDict :: Expression String -> Expression Addr
+  GetByteE :: Expression Addr -> Expression Byte
+  GetLocalE :: Expression Byte -> Expression Value
+  GetTextE :: Expression Addr -> Expression String
+  LookupInDictE :: Expression String -> Expression Addr
   Ite :: Expression Bool -> Expression a -> Expression a -> Expression a
 
 instance Show a => Show (Expression a) where
@@ -169,10 +169,10 @@ instance Show a => Show (Expression a) where
     Variable v -> show v
     Unary p1 x -> show p1 ++ "(" ++ show x ++ ")"
     Binary p2 x y -> show p2 ++ "(" ++ show x ++ "," ++ show y ++ ")"
-    GetByte a -> "M[" ++ show a ++ "]"
-    GetLocal n -> "GetLocal(" ++ show n ++ ")"
-    GetText a -> "GetText(" ++ show a ++ ")"
-    LookupInDict x -> "LookupInDict(" ++ show x ++ ")"
+    GetByteE a -> "M[" ++ show a ++ "]"
+    GetLocalE n -> "GetLocal(" ++ show n ++ ")"
+    GetTextE a -> "GetText(" ++ show a ++ ")"
+    LookupInDictE x -> "LookupInDict(" ++ show x ++ ")"
     Ite i t e -> "Ite(" ++ show (i,t,e) ++ ")"
 
 data Identifier a where

@@ -2,7 +2,7 @@
 module Compiler (compileEffect) where
 
 import Action (Conf(..))
-import Code (Code(..),CompiledRoutine(..),Chunk(..),Prog(..),Binding(..),Label(..),Loc(..),Expression(..),Identifier(..))
+import Code (Code(..),CompiledRoutine(..),Chunk(..),Prog(Seq),Binding(..),Label(..),Loc(..),Expression(..),Identifier(..))
 import Control.Monad (when,ap,liftM)
 import Data.Set (Set,(\\))
 import Decode (fetchOperation,fetchRoutineHeader)
@@ -13,10 +13,12 @@ import Header (Header(..))
 import Numbers (Addr,Byte,Value)
 import Operation (Operation(Call,CallN),Func(Fvar))
 import Story (Story(header,size),OOB_Mode(..),readStoryByte)
-import qualified Code (Atom(..))
+import qualified Code as Atom (Atom(..))
+import qualified Code as Prog (Prog(..))
 import qualified Data.Set as Set
 import qualified Eff (Phase(..))
 import qualified Primitive as Prim
+
 
 data DuringCompilation
 
@@ -139,7 +141,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
     -- compile0: compile an effect, in isolation, to a program which will not jump
     compile0 :: State -> Effect () -> Gen Prog
     compile0 s eff = do
-      compileK s eff $ \s () -> pure (flushState s Null)
+      compileK s eff $ \s () -> pure (flushState s Prog.Null)
 
     -- compileK: compile an effect, given a continuation, to a program which may or notjump
     compileK :: forall effectType. State -> Effect effectType -> (State -> effectType -> Gen Prog) -> Gen Prog
@@ -147,23 +149,23 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Ret x -> k s x
       Bind e f -> compileK s e $ \s a -> compileK s (f a) k
 
-      GamePrint mes -> do Seq (Code.GamePrint mes) <$> k s ()
+      GamePrint mes -> do Seq (Atom.GamePrint mes) <$> k s ()
       TextStyle sb -> do
-        Seq (Code.Note (show ("TextStyle",sb))) <$> k s ()
+        Seq (Atom.Note (show ("TextStyle",sb))) <$> k s ()
 
-      Error msg -> do pure $ ProgError msg
+      Error msg -> do pure $ Prog.Error msg
       Debug msg -> do GDebug msg; k s ()
-      Note x -> Seq (Code.Note (show x)) <$> k s ()
+      Note x -> Seq (Atom.Note (show x)) <$> k s ()
 
       StoryHeader -> k s header
 
       ReadInputFromUser statusLine -> do
         name <- genId "user_command_line_"
-        Seq (Code.ReadInputFromUser statusLine name) <$> k s (Variable name)
+        Seq (Atom.ReadInputFromUser statusLine name) <$> k s (Variable name)
 
-      Eff.GetText a -> do
+      GetText a -> do
         -- TODO: make special case for static addresses.
-        k s (Code.GetText a)
+        k s (GetTextE a)
 
       GetControl -> let State{control} = s in k s control
       SetControl control -> k s { control } ()
@@ -185,38 +187,38 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             error "Fetch routine header at non-constant PC"
 
       TraceOperation addr op -> do
-        Seq (Code.TraceOperation addr op) <$> k s ()
+        Seq (Atom.TraceOperation addr op) <$> k s ()
 
       TraceRoutineCall _addr -> do k s ()
 
       MakeRoutineFrame n -> do
-        Seq (Code.MakeRoutineFrame n)  <$> k s ()
+        Seq (Atom.MakeRoutineFrame n)  <$> k s ()
 
       PushFrame addr _numActuals-> do
-        Seq Code.PushFrame <$> if
-          | eagerStack -> Seq (Code.PushReturnAddress addr) <$> k s ()
+        Seq Atom.PushFrame <$> if
+          | eagerStack -> Seq (Atom.PushReturnAddress addr) <$> k s ()
           | otherwise -> do
               let State{retStack} = s
               k s { retStack = addr : retStack } ()
 
       PopFrame -> do
-        Seq Code.PopFrame <$> do
+        Seq Atom.PopFrame <$> do
           let State{retStack} = s
           case retStack of
             [] -> do
               name <- genId "return_address_"
-              Seq (Code.PopReturnAddress name) <$> k s (Variable name)
+              Seq (Atom.PopReturnAddress name) <$> k s (Variable name)
             addr:retStack -> do
               k s { retStack } addr
 
       GetNumActuals -> k s NumActuals
 
-      Eff.GetLocal n -> k s (Code.GetLocal n)
+      GetLocal n -> k s (GetLocalE n)
 
       SetLocal n v -> do
-        Seq (Code.SetLocal n v) <$> k s ()
+        Seq (Atom.SetLocal n v) <$> k s ()
 
-      Eff.GetByte a -> do
+      GetByte a -> do
         case a of
           Const addr
             | isStaticAddress addr -> do
@@ -227,13 +229,13 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
                 k s (Const b)
           _ -> do
             name <- genId "b"
-            Seq (Code.Let (Binding name (Code.GetByte a))) <$> k s (Variable name)
+            Seq (Atom.Let (Binding name (GetByteE a))) <$> k s (Variable name)
 
       SetByte a b ->
-        Seq (Code.SetByte a b) <$> k s ()
+        Seq (Atom.SetByte a b) <$> k s ()
 
       PushStack v -> if
-        | eagerStack -> Seq (Code.PushStack v) <$> k s ()
+        | eagerStack -> Seq (Atom.PushStack v) <$> k s ()
         | otherwise -> do
           let State{tmpStack} = s
           k s { tmpStack = v : tmpStack } ()
@@ -245,29 +247,29 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
             k s { tmpStack } v
           [] -> do
             name <- genId "popped"
-            Seq (Code.PopStack name) <$> k s (Variable name)
+            Seq (Atom.PopStack name) <$> k s (Variable name)
 
       Random range -> do
         name <- genId "random"
-        Seq (Code.LetRandom name range) <$> k s (Variable name)
+        Seq (Atom.LetRandom name range) <$> k s (Variable name)
 
-      Eff.Quit -> do
-        pure Code.Quit
+      Quit -> do
+        pure Prog.Quit
 
       IteString pred a b -> do
         case pred of
           Const pred -> k s (if pred then a else b)
           _ -> do
             name <- genId "ite_res"
-            Seq (Code.Let (Binding name (Ite pred a b))) <$> k s (Variable name)
+            Seq (Atom.Let (Binding name (Ite pred a b))) <$> k s (Variable name)
 
-      Eff.If pred -> do
+      If pred -> do
         case pred of
           Const pred -> k s pred
           _ -> do
             b1 <- k s True
             b2 <- k s False
-            pure $ Code.If pred b1 b2
+            pure $ Prog.If pred b1 b2
 
       Fixpoint init f -> do
         flushStateK s $ \s -> do
@@ -276,17 +278,17 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
           let tieback exp = do pure (Binding var exp,label)
           let eff :: Effect () = f tieback (Variable var)
           let body :: Gen Prog = compileK s eff k
-          Seq (Code.Let (Binding var init)) <$> do
-            Labelled label <$> do
+          Seq (Atom.Let (Binding var init)) <$> do
+            Prog.Labelled label <$> do
               body
 
       Link (bind,label) -> do
-        Seq (Code.Assign bind) <$> pure (Goto label)
+        Seq (Atom.Assign bind) <$> pure (Prog.Goto label)
 
       Isolate eff -> do
         flushStateK s $ \s -> do
           first <- compile0 s eff
-          FullSeq first <$> k s ()
+          Prog.FullSeq first <$> k s ()
 
       IndexVecB vec n -> do
         k s (Join (Binary Prim.IndexList vec n))
@@ -341,20 +343,20 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
       Sub x y -> prim2 x y Prim.Sub
       TestBit x y -> prim2 x y Prim.TestBit
 
-      Eff.LookupInDict word -> do
+      LookupInDict word -> do
         res <- genId "lookee"
-        Seq (Code.Let (Binding res (Code.LookupInDict word))) <$> k s (Variable res)
+        Seq (Atom.Let (Binding res (LookupInDictE word))) <$> k s (Variable res)
 
       StringBytes string -> do
         split <- genId "string_bytes_"
-        Seq (Code.StringBytes string split) <$> k s (Variable split)
+        Seq (Atom.StringBytes string split) <$> k s (Variable split)
 
       Tokenize x -> do
         a <- genId "num_tokens_"
         b <- genId "positions"
         c <- genId "words"
         d <- genId "canonicalized"
-        Seq (Code.Tokenize x (a,b,c,d)) <$> k s (Variable a,Variable b,Variable c,Variable d)
+        Seq (Atom.Tokenize x (a,b,c,d)) <$> k s (Variable a,Variable b,Variable c,Variable d)
 
       where
         prim1 :: (Show x) => Expression r ~ effectType => Expression x -> Prim.P1 x r -> Gen Prog
@@ -389,21 +391,21 @@ makeControl = \case
 makeJump :: Control DuringCompilation -> Prog
 makeJump = \case
   AtRoutineHeader{routine,numActuals} -> do
-    Seq (Code.SetNumberActuals numActuals) $ do
+    Seq (Atom.SetNumberActuals numActuals) $ do
       case routine of
-        Const routine -> Jump (LocRoutine routine)
-        _ -> JumpIndirect (LocRoutine routine)
+        Const routine -> Prog.Jump (LocRoutine routine)
+        _ -> Prog.JumpIndirect (LocRoutine routine)
 
   AtInstruction{pc} -> do
     case pc of
-      Const pc -> Jump (LocOp pc)
-      _ -> JumpIndirect (LocOp pc)
+      Const pc -> Prog.Jump (LocOp pc)
+      _ -> Prog.JumpIndirect (LocOp pc)
 
   AtReturnFromCall{caller,result} -> do
-    Seq (Code.SetResult result) $ do
+    Seq (Atom.SetResult result) $ do
       case caller of
-        Const caller -> Jump (LocReturn caller) -- normally can't occur; but can when inlining
-        _ -> JumpIndirect (LocReturn caller)
+        Const caller -> Prog.Jump (LocReturn caller) -- normally can't occur; but can when inlining
+        _ -> Prog.JumpIndirect (LocReturn caller)
 
 data State = State
   { control :: Control DuringCompilation
@@ -432,11 +434,11 @@ flushState State{tmpStack,retStack} s =
   where
     loopTmpStack s = \case
       [] -> s
-      x:xs -> loopTmpStack (Seq (Code.PushStack x) s) xs
+      x:xs -> loopTmpStack (Seq (Atom.PushStack x) s) xs
 
     loopRetStack s = \case
       [] -> s
-      x:xs -> loopRetStack (Seq (Code.PushReturnAddress x) s) xs
+      x:xs -> loopRetStack (Seq (Atom.PushReturnAddress x) s) xs
 
 --[gen]---------------------------------------------------------------
 
