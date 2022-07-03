@@ -26,7 +26,7 @@ data P1 arg ret where
   SingleChar :: P1 Value String
   StringBytes :: P1 String [Byte]
   StringLength :: P1 String Byte
-  Tokenize :: P1 String (Byte,[Byte],[String])
+  Tokenize :: Dict -> P1 String (Byte,[Byte],[String])
   Widen :: P1 Byte Value
 
 deriving instance Show (P1 a b)
@@ -49,7 +49,7 @@ evalP1 = \case
   SingleChar -> \v -> [Char.chr (fromIntegral v)]
   StringBytes -> \str -> [ fromIntegral (Char.ord c) | c <- str ]
   StringLength -> fromIntegral . length
-  Tokenize -> Lex.tokenize
+  Tokenize dict -> Lex.tokenize dict
   Widen -> fromIntegral
 
 data P2 arg1 arg2 ret where

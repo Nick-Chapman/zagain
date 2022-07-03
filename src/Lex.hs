@@ -6,9 +6,9 @@ import Data.List.Extra (lower)
 import Dictionary (Dict(..))
 import Numbers (Byte,Addr,Zversion(..))
 
-tokenize :: String -> (Byte,[Byte],[String])
-tokenize s = do
-  let better = xtokenize s -- TODO: inline
+tokenize :: Dict -> String -> (Byte,[Byte],[String])
+tokenize dict s = do
+  let better = xtokenize dict s -- TODO: inline
   let offsets = [ offset | Alpha offset _ <- better ]
   let toks = [ tok | Alpha _ tok <- better ]
   let n = length better
@@ -16,10 +16,9 @@ tokenize s = do
 
 data Tok = Alpha Byte String -- TODO: dont need
 
-xtokenize :: String -> [Tok] -- TODO: inline into caller
-xtokenize = loop1 (1::Byte)
+xtokenize :: Dict -> String -> [Tok] -- TODO: inline into caller
+xtokenize Dict{seps}= loop1 (1::Byte)
   where
-    seps = [',','"']
     isSep = (`elem` seps)
 
     loop1 n = \case

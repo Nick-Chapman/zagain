@@ -209,7 +209,7 @@ runEffect screenWidth seed story smallStep = do
       SingleChar x -> prim1 x Prim.SingleChar
       StringBytes x -> prim1 x Prim.StringBytes
       StringLength x -> prim1 x Prim.StringLength
-      Tokenize x -> prim1 x Prim.Tokenize
+      Tokenize x -> prim1 x (Prim.Tokenize dict)
       Widen x -> prim1 x Prim.Widen
 
       -- pure binary primitives
