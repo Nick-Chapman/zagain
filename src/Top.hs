@@ -76,8 +76,12 @@ parseCommandLine = loop config0
       "-walk":path:more -> do
         xs <- Prelude.lines <$> readFile path
         loop c { inputs = inputs ++ xs } more
-      storyFile:more ->
-        loop c { storyFile } more
+      -- convenience for story files used during development and regression
+      "zork":more -> loop c { storyFile = known Zork } more
+      "hitch":more -> loop c { storyFile = known Hitch } more
+      "trinity":more -> loop c { storyFile = known Trinity } more
+      "judo":more -> loop c { storyFile = known Judo } more
+      storyFile:more -> loop c { storyFile } more
 
 run :: Config -> IO ()
 run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaCompiler} = do
@@ -113,3 +117,13 @@ run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaC
       let eff = Semantics.smallStep
       code <- compileEffect iconf story eff
       dumpCode code -- to stdout
+
+
+data Known = Zork | Hitch | Trinity | Judo
+
+known :: Known -> String
+known = ("story/"++) . \case
+  Zork -> "zork1.88-840726.z3"
+  Hitch -> "hitchhiker-r59-s851108.z3"
+  Trinity -> "trinity.12-860926.z4"
+  Judo -> "judo-night.1-080706.z5"
