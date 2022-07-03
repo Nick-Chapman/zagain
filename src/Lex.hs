@@ -6,35 +6,37 @@ import Data.List.Extra (lower)
 import Dictionary (Dict(..))
 import Numbers (Byte,Addr,Zversion(..))
 
+data Tok = Tok Byte String
+
 tokenize :: Dict -> String -> (Byte,[Byte],[String])
-tokenize dict s = do
-  let better = xtokenize dict s -- TODO: inline
-  let offsets = [ offset | Alpha offset _ <- better ]
-  let toks = [ tok | Alpha _ tok <- better ]
-  let n = length better
-  (fromIntegral n,offsets,toks)
+tokenize Dict{seps} s = do
 
-data Tok = Alpha Byte String -- TODO: dont need
+  let toks = loop1 1 s
+  let offsets = [ offset | Tok offset _ <- toks ]
+  let words = [ tok | Tok _ tok <- toks ]
+  let n = fromIntegral $ length toks
 
-xtokenize :: Dict -> String -> [Tok] -- TODO: inline into caller
-xtokenize Dict{seps}= loop1 (1::Byte)
+  (n,offsets,words)
+
   where
     isSep = (`elem` seps)
 
     loop1 n = \case
       "" -> []
       ' ':cs -> loopW (n+1) cs
-      c:cs | isSep c -> Alpha n [c] : loop1 (n+1) cs
+      c:cs | isSep c -> Tok n [c] : loop1 (n+1) cs
       c:cs -> loopA (n+1) n [c] cs
+
     loopA n i acc = \case
-      "" -> [Alpha i (reverse acc)]
-      ' ':cs -> Alpha i (reverse acc) : loopW (n+1) cs
-      c:cs | isSep c -> Alpha i (reverse acc) : Alpha n [c] : loop1 (n+1) cs
+      "" -> [Tok i (reverse acc)]
+      ' ':cs -> Tok i (reverse acc) : loopW (n+1) cs
+      c:cs | isSep c -> Tok i (reverse acc) : Tok n [c] : loop1 (n+1) cs
       c:cs -> loopA (n+1) i (c:acc) cs
+
     loopW n = \case
       "" -> []
       ' ':cs -> loopW (n+1) cs
-      c:cs | isSep c -> Alpha n [c] : loop1 (n+1) cs
+      c:cs | isSep c -> Tok n [c] : loop1 (n+1) cs
       c:cs -> loopA (n+1) n [c] cs
 
 
