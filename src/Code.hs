@@ -143,7 +143,6 @@ type TokenizeIdents =
   ( Identifier Byte
   , Identifier [Expression Byte]
   , Identifier [Expression String]
-  , Identifier String
   )
 
 data Expression a where

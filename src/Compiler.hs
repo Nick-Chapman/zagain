@@ -360,8 +360,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
         a <- genId "num_tokens_"
         b <- genId "positions"
         c <- genId "words"
-        d <- genId "canonicalized"
-        Seq (Atom.Tokenize x (a,b,c,d)) <$> k s (Variable a,Variable b,Variable c,Variable d)
+        Seq (Atom.Tokenize x (a,b,c)) <$> k s (Variable a,Variable b,Variable c)
 
       where
         prim1 :: (Show x) => Expression r ~ effectType => Expression x -> Prim.P1 x r -> Gen Prog

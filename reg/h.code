@@ -3514,36 +3514,36 @@ LocOp 022635:
   Let b13 = M[008295];
   Let b14 = M[008296];
   Let b15 = M[008297];
-  Tokenize user_command_line_11 (num_tokens_16,positions17,words18,canonicalized19);
-  StringBytes canonicalized19 string_bytes_20;
-  Let loop_var21 = 0;
-  Label 22: {
-    if (Equal(loop_var21,Widen(StringLength(canonicalized19)))) {
+  Tokenize user_command_line_11 (num_tokens_16,positions17,words18);
+  StringBytes user_command_line_11 string_bytes_19;
+  Let loop_var20 = 0;
+  Label 21: {
+    if (Equal(loop_var20,Widen(StringLength(user_command_line_11)))) {
       SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-      Let loop_var23 = 0;
-      Label 24: {
-        if (Equal(loop_var23,Widen(num_tokens_16))) {
+      Let loop_var22 = 0;
+      Label 23: {
+        if (Equal(loop_var22,Widen(num_tokens_16))) {
           TraceOperation 022644 (Loadb (Var (Global 194)) (Con 1) (Global 178));
-          Let b25 = M[008296];
-          Let b26 = M[008297];
-          Let b27 = M[Offset(Address(MakeHiLo(b25,b26)),1)];
-          SetByte 008264 HiByte(Widen(b27));
-          SetByte 008265 LoByte(Widen(b27));
+          Let b24 = M[008296];
+          Let b25 = M[008297];
+          Let b26 = M[Offset(Address(MakeHiLo(b24,b25)),1)];
+          SetByte 008264 HiByte(Widen(b26));
+          SetByte 008265 LoByte(Widen(b26));
           Jump: 022648
         } else {
-          Let lookee28 = LookupInDict(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),0) HiByte(DeAddress(lookee28));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),1) LoByte(DeAddress(lookee28));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),2) StringLength(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),3) IndexList(positions17,loop_var23);
-          Assign loop_var23 = Add(loop_var23,1);
-          Goto: Label 24
+          Let lookee27 = LookupInDict(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),0) HiByte(DeAddress(lookee27));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),1) LoByte(DeAddress(lookee27));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),2) StringLength(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),3) IndexList(positions17,loop_var22);
+          Assign loop_var22 = Add(loop_var22,1);
+          Goto: Label 23
         }
       }
     } else {
-      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var21) IndexList(string_bytes_20,loop_var21);
-      Assign loop_var21 = Add(loop_var21,1);
-      Goto: Label 22
+      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var20) IndexList(string_bytes_19,loop_var20);
+      Assign loop_var20 = Add(loop_var20,1);
+      Goto: Label 21
     }
   }
 LocOp 022648:
@@ -12148,43 +12148,43 @@ LocOp 028961:
   Let b13 = M[008295];
   Let b14 = M[008296];
   Let b15 = M[008297];
-  Tokenize user_command_line_11 (num_tokens_16,positions17,words18,canonicalized19);
-  StringBytes canonicalized19 string_bytes_20;
-  Let loop_var21 = 0;
-  Label 22: {
-    if (Equal(loop_var21,Widen(StringLength(canonicalized19)))) {
+  Tokenize user_command_line_11 (num_tokens_16,positions17,words18);
+  StringBytes user_command_line_11 string_bytes_19;
+  Let loop_var20 = 0;
+  Label 21: {
+    if (Equal(loop_var20,Widen(StringLength(user_command_line_11)))) {
       SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-      Let loop_var23 = 0;
-      Label 24: {
-        if (Equal(loop_var23,Widen(num_tokens_16))) {
+      Let loop_var22 = 0;
+      Label 23: {
+        if (Equal(loop_var22,Widen(num_tokens_16))) {
           TraceOperation 029060 (Loadw (Var (Global 194)) (Con 1) Sp);
-          Let b25 = M[008296];
-          Let b26 = M[008297];
-          Let b27 = M[Offset(Address(MakeHiLo(b25,b26)),2)];
-          Let b28 = M[Offset(Offset(Address(MakeHiLo(b25,b26)),2),1)];
-          PushStack MakeHiLo(b27,b28);
+          Let b24 = M[008296];
+          Let b25 = M[008297];
+          Let b26 = M[Offset(Address(MakeHiLo(b24,b25)),2)];
+          Let b27 = M[Offset(Offset(Address(MakeHiLo(b24,b25)),2),1)];
+          PushStack MakeHiLo(b26,b27);
           TraceOperation 029064 (Je [Var Sp,Con 18285] (Branch F (Dloc 029086)));
-          PopStack popped29;
-          if (Equal(popped29,18285)) {
+          PopStack popped28;
+          if (Equal(popped28,18285)) {
             TraceOperation 029070 Restart;
             Jump: 020735
           } else {
             Jump: 029086
           }
         } else {
-          Let lookee30 = LookupInDict(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),0) HiByte(DeAddress(lookee30));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),1) LoByte(DeAddress(lookee30));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),2) StringLength(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),3) IndexList(positions17,loop_var23);
-          Assign loop_var23 = Add(loop_var23,1);
-          Goto: Label 24
+          Let lookee29 = LookupInDict(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),0) HiByte(DeAddress(lookee29));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),1) LoByte(DeAddress(lookee29));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),2) StringLength(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),3) IndexList(positions17,loop_var22);
+          Assign loop_var22 = Add(loop_var22,1);
+          Goto: Label 23
         }
       }
     } else {
-      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var21) IndexList(string_bytes_20,loop_var21);
-      Assign loop_var21 = Add(loop_var21,1);
-      Goto: Label 22
+      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var20) IndexList(string_bytes_19,loop_var20);
+      Assign loop_var20 = Add(loop_var20,1);
+      Goto: Label 21
     }
   }
 LocReturn 029079:
@@ -12288,49 +12288,49 @@ LocOp 029141:
   Let b13 = M[008295];
   Let b14 = M[008296];
   Let b15 = M[008297];
-  Tokenize user_command_line_11 (num_tokens_16,positions17,words18,canonicalized19);
-  StringBytes canonicalized19 string_bytes_20;
-  Let loop_var21 = 0;
-  Label 22: {
-    if (Equal(loop_var21,Widen(StringLength(canonicalized19)))) {
+  Tokenize user_command_line_11 (num_tokens_16,positions17,words18);
+  StringBytes user_command_line_11 string_bytes_19;
+  Let loop_var20 = 0;
+  Label 21: {
+    if (Equal(loop_var20,Widen(StringLength(user_command_line_11)))) {
       SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-      Let loop_var23 = 0;
-      Label 24: {
-        if (Equal(loop_var23,Widen(num_tokens_16))) {
+      Let loop_var22 = 0;
+      Label 23: {
+        if (Equal(loop_var22,Widen(num_tokens_16))) {
           TraceOperation 029150 (Loadw (Var (Global 194)) (Con 1) Sp);
-          Let b25 = M[008296];
-          Let b26 = M[008297];
-          Let b27 = M[Offset(Address(MakeHiLo(b25,b26)),2)];
-          Let b28 = M[Offset(Offset(Address(MakeHiLo(b25,b26)),2),1)];
-          PushStack MakeHiLo(b27,b28);
+          Let b24 = M[008296];
+          Let b25 = M[008297];
+          Let b26 = M[Offset(Address(MakeHiLo(b24,b25)),2)];
+          Let b27 = M[Offset(Offset(Address(MakeHiLo(b24,b25)),2),1)];
+          PushStack MakeHiLo(b26,b27);
           TraceOperation 029154 (Je [Var Sp,Con 20420,Con 20392] (Branch F Dfalse));
-          PopStack popped29;
-          if (LogOr(Equal(popped29,20420),Equal(popped29,20392))) {
+          PopStack popped28;
+          if (LogOr(Equal(popped28,20420),Equal(popped28,20392))) {
             TraceOperation 029162 Rtrue;
             PopFrame;
-            PopReturnAddress return_address_30;
+            PopReturnAddress return_address_29;
             SetResult 1;
-            JumpIndirect: (return) return_address_30
+            JumpIndirect: (return) return_address_29
           } else {
             PopFrame;
-            PopReturnAddress return_address_31;
+            PopReturnAddress return_address_30;
             SetResult 0;
-            JumpIndirect: (return) return_address_31
+            JumpIndirect: (return) return_address_30
           }
         } else {
-          Let lookee32 = LookupInDict(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),0) HiByte(DeAddress(lookee32));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),1) LoByte(DeAddress(lookee32));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),2) StringLength(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),3) IndexList(positions17,loop_var23);
-          Assign loop_var23 = Add(loop_var23,1);
-          Goto: Label 24
+          Let lookee31 = LookupInDict(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),0) HiByte(DeAddress(lookee31));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),1) LoByte(DeAddress(lookee31));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),2) StringLength(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),3) IndexList(positions17,loop_var22);
+          Assign loop_var22 = Add(loop_var22,1);
+          Goto: Label 23
         }
       }
     } else {
-      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var21) IndexList(string_bytes_20,loop_var21);
-      Assign loop_var21 = Add(loop_var21,1);
-      Goto: Label 22
+      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var20) IndexList(string_bytes_19,loop_var20);
+      Assign loop_var20 = Add(loop_var20,1);
+      Goto: Label 21
     }
   }
 --------------------------------------------------
@@ -12405,15 +12405,15 @@ LocOp 029199:
     Let b15 = M[008295];
     Let b16 = M[008296];
     Let b17 = M[008297];
-    Tokenize user_command_line_13 (num_tokens_18,positions19,words20,canonicalized21);
-    StringBytes canonicalized21 string_bytes_22;
-    Let loop_var23 = 0;
-    Label 24: {
-      if (Equal(loop_var23,Widen(StringLength(canonicalized21)))) {
+    Tokenize user_command_line_13 (num_tokens_18,positions19,words20);
+    StringBytes user_command_line_13 string_bytes_21;
+    Let loop_var22 = 0;
+    Label 23: {
+      if (Equal(loop_var22,Widen(StringLength(user_command_line_13)))) {
         SetByte Offset(Address(MakeHiLo(b16,b17)),1) num_tokens_18;
-        Let loop_var25 = 0;
-        Label 26: {
-          if (Equal(loop_var25,Widen(num_tokens_18))) {
+        Let loop_var24 = 0;
+        Label 25: {
+          if (Equal(loop_var24,Widen(num_tokens_18))) {
             TraceOperation 029294 (Store (Con 208) (Con 0));
             SetByte 008292 0;
             SetByte 008293 0;
@@ -12421,19 +12421,19 @@ LocOp 029199:
             GamePrint "\n";
             Jump: 029298
           } else {
-            Let lookee27 = LookupInDict(IndexList(words20,loop_var25));
-            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var25)),0) HiByte(DeAddress(lookee27));
-            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var25)),1) LoByte(DeAddress(lookee27));
-            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var25)),2) StringLength(IndexList(words20,loop_var25));
-            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var25)),3) IndexList(positions19,loop_var25);
-            Assign loop_var25 = Add(loop_var25,1);
-            Goto: Label 26
+            Let lookee26 = LookupInDict(IndexList(words20,loop_var24));
+            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var24)),0) HiByte(DeAddress(lookee26));
+            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var24)),1) LoByte(DeAddress(lookee26));
+            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var24)),2) StringLength(IndexList(words20,loop_var24));
+            SetByte Offset(Offset(Offset(Address(MakeHiLo(b16,b17)),2),Mul(4,loop_var24)),3) IndexList(positions19,loop_var24);
+            Assign loop_var24 = Add(loop_var24,1);
+            Goto: Label 25
           }
         }
       } else {
-        SetByte Offset(Offset(Address(MakeHiLo(b14,b15)),1),loop_var23) IndexList(string_bytes_22,loop_var23);
-        Assign loop_var23 = Add(loop_var23,1);
-        Goto: Label 24
+        SetByte Offset(Offset(Address(MakeHiLo(b14,b15)),1),loop_var22) IndexList(string_bytes_21,loop_var22);
+        Assign loop_var22 = Add(loop_var22,1);
+        Goto: Label 23
       }
     }
   } else {
@@ -39203,43 +39203,43 @@ LocReturn 051424:
   Let b26 = M[008295];
   Let b27 = M[008296];
   Let b28 = M[008297];
-  Tokenize user_command_line_24 (num_tokens_29,positions30,words31,canonicalized32);
-  StringBytes canonicalized32 string_bytes_33;
-  Let loop_var34 = 0;
-  Label 35: {
-    if (Equal(loop_var34,Widen(StringLength(canonicalized32)))) {
+  Tokenize user_command_line_24 (num_tokens_29,positions30,words31);
+  StringBytes user_command_line_24 string_bytes_32;
+  Let loop_var33 = 0;
+  Label 34: {
+    if (Equal(loop_var33,Widen(StringLength(user_command_line_24)))) {
       SetByte Offset(Address(MakeHiLo(b27,b28)),1) num_tokens_29;
-      Let loop_var36 = 0;
-      Label 37: {
-        if (Equal(loop_var36,Widen(num_tokens_29))) {
+      Let loop_var35 = 0;
+      Label 36: {
+        if (Equal(loop_var35,Widen(num_tokens_29))) {
           TraceOperation 051512 (Print "The ");
           GamePrint "The ";
           TraceOperation 051515 (Print_obj (Con 3));
-          Let b38 = M[000785];
-          Let b39 = M[000786];
-          Let b40 = M[Address(MakeHiLo(b38,b39))];
-          Let ite_res41 = Ite((IsZeroByte(b40),"",GetText(Offset(Address(MakeHiLo(b38,b39)),1))));
-          GamePrint ite_res41;
+          Let b37 = M[000785];
+          Let b38 = M[000786];
+          Let b39 = M[Address(MakeHiLo(b37,b38))];
+          Let ite_res40 = Ite((IsZeroByte(b39),"",GetText(Offset(Address(MakeHiLo(b37,b38)),1))));
+          GamePrint ite_res40;
           TraceOperation 051517 (Print_ret " ignores your reply and shakes the Thumb despondently. \"This is a model 13X,\" he says. \"Not meant for this sort of job. Anyway, it's discontinued. Can't get the parts.\"");
           GamePrint " ignores your reply and shakes the Thumb despondently. \"This is a model 13X,\" he says. \"Not meant for this sort of job. Anyway, it's discontinued. Can't get the parts.\"\n";
           PopFrame;
-          PopReturnAddress return_address_42;
+          PopReturnAddress return_address_41;
           SetResult 1;
-          JumpIndirect: (return) return_address_42
+          JumpIndirect: (return) return_address_41
         } else {
-          Let lookee43 = LookupInDict(IndexList(words31,loop_var36));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var36)),0) HiByte(DeAddress(lookee43));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var36)),1) LoByte(DeAddress(lookee43));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var36)),2) StringLength(IndexList(words31,loop_var36));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var36)),3) IndexList(positions30,loop_var36);
-          Assign loop_var36 = Add(loop_var36,1);
-          Goto: Label 37
+          Let lookee42 = LookupInDict(IndexList(words31,loop_var35));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var35)),0) HiByte(DeAddress(lookee42));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var35)),1) LoByte(DeAddress(lookee42));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var35)),2) StringLength(IndexList(words31,loop_var35));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b27,b28)),2),Mul(4,loop_var35)),3) IndexList(positions30,loop_var35);
+          Assign loop_var35 = Add(loop_var35,1);
+          Goto: Label 36
         }
       }
     } else {
-      SetByte Offset(Offset(Address(MakeHiLo(b25,b26)),1),loop_var34) IndexList(string_bytes_33,loop_var34);
-      Assign loop_var34 = Add(loop_var34,1);
-      Goto: Label 35
+      SetByte Offset(Offset(Address(MakeHiLo(b25,b26)),1),loop_var33) IndexList(string_bytes_32,loop_var33);
+      Assign loop_var33 = Add(loop_var33,1);
+      Goto: Label 34
     }
   }
 LocOp 051626:
@@ -43764,30 +43764,30 @@ LocOp 061479:
   Let b13 = M[008295];
   Let b14 = M[008296];
   Let b15 = M[008297];
-  Tokenize user_command_line_11 (num_tokens_16,positions17,words18,canonicalized19);
-  StringBytes canonicalized19 string_bytes_20;
-  Let loop_var21 = 0;
-  Label 22: {
-    if (Equal(loop_var21,Widen(StringLength(canonicalized19)))) {
+  Tokenize user_command_line_11 (num_tokens_16,positions17,words18);
+  StringBytes user_command_line_11 string_bytes_19;
+  Let loop_var20 = 0;
+  Label 21: {
+    if (Equal(loop_var20,Widen(StringLength(user_command_line_11)))) {
       SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-      Let loop_var23 = 0;
-      Label 24: {
-        if (Equal(loop_var23,Widen(num_tokens_16))) {
+      Let loop_var22 = 0;
+      Label 23: {
+        if (Equal(loop_var22,Widen(num_tokens_16))) {
           TraceOperation 061490 (Inc (Con 157));
-          Let b25 = M[008190];
-          Let b26 = M[008191];
-          SetByte 008190 HiByte(Add(MakeHiLo(b25,b26),1));
-          SetByte 008191 LoByte(Add(MakeHiLo(b25,b26),1));
+          Let b24 = M[008190];
+          Let b25 = M[008191];
+          SetByte 008190 HiByte(Add(MakeHiLo(b24,b25),1));
+          SetByte 008191 LoByte(Add(MakeHiLo(b24,b25),1));
           TraceOperation 061492 (Je [Var (Global 141),Con 1,Con 2] (Branch F (Dloc 061616)));
-          Let b27 = M[008190];
-          Let b28 = M[008191];
-          if (LogOr(Equal(MakeHiLo(b27,b28),1),Equal(MakeHiLo(b27,b28),2))) {
+          Let b26 = M[008190];
+          Let b27 = M[008191];
+          if (LogOr(Equal(MakeHiLo(b26,b27),1),Equal(MakeHiLo(b26,b27),2))) {
             TraceOperation 061499 (Print "You keep out of this, you're dead");
             GamePrint "You keep out of this, you're dead";
             TraceOperation 061516 (Je [Var (Global 141),Con 1] (Branch F (Dloc 061542)));
-            Let b29 = M[008190];
-            Let b30 = M[008191];
-            if (Equal(MakeHiLo(b29,b30),1)) {
+            Let b28 = M[008190];
+            Let b29 = M[008191];
+            if (Equal(MakeHiLo(b28,b29),1)) {
               TraceOperation 061520 (Print ". An ambulance arrives.");
               GamePrint ". An ambulance arrives.";
               TraceOperation 061539 (Jump 061479);
@@ -43799,19 +43799,19 @@ LocOp 061479:
             Jump: 061616
           }
         } else {
-          Let lookee31 = LookupInDict(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),0) HiByte(DeAddress(lookee31));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),1) LoByte(DeAddress(lookee31));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),2) StringLength(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),3) IndexList(positions17,loop_var23);
-          Assign loop_var23 = Add(loop_var23,1);
-          Goto: Label 24
+          Let lookee30 = LookupInDict(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),0) HiByte(DeAddress(lookee30));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),1) LoByte(DeAddress(lookee30));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),2) StringLength(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),3) IndexList(positions17,loop_var22);
+          Assign loop_var22 = Add(loop_var22,1);
+          Goto: Label 23
         }
       }
     } else {
-      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var21) IndexList(string_bytes_20,loop_var21);
-      Assign loop_var21 = Add(loop_var21,1);
-      Goto: Label 22
+      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var20) IndexList(string_bytes_19,loop_var20);
+      Assign loop_var20 = Add(loop_var20,1);
+      Goto: Label 21
     }
   }
 LocOp 061542:
@@ -53180,49 +53180,49 @@ LocOp 076565:
   Let b13 = M[008295];
   Let b14 = M[008296];
   Let b15 = M[008297];
-  Tokenize user_command_line_11 (num_tokens_16,positions17,words18,canonicalized19);
-  StringBytes canonicalized19 string_bytes_20;
-  Let loop_var21 = 0;
-  Label 22: {
-    if (Equal(loop_var21,Widen(StringLength(canonicalized19)))) {
+  Tokenize user_command_line_11 (num_tokens_16,positions17,words18);
+  StringBytes user_command_line_11 string_bytes_19;
+  Let loop_var20 = 0;
+  Label 21: {
+    if (Equal(loop_var20,Widen(StringLength(user_command_line_11)))) {
       SetByte Offset(Address(MakeHiLo(b14,b15)),1) num_tokens_16;
-      Let loop_var23 = 0;
-      Label 24: {
-        if (Equal(loop_var23,Widen(num_tokens_16))) {
+      Let loop_var22 = 0;
+      Label 23: {
+        if (Equal(loop_var22,Widen(num_tokens_16))) {
           TraceOperation 076576 (Loadw (Var (Global 194)) (Con 1) Sp);
-          Let b25 = M[008296];
-          Let b26 = M[008297];
-          Let b27 = M[Offset(Address(MakeHiLo(b25,b26)),2)];
-          Let b28 = M[Offset(Offset(Address(MakeHiLo(b25,b26)),2),1)];
-          PushStack MakeHiLo(b27,b28);
+          Let b24 = M[008296];
+          Let b25 = M[008297];
+          Let b26 = M[Offset(Address(MakeHiLo(b24,b25)),2)];
+          Let b27 = M[Offset(Offset(Address(MakeHiLo(b24,b25)),2),1)];
+          PushStack MakeHiLo(b26,b27);
           TraceOperation 076580 (Je [Var Sp,Con 16444] (Branch F Dfalse));
-          PopStack popped29;
-          if (Equal(popped29,16444)) {
+          PopStack popped28;
+          if (Equal(popped28,16444)) {
             TraceOperation 076586 Rtrue;
             PopFrame;
-            PopReturnAddress return_address_30;
+            PopReturnAddress return_address_29;
             SetResult 1;
-            JumpIndirect: (return) return_address_30
+            JumpIndirect: (return) return_address_29
           } else {
             PopFrame;
-            PopReturnAddress return_address_31;
+            PopReturnAddress return_address_30;
             SetResult 0;
-            JumpIndirect: (return) return_address_31
+            JumpIndirect: (return) return_address_30
           }
         } else {
-          Let lookee32 = LookupInDict(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),0) HiByte(DeAddress(lookee32));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),1) LoByte(DeAddress(lookee32));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),2) StringLength(IndexList(words18,loop_var23));
-          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var23)),3) IndexList(positions17,loop_var23);
-          Assign loop_var23 = Add(loop_var23,1);
-          Goto: Label 24
+          Let lookee31 = LookupInDict(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),0) HiByte(DeAddress(lookee31));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),1) LoByte(DeAddress(lookee31));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),2) StringLength(IndexList(words18,loop_var22));
+          SetByte Offset(Offset(Offset(Address(MakeHiLo(b14,b15)),2),Mul(4,loop_var22)),3) IndexList(positions17,loop_var22);
+          Assign loop_var22 = Add(loop_var22,1);
+          Goto: Label 23
         }
       }
     } else {
-      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var21) IndexList(string_bytes_20,loop_var21);
-      Assign loop_var21 = Add(loop_var21,1);
-      Goto: Label 22
+      SetByte Offset(Offset(Address(MakeHiLo(b12,b13)),1),loop_var20) IndexList(string_bytes_19,loop_var20);
+      Assign loop_var20 = Add(loop_var20,1);
+      Goto: Label 21
     }
   }
 --------------------------------------------------

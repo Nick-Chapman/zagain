@@ -6,14 +6,13 @@ import Data.List.Extra (lower)
 import Dictionary (Dict(..))
 import Numbers (Byte,Addr,Zversion(..))
 
-tokenize :: String -> (Byte,[Byte],[String],String) -- TODO: dont return canonicalized
+tokenize :: String -> (Byte,[Byte],[String])
 tokenize s = do
   let better = xtokenize s -- TODO: inline
   let offsets = [ offset | Alpha offset _ <- better ]
   let toks = [ tok | Alpha _ tok <- better ]
   let n = length better
-  let canonicalized = s ++ "\0" -- TODO: dont add null
-  (fromIntegral n,offsets,toks,canonicalized)
+  (fromIntegral n,offsets,toks)
 
 data Tok = Alpha Byte String -- TODO: dont need
 

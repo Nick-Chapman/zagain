@@ -137,5 +137,5 @@ data Eff p x where
   StringLength :: Text p -> Eff p (Byte p)
   Sub :: Value p -> Value p -> Eff p (Value p)
   TestBit :: Byte p -> Byte p -> Eff p (Pred p)
-  Tokenize :: Text p -> Eff p (Byte p,Vector p (Byte p),Vector p (Text p),Text p)
+  Tokenize :: Text p -> Eff p (Byte p,Vector p (Byte p),Vector p (Text p))
   Widen :: Byte p -> Eff p (Value p)

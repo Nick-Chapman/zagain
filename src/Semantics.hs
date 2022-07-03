@@ -322,10 +322,11 @@ eval here op = case op of
     rawTyped <- ReadInputFromUser statusInfoM
     tBuf <- evalArg arg1 >>= Address
     pBuf <- evalArg arg2 >>= Address
-    (n,offsets,words,canoicalizedTyped) <- Tokenize rawTyped
+    (n,offsets,words) <- Tokenize rawTyped
     nw <- Widen n
     one <- LitV 1
     tBuf1 <- Offset tBuf one
+    let canoicalizedTyped = rawTyped
     foreachTextByte canoicalizedTyped $ \off b -> do
       a <- Offset tBuf1 off
       SetByte a b
