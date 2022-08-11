@@ -42,7 +42,7 @@ instance Show Chunk where
     intercalate "\n" ((show label ++ ":") : pretty 2 body)
 
 data Loc a = LocRoutine a | LocOp a | LocReturn a
-  deriving (Eq,Ord,Show)
+  deriving (Eq,Ord,Show,Functor)
 
 seeLoc :: Show a => Loc a -> String
 seeLoc = \case

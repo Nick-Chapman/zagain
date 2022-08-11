@@ -43,7 +43,7 @@ runProg q prog0 k = case prog0 of
   Goto label -> do
     undefined label
   JumpIndirect loc -> do
-    undefined loc -- TODO: here
+    runLoc q (eval q <$> loc)
   Jump loc -> do
     runLoc q loc
   Seq atom prog -> do
@@ -62,28 +62,55 @@ runAtom q atom0 k = case atom0 of
   SetByte a b -> do
     let Env{overrides} = q
     k q { overrides = Map.insert (eval q a) (eval q b) overrides }
-  Note{} -> undefined
-  GamePrint{} -> undefined
+  Note{} -> do
+    undefined
+  GamePrint{} -> do
+    undefined
   MakeRoutineFrame{} -> k q --TODO
   PushFrame -> k q-- TODO
   PopFrame -> k q -- TODO
-  PushReturnAddress{} -> k q -- TODO
-  PopReturnAddress{} -> k q -- TODO
-  PushStack{} -> undefined
-  PopStack{} -> undefined
+  PushReturnAddress e  -> do
+    let Env{callstack} = q
+    k q { callstack = eval q e : callstack }
+  PopReturnAddress x -> do
+    let Env{callstack} = q
+    case callstack of
+      [] -> error "callstack[]"
+      addr:callstack -> do
+        k $ (bind q x addr) { callstack }
+  PushStack e -> do
+    let Env{stack} = q
+    k q { stack = eval q e : stack }
+  PopStack x -> do
+    let Env{stack} = q
+    case stack of
+      [] -> error "stack[]"
+      v:stack -> do
+        k $ (bind q x v) { stack }
   SetLocal n v -> do
     let Env{locals} = q
     k q { locals = Map.insert (eval q n) (eval q v) locals }
-  ReadInputFromUser{} -> undefined
-  StringBytes{} -> undefined
-  Tokenize{} -> undefined
-  LetRandom{} -> undefined
+  ReadInputFromUser{} -> do
+    undefined
+  StringBytes{} -> do
+    undefined
+  Tokenize{} -> do
+    undefined
+  LetRandom{} -> do
+    undefined
   Let (Binding x e) -> do
-    let Env{bindings} = q
-    k q { bindings = extendB bindings x (eval q e) }
-  Assign{} -> undefined
-  SetNumberActuals{} -> undefined
-  SetResult{} -> k q -- TODO
+    k $ bind q x (eval q e)
+  Assign{} -> do
+    undefined
+  SetNumberActuals{} -> do
+    undefined
+  SetResult{} ->
+    k q -- TODO, need this
+
+
+bind :: Typeable x => Env ->  Identifier x -> x -> Env
+bind q@Env{bindings} x v = do q { bindings = extendB bindings x v }
+
 
 eval :: Env -> Expression a -> a
 eval q = \case
@@ -94,7 +121,7 @@ eval q = \case
   NumActuals -> do
     undefined q
   CallResult -> do
-    undefined
+    undefined -- TODO: here
   Variable x -> do
     let Env{bindings} = q
     maybe (error (show ("eval/Variable",x))) id $ lookupB bindings x
@@ -128,6 +155,8 @@ data Env = Env
   , bindings :: Bindings
   , overrides :: Map Addr Byte
   , count :: Int
+  , callstack :: [Addr]
+  , stack :: [Value]
   }
 
 makeEnv :: StaticEnv -> Env
@@ -137,6 +166,8 @@ makeEnv static = Env
   , bindings = emptyB
   , overrides = Map.empty
   , count = 0
+  , callstack = []
+  , stack = []
   }
 
 data Bindings = Bindings (Map Int Dynamic) -- Hetrogenous Map
