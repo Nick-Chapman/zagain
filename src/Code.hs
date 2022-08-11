@@ -7,6 +7,7 @@ module Code
   )
 where
 
+import Data.Dynamic (Typeable)
 import Data.List (intercalate)
 import Numbers (Addr,Byte,Value)
 import Operation (Operation)
@@ -128,7 +129,7 @@ data Atom
   deriving Show
 
 data Binding where
-  Binding :: Show x => Identifier x -> Expression x -> Binding
+  Binding :: (Show x,Typeable x) => Identifier x -> Expression x -> Binding
 
 instance Show Binding where
   show = \case
@@ -147,7 +148,7 @@ data Expression a where
   Const :: a -> Expression a
   NumActuals :: Expression Byte
   CallResult :: Expression Value
-  Variable :: Identifier a -> Expression a
+  Variable :: Typeable a => Identifier a -> Expression a
   Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
   GetByteE :: Expression Addr -> Expression Byte

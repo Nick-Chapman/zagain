@@ -3,14 +3,14 @@
 module Top (main)  where
 
 import Action (Conf(..))
+import Code (dumpCode)
+import Compiler (compileEffect)
 import Dictionary (fetchDict)
 import Disassemble (disassemble)
 import Fetch (runFetch)
+import RunCode (runCode)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
-import Code (dumpCode)
-import RunCode (runCode)
-import Compiler (compileEffect)
 import qualified Console (runAction)
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
@@ -105,7 +105,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaC
               | otherwise -> do
                   let eff = Semantics.smallStep
                   code <- compileEffect iconf story eff
-                  pure $ runCode seed code
+                  pure $ runCode story seed code
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a
         _ -> WalkThrough.runAction iconf inputs a
