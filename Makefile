@@ -3,6 +3,9 @@ top: trace walk dis code diff
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
+dev: $(exe)
+	$(exe) zork -trace -type '' -trace -viacomp
+
 trace: .reg reg/zork.trace
 walk: .reg reg/zork.walk reg/h.walk reg/judo.walk reg/trinity.walk
 dis: .reg reg/zork.dis reg/h.dis reg/judo.dis reg/trinity.dis

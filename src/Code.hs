@@ -3,23 +3,18 @@ module Code
   ( Code(..), CompiledRoutine(..), Chunk(..)
   , Prog(..), Atom(..), Binding(..), Label(..), Loc(..)
   , Expression(..), Identifier(..)
-  , runCode, dumpCode
+  , dumpCode
   )
 where
 
-import Action (Action)
 import Data.List (intercalate)
 import Numbers (Addr,Byte,Value)
 import Operation (Operation)
 import Text.Printf (printf)
-import qualified Action (Action(..))
 import qualified Eff (StatusInfo(..))
 import qualified Primitive as Prim
 
 --[code]--------------------------------------------------------------
-
-runCode :: Word -> Code -> Action
-runCode _ _ = do Action.Debug "**TODO:runCode" $ Action.Stop 99
 
 dumpCode :: Code -> IO ()
 dumpCode Code{routines} = do
