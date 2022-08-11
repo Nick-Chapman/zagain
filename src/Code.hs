@@ -40,7 +40,8 @@ instance Show Chunk where
   show Chunk{ label, body } =
     intercalate "\n" ((show label ++ ":") : pretty 2 body)
 
-data Loc a = LocRoutine a | LocOp a | LocReturn a deriving Show
+data Loc a = LocRoutine a | LocOp a | LocReturn a
+  deriving (Eq,Ord,Show)
 
 seeLoc :: Show a => Loc a -> String
 seeLoc = \case
@@ -62,6 +63,7 @@ data Prog where
   Seq :: Atom ->  Prog -> Prog
   FullSeq :: Prog -> Prog -> Prog
   If :: Expression Bool -> Prog -> Prog -> Prog
+  deriving Show
 
 pretty :: Int -> Prog -> [String]
 pretty i = \case
