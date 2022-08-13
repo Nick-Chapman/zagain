@@ -39,7 +39,8 @@ runProg q prog0 k = case prog0 of
   Error s -> do
     undefined s
   Labelled label p -> do
-    undefined label p
+    let _ = undefined label p -- TODO
+    k q
   Goto label -> do
     undefined label
   JumpIndirect loc -> do
@@ -64,8 +65,8 @@ runAtom q atom0 k = case atom0 of
     k q { overrides = Map.insert (eval q a) (eval q b) overrides }
   Note{} -> do
     undefined
-  GamePrint{} -> do
-    undefined
+  GamePrint mes -> do
+    A.Output (eval q mes) $ k q
   MakeRoutineFrame{} -> k q --TODO
   PushFrame -> k q-- TODO
   PopFrame -> k q -- TODO
