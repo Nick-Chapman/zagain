@@ -51,7 +51,7 @@ seeLoc = \case
   LocRoutine a -> "(routine) " ++ show a
 
 newtype Label = Label Int
-  deriving Show
+  deriving (Eq,Ord,Show)
 
 data Prog where
   Null :: Prog

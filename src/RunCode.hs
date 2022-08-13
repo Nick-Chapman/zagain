@@ -2,7 +2,7 @@
 module RunCode (runCode) where
 
 import Action (Action)
-import Code (Code(..),Loc(..),CompiledRoutine(..),Chunk(..),Prog(..),Atom(..),Expression(..),Identifier(..),Binding(..))
+import Code (Code(..),Loc(..),CompiledRoutine(..),Chunk(..),Prog(..),Atom(..),Expression(..),Identifier(..),Binding(..),Label)
 import Data.Dynamic (Typeable,Dynamic,toDyn,fromDynamic)
 import Data.Map (Map)
 import Numbers (Byte,Addr,Value)
@@ -39,10 +39,12 @@ runProg q prog0 k = case prog0 of
   Error s -> do
     undefined s
   Labelled label p -> do
-    let _ = undefined label -- TODO: need this
-    runProg q p k
+    let Env{labelledPrograms=lp} = q
+    runProg q { labelledPrograms = Map.insert label p lp } p k
   Goto label -> do
-    undefined label -- TODO: here
+    let Env{labelledPrograms=lp} = q
+    let p = maybe (error (show ("Goto",label))) id $ Map.lookup label lp
+    runProg q p k
   JumpIndirect loc -> do
     runLoc q (eval q <$> loc)
   Jump loc -> do
@@ -91,7 +93,7 @@ runAtom q atom0 k = case atom0 of
   GetLocal e x -> do
     let Env{locals} = q
     let n = eval q e
-    let v = maybe (error (show ("eval/GetLocalE",n))) id $ Map.lookup n locals
+    let v = maybe (error (show ("GetLocal",n))) id $ Map.lookup n locals
     k $ bind q x v
   SetLocal n v -> do
     let Env{locals} = q
@@ -162,6 +164,7 @@ data Env = Env -- TODO: rename State?
   , callstack :: [Addr]
   , stack :: [Value]
   , callResult :: Maybe Value
+  , labelledPrograms :: Map Label Prog
   }
 
 makeEnv :: Byte -> StaticEnv -> Env
@@ -174,6 +177,7 @@ makeEnv screenWidth static = Env
   , callstack = []
   , stack = []
   , callResult = Nothing
+  , labelledPrograms = Map.empty
   }
 
 data Bindings = Bindings (Map Int Dynamic) -- Hetrogenous Map
