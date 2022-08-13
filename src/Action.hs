@@ -19,7 +19,7 @@ data Conf = Conf
 data StatusLine = StatusLine { left :: String, right :: String }
 
 data Action
-  = TraceInstruction String Int Addr Operation Action
+  = TraceInstruction String Int Addr Operation Action -- TODO: kill state-string
   | Tab Action
   | UnTab Action
   | TraceRoutineCall Addr Action

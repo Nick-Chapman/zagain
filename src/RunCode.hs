@@ -9,8 +9,9 @@ import Decode (ztext)
 import Dictionary (Dict,fetchDict)
 import Eff (StatusInfo(..))
 import Fetch (runFetch)
+import Header (Header(..))
 import Numbers (Byte,Addr,Value)
-import Story (Story,readStoryByte,OOB_Mode(..))
+import Story (Story(header),readStoryByte,OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Action as A (Action(..),StatusLine(..))
 import qualified Data.Map as Map
@@ -18,24 +19,22 @@ import qualified Primitive as Prim
 
 runCode :: Byte -> Word -> Story -> Code -> Action
 runCode screenWidth _seed story code = do
-  let start = getStart code
-  let static = makeStaticEnv story code
-  let q = makeEnv screenWidth static
+  let q = makeState screenWidth story code
+  let Header{initialPC} = Story.header story
+  let start = LocOp initialPC
   runLoc q start
 
-getStart :: Code -> Loc Addr
-getStart _ = LocOp 20229 -- TODO: hack zork start address; get this from story
+runLoc :: State -> Loc Addr -> Action
+runLoc q@State{chunks} loc = do
+  let chunk = maybe (error (show ("runLoc",loc))) id $ Map.lookup loc chunks
+  runChunk q chunk
 
-runLoc :: Env -> Loc Addr -> Action
-runLoc q@Env{static} loc = do
-  runChunk q (findChunk static loc)
-
-runChunk :: Env -> Chunk -> Action
+runChunk :: State -> Chunk -> Action
 runChunk q Chunk{body} = do
   let k0 = error "runChunk didn't transfer control"
   runProg q body k0
 
-runProg :: Env -> Prog -> (Env -> Action) -> Action
+runProg :: State -> Prog -> (State -> Action) -> Action
 runProg q prog0 k = case prog0 of
   Null -> do
     k q
@@ -44,10 +43,10 @@ runProg q prog0 k = case prog0 of
   Error s -> do
     undefined s
   Labelled label p -> do
-    let Env{labelledPrograms=lp} = q
+    let State{labelledPrograms=lp} = q
     runProg q { labelledPrograms = Map.insert label p lp } p k
   Goto label -> do
-    let Env{labelledPrograms=lp} = q
+    let State{labelledPrograms=lp} = q
     let p = maybe (error (show ("Goto",label))) id $ Map.lookup label lp
     runProg q p k
   JumpIndirect loc -> do
@@ -61,14 +60,14 @@ runProg q prog0 k = case prog0 of
   If i t e -> do
     runProg q (if (eval q i) then t else e) k
 
-runAtom :: Env -> Atom -> (Env -> Action) -> Action
+runAtom :: State -> Atom -> (State -> Action) -> Action
 runAtom q atom0 k = case atom0 of
   TraceOperation e op -> do
-    let Env{count} = q
-    A.TraceInstruction "xx" count (eval q e) op $ do -- TODO: kill state-string
+    let State{count} = q
+    A.TraceInstruction "state-string" count (eval q e) op $ do
       k q { count = count + 1 }
   SetByte a b -> do
-    let Env{overrides} = q
+    let State{overrides} = q
     k q { overrides = Map.insert (eval q a) (eval q b) overrides }
   Note{} -> do
     undefined
@@ -76,42 +75,42 @@ runAtom q atom0 k = case atom0 of
     A.Output (eval q mes) $ k q
   MakeRoutineFrame{} -> k q --TODO
   PushFrame -> do
-    let Env{stack,locals,frames} = q
+    let State{stack,locals,frames} = q
     k q { frames = Frame{stack,locals} : frames, stack = [], locals = Map.empty }
   PopFrame -> do
-    let Env{frames} = q
+    let State{frames} = q
     case frames of
       [] -> error "PopFrame/frames=[]"
       Frame{stack,locals} : frames -> do
         k q { stack, locals, frames }
   PushReturnAddress e  -> do
-    let Env{callstack} = q
+    let State{callstack} = q
     k q { callstack = eval q e : callstack }
   PopReturnAddress x -> do
-    let Env{callstack} = q
+    let State{callstack} = q
     case callstack of
       [] -> error "PopReturnAddress/callstack=[]"
       addr:callstack -> do
         k $ (bind q x addr) { callstack }
   PushStack e -> do
-    let Env{stack} = q
+    let State{stack} = q
     k q { stack = eval q e : stack }
   PopStack x -> do
-    let Env{stack} = q
+    let State{stack} = q
     case stack of
       [] -> error "PopStack/stack=[]"
       v:stack -> do
         k $ (bind q x v) { stack }
   GetLocal e x -> do
-    let Env{locals} = q
+    let State{locals} = q
     let n = eval q e
     let v = maybe (error (show ("GetLocal",n))) id $ Map.lookup n locals
     k $ bind q x v
   SetLocal n v -> do
-    let Env{locals} = q
+    let State{locals} = q
     k q { locals = Map.insert (eval q n) (eval q v) locals }
   ReadInputFromUser statusInfo x -> do
-    let Env{count,lastCount} = q
+    let State{count,lastCount} = q
     let
       statusLineM =
         case statusInfo of
@@ -128,7 +127,7 @@ runAtom q atom0 k = case atom0 of
     let a = map Const a0 -- TODO: hmm
     k $ bind q x a
   Tokenize e (x,y,z) -> do
-    let Env{static=StaticEnv{dict}} = q
+    let State{dict} = q
     let (a,b0,c0) = Prim.evalP1 (Prim.Tokenize dict) (eval q e)
     let b = map Const b0 -- TODO: hmm
     let c = map Const c0 -- TODO: hmm
@@ -145,24 +144,24 @@ runAtom q atom0 k = case atom0 of
     k q { callResult = Just (eval q v) }
 
 
-bind :: Typeable x => Env ->  Identifier x -> x -> Env
-bind q@Env{bindings} x v = do q { bindings = extendB bindings x v }
+bind :: Typeable x => State ->  Identifier x -> x -> State
+bind q@State{bindings} x v = do q { bindings = extendB bindings x v }
 
 
-eval :: Env -> Expression a -> a
+eval :: State -> Expression a -> a
 eval q = \case
   Join e -> do
     eval q (eval q e) -- TODO: correctly typed, but why do I need this???
   Const x ->
     x
   NumActuals -> do
-    let Env{numActuals} = q
+    let State{numActuals} = q
     numActuals
   CallResult -> do
-    let Env{callResult} = q
+    let State{callResult} = q
     maybe (error "callResult=Nothing") id callResult
   Variable x -> do
-    let Env{bindings} = q
+    let State{bindings} = q
     maybe (error (show ("eval/Variable",x))) id $ lookupB bindings x
   Unary p1 e1 -> do
     Prim.evalP1 p1 (eval q e1)
@@ -170,16 +169,16 @@ eval q = \case
     Prim.evalP2 p2 (eval q e1) (eval q e2)
   GetByteE e -> do
     let n = eval q e
-    let Env { static = StaticEnv{story}, overrides } = q
+    let State{story,overrides} = q
     case Map.lookup n overrides of
       Just x -> x
       Nothing -> readStoryByte (oob "eval/GetByteE") story n
   GetTextE e -> do -- TODO: can we do all these potential decodes ahead of time!
-    let Env{static=StaticEnv{story}} = q
+    let State{story} = q
     let (text,_) = runFetch (oob "eval/GetTextE") (eval q e) story ztext
     text
   LookupInDictE e -> do
-    let Env{static=StaticEnv{dict}} = q
+    let State{dict} = q
     Prim.evalP1 (Prim.LookupInDict dict) (eval q e)
   Ite i t e -> do
     eval q (if (eval q i) then t else e)
@@ -187,19 +186,21 @@ eval q = \case
   where
     oob who = OOB_Error ("RunCode.eval:"++who)
 
-data Env = Env -- TODO: rename State?
-  { static :: StaticEnv -- TODO: inline this
-  , locals :: Map Byte Value
-  , bindings :: Bindings
-  , overrides :: Map Addr Byte
+data State = State
+  { chunks :: Map (Loc Addr) Chunk
+  , story :: Story
+  , dict :: Dict
   , lastCount :: Int
   , count :: Int
-  , callstack :: [Addr]
   , stack :: [Value]
+  , locals :: Map Byte Value
+  , frames :: [Frame]
+  , callstack :: [Addr]
+  , overrides :: Map Addr Byte
+  , numActuals :: Byte
   , callResult :: Maybe Value
   , labelledPrograms :: Map Label Prog
-  , numActuals :: Byte
-  , frames :: [Frame]
+  , bindings :: Bindings
   }
 
 data Frame = Frame
@@ -207,21 +208,31 @@ data Frame = Frame
   , locals :: Map Byte Value
   }
 
-makeEnv :: Byte -> StaticEnv -> Env
-makeEnv screenWidth static = Env
-  { static
-  , locals = Map.empty
-  , bindings = emptyB
-  , overrides = Map.fromList [ (0x21,screenWidth) ]
-  , lastCount = 0
-  , count = 0
-  , callstack = []
-  , stack = []
-  , callResult = Nothing
-  , labelledPrograms = Map.empty
-  , numActuals = 0
-  , frames = []
-  }
+makeState :: Byte -> Story -> Code -> State
+makeState screenWidth story code = do
+  let Code{routines} = code
+  let chunks = Map.fromList
+        [ (label,chunk)
+        | CompiledRoutine{chunks=rChunks} <- routines
+        , chunk@Chunk{label} <- rChunks
+        ]
+  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
+  State
+    { chunks
+    , story
+    , dict
+    , lastCount = 0
+    , count = 0
+    , stack = []
+    , locals = Map.empty
+    , frames = []
+    , callstack = []
+    , overrides = Map.fromList [ (0x21,screenWidth) ]
+    , numActuals = 0
+    , callResult = Nothing
+    , labelledPrograms = Map.empty
+    , bindings = emptyB
+    }
 
 data Bindings = Bindings (Map Int Dynamic) -- Hetrogenous Map
 
@@ -234,22 +245,3 @@ lookupB (Bindings m) (Identifier _ u) = Map.lookup u m >>= fromDynamic
 extendB :: Typeable a => Bindings -> Identifier a -> a -> Bindings
 extendB (Bindings m) (Identifier _ u) x = Bindings (Map.insert u (toDyn x) m)
 
-data StaticEnv = StaticEnv -- TODO: inline
-  { m :: Map (Loc Addr) Chunk -- TODO: rename chunks?
-  , story :: Story
-  , dict :: Dict
-  }
-
-makeStaticEnv :: Story -> Code -> StaticEnv
-makeStaticEnv story Code{routines} = do
-  let m = Map.fromList
-        [ (label,chunk)
-        | CompiledRoutine{chunks} <- routines
-        , chunk@Chunk{label} <- chunks
-        ]
-  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
-  StaticEnv { m, story, dict }
-
-findChunk :: StaticEnv -> Loc Addr -> Chunk
-findChunk StaticEnv{m} k = do
-  maybe (error (show ("findChunk",k))) id $ Map.lookup k m
