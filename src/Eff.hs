@@ -33,7 +33,7 @@ data Control p
 
 deriving instance Phase p => Show (Control p)
 
-data StatusInfo text value = StatusInfo
+data StatusInfo text value = StatusInfo -- TODO: shouldn't be in Eff
   { room :: text
   , score :: value
   , turns :: value

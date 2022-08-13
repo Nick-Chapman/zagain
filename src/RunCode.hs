@@ -5,9 +5,13 @@ import Action (Action)
 import Code (Code(..),Loc(..),CompiledRoutine(..),Chunk(..),Prog(..),Atom(..),Expression(..),Identifier(..),Binding(..),Label)
 import Data.Dynamic (Typeable,Dynamic,toDyn,fromDynamic)
 import Data.Map (Map)
+import Decode (ztext)
+import Eff (StatusInfo(..))
+import Fetch (runFetch)
 import Numbers (Byte,Addr,Value)
 import Story (Story,readStoryByte,OOB_Mode(..))
-import qualified Action as A (Action(..))
+import Text.Printf (printf)
+import qualified Action as A (Action(..),StatusLine(..))
 import qualified Data.Map as Map
 import qualified Primitive as Prim
 
@@ -19,7 +23,7 @@ runCode screenWidth _seed story code = do
   runLoc q start
 
 getStart :: Code -> Loc Addr
-getStart _ = LocOp 20229 -- TODO: hack zork start address
+getStart _ = LocOp 20229 -- TODO: hack zork start address; get this from story
 
 runLoc :: Env -> Loc Addr -> Action
 runLoc q@Env{static} loc = do
@@ -105,8 +109,19 @@ runAtom q atom0 k = case atom0 of
   SetLocal n v -> do
     let Env{locals} = q
     k q { locals = Map.insert (eval q n) (eval q v) locals }
-  ReadInputFromUser{} -> do
-    undefined
+  ReadInputFromUser statusInfo x -> do
+    let Env{count,lastCount} = q
+    let
+      statusLineM =
+        case statusInfo of
+          Nothing -> Nothing
+          Just (StatusInfo{room,score,turns}) ->
+            Just (A.StatusLine
+                   { left = eval q room
+                   , right = printf "score:%s--turns:%s" (show score) (show turns)
+                   })
+    A.Input statusLineM (count-lastCount) $ \response -> do
+      k $ (bind q x response) { lastCount = count }
   StringBytes{} -> do
     undefined
   Tokenize{} -> do
@@ -152,21 +167,24 @@ eval q = \case
     case Map.lookup n overrides of
       Just x -> x
       Nothing -> readStoryByte (oob "eval/GetByteE") story n
-  GetTextE e -> do
-    undefined e
+  GetTextE e -> do -- TODO: can we do all these potential decodes ahead of time!
+    let Env{static=StaticEnv{story}} = q
+    let (text,_) = runFetch (oob "eval/GetTextE") (eval q e) story ztext
+    text
   LookupInDictE e -> do
     undefined e
   Ite i t e -> do
-    undefined i t e
+    eval q (if (eval q i) then t else e)
 
   where
     oob who = OOB_Error ("RunCode.eval:"++who)
 
 data Env = Env -- TODO: rename State?
-  { static :: StaticEnv
+  { static :: StaticEnv -- TODO: inline this
   , locals :: Map Byte Value
   , bindings :: Bindings
   , overrides :: Map Addr Byte
+  , lastCount :: Int
   , count :: Int
   , callstack :: [Addr]
   , stack :: [Value]
@@ -187,6 +205,7 @@ makeEnv screenWidth static = Env
   , locals = Map.empty
   , bindings = emptyB
   , overrides = Map.fromList [ (0x21,screenWidth) ]
+  , lastCount = 0
   , count = 0
   , callstack = []
   , stack = []
@@ -207,8 +226,8 @@ lookupB (Bindings m) (Identifier _ u) = Map.lookup u m >>= fromDynamic
 extendB :: Typeable a => Bindings -> Identifier a -> a -> Bindings
 extendB (Bindings m) (Identifier _ u) x = Bindings (Map.insert u (toDyn x) m)
 
-data StaticEnv = StaticEnv
-  { m :: Map (Loc Addr) Chunk
+data StaticEnv = StaticEnv -- TODO: inline
+  { m :: Map (Loc Addr) Chunk -- TODO: rename chunks?
   , story :: Story
   }
 
