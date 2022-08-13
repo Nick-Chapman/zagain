@@ -77,7 +77,7 @@ eval here op = case op of
     v' <- Sub v one
     setDyn dyn v'
 
-  Op.Dec_chk arg1 arg2 label -> Isolate $ do
+  Op.Dec_chk arg1 arg2 label -> do
     dyn <- evalArgAsDyn arg1
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
@@ -139,14 +139,13 @@ eval here op = case op of
     v' <- Add v one
     setDyn dyn v'
 
-  Op.Inc_chk arg1 arg2 label -> Isolate $ do
+  Op.Inc_chk arg1 arg2 label -> do
     dyn <- evalArgAsDyn arg1
     v1 <- evalDyn dyn
     v2 <- evalArg arg2
     one <- LitV 1
     v1' <- Add v1 one
     setDyn dyn v1'
-    --Debug ("Inc_chk",arg1,arg2,label,"-->",dyn,v1,v2)
     res <- GreaterThanEqual v1 v2 >>= If
     branchMaybe label res
 

@@ -70,35 +70,38 @@ LocOp 015219:
     SetByte 007944 HiByte(Add(MakeHiLo(b4,b5),1));
     SetByte 007945 LoByte(Add(MakeHiLo(b4,b5),1));
     if (GreaterThanEqual(MakeHiLo(b4,b5),MakeHiLo(b6,b7))) {
-    }
-    TraceOperation 015234 (Get_parent (Con 148) (Global 149));
-    Let b8 = M[002087];
-    SetByte 008206 HiByte(Widen(b8));
-    SetByte 008207 LoByte(Widen(b8));
-    TraceOperation 015237 (Je [Var (Global 232),Con 0] (Branch F (Dloc 008731)));
-    Let b9 = M[008372];
-    Let b10 = M[008373];
-    if (Equal(MakeHiLo(b9,b10),0)) {
-      TraceOperation 015242 (Print_addr (Con 25));
-      Note "<static Gettext address>";
-      GamePrint "yqx";
-      TraceOperation 015244 (Dec_chk (Con 239) (Con 0) (Branch F (Dloc 008738)));
-      Let b11 = M[008354];
-      Let b12 = M[008355];
-      if (LessThanEqual(MakeHiLo(b11,b12),0)) {
-        SetByte 008354 HiByte(Sub(MakeHiLo(b11,b12),1));
-        SetByte 008355 LoByte(Sub(MakeHiLo(b11,b12),1));
+      TraceOperation 015234 (Get_parent (Con 148) (Global 149));
+      Let b8 = M[002087];
+      SetByte 008206 HiByte(Widen(b8));
+      SetByte 008207 LoByte(Widen(b8));
+      TraceOperation 015237 (Je [Var (Global 232),Con 0] (Branch F (Dloc 008731)));
+      Let b9 = M[008372];
+      Let b10 = M[008373];
+      if (Equal(MakeHiLo(b9,b10),0)) {
+        TraceOperation 015242 (Print_addr (Con 25));
+        Note "<static Gettext address>";
+        GamePrint "yqx";
+        TraceOperation 015244 (Dec_chk (Con 239) (Con 0) (Branch F (Dloc 008738)));
+        Let b11 = M[008354];
+        Let b12 = M[008355];
+        if (LessThanEqual(MakeHiLo(b11,b12),0)) {
+          SetByte 008354 HiByte(Sub(MakeHiLo(b11,b12),1));
+          SetByte 008355 LoByte(Sub(MakeHiLo(b11,b12),1));
+          TraceOperation 015249 (Ret (Con 42));
+          PopFrame;
+          PopReturnAddress return_address_13;
+          SetResult 42;
+          JumpIndirect: (return) return_address_13
+        } else {
+          SetByte 008354 HiByte(Sub(MakeHiLo(b11,b12),1));
+          SetByte 008355 LoByte(Sub(MakeHiLo(b11,b12),1));
+          Jump: 008738
+        }
       } else {
-        SetByte 008354 HiByte(Sub(MakeHiLo(b11,b12),1));
-        SetByte 008355 LoByte(Sub(MakeHiLo(b11,b12),1));
+        Jump: 008731
       }
-      TraceOperation 015249 (Ret (Con 42));
-      PopFrame;
-      PopReturnAddress return_address_13;
-      SetResult 42;
-      JumpIndirect: (return) return_address_13
     } else {
-      Jump: 008731
+      Jump: 015270
     }
   }
 --------------------------------------------------
@@ -277,34 +280,49 @@ LocOp 016745:
     PopStack popped3;
     if (LessThanEqual(popped3,212)) {
       PushStack Sub(popped3,1);
+      Jump: 009964
     } else {
       PushStack Sub(popped3,1);
+      TraceOperation 016750 (Je [Con 0,Con 68] (Branch T (Dloc 016775)));
+      TraceOperation 016754 Rfalse;
+      PopFrame;
+      PopReturnAddress return_address_4;
+      SetResult 0;
+      JumpIndirect: (return) return_address_4
     }
   } else {
     if (LessThanByte(b2,16)) {
       if (LessThanEqual(GetLocal(b2),212)) {
         SetLocal b2 Sub(GetLocal(b2),1);
+        Jump: 009964
       } else {
         SetLocal b2 Sub(GetLocal(b2),1);
+        TraceOperation 016750 (Je [Con 0,Con 68] (Branch T (Dloc 016775)));
+        TraceOperation 016754 Rfalse;
+        PopFrame;
+        PopReturnAddress return_address_5;
+        SetResult 0;
+        JumpIndirect: (return) return_address_5
       }
     } else {
-      Let b4 = M[Offset(007908,Mul(2,Widen(MinusByte(b2,16))))];
-      Let b5 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b2,16)))),1)];
-      if (LessThanEqual(MakeHiLo(b4,b5),212)) {
-        SetByte Offset(007908,Mul(2,Widen(MinusByte(b2,16)))) HiByte(Sub(MakeHiLo(b4,b5),1));
-        SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b2,16)))),1) LoByte(Sub(MakeHiLo(b4,b5),1));
+      Let b6 = M[Offset(007908,Mul(2,Widen(MinusByte(b2,16))))];
+      Let b7 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b2,16)))),1)];
+      if (LessThanEqual(MakeHiLo(b6,b7),212)) {
+        SetByte Offset(007908,Mul(2,Widen(MinusByte(b2,16)))) HiByte(Sub(MakeHiLo(b6,b7),1));
+        SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b2,16)))),1) LoByte(Sub(MakeHiLo(b6,b7),1));
+        Jump: 009964
       } else {
-        SetByte Offset(007908,Mul(2,Widen(MinusByte(b2,16)))) HiByte(Sub(MakeHiLo(b4,b5),1));
-        SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b2,16)))),1) LoByte(Sub(MakeHiLo(b4,b5),1));
+        SetByte Offset(007908,Mul(2,Widen(MinusByte(b2,16)))) HiByte(Sub(MakeHiLo(b6,b7),1));
+        SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b2,16)))),1) LoByte(Sub(MakeHiLo(b6,b7),1));
+        TraceOperation 016750 (Je [Con 0,Con 68] (Branch T (Dloc 016775)));
+        TraceOperation 016754 Rfalse;
+        PopFrame;
+        PopReturnAddress return_address_8;
+        SetResult 0;
+        JumpIndirect: (return) return_address_8
       }
     }
   }
-  TraceOperation 016750 (Je [Con 0,Con 68] (Branch T (Dloc 016775)));
-  TraceOperation 016754 Rfalse;
-  PopFrame;
-  PopReturnAddress return_address_6;
-  SetResult 0;
-  JumpIndirect: (return) return_address_6
 --------------------------------------------------
 LocRoutine 017212:
   MakeRoutineFrame 1;
@@ -429,122 +447,276 @@ LocOp 019119:
   SetByte 007944 HiByte(Add(MakeHiLo(b7,b8),1));
   SetByte 007945 LoByte(Add(MakeHiLo(b7,b8),1));
   if (GreaterThanEqual(MakeHiLo(b7,b8),MakeHiLo(b9,b10))) {
-  }
-  TraceOperation 019126 (Print_obj (Var (Global 153)));
-  Let b11 = M[008214];
-  Let b12 = M[008215];
-  Let b13 = M[Offset(Offset(000751,Mul(MakeHiLo(b11,b12),9)),7)];
-  Let b14 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b11,b12),9)),7),1)];
-  Let b15 = M[Address(MakeHiLo(b13,b14))];
-  Let ite_res16 = Ite((IsZeroByte(b15),"",GetText(Offset(Address(MakeHiLo(b13,b14)),1))));
-  GamePrint ite_res16;
-  TraceOperation 019128 (Test (Con 128) (Var (Local 1)) (Branch F (Dloc 019229)));
-  if (Equal(And(128,GetLocal(1)),GetLocal(1))) {
-    TraceOperation 019133 (Print_obj (Var (Global 206)));
-    Let b17 = M[008320];
-    Let b18 = M[008321];
-    Let b19 = M[Offset(Offset(000751,Mul(MakeHiLo(b17,b18),9)),7)];
-    Let b20 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b17,b18),9)),7),1)];
-    Let b21 = M[Address(MakeHiLo(b19,b20))];
-    Let ite_res22 = Ite((IsZeroByte(b21),"",GetText(Offset(Address(MakeHiLo(b19,b20)),1))));
-    GamePrint ite_res22;
-    TraceOperation 019135 (Inc_chk (Var (Global 18)) (Con 56) (Branch F (Dloc 019236)));
-    Let b23 = M[007944];
-    Let b24 = M[007945];
-    if (IsZeroByte(b24)) {
-      PopStack popped25;
-      PushStack Add(popped25,1);
-      if (GreaterThanEqual(popped25,56)) {
-      }
-    } else {
-      if (LessThanByte(b24,16)) {
-        SetLocal b24 Add(GetLocal(b24),1);
-        if (GreaterThanEqual(GetLocal(b24),56)) {
-        }
-      } else {
-        Let b26 = M[Offset(007908,Mul(2,Widen(MinusByte(b24,16))))];
-        Let b27 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b24,16)))),1)];
-        SetByte Offset(007908,Mul(2,Widen(MinusByte(b24,16)))) HiByte(Add(MakeHiLo(b26,b27),1));
-        SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b24,16)))),1) LoByte(Add(MakeHiLo(b26,b27),1));
-        if (GreaterThanEqual(MakeHiLo(b26,b27),56)) {
-        }
-      }
-    }
-    TraceOperation 019140 (Load (Var (Global 182)) (Global 21));
-    Let b28 = M[008272];
-    Let b29 = M[008273];
-    if (IsZeroByte(b29)) {
-      PopStack popped30;
-      PushStack popped30;
-      SetByte 007950 HiByte(popped30);
-      SetByte 007951 LoByte(popped30);
-    } else {
-      if (LessThanByte(b29,16)) {
-        SetByte 007950 HiByte(GetLocal(b29));
-        SetByte 007951 LoByte(GetLocal(b29));
-      } else {
-        Let b31 = M[Offset(007908,Mul(2,Widen(MinusByte(b29,16))))];
-        Let b32 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b29,16)))),1)];
-        SetByte 007950 b31;
-        SetByte 007951 b32;
-      }
-    }
-    TraceOperation 019143 (Je [Var (Global 188),Con 0] (Branch F (Dloc 019179)));
-    Let b33 = M[008284];
-    Let b34 = M[008285];
-    if (Equal(MakeHiLo(b33,b34),0)) {
-      TraceOperation 019147 (Load (Var (Global 188)) (Global 149));
-      Let b35 = M[008284];
-      Let b36 = M[008285];
-      if (IsZeroByte(b36)) {
-        PopStack popped37;
-        PushStack popped37;
-        SetByte 008206 HiByte(popped37);
-        SetByte 008207 LoByte(popped37);
-      } else {
-        if (LessThanByte(b36,16)) {
-          SetByte 008206 HiByte(GetLocal(b36));
-          SetByte 008207 LoByte(GetLocal(b36));
-        } else {
-          Let b38 = M[Offset(007908,Mul(2,Widen(MinusByte(b36,16))))];
-          Let b39 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b36,16)))),1)];
-          SetByte 008206 b38;
-          SetByte 008207 b39;
-        }
-      }
-      TraceOperation 019150 (Je [Var (Global 211),Con 0] (Branch F (Dloc 019186)));
-      Let b40 = M[008330];
-      Let b41 = M[008331];
-      if (Equal(MakeHiLo(b40,b41),0)) {
-        TraceOperation 019154 (Load (Var (Global 205)) (Global 53));
-        Let b42 = M[008318];
-        Let b43 = M[008319];
-        if (IsZeroByte(b43)) {
-          PopStack popped44;
-          PushStack popped44;
-          SetByte 008014 HiByte(popped44);
-          SetByte 008015 LoByte(popped44);
-        } else {
-          if (LessThanByte(b43,16)) {
-            SetByte 008014 HiByte(GetLocal(b43));
-            SetByte 008015 LoByte(GetLocal(b43));
+    TraceOperation 019126 (Print_obj (Var (Global 153)));
+    Let b11 = M[008214];
+    Let b12 = M[008215];
+    Let b13 = M[Offset(Offset(000751,Mul(MakeHiLo(b11,b12),9)),7)];
+    Let b14 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b11,b12),9)),7),1)];
+    Let b15 = M[Address(MakeHiLo(b13,b14))];
+    Let ite_res16 = Ite((IsZeroByte(b15),"",GetText(Offset(Address(MakeHiLo(b13,b14)),1))));
+    GamePrint ite_res16;
+    TraceOperation 019128 (Test (Con 128) (Var (Local 1)) (Branch F (Dloc 019229)));
+    if (Equal(And(128,GetLocal(1)),GetLocal(1))) {
+      TraceOperation 019133 (Print_obj (Var (Global 206)));
+      Let b17 = M[008320];
+      Let b18 = M[008321];
+      Let b19 = M[Offset(Offset(000751,Mul(MakeHiLo(b17,b18),9)),7)];
+      Let b20 = M[Offset(Offset(Offset(000751,Mul(MakeHiLo(b17,b18),9)),7),1)];
+      Let b21 = M[Address(MakeHiLo(b19,b20))];
+      Let ite_res22 = Ite((IsZeroByte(b21),"",GetText(Offset(Address(MakeHiLo(b19,b20)),1))));
+      GamePrint ite_res22;
+      TraceOperation 019135 (Inc_chk (Var (Global 18)) (Con 56) (Branch F (Dloc 019236)));
+      Let b23 = M[007944];
+      Let b24 = M[007945];
+      if (IsZeroByte(b24)) {
+        PopStack popped25;
+        PushStack Add(popped25,1);
+        if (GreaterThanEqual(popped25,56)) {
+          TraceOperation 019140 (Load (Var (Global 182)) (Global 21));
+          Let b26 = M[008272];
+          Let b27 = M[008273];
+          if (IsZeroByte(b27)) {
+            PopStack popped28;
+            PushStack popped28;
+            SetByte 007950 HiByte(popped28);
+            SetByte 007951 LoByte(popped28);
           } else {
-            Let b45 = M[Offset(007908,Mul(2,Widen(MinusByte(b43,16))))];
-            Let b46 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b43,16)))),1)];
-            SetByte 008014 b45;
-            SetByte 008015 b46;
+            if (LessThanByte(b27,16)) {
+              SetByte 007950 HiByte(GetLocal(b27));
+              SetByte 007951 LoByte(GetLocal(b27));
+            } else {
+              Let b29 = M[Offset(007908,Mul(2,Widen(MinusByte(b27,16))))];
+              Let b30 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b27,16)))),1)];
+              SetByte 007950 b29;
+              SetByte 007951 b30;
+            }
+          }
+          TraceOperation 019143 (Je [Var (Global 188),Con 0] (Branch F (Dloc 019179)));
+          Let b31 = M[008284];
+          Let b32 = M[008285];
+          if (Equal(MakeHiLo(b31,b32),0)) {
+            TraceOperation 019147 (Load (Var (Global 188)) (Global 149));
+            Let b33 = M[008284];
+            Let b34 = M[008285];
+            if (IsZeroByte(b34)) {
+              PopStack popped35;
+              PushStack popped35;
+              SetByte 008206 HiByte(popped35);
+              SetByte 008207 LoByte(popped35);
+            } else {
+              if (LessThanByte(b34,16)) {
+                SetByte 008206 HiByte(GetLocal(b34));
+                SetByte 008207 LoByte(GetLocal(b34));
+              } else {
+                Let b36 = M[Offset(007908,Mul(2,Widen(MinusByte(b34,16))))];
+                Let b37 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b34,16)))),1)];
+                SetByte 008206 b36;
+                SetByte 008207 b37;
+              }
+            }
+            TraceOperation 019150 (Je [Var (Global 211),Con 0] (Branch F (Dloc 019186)));
+            Let b38 = M[008330];
+            Let b39 = M[008331];
+            if (Equal(MakeHiLo(b38,b39),0)) {
+              TraceOperation 019154 (Load (Var (Global 205)) (Global 53));
+              Let b40 = M[008318];
+              Let b41 = M[008319];
+              if (IsZeroByte(b41)) {
+                PopStack popped42;
+                PushStack popped42;
+                SetByte 008014 HiByte(popped42);
+                SetByte 008015 LoByte(popped42);
+              } else {
+                if (LessThanByte(b41,16)) {
+                  SetByte 008014 HiByte(GetLocal(b41));
+                  SetByte 008015 LoByte(GetLocal(b41));
+                } else {
+                  Let b43 = M[Offset(007908,Mul(2,Widen(MinusByte(b41,16))))];
+                  Let b44 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b41,16)))),1)];
+                  SetByte 008014 b43;
+                  SetByte 008015 b44;
+                }
+              }
+              TraceOperation 019157 (Jz (Con 256) (Branch F (Dloc 019193)));
+              Jump: 019193
+            } else {
+              Jump: 019186
+            }
+          } else {
+            Jump: 019179
+          }
+        } else {
+          Jump: 019236
+        }
+      } else {
+        if (LessThanByte(b24,16)) {
+          SetLocal b24 Add(GetLocal(b24),1);
+          if (GreaterThanEqual(GetLocal(b24),56)) {
+            TraceOperation 019140 (Load (Var (Global 182)) (Global 21));
+            Let b45 = M[008272];
+            Let b46 = M[008273];
+            if (IsZeroByte(b46)) {
+              PopStack popped47;
+              PushStack popped47;
+              SetByte 007950 HiByte(popped47);
+              SetByte 007951 LoByte(popped47);
+            } else {
+              if (LessThanByte(b46,16)) {
+                SetByte 007950 HiByte(GetLocal(b46));
+                SetByte 007951 LoByte(GetLocal(b46));
+              } else {
+                Let b48 = M[Offset(007908,Mul(2,Widen(MinusByte(b46,16))))];
+                Let b49 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b46,16)))),1)];
+                SetByte 007950 b48;
+                SetByte 007951 b49;
+              }
+            }
+            TraceOperation 019143 (Je [Var (Global 188),Con 0] (Branch F (Dloc 019179)));
+            Let b50 = M[008284];
+            Let b51 = M[008285];
+            if (Equal(MakeHiLo(b50,b51),0)) {
+              TraceOperation 019147 (Load (Var (Global 188)) (Global 149));
+              Let b52 = M[008284];
+              Let b53 = M[008285];
+              if (IsZeroByte(b53)) {
+                PopStack popped54;
+                PushStack popped54;
+                SetByte 008206 HiByte(popped54);
+                SetByte 008207 LoByte(popped54);
+              } else {
+                if (LessThanByte(b53,16)) {
+                  SetByte 008206 HiByte(GetLocal(b53));
+                  SetByte 008207 LoByte(GetLocal(b53));
+                } else {
+                  Let b55 = M[Offset(007908,Mul(2,Widen(MinusByte(b53,16))))];
+                  Let b56 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b53,16)))),1)];
+                  SetByte 008206 b55;
+                  SetByte 008207 b56;
+                }
+              }
+              TraceOperation 019150 (Je [Var (Global 211),Con 0] (Branch F (Dloc 019186)));
+              Let b57 = M[008330];
+              Let b58 = M[008331];
+              if (Equal(MakeHiLo(b57,b58),0)) {
+                TraceOperation 019154 (Load (Var (Global 205)) (Global 53));
+                Let b59 = M[008318];
+                Let b60 = M[008319];
+                if (IsZeroByte(b60)) {
+                  PopStack popped61;
+                  PushStack popped61;
+                  SetByte 008014 HiByte(popped61);
+                  SetByte 008015 LoByte(popped61);
+                } else {
+                  if (LessThanByte(b60,16)) {
+                    SetByte 008014 HiByte(GetLocal(b60));
+                    SetByte 008015 LoByte(GetLocal(b60));
+                  } else {
+                    Let b62 = M[Offset(007908,Mul(2,Widen(MinusByte(b60,16))))];
+                    Let b63 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b60,16)))),1)];
+                    SetByte 008014 b62;
+                    SetByte 008015 b63;
+                  }
+                }
+                TraceOperation 019157 (Jz (Con 256) (Branch F (Dloc 019193)));
+                Jump: 019193
+              } else {
+                Jump: 019186
+              }
+            } else {
+              Jump: 019179
+            }
+          } else {
+            Jump: 019236
+          }
+        } else {
+          Let b64 = M[Offset(007908,Mul(2,Widen(MinusByte(b24,16))))];
+          Let b65 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b24,16)))),1)];
+          SetByte Offset(007908,Mul(2,Widen(MinusByte(b24,16)))) HiByte(Add(MakeHiLo(b64,b65),1));
+          SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b24,16)))),1) LoByte(Add(MakeHiLo(b64,b65),1));
+          if (GreaterThanEqual(MakeHiLo(b64,b65),56)) {
+            TraceOperation 019140 (Load (Var (Global 182)) (Global 21));
+            Let b66 = M[008272];
+            Let b67 = M[008273];
+            if (IsZeroByte(b67)) {
+              PopStack popped68;
+              PushStack popped68;
+              SetByte 007950 HiByte(popped68);
+              SetByte 007951 LoByte(popped68);
+            } else {
+              if (LessThanByte(b67,16)) {
+                SetByte 007950 HiByte(GetLocal(b67));
+                SetByte 007951 LoByte(GetLocal(b67));
+              } else {
+                Let b69 = M[Offset(007908,Mul(2,Widen(MinusByte(b67,16))))];
+                Let b70 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b67,16)))),1)];
+                SetByte 007950 b69;
+                SetByte 007951 b70;
+              }
+            }
+            TraceOperation 019143 (Je [Var (Global 188),Con 0] (Branch F (Dloc 019179)));
+            Let b71 = M[008284];
+            Let b72 = M[008285];
+            if (Equal(MakeHiLo(b71,b72),0)) {
+              TraceOperation 019147 (Load (Var (Global 188)) (Global 149));
+              Let b73 = M[008284];
+              Let b74 = M[008285];
+              if (IsZeroByte(b74)) {
+                PopStack popped75;
+                PushStack popped75;
+                SetByte 008206 HiByte(popped75);
+                SetByte 008207 LoByte(popped75);
+              } else {
+                if (LessThanByte(b74,16)) {
+                  SetByte 008206 HiByte(GetLocal(b74));
+                  SetByte 008207 LoByte(GetLocal(b74));
+                } else {
+                  Let b76 = M[Offset(007908,Mul(2,Widen(MinusByte(b74,16))))];
+                  Let b77 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b74,16)))),1)];
+                  SetByte 008206 b76;
+                  SetByte 008207 b77;
+                }
+              }
+              TraceOperation 019150 (Je [Var (Global 211),Con 0] (Branch F (Dloc 019186)));
+              Let b78 = M[008330];
+              Let b79 = M[008331];
+              if (Equal(MakeHiLo(b78,b79),0)) {
+                TraceOperation 019154 (Load (Var (Global 205)) (Global 53));
+                Let b80 = M[008318];
+                Let b81 = M[008319];
+                if (IsZeroByte(b81)) {
+                  PopStack popped82;
+                  PushStack popped82;
+                  SetByte 008014 HiByte(popped82);
+                  SetByte 008015 LoByte(popped82);
+                } else {
+                  if (LessThanByte(b81,16)) {
+                    SetByte 008014 HiByte(GetLocal(b81));
+                    SetByte 008015 LoByte(GetLocal(b81));
+                  } else {
+                    Let b83 = M[Offset(007908,Mul(2,Widen(MinusByte(b81,16))))];
+                    Let b84 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b81,16)))),1)];
+                    SetByte 008014 b83;
+                    SetByte 008015 b84;
+                  }
+                }
+                TraceOperation 019157 (Jz (Con 256) (Branch F (Dloc 019193)));
+                Jump: 019193
+              } else {
+                Jump: 019186
+              }
+            } else {
+              Jump: 019179
+            }
+          } else {
+            Jump: 019236
           }
         }
-        TraceOperation 019157 (Jz (Con 256) (Branch F (Dloc 019193)));
-        Jump: 019193
-      } else {
-        Jump: 019186
       }
     } else {
-      Jump: 019179
+      Jump: 019229
     }
   } else {
-    Jump: 019229
+    Jump: 019222
   }
 --------------------------------------------------
 LocRoutine 019292:
@@ -1051,9 +1223,11 @@ LocOp 020953:
   TraceOperation 020953 (Inc_chk (Con 4) (Var (Local 1)) (Branch F (Dloc 020960)));
   SetLocal 4 Add(GetLocal(4),1);
   if (GreaterThanEqual(GetLocal(4),GetLocal(1))) {
+    TraceOperation 020957 (Jump 020977);
+    Jump: 020977
+  } else {
+    Jump: 020960
   }
-  TraceOperation 020957 (Jump 020977);
-  Jump: 020977
 LocOp 020960:
   TraceOperation 020960 (Loadw (Var (Global 166)) (Var (Local 4)) Sp);
   Let b1 = M[008240];
@@ -1090,9 +1264,11 @@ LocOp 020983:
   TraceOperation 020983 (Inc_chk (Con 4) (Var (Local 2)) (Branch F (Dloc 020990)));
   SetLocal 4 Add(GetLocal(4),1);
   if (GreaterThanEqual(GetLocal(4),GetLocal(2))) {
+    TraceOperation 020987 (Jump 021004);
+    Jump: 021004
+  } else {
+    Jump: 020990
   }
-  TraceOperation 020987 (Jump 021004);
-  Jump: 021004
 LocOp 020990:
   TraceOperation 020990 (Loadw (Var (Global 167)) (Var (Local 4)) Sp);
   Let b1 = M[008242];
@@ -1403,25 +1579,27 @@ LocOp 021220:
   TraceOperation 021220 (Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 021299)));
   SetLocal 4 Add(GetLocal(4),1);
   if (GreaterThanEqual(GetLocal(4),GetLocal(3))) {
-  }
-  TraceOperation 021225 (Jg (Var (Global 226)) (Con 0) (Branch F (Dloc 021289)));
-  Let b1 = M[008360];
-  Let b2 = M[008361];
-  if (GreaterThan(MakeHiLo(b1,b2),0)) {
-    TraceOperation 021230 (Print "The ");
-    GamePrint "The ";
-    TraceOperation 021233 (Je [Var (Global 226),Var (Local 3)] (Branch T (Dloc 021242)));
-    Let b3 = M[008360];
-    Let b4 = M[008361];
-    if (Equal(MakeHiLo(b3,b4),GetLocal(3))) {
-      Jump: 021242
+    TraceOperation 021225 (Jg (Var (Global 226)) (Con 0) (Branch F (Dloc 021289)));
+    Let b1 = M[008360];
+    Let b2 = M[008361];
+    if (GreaterThan(MakeHiLo(b1,b2),0)) {
+      TraceOperation 021230 (Print "The ");
+      GamePrint "The ";
+      TraceOperation 021233 (Je [Var (Global 226),Var (Local 3)] (Branch T (Dloc 021242)));
+      Let b3 = M[008360];
+      Let b4 = M[008361];
+      if (Equal(MakeHiLo(b3,b4),GetLocal(3))) {
+        Jump: 021242
+      } else {
+        TraceOperation 021237 (Print "other ");
+        GamePrint "other ";
+        Jump: 021242
+      }
     } else {
-      TraceOperation 021237 (Print "other ");
-      GamePrint "other ";
-      Jump: 021242
+      Jump: 021289
     }
   } else {
-    Jump: 021289
+    Jump: 021299
   }
 LocOp 021242:
   TraceOperation 021242 (Print "object");
@@ -3304,9 +3482,11 @@ LocOp 022515:
   TraceOperation 022515 (Inc_chk (Con 12) (Con 9) (Branch F (Dloc 022522)));
   SetLocal 12 Add(GetLocal(12),1);
   if (GreaterThanEqual(GetLocal(12),9)) {
+    TraceOperation 022519 (Jump 022530);
+    Jump: 022530
+  } else {
+    Jump: 022522
   }
-  TraceOperation 022519 (Jump 022530);
-  Jump: 022530
 LocOp 022522:
   TraceOperation 022522 (Storew (Var (Global 184)) (Var (Local 12)) (Con 0));
   Let b1 = M[008276];
@@ -3588,15 +3768,16 @@ LocOp 022679:
   if (LessThanEqual(MakeHiLo(b1,b2),0)) {
     SetByte 008300 HiByte(Sub(MakeHiLo(b1,b2),1));
     SetByte 008301 LoByte(Sub(MakeHiLo(b1,b2),1));
+    TraceOperation 022683 (Store (Con 195) (Con 0));
+    SetByte 008266 0;
+    SetByte 008267 0;
+    TraceOperation 022686 (Jump 023396);
+    Jump: 023396
   } else {
     SetByte 008300 HiByte(Sub(MakeHiLo(b1,b2),1));
     SetByte 008301 LoByte(Sub(MakeHiLo(b1,b2),1));
+    Jump: 022689
   }
-  TraceOperation 022683 (Store (Con 195) (Con 0));
-  SetByte 008266 0;
-  SetByte 008267 0;
-  TraceOperation 022686 (Jump 023396);
-  Jump: 023396
 LocOp 022689:
   TraceOperation 022689 (Loadw (Var (Global 194)) (Var (Local 1)) (Local 2));
   Let b1 = M[008296];
@@ -4735,30 +4916,31 @@ LocOp 023615:
   if (LessThanEqual(MakeHiLo(b1,b2),0)) {
     SetByte 008300 HiByte(Sub(MakeHiLo(b1,b2),1));
     SetByte 008301 LoByte(Sub(MakeHiLo(b1,b2),1));
+    TraceOperation 023619 (Add (Var (Local 5)) (Con 1) (Local 10));
+    SetLocal 10 Add(GetLocal(5),1);
+    TraceOperation 023623 (Mul (Var (Local 1)) (Con 2) Sp);
+    PushStack Mul(GetLocal(1),2);
+    TraceOperation 023627 (Add (Var (Global 194)) (Var Sp) Sp);
+    Let b3 = M[008296];
+    Let b4 = M[008297];
+    PopStack popped5;
+    PushStack Add(MakeHiLo(b3,b4),popped5);
+    TraceOperation 023631 (Storew (Var (Global 184)) (Var (Local 10)) (Var Sp));
+    Let b6 = M[008276];
+    Let b7 = M[008277];
+    PopStack popped8;
+    SetByte Offset(Address(MakeHiLo(b6,b7)),Mul(2,GetLocal(10))) HiByte(popped8);
+    SetByte Offset(Offset(Address(MakeHiLo(b6,b7)),Mul(2,GetLocal(10))),1) LoByte(popped8);
+    TraceOperation 023636 (Ret (Con -1));
+    PopFrame;
+    PopReturnAddress return_address_9;
+    SetResult -1;
+    JumpIndirect: (return) return_address_9
   } else {
     SetByte 008300 HiByte(Sub(MakeHiLo(b1,b2),1));
     SetByte 008301 LoByte(Sub(MakeHiLo(b1,b2),1));
+    Jump: 023639
   }
-  TraceOperation 023619 (Add (Var (Local 5)) (Con 1) (Local 10));
-  SetLocal 10 Add(GetLocal(5),1);
-  TraceOperation 023623 (Mul (Var (Local 1)) (Con 2) Sp);
-  PushStack Mul(GetLocal(1),2);
-  TraceOperation 023627 (Add (Var (Global 194)) (Var Sp) Sp);
-  Let b3 = M[008296];
-  Let b4 = M[008297];
-  PopStack popped5;
-  PushStack Add(MakeHiLo(b3,b4),popped5);
-  TraceOperation 023631 (Storew (Var (Global 184)) (Var (Local 10)) (Var Sp));
-  Let b6 = M[008276];
-  Let b7 = M[008277];
-  PopStack popped8;
-  SetByte Offset(Address(MakeHiLo(b6,b7)),Mul(2,GetLocal(10))) HiByte(popped8);
-  SetByte Offset(Offset(Address(MakeHiLo(b6,b7)),Mul(2,GetLocal(10))),1) LoByte(popped8);
-  TraceOperation 023636 (Ret (Con -1));
-  PopFrame;
-  PopReturnAddress return_address_9;
-  SetResult -1;
-  JumpIndirect: (return) return_address_9
 LocOp 023639:
   TraceOperation 023639 (Loadw (Var (Global 194)) (Var (Local 1)) (Local 3));
   Let b1 = M[008296];
@@ -5263,11 +5445,12 @@ LocOp 024035:
   TraceOperation 024035 (Dec_chk (Con 2) (Con 0) (Branch F (Dloc 024042)));
   if (LessThanEqual(GetLocal(2),0)) {
     SetLocal 2 Sub(GetLocal(2),1);
+    TraceOperation 024039 (Jump 024090);
+    Jump: 024090
   } else {
     SetLocal 2 Sub(GetLocal(2),1);
+    Jump: 024042
   }
-  TraceOperation 024039 (Jump 024090);
-  Jump: 024090
 LocOp 024042:
   TraceOperation 024042 (Loadb (Var (Global 193)) (Var (Local 3)) (Local 4));
   Let b1 = M[008294];
@@ -6020,15 +6203,17 @@ LocOp 024598:
   TraceOperation 024598 (Inc_chk (Con 1) (Con 9) (Branch F (Dloc 024606)));
   SetLocal 1 Add(GetLocal(1),1);
   if (GreaterThanEqual(GetLocal(1),9)) {
+    TraceOperation 024602 (Store (Con 204) (Con 1));
+    SetByte 008284 0;
+    SetByte 008285 1;
+    TraceOperation 024605 Rtrue;
+    PopFrame;
+    PopReturnAddress return_address_1;
+    SetResult 1;
+    JumpIndirect: (return) return_address_1
+  } else {
+    Jump: 024606
   }
-  TraceOperation 024602 (Store (Con 204) (Con 1));
-  SetByte 008284 0;
-  SetByte 008285 1;
-  TraceOperation 024605 Rtrue;
-  PopFrame;
-  PopReturnAddress return_address_1;
-  SetResult 1;
-  JumpIndirect: (return) return_address_1
 LocOp 024606:
   TraceOperation 024606 (Loadw (Var (Global 183)) (Var (Local 1)) Sp);
   Let b1 = M[008274];
@@ -6247,21 +6432,23 @@ LocOp 024745:
     SetLocal 1 Sub(GetLocal(1),1);
     PopFrame;
     PopReturnAddress return_address_1;
+    SetResult 1;
+    JumpIndirect: (return) return_address_1
   } else {
     SetLocal 1 Sub(GetLocal(1),1);
+    TraceOperation 024749 (Loadb (Var (Global 193)) (Var (Local 2)) Sp);
+    Let b2 = M[008294];
+    Let b3 = M[008295];
+    Let b4 = M[Offset(Address(MakeHiLo(b2,b3)),GetLocal(2))];
+    PushStack Widen(b4);
+    TraceOperation 024753 (Print_char (Var Sp));
+    PopStack popped5;
+    GamePrint SingleChar(popped5);
+    TraceOperation 024756 (Inc (Con 2));
+    SetLocal 2 Add(GetLocal(2),1);
+    TraceOperation 024758 (Jump 024745);
+    Jump: 024745
   }
-  TraceOperation 024749 (Loadb (Var (Global 193)) (Var (Local 2)) Sp);
-  Let b2 = M[008294];
-  Let b3 = M[008295];
-  Let b4 = M[Offset(Address(MakeHiLo(b2,b3)),GetLocal(2))];
-  PushStack Widen(b4);
-  TraceOperation 024753 (Print_char (Var Sp));
-  PopStack popped5;
-  GamePrint SingleChar(popped5);
-  TraceOperation 024756 (Inc (Con 2));
-  SetLocal 2 Add(GetLocal(2),1);
-  TraceOperation 024758 (Jump 024745);
-  Jump: 024745
 --------------------------------------------------
 LocRoutine 024762:
   MakeRoutineFrame 3;
@@ -6578,20 +6765,21 @@ LocOp 025059:
   TraceOperation 025059 (Dec_chk (Con 2) (Con 1) (Branch F (Dloc 025078)));
   if (LessThanEqual(GetLocal(2),1)) {
     SetLocal 2 Sub(GetLocal(2),1);
-  } else {
-    SetLocal 2 Sub(GetLocal(2),1);
-  }
-  TraceOperation 025063 (Jz (Var (Local 5)) (Branch F (Dloc 025085)));
-  if (IsZero(GetLocal(5))) {
-    TraceOperation 025066 (Jz (Var (Local 6)) (Branch T (Dloc 025072)));
-    if (IsZero(GetLocal(6))) {
-      Jump: 025072
+    TraceOperation 025063 (Jz (Var (Local 5)) (Branch F (Dloc 025085)));
+    if (IsZero(GetLocal(5))) {
+      TraceOperation 025066 (Jz (Var (Local 6)) (Branch T (Dloc 025072)));
+      if (IsZero(GetLocal(6))) {
+        Jump: 025072
+      } else {
+        TraceOperation 025069 (Jump 025085);
+        Jump: 025085
+      }
     } else {
-      TraceOperation 025069 (Jump 025085);
       Jump: 025085
     }
   } else {
-    Jump: 025085
+    SetLocal 2 Sub(GetLocal(2),1);
+    Jump: 025078
   }
 LocOp 025072:
   TraceOperation 025072 (Call (Floc 039060) [] Sp);
@@ -7008,9 +7196,11 @@ LocOp 025420:
   TraceOperation 025420 (Inc_chk (Con 3) (Con 9) (Branch F (Dloc 025427)));
   SetLocal 3 Add(GetLocal(3),1);
   if (GreaterThanEqual(GetLocal(3),9)) {
+    TraceOperation 025424 (Jump 025439);
+    Jump: 025439
+  } else {
+    Jump: 025427
   }
-  TraceOperation 025424 (Jump 025439);
-  Jump: 025439
 LocOp 025427:
   TraceOperation 025427 (Loadw (Var (Global 184)) (Var (Local 3)) Sp);
   Let b1 = M[008276];
@@ -7856,33 +8046,36 @@ LocOp 026027:
   if (GreaterThanEqual(GetLocal(2),GetLocal(3))) {
     PopFrame;
     PopReturnAddress return_address_1;
-  }
-  TraceOperation 026031 (Loadw (Var (Global 236)) (Var (Local 2)) Sp);
-  Let b2 = M[008380];
-  Let b3 = M[008381];
-  Let b4 = M[Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(2)))];
-  Let b5 = M[Offset(Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(2))),1)];
-  PushStack MakeHiLo(b4,b5);
-  TraceOperation 026035 (Je [Var Sp,Var (Local 1)] (Branch F (Dloc 026027)));
-  PopStack popped6;
-  if (Equal(popped6,GetLocal(1))) {
-    TraceOperation 026040 (Sub (Var (Local 2)) (Con 1) Sp);
-    PushStack Sub(GetLocal(2),1);
-    TraceOperation 026044 (Loadw (Var (Global 236)) (Var Sp) Sp);
-    Let b7 = M[008380];
-    Let b8 = M[008381];
-    PopStack popped9;
-    Let b10 = M[Offset(Address(MakeHiLo(b7,b8)),Mul(2,popped9))];
-    Let b11 = M[Offset(Offset(Address(MakeHiLo(b7,b8)),Mul(2,popped9)),1)];
-    PushStack MakeHiLo(b10,b11);
-    TraceOperation 026048 (Ret (Var Sp));
-    PopStack popped12;
-    PopFrame;
-    PopReturnAddress return_address_13;
-    SetResult popped12;
-    JumpIndirect: (return) return_address_13
+    SetResult 0;
+    JumpIndirect: (return) return_address_1
   } else {
-    Jump: 026027
+    TraceOperation 026031 (Loadw (Var (Global 236)) (Var (Local 2)) Sp);
+    Let b2 = M[008380];
+    Let b3 = M[008381];
+    Let b4 = M[Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(2)))];
+    Let b5 = M[Offset(Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(2))),1)];
+    PushStack MakeHiLo(b4,b5);
+    TraceOperation 026035 (Je [Var Sp,Var (Local 1)] (Branch F (Dloc 026027)));
+    PopStack popped6;
+    if (Equal(popped6,GetLocal(1))) {
+      TraceOperation 026040 (Sub (Var (Local 2)) (Con 1) Sp);
+      PushStack Sub(GetLocal(2),1);
+      TraceOperation 026044 (Loadw (Var (Global 236)) (Var Sp) Sp);
+      Let b7 = M[008380];
+      Let b8 = M[008381];
+      PopStack popped9;
+      Let b10 = M[Offset(Address(MakeHiLo(b7,b8)),Mul(2,popped9))];
+      Let b11 = M[Offset(Offset(Address(MakeHiLo(b7,b8)),Mul(2,popped9)),1)];
+      PushStack MakeHiLo(b10,b11);
+      TraceOperation 026048 (Ret (Var Sp));
+      PopStack popped12;
+      PopFrame;
+      PopReturnAddress return_address_13;
+      SetResult popped12;
+      JumpIndirect: (return) return_address_13
+    } else {
+      Jump: 026027
+    }
   }
 --------------------------------------------------
 LocRoutine 026050:
@@ -8338,11 +8531,12 @@ LocOp 026288:
   TraceOperation 026288 (Dec_chk (Con 2) (Con 0) (Branch F (Dloc 026295)));
   if (LessThanEqual(GetLocal(2),0)) {
     SetLocal 2 Sub(GetLocal(2),1);
+    TraceOperation 026292 (Jump 026328);
+    Jump: 026328
   } else {
     SetLocal 2 Sub(GetLocal(2),1);
+    Jump: 026295
   }
-  TraceOperation 026292 (Jump 026328);
-  Jump: 026328
 LocOp 026295:
   TraceOperation 026295 (Loadw (Var (Local 1)) (Var (Local 4)) (Local 6));
   Let b1 = M[Offset(Address(GetLocal(1)),Mul(2,GetLocal(4)))];
@@ -9960,15 +10154,16 @@ LocOp 027423:
   TraceOperation 027423 (Dec_chk (Con 2) (Con 1) (Branch F (Dloc 027382)));
   if (LessThanEqual(GetLocal(2),1)) {
     SetLocal 2 Sub(GetLocal(2),1);
+    TraceOperation 027428 (Print_ret "?");
+    GamePrint "?\n";
+    PopFrame;
+    PopReturnAddress return_address_1;
+    SetResult 1;
+    JumpIndirect: (return) return_address_1
   } else {
     SetLocal 2 Sub(GetLocal(2),1);
+    Jump: 027382
   }
-  TraceOperation 027428 (Print_ret "?");
-  GamePrint "?\n";
-  PopFrame;
-  PopReturnAddress return_address_1;
-  SetResult 1;
-  JumpIndirect: (return) return_address_1
 --------------------------------------------------
 LocRoutine 027432:
   MakeRoutineFrame 8;
@@ -10080,8 +10275,10 @@ LocOp 027491:
   TraceOperation 027491 (Inc_chk (Con 5) (Var (Local 4)) (Branch F (Dloc 027470)));
   SetLocal 5 Add(GetLocal(5),1);
   if (GreaterThanEqual(GetLocal(5),GetLocal(4))) {
+    Jump: 027496
+  } else {
+    Jump: 027470
   }
-  Jump: 027496
 LocOp 027496:
   TraceOperation 027496 (Get_prop_addr (Var (Global 0)) (Con 25) (Local 3));
   Let b1 = M[007908];
@@ -10236,8 +10433,10 @@ LocOp 027586:
   TraceOperation 027586 (Inc_chk (Con 5) (Var (Local 4)) (Branch F (Dloc 027518)));
   SetLocal 5 Add(GetLocal(5),1);
   if (GreaterThanEqual(GetLocal(5),GetLocal(4))) {
+    Jump: 027591
+  } else {
+    Jump: 027518
   }
-  Jump: 027591
 LocOp 027591:
   TraceOperation 027591 (Loadw (Var (Local 1)) (Var (Global 162)) Sp);
   Let b1 = M[008232];
@@ -10730,29 +10929,31 @@ LocOp 027864:
     SetLocal 3 Sub(GetLocal(3),1);
     PopFrame;
     PopReturnAddress return_address_1;
+    SetResult 1;
+    JumpIndirect: (return) return_address_1
   } else {
     SetLocal 3 Sub(GetLocal(3),1);
-  }
-  TraceOperation 027868 (Add (Var (Local 3)) (Con 1) Sp);
-  PushStack Add(GetLocal(3),1);
-  TraceOperation 027872 (Loadw (Var (Local 1)) (Var Sp) (Local 4));
-  PopStack popped2;
-  Let b3 = M[Offset(Address(GetLocal(1)),Mul(2,popped2))];
-  Let b4 = M[Offset(Offset(Address(GetLocal(1)),Mul(2,popped2)),1)];
-  SetLocal 4 MakeHiLo(b3,b4);
-  TraceOperation 027876 (Je [Var (Local 4),Con 47] (Branch F (Dloc 027896)));
-  if (Equal(GetLocal(4),47)) {
-    TraceOperation 027880 (Call (Floc 043298) [Var (Global 191)] Sp);
-    Let b5 = M[008290];
-    Let b6 = M[008291];
-    PushFrame;
-    PushReturnAddress 027880;
-    SetLocal 1 MakeHiLo(b5,b6);
-    MakeRoutineFrame 2;
-    SetLocal 2 0;
-    Jump: 043303
-  } else {
-    Jump: 027896
+    TraceOperation 027868 (Add (Var (Local 3)) (Con 1) Sp);
+    PushStack Add(GetLocal(3),1);
+    TraceOperation 027872 (Loadw (Var (Local 1)) (Var Sp) (Local 4));
+    PopStack popped2;
+    Let b3 = M[Offset(Address(GetLocal(1)),Mul(2,popped2))];
+    Let b4 = M[Offset(Offset(Address(GetLocal(1)),Mul(2,popped2)),1)];
+    SetLocal 4 MakeHiLo(b3,b4);
+    TraceOperation 027876 (Je [Var (Local 4),Con 47] (Branch F (Dloc 027896)));
+    if (Equal(GetLocal(4),47)) {
+      TraceOperation 027880 (Call (Floc 043298) [Var (Global 191)] Sp);
+      Let b5 = M[008290];
+      Let b6 = M[008291];
+      PushFrame;
+      PushReturnAddress 027880;
+      SetLocal 1 MakeHiLo(b5,b6);
+      MakeRoutineFrame 2;
+      SetLocal 2 0;
+      Jump: 043303
+    } else {
+      Jump: 027896
+    }
   }
 LocReturn 027880:
   PushStack call_result;
@@ -11238,12 +11439,14 @@ LocOp 028278:
     TraceOperation 028286 (Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 028278)));
     SetLocal 4 Add(GetLocal(4),1);
     if (GreaterThanEqual(GetLocal(4),GetLocal(3))) {
+      TraceOperation 028291 Rfalse;
+      PopFrame;
+      PopReturnAddress return_address_5;
+      SetResult 0;
+      JumpIndirect: (return) return_address_5
+    } else {
+      Jump: 028278
     }
-    TraceOperation 028291 Rfalse;
-    PopFrame;
-    PopReturnAddress return_address_5;
-    SetResult 0;
-    JumpIndirect: (return) return_address_5
   }
 --------------------------------------------------
 LocRoutine 028292:
@@ -11276,12 +11479,14 @@ LocOp 028301:
     TraceOperation 028309 (Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 028301)));
     SetLocal 4 Add(GetLocal(4),1);
     if (GreaterThanEqual(GetLocal(4),GetLocal(3))) {
+      TraceOperation 028314 Rfalse;
+      PopFrame;
+      PopReturnAddress return_address_4;
+      SetResult 0;
+      JumpIndirect: (return) return_address_4
+    } else {
+      Jump: 028301
     }
-    TraceOperation 028314 Rfalse;
-    PopFrame;
-    PopReturnAddress return_address_4;
-    SetResult 0;
-    JumpIndirect: (return) return_address_4
   }
 --------------------------------------------------
 LocRoutine 028316:
@@ -12603,9 +12808,11 @@ LocOp 029621:
   TraceOperation 029621 (Inc_chk (Con 1) (Con 23) (Branch F (Dloc 029628)));
   SetLocal 1 Add(GetLocal(1),1);
   if (GreaterThanEqual(GetLocal(1),23)) {
+    TraceOperation 029625 (Jump 029638);
+    Jump: 029638
+  } else {
+    Jump: 029628
   }
-  TraceOperation 029625 (Jump 029638);
-  Jump: 029638
 LocOp 029628:
   TraceOperation 029628 (Loadb (Con 0) (Var (Local 1)) Sp);
   Let b1 = M[Offset(000000,GetLocal(1))];
@@ -21240,25 +21447,27 @@ LocOp 036755:
     SetLocal 2 Sub(GetLocal(2),1);
     PopFrame;
     PopReturnAddress return_address_1;
+    SetResult 0;
+    JumpIndirect: (return) return_address_1
   } else {
     SetLocal 2 Sub(GetLocal(2),1);
-  }
-  TraceOperation 036759 (Loadw (Var (Global 194)) (Var (Local 1)) (Local 3));
-  Let b2 = M[008296];
-  Let b3 = M[008297];
-  Let b4 = M[Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(1)))];
-  Let b5 = M[Offset(Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(1))),1)];
-  SetLocal 3 MakeHiLo(b4,b5);
-  TraceOperation 036763 (Je [Var (Local 3),Con 17256,Con 17277,Con 16605] (Branch T (Dloc 036795)));
-  if (LogOr(LogOr(Equal(GetLocal(3),17256),Equal(GetLocal(3),17277)),Equal(GetLocal(3),16605))) {
-    Jump: 036795
-  } else {
-    TraceOperation 036773 (Je [Var (Local 3),Con 16430,Con 13812,Con 16437] (Branch F (Dloc 036786)));
-    if (LogOr(LogOr(Equal(GetLocal(3),16430),Equal(GetLocal(3),13812)),Equal(GetLocal(3),16437))) {
-      TraceOperation 036783 (Jump 036795);
+    TraceOperation 036759 (Loadw (Var (Global 194)) (Var (Local 1)) (Local 3));
+    Let b2 = M[008296];
+    Let b3 = M[008297];
+    Let b4 = M[Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(1)))];
+    Let b5 = M[Offset(Offset(Address(MakeHiLo(b2,b3)),Mul(2,GetLocal(1))),1)];
+    SetLocal 3 MakeHiLo(b4,b5);
+    TraceOperation 036763 (Je [Var (Local 3),Con 17256,Con 17277,Con 16605] (Branch T (Dloc 036795)));
+    if (LogOr(LogOr(Equal(GetLocal(3),17256),Equal(GetLocal(3),17277)),Equal(GetLocal(3),16605))) {
       Jump: 036795
     } else {
-      Jump: 036786
+      TraceOperation 036773 (Je [Var (Local 3),Con 16430,Con 13812,Con 16437] (Branch F (Dloc 036786)));
+      if (LogOr(LogOr(Equal(GetLocal(3),16430),Equal(GetLocal(3),13812)),Equal(GetLocal(3),16437))) {
+        TraceOperation 036783 (Jump 036795);
+        Jump: 036795
+      } else {
+        Jump: 036786
+      }
     }
   }
 LocOp 036786:
@@ -25636,11 +25845,12 @@ LocOp 040451:
   TraceOperation 040451 (Dec_chk (Con 1) (Con 0) (Branch F (Dloc 040458)));
   if (LessThanEqual(GetLocal(1),0)) {
     SetLocal 1 Sub(GetLocal(1),1);
+    TraceOperation 040455 (Jump 040467);
+    Jump: 040467
   } else {
     SetLocal 1 Sub(GetLocal(1),1);
+    Jump: 040458
   }
-  TraceOperation 040455 (Jump 040467);
-  Jump: 040467
 LocOp 040458:
   TraceOperation 040458 (Call (Floc 022394) [] Sp);
   PushFrame;
@@ -74379,30 +74589,46 @@ LocOp 106797:
             Let b21 = M[008235];
             PushStack Add(popped19,1);
             if (GreaterThanEqual(popped19,MakeHiLo(b20,b21))) {
+              TraceOperation 106828 Rtrue;
+              PopFrame;
+              PopReturnAddress return_address_22;
+              SetResult 1;
+              JumpIndirect: (return) return_address_22
+            } else {
+              Jump: 112431
             }
           } else {
             if (LessThanByte(b18,16)) {
-              Let b22 = M[008234];
-              Let b23 = M[008235];
+              Let b23 = M[008234];
+              Let b24 = M[008235];
               SetLocal b18 Add(GetLocal(b18),1);
-              if (GreaterThanEqual(GetLocal(b18),MakeHiLo(b22,b23))) {
+              if (GreaterThanEqual(GetLocal(b18),MakeHiLo(b23,b24))) {
+                TraceOperation 106828 Rtrue;
+                PopFrame;
+                PopReturnAddress return_address_25;
+                SetResult 1;
+                JumpIndirect: (return) return_address_25
+              } else {
+                Jump: 112431
               }
             } else {
-              Let b24 = M[Offset(007908,Mul(2,Widen(MinusByte(b18,16))))];
-              Let b25 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b18,16)))),1)];
-              Let b26 = M[008234];
-              Let b27 = M[008235];
-              SetByte Offset(007908,Mul(2,Widen(MinusByte(b18,16)))) HiByte(Add(MakeHiLo(b24,b25),1));
-              SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b18,16)))),1) LoByte(Add(MakeHiLo(b24,b25),1));
-              if (GreaterThanEqual(MakeHiLo(b24,b25),MakeHiLo(b26,b27))) {
+              Let b26 = M[Offset(007908,Mul(2,Widen(MinusByte(b18,16))))];
+              Let b27 = M[Offset(Offset(007908,Mul(2,Widen(MinusByte(b18,16)))),1)];
+              Let b28 = M[008234];
+              Let b29 = M[008235];
+              SetByte Offset(007908,Mul(2,Widen(MinusByte(b18,16)))) HiByte(Add(MakeHiLo(b26,b27),1));
+              SetByte Offset(Offset(007908,Mul(2,Widen(MinusByte(b18,16)))),1) LoByte(Add(MakeHiLo(b26,b27),1));
+              if (GreaterThanEqual(MakeHiLo(b26,b27),MakeHiLo(b28,b29))) {
+                TraceOperation 106828 Rtrue;
+                PopFrame;
+                PopReturnAddress return_address_30;
+                SetResult 1;
+                JumpIndirect: (return) return_address_30
+              } else {
+                Jump: 112431
               }
             }
           }
-          TraceOperation 106828 Rtrue;
-          PopFrame;
-          PopReturnAddress return_address_28;
-          SetResult 1;
-          JumpIndirect: (return) return_address_28
         } else {
           Jump: 111304
         }
@@ -74411,9 +74637,9 @@ LocOp 106797:
       }
     } else {
       PopFrame;
-      PopReturnAddress return_address_29;
+      PopReturnAddress return_address_31;
       SetResult 1;
-      JumpIndirect: (return) return_address_29
+      JumpIndirect: (return) return_address_31
     }
   } else {
     Jump: 100848
@@ -74431,15 +74657,16 @@ LocOp 108451:
   if (LessThanEqual(MakeHiLo(b1,b2),MakeHiLo(b3,b4))) {
     SetByte 007992 HiByte(Sub(MakeHiLo(b1,b2),1));
     SetByte 007993 LoByte(Sub(MakeHiLo(b1,b2),1));
+    TraceOperation 108455 Rfalse;
+    PopFrame;
+    PopReturnAddress return_address_5;
+    SetResult 0;
+    JumpIndirect: (return) return_address_5
   } else {
     SetByte 007992 HiByte(Sub(MakeHiLo(b1,b2),1));
     SetByte 007993 LoByte(Sub(MakeHiLo(b1,b2),1));
+    Jump: 108507
   }
-  TraceOperation 108455 Rfalse;
-  PopFrame;
-  PopReturnAddress return_address_5;
-  SetResult 0;
-  JumpIndirect: (return) return_address_5
 --------------------------------------------------
 LocRoutine 109720:
   MakeRoutineFrame 0;
