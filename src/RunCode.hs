@@ -70,15 +70,22 @@ runAtom q atom0 k = case atom0 of
   GamePrint mes -> do
     A.Output (eval q mes) $ k q
   MakeRoutineFrame{} -> k q --TODO
-  PushFrame -> k q-- TODO
-  PopFrame -> k q -- TODO
+  PushFrame -> do
+    let Env{stack,locals,frames} = q
+    k q { frames = Frame{stack,locals} : frames, stack = [], locals = Map.empty }
+  PopFrame -> do
+    let Env{frames} = q
+    case frames of
+      [] -> error "PopFrame/frames=[]"
+      Frame{stack,locals} : frames -> do
+        k q { stack, locals, frames }
   PushReturnAddress e  -> do
     let Env{callstack} = q
     k q { callstack = eval q e : callstack }
   PopReturnAddress x -> do
     let Env{callstack} = q
     case callstack of
-      [] -> error "callstack[]"
+      [] -> error "PopReturnAddress/callstack=[]"
       addr:callstack -> do
         k $ (bind q x addr) { callstack }
   PushStack e -> do
@@ -87,7 +94,7 @@ runAtom q atom0 k = case atom0 of
   PopStack x -> do
     let Env{stack} = q
     case stack of
-      [] -> error "stack[]"
+      [] -> error "PopStack/stack=[]"
       v:stack -> do
         k $ (bind q x v) { stack }
   GetLocal e x -> do
@@ -166,6 +173,12 @@ data Env = Env -- TODO: rename State?
   , callResult :: Maybe Value
   , labelledPrograms :: Map Label Prog
   , numActuals :: Byte
+  , frames :: [Frame]
+  }
+
+data Frame = Frame
+  { stack :: [Value]
+  , locals :: Map Byte Value
   }
 
 makeEnv :: Byte -> StaticEnv -> Env
@@ -180,6 +193,7 @@ makeEnv screenWidth static = Env
   , callResult = Nothing
   , labelledPrograms = Map.empty
   , numActuals = 0
+  , frames = []
   }
 
 data Bindings = Bindings (Map Int Dynamic) -- Hetrogenous Map
