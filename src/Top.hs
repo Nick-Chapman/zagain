@@ -105,7 +105,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaC
               | otherwise -> do
                   let eff = Semantics.smallStep
                   code <- compileEffect iconf story eff
-                  pure $ runCode story seed code
+                  pure $ runCode screenWidth seed story code
       case inputs of
         [] | mayStartConsole -> Console.runAction iconf a
         _ -> WalkThrough.runAction iconf inputs a

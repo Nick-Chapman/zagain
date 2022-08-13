@@ -146,6 +146,7 @@ eval here op = case op of
     one <- LitV 1
     v1' <- Add v1 one
     setDyn dyn v1'
+    --Debug ("Inc_chk",arg1,arg2,label,"-->",dyn,v1,v2)
     res <- GreaterThanEqual v1 v2 >>= If
     branchMaybe label res
 
@@ -604,6 +605,7 @@ data Dyn b -- dynamic target
   = DSp
   | DLocal b
   | DGlobal b
+  deriving Show
 
 evalArgAsDyn :: Phase p => Arg -> Eff p (Dyn (Byte p))
 evalArgAsDyn arg = do

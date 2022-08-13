@@ -11,11 +11,13 @@ import qualified Action as A (Action(..))
 import qualified Data.Map as Map
 import qualified Primitive as Prim
 
-runCode :: Story -> Word -> Code -> Action
-runCode story _seed code = do
+--import Debug.Trace(trace) -- NICK
+
+runCode :: Byte -> Word -> Story -> Code -> Action
+runCode screenWidth _seed story code = do
   let start = getStart code
   let static = makeStaticEnv story code
-  let q = makeEnv static
+  let q = makeEnv screenWidth static
   runLoc q start
 
 getStart :: Code -> Loc Addr
@@ -58,7 +60,7 @@ runAtom :: Env -> Atom -> (Env -> Action) -> Action
 runAtom q atom0 k = case atom0 of
   TraceOperation e op -> do
     let Env{count} = q
-    A.TraceInstruction "xx" count (eval q e) op $ do
+    A.TraceInstruction "xx" count (eval q e) op $ do -- TODO: kill state-string
       k q { count = count + 1 }
   SetByte a b -> do
     let Env{overrides} = q
@@ -134,9 +136,13 @@ eval q = \case
   GetByteE e -> do
     let n = eval q e
     let Env { static = StaticEnv{story}, overrides } = q
-    case Map.lookup n overrides of
-      Just x -> x
-      Nothing -> readStoryByte (oob "eval/GetByteE") story n
+    let
+      (res,_ov) =
+        case Map.lookup n overrides of
+          Just x -> (x,True)
+          Nothing -> (readStoryByte (oob "eval/GetByteE") story n,False)
+    --trace (show("GetByte",n,res,ov)) $ res
+    res
   GetLocalE e -> do
     let Env{locals} = q
     let n = eval q e
@@ -151,7 +157,7 @@ eval q = \case
   where
     oob who = OOB_Error ("RunCode.eval:"++who)
 
-data Env = Env
+data Env = Env -- TODO: rename State?
   { static :: StaticEnv
   , locals :: Map Byte Value
   , bindings :: Bindings
@@ -162,12 +168,12 @@ data Env = Env
   , callResult :: Maybe Value
   }
 
-makeEnv :: StaticEnv -> Env
-makeEnv static = Env
+makeEnv :: Byte -> StaticEnv -> Env
+makeEnv screenWidth static = Env
   { static
   , locals = Map.empty
   , bindings = emptyB
-  , overrides = Map.empty
+  , overrides = Map.fromList [ (0x21,screenWidth) ]
   , count = 0
   , callstack = []
   , stack = []
