@@ -40,7 +40,8 @@ runProg q prog0 k = case prog0 of
   Null -> do
     k q
   Quit -> do
-    undefined
+    let State{lastCount,count} = q
+    A.Stop (count-lastCount)
   Error s -> do
     undefined s
   Labelled label p -> do
