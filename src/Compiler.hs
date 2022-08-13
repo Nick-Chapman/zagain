@@ -218,7 +218,9 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       GetNumActuals -> k s NumActuals
 
-      GetLocal n -> k s (GetLocalE n)
+      GetLocal n -> do
+        name <- genId ("local" ++ show n ++ "_")
+        Seq (Atom.GetLocal n name) <$> k s (Variable name)
 
       SetLocal n v -> do
         Seq (Atom.SetLocal n v) <$> k s ()

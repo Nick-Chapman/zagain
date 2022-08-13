@@ -11,8 +11,6 @@ import qualified Action as A (Action(..))
 import qualified Data.Map as Map
 import qualified Primitive as Prim
 
---import Debug.Trace(trace) -- NICK
-
 runCode :: Byte -> Word -> Story -> Code -> Action
 runCode screenWidth _seed story code = do
   let start = getStart code
@@ -90,6 +88,11 @@ runAtom q atom0 k = case atom0 of
       [] -> error "stack[]"
       v:stack -> do
         k $ (bind q x v) { stack }
+  GetLocal e x -> do
+    let Env{locals} = q
+    let n = eval q e
+    let v = maybe (error (show ("eval/GetLocalE",n))) id $ Map.lookup n locals
+    k $ bind q x v
   SetLocal n v -> do
     let Env{locals} = q
     k q { locals = Map.insert (eval q n) (eval q v) locals }
@@ -136,17 +139,9 @@ eval q = \case
   GetByteE e -> do
     let n = eval q e
     let Env { static = StaticEnv{story}, overrides } = q
-    let
-      (res,_ov) =
-        case Map.lookup n overrides of
-          Just x -> (x,True)
-          Nothing -> (readStoryByte (oob "eval/GetByteE") story n,False)
-    --trace (show("GetByte",n,res,ov)) $ res
-    res
-  GetLocalE e -> do
-    let Env{locals} = q
-    let n = eval q e
-    maybe (error (show ("eval/GetLocalE",n))) id $ Map.lookup n locals
+    case Map.lookup n overrides of
+      Just x -> x
+      Nothing -> readStoryByte (oob "eval/GetByteE") story n
   GetTextE e -> do
     undefined e
   LookupInDictE e -> do

@@ -117,6 +117,7 @@ data Atom
   | PopReturnAddress (Identifier Addr)
   | PushStack (Expression Value)
   | PopStack (Identifier Value)
+  | GetLocal (Expression Byte) (Identifier Value)
   | SetLocal (Expression Byte) (Expression Value)
   | ReadInputFromUser StatusInfo (Identifier String)
   | StringBytes (Expression String) (Identifier [Expression Byte])
@@ -151,9 +152,8 @@ data Expression a where
   Variable :: Typeable a => Identifier a -> Expression a
   Unary :: Show x => Prim.P1 x r -> Expression x -> Expression r
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
-  GetByteE :: Expression Addr -> Expression Byte
-  GetLocalE :: Expression Byte -> Expression Value
-  GetTextE :: Expression Addr -> Expression String
+  GetByteE :: Expression Addr -> Expression Byte -- TODO: bad also?
+  GetTextE :: Expression Addr -> Expression String -- TODO: bad also?
   LookupInDictE :: Expression String -> Expression Addr
   Ite :: Expression Bool -> Expression a -> Expression a -> Expression a
 
@@ -167,7 +167,6 @@ instance Show a => Show (Expression a) where
     Unary p1 x -> show p1 ++ "(" ++ show x ++ ")"
     Binary p2 x y -> show p2 ++ "(" ++ show x ++ "," ++ show y ++ ")"
     GetByteE a -> "M[" ++ show a ++ "]"
-    GetLocalE n -> "GetLocal(" ++ show n ++ ")"
     GetTextE a -> "GetText(" ++ show a ++ ")"
     LookupInDictE x -> "LookupInDict(" ++ show x ++ ")"
     Ite i t e -> "Ite(" ++ show (i,t,e) ++ ")"
