@@ -1932,4 +1932,1761 @@ Opening the small mailbox reveals a leaflet.
 ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"
 
 
+>[3]drop leaflet
+
+
+1905 022800 Loadb (Var (Global 110)) (Con 1) (Global 113)
+1906 022804 Jz (Var (Global 113)) (Branch F (Dloc 022822))
+1907 022822 Store (Con 5) (Var (Global 113))
+1908 022825 Store (Con 128) (Con 0)
+1909 022828 Store (Con 113) (Con 0)
+1910 022831 Store (Con 96) (Con 0)
+1911 022834 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844))
+1912 022844 Loadw (Var (Global 110)) (Var (Local 1)) (Local 2)
+1913 022848 Jz (Var (Local 2)) (Branch F (Dloc 022861))
+1914 022861 Je [Var (Local 2),Con 19456] (Branch F (Dloc 022879))
+1915 022879 Je [Var (Local 2),Con 19393] (Branch F (Dloc 022906))
+1916 022906 Je [Var (Local 2),Con 19393,Con 15151] (Branch T (Dloc 022920))
+1917 022914 Je [Var (Local 2),Con 15165] (Branch F (Dloc 022953))
+1918 022953 Call (Floc 023466) [Var (Local 2),Con 16,Con 3] (Local 3)
+1919 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+1920 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+1921 022961 Jz (Var (Local 3)) (Branch T (Dloc 023064))
+1922 023064 Call (Floc 023466) [Var (Local 2),Con 64,Con 1] (Local 3)
+1923 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+1924 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+1925 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+1926 023489 And (Var (Local 5)) (Con 3) (Local 5)
+1927 023493 Je [Var (Local 5),Var (Local 3)] (Branch T (Dloc 023499))
+1928 023499 Loadb (Var (Local 1)) (Var (Local 4)) Sp
+1929 023503 Ret_popped
+1930 023072 Jz (Var (Local 3)) (Branch T (Dloc 023129))
+1931 023075 Jz (Var (Local 4)) (Branch F (Dloc 023129))
+1932 023078 Store (Con 4) (Var (Local 3))
+1933 023081 Storew (Var (Global 100)) (Con 0) (Var (Local 3))
+1934 023086 Storew (Var (Global 100)) (Con 1) (Var (Global 98))
+1935 023091 Storew (Var (Global 98)) (Con 0) (Var (Local 2))
+1936 023096 Mul (Var (Local 1)) (Con 2) Sp
+1937 023100 Add (Var Sp) (Con 2) (Local 9)
+1938 023104 Loadb (Var (Global 110)) (Var (Local 9)) Sp
+1939 023108 Storeb (Var (Global 98)) (Con 2) (Var Sp)
+1940 023113 Add (Var (Local 9)) (Con 1) Sp
+1941 023117 Loadb (Var (Global 110)) (Var Sp) Sp
+1942 023121 Storeb (Var (Global 98)) (Con 3) (Var Sp)
+1943 023126 Jump 023397
+1944 023397 Store (Con 8) (Var (Local 2))
+1945 023400 Add (Var (Local 1)) (Con 2) (Local 1)
+1946 023404 Jump 022834
+1947 022834 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844))
+1948 022844 Loadw (Var (Global 110)) (Var (Local 1)) (Local 2)
+1949 022848 Jz (Var (Local 2)) (Branch F (Dloc 022861))
+1950 022861 Je [Var (Local 2),Con 19456] (Branch F (Dloc 022879))
+1951 022879 Je [Var (Local 2),Con 19393] (Branch F (Dloc 022906))
+1952 022906 Je [Var (Local 2),Con 19393,Con 15151] (Branch T (Dloc 022920))
+1953 022914 Je [Var (Local 2),Con 15165] (Branch F (Dloc 022953))
+1954 022953 Call (Floc 023466) [Var (Local 2),Con 16,Con 3] (Local 3)
+1955 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+1956 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+1957 022961 Jz (Var (Local 3)) (Branch T (Dloc 023064))
+1958 023064 Call (Floc 023466) [Var (Local 2),Con 64,Con 1] (Local 3)
+1959 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+1960 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+1961 023072 Jz (Var (Local 3)) (Branch T (Dloc 023129))
+1962 023129 Call (Floc 023466) [Var (Local 2),Con 8,Con 0] (Local 3)
+1963 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+1964 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+1965 023137 Jz (Var (Local 3)) (Branch F (Dloc 023172))
+1966 023140 Je [Var (Local 2),Con 15228,Con 18042] (Branch T (Dloc 023169))
+1967 023148 Call (Floc 023466) [Var (Local 2),Con 32] Sp
+1968 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+1969 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+1970 023155 Jz (Var Sp) (Branch F (Dloc 023169))
+1971 023158 Call (Floc 023466) [Var (Local 2),Con 128] Sp
+1972 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+1973 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+1974 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+1975 023165 Jz (Var Sp) (Branch T (Dloc 023301))
+1976 023169 Store (Con 3) (Con 0)
+1977 023172 Jg (Var (Global 113)) (Con 0) (Branch F (Dloc 023206))
+1978 023206 Jz (Var (Local 3)) (Branch T (Dloc 023246))
+1979 023246 Je [Var (Global 97),Con 2] (Branch F (Dloc 023277))
+1980 023277 Inc (Con 113)
+1981 023279 Call (Floc 023504) [Var (Local 1),Var (Local 3),Var (Local 2)] (Local 1)
+1982 023525 Sub (Var (Global 97)) (Con 1) Sp
+1983 023529 Mul (Var Sp) (Con 2) (Local 4)
+1984 023533 Jz (Var (Local 2)) (Branch T (Dloc 023561))
+1985 023561 Inc (Con 129)
+1986 023563 Jz (Var (Global 113)) (Branch F (Dloc 023571))
+1987 023571 Add (Con 6) (Var (Local 4)) (Local 5)
+1988 023575 Mul (Var (Local 1)) (Con 2) Sp
+1989 023579 Add (Var (Global 110)) (Var Sp) Sp
+1990 023583 Storew (Var (Global 100)) (Var (Local 5)) (Var Sp)
+1991 023588 Loadw (Var (Global 110)) (Var (Local 1)) Sp
+1992 023592 Je [Var Sp,Con 19379,Con 15172,Con 15242] (Branch F (Dloc 023615))
+1993 023615 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 023639))
+1994 023639 Loadw (Var (Global 110)) (Var (Local 1)) (Local 3)
+1995 023643 Jz (Var (Local 3)) (Branch F (Dloc 023656))
+1996 023656 Jz (Var (Global 113)) (Branch F (Dloc 023665))
+1997 023659 Store (Con 8) (Con 0)
+1998 023662 Jump 023673
+1999 023673 Je [Var (Local 3),Con 15256,Con 15158] (Branch F (Dloc 023687))
+2000 023687 Je [Var (Local 3),Con 15228,Con 18042] (Branch F (Dloc 023711))
+2001 023711 Je [Var (Local 3),Con 19393,Con 15151] (Branch T (Dloc 023739))
+2002 023719 Call (Floc 023466) [Var (Local 3),Con 8] Sp
+2003 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2004 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2005 023726 Jz (Var Sp) (Branch T (Dloc 023764))
+2006 023764 Call (Floc 023466) [Var (Local 3),Con 128] Sp
+2007 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2008 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2009 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+2010 023771 Jz (Var Sp) (Branch T (Dloc 023871))
+2011 023775 Jg (Var (Global 113)) (Con 0) (Branch F (Dloc 023796))
+2012 023796 Call (Floc 023466) [Var (Local 3),Con 32,Con 2] Sp
+2013 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2014 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2015 023804 Jz (Var Sp) (Branch T (Dloc 023823))
+2016 023823 Jz (Var (Local 6)) (Branch F (Dloc 023865))
+2017 023826 Je [Var (Local 8),Con 15767,Con 16481] (Branch T (Dloc 023865))
+2018 023834 Je [Var (Local 8),Con 15256,Con 15158] (Branch T (Dloc 023865))
+2019 023842 Add (Var (Local 5)) (Con 1) (Local 10)
+2020 023846 Add (Var (Local 1)) (Con 2) Sp
+2021 023850 Mul (Var Sp) (Con 2) Sp
+2022 023854 Add (Var (Global 110)) (Var Sp) Sp
+2023 023858 Storew (Var (Global 100)) (Var (Local 10)) (Var Sp)
+2024 023863 Ret (Var (Local 1))
+2025 023287 Jz (Var (Local 1)) (Branch T Dfalse)
+2026 023290 Jl (Var (Local 1)) (Con 0) (Branch F (Dloc 023397))
+2027 023397 Store (Con 8) (Var (Local 2))
+2028 023400 Add (Var (Local 1)) (Con 2) (Local 1)
+2029 023404 Jump 022834
+2030 022834 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844))
+2031 022838 Store (Con 112) (Con 0)
+2032 022841 Jump 023407
+2033 023407 Jz (Var (Local 6)) (Branch T (Dloc 023421))
+2034 023421 Store (Con 111) (Con 0)
+2035 023424 Jz (Var (Global 105)) (Branch T (Dloc 023432))
+2036 023432 Call (Floc 024736) [] Sp
+2037 024759 Loadw (Var (Global 100)) (Con 0) (Local 8)
+2038 024763 Jz (Var (Local 8)) (Branch F (Dloc 024789))
+2039 024789 Sub (Con 255) (Var (Local 8)) Sp
+2040 024793 Loadw (Var (Global 157)) (Var Sp) (Local 1)
+2041 024797 Loadb (Var (Local 1)) (Con 0) (Local 2)
+2042 024801 Add (Con 1) (Var (Local 1)) (Local 1)
+2043 024805 Loadb (Var (Local 1)) (Con 0) Sp
+2044 024809 And (Var Sp) (Con 3) (Local 3)
+2045 024813 Jg (Var (Global 97)) (Var (Local 3)) (Branch F (Dloc 024820))
+2046 024820 Jl (Var (Local 3)) (Con 1) (Branch T (Dloc 024848))
+2047 024824 Jz (Var (Global 97)) (Branch F (Dloc 024848))
+2048 024848 Loadb (Var (Local 1)) (Con 1) (Local 11)
+2049 024852 Loadw (Var (Global 100)) (Con 2) Sp
+2050 024856 Je [Var (Local 11),Var Sp] (Branch F (Dloc 024893))
+2051 024860 Je [Var (Local 3),Con 2] (Branch F (Dloc 024874))
+2052 024864 Je [Var (Global 97),Con 1] (Branch F (Dloc 024874))
+2053 024868 Store (Con 6) (Var (Local 1))
+2054 024871 Jump 024893
+2055 024893 Dec_chk (Con 2) (Con 1) (Branch F (Dloc 024935))
+2056 024935 Add (Var (Local 1)) (Con 8) (Local 1)
+2057 024939 Jump 024805
+2058 024805 Loadb (Var (Local 1)) (Con 0) Sp
+2059 024809 And (Var Sp) (Con 3) (Local 3)
+2060 024813 Jg (Var (Global 97)) (Var (Local 3)) (Branch F (Dloc 024820))
+2061 024820 Jl (Var (Local 3)) (Con 1) (Branch T (Dloc 024848))
+2062 024824 Jz (Var (Global 97)) (Branch F (Dloc 024848))
+2063 024848 Loadb (Var (Local 1)) (Con 1) (Local 11)
+2064 024852 Loadw (Var (Global 100)) (Con 2) Sp
+2065 024856 Je [Var (Local 11),Var Sp] (Branch F (Dloc 024893))
+2066 024860 Je [Var (Local 3),Con 2] (Branch F (Dloc 024874))
+2067 024864 Je [Var (Global 97),Con 1] (Branch F (Dloc 024874))
+2068 024868 Store (Con 6) (Var (Local 1))
+2069 024871 Jump 024893
+2070 024893 Dec_chk (Con 2) (Con 1) (Branch F (Dloc 024935))
+2071 024935 Add (Var (Local 1)) (Con 8) (Local 1)
+2072 024939 Jump 024805
+2073 024805 Loadb (Var (Local 1)) (Con 0) Sp
+2074 024809 And (Var Sp) (Con 3) (Local 3)
+2075 024813 Jg (Var (Global 97)) (Var (Local 3)) (Branch F (Dloc 024820))
+2076 024820 Jl (Var (Local 3)) (Con 1) (Branch T (Dloc 024848))
+2077 024824 Jz (Var (Global 97)) (Branch F (Dloc 024848))
+2078 024848 Loadb (Var (Local 1)) (Con 1) (Local 11)
+2079 024852 Loadw (Var (Global 100)) (Con 2) Sp
+2080 024856 Je [Var (Local 11),Var Sp] (Branch F (Dloc 024893))
+2081 024860 Je [Var (Local 3),Con 2] (Branch F (Dloc 024874))
+2082 024864 Je [Var (Global 97),Con 1] (Branch F (Dloc 024874))
+2083 024868 Store (Con 6) (Var (Local 1))
+2084 024871 Jump 024893
+2085 024893 Dec_chk (Con 2) (Con 1) (Branch F (Dloc 024935))
+2086 024935 Add (Var (Local 1)) (Con 8) (Local 1)
+2087 024939 Jump 024805
+2088 024805 Loadb (Var (Local 1)) (Con 0) Sp
+2089 024809 And (Var Sp) (Con 3) (Local 3)
+2090 024813 Jg (Var (Global 97)) (Var (Local 3)) (Branch F (Dloc 024820))
+2091 024820 Jl (Var (Local 3)) (Con 1) (Branch T (Dloc 024848))
+2092 024824 Jz (Var (Global 97)) (Branch F (Dloc 024848))
+2093 024848 Loadb (Var (Local 1)) (Con 1) (Local 11)
+2094 024852 Loadw (Var (Global 100)) (Con 2) Sp
+2095 024856 Je [Var (Local 11),Var Sp] (Branch F (Dloc 024893))
+2096 024860 Je [Var (Local 3),Con 2] (Branch F (Dloc 024874))
+2097 024874 Loadb (Var (Local 1)) (Con 2) (Local 11)
+2098 024878 Loadw (Var (Global 100)) (Con 4) Sp
+2099 024882 Je [Var (Local 11),Var Sp] (Branch F (Dloc 024893))
+2100 024886 Call (Floc 025674) [Var (Local 1)] Sp
+2101 025677 Store (Con 131) (Var (Local 1))
+2102 025680 Loadb (Var (Local 1)) (Con 7) (Global 120)
+2103 025684 Ret (Var (Global 120))
+2104 024892 Rtrue
+2105 023437 Jz (Var Sp) (Branch T Dfalse)
+2106 023440 Call (Floc 025802) [] Sp
+2107 025805 Loadw (Var (Global 100)) (Con 6) (Local 1)
+2108 025809 Jz (Var (Local 1)) (Branch T (Dloc 025844))
+2109 025812 Loadb (Var (Global 115)) (Con 5) (Global 92)
+2110 025816 Loadw (Var (Global 100)) (Con 7) Sp
+2111 025820 Call (Floc 025978) [Var (Local 1),Var Sp,Var (Global 86)] Sp
+2112 025995 Store (Con 96) (Con 0)
+2113 025998 Store (Con 95) (Var (Local 1))
+2114 026001 Store (Con 94) (Var (Local 2))
+2115 026004 Store (Con 93) (Con 0)
+2116 026007 Storew (Var (Global 84)) (Var (Global 81)) (Con 0)
+2117 026012 Storew (Var (Local 3)) (Var (Global 81)) (Con 0)
+2118 026017 Loadw (Var (Local 1)) (Con 0) (Local 7)
+2119 026021 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 026045))
+2120 026045 Loadw (Var (Local 1)) (Con 2) (Local 8)
+2121 026049 Je [Var (Local 7),Con 15228] (Branch F (Dloc 026072))
+2122 026072 Je [Var (Local 7),Con 15767,Con 16481] (Branch F (Dloc 026112))
+2123 026112 Je [Var (Local 7),Con 15172,Con 18042] (Branch F (Dloc 026170))
+2124 026170 Je [Var (Local 7),Con 15256,Con 15158] (Branch F (Dloc 026212))
+2125 026212 Call (Floc 023466) [Var (Local 7),Con 4] Sp
+2126 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2127 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2128 026219 Jz (Var Sp) (Branch T (Dloc 026225))
+2129 026225 Je [Var (Local 7),Con 15256,Con 15158] (Branch F (Dloc 026236))
+2130 026236 Je [Var (Local 7),Con 18000] (Branch F (Dloc 026251))
+2131 026251 Call (Floc 023466) [Var (Local 7),Con 32,Con 2] (Local 6)
+2132 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2133 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2134 026259 Jz (Var (Local 6)) (Branch T (Dloc 026274))
+2135 026274 Call (Floc 023466) [Var (Local 7),Con 128,Con 0] Sp
+2136 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2137 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2138 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+2139 023489 And (Var (Local 5)) (Con 3) (Local 5)
+2140 023493 Je [Var (Local 5),Var (Local 3)] (Branch T (Dloc 023499))
+2141 023499 Loadb (Var (Local 1)) (Var (Local 4)) Sp
+2142 023503 Ret_popped
+2143 026282 Jz (Var Sp) (Branch T (Dloc 026291))
+2144 026285 Store (Con 106) (Var (Local 7))
+2145 026288 Store (Con 132) (Var (Local 7))
+2146 026291 Je [Var (Local 1),Var (Local 2)] (Branch T (Dloc 026021))
+2147 026296 Add (Var (Local 1)) (Con 4) (Local 1)
+2148 026300 Store (Con 7) (Var (Local 8))
+2149 026303 Jump 026021
+2150 026021 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 026045))
+2151 026025 Jz (Var (Local 4)) (Branch T (Dloc 026034))
+2152 026034 Push (Var (Local 3))
+2153 026037 Call (Floc 026306) [Var Sp] Sp
+2154 026325 Store (Con 5) (Var (Global 92))
+2155 026328 Loadw (Var (Local 1)) (Var (Global 81)) (Local 6)
+2156 026332 Test (Var (Global 80)) (Con 4) (Branch T Dtrue)
+2157 026336 Jz (Var (Global 90)) (Branch F (Dloc 026359))
+2158 026359 Jz (Var (Global 90)) (Branch F (Dloc 026404))
+2159 026404 Je [Var (Global 80),Con 1] (Branch F (Dloc 026411))
+2160 026411 Store (Con 108) (Con -1)
+2161 026416 Store (Con 133) (Var (Local 1))
+2162 026419 Jz (Var (Local 7)) (Branch T (Dloc 026431))
+2163 026431 Jz (Var (Global 66)) (Branch T (Dloc 026448))
+2164 026434 Clear_attr (Var (Global 128)) (Con 12)
+2165 026437 Call (Floc 027166) [Var (Global 0),Con 16,Con 32] Sp
+2166 027175 Add (Var (Local 2)) (Var (Local 3)) Sp
+2167 027179 Test (Var (Global 92)) (Var Sp) (Branch F (Dloc 027192))
+2168 027183 Call (Floc 027218) [Var (Local 1),Var (Global 117),Con 1] Sp
+2169 027229 Get_child (Var (Local 1)) (Local 1) (Branch F Dfalse)
+2170 027233 Je [Var (Local 3),Con 2] (Branch T (Dloc 027261))
+2171 027237 Get_prop_addr (Var (Local 1)) (Con 18) Sp
+2172 027241 Jz (Var Sp) (Branch T (Dloc 027261))
+2173 027244 Call (Floc 027932) [Var (Local 1),Var (Local 2)] Sp
+2174 027941 Test_attr (Var (Local 1)) (Con 7) (Branch T Dfalse)
+2175 027251 Jz (Var Sp) (Branch T (Dloc 027261))
+2176 027261 Je [Var (Local 3),Con 0] (Branch F (Dloc 027273))
+2177 027273 Get_child (Var (Local 1)) (Local 5) (Branch F (Dloc 027316))
+2178 027277 Test_attr (Var (Local 1)) (Con 11) (Branch T (Dloc 027285))
+2179 027281 Test_attr (Var (Local 1)) (Con 12) (Branch F (Dloc 027316))
+2180 027316 Get_sibling (Var (Local 1)) (Local 1) (Branch T (Dloc 027233))
+2181 027233 Je [Var (Local 3),Con 2] (Branch T (Dloc 027261))
+2182 027237 Get_prop_addr (Var (Local 1)) (Con 18) Sp
+2183 027241 Jz (Var Sp) (Branch T (Dloc 027261))
+2184 027244 Call (Floc 027932) [Var (Local 1),Var (Local 2)] Sp
+2185 027941 Test_attr (Var (Local 1)) (Con 7) (Branch T Dfalse)
+2186 027945 Jz (Var (Global 90)) (Branch T (Dloc 027974))
+2187 027948 Get_prop_addr (Var (Local 1)) (Con 18) (Local 3)
+2188 027952 Get_prop_len (Var (Local 3)) Sp
+2189 027955 Div (Var Sp) (Con 2) Sp
+2190 027959 Sub (Var Sp) (Con 1) Sp
+2191 027963 Call (Floc 027682) [Var (Global 90),Var (Local 3),Var Sp] Sp
+2192 027691 Jz (Var (Local 2)) (Branch T Dfalse)
+2193 027694 Jl (Var (Local 3)) (Con 0) (Branch T (Dloc 027704))
+2194 027698 Store (Con 4) (Con 0)
+2195 027701 Jump 027708
+2196 027708 Loadw (Var (Local 2)) (Var (Local 4)) Sp
+2197 027712 Je [Var (Local 1),Var Sp] (Branch T Dtrue)
+2198 027716 Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 027708))
+2199 027721 Rfalse
+2200 027971 Jz (Var Sp) (Branch T Dfalse)
+2201 027251 Jz (Var Sp) (Branch T (Dloc 027261))
+2202 027261 Je [Var (Local 3),Con 0] (Branch F (Dloc 027273))
+2203 027273 Get_child (Var (Local 1)) (Local 5) (Branch F (Dloc 027316))
+2204 027316 Get_sibling (Var (Local 1)) (Local 1) (Branch T (Dloc 027233))
+2205 027233 Je [Var (Local 3),Con 2] (Branch T (Dloc 027261))
+2206 027237 Get_prop_addr (Var (Local 1)) (Con 18) Sp
+2207 027241 Jz (Var Sp) (Branch T (Dloc 027261))
+2208 027244 Call (Floc 027932) [Var (Local 1),Var (Local 2)] Sp
+2209 027941 Test_attr (Var (Local 1)) (Con 7) (Branch T Dfalse)
+2210 027945 Jz (Var (Global 90)) (Branch T (Dloc 027974))
+2211 027948 Get_prop_addr (Var (Local 1)) (Con 18) (Local 3)
+2212 027952 Get_prop_len (Var (Local 3)) Sp
+2213 027955 Div (Var Sp) (Con 2) Sp
+2214 027959 Sub (Var Sp) (Con 1) Sp
+2215 027963 Call (Floc 027682) [Var (Global 90),Var (Local 3),Var Sp] Sp
+2216 027691 Jz (Var (Local 2)) (Branch T Dfalse)
+2217 027694 Jl (Var (Local 3)) (Con 0) (Branch T (Dloc 027704))
+2218 027698 Store (Con 4) (Con 0)
+2219 027701 Jump 027708
+2220 027708 Loadw (Var (Local 2)) (Var (Local 4)) Sp
+2221 027712 Je [Var (Local 1),Var Sp] (Branch T Dtrue)
+2222 027716 Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 027708))
+2223 027708 Loadw (Var (Local 2)) (Var (Local 4)) Sp
+2224 027712 Je [Var (Local 1),Var Sp] (Branch T Dtrue)
+2225 027716 Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 027708))
+2226 027721 Rfalse
+2227 027971 Jz (Var Sp) (Branch T Dfalse)
+2228 027251 Jz (Var Sp) (Branch T (Dloc 027261))
+2229 027261 Je [Var (Local 3),Con 0] (Branch F (Dloc 027273))
+2230 027273 Get_child (Var (Local 1)) (Local 5) (Branch F (Dloc 027316))
+2231 027316 Get_sibling (Var (Local 1)) (Local 1) (Branch T (Dloc 027233))
+2232 027321 Rtrue
+2233 027191 Ret_popped
+2234 026445 Set_attr (Var (Global 128)) (Con 12)
+2235 026448 Call (Floc 027166) [Var (Global 128),Con 128,Con 64] Sp
+2236 027175 Add (Var (Local 2)) (Var (Local 3)) Sp
+2237 027179 Test (Var (Global 92)) (Var Sp) (Branch F (Dloc 027192))
+2238 027183 Call (Floc 027218) [Var (Local 1),Var (Global 117),Con 1] Sp
+2239 027229 Get_child (Var (Local 1)) (Local 1) (Branch F Dfalse)
+2240 027233 Je [Var (Local 3),Con 2] (Branch T (Dloc 027261))
+2241 027237 Get_prop_addr (Var (Local 1)) (Con 18) Sp
+2242 027241 Jz (Var Sp) (Branch T (Dloc 027261))
+2243 027244 Call (Floc 027932) [Var (Local 1),Var (Local 2)] Sp
+2244 027941 Test_attr (Var (Local 1)) (Con 7) (Branch T Dfalse)
+2245 027945 Jz (Var (Global 90)) (Branch T (Dloc 027974))
+2246 027948 Get_prop_addr (Var (Local 1)) (Con 18) (Local 3)
+2247 027952 Get_prop_len (Var (Local 3)) Sp
+2248 027955 Div (Var Sp) (Con 2) Sp
+2249 027959 Sub (Var Sp) (Con 1) Sp
+2250 027963 Call (Floc 027682) [Var (Global 90),Var (Local 3),Var Sp] Sp
+2251 027691 Jz (Var (Local 2)) (Branch T Dfalse)
+2252 027694 Jl (Var (Local 3)) (Con 0) (Branch T (Dloc 027704))
+2253 027698 Store (Con 4) (Con 0)
+2254 027701 Jump 027708
+2255 027708 Loadw (Var (Local 2)) (Var (Local 4)) Sp
+2256 027712 Je [Var (Local 1),Var Sp] (Branch T Dtrue)
+2257 027716 Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 027708))
+2258 027708 Loadw (Var (Local 2)) (Var (Local 4)) Sp
+2259 027712 Je [Var (Local 1),Var Sp] (Branch T Dtrue)
+2260 027971 Jz (Var Sp) (Branch T Dfalse)
+2261 027974 Jz (Var (Global 89)) (Branch T (Dloc 028002))
+2262 028002 Jz (Var (Global 91)) (Branch T Dtrue)
+2263 027251 Jz (Var Sp) (Branch T (Dloc 027261))
+2264 027254 Call (Floc 027322) [Var (Local 1),Var (Local 2)] Sp
+2265 027329 Loadw (Var (Local 2)) (Var (Global 81)) (Local 3)
+2266 027333 Add (Var (Local 3)) (Con 1) Sp
+2267 027337 Storew (Var (Local 2)) (Var Sp) (Var (Local 1))
+2268 027342 Add (Var (Local 3)) (Con 1) Sp
+2269 027346 Storew (Var (Local 2)) (Var (Global 81)) (Var Sp)
+2270 027351 Rtrue
+2271 027261 Je [Var (Local 3),Con 0] (Branch F (Dloc 027273))
+2272 027273 Get_child (Var (Local 1)) (Local 5) (Branch F (Dloc 027316))
+2273 027316 Get_sibling (Var (Local 1)) (Local 1) (Branch T (Dloc 027233))
+2274 027321 Rtrue
+2275 027191 Ret_popped
+2276 026456 Loadw (Var (Local 1)) (Var (Global 81)) Sp
+2277 026460 Sub (Var Sp) (Var (Local 6)) (Local 4)
+2278 026464 Test (Var (Global 80)) (Con 1) (Branch F (Dloc 026471))
+2279 026471 Test (Var (Global 80)) (Con 2) (Branch F (Dloc 026524))
+2280 026524 Jg (Var (Local 4)) (Con 1) (Branch T (Dloc 026539))
+2281 026528 Jz (Var (Local 4)) (Branch F (Dloc 026670))
+2282 026670 Jz (Var (Local 4)) (Branch F (Dloc 026729))
+2283 026729 Jz (Var (Local 4)) (Branch F (Dloc 026738))
+2284 026738 Store (Con 108) (Var (Local 5))
+2285 026741 Store (Con 106) (Con 0)
+2286 026744 Store (Con 105) (Con 0)
+2287 026747 Rtrue
+2288 026043 Ret (Var Sp)
+2289 025828 Jz (Var Sp) (Branch T Dfalse)
+2290 025831 Loadw (Var (Global 84)) (Var (Global 81)) Sp
+2291 025835 Jz (Var Sp) (Branch T (Dloc 025844))
+2292 025844 Loadw (Var (Global 100)) (Con 8) (Local 1)
+2293 025848 Jz (Var (Local 1)) (Branch T Dtrue)
+2294 023445 Jz (Var Sp) (Branch T Dfalse)
+2295 023448 Call (Floc 027544) [] Sp
+2296 027551 Loadw (Var (Global 86)) (Var (Global 81)) Sp
+2297 027555 Jg (Var Sp) (Con 1) (Branch F (Dloc 027573))
+2298 027573 Loadw (Var (Global 85)) (Var (Global 81)) Sp
+2299 027577 Jg (Var Sp) (Con 1) (Branch F (Dloc 027592))
+2300 027592 Jz (Var (Local 1)) (Branch T Dtrue)
+2301 023453 Jz (Var Sp) (Branch T Dfalse)
+2302 023456 Call (Floc 027352) [] Sp
+2303 027353 Loadb (Var (Global 115)) (Con 5) Sp
+2304 027357 Call (Floc 027380) [Var (Global 86),Var Sp] Sp
+2305 027391 Loadw (Var (Local 1)) (Var (Global 81)) (Local 3)
+2306 027395 Jz (Var (Local 3)) (Branch T Dtrue)
+2307 027398 Test (Var (Local 2)) (Con 2) (Branch T (Dloc 027406))
+2308 027406 Dec_chk (Con 3) (Con 0) (Branch T Dtrue)
+2309 027410 Add (Var (Local 3)) (Con 1) Sp
+2310 027414 Loadw (Var (Local 1)) (Var Sp) (Local 4)
+2311 027418 Je [Var (Local 4),Con 12] (Branch F (Dloc 027425))
+2312 027425 Call (Floc 038124) [Var (Local 4)] Sp
+2313 038127 Get_parent (Var (Local 1)) (Local 1)
+2314 038130 Jz (Var (Local 1)) (Branch T Dfalse)
+2315 038133 Je [Var (Local 1),Var (Global 111)] (Branch F (Dloc 038127))
+2316 038138 Rtrue
+2317 027431 Jz (Var Sp) (Branch F (Dloc 027406))
+2318 027406 Dec_chk (Con 3) (Con 0) (Branch T Dtrue)
+2319 027364 Jz (Var Sp) (Branch T Dfalse)
+2320 027367 Loadb (Var (Global 115)) (Con 6) Sp
+2321 027371 Call (Floc 027380) [Var (Global 85),Var Sp] Sp
+2322 027391 Loadw (Var (Local 1)) (Var (Global 81)) (Local 3)
+2323 027395 Jz (Var (Local 3)) (Branch T Dtrue)
+2324 027378 Ret_popped
+2325 023461 Jz (Var Sp) (Branch T Dfalse)
+2326 023464 Rtrue
+2327 021837 Jz (Var (Global 127)) (Branch T (Dloc 022347))
+2328 021841 Loadw (Var (Global 85)) (Var (Global 81)) (Local 1)
+2329 021845 Loadw (Var (Global 86)) (Var (Global 81)) (Local 2)
+2330 021849 Jz (Var (Local 2)) (Branch F (Dloc 021858))
+2331 021858 Jg (Var (Local 2)) (Con 1) (Branch F (Dloc 021884))
+2332 021884 Jg (Var (Local 1)) (Con 1) (Branch F (Dloc 021904))
+2333 021904 Push (Con 1)
+2334 021907 Store (Con 3) (Var Sp)
+2335 021910 Jz (Var (Local 5)) (Branch F (Dloc 021921))
+2336 021913 Je [Var (Local 1),Con 1] (Branch F (Dloc 021921))
+2337 021921 Je [Var (Global 120),Con 137] (Branch F (Dloc 021935))
+2338 021935 Jz (Var (Local 3)) (Branch F (Dloc 022016))
+2339 022016 Store (Con 138) (Con 0)
+2340 022019 Store (Con 139) (Con 0)
+2341 022022 Jg (Var (Local 3)) (Con 1) (Branch F (Dloc 022029))
+2342 022029 Store (Con 10) (Con 0)
+2343 022032 Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 022126))
+2344 022126 Jz (Var (Local 8)) (Branch T (Dloc 022136))
+2345 022129 Loadw (Var (Global 86)) (Var (Local 4)) (Local 9)
+2346 022133 Jump 022140
+2347 022140 Jz (Var (Local 8)) (Branch T (Dloc 022149))
+2348 022143 Push (Var (Local 9))
+2349 022146 Jump 022152
+2350 022152 Store (Con 134) (Var Sp)
+2351 022155 Jz (Var (Local 8)) (Branch T (Dloc 022164))
+2352 022158 Push (Var (Local 5))
+2353 022161 Jump 022167
+2354 022167 Store (Con 135) (Var Sp)
+2355 022170 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 022189))
+2356 022174 Loadw (Var (Global 100)) (Con 6) Sp
+2357 022178 Loadw (Var Sp) (Con 0) Sp
+2358 022182 Je [Var Sp,Con 15228] (Branch F (Dloc 022276))
+2359 022276 Store (Con 10) (Con 1)
+2360 022279 Call (Floc 022396) [Var (Global 120),Var (Global 118),Var (Global 119)] (Local 7)
+2361 022411 Store (Con 5) (Var (Global 120))
+2362 022414 Store (Con 6) (Var (Global 118))
+2363 022417 Store (Con 7) (Var (Global 119))
+2364 022420 Je [Con 12,Var (Local 3),Var (Local 2)] (Branch F (Dloc 022456))
+2365 022456 Je [Var (Local 2),Con 12] (Branch F (Dloc 022463))
+2366 022463 Je [Var (Local 3),Con 12] (Branch F (Dloc 022470))
+2367 022470 Store (Con 136) (Var (Local 1))
+2368 022473 Store (Con 134) (Var (Local 2))
+2369 022476 Jz (Var (Global 118)) (Branch T (Dloc 022493))
+2370 022479 Je [Var (Global 119),Con 12] (Branch T (Dloc 022493))
+2371 022483 Je [Var (Global 120),Con 137] (Branch T (Dloc 022493))
+2372 022487 Store (Con 123) (Var (Global 118))
+2373 022490 Store (Con 122) (Var (Global 0))
+2374 022493 Store (Con 135) (Var (Local 3))
+2375 022496 Je [Con 11,Var (Global 118),Var (Global 119)] (Branch F (Dloc 022513))
+2376 022513 Store (Con 2) (Var (Global 118))
+2377 022516 Store (Con 3) (Var (Global 119))
+2378 022519 Get_prop (Var (Global 111)) (Con 17) Sp
+2379 022523 Call (Fvar Sp) [] (Local 4)
+2380 022527 Jz (Var (Local 4)) (Branch T (Dloc 022533))
+2381 022533 Get_parent (Var (Global 111)) Sp
+2382 022536 Get_prop (Var Sp) (Con 17) Sp
+2383 022540 Call (Fvar Sp) [Con 1] (Local 4)
+2384 038207 Je [Var (Local 1),Con 3] (Branch F Dfalse)
+2385 022545 Jz (Var (Local 4)) (Branch T (Dloc 022551))
+2386 022551 Loadw (Var (Global 156)) (Var (Local 1)) Sp
+2387 022555 Call (Fvar Sp) [] (Local 4)
+2388 030449 Get_parent (Var (Global 111)) Sp
+2389 030452 Je [Var (Global 118),Var Sp] (Branch F Dfalse)
+2390 022559 Jz (Var (Local 4)) (Branch T (Dloc 022565))
+2391 022565 Jz (Var (Local 3)) (Branch T (Dloc 022582))
+2392 022582 Jz (Var (Local 2)) (Branch T (Dloc 022612))
+2393 022585 Je [Var (Local 1),Con 137] (Branch T (Dloc 022612))
+2394 022589 Get_parent (Var (Local 2)) Sp
+2395 022592 Jz (Var Sp) (Branch T (Dloc 022612))
+2396 022595 Get_parent (Var (Local 2)) Sp
+2397 022598 Get_prop (Var Sp) (Con 2) Sp
+2398 022602 Call (Fvar Sp) [] (Local 4)
+2399 022606 Jz (Var (Local 4)) (Branch T (Dloc 022612))
+2400 022612 Jz (Var (Local 2)) (Branch T (Dloc 022633))
+2401 022615 Je [Var (Local 1),Con 137] (Branch T (Dloc 022633))
+2402 022619 Get_prop (Var (Local 2)) (Con 17) Sp
+2403 022623 Call (Fvar Sp) [] (Local 4)
+2404 022627 Jz (Var (Local 4)) (Branch T (Dloc 022633))
+2405 022633 Loadw (Var (Global 155)) (Var (Local 1)) Sp
+2406 022637 Call (Fvar Sp) [] (Local 4)
+2407 030465 Call (Floc 037334) [] Sp
+2408 037335 Jin (Var (Global 118)) (Var (Global 111)) (Branch T (Dloc 037364))
+2409 037364 Jin (Var (Global 118)) (Var (Global 111)) (Branch T (Dloc 037389))
+2410 037389 Get_parent (Var (Global 111)) Sp
+2411 037392 Insert_obj (Var (Global 118)) (Var Sp)
+2412 037395 Rtrue
+2413 030470 Jz (Var Sp) (Branch T Dfalse)
+2414 030473 Print_ret "Dropped."
+2415 022641 Jz (Var (Local 4)) (Branch T (Dloc 022644))
+2416 022644 Store (Con 136) (Var (Local 5))
+2417 022647 Store (Con 134) (Var (Local 6))
+2418 022650 Store (Con 135) (Var (Local 7))
+2419 022653 Ret (Var (Local 4))
+2420 022287 Je [Var (Local 7),Con 2] (Branch F (Dloc 022032))
+2421 022032 Inc_chk (Con 4) (Var (Local 3)) (Branch F (Dloc 022126))
+2422 022037 Jg (Var (Global 122)) (Con 0) (Branch F (Dloc 022101))
+2423 022101 Jz (Var (Local 10)) (Branch F (Dloc 022295))
+2424 022295 Je [Var (Local 7),Con 2] (Branch T (Dloc 022311))
+2425 022299 Get_parent (Var (Global 111)) Sp
+2426 022302 Get_prop (Var Sp) (Con 17) Sp
+2427 022306 Call (Fvar Sp) [Con 6] (Local 7)
+2428 038207 Je [Var (Local 1),Con 3] (Branch F Dfalse)
+2429 022311 Je [Var (Global 120),Con 8,Con 137,Con 15] (Branch T (Dloc 022337))
+2430 022318 Je [Var (Global 120),Con 12,Con 9,Con 7] (Branch F (Dloc 022328))
+2431 022328 Store (Con 142) (Var (Global 120))
+2432 022331 Store (Con 141) (Var (Global 118))
+2433 022334 Store (Con 140) (Var (Global 119))
+2434 022337 Je [Var (Local 7),Con 2] (Branch F (Dloc 022350))
+2435 022350 Jz (Var (Global 127)) (Branch T (Dloc 021823))
+2436 022354 Je [Var (Global 120),Con 2,Con 1,Con 111] (Branch T (Dloc 021823))
+2437 022362 Je [Var (Global 120),Con 12,Con 8,Con 0] (Branch T (Dloc 021823))
+2438 022370 Je [Var (Global 120),Con 9,Con 6,Con 5] (Branch T (Dloc 021823))
+2439 022378 Je [Var (Global 120),Con 7,Con 11,Con 10] (Branch F (Dloc 022388))
+2440 022388 Call (Floc 021700) [] (Local 7)
+2441 021709 Jz (Var (Global 129)) (Branch T (Dloc 021716))
+2442 021716 Jz (Var (Global 127)) (Branch T (Dloc 021725))
+2443 021719 Push (Var (Global 130))
+2444 021722 Jump 021728
+2445 021728 Add (Var (Global 132)) (Var Sp) (Local 1)
+2446 021732 Add (Var (Global 132)) (Con 180) (Local 2)
+2447 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2448 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2449 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2450 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2451 021799 Jump 021736
+2452 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2453 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2454 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2455 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2456 021799 Jump 021736
+2457 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2458 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2459 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2460 021758 Loadw (Var (Local 1)) (Con 1) (Local 3)
+2461 021762 Jz (Var (Local 3)) (Branch F (Dloc 021768))
+2462 021768 Sub (Var (Local 3)) (Con 1) Sp
+2463 021772 Storew (Var (Local 1)) (Con 1) (Var Sp)
+2464 021777 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 021795))
+2465 021781 Loadw (Var (Local 1)) (Con 2) Sp
+2466 021785 Call (Fvar Sp) [] Sp
+2467 066027 Get_parent (Con 114) (Local 1)
+2468 066030 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066040))
+2469 066040 Push (Con 0)
+2470 066043 Store (Con 3) (Var Sp)
+2471 066046 Jz (Var (Local 3)) (Branch T (Dloc 066052))
+2472 066052 Je [Var (Local 1),Con 190] (Branch F (Dloc 066080))
+2473 066080 Je [Var (Local 1),Var (Global 0)] (Branch F (Dloc 066112))
+2474 066112 Jin (Con 114) (Var (Local 1)) (Branch F (Dloc 066126))
+2475 066116 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066126))
+2476 066126 Test_attr (Var (Local 1)) (Con 3) (Branch F (Dloc 066164))
+2477 066164 Jz (Var (Local 4)) (Branch F (Dloc 066173))
+2478 066167 Push (Con 1)
+2479 066170 Jump 066176
+2480 066176 Store (Con 4) (Var Sp)
+2481 066179 Jz (Var (Local 4)) (Branch T (Dloc 066229))
+2482 066182 Jz (Var (Local 3)) (Branch F (Dloc 066229))
+2483 066185 Call (Floc 066364) [] Sp
+2484 066365 Get_parent (Con 114) Sp
+2485 066368 Jin (Con 113) (Var Sp) (Branch F Dfalse)
+2486 066190 Jz (Var (Local 1)) (Branch T (Dloc 066200))
+2487 066193 Get_sibling (Var (Local 1)) (Local 1) (Branch F (Dloc 066200))
+2488 066197 Jump 066204
+2489 066204 Test_attr (Var (Local 1)) (Con 9) (Branch T (Dloc 066190))
+2490 066209 Test_attr (Var (Local 1)) (Con 6) (Branch F (Dloc 066190))
+2491 066214 Insert_obj (Con 114) (Var (Local 1))
+2492 066217 Clear_attr (Con 114) (Con 2)
+2493 066220 Set_attr (Con 114) (Con 7)
+2494 066223 Store (Con 47) (Con 0)
+2495 066226 Jump 066030
+2496 066030 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066040))
+2497 066040 Push (Con 0)
+2498 066043 Store (Con 3) (Var Sp)
+2499 066046 Jz (Var (Local 3)) (Branch T (Dloc 066052))
+2500 066052 Je [Var (Local 1),Con 190] (Branch F (Dloc 066080))
+2501 066080 Je [Var (Local 1),Var (Global 0)] (Branch F (Dloc 066112))
+2502 066112 Jin (Con 114) (Var (Local 1)) (Branch F (Dloc 066126))
+2503 066116 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066126))
+2504 066126 Test_attr (Var (Local 1)) (Con 3) (Branch F (Dloc 066164))
+2505 066164 Jz (Var (Local 4)) (Branch F (Dloc 066173))
+2506 066173 Push (Con 0)
+2507 066176 Store (Con 4) (Var Sp)
+2508 066179 Jz (Var (Local 4)) (Branch T (Dloc 066229))
+2509 066229 Je [Var (Local 1),Con 190] (Branch T (Dloc 066241))
+2510 066233 Call (Floc 066244) [Var (Local 1)] Sp
+2511 066253 Get_child (Con 114) (Local 2) (Branch T (Dloc 066257))
+2512 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+2513 066262 Get_sibling (Var (Local 2)) (Local 3) (Branch T (Dloc 066266))
+2514 066266 Je [Var (Local 2),Con 113,Con 115] (Branch F (Dloc 066275))
+2515 066272 Jump 066357
+2516 066357 Store (Con 2) (Var (Local 3))
+2517 066360 Jump 066257
+2518 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+2519 066262 Get_sibling (Var (Local 2)) (Local 3) (Branch T (Dloc 066266))
+2520 066266 Je [Var (Local 2),Con 113,Con 115] (Branch F (Dloc 066275))
+2521 066272 Jump 066357
+2522 066357 Store (Con 2) (Var (Local 3))
+2523 066360 Jump 066257
+2524 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+2525 066260 Ret (Var (Local 4))
+2526 066239 Ret (Var (Local 5))
+2527 021789 Jz (Var Sp) (Branch T (Dloc 021795))
+2528 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2529 021799 Jump 021736
+2530 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2531 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2532 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2533 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2534 021799 Jump 021736
+2535 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2536 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2537 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2538 021758 Loadw (Var (Local 1)) (Con 1) (Local 3)
+2539 021762 Jz (Var (Local 3)) (Branch F (Dloc 021768))
+2540 021768 Sub (Var (Local 3)) (Con 1) Sp
+2541 021772 Storew (Var (Local 1)) (Con 1) (Var Sp)
+2542 021777 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 021795))
+2543 021781 Loadw (Var (Local 1)) (Con 2) Sp
+2544 021785 Call (Fvar Sp) [] Sp
+2545 065581 Loadw (Var (Global 3)) (Con 0) (Local 2)
+2546 065585 Jz (Var (Global 62)) (Branch F Dfalse)
+2547 065588 Store (Con 3) (Con 0)
+2548 065591 Inc (Con 3)
+2549 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+2550 065600 Loadw (Var (Global 3)) (Var (Local 3)) (Local 4)
+2551 065604 Loadw (Var (Local 4)) (Con 0) (Local 5)
+2552 065608 Jin (Var (Local 5)) (Var (Global 0)) (Branch F (Dloc 065703))
+2553 065703 Test_attr (Var (Local 5)) (Con 2) (Branch F (Dloc 065716))
+2554 065716 Je [Var (Local 5),Con 114] (Branch F (Dloc 065723))
+2555 065723 Clear_attr (Var (Global 111)) (Con 1)
+2556 065726 Clear_attr (Var (Local 5)) (Con 1)
+2557 065729 Clear_attr (Var (Local 5)) (Con 2)
+2558 065732 Call (Floc 065752) [Var (Local 5)] Sp
+2559 065757 Get_prop (Var (Local 1)) (Con 7) (Local 2)
+2560 065761 Jl (Var (Local 2)) (Con 0) (Branch F Dtrue)
+2561 065738 Jump 065591
+2562 065591 Inc (Con 3)
+2563 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+2564 065600 Loadw (Var (Global 3)) (Var (Local 3)) (Local 4)
+2565 065604 Loadw (Var (Local 4)) (Con 0) (Local 5)
+2566 065608 Jin (Var (Local 5)) (Var (Global 0)) (Branch F (Dloc 065703))
+2567 065703 Test_attr (Var (Local 5)) (Con 2) (Branch F (Dloc 065716))
+2568 065716 Je [Var (Local 5),Con 114] (Branch F (Dloc 065723))
+2569 065720 Store (Con 46) (Con 0)
+2570 065723 Clear_attr (Var (Global 111)) (Con 1)
+2571 065726 Clear_attr (Var (Local 5)) (Con 1)
+2572 065729 Clear_attr (Var (Local 5)) (Con 2)
+2573 065732 Call (Floc 065752) [Var (Local 5)] Sp
+2574 065757 Get_prop (Var (Local 1)) (Con 7) (Local 2)
+2575 065761 Jl (Var (Local 2)) (Con 0) (Branch F Dtrue)
+2576 065738 Jump 065591
+2577 065591 Inc (Con 3)
+2578 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+2579 065597 Jump 065741
+2580 065741 Jz (Var (Local 1)) (Branch T Dfalse)
+2581 021789 Jz (Var Sp) (Branch T (Dloc 021795))
+2582 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2583 021799 Jump 021736
+2584 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2585 021740 Inc_chk (Con 18) (Con 999) (Branch F (Dloc 021749))
+2586 021749 Ret (Var (Local 4))
+2587 022393 Jump 021823
+2588 021823 Store (Con 4) (Con 0)
+2589 021826 Store (Con 5) (Con 0)
+2590 021829 Store (Con 8) (Con 1)
+2591 021832 Call (Floc 022656) [] (Global 127)
+2592 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2593 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2594 022691 Jump 022679
+2595 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2596 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2597 022691 Jump 022679
+2598 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2599 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2600 022691 Jump 022679
+2601 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2602 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2603 022691 Jump 022679
+2604 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2605 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2606 022691 Jump 022679
+2607 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2608 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2609 022691 Jump 022679
+2610 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2611 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2612 022691 Jump 022679
+2613 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2614 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2615 022691 Jump 022679
+2616 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2617 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2618 022691 Jump 022679
+2619 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2620 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+2621 022691 Jump 022679
+2622 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+2623 022683 Jump 022694
+2624 022694 Store (Con 104) (Con 0)
+2625 022697 Store (Con 120) (Con 0)
+2626 022700 Storew (Var (Global 86)) (Var (Global 81)) (Con 0)
+2627 022705 Storew (Var (Global 85)) (Var (Global 81)) (Con 0)
+2628 022710 Storew (Var (Global 84)) (Var (Global 81)) (Con 0)
+2629 022715 Jz (Var (Global 96)) (Branch F (Dloc 022741))
+2630 022718 Je [Var (Global 111),Var (Global 128)] (Branch T (Dloc 022741))
+2631 022741 Jz (Var (Global 108)) (Branch T (Dloc 022765))
+2632 022765 Store (Con 127) (Var (Global 128))
+2633 022768 Store (Con 112) (Con 0)
+2634 022771 Get_parent (Var (Global 111)) Sp
+2635 022774 Test_attr (Var Sp) (Con 27) (Branch T (Dloc 022781))
+2636 022778 Get_parent (Var (Global 111)) (Global 0)
+2637 022781 Call (Floc 027746) [Var (Global 0)] (Global 66)
+2638 027755 Jz (Var (Global 72)) (Branch T (Dloc 027762))
+2639 027762 Store (Con 107) (Con 20)
+2640 027765 Store (Con 3) (Var (Global 0))
+2641 027768 Store (Con 16) (Var (Local 1))
+2642 027771 Jz (Var (Local 2)) (Branch T (Dloc 027784))
+2643 027774 Test_attr (Var (Local 1)) (Con 20) (Branch F (Dloc 027784))
+2644 027778 Store (Con 4) (Con 1)
+2645 027781 Jump 027844
+2646 027844 Store (Con 16) (Var (Local 3))
+2647 027847 Store (Con 107) (Con 0)
+2648 027850 Ret (Var (Local 4))
+2649 022787 Jz (Var (Global 70)) (Branch F (Dloc 022791))
+2650 022790 New_line
+2651 022791 Print ">"
+2652 022796 Sread (Var (Global 109)) (Var (Global 110))
+
+[executed: 748 instructions]
+Dropped.
+
+>[4]go north
+
+
+2653 022800 Loadb (Var (Global 110)) (Con 1) (Global 113)
+2654 022804 Jz (Var (Global 113)) (Branch F (Dloc 022822))
+2655 022822 Store (Con 5) (Var (Global 113))
+2656 022825 Store (Con 128) (Con 0)
+2657 022828 Store (Con 113) (Con 0)
+2658 022831 Store (Con 96) (Con 0)
+2659 022834 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844))
+2660 022844 Loadw (Var (Global 110)) (Var (Local 1)) (Local 2)
+2661 022848 Jz (Var (Local 2)) (Branch F (Dloc 022861))
+2662 022861 Je [Var (Local 2),Con 19456] (Branch F (Dloc 022879))
+2663 022879 Je [Var (Local 2),Con 19393] (Branch F (Dloc 022906))
+2664 022906 Je [Var (Local 2),Con 19393,Con 15151] (Branch T (Dloc 022920))
+2665 022914 Je [Var (Local 2),Con 15165] (Branch F (Dloc 022953))
+2666 022953 Call (Floc 023466) [Var (Local 2),Con 16,Con 3] (Local 3)
+2667 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2668 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2669 022961 Jz (Var (Local 3)) (Branch T (Dloc 023064))
+2670 023064 Call (Floc 023466) [Var (Local 2),Con 64,Con 1] (Local 3)
+2671 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2672 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2673 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+2674 023489 And (Var (Local 5)) (Con 3) (Local 5)
+2675 023493 Je [Var (Local 5),Var (Local 3)] (Branch T (Dloc 023499))
+2676 023499 Loadb (Var (Local 1)) (Var (Local 4)) Sp
+2677 023503 Ret_popped
+2678 023072 Jz (Var (Local 3)) (Branch T (Dloc 023129))
+2679 023075 Jz (Var (Local 4)) (Branch F (Dloc 023129))
+2680 023078 Store (Con 4) (Var (Local 3))
+2681 023081 Storew (Var (Global 100)) (Con 0) (Var (Local 3))
+2682 023086 Storew (Var (Global 100)) (Con 1) (Var (Global 98))
+2683 023091 Storew (Var (Global 98)) (Con 0) (Var (Local 2))
+2684 023096 Mul (Var (Local 1)) (Con 2) Sp
+2685 023100 Add (Var Sp) (Con 2) (Local 9)
+2686 023104 Loadb (Var (Global 110)) (Var (Local 9)) Sp
+2687 023108 Storeb (Var (Global 98)) (Con 2) (Var Sp)
+2688 023113 Add (Var (Local 9)) (Con 1) Sp
+2689 023117 Loadb (Var (Global 110)) (Var Sp) Sp
+2690 023121 Storeb (Var (Global 98)) (Con 3) (Var Sp)
+2691 023126 Jump 023397
+2692 023397 Store (Con 8) (Var (Local 2))
+2693 023400 Add (Var (Local 1)) (Con 2) (Local 1)
+2694 023404 Jump 022834
+2695 022834 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844))
+2696 022844 Loadw (Var (Global 110)) (Var (Local 1)) (Local 2)
+2697 022848 Jz (Var (Local 2)) (Branch F (Dloc 022861))
+2698 022861 Je [Var (Local 2),Con 19456] (Branch F (Dloc 022879))
+2699 022879 Je [Var (Local 2),Con 19393] (Branch F (Dloc 022906))
+2700 022906 Je [Var (Local 2),Con 19393,Con 15151] (Branch T (Dloc 022920))
+2701 022914 Je [Var (Local 2),Con 15165] (Branch F (Dloc 022953))
+2702 022953 Call (Floc 023466) [Var (Local 2),Con 16,Con 3] (Local 3)
+2703 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+2704 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+2705 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+2706 023489 And (Var (Local 5)) (Con 3) (Local 5)
+2707 023493 Je [Var (Local 5),Var (Local 3)] (Branch T (Dloc 023499))
+2708 023499 Loadb (Var (Local 1)) (Var (Local 4)) Sp
+2709 023503 Ret_popped
+2710 022961 Jz (Var (Local 3)) (Branch T (Dloc 023064))
+2711 022965 Je [Var (Local 4),Con 0,Con 248] (Branch F (Dloc 023064))
+2712 022972 Je [Var (Local 5),Con 1] (Branch T (Dloc 023032))
+2713 022977 Je [Var (Local 5),Con 2] (Branch F (Dloc 022985))
+2714 022981 Je [Var (Local 4),Con 248] (Branch T (Dloc 023032))
+2715 023032 Store (Con 6) (Var (Local 3))
+2716 023035 Je [Var (Local 7),Con 15158,Con 15256] (Branch F (Dloc 023053))
+2717 023053 Jg (Var (Local 5)) (Con 2) (Branch T (Dloc 023397))
+2718 023058 Store (Con 112) (Con 0)
+2719 023061 Jump 023407
+2720 023407 Jz (Var (Local 6)) (Branch T (Dloc 023421))
+2721 023410 Store (Con 136) (Con 137)
+2722 023413 Store (Con 134) (Var (Local 6))
+2723 023416 Store (Con 111) (Var (Local 6))
+2724 023419 Ret (Con 1)
+2725 021837 Jz (Var (Global 127)) (Branch T (Dloc 022347))
+2726 021841 Loadw (Var (Global 85)) (Var (Global 81)) (Local 1)
+2727 021845 Loadw (Var (Global 86)) (Var (Global 81)) (Local 2)
+2728 021849 Jz (Var (Local 2)) (Branch F (Dloc 021858))
+2729 021852 Push (Var (Local 2))
+2730 021855 Jump 021907
+2731 021907 Store (Con 3) (Var Sp)
+2732 021910 Jz (Var (Local 5)) (Branch F (Dloc 021921))
+2733 021913 Je [Var (Local 1),Con 1] (Branch F (Dloc 021921))
+2734 021921 Je [Var (Global 120),Con 137] (Branch F (Dloc 021935))
+2735 021925 Call (Floc 022396) [Var (Global 120),Var (Global 118)] (Local 7)
+2736 022411 Store (Con 5) (Var (Global 120))
+2737 022414 Store (Con 6) (Var (Global 118))
+2738 022417 Store (Con 7) (Var (Global 119))
+2739 022420 Je [Con 12,Var (Local 3),Var (Local 2)] (Branch F (Dloc 022456))
+2740 022456 Je [Var (Local 2),Con 12] (Branch F (Dloc 022463))
+2741 022463 Je [Var (Local 3),Con 12] (Branch F (Dloc 022470))
+2742 022470 Store (Con 136) (Var (Local 1))
+2743 022473 Store (Con 134) (Var (Local 2))
+2744 022476 Jz (Var (Global 118)) (Branch T (Dloc 022493))
+2745 022479 Je [Var (Global 119),Con 12] (Branch T (Dloc 022493))
+2746 022483 Je [Var (Global 120),Con 137] (Branch T (Dloc 022493))
+2747 022493 Store (Con 135) (Var (Local 3))
+2748 022496 Je [Con 11,Var (Global 118),Var (Global 119)] (Branch F (Dloc 022513))
+2749 022513 Store (Con 2) (Var (Global 118))
+2750 022516 Store (Con 3) (Var (Global 119))
+2751 022519 Get_prop (Var (Global 111)) (Con 17) Sp
+2752 022523 Call (Fvar Sp) [] (Local 4)
+2753 022527 Jz (Var (Local 4)) (Branch T (Dloc 022533))
+2754 022533 Get_parent (Var (Global 111)) Sp
+2755 022536 Get_prop (Var Sp) (Con 17) Sp
+2756 022540 Call (Fvar Sp) [Con 1] (Local 4)
+2757 038207 Je [Var (Local 1),Con 3] (Branch F Dfalse)
+2758 022545 Jz (Var (Local 4)) (Branch T (Dloc 022551))
+2759 022551 Loadw (Var (Global 156)) (Var (Local 1)) Sp
+2760 022555 Call (Fvar Sp) [] (Local 4)
+2761 022559 Jz (Var (Local 4)) (Branch T (Dloc 022565))
+2762 022565 Jz (Var (Local 3)) (Branch T (Dloc 022582))
+2763 022582 Jz (Var (Local 2)) (Branch T (Dloc 022612))
+2764 022585 Je [Var (Local 1),Con 137] (Branch T (Dloc 022612))
+2765 022612 Jz (Var (Local 2)) (Branch T (Dloc 022633))
+2766 022615 Je [Var (Local 1),Con 137] (Branch T (Dloc 022633))
+2767 022633 Loadw (Var (Global 155)) (Var (Local 1)) Sp
+2768 022637 Call (Fvar Sp) [] (Local 4)
+2769 035503 Jz (Var (Global 95)) (Branch F (Dloc 035514))
+2770 035514 Get_prop_addr (Var (Global 0)) (Var (Global 118)) (Local 1)
+2771 035518 Jz (Var (Local 1)) (Branch T (Dloc 035692))
+2772 035522 Get_prop_len (Var (Local 1)) (Local 2)
+2773 035525 Je [Var (Local 2),Con 1] (Branch F (Dloc 035540))
+2774 035529 Loadb (Var (Local 1)) (Con 0) Sp
+2775 035533 Call (Floc 037558) [Var Sp] Sp
+2776 037571 Test_attr (Var (Local 1)) (Con 6) (Branch T (Dloc 037581))
+2777 037581 Push (Con 1)
+2778 037584 Store (Con 3) (Var Sp)
+2779 037587 Get_parent (Var (Global 111)) (Local 4)
+2780 037590 Store (Con 6) (Var (Global 66))
+2781 037593 Test_attr (Var (Local 4)) (Con 27) (Branch F (Dloc 037601))
+2782 037601 Jz (Var (Local 3)) (Branch F (Dloc 037615))
+2783 037615 Jz (Var (Local 3)) (Branch F (Dloc 037630))
+2784 037630 Test_attr (Var (Global 0)) (Con 6) (Branch F (Dloc 037656))
+2785 037634 Jz (Var (Local 3)) (Branch T (Dloc 037656))
+2786 037637 Jz (Var (Local 5)) (Branch T (Dloc 037656))
+2787 037656 Test_attr (Var (Local 1)) (Con 18) (Branch F (Dloc 037668))
+2788 037668 Jz (Var (Local 3)) (Branch T (Dloc 037708))
+2789 037671 Test_attr (Var (Global 0)) (Con 6) (Branch T (Dloc 037708))
+2790 037708 Jz (Var (Local 5)) (Branch T (Dloc 037717))
+2791 037717 Insert_obj (Var (Global 111)) (Var (Local 1))
+2792 037720 Store (Con 16) (Var (Local 1))
+2793 037723 Call (Floc 027746) [Var (Global 0)] (Global 66)
+2794 027755 Jz (Var (Global 72)) (Branch T (Dloc 027762))
+2795 027762 Store (Con 107) (Con 20)
+2796 027765 Store (Con 3) (Var (Global 0))
+2797 027768 Store (Con 16) (Var (Local 1))
+2798 027771 Jz (Var (Local 2)) (Branch T (Dloc 027784))
+2799 027774 Test_attr (Var (Local 1)) (Con 20) (Branch F (Dloc 027784))
+2800 027778 Store (Con 4) (Con 1)
+2801 027781 Jump 027844
+2802 027844 Store (Con 16) (Var (Local 3))
+2803 027847 Store (Con 107) (Con 0)
+2804 027850 Ret (Var (Local 4))
+2805 037729 Jz (Var (Local 6)) (Branch F (Dloc 037855))
+2806 037855 Jz (Var (Global 66)) (Branch F (Dloc 037885))
+2807 037885 Get_prop (Var (Global 0)) (Con 17) Sp
+2808 037889 Call (Fvar Sp) [Con 2] Sp
+2809 037894 Call (Floc 037050) [Var (Local 1)] Sp
+2810 037055 Get_prop (Var (Local 1)) (Con 13) (Local 2)
+2811 037059 Jg (Var (Local 2)) (Con 0) (Branch F Dfalse)
+2812 037900 Je [Var (Global 0),Var (Local 1)] (Branch F Dtrue)
+2813 037904 Je [Con 4,Var (Global 111)] (Branch T (Dloc 037924))
+2814 037924 Jz (Var (Local 2)) (Branch T Dtrue)
+2815 037927 Call (Floc 035976) [] Sp
+2816 035977 Call (Floc 035994) [] Sp
+2817 036003 Jz (Var (Local 1)) (Branch T (Dloc 036012))
+2818 036012 Push (Var (Global 71))
+2819 036015 Pull (Con 2)
+2820 036018 Jz (Var (Global 66)) (Branch F (Dloc 036068))
+2821 036068 Test_attr (Var (Global 0)) (Con 3) (Branch T (Dloc 036078))
+2822 036072 Set_attr (Var (Global 0)) (Con 3)
+2823 036075 Store (Con 2) (Con 1)
+2824 036078 Test_attr (Var (Global 0)) (Con 5) (Branch F (Dloc 036085))
+2825 036085 Jin (Var (Global 0)) (Con 82) (Branch F (Dloc 036106))
+2826 036089 Print_obj (Var (Global 0))
+2827 036091 Get_parent (Var (Global 111)) (Local 4)
+2828 036094 Test_attr (Var (Local 4)) (Con 27) (Branch F (Dloc 036105))
+2829 036105 New_line
+2830 036106 Jz (Var (Local 1)) (Branch F (Dloc 036112))
+2831 036109 Jz (Var (Global 70)) (Branch F Dtrue)
+2832 036112 Get_parent (Var (Global 111)) (Local 4)
+2833 036115 Jz (Var (Local 2)) (Branch T (Dloc 036130))
+2834 036118 Get_prop (Var (Global 0)) (Con 17) Sp
+2835 036122 Call (Fvar Sp) [Con 3] Sp
+2836 036127 Jz (Var Sp) (Branch F Dtrue)
+2837 036130 Jz (Var (Local 2)) (Branch T (Dloc 036146))
+2838 036133 Get_prop (Var (Global 0)) (Con 11) (Local 3)
+2839 036137 Jz (Var (Local 3)) (Branch T (Dloc 036146))
+2840 036140 Print_paddr (Var (Local 3))
+2841 036142 New_line
+2842 036143 Jump 036155
+2843 036155 Je [Var (Global 0),Var (Local 4)] (Branch T Dtrue)
+2844 035982 Jz (Var Sp) (Branch T Dfalse)
+2845 035985 Jz (Var (Global 70)) (Branch F Dfalse)
+2846 035988 Call (Floc 036174) [] Sp
+2847 036177 Jz (Var (Global 66)) (Branch T (Dloc 036209))
+2848 036180 Get_child (Var (Global 0)) Sp (Branch F Dfalse)
+2849 036184 Jz (Var (Local 1)) (Branch T (Dloc 036193))
+2850 036193 Push (Var (Global 71))
+2851 036196 Pull (Con 1)
+2852 036199 Call (Floc 036522) [Var (Global 0),Var (Local 1),Con -1] Sp
+2853 036543 Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue)
+2854 036547 Get_parent (Var (Global 111)) (Local 7)
+2855 036550 Jz (Var (Local 7)) (Branch T (Dloc 036560))
+2856 036553 Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560))
+2857 036560 Store (Con 7) (Con 0)
+2858 036563 Store (Con 5) (Con 1)
+2859 036566 Store (Con 6) (Con 1)
+2860 036569 Get_parent (Var (Local 1)) Sp
+2861 036572 Je [Var (Global 111),Var (Local 1),Var Sp] (Branch F (Dloc 036584))
+2862 036584 Jz (Var (Local 4)) (Branch F (Dloc 036590))
+2863 036590 Je [Var (Local 4),Var (Local 7)] (Branch F (Dloc 036600))
+2864 036600 Je [Var (Local 4),Var (Global 111)] (Branch F (Dloc 036607))
+2865 036604 Jump 036670
+2866 036670 Get_sibling (Var (Local 4)) (Local 4) (Branch T (Dloc 036674))
+2867 036674 Jump 036584
+2868 036584 Jz (Var (Local 4)) (Branch F (Dloc 036590))
+2869 036587 Jump 036677
+2870 036677 Get_child (Var (Local 1)) (Local 4) (Branch T (Dloc 036681))
+2871 036681 Jz (Var (Local 4)) (Branch F (Dloc 036710))
+2872 036710 Je [Var (Local 4),Var (Local 7),Con 4] (Branch F (Dloc 036719))
+2873 036716 Jump 036809
+2874 036809 Get_sibling (Var (Local 4)) (Local 4) (Branch T (Dloc 036813))
+2875 036813 Jump 036681
+2876 036681 Jz (Var (Local 4)) (Branch F (Dloc 036710))
+2877 036684 Jz (Var (Local 9)) (Branch T (Dloc 036816))
+2878 036816 Jz (Var (Local 5)) (Branch T Dtrue)
+2879 036819 Jz (Var (Local 6)) (Branch T Dtrue)
+2880 036822 Rfalse
+2881 036208 Ret_popped
+2882 035993 Ret_popped
+2883 037932 Rtrue
+2884 035539 Ret_popped
+2885 022641 Jz (Var (Local 4)) (Branch T (Dloc 022644))
+2886 022644 Store (Con 136) (Var (Local 5))
+2887 022647 Store (Con 134) (Var (Local 6))
+2888 022650 Store (Con 135) (Var (Local 7))
+2889 022653 Ret (Var (Local 4))
+2890 021932 Jump 022295
+2891 022295 Je [Var (Local 7),Con 2] (Branch T (Dloc 022311))
+2892 022299 Get_parent (Var (Global 111)) Sp
+2893 022302 Get_prop (Var Sp) (Con 17) Sp
+2894 022306 Call (Fvar Sp) [Con 6] (Local 7)
+2895 022311 Je [Var (Global 120),Con 8,Con 137,Con 15] (Branch T (Dloc 022337))
+2896 022337 Je [Var (Local 7),Con 2] (Branch F (Dloc 022350))
+2897 022350 Jz (Var (Global 127)) (Branch T (Dloc 021823))
+2898 022354 Je [Var (Global 120),Con 2,Con 1,Con 111] (Branch T (Dloc 021823))
+2899 022362 Je [Var (Global 120),Con 12,Con 8,Con 0] (Branch T (Dloc 021823))
+2900 022370 Je [Var (Global 120),Con 9,Con 6,Con 5] (Branch T (Dloc 021823))
+2901 022378 Je [Var (Global 120),Con 7,Con 11,Con 10] (Branch F (Dloc 022388))
+2902 022388 Call (Floc 021700) [] (Local 7)
+2903 021709 Jz (Var (Global 129)) (Branch T (Dloc 021716))
+2904 021716 Jz (Var (Global 127)) (Branch T (Dloc 021725))
+2905 021719 Push (Var (Global 130))
+2906 021722 Jump 021728
+2907 021728 Add (Var (Global 132)) (Var Sp) (Local 1)
+2908 021732 Add (Var (Global 132)) (Con 180) (Local 2)
+2909 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2910 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2911 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2912 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2913 021799 Jump 021736
+2914 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2915 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2916 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2917 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2918 021799 Jump 021736
+2919 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2920 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2921 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2922 021758 Loadw (Var (Local 1)) (Con 1) (Local 3)
+2923 021762 Jz (Var (Local 3)) (Branch F (Dloc 021768))
+2924 021768 Sub (Var (Local 3)) (Con 1) Sp
+2925 021772 Storew (Var (Local 1)) (Con 1) (Var Sp)
+2926 021777 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 021795))
+2927 021781 Loadw (Var (Local 1)) (Con 2) Sp
+2928 021785 Call (Fvar Sp) [] Sp
+2929 066027 Get_parent (Con 114) (Local 1)
+2930 066030 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066040))
+2931 066040 Push (Con 0)
+2932 066043 Store (Con 3) (Var Sp)
+2933 066046 Jz (Var (Local 3)) (Branch T (Dloc 066052))
+2934 066052 Je [Var (Local 1),Con 190] (Branch F (Dloc 066080))
+2935 066080 Je [Var (Local 1),Var (Global 0)] (Branch F (Dloc 066112))
+2936 066112 Jin (Con 114) (Var (Local 1)) (Branch F (Dloc 066126))
+2937 066116 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066126))
+2938 066126 Test_attr (Var (Local 1)) (Con 3) (Branch F (Dloc 066164))
+2939 066164 Jz (Var (Local 4)) (Branch F (Dloc 066173))
+2940 066167 Push (Con 1)
+2941 066170 Jump 066176
+2942 066176 Store (Con 4) (Var Sp)
+2943 066179 Jz (Var (Local 4)) (Branch T (Dloc 066229))
+2944 066182 Jz (Var (Local 3)) (Branch F (Dloc 066229))
+2945 066185 Call (Floc 066364) [] Sp
+2946 066365 Get_parent (Con 114) Sp
+2947 066368 Jin (Con 113) (Var Sp) (Branch F Dfalse)
+2948 066190 Jz (Var (Local 1)) (Branch T (Dloc 066200))
+2949 066193 Get_sibling (Var (Local 1)) (Local 1) (Branch F (Dloc 066200))
+2950 066197 Jump 066204
+2951 066204 Test_attr (Var (Local 1)) (Con 9) (Branch T (Dloc 066190))
+2952 066209 Test_attr (Var (Local 1)) (Con 6) (Branch F (Dloc 066190))
+2953 066214 Insert_obj (Con 114) (Var (Local 1))
+2954 066217 Clear_attr (Con 114) (Con 2)
+2955 066220 Set_attr (Con 114) (Con 7)
+2956 066223 Store (Con 47) (Con 0)
+2957 066226 Jump 066030
+2958 066030 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066040))
+2959 066040 Push (Con 0)
+2960 066043 Store (Con 3) (Var Sp)
+2961 066046 Jz (Var (Local 3)) (Branch T (Dloc 066052))
+2962 066052 Je [Var (Local 1),Con 190] (Branch F (Dloc 066080))
+2963 066080 Je [Var (Local 1),Var (Global 0)] (Branch F (Dloc 066112))
+2964 066112 Jin (Con 114) (Var (Local 1)) (Branch F (Dloc 066126))
+2965 066116 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066126))
+2966 066126 Test_attr (Var (Local 1)) (Con 3) (Branch F (Dloc 066164))
+2967 066164 Jz (Var (Local 4)) (Branch F (Dloc 066173))
+2968 066173 Push (Con 0)
+2969 066176 Store (Con 4) (Var Sp)
+2970 066179 Jz (Var (Local 4)) (Branch T (Dloc 066229))
+2971 066229 Je [Var (Local 1),Con 190] (Branch T (Dloc 066241))
+2972 066233 Call (Floc 066244) [Var (Local 1)] Sp
+2973 066253 Get_child (Con 114) (Local 2) (Branch T (Dloc 066257))
+2974 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+2975 066262 Get_sibling (Var (Local 2)) (Local 3) (Branch T (Dloc 066266))
+2976 066266 Je [Var (Local 2),Con 113,Con 115] (Branch F (Dloc 066275))
+2977 066272 Jump 066357
+2978 066357 Store (Con 2) (Var (Local 3))
+2979 066360 Jump 066257
+2980 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+2981 066262 Get_sibling (Var (Local 2)) (Local 3) (Branch T (Dloc 066266))
+2982 066266 Je [Var (Local 2),Con 113,Con 115] (Branch F (Dloc 066275))
+2983 066272 Jump 066357
+2984 066357 Store (Con 2) (Var (Local 3))
+2985 066360 Jump 066257
+2986 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+2987 066260 Ret (Var (Local 4))
+2988 066239 Ret (Var (Local 5))
+2989 021789 Jz (Var Sp) (Branch T (Dloc 021795))
+2990 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2991 021799 Jump 021736
+2992 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2993 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2994 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+2995 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+2996 021799 Jump 021736
+2997 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+2998 021751 Loadw (Var (Local 1)) (Con 0) Sp
+2999 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+3000 021758 Loadw (Var (Local 1)) (Con 1) (Local 3)
+3001 021762 Jz (Var (Local 3)) (Branch F (Dloc 021768))
+3002 021768 Sub (Var (Local 3)) (Con 1) Sp
+3003 021772 Storew (Var (Local 1)) (Con 1) (Var Sp)
+3004 021777 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 021795))
+3005 021781 Loadw (Var (Local 1)) (Con 2) Sp
+3006 021785 Call (Fvar Sp) [] Sp
+3007 065581 Loadw (Var (Global 3)) (Con 0) (Local 2)
+3008 065585 Jz (Var (Global 62)) (Branch F Dfalse)
+3009 065588 Store (Con 3) (Con 0)
+3010 065591 Inc (Con 3)
+3011 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+3012 065600 Loadw (Var (Global 3)) (Var (Local 3)) (Local 4)
+3013 065604 Loadw (Var (Local 4)) (Con 0) (Local 5)
+3014 065608 Jin (Var (Local 5)) (Var (Global 0)) (Branch F (Dloc 065703))
+3015 065703 Test_attr (Var (Local 5)) (Con 2) (Branch F (Dloc 065716))
+3016 065716 Je [Var (Local 5),Con 114] (Branch F (Dloc 065723))
+3017 065723 Clear_attr (Var (Global 111)) (Con 1)
+3018 065726 Clear_attr (Var (Local 5)) (Con 1)
+3019 065729 Clear_attr (Var (Local 5)) (Con 2)
+3020 065732 Call (Floc 065752) [Var (Local 5)] Sp
+3021 065757 Get_prop (Var (Local 1)) (Con 7) (Local 2)
+3022 065761 Jl (Var (Local 2)) (Con 0) (Branch F Dtrue)
+3023 065738 Jump 065591
+3024 065591 Inc (Con 3)
+3025 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+3026 065600 Loadw (Var (Global 3)) (Var (Local 3)) (Local 4)
+3027 065604 Loadw (Var (Local 4)) (Con 0) (Local 5)
+3028 065608 Jin (Var (Local 5)) (Var (Global 0)) (Branch F (Dloc 065703))
+3029 065703 Test_attr (Var (Local 5)) (Con 2) (Branch F (Dloc 065716))
+3030 065716 Je [Var (Local 5),Con 114] (Branch F (Dloc 065723))
+3031 065720 Store (Con 46) (Con 0)
+3032 065723 Clear_attr (Var (Global 111)) (Con 1)
+3033 065726 Clear_attr (Var (Local 5)) (Con 1)
+3034 065729 Clear_attr (Var (Local 5)) (Con 2)
+3035 065732 Call (Floc 065752) [Var (Local 5)] Sp
+3036 065757 Get_prop (Var (Local 1)) (Con 7) (Local 2)
+3037 065761 Jl (Var (Local 2)) (Con 0) (Branch F Dtrue)
+3038 065738 Jump 065591
+3039 065591 Inc (Con 3)
+3040 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+3041 065597 Jump 065741
+3042 065741 Jz (Var (Local 1)) (Branch T Dfalse)
+3043 021789 Jz (Var Sp) (Branch T (Dloc 021795))
+3044 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+3045 021799 Jump 021736
+3046 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3047 021740 Inc_chk (Con 18) (Con 999) (Branch F (Dloc 021749))
+3048 021749 Ret (Var (Local 4))
+3049 022393 Jump 021823
+3050 021823 Store (Con 4) (Con 0)
+3051 021826 Store (Con 5) (Con 0)
+3052 021829 Store (Con 8) (Con 1)
+3053 021832 Call (Floc 022656) [] (Global 127)
+3054 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3055 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3056 022691 Jump 022679
+3057 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3058 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3059 022691 Jump 022679
+3060 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3061 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3062 022691 Jump 022679
+3063 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3064 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3065 022691 Jump 022679
+3066 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3067 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3068 022691 Jump 022679
+3069 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3070 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3071 022691 Jump 022679
+3072 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3073 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3074 022691 Jump 022679
+3075 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3076 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3077 022691 Jump 022679
+3078 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3079 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3080 022691 Jump 022679
+3081 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3082 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3083 022691 Jump 022679
+3084 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3085 022683 Jump 022694
+3086 022694 Store (Con 104) (Con 0)
+3087 022697 Store (Con 120) (Con 0)
+3088 022700 Storew (Var (Global 86)) (Var (Global 81)) (Con 0)
+3089 022705 Storew (Var (Global 85)) (Var (Global 81)) (Con 0)
+3090 022710 Storew (Var (Global 84)) (Var (Global 81)) (Con 0)
+3091 022715 Jz (Var (Global 96)) (Branch F (Dloc 022741))
+3092 022718 Je [Var (Global 111),Var (Global 128)] (Branch T (Dloc 022741))
+3093 022741 Jz (Var (Global 108)) (Branch T (Dloc 022765))
+3094 022765 Store (Con 127) (Var (Global 128))
+3095 022768 Store (Con 112) (Con 0)
+3096 022771 Get_parent (Var (Global 111)) Sp
+3097 022774 Test_attr (Var Sp) (Con 27) (Branch T (Dloc 022781))
+3098 022778 Get_parent (Var (Global 111)) (Global 0)
+3099 022781 Call (Floc 027746) [Var (Global 0)] (Global 66)
+3100 027755 Jz (Var (Global 72)) (Branch T (Dloc 027762))
+3101 027762 Store (Con 107) (Con 20)
+3102 027765 Store (Con 3) (Var (Global 0))
+3103 027768 Store (Con 16) (Var (Local 1))
+3104 027771 Jz (Var (Local 2)) (Branch T (Dloc 027784))
+3105 027774 Test_attr (Var (Local 1)) (Con 20) (Branch F (Dloc 027784))
+3106 027778 Store (Con 4) (Con 1)
+3107 027781 Jump 027844
+3108 027844 Store (Con 16) (Var (Local 3))
+3109 027847 Store (Con 107) (Con 0)
+3110 027850 Ret (Var (Local 4))
+3111 022787 Jz (Var (Global 70)) (Branch F (Dloc 022791))
+3112 022790 New_line
+3113 022791 Print ">"
+3114 022796 Sread (Var (Global 109)) (Var (Global 110))
+
+[executed: 462 instructions]
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+>[5]go north
+
+
+3115 022800 Loadb (Var (Global 110)) (Con 1) (Global 113)
+3116 022804 Jz (Var (Global 113)) (Branch F (Dloc 022822))
+3117 022822 Store (Con 5) (Var (Global 113))
+3118 022825 Store (Con 128) (Con 0)
+3119 022828 Store (Con 113) (Con 0)
+3120 022831 Store (Con 96) (Con 0)
+3121 022834 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844))
+3122 022844 Loadw (Var (Global 110)) (Var (Local 1)) (Local 2)
+3123 022848 Jz (Var (Local 2)) (Branch F (Dloc 022861))
+3124 022861 Je [Var (Local 2),Con 19456] (Branch F (Dloc 022879))
+3125 022879 Je [Var (Local 2),Con 19393] (Branch F (Dloc 022906))
+3126 022906 Je [Var (Local 2),Con 19393,Con 15151] (Branch T (Dloc 022920))
+3127 022914 Je [Var (Local 2),Con 15165] (Branch F (Dloc 022953))
+3128 022953 Call (Floc 023466) [Var (Local 2),Con 16,Con 3] (Local 3)
+3129 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+3130 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+3131 022961 Jz (Var (Local 3)) (Branch T (Dloc 023064))
+3132 023064 Call (Floc 023466) [Var (Local 2),Con 64,Con 1] (Local 3)
+3133 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+3134 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+3135 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+3136 023489 And (Var (Local 5)) (Con 3) (Local 5)
+3137 023493 Je [Var (Local 5),Var (Local 3)] (Branch T (Dloc 023499))
+3138 023499 Loadb (Var (Local 1)) (Var (Local 4)) Sp
+3139 023503 Ret_popped
+3140 023072 Jz (Var (Local 3)) (Branch T (Dloc 023129))
+3141 023075 Jz (Var (Local 4)) (Branch F (Dloc 023129))
+3142 023078 Store (Con 4) (Var (Local 3))
+3143 023081 Storew (Var (Global 100)) (Con 0) (Var (Local 3))
+3144 023086 Storew (Var (Global 100)) (Con 1) (Var (Global 98))
+3145 023091 Storew (Var (Global 98)) (Con 0) (Var (Local 2))
+3146 023096 Mul (Var (Local 1)) (Con 2) Sp
+3147 023100 Add (Var Sp) (Con 2) (Local 9)
+3148 023104 Loadb (Var (Global 110)) (Var (Local 9)) Sp
+3149 023108 Storeb (Var (Global 98)) (Con 2) (Var Sp)
+3150 023113 Add (Var (Local 9)) (Con 1) Sp
+3151 023117 Loadb (Var (Global 110)) (Var Sp) Sp
+3152 023121 Storeb (Var (Global 98)) (Con 3) (Var Sp)
+3153 023126 Jump 023397
+3154 023397 Store (Con 8) (Var (Local 2))
+3155 023400 Add (Var (Local 1)) (Con 2) (Local 1)
+3156 023404 Jump 022834
+3157 022834 Dec_chk (Con 129) (Con 0) (Branch F (Dloc 022844))
+3158 022844 Loadw (Var (Global 110)) (Var (Local 1)) (Local 2)
+3159 022848 Jz (Var (Local 2)) (Branch F (Dloc 022861))
+3160 022861 Je [Var (Local 2),Con 19456] (Branch F (Dloc 022879))
+3161 022879 Je [Var (Local 2),Con 19393] (Branch F (Dloc 022906))
+3162 022906 Je [Var (Local 2),Con 19393,Con 15151] (Branch T (Dloc 022920))
+3163 022914 Je [Var (Local 2),Con 15165] (Branch F (Dloc 022953))
+3164 022953 Call (Floc 023466) [Var (Local 2),Con 16,Con 3] (Local 3)
+3165 023477 Loadb (Var (Local 1)) (Con 4) (Local 5)
+3166 023481 Test (Var (Local 5)) (Var (Local 2)) (Branch F Dfalse)
+3167 023485 Jg (Var (Local 3)) (Con 4) (Branch T Dtrue)
+3168 023489 And (Var (Local 5)) (Con 3) (Local 5)
+3169 023493 Je [Var (Local 5),Var (Local 3)] (Branch T (Dloc 023499))
+3170 023499 Loadb (Var (Local 1)) (Var (Local 4)) Sp
+3171 023503 Ret_popped
+3172 022961 Jz (Var (Local 3)) (Branch T (Dloc 023064))
+3173 022965 Je [Var (Local 4),Con 0,Con 248] (Branch F (Dloc 023064))
+3174 022972 Je [Var (Local 5),Con 1] (Branch T (Dloc 023032))
+3175 022977 Je [Var (Local 5),Con 2] (Branch F (Dloc 022985))
+3176 022981 Je [Var (Local 4),Con 248] (Branch T (Dloc 023032))
+3177 023032 Store (Con 6) (Var (Local 3))
+3178 023035 Je [Var (Local 7),Con 15158,Con 15256] (Branch F (Dloc 023053))
+3179 023053 Jg (Var (Local 5)) (Con 2) (Branch T (Dloc 023397))
+3180 023058 Store (Con 112) (Con 0)
+3181 023061 Jump 023407
+3182 023407 Jz (Var (Local 6)) (Branch T (Dloc 023421))
+3183 023410 Store (Con 136) (Con 137)
+3184 023413 Store (Con 134) (Var (Local 6))
+3185 023416 Store (Con 111) (Var (Local 6))
+3186 023419 Ret (Con 1)
+3187 021837 Jz (Var (Global 127)) (Branch T (Dloc 022347))
+3188 021841 Loadw (Var (Global 85)) (Var (Global 81)) (Local 1)
+3189 021845 Loadw (Var (Global 86)) (Var (Global 81)) (Local 2)
+3190 021849 Jz (Var (Local 2)) (Branch F (Dloc 021858))
+3191 021852 Push (Var (Local 2))
+3192 021855 Jump 021907
+3193 021907 Store (Con 3) (Var Sp)
+3194 021910 Jz (Var (Local 5)) (Branch F (Dloc 021921))
+3195 021913 Je [Var (Local 1),Con 1] (Branch F (Dloc 021921))
+3196 021921 Je [Var (Global 120),Con 137] (Branch F (Dloc 021935))
+3197 021925 Call (Floc 022396) [Var (Global 120),Var (Global 118)] (Local 7)
+3198 022411 Store (Con 5) (Var (Global 120))
+3199 022414 Store (Con 6) (Var (Global 118))
+3200 022417 Store (Con 7) (Var (Global 119))
+3201 022420 Je [Con 12,Var (Local 3),Var (Local 2)] (Branch F (Dloc 022456))
+3202 022456 Je [Var (Local 2),Con 12] (Branch F (Dloc 022463))
+3203 022463 Je [Var (Local 3),Con 12] (Branch F (Dloc 022470))
+3204 022470 Store (Con 136) (Var (Local 1))
+3205 022473 Store (Con 134) (Var (Local 2))
+3206 022476 Jz (Var (Global 118)) (Branch T (Dloc 022493))
+3207 022479 Je [Var (Global 119),Con 12] (Branch T (Dloc 022493))
+3208 022483 Je [Var (Global 120),Con 137] (Branch T (Dloc 022493))
+3209 022493 Store (Con 135) (Var (Local 3))
+3210 022496 Je [Con 11,Var (Global 118),Var (Global 119)] (Branch F (Dloc 022513))
+3211 022513 Store (Con 2) (Var (Global 118))
+3212 022516 Store (Con 3) (Var (Global 119))
+3213 022519 Get_prop (Var (Global 111)) (Con 17) Sp
+3214 022523 Call (Fvar Sp) [] (Local 4)
+3215 022527 Jz (Var (Local 4)) (Branch T (Dloc 022533))
+3216 022533 Get_parent (Var (Global 111)) Sp
+3217 022536 Get_prop (Var Sp) (Con 17) Sp
+3218 022540 Call (Fvar Sp) [Con 1] (Local 4)
+3219 022545 Jz (Var (Local 4)) (Branch T (Dloc 022551))
+3220 022551 Loadw (Var (Global 156)) (Var (Local 1)) Sp
+3221 022555 Call (Fvar Sp) [] (Local 4)
+3222 022559 Jz (Var (Local 4)) (Branch T (Dloc 022565))
+3223 022565 Jz (Var (Local 3)) (Branch T (Dloc 022582))
+3224 022582 Jz (Var (Local 2)) (Branch T (Dloc 022612))
+3225 022585 Je [Var (Local 1),Con 137] (Branch T (Dloc 022612))
+3226 022612 Jz (Var (Local 2)) (Branch T (Dloc 022633))
+3227 022615 Je [Var (Local 1),Con 137] (Branch T (Dloc 022633))
+3228 022633 Loadw (Var (Global 155)) (Var (Local 1)) Sp
+3229 022637 Call (Fvar Sp) [] (Local 4)
+3230 035503 Jz (Var (Global 95)) (Branch F (Dloc 035514))
+3231 035514 Get_prop_addr (Var (Global 0)) (Var (Global 118)) (Local 1)
+3232 035518 Jz (Var (Local 1)) (Branch T (Dloc 035692))
+3233 035522 Get_prop_len (Var (Local 1)) (Local 2)
+3234 035525 Je [Var (Local 2),Con 1] (Branch F (Dloc 035540))
+3235 035529 Loadb (Var (Local 1)) (Con 0) Sp
+3236 035533 Call (Floc 037558) [Var Sp] Sp
+3237 037571 Test_attr (Var (Local 1)) (Con 6) (Branch T (Dloc 037581))
+3238 037581 Push (Con 1)
+3239 037584 Store (Con 3) (Var Sp)
+3240 037587 Get_parent (Var (Global 111)) (Local 4)
+3241 037590 Store (Con 6) (Var (Global 66))
+3242 037593 Test_attr (Var (Local 4)) (Con 27) (Branch F (Dloc 037601))
+3243 037601 Jz (Var (Local 3)) (Branch F (Dloc 037615))
+3244 037615 Jz (Var (Local 3)) (Branch F (Dloc 037630))
+3245 037630 Test_attr (Var (Global 0)) (Con 6) (Branch F (Dloc 037656))
+3246 037634 Jz (Var (Local 3)) (Branch T (Dloc 037656))
+3247 037637 Jz (Var (Local 5)) (Branch T (Dloc 037656))
+3248 037656 Test_attr (Var (Local 1)) (Con 18) (Branch F (Dloc 037668))
+3249 037668 Jz (Var (Local 3)) (Branch T (Dloc 037708))
+3250 037671 Test_attr (Var (Global 0)) (Con 6) (Branch T (Dloc 037708))
+3251 037708 Jz (Var (Local 5)) (Branch T (Dloc 037717))
+3252 037717 Insert_obj (Var (Global 111)) (Var (Local 1))
+3253 037720 Store (Con 16) (Var (Local 1))
+3254 037723 Call (Floc 027746) [Var (Global 0)] (Global 66)
+3255 027755 Jz (Var (Global 72)) (Branch T (Dloc 027762))
+3256 027762 Store (Con 107) (Con 20)
+3257 027765 Store (Con 3) (Var (Global 0))
+3258 027768 Store (Con 16) (Var (Local 1))
+3259 027771 Jz (Var (Local 2)) (Branch T (Dloc 027784))
+3260 027774 Test_attr (Var (Local 1)) (Con 20) (Branch F (Dloc 027784))
+3261 027778 Store (Con 4) (Con 1)
+3262 027781 Jump 027844
+3263 027844 Store (Con 16) (Var (Local 3))
+3264 027847 Store (Con 107) (Con 0)
+3265 027850 Ret (Var (Local 4))
+3266 037729 Jz (Var (Local 6)) (Branch F (Dloc 037855))
+3267 037855 Jz (Var (Global 66)) (Branch F (Dloc 037885))
+3268 037885 Get_prop (Var (Global 0)) (Con 17) Sp
+3269 037889 Call (Fvar Sp) [Con 2] Sp
+3270 062187 Je [Var (Local 1),Con 2] (Branch F (Dloc 062206))
+3271 062191 Call (Floc 021618) [Con 31060,Con -1] Sp
+3272 021625 Call (Floc 021638) [Var (Local 1)] (Local 3)
+3273 021649 Add (Var (Global 132)) (Con 180) (Local 3)
+3274 021653 Add (Var (Global 132)) (Var (Global 130)) (Local 4)
+3275 021657 Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 021683))
+3276 021683 Loadw (Var (Local 4)) (Con 2) Sp
+3277 021687 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 021693))
+3278 021693 Add (Var (Local 4)) (Con 6) (Local 4)
+3279 021697 Jump 021657
+3280 021657 Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 021683))
+3281 021683 Loadw (Var (Local 4)) (Con 2) Sp
+3282 021687 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 021693))
+3283 021693 Add (Var (Local 4)) (Con 6) (Local 4)
+3284 021697 Jump 021657
+3285 021657 Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 021683))
+3286 021683 Loadw (Var (Local 4)) (Con 2) Sp
+3287 021687 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 021693))
+3288 021693 Add (Var (Local 4)) (Con 6) (Local 4)
+3289 021697 Jump 021657
+3290 021657 Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 021683))
+3291 021683 Loadw (Var (Local 4)) (Con 2) Sp
+3292 021687 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 021693))
+3293 021693 Add (Var (Local 4)) (Con 6) (Local 4)
+3294 021697 Jump 021657
+3295 021657 Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 021683))
+3296 021683 Loadw (Var (Local 4)) (Con 2) Sp
+3297 021687 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 021693))
+3298 021693 Add (Var (Local 4)) (Con 6) (Local 4)
+3299 021697 Jump 021657
+3300 021657 Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 021683))
+3301 021661 Sub (Var (Global 130)) (Con 6) (Global 130)
+3302 021665 Jz (Var (Local 2)) (Branch T (Dloc 021672))
+3303 021672 Add (Var (Global 132)) (Var (Global 130)) (Local 5)
+3304 021676 Storew (Var (Local 5)) (Con 2) (Var (Local 1))
+3305 021681 Ret (Var (Local 5))
+3306 021631 Storew (Var (Local 3)) (Con 1) (Var (Local 2))
+3307 021636 Ret (Var (Local 3))
+3308 062200 Storew (Var Sp) (Con 0) (Con 1)
+3309 062205 Rtrue
+3310 037894 Call (Floc 037050) [Var (Local 1)] Sp
+3311 037055 Get_prop (Var (Local 1)) (Con 13) (Local 2)
+3312 037059 Jg (Var (Local 2)) (Con 0) (Branch F Dfalse)
+3313 037900 Je [Var (Global 0),Var (Local 1)] (Branch F Dtrue)
+3314 037904 Je [Con 4,Var (Global 111)] (Branch T (Dloc 037924))
+3315 037924 Jz (Var (Local 2)) (Branch T Dtrue)
+3316 037927 Call (Floc 035976) [] Sp
+3317 035977 Call (Floc 035994) [] Sp
+3318 036003 Jz (Var (Local 1)) (Branch T (Dloc 036012))
+3319 036012 Push (Var (Global 71))
+3320 036015 Pull (Con 2)
+3321 036018 Jz (Var (Global 66)) (Branch F (Dloc 036068))
+3322 036068 Test_attr (Var (Global 0)) (Con 3) (Branch T (Dloc 036078))
+3323 036072 Set_attr (Var (Global 0)) (Con 3)
+3324 036075 Store (Con 2) (Con 1)
+3325 036078 Test_attr (Var (Global 0)) (Con 5) (Branch F (Dloc 036085))
+3326 036085 Jin (Var (Global 0)) (Con 82) (Branch F (Dloc 036106))
+3327 036089 Print_obj (Var (Global 0))
+3328 036091 Get_parent (Var (Global 111)) (Local 4)
+3329 036094 Test_attr (Var (Local 4)) (Con 27) (Branch F (Dloc 036105))
+3330 036105 New_line
+3331 036106 Jz (Var (Local 1)) (Branch F (Dloc 036112))
+3332 036109 Jz (Var (Global 70)) (Branch F Dtrue)
+3333 036112 Get_parent (Var (Global 111)) (Local 4)
+3334 036115 Jz (Var (Local 2)) (Branch T (Dloc 036130))
+3335 036118 Get_prop (Var (Global 0)) (Con 17) Sp
+3336 036122 Call (Fvar Sp) [Con 3] Sp
+3337 062187 Je [Var (Local 1),Con 2] (Branch F (Dloc 062206))
+3338 062206 Je [Var (Local 1),Con 1] (Branch F Dfalse)
+3339 036127 Jz (Var Sp) (Branch F Dtrue)
+3340 036130 Jz (Var (Local 2)) (Branch T (Dloc 036146))
+3341 036133 Get_prop (Var (Global 0)) (Con 11) (Local 3)
+3342 036137 Jz (Var (Local 3)) (Branch T (Dloc 036146))
+3343 036140 Print_paddr (Var (Local 3))
+3344 036142 New_line
+3345 036143 Jump 036155
+3346 036155 Je [Var (Global 0),Var (Local 4)] (Branch T Dtrue)
+3347 035982 Jz (Var Sp) (Branch T Dfalse)
+3348 035985 Jz (Var (Global 70)) (Branch F Dfalse)
+3349 035988 Call (Floc 036174) [] Sp
+3350 036177 Jz (Var (Global 66)) (Branch T (Dloc 036209))
+3351 036180 Get_child (Var (Global 0)) Sp (Branch F Dfalse)
+3352 036184 Jz (Var (Local 1)) (Branch T (Dloc 036193))
+3353 036193 Push (Var (Global 71))
+3354 036196 Pull (Con 1)
+3355 036199 Call (Floc 036522) [Var (Global 0),Var (Local 1),Con -1] Sp
+3356 036543 Get_child (Var (Local 1)) (Local 4) (Branch F Dtrue)
+3357 036547 Get_parent (Var (Global 111)) (Local 7)
+3358 036550 Jz (Var (Local 7)) (Branch T (Dloc 036560))
+3359 036553 Test_attr (Var (Local 7)) (Con 27) (Branch F (Dloc 036560))
+3360 036560 Store (Con 7) (Con 0)
+3361 036563 Store (Con 5) (Con 1)
+3362 036566 Store (Con 6) (Con 1)
+3363 036569 Get_parent (Var (Local 1)) Sp
+3364 036572 Je [Var (Global 111),Var (Local 1),Var Sp] (Branch F (Dloc 036584))
+3365 036584 Jz (Var (Local 4)) (Branch F (Dloc 036590))
+3366 036590 Je [Var (Local 4),Var (Local 7)] (Branch F (Dloc 036600))
+3367 036600 Je [Var (Local 4),Var (Global 111)] (Branch F (Dloc 036607))
+3368 036604 Jump 036670
+3369 036670 Get_sibling (Var (Local 4)) (Local 4) (Branch T (Dloc 036674))
+3370 036674 Jump 036584
+3371 036584 Jz (Var (Local 4)) (Branch F (Dloc 036590))
+3372 036587 Jump 036677
+3373 036677 Get_child (Var (Local 1)) (Local 4) (Branch T (Dloc 036681))
+3374 036681 Jz (Var (Local 4)) (Branch F (Dloc 036710))
+3375 036710 Je [Var (Local 4),Var (Local 7),Con 4] (Branch F (Dloc 036719))
+3376 036716 Jump 036809
+3377 036809 Get_sibling (Var (Local 4)) (Local 4) (Branch T (Dloc 036813))
+3378 036813 Jump 036681
+3379 036681 Jz (Var (Local 4)) (Branch F (Dloc 036710))
+3380 036684 Jz (Var (Local 9)) (Branch T (Dloc 036816))
+3381 036816 Jz (Var (Local 5)) (Branch T Dtrue)
+3382 036819 Jz (Var (Local 6)) (Branch T Dtrue)
+3383 036822 Rfalse
+3384 036208 Ret_popped
+3385 035993 Ret_popped
+3386 037932 Rtrue
+3387 035539 Ret_popped
+3388 022641 Jz (Var (Local 4)) (Branch T (Dloc 022644))
+3389 022644 Store (Con 136) (Var (Local 5))
+3390 022647 Store (Con 134) (Var (Local 6))
+3391 022650 Store (Con 135) (Var (Local 7))
+3392 022653 Ret (Var (Local 4))
+3393 021932 Jump 022295
+3394 022295 Je [Var (Local 7),Con 2] (Branch T (Dloc 022311))
+3395 022299 Get_parent (Var (Global 111)) Sp
+3396 022302 Get_prop (Var Sp) (Con 17) Sp
+3397 022306 Call (Fvar Sp) [Con 6] (Local 7)
+3398 062187 Je [Var (Local 1),Con 2] (Branch F (Dloc 062206))
+3399 062206 Je [Var (Local 1),Con 1] (Branch F Dfalse)
+3400 022311 Je [Var (Global 120),Con 8,Con 137,Con 15] (Branch T (Dloc 022337))
+3401 022337 Je [Var (Local 7),Con 2] (Branch F (Dloc 022350))
+3402 022350 Jz (Var (Global 127)) (Branch T (Dloc 021823))
+3403 022354 Je [Var (Global 120),Con 2,Con 1,Con 111] (Branch T (Dloc 021823))
+3404 022362 Je [Var (Global 120),Con 12,Con 8,Con 0] (Branch T (Dloc 021823))
+3405 022370 Je [Var (Global 120),Con 9,Con 6,Con 5] (Branch T (Dloc 021823))
+3406 022378 Je [Var (Global 120),Con 7,Con 11,Con 10] (Branch F (Dloc 022388))
+3407 022388 Call (Floc 021700) [] (Local 7)
+3408 021709 Jz (Var (Global 129)) (Branch T (Dloc 021716))
+3409 021716 Jz (Var (Global 127)) (Branch T (Dloc 021725))
+3410 021719 Push (Var (Global 130))
+3411 021722 Jump 021728
+3412 021728 Add (Var (Global 132)) (Var Sp) (Local 1)
+3413 021732 Add (Var (Global 132)) (Con 180) (Local 2)
+3414 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3415 021751 Loadw (Var (Local 1)) (Con 0) Sp
+3416 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+3417 021758 Loadw (Var (Local 1)) (Con 1) (Local 3)
+3418 021762 Jz (Var (Local 3)) (Branch F (Dloc 021768))
+3419 021768 Sub (Var (Local 3)) (Con 1) Sp
+3420 021772 Storew (Var (Local 1)) (Con 1) (Var Sp)
+3421 021777 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 021795))
+3422 021781 Loadw (Var (Local 1)) (Con 2) Sp
+3423 021785 Call (Fvar Sp) [] Sp
+3424 062121 Call (Floc 062104) [] Sp
+3425 062105 Je [Var (Global 0),Con 78,Con 77,Con 76] (Branch T Dtrue)
+3426 062112 Je [Var (Global 0),Con 75,Con 88] (Branch T Dtrue)
+3427 062126 Jz (Var Sp) (Branch F (Dloc 062142))
+3428 062142 Random (Con 100) Sp
+3429 062146 Jg (Con 15) (Var Sp) (Branch F Dfalse)
+3430 021789 Jz (Var Sp) (Branch T (Dloc 021795))
+3431 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+3432 021799 Jump 021736
+3433 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3434 021751 Loadw (Var (Local 1)) (Con 0) Sp
+3435 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+3436 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+3437 021799 Jump 021736
+3438 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3439 021751 Loadw (Var (Local 1)) (Con 0) Sp
+3440 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+3441 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+3442 021799 Jump 021736
+3443 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3444 021751 Loadw (Var (Local 1)) (Con 0) Sp
+3445 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+3446 021758 Loadw (Var (Local 1)) (Con 1) (Local 3)
+3447 021762 Jz (Var (Local 3)) (Branch F (Dloc 021768))
+3448 021768 Sub (Var (Local 3)) (Con 1) Sp
+3449 021772 Storew (Var (Local 1)) (Con 1) (Var Sp)
+3450 021777 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 021795))
+3451 021781 Loadw (Var (Local 1)) (Con 2) Sp
+3452 021785 Call (Fvar Sp) [] Sp
+3453 066027 Get_parent (Con 114) (Local 1)
+3454 066030 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066040))
+3455 066040 Push (Con 0)
+3456 066043 Store (Con 3) (Var Sp)
+3457 066046 Jz (Var (Local 3)) (Branch T (Dloc 066052))
+3458 066052 Je [Var (Local 1),Con 190] (Branch F (Dloc 066080))
+3459 066080 Je [Var (Local 1),Var (Global 0)] (Branch F (Dloc 066112))
+3460 066112 Jin (Con 114) (Var (Local 1)) (Branch F (Dloc 066126))
+3461 066116 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066126))
+3462 066126 Test_attr (Var (Local 1)) (Con 3) (Branch F (Dloc 066164))
+3463 066164 Jz (Var (Local 4)) (Branch F (Dloc 066173))
+3464 066167 Push (Con 1)
+3465 066170 Jump 066176
+3466 066176 Store (Con 4) (Var Sp)
+3467 066179 Jz (Var (Local 4)) (Branch T (Dloc 066229))
+3468 066182 Jz (Var (Local 3)) (Branch F (Dloc 066229))
+3469 066185 Call (Floc 066364) [] Sp
+3470 066365 Get_parent (Con 114) Sp
+3471 066368 Jin (Con 113) (Var Sp) (Branch F Dfalse)
+3472 066190 Jz (Var (Local 1)) (Branch T (Dloc 066200))
+3473 066193 Get_sibling (Var (Local 1)) (Local 1) (Branch F (Dloc 066200))
+3474 066197 Jump 066204
+3475 066204 Test_attr (Var (Local 1)) (Con 9) (Branch T (Dloc 066190))
+3476 066209 Test_attr (Var (Local 1)) (Con 6) (Branch F (Dloc 066190))
+3477 066214 Insert_obj (Con 114) (Var (Local 1))
+3478 066217 Clear_attr (Con 114) (Con 2)
+3479 066220 Set_attr (Con 114) (Con 7)
+3480 066223 Store (Con 47) (Con 0)
+3481 066226 Jump 066030
+3482 066030 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066040))
+3483 066040 Push (Con 0)
+3484 066043 Store (Con 3) (Var Sp)
+3485 066046 Jz (Var (Local 3)) (Branch T (Dloc 066052))
+3486 066052 Je [Var (Local 1),Con 190] (Branch F (Dloc 066080))
+3487 066080 Je [Var (Local 1),Var (Global 0)] (Branch F (Dloc 066112))
+3488 066112 Jin (Con 114) (Var (Local 1)) (Branch F (Dloc 066126))
+3489 066116 Test_attr (Con 114) (Con 7) (Branch T (Dloc 066126))
+3490 066126 Test_attr (Var (Local 1)) (Con 3) (Branch F (Dloc 066164))
+3491 066164 Jz (Var (Local 4)) (Branch F (Dloc 066173))
+3492 066173 Push (Con 0)
+3493 066176 Store (Con 4) (Var Sp)
+3494 066179 Jz (Var (Local 4)) (Branch T (Dloc 066229))
+3495 066229 Je [Var (Local 1),Con 190] (Branch T (Dloc 066241))
+3496 066233 Call (Floc 066244) [Var (Local 1)] Sp
+3497 066253 Get_child (Con 114) (Local 2) (Branch T (Dloc 066257))
+3498 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+3499 066262 Get_sibling (Var (Local 2)) (Local 3) (Branch T (Dloc 066266))
+3500 066266 Je [Var (Local 2),Con 113,Con 115] (Branch F (Dloc 066275))
+3501 066272 Jump 066357
+3502 066357 Store (Con 2) (Var (Local 3))
+3503 066360 Jump 066257
+3504 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+3505 066262 Get_sibling (Var (Local 2)) (Local 3) (Branch T (Dloc 066266))
+3506 066266 Je [Var (Local 2),Con 113,Con 115] (Branch F (Dloc 066275))
+3507 066272 Jump 066357
+3508 066357 Store (Con 2) (Var (Local 3))
+3509 066360 Jump 066257
+3510 066257 Jz (Var (Local 2)) (Branch F (Dloc 066262))
+3511 066260 Ret (Var (Local 4))
+3512 066239 Ret (Var (Local 5))
+3513 021789 Jz (Var Sp) (Branch T (Dloc 021795))
+3514 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+3515 021799 Jump 021736
+3516 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3517 021751 Loadw (Var (Local 1)) (Con 0) Sp
+3518 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+3519 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+3520 021799 Jump 021736
+3521 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3522 021751 Loadw (Var (Local 1)) (Con 0) Sp
+3523 021755 Jz (Var Sp) (Branch T (Dloc 021795))
+3524 021758 Loadw (Var (Local 1)) (Con 1) (Local 3)
+3525 021762 Jz (Var (Local 3)) (Branch F (Dloc 021768))
+3526 021768 Sub (Var (Local 3)) (Con 1) Sp
+3527 021772 Storew (Var (Local 1)) (Con 1) (Var Sp)
+3528 021777 Jg (Var (Local 3)) (Con 1) (Branch T (Dloc 021795))
+3529 021781 Loadw (Var (Local 1)) (Con 2) Sp
+3530 021785 Call (Fvar Sp) [] Sp
+3531 065581 Loadw (Var (Global 3)) (Con 0) (Local 2)
+3532 065585 Jz (Var (Global 62)) (Branch F Dfalse)
+3533 065588 Store (Con 3) (Con 0)
+3534 065591 Inc (Con 3)
+3535 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+3536 065600 Loadw (Var (Global 3)) (Var (Local 3)) (Local 4)
+3537 065604 Loadw (Var (Local 4)) (Con 0) (Local 5)
+3538 065608 Jin (Var (Local 5)) (Var (Global 0)) (Branch F (Dloc 065703))
+3539 065703 Test_attr (Var (Local 5)) (Con 2) (Branch F (Dloc 065716))
+3540 065716 Je [Var (Local 5),Con 114] (Branch F (Dloc 065723))
+3541 065723 Clear_attr (Var (Global 111)) (Con 1)
+3542 065726 Clear_attr (Var (Local 5)) (Con 1)
+3543 065729 Clear_attr (Var (Local 5)) (Con 2)
+3544 065732 Call (Floc 065752) [Var (Local 5)] Sp
+3545 065757 Get_prop (Var (Local 1)) (Con 7) (Local 2)
+3546 065761 Jl (Var (Local 2)) (Con 0) (Branch F Dtrue)
+3547 065738 Jump 065591
+3548 065591 Inc (Con 3)
+3549 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+3550 065600 Loadw (Var (Global 3)) (Var (Local 3)) (Local 4)
+3551 065604 Loadw (Var (Local 4)) (Con 0) (Local 5)
+3552 065608 Jin (Var (Local 5)) (Var (Global 0)) (Branch F (Dloc 065703))
+3553 065703 Test_attr (Var (Local 5)) (Con 2) (Branch F (Dloc 065716))
+3554 065716 Je [Var (Local 5),Con 114] (Branch F (Dloc 065723))
+3555 065720 Store (Con 46) (Con 0)
+3556 065723 Clear_attr (Var (Global 111)) (Con 1)
+3557 065726 Clear_attr (Var (Local 5)) (Con 1)
+3558 065729 Clear_attr (Var (Local 5)) (Con 2)
+3559 065732 Call (Floc 065752) [Var (Local 5)] Sp
+3560 065757 Get_prop (Var (Local 1)) (Con 7) (Local 2)
+3561 065761 Jl (Var (Local 2)) (Con 0) (Branch F Dtrue)
+3562 065738 Jump 065591
+3563 065591 Inc (Con 3)
+3564 065593 Je [Var (Local 3),Var (Local 2)] (Branch F (Dloc 065600))
+3565 065597 Jump 065741
+3566 065741 Jz (Var (Local 1)) (Branch T Dfalse)
+3567 021789 Jz (Var Sp) (Branch T (Dloc 021795))
+3568 021795 Add (Var (Local 1)) (Con 6) (Local 1)
+3569 021799 Jump 021736
+3570 021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))
+3571 021740 Inc_chk (Con 18) (Con 999) (Branch F (Dloc 021749))
+3572 021749 Ret (Var (Local 4))
+3573 022393 Jump 021823
+3574 021823 Store (Con 4) (Con 0)
+3575 021826 Store (Con 5) (Con 0)
+3576 021829 Store (Con 8) (Con 1)
+3577 021832 Call (Floc 022656) [] (Global 127)
+3578 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3579 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3580 022691 Jump 022679
+3581 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3582 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3583 022691 Jump 022679
+3584 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3585 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3586 022691 Jump 022679
+3587 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3588 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3589 022691 Jump 022679
+3590 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3591 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3592 022691 Jump 022679
+3593 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3594 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3595 022691 Jump 022679
+3596 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3597 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3598 022691 Jump 022679
+3599 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3600 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3601 022691 Jump 022679
+3602 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3603 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3604 022691 Jump 022679
+3605 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3606 022686 Storew (Var (Global 100)) (Var (Local 11)) (Con 0)
+3607 022691 Jump 022679
+3608 022679 Inc_chk (Con 11) (Con 9) (Branch F (Dloc 022686))
+3609 022683 Jump 022694
+3610 022694 Store (Con 104) (Con 0)
+3611 022697 Store (Con 120) (Con 0)
+3612 022700 Storew (Var (Global 86)) (Var (Global 81)) (Con 0)
+3613 022705 Storew (Var (Global 85)) (Var (Global 81)) (Con 0)
+3614 022710 Storew (Var (Global 84)) (Var (Global 81)) (Con 0)
+3615 022715 Jz (Var (Global 96)) (Branch F (Dloc 022741))
+3616 022718 Je [Var (Global 111),Var (Global 128)] (Branch T (Dloc 022741))
+3617 022741 Jz (Var (Global 108)) (Branch T (Dloc 022765))
+3618 022765 Store (Con 127) (Var (Global 128))
+3619 022768 Store (Con 112) (Con 0)
+3620 022771 Get_parent (Var (Global 111)) Sp
+3621 022774 Test_attr (Var Sp) (Con 27) (Branch T (Dloc 022781))
+3622 022778 Get_parent (Var (Global 111)) (Global 0)
+3623 022781 Call (Floc 027746) [Var (Global 0)] (Global 66)
+3624 027755 Jz (Var (Global 72)) (Branch T (Dloc 027762))
+3625 027762 Store (Con 107) (Con 20)
+3626 027765 Store (Con 3) (Var (Global 0))
+3627 027768 Store (Con 16) (Var (Local 1))
+3628 027771 Jz (Var (Local 2)) (Branch T (Dloc 027784))
+3629 027774 Test_attr (Var (Local 1)) (Con 20) (Branch F (Dloc 027784))
+3630 027778 Store (Con 4) (Con 1)
+3631 027781 Jump 027844
+3632 027844 Store (Con 16) (Var (Local 3))
+3633 027847 Store (Con 107) (Con 0)
+3634 027850 Ret (Var (Local 4))
+3635 022787 Jz (Var (Global 70)) (Branch F (Dloc 022791))
+3636 022790 New_line
+3637 022791 Print ">"
+3638 022796 Sread (Var (Global 109)) (Var (Global 110))
+
+[executed: 524 instructions]
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
 >

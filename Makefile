@@ -7,7 +7,7 @@ exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 dev: gold.out dev.out
 	git diff --no-index $^
 
-gold.out: dev.out
+gold.out: dev.out reg/zork.trace
 	bash -c 'cat reg/zork.trace | head -$$(cat dev.out | wc -l) > $@'
 
 dev.out: $(exe) Makefile
@@ -22,8 +22,8 @@ code: .reg reg/zork.code reg/h.code reg/judo.code reg/trinity.code
 diff:
 	git diff reg
 
-reg/zork.trace: $(exe) scripts/zork.script src/*.hs
-	$(exe) -nodebug zork -trace -type 'open mailbox' -type 'read leaflet' > $@
+reg/zork.trace: $(exe) scripts/zork.script src/*.hs Makefile
+	bash -c '$(exe) -nodebug zork -trace -walk <(head -5 scripts/zork.script) > $@'
 
 reg/zork.walk: $(exe) scripts/zork.script src/*.hs
 	$(exe) -nodebug zork -walk scripts/zork.script > $@
