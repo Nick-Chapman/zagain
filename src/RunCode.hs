@@ -151,8 +151,8 @@ bind q@Env{bindings} x v = do q { bindings = extendB bindings x v }
 
 eval :: Env -> Expression a -> a
 eval q = \case
-  Join{} -> do
-    undefined
+  Join e -> do
+    eval q (eval q e) -- TODO: correctly typed, but why do I need this???
   Const x ->
     x
   NumActuals -> do
@@ -179,7 +179,8 @@ eval q = \case
     let (text,_) = runFetch (oob "eval/GetTextE") (eval q e) story ztext
     text
   LookupInDictE e -> do
-    undefined e
+    let Env{static=StaticEnv{dict}} = q
+    Prim.evalP1 (Prim.LookupInDict dict) (eval q e)
   Ite i t e -> do
     eval q (if (eval q i) then t else e)
 
