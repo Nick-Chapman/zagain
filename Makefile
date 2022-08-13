@@ -3,8 +3,16 @@ top: trace walk dis code diff
 
 exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
-dev: $(exe)
-	$(exe) zork -trace -type '' -trace -viacomp
+
+dev: gold.out dev.out
+	git diff --no-index $^
+
+gold.out: dev.out
+	bash -c 'cat reg/zork.trace | head -$$(cat dev.out | wc -l) > $@'
+
+dev.out: $(exe) Makefile
+	bash -c '$(exe) zork -trace -walk <(echo) -trace -viacomp > $@ 2>&1 || true'
+
 
 trace: .reg reg/zork.trace
 walk: .reg reg/zork.walk reg/h.walk reg/judo.walk reg/trinity.walk
