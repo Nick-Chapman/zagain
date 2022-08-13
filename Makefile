@@ -11,7 +11,7 @@ gold.out: dev.out
 	bash -c 'cat reg/zork.trace | head -$$(cat dev.out | wc -l) > $@'
 
 dev.out: $(exe) Makefile
-	bash -c '$(exe) zork -trace -walk <(echo) -trace -viacomp > $@ 2>&1 || true'
+	bash -c '$(exe) zork -trace -walk scripts/zork.script -trace -viacomp > $@ 2>&1 || true'
 
 
 trace: .reg reg/zork.trace

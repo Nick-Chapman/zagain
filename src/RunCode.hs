@@ -6,6 +6,7 @@ import Code (Code(..),Loc(..),CompiledRoutine(..),Chunk(..),Prog(..),Atom(..),Ex
 import Data.Dynamic (Typeable,Dynamic,toDyn,fromDynamic)
 import Data.Map (Map)
 import Decode (ztext)
+import Dictionary (Dict,fetchDict)
 import Eff (StatusInfo(..))
 import Fetch (runFetch)
 import Numbers (Byte,Addr,Value)
@@ -122,10 +123,16 @@ runAtom q atom0 k = case atom0 of
                    })
     A.Input statusLineM (count-lastCount) $ \response -> do
       k $ (bind q x response) { lastCount = count }
-  StringBytes{} -> do
-    undefined
-  Tokenize{} -> do
-    undefined
+  StringBytes e x -> do
+    let a0 = Prim.evalP1 Prim.StringBytes (eval q e)
+    let a = map Const a0 -- TODO: hmm
+    k $ bind q x a
+  Tokenize e (x,y,z) -> do
+    let Env{static=StaticEnv{dict}} = q
+    let (a,b0,c0) = Prim.evalP1 (Prim.Tokenize dict) (eval q e)
+    let b = map Const b0 -- TODO: hmm
+    let c = map Const c0 -- TODO: hmm
+    k $ bind (bind (bind q x a) y b) z c
   LetRandom{} -> do
     undefined
   Let (Binding x e) -> do
@@ -229,6 +236,7 @@ extendB (Bindings m) (Identifier _ u) x = Bindings (Map.insert u (toDyn x) m)
 data StaticEnv = StaticEnv -- TODO: inline
   { m :: Map (Loc Addr) Chunk -- TODO: rename chunks?
   , story :: Story
+  , dict :: Dict
   }
 
 makeStaticEnv :: Story -> Code -> StaticEnv
@@ -238,7 +246,8 @@ makeStaticEnv story Code{routines} = do
         | CompiledRoutine{chunks} <- routines
         , chunk@Chunk{label} <- chunks
         ]
-  StaticEnv { m, story }
+  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
+  StaticEnv { m, story, dict }
 
 findChunk :: StaticEnv -> Loc Addr -> Chunk
 findChunk StaticEnv{m} k = do
