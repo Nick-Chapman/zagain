@@ -23,10 +23,10 @@ diff:
 	git diff reg
 
 reg/zork.trace: $(exe) scripts/zork.script src/*.hs Makefile
-	bash -c '$(exe) -nodebug zork -trace -walk <(head -5 scripts/zork.script) > $@'
+	bash -c '$(exe) -nodebug zork -trace -walk <(head -5 scripts/zork.script) -viacomp > $@'
 
-reg/zork.walk: $(exe) scripts/zork.script src/*.hs
-	$(exe) -nodebug zork -walk scripts/zork.script > $@
+reg/zork.walk: $(exe) scripts/zork.script src/*.hs Makefile
+	$(exe) -nodebug zork -walk scripts/zork.script -viacomp > $@
 
 reg/zork.dis: $(exe) src/*.hs
 	$(exe) dis zork -walk scripts/zork.script > $@
