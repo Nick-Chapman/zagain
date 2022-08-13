@@ -111,8 +111,7 @@ runAtom q atom0 k = case atom0 of
   Assign (Binding x e) -> do
     k $ bind q x (eval q e)
   SetNumberActuals n -> do
-    let _ = undefined n -- TODO
-    k q
+    k q { numActuals = eval q n }
   SetResult v ->
     k q { callResult = Just (eval q v) }
 
@@ -128,7 +127,8 @@ eval q = \case
   Const x ->
     x
   NumActuals -> do
-    undefined q
+    let Env{numActuals} = q
+    numActuals
   CallResult -> do
     let Env{callResult} = q
     maybe (error "callResult=Nothing") id callResult
@@ -165,6 +165,7 @@ data Env = Env -- TODO: rename State?
   , stack :: [Value]
   , callResult :: Maybe Value
   , labelledPrograms :: Map Label Prog
+  , numActuals :: Byte
   }
 
 makeEnv :: Byte -> StaticEnv -> Env
@@ -178,6 +179,7 @@ makeEnv screenWidth static = Env
   , stack = []
   , callResult = Nothing
   , labelledPrograms = Map.empty
+  , numActuals = 0
   }
 
 data Bindings = Bindings (Map Int Dynamic) -- Hetrogenous Map
