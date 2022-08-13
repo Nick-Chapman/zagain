@@ -104,8 +104,8 @@ runAtom q atom0 k = case atom0 of
     undefined
   SetNumberActuals{} -> do
     undefined
-  SetResult{} ->
-    k q -- TODO, need this
+  SetResult v ->
+    k q { callResult = Just (eval q v) }
 
 
 bind :: Typeable x => Env ->  Identifier x -> x -> Env
@@ -121,7 +121,8 @@ eval q = \case
   NumActuals -> do
     undefined q
   CallResult -> do
-    undefined -- TODO: here
+    let Env{callResult} = q
+    maybe (error "callResult=Nothing") id callResult
   Variable x -> do
     let Env{bindings} = q
     maybe (error (show ("eval/Variable",x))) id $ lookupB bindings x
@@ -133,7 +134,7 @@ eval q = \case
     let n = eval q e
     let Env { static = StaticEnv{story}, overrides } = q
     case Map.lookup n overrides of
-      Just{} -> undefined -- TODO
+      Just x -> x
       Nothing -> readStoryByte (oob "eval/GetByteE") story n
   GetLocalE e -> do
     let Env{locals} = q
@@ -157,6 +158,7 @@ data Env = Env
   , count :: Int
   , callstack :: [Addr]
   , stack :: [Value]
+  , callResult :: Maybe Value
   }
 
 makeEnv :: StaticEnv -> Env
@@ -168,6 +170,7 @@ makeEnv static = Env
   , count = 0
   , callstack = []
   , stack = []
+  , callResult = Nothing
   }
 
 data Bindings = Bindings (Map Int Dynamic) -- Hetrogenous Map
