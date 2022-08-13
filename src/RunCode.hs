@@ -2,6 +2,7 @@
 module RunCode (runCode) where
 
 import Action (Action)
+import Data.Bits (shiftL)
 import Code (Code(..),Loc(..),CompiledRoutine(..),Chunk(..),Prog(..),Atom(..),Expression(..),Identifier(..),Binding(..),Label)
 import Data.Dynamic (Typeable,Dynamic,toDyn,fromDynamic)
 import Data.Map (Map)
@@ -18,8 +19,8 @@ import qualified Data.Map as Map
 import qualified Primitive as Prim
 
 runCode :: Byte -> Word -> Story -> Code -> Action
-runCode screenWidth _seed story code = do
-  let q = makeState screenWidth story code
+runCode screenWidth seed story code = do
+  let q = makeState screenWidth seed story code
   let Header{initialPC} = Story.header story
   let start = LocOp initialPC
   runLoc q start
@@ -132,8 +133,12 @@ runAtom q atom0 k = case atom0 of
     let b = map Const b0 -- TODO: hmm
     let c = map Const c0 -- TODO: hmm
     k $ bind (bind (bind q x a) y b) z c
-  LetRandom{} -> do
-    undefined
+  LetRandom name eRange -> do
+    let range = eval q eRange
+    let State{seed} = q
+    let x = stepRandom seed
+    let result = x `mod` (fromIntegral range) + 1
+    k $ (bind q name (fromIntegral result)) { seed = x }
   Let (Binding x e) -> do
     k $ bind q x (eval q e)
   Assign (Binding x e) -> do
@@ -197,6 +202,7 @@ data State = State
   , frames :: [Frame]
   , callstack :: [Addr]
   , overrides :: Map Addr Byte
+  , seed :: Word
   , numActuals :: Byte
   , callResult :: Maybe Value
   , labelledPrograms :: Map Label Prog
@@ -206,10 +212,11 @@ data State = State
 data Frame = Frame
   { stack :: [Value]
   , locals :: Map Byte Value
+  -- , numActuals :: Byte -- TODO: do we also need this?
   }
 
-makeState :: Byte -> Story -> Code -> State
-makeState screenWidth story code = do
+makeState :: Byte -> Word -> Story -> Code -> State
+makeState screenWidth seed story code = do
   let Code{routines} = code
   let chunks = Map.fromList
         [ (label,chunk)
@@ -228,6 +235,7 @@ makeState screenWidth story code = do
     , frames = []
     , callstack = []
     , overrides = Map.fromList [ (0x21,screenWidth) ]
+    , seed
     , numActuals = 0
     , callResult = Nothing
     , labelledPrograms = Map.empty
@@ -245,3 +253,10 @@ lookupB (Bindings m) (Identifier _ u) = Map.lookup u m >>= fromDynamic
 extendB :: Typeable a => Bindings -> Identifier a -> a -> Bindings
 extendB (Bindings m) (Identifier _ u) x = Bindings (Map.insert u (toDyn x) m)
 
+-- pulled from wikipedia "Linear congruential generator"
+stepRandom :: Word -> Word -- TODO: copied from Interpreter; dedup!
+stepRandom x = (x * a  + c) `mod` m
+  where
+    a = 1103515245
+    c = 12345
+    m = 1 `shiftL` 31
