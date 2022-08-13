@@ -124,7 +124,7 @@ data Atom
   | Tokenize (Expression String) TokenizeIdents
   | LetRandom (Identifier Value) (Expression Value)
   | Let Binding
-  | Assign Binding
+  | Assign Binding -- TODO: semantically any different from Let?
   | SetNumberActuals (Expression Byte)
   | SetResult (Expression Value)
   deriving Show

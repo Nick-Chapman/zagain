@@ -39,10 +39,10 @@ runProg q prog0 k = case prog0 of
   Error s -> do
     undefined s
   Labelled label p -> do
-    let _ = undefined label -- TODO
+    let _ = undefined label -- TODO: need this
     runProg q p k
   Goto label -> do
-    undefined label
+    undefined label -- TODO: here
   JumpIndirect loc -> do
     runLoc q (eval q <$> loc)
   Jump loc -> do
@@ -106,8 +106,8 @@ runAtom q atom0 k = case atom0 of
     undefined
   Let (Binding x e) -> do
     k $ bind q x (eval q e)
-  Assign{} -> do
-    undefined -- TODO, here
+  Assign (Binding x e) -> do
+    k $ bind q x (eval q e)
   SetNumberActuals n -> do
     let _ = undefined n -- TODO
     k q
