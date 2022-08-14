@@ -18,20 +18,20 @@ $(exe): src/*.hs
 	stack build; touch $(exe)
 
 
-reg/zork.trace: $(exe) scripts/zork.script src/*.hs Makefile
+reg/zork.trace: $(exe) scripts/zork.script src/*.hs
 	bash -c '$(exe) -nodebug zork -trace -walk <(head -5 scripts/zork.script) -viacomp > $@'
 
-reg/trinity.trace: $(exe) scripts/trinity.script src/*.hs Makefile
+reg/trinity.trace: $(exe) scripts/trinity.script src/*.hs
 	bash -c '$(exe) -nodebug trinity -trace -walk <(head -17 scripts/trinity.script) > $@'
 
 
-reg/zork.walk: $(exe) scripts/zork.script src/*.hs Makefile
+reg/zork.walk: $(exe) scripts/zork.script src/*.hs
 	$(exe) -nodebug zork -walk scripts/zork.script -viacomp > $@
 
 reg/hitch.walk: $(exe) scripts/hitch.script src/*.hs
-	$(exe) -nodebug hitch -walk scripts/hitch.script > $@
+	$(exe) -nodebug hitch -walk scripts/hitch.script -viacomp > $@
 
-reg/trinity.walk: $(exe) scripts/trinity.script src/*.hs Makefile
+reg/trinity.walk: $(exe) scripts/trinity.script src/*.hs
 	$(exe) -nodebug trinity -walk scripts/trinity.script -viacomp > $@
 
 reg/judo.walk: $(exe) scripts/judo.script src/*.hs
