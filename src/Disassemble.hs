@@ -65,7 +65,7 @@ discoverCode story walkthrough = do
   printf "Found %d routines by walkthrough\n" (length ws)
   printf "Found %d routines by speculative disassembly\n" (length cs)
   printf "%d routines lost (in walkthrough but not disassembly)\n" (length lost)
-  --print lost
+  when (length lost > 0) $ print lost
 
   let foundR = [ (Found, disRoutine story a) | a <- cs ]
   let lostR = [ (Lost, disRoutine story a) | a <- lost ]
