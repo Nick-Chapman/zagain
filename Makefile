@@ -2,9 +2,9 @@
 top: trace walk dis code diff
 
 trace: .reg reg/zork.trace reg/trinity.trace
-walk: .reg reg/zork.walk reg/h.walk reg/judo.walk reg/trinity.walk
-dis: .reg reg/zork.dis reg/h.dis reg/judo.dis reg/trinity.dis
-code: .reg reg/zork.code reg/h.code reg/judo.code reg/trinity.code
+walk: .reg reg/zork.walk reg/hitch.walk reg/judo.walk reg/trinity.walk
+dis: .reg reg/zork.dis reg/hitch.dis reg/judo.dis reg/trinity.dis
+code: .reg reg/zork.code reg/hitch.code reg/judo.code reg/trinity.code
 
 diff:
 	git diff reg
@@ -28,7 +28,7 @@ reg/trinity.trace: $(exe) scripts/trinity.script src/*.hs Makefile
 reg/zork.walk: $(exe) scripts/zork.script src/*.hs Makefile
 	$(exe) -nodebug zork -walk scripts/zork.script -viacomp > $@
 
-reg/h.walk: $(exe) scripts/hitch.script src/*.hs
+reg/hitch.walk: $(exe) scripts/hitch.script src/*.hs
 	$(exe) -nodebug hitch -walk scripts/hitch.script > $@
 
 reg/trinity.walk: $(exe) scripts/trinity.script src/*.hs
@@ -41,7 +41,7 @@ reg/judo.walk: $(exe) scripts/judo.script src/*.hs
 reg/zork.dis: $(exe) src/*.hs
 	$(exe) dis zork -walk scripts/zork.script > $@
 
-reg/h.dis: $(exe) src/*.hs
+reg/hitch.dis: $(exe) src/*.hs
 	$(exe) dis hitch -walk scripts/hitch.script > $@
 
 reg/trinity.dis: $(exe) src/*.hs
@@ -54,7 +54,7 @@ reg/judo.dis: $(exe) src/*.hs
 reg/zork.code: $(exe) src/*.hs
 	$(exe) code zork -nodebug > $@
 
-reg/h.code: $(exe) src/*.hs
+reg/hitch.code: $(exe) src/*.hs
 	$(exe) code -nodebug hitch > $@
 
 reg/trinity.code: $(exe) src/*.hs
