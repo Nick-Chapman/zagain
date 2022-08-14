@@ -6,6 +6,7 @@ import Code (Code(..),CompiledRoutine(..),Chunk(..),Prog(Seq),Binding(..),Label(
 import Control.Monad (when,ap,liftM)
 import Data.Set (Set,(\\))
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
+import Dictionary (fetchDict)
 import Disassemble (Routine(..),disRoutine,branchesOf,routinesBetween)
 import Eff (Phase,Eff(..),Control(..))
 import Fetch (runFetch)
@@ -57,8 +58,9 @@ compileEffect conf story smallStep = do
 
   let static = Static { conf, story, smallStep, shouldInline }
 
-  Code <$> sequence
-    [ do compileRoutine static r | r <- routines ]
+  compiledRoutines <- sequence [ do compileRoutine static r | r <- routines ]
+  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
+  pure Code { compiledRoutines, dict }
 
 
 allAddressesToInline :: [Routine] -> Set Addr

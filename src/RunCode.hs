@@ -2,12 +2,12 @@
 module RunCode (runCode) where
 
 import Action (Action)
-import Data.Bits (shiftL)
 import Code (Code(..),Loc(..),CompiledRoutine(..),Chunk(..),Prog(..),Atom(..),Expression(..),Identifier(..),Binding(..),Label)
+import Data.Bits (shiftL)
 import Data.Dynamic (Typeable,Dynamic,toDyn,fromDynamic)
 import Data.Map (Map)
 import Decode (ztext)
-import Dictionary (Dict,fetchDict)
+import Dictionary (Dict)
 import Eff (StatusInfo(..))
 import Fetch (runFetch)
 import Header (Header(..))
@@ -218,13 +218,12 @@ data Frame = Frame
 
 makeState :: Byte -> Word -> Story -> Code -> State
 makeState screenWidth seed story code = do
-  let Code{routines} = code
+  let Code{compiledRoutines=rs,dict} = code
   let chunks = Map.fromList
         [ (label,chunk)
-        | CompiledRoutine{chunks=rChunks} <- routines
+        | CompiledRoutine{chunks=rChunks} <- rs
         , chunk@Chunk{label} <- rChunks
         ]
-  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict -- TODO: get dict from Code
   State
     { chunks
     , story

@@ -9,6 +9,7 @@ where
 
 import Data.Dynamic (Typeable)
 import Data.List (intercalate)
+import Dictionary (Dict)
 import Numbers (Addr,Byte,Value)
 import Operation (Operation)
 import Text.Printf (printf)
@@ -18,17 +19,18 @@ import qualified Primitive as Prim
 --[code]--------------------------------------------------------------
 
 dumpCode :: Code -> IO ()
-dumpCode Code{routines} = do
-  printf "Code for %d routines\n" (length routines)
+dumpCode Code{compiledRoutines=rs} = do
+  printf "Code for %d routines\n" (length rs)
   sequence_
     [ do
         printf "--------------------------------------------------\n"
         mapM_ print chunks
-    | CompiledRoutine{chunks} <- routines
+    | CompiledRoutine{chunks} <- rs
     ]
 
-data Code = Code -- TODO: add dict here
-  { routines :: [CompiledRoutine]
+data Code = Code
+  { compiledRoutines :: [CompiledRoutine]
+  , dict :: Dict
   }
 
 data CompiledRoutine = CompiledRoutine
