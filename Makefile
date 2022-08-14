@@ -48,7 +48,7 @@ reg/trinity.dis: $(exe) src/*.hs
 	$(exe) dis trinity > $@
 
 reg/judo.dis: $(exe) src/*.hs
-	$(exe) dis judo > $@
+	$(exe) dis judo -walk scripts/judo.script > $@
 
 
 reg/zork.code: $(exe) src/*.hs
