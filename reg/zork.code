@@ -11753,14 +11753,16 @@ LocRoutine 028280:
   Jump: 028281
 LocOp 028281:
   TraceOperation 028281 (Loadw (Con 0) (Con 8) Sp);
-  PushStack 0;
+  Let b1 = M[000016];
+  Let b2 = M[000017];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 028285 (Or (Var Sp) (Con 1) Sp);
-  PopStack popped1;
-  PushStack Or(popped1,1);
+  PopStack popped3;
+  PushStack Or(popped3,1);
   TraceOperation 028289 (Storew (Con 0) (Con 8) (Var Sp));
-  PopStack popped2;
-  SetByte 000016 HiByte(popped2);
-  SetByte 000017 LoByte(popped2);
+  PopStack popped4;
+  SetByte 000016 HiByte(popped4);
+  SetByte 000017 LoByte(popped4);
   TraceOperation 028294 (Print "Here begins a transcript of interaction with");
   GamePrint "Here begins a transcript of interaction with";
   TraceOperation 028325 New_line;
@@ -11796,19 +11798,21 @@ LocOp 028333:
 LocReturn 028363:
   PushStack call_result;
   TraceOperation 028368 (Loadw (Con 0) (Con 8) Sp);
-  PushStack 0;
+  Let b1 = M[000016];
+  Let b2 = M[000017];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 028372 (And (Var Sp) (Con -2) Sp);
-  PopStack popped1;
-  PushStack And(popped1,-2);
+  PopStack popped3;
+  PushStack And(popped3,-2);
   TraceOperation 028378 (Storew (Con 0) (Con 8) (Var Sp));
-  PopStack popped2;
-  SetByte 000016 HiByte(popped2);
-  SetByte 000017 LoByte(popped2);
+  PopStack popped4;
+  SetByte 000016 HiByte(popped4);
+  SetByte 000017 LoByte(popped4);
   TraceOperation 028383 Rtrue;
   PopFrame;
-  PopReturnAddress return_address_3;
+  PopReturnAddress return_address_5;
   SetResult 1;
-  JumpIndirect: (return) return_address_3
+  JumpIndirect: (return) return_address_5
 --------------------------------------------------
 LocRoutine 028384:
   MakeRoutineFrame 1;
@@ -11824,13 +11828,14 @@ LocOp 028387:
   TraceOperation 028473 New_line;
   GamePrint "\n";
   TraceOperation 028474 (Loadb (Con 0) (Con 1) Sp);
-  PushStack 0;
+  Let b1 = M[000001];
+  PushStack Widen(b1);
   TraceOperation 028478 (And (Var Sp) (Con 8) Sp);
-  PopStack popped1;
-  PushStack And(popped1,8);
-  TraceOperation 028482 (Jz (Var Sp) (Branch T (Dloc 028509)));
   PopStack popped2;
-  if (IsZero(popped2)) {
+  PushStack And(popped2,8);
+  TraceOperation 028482 (Jz (Var Sp) (Branch T (Dloc 028509)));
+  PopStack popped3;
+  if (IsZero(popped3)) {
     Jump: 028509
   } else {
     TraceOperation 028485 (Print "Licensed to Tandy Corporation.");
@@ -11843,13 +11848,15 @@ LocOp 028509:
   TraceOperation 028509 (Print "ZORK is a registered trademark of Infocom, Inc.\nRevision ");
   GamePrint "ZORK is a registered trademark of Infocom, Inc.\nRevision ";
   TraceOperation 028552 (Loadw (Con 0) (Con 1) Sp);
-  PushStack 88;
+  Let b1 = M[000002];
+  Let b2 = M[000003];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 028556 (And (Var Sp) (Con 2047) Sp);
-  PopStack popped1;
-  PushStack And(popped1,2047);
+  PopStack popped3;
+  PushStack And(popped3,2047);
   TraceOperation 028562 (Print_num (Var Sp));
-  PopStack popped2;
-  GamePrint ShowNumber(popped2);
+  PopStack popped4;
+  GamePrint ShowNumber(popped4);
   TraceOperation 028565 (Print " / Serial number ");
   GamePrint " / Serial number ";
   Jump: 028580
@@ -26893,13 +26900,14 @@ LocOp 040979:
   TraceOperation 040979 (Print "Inside the Barrow\nAs you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads:  All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered");
   GamePrint "Inside the Barrow\nAs you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads:  All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered";
   TraceOperation 041262 (Loadb (Con 0) (Con 1) Sp);
-  PushStack 0;
+  Let b1 = M[000001];
+  PushStack Widen(b1);
   TraceOperation 041266 (And (Var Sp) (Con 8) Sp);
-  PopStack popped1;
-  PushStack And(popped1,8);
-  TraceOperation 041270 (Jz (Var Sp) (Branch F (Dloc 041473)));
   PopStack popped2;
-  if (IsZero(popped2)) {
+  PushStack And(popped2,8);
+  TraceOperation 041270 (Jz (Var Sp) (Branch F (Dloc 041473)));
+  PopStack popped3;
+  if (IsZero(popped3)) {
     TraceOperation 041274 (Print " the first part of the ZORK trilogy. Those who pass over this bridge must be prepared to undertake an even greater adventure that will severely test your skill and bravery!\n\nThe ZORK trilogy continues with \"ZORK II: The Wizard of Frobozz\" and is completed in \"ZORK III: The Dungeon Master.\"");
     GamePrint " the first part of the ZORK trilogy. Those who pass over this bridge must be prepared to undertake an even greater adventure that will severely test your skill and bravery!\n\nThe ZORK trilogy continues with \"ZORK II: The Wizard of Frobozz\" and is completed in \"ZORK III: The Dungeon Master.\"";
     TraceOperation 041469 New_line;

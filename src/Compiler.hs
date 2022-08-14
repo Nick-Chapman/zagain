@@ -126,7 +126,8 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
     header@Header{zv,staticMem} = Story.header story
 
     isStaticAddress :: Addr -> Bool
-    isStaticAddress a = a <= 63 || a > staticMem
+    --isStaticAddress a = a <= 63 || a > staticMem
+    isStaticAddress a = a > staticMem
 
     -- continuation (for compilation) which will finish the compiled program with a jump
     kJump :: State -> () -> Gen Prog

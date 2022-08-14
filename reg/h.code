@@ -13448,14 +13448,16 @@ LocRoutine 029356:
   Jump: 029357
 LocOp 029357:
   TraceOperation 029357 (Loadw (Con 0) (Con 8) Sp);
-  PushStack 0;
+  Let b1 = M[000016];
+  Let b2 = M[000017];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 029361 (Or (Var Sp) (Con 1) Sp);
-  PopStack popped1;
-  PushStack Or(popped1,1);
+  PopStack popped3;
+  PushStack Or(popped3,1);
   TraceOperation 029365 (Storew (Con 0) (Con 8) (Var Sp));
-  PopStack popped2;
-  SetByte 000016 HiByte(popped2);
-  SetByte 000017 LoByte(popped2);
+  PopStack popped4;
+  SetByte 000016 HiByte(popped4);
+  SetByte 000017 LoByte(popped4);
   TraceOperation 029370 (Call (Floc 029414) [Con -11788] Sp);
   PushFrame;
   PushReturnAddress 029370;
@@ -13502,19 +13504,21 @@ LocReturn 029385:
 LocReturn 029392:
   PushStack call_result;
   TraceOperation 029397 (Loadw (Con 0) (Con 8) Sp);
-  PushStack 0;
+  Let b1 = M[000016];
+  Let b2 = M[000017];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 029401 (And (Var Sp) (Con -2) Sp);
-  PopStack popped1;
-  PushStack And(popped1,-2);
+  PopStack popped3;
+  PushStack And(popped3,-2);
   TraceOperation 029407 (Storew (Con 0) (Con 8) (Var Sp));
-  PopStack popped2;
-  SetByte 000016 HiByte(popped2);
-  SetByte 000017 LoByte(popped2);
+  PopStack popped4;
+  SetByte 000016 HiByte(popped4);
+  SetByte 000017 LoByte(popped4);
   TraceOperation 029412 Rtrue;
   PopFrame;
-  PopReturnAddress return_address_3;
+  PopReturnAddress return_address_5;
   SetResult 1;
-  JumpIndirect: (return) return_address_3
+  JumpIndirect: (return) return_address_5
 --------------------------------------------------
 LocRoutine 029414:
   MakeRoutineFrame 1;
@@ -13552,17 +13556,19 @@ LocRoutine 029450:
   Jump: 029455
 LocOp 029455:
   TraceOperation 029455 (Loadw (Con 0) (Con 1) Sp);
-  PushStack 59;
+  Let b1 = M[000002];
+  Let b2 = M[000003];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 029459 (And (Var Sp) (Con 2047) (Local 2));
-  PopStack popped1;
-  SetLocal 2 And(popped1,2047);
+  PopStack popped3;
+  SetLocal 2 And(popped3,2047);
   TraceOperation 029465 (Print "THE HITCHHIKER'S GUIDE TO THE GALAXY\nInfocom interactive fiction - a science fiction story\nCopyright (c) 1984 by Infocom, Inc. All rights reserved.\n");
   GamePrint "THE HITCHHIKER'S GUIDE TO THE GALAXY\nInfocom interactive fiction - a science fiction story\nCopyright (c) 1984 by Infocom, Inc. All rights reserved.\n";
   TraceOperation 029596 (Print "Release ");
   GamePrint "Release ";
   TraceOperation 029603 (Print_num (Var (Local 2)));
-  GetLocal 2 local2_2;
-  GamePrint ShowNumber(local2_2);
+  GetLocal 2 local2_4;
+  GamePrint ShowNumber(local2_4);
   TraceOperation 029606 (Print " / Serial number ");
   GamePrint " / Serial number ";
   Jump: 029621

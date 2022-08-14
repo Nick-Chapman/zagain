@@ -248,66 +248,72 @@ LocRoutine 024584:
   Jump: 024585
 LocOp 024585:
   TraceOperation 024585 (Loadw (Con 50) (Con 0) (Global 19));
-  SetByte 007244 0;
-  SetByte 007245 0;
+  Let b1 = M[000050];
+  Let b2 = M[000051];
+  SetByte 007244 b1;
+  SetByte 007245 b2;
   TraceOperation 024589 (Loadw (Con 16) (Con 0) Sp);
-  PushStack 80;
+  Let b3 = M[000016];
+  Let b4 = M[000017];
+  PushStack MakeHiLo(b3,b4);
   TraceOperation 024593 (And (Var Sp) (Con 1) (Global 119));
-  PopStack popped1;
-  SetByte 007444 HiByte(And(popped1,1));
-  SetByte 007445 LoByte(And(popped1,1));
-  TraceOperation 024597 (Loadw (Con 8) (Con 0) (Global 120));
-  SetByte 007446 83;
-  SetByte 007447 194;
-  TraceOperation 024601 (Loadb (Var (Global 120)) (Con 0) Sp);
-  Let b2 = M[007446];
-  Let b3 = M[007447];
-  Let b4 = M[Offset(Address(MakeHiLo(b2,b3)),0)];
-  PushStack Widen(b4);
-  TraceOperation 024605 (Add (Var Sp) (Con 1) Sp);
   PopStack popped5;
-  PushStack Add(popped5,1);
+  SetByte 007444 HiByte(And(popped5,1));
+  SetByte 007445 LoByte(And(popped5,1));
+  TraceOperation 024597 (Loadw (Con 8) (Con 0) (Global 120));
+  Let b6 = M[000008];
+  Let b7 = M[000009];
+  SetByte 007446 b6;
+  SetByte 007447 b7;
+  TraceOperation 024601 (Loadb (Var (Global 120)) (Con 0) Sp);
+  Let b8 = M[007446];
+  Let b9 = M[007447];
+  Let b10 = M[Offset(Address(MakeHiLo(b8,b9)),0)];
+  PushStack Widen(b10);
+  TraceOperation 024605 (Add (Var Sp) (Con 1) Sp);
+  PopStack popped11;
+  PushStack Add(popped11,1);
   TraceOperation 024609 (Loadb (Var (Global 120)) (Var Sp) (Global 121));
-  Let b6 = M[007446];
-  Let b7 = M[007447];
-  PopStack popped8;
-  Let b9 = M[Offset(Address(MakeHiLo(b6,b7)),popped8)];
-  SetByte 007448 HiByte(Widen(b9));
-  SetByte 007449 LoByte(Widen(b9));
+  Let b12 = M[007446];
+  Let b13 = M[007447];
+  PopStack popped14;
+  Let b15 = M[Offset(Address(MakeHiLo(b12,b13)),popped14)];
+  SetByte 007448 HiByte(Widen(b15));
+  SetByte 007449 LoByte(Widen(b15));
   TraceOperation 024613 (Loadb (Var (Global 120)) (Con 0) Sp);
-  Let b10 = M[007446];
-  Let b11 = M[007447];
-  Let b12 = M[Offset(Address(MakeHiLo(b10,b11)),0)];
-  PushStack Widen(b12);
+  Let b16 = M[007446];
+  Let b17 = M[007447];
+  Let b18 = M[Offset(Address(MakeHiLo(b16,b17)),0)];
+  PushStack Widen(b18);
   TraceOperation 024617 (Add (Var (Global 120)) (Var Sp) Sp);
-  Let b13 = M[007446];
-  Let b14 = M[007447];
-  PopStack popped15;
-  PushStack Add(MakeHiLo(b13,b14),popped15);
+  Let b19 = M[007446];
+  Let b20 = M[007447];
+  PopStack popped21;
+  PushStack Add(MakeHiLo(b19,b20),popped21);
   TraceOperation 024621 (Add (Var Sp) (Con 4) (Global 120));
-  PopStack popped16;
-  SetByte 007446 HiByte(Add(popped16,4));
-  SetByte 007447 LoByte(Add(popped16,4));
-  TraceOperation 024625 (Sub (Var (Global 120)) (Con 2) Sp);
-  Let b17 = M[007446];
-  Let b18 = M[007447];
-  PushStack Sub(MakeHiLo(b17,b18),2);
-  TraceOperation 024629 (Loadw (Var Sp) (Con 0) Sp);
-  PopStack popped19;
-  Let b20 = M[Offset(Address(popped19),0)];
-  Let b21 = M[Offset(Offset(Address(popped19),0),1)];
-  PushStack MakeHiLo(b20,b21);
-  TraceOperation 024633 (Mul (Var Sp) (Var (Global 121)) Sp);
   PopStack popped22;
-  Let b23 = M[007448];
-  Let b24 = M[007449];
-  PushStack Mul(popped22,MakeHiLo(b23,b24));
+  SetByte 007446 HiByte(Add(popped22,4));
+  SetByte 007447 LoByte(Add(popped22,4));
+  TraceOperation 024625 (Sub (Var (Global 120)) (Con 2) Sp);
+  Let b23 = M[007446];
+  Let b24 = M[007447];
+  PushStack Sub(MakeHiLo(b23,b24),2);
+  TraceOperation 024629 (Loadw (Var Sp) (Con 0) Sp);
+  PopStack popped25;
+  Let b26 = M[Offset(Address(popped25),0)];
+  Let b27 = M[Offset(Offset(Address(popped25),0),1)];
+  PushStack MakeHiLo(b26,b27);
+  TraceOperation 024633 (Mul (Var Sp) (Var (Global 121)) Sp);
+  PopStack popped28;
+  Let b29 = M[007448];
+  Let b30 = M[007449];
+  PushStack Mul(popped28,MakeHiLo(b29,b30));
   TraceOperation 024637 (Add (Var (Global 120)) (Var Sp) (Global 122));
-  Let b25 = M[007446];
-  Let b26 = M[007447];
-  PopStack popped27;
-  SetByte 007450 HiByte(Add(MakeHiLo(b25,b26),popped27));
-  SetByte 007451 LoByte(Add(MakeHiLo(b25,b26),popped27));
+  Let b31 = M[007446];
+  Let b32 = M[007447];
+  PopStack popped33;
+  SetByte 007450 HiByte(Add(MakeHiLo(b31,b32),popped33));
+  SetByte 007451 LoByte(Add(MakeHiLo(b31,b32),popped33));
   TraceOperation 024641 (Storeb (Con 8498) (Con 0) (Con 120));
   SetByte 008498 120;
   TraceOperation 024647 (Storeb (Con 8621) (Con 0) (Con 120));
@@ -323,9 +329,9 @@ LocOp 024585:
   SetByte 007441 72;
   TraceOperation 024677 Rtrue;
   PopFrame;
-  PopReturnAddress return_address_28;
+  PopReturnAddress return_address_34;
   SetResult 1;
-  JumpIndirect: (return) return_address_28
+  JumpIndirect: (return) return_address_34
 --------------------------------------------------
 LocRoutine 024680:
   MakeRoutineFrame 1;
@@ -337,13 +343,15 @@ LocOp 024681:
   TraceOperation 024681 (Print "Release ");
   GamePrint "Release ";
   TraceOperation 024688 (Loadw (Con 2) (Con 0) Sp);
-  PushStack 1;
+  Let b1 = M[000002];
+  Let b2 = M[000003];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 024692 (And (Var Sp) (Con 1023) Sp);
-  PopStack popped1;
-  PushStack And(popped1,1023);
+  PopStack popped3;
+  PushStack And(popped3,1023);
   TraceOperation 024698 (Print_num (Var Sp));
-  PopStack popped2;
-  GamePrint ShowNumber(popped2);
+  PopStack popped4;
+  GamePrint ShowNumber(popped4);
   TraceOperation 024701 (Print " / Serial number ");
   GamePrint " / Serial number ";
   TraceOperation 024716 (Store (Con 1) (Con 0));
@@ -906,23 +914,25 @@ LocRoutine 025032:
   Jump: 025033
 LocOp 025033:
   TraceOperation 025033 (Loadw (Con 8) (Con 0) Sp);
-  PushStack 21442;
+  Let b1 = M[000008];
+  Let b2 = M[000009];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 025037 (Add (Var Sp) (Con 7) Sp);
-  PopStack popped1;
-  PushStack Add(popped1,7);
-  TraceOperation 025041 (Sub (Var (Local 1)) (Var Sp) Sp);
-  GetLocal 1 local1_2;
   PopStack popped3;
-  PushStack Sub(local1_2,popped3);
-  TraceOperation 025045 (Div (Var Sp) (Con 9) Sp);
-  PopStack popped4;
-  PushStack Div(popped4,9);
-  TraceOperation 025049 Ret_popped;
+  PushStack Add(popped3,7);
+  TraceOperation 025041 (Sub (Var (Local 1)) (Var Sp) Sp);
+  GetLocal 1 local1_4;
   PopStack popped5;
+  PushStack Sub(local1_4,popped5);
+  TraceOperation 025045 (Div (Var Sp) (Con 9) Sp);
+  PopStack popped6;
+  PushStack Div(popped6,9);
+  TraceOperation 025049 Ret_popped;
+  PopStack popped7;
   PopFrame;
-  PopReturnAddress return_address_6;
-  SetResult popped5;
-  JumpIndirect: (return) return_address_6
+  PopReturnAddress return_address_8;
+  SetResult popped7;
+  JumpIndirect: (return) return_address_8
 --------------------------------------------------
 LocRoutine 025052:
   MakeRoutineFrame 1;
@@ -935,20 +945,22 @@ LocOp 025053:
   GetLocal 1 local1_1;
   PushStack Mul(9,local1_1);
   TraceOperation 025057 (Loadw (Con 8) (Con 0) Sp);
-  PushStack 21442;
+  Let b2 = M[000008];
+  Let b3 = M[000009];
+  PushStack MakeHiLo(b2,b3);
   TraceOperation 025061 (Add (Var Sp) (Con 7) Sp);
-  PopStack popped2;
-  PushStack Add(popped2,7);
-  TraceOperation 025065 (Add (Var Sp) (Var Sp) Sp);
-  PopStack popped3;
   PopStack popped4;
-  PushStack Add(popped3,popped4);
-  TraceOperation 025069 Ret_popped;
+  PushStack Add(popped4,7);
+  TraceOperation 025065 (Add (Var Sp) (Var Sp) Sp);
   PopStack popped5;
+  PopStack popped6;
+  PushStack Add(popped5,popped6);
+  TraceOperation 025069 Ret_popped;
+  PopStack popped7;
   PopFrame;
-  PopReturnAddress return_address_6;
-  SetResult popped5;
-  JumpIndirect: (return) return_address_6
+  PopReturnAddress return_address_8;
+  SetResult popped7;
+  JumpIndirect: (return) return_address_8
 --------------------------------------------------
 LocRoutine 025072:
   MakeRoutineFrame 1;
@@ -958,19 +970,21 @@ LocRoutine 025072:
   Jump: 025073
 LocOp 025073:
   TraceOperation 025073 (Loadw (Con 14) (Con 0) Sp);
-  PushStack 19869;
+  Let b1 = M[000014];
+  Let b2 = M[000015];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 025077 (Loadw (Var Sp) (Var (Local 1)) Sp);
-  PopStack popped1;
-  GetLocal 1 local1_2;
-  Let b3 = M[Offset(Address(popped1),Mul(2,local1_2))];
-  Let b4 = M[Offset(Offset(Address(popped1),Mul(2,local1_2)),1)];
-  PushStack MakeHiLo(b3,b4);
+  PopStack popped3;
+  GetLocal 1 local1_4;
+  Let b5 = M[Offset(Address(popped3),Mul(2,local1_4))];
+  Let b6 = M[Offset(Offset(Address(popped3),Mul(2,local1_4)),1)];
+  PushStack MakeHiLo(b5,b6);
   TraceOperation 025081 Ret_popped;
-  PopStack popped5;
+  PopStack popped7;
   PopFrame;
-  PopReturnAddress return_address_6;
-  SetResult popped5;
-  JumpIndirect: (return) return_address_6
+  PopReturnAddress return_address_8;
+  SetResult popped7;
+  JumpIndirect: (return) return_address_8
 --------------------------------------------------
 LocRoutine 025084:
   MakeRoutineFrame 3;
@@ -986,7 +1000,9 @@ LocRoutine 025084:
   Jump: 025085
 LocOp 025085:
   TraceOperation 025085 (Loadw (Con 8) (Con 0) (Local 2));
-  SetLocal 2 21442;
+  Let b1 = M[000008];
+  Let b2 = M[000009];
+  SetLocal 2 MakeHiLo(b1,b2);
   TraceOperation 025089 (Store (Con 3) (Con 0));
   SetLocal 3 0;
   Jump: 025092
@@ -1608,26 +1624,28 @@ LocRoutine 025480:
   Jump: 025481
 LocOp 025481:
   TraceOperation 025481 (Loadb (Con 33) (Con 0) Sp);
-  PushStack 0;
+  Let b1 = M[000033];
+  PushStack Widen(b1);
   TraceOperation 025485 Ret_popped;
-  PopStack popped1;
+  PopStack popped2;
   PopFrame;
-  PopReturnAddress return_address_2;
-  SetResult popped1;
-  JumpIndirect: (return) return_address_2
+  PopReturnAddress return_address_3;
+  SetResult popped2;
+  JumpIndirect: (return) return_address_3
 --------------------------------------------------
 LocRoutine 025488:
   MakeRoutineFrame 0;
   Jump: 025489
 LocOp 025489:
   TraceOperation 025489 (Loadb (Con 32) (Con 0) Sp);
-  PushStack 0;
+  Let b1 = M[000032];
+  PushStack Widen(b1);
   TraceOperation 025493 Ret_popped;
-  PopStack popped1;
+  PopStack popped2;
   PopFrame;
-  PopReturnAddress return_address_2;
-  SetResult popped1;
-  JumpIndirect: (return) return_address_2
+  PopReturnAddress return_address_3;
+  SetResult popped2;
+  JumpIndirect: (return) return_address_3
 --------------------------------------------------
 LocRoutine 025496:
   MakeRoutineFrame 3;
@@ -2216,15 +2234,17 @@ LocOp 025829:
   Let b4 = M[007269];
   if (Equal(MakeHiLo(b1,b2),MakeHiLo(b3,b4))) {
     TraceOperation 025833 (Loadw (Con 0) (Con 8) Sp);
-    PushStack 80;
+    Let b5 = M[000016];
+    Let b6 = M[000017];
+    PushStack MakeHiLo(b5,b6);
     TraceOperation 025837 (And (Var Sp) (Con 1) (Global 119));
-    PopStack popped5;
-    SetByte 007444 HiByte(And(popped5,1));
-    SetByte 007445 LoByte(And(popped5,1));
+    PopStack popped7;
+    SetByte 007444 HiByte(And(popped7,1));
+    SetByte 007445 LoByte(And(popped7,1));
     TraceOperation 025841 (Jz (Var (Global 119)) (Branch T (Dloc 025852)));
-    Let b6 = M[007444];
-    Let b7 = M[007445];
-    if (IsZero(MakeHiLo(b6,b7))) {
+    Let b8 = M[007444];
+    Let b9 = M[007445];
+    if (IsZero(MakeHiLo(b8,b9))) {
       Jump: 025852
     } else {
       TraceOperation 025844 (Call (Floc 041040) [Con 5,Con 1] Sp);
@@ -2239,9 +2259,9 @@ LocOp 025829:
     }
   } else {
     PopFrame;
-    PopReturnAddress return_address_8;
+    PopReturnAddress return_address_10;
     SetResult 0;
-    JumpIndirect: (return) return_address_8
+    JumpIndirect: (return) return_address_10
   }
 LocReturn 025844:
   PushStack call_result;
@@ -2255,13 +2275,15 @@ LocOp 025852:
   TraceOperation 025852 (Output_stream (Con 2) Nothing);
   Note "Output_stream (Con 2) Nothing";
   TraceOperation 025855 (Loadw (Con 0) (Con 8) Sp);
-  PushStack 80;
+  Let b1 = M[000016];
+  Let b2 = M[000017];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 025859 (And (Var Sp) (Con 1) Sp);
-  PopStack popped1;
-  PushStack And(popped1,1);
+  PopStack popped3;
+  PushStack And(popped3,1);
   TraceOperation 025863 (Jz (Var Sp) (Branch F (Dloc 025874)));
-  PopStack popped2;
-  if (IsZero(popped2)) {
+  PopStack popped4;
+  if (IsZero(popped4)) {
     TraceOperation 025866 (Call (Floc 041040) [Con 5,Con 3] Sp);
     PushFrame;
     PushReturnAddress 025866;
@@ -2319,15 +2341,17 @@ LocOp 025889:
   Let b4 = M[007269];
   if (Equal(MakeHiLo(b1,b2),MakeHiLo(b3,b4))) {
     TraceOperation 025893 (Loadw (Con 0) (Con 8) Sp);
-    PushStack 80;
+    Let b5 = M[000016];
+    Let b6 = M[000017];
+    PushStack MakeHiLo(b5,b6);
     TraceOperation 025897 (And (Var Sp) (Con 1) (Global 119));
-    PopStack popped5;
-    SetByte 007444 HiByte(And(popped5,1));
-    SetByte 007445 LoByte(And(popped5,1));
+    PopStack popped7;
+    SetByte 007444 HiByte(And(popped7,1));
+    SetByte 007445 LoByte(And(popped7,1));
     TraceOperation 025901 (Jz (Var (Global 119)) (Branch F (Dloc 025912)));
-    Let b6 = M[007444];
-    Let b7 = M[007445];
-    if (IsZero(MakeHiLo(b6,b7))) {
+    Let b8 = M[007444];
+    Let b9 = M[007445];
+    if (IsZero(MakeHiLo(b8,b9))) {
       TraceOperation 025904 (Call (Floc 041040) [Con 6,Con 1] Sp);
       PushFrame;
       PushReturnAddress 025904;
@@ -2342,9 +2366,9 @@ LocOp 025889:
     }
   } else {
     PopFrame;
-    PopReturnAddress return_address_8;
+    PopReturnAddress return_address_10;
     SetResult 0;
-    JumpIndirect: (return) return_address_8
+    JumpIndirect: (return) return_address_10
   }
 LocReturn 025904:
   PushStack call_result;
@@ -2368,13 +2392,15 @@ LocReturn 025912:
   TraceOperation 025918 (Output_stream (Con -2) Nothing);
   Note "Output_stream (Con -2) Nothing";
   TraceOperation 025922 (Loadw (Con 0) (Con 8) Sp);
-  PushStack 80;
+  Let b1 = M[000016];
+  Let b2 = M[000017];
+  PushStack MakeHiLo(b1,b2);
   TraceOperation 025926 (And (Var Sp) (Con 1) Sp);
-  PopStack popped1;
-  PushStack And(popped1,1);
+  PopStack popped3;
+  PushStack And(popped3,1);
   TraceOperation 025930 (Jz (Var Sp) (Branch T (Dloc 025941)));
-  PopStack popped2;
-  if (IsZero(popped2)) {
+  PopStack popped4;
+  if (IsZero(popped4)) {
     Jump: 025941
   } else {
     TraceOperation 025933 (Call (Floc 041040) [Con 6,Con 3] Sp);
@@ -2488,15 +2514,17 @@ LocOp 026002:
     TraceOperation 026051 (Print " (");
     GamePrint " (";
     TraceOperation 026054 (Loadb (Con 30) (Con 0) Sp);
-    PushStack 0;
+    Let b9 = M[000030];
+    PushStack Widen(b9);
     TraceOperation 026058 (Print_num (Var Sp));
-    PopStack popped9;
-    GamePrint ShowNumber(popped9);
-    TraceOperation 026061 (Loadb (Con 31) (Con 0) Sp);
-    PushStack 0;
-    TraceOperation 026065 (Print_char (Var Sp));
     PopStack popped10;
-    GamePrint SingleChar(popped10);
+    GamePrint ShowNumber(popped10);
+    TraceOperation 026061 (Loadb (Con 31) (Con 0) Sp);
+    Let b11 = M[000031];
+    PushStack Widen(b11);
+    TraceOperation 026065 (Print_char (Var Sp));
+    PopStack popped12;
+    GamePrint SingleChar(popped12);
     TraceOperation 026068 (Print ") / ");
     GamePrint ") / ";
     TraceOperation 026073 (Jump 026115);
@@ -2508,17 +2536,19 @@ LocOp 026076:
   TraceOperation 026076 (Print "Interpreter ");
   GamePrint "Interpreter ";
   TraceOperation 026087 (Loadb (Con 30) (Con 0) Sp);
-  PushStack 0;
+  Let b1 = M[000030];
+  PushStack Widen(b1);
   TraceOperation 026091 (Print_num (Var Sp));
-  PopStack popped1;
-  GamePrint ShowNumber(popped1);
+  PopStack popped2;
+  GamePrint ShowNumber(popped2);
   TraceOperation 026094 (Print " Version ");
   GamePrint " Version ";
   TraceOperation 026103 (Loadb (Con 31) (Con 0) Sp);
-  PushStack 0;
+  Let b3 = M[000031];
+  PushStack Widen(b3);
   TraceOperation 026107 (Print_char (Var Sp));
-  PopStack popped2;
-  GamePrint SingleChar(popped2);
+  PopStack popped4;
+  GamePrint SingleChar(popped4);
   TraceOperation 026110 (Print " / ");
   GamePrint " / ";
   Jump: 026115
@@ -21379,20 +21409,22 @@ LocOp 043003:
   PopStack popped4;
   SetLocal 6 Sub(255,popped4);
   TraceOperation 043011 (Loadw (Con 14) (Con 0) Sp);
-  PushStack 19869;
+  Let b5 = M[000014];
+  Let b6 = M[000015];
+  PushStack MakeHiLo(b5,b6);
   TraceOperation 043015 (Loadw (Var Sp) (Var (Local 6)) (Local 2));
-  PopStack popped5;
-  GetLocal 6 local6_6;
-  Let b7 = M[Offset(Address(popped5),Mul(2,local6_6))];
-  Let b8 = M[Offset(Offset(Address(popped5),Mul(2,local6_6)),1)];
-  SetLocal 2 MakeHiLo(b7,b8);
+  PopStack popped7;
+  GetLocal 6 local6_8;
+  Let b9 = M[Offset(Address(popped7),Mul(2,local6_8))];
+  Let b10 = M[Offset(Offset(Address(popped7),Mul(2,local6_8)),1)];
+  SetLocal 2 MakeHiLo(b9,b10);
   TraceOperation 043019 (Loadb (Var (Local 2)) (Con 0) Sp);
-  GetLocal 2 local2_9;
-  Let b10 = M[Offset(Address(local2_9),0)];
-  PushStack Widen(b10);
+  GetLocal 2 local2_11;
+  Let b12 = M[Offset(Address(local2_11),0)];
+  PushStack Widen(b12);
   TraceOperation 043023 (Sub (Var Sp) (Con 1) (Local 4));
-  PopStack popped11;
-  SetLocal 4 Sub(popped11,1);
+  PopStack popped13;
+  SetLocal 4 Sub(popped13,1);
   TraceOperation 043027 (Store (Con 78) (Con -1));
   SetByte 007330 255;
   SetByte 007331 255;
@@ -21409,8 +21441,8 @@ LocOp 043003:
   SetByte 007296 0;
   SetByte 007297 0;
   TraceOperation 043046 (Add (Var (Local 2)) (Con 1) (Local 5));
-  GetLocal 2 local2_12;
-  SetLocal 5 Add(local2_12,1);
+  GetLocal 2 local2_14;
+  SetLocal 5 Add(local2_14,1);
   TraceOperation 043050 (Store (Con 3) (Con 0));
   SetLocal 3 0;
   Jump: 043053
@@ -82949,33 +82981,37 @@ LocReturn 080858:
   TraceOperation 080882 (Print "(I6/v");
   GamePrint "(I6/v";
   TraceOperation 080889 (Loadb (Con 0) (Con 60) (Global 239));
-  SetByte 007684 0;
-  SetByte 007685 54;
+  Let b1 = M[000060];
+  SetByte 007684 HiByte(Widen(b1));
+  SetByte 007685 LoByte(Widen(b1));
   TraceOperation 080893 (Print_char (Var (Global 239)));
-  Let b1 = M[007684];
-  Let b2 = M[007685];
-  GamePrint SingleChar(MakeHiLo(b1,b2));
+  Let b2 = M[007684];
+  Let b3 = M[007685];
+  GamePrint SingleChar(MakeHiLo(b2,b3));
   TraceOperation 080896 (Loadb (Con 0) (Con 61) (Global 239));
-  SetByte 007684 0;
-  SetByte 007685 46;
+  Let b4 = M[000061];
+  SetByte 007684 HiByte(Widen(b4));
+  SetByte 007685 LoByte(Widen(b4));
   TraceOperation 080900 (Print_char (Var (Global 239)));
-  Let b3 = M[007684];
-  Let b4 = M[007685];
-  GamePrint SingleChar(MakeHiLo(b3,b4));
-  TraceOperation 080903 (Loadb (Con 0) (Con 62) (Global 239));
-  SetByte 007684 0;
-  SetByte 007685 51;
-  TraceOperation 080907 (Print_char (Var (Global 239)));
   Let b5 = M[007684];
   Let b6 = M[007685];
   GamePrint SingleChar(MakeHiLo(b5,b6));
+  TraceOperation 080903 (Loadb (Con 0) (Con 62) (Global 239));
+  Let b7 = M[000062];
+  SetByte 007684 HiByte(Widen(b7));
+  SetByte 007685 LoByte(Widen(b7));
+  TraceOperation 080907 (Print_char (Var (Global 239)));
+  Let b8 = M[007684];
+  Let b9 = M[007685];
+  GamePrint SingleChar(MakeHiLo(b8,b9));
   TraceOperation 080910 (Loadb (Con 0) (Con 63) (Global 239));
-  SetByte 007684 0;
-  SetByte 007685 49;
+  Let b10 = M[000063];
+  SetByte 007684 HiByte(Widen(b10));
+  SetByte 007685 LoByte(Widen(b10));
   TraceOperation 080914 (Print_char (Var (Global 239)));
-  Let b7 = M[007684];
-  Let b8 = M[007685];
-  GamePrint SingleChar(MakeHiLo(b7,b8));
+  Let b11 = M[007684];
+  Let b12 = M[007685];
+  GamePrint SingleChar(MakeHiLo(b11,b12));
   TraceOperation 080917 (Print " lib ");
   GamePrint " lib ";
   TraceOperation 080922 (Print_paddr (Con 28411));
@@ -124009,11 +124045,13 @@ LocOp 110522:
         PopStack popped16;
         PushStack Mul(2,popped16);
         TraceOperation 110548 (Loadw (Con 10) (Con 0) Sp);
-        PushStack 266;
+        Let b17 = M[000010];
+        Let b18 = M[000011];
+        PushStack MakeHiLo(b17,b18);
         TraceOperation 110552 (Add (Var Sp) (Var Sp) (Local 9));
-        PopStack popped17;
-        PopStack popped18;
-        SetLocal 9 Add(popped17,popped18);
+        PopStack popped19;
+        PopStack popped20;
+        SetLocal 9 Add(popped19,popped20);
         TraceOperation 110556 (Store (Con 14) (Con 2));
         SetLocal 14 2;
         TraceOperation 110559 (Jump 110575);
@@ -125044,26 +125082,28 @@ LocReturn 111049:
     JumpIndirect: (return) return_address_2
   } else {
     TraceOperation 111059 (Loadw (Con 0) (Con 5) (Local 3));
-    SetLocal 3 266;
+    Let b3 = M[000010];
+    Let b4 = M[000011];
+    SetLocal 3 MakeHiLo(b3,b4);
     TraceOperation 111063 (Je [Var (Local 5),Con 2] (Branch F (Dloc 111080)));
-    GetLocal 5 local5_3;
-    if (Equal(local5_3,2)) {
+    GetLocal 5 local5_5;
+    if (Equal(local5_5,2)) {
       TraceOperation 111067 (Mul (Con 2) (Var (Local 2)) Sp);
-      GetLocal 2 local2_4;
-      PushStack Mul(2,local2_4);
+      GetLocal 2 local2_6;
+      PushStack Mul(2,local2_6);
       TraceOperation 111071 (Add (Var (Local 3)) (Var Sp) Sp);
-      GetLocal 3 local3_5;
-      PopStack popped6;
-      PushStack Add(local3_5,popped6);
-      TraceOperation 111075 (Sub (Var Sp) (Con 2) Sp);
-      PopStack popped7;
-      PushStack Sub(popped7,2);
-      TraceOperation 111079 Ret_popped;
+      GetLocal 3 local3_7;
       PopStack popped8;
+      PushStack Add(local3_7,popped8);
+      TraceOperation 111075 (Sub (Var Sp) (Con 2) Sp);
+      PopStack popped9;
+      PushStack Sub(popped9,2);
+      TraceOperation 111079 Ret_popped;
+      PopStack popped10;
       PopFrame;
-      PopReturnAddress return_address_9;
-      SetResult popped8;
-      JumpIndirect: (return) return_address_9
+      PopReturnAddress return_address_11;
+      SetResult popped10;
+      JumpIndirect: (return) return_address_11
     } else {
       Jump: 111080
     }
@@ -127412,14 +127452,16 @@ LocOp 112869:
     GetLocal 1 local1_3;
     SetLocal 2 local1_3;
     TraceOperation 112879 (Loadw (Con 26) (Con 0) Sp);
-    PushStack -29609;
+    Let b4 = M[000026];
+    Let b5 = M[000027];
+    PushStack MakeHiLo(b4,b5);
     TraceOperation 112883 (Call (Floc 026308) [Var (Local 2),Var Sp] Sp);
-    GetLocal 2 local2_4;
-    PopStack popped5;
+    GetLocal 2 local2_6;
+    PopStack popped7;
     PushFrame;
     PushReturnAddress 112883;
-    SetLocal 1 local2_4;
-    SetLocal 2 popped5;
+    SetLocal 1 local2_6;
+    SetLocal 2 popped7;
     MakeRoutineFrame 4;
     SetLocal 4 0;
     SetLocal 3 0;
