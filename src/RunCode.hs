@@ -75,6 +75,8 @@ runAtom q atom0 k = case atom0 of
     A.Debug ("Note: " ++ mes) $ k q
   GamePrint mes -> do
     A.Output (eval q mes) $ k q
+  TextStyle sb -> do
+    A.TextStyle sb $ k q
   MakeRoutineFrame{} -> k q --TODO
   PushFrame -> do
     let State{stack,locals,frames} = q

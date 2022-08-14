@@ -1169,10 +1169,10 @@ LocOp 025177:
   Let b3 = M[007685];
   if (LogOr(Equal(MakeHiLo(b2,b3),0),Equal(MakeHiLo(b2,b3),6))) {
     TraceOperation 025186 (Set_text_style (Con 0));
-    Note "(\"TextStyle\",(Reverse,False))";
-    Note "(\"TextStyle\",(Bold,False))";
-    Note "(\"TextStyle\",(Italic,False))";
-    Note "(\"TextStyle\",(Fixed,False))";
+    TextStyle (Reverse,False);
+    TextStyle (Bold,False);
+    TextStyle (Italic,False);
+    TextStyle (Fixed,False);
     TraceOperation 025189 (Jump 025202);
     Jump: 025202
   } else {
@@ -1184,10 +1184,10 @@ LocOp 025192:
   Let b2 = M[007685];
   if (LogOr(LogOr(Equal(MakeHiLo(b1,b2),3),Equal(MakeHiLo(b1,b2),4)),Equal(MakeHiLo(b1,b2),5))) {
     TraceOperation 025199 (Set_text_style (Con 2));
-    Note "(\"TextStyle\",(Reverse,True))";
-    Note "(\"TextStyle\",(Bold,False))";
-    Note "(\"TextStyle\",(Italic,False))";
-    Note "(\"TextStyle\",(Fixed,False))";
+    TextStyle (Reverse,True);
+    TextStyle (Bold,False);
+    TextStyle (Italic,False);
+    TextStyle (Fixed,False);
     Jump: 025202
   } else {
     Jump: 025202
@@ -1845,10 +1845,10 @@ LocOp 025577:
   }
 LocOp 025593:
   TraceOperation 025593 (Set_text_style (Con 0));
-  Note "(\"TextStyle\",(Reverse,False))";
-  Note "(\"TextStyle\",(Bold,False))";
-  Note "(\"TextStyle\",(Italic,False))";
-  Note "(\"TextStyle\",(Fixed,False))";
+  TextStyle (Reverse,False);
+  TextStyle (Bold,False);
+  TextStyle (Italic,False);
+  TextStyle (Fixed,False);
   Jump: 025596
 LocOp 025596:
   TraceOperation 025596 (Set_window (Con 0));
@@ -1907,10 +1907,10 @@ LocOp 025605:
   }
 LocOp 025624:
   TraceOperation 025624 (Set_text_style (Con 1));
-  Note "(\"TextStyle\",(Reverse,False))";
-  Note "(\"TextStyle\",(Bold,False))";
-  Note "(\"TextStyle\",(Italic,False))";
-  Note "(\"TextStyle\",(Fixed,False))";
+  TextStyle (Reverse,False);
+  TextStyle (Bold,False);
+  TextStyle (Italic,False);
+  TextStyle (Fixed,False);
   Jump: 025627
 LocOp 025627:
   TraceOperation 025627 (Jz (Var (Local 1)) (Branch F (Dloc 025636)));
@@ -61981,10 +61981,10 @@ LocOp 068179:
   SetByte 007214 0;
   SetByte 007215 1;
   TraceOperation 068182 (Set_text_style (Con 2));
-  Note "(\"TextStyle\",(Reverse,True))";
-  Note "(\"TextStyle\",(Bold,False))";
-  Note "(\"TextStyle\",(Italic,False))";
-  Note "(\"TextStyle\",(Fixed,False))";
+  TextStyle (Reverse,True);
+  TextStyle (Bold,False);
+  TextStyle (Italic,False);
+  TextStyle (Fixed,False);
   TraceOperation 068185 (Call (Floc 079624) [Con 20011,Con 2] Sp);
   PushFrame;
   PushReturnAddress 068185;
@@ -62142,10 +62142,10 @@ LocOp 068296:
   SetByte 007214 0;
   SetByte 007215 1;
   TraceOperation 068299 (Set_text_style (Con 0));
-  Note "(\"TextStyle\",(Reverse,False))";
-  Note "(\"TextStyle\",(Bold,False))";
-  Note "(\"TextStyle\",(Italic,False))";
-  Note "(\"TextStyle\",(Fixed,False))";
+  TextStyle (Reverse,False);
+  TextStyle (Bold,False);
+  TextStyle (Italic,False);
+  TextStyle (Fixed,False);
   TraceOperation 068302 (Call (Floc 037168) [Var (Global 37)] (Local 1));
   Let b1 = M[007280];
   Let b2 = M[007281];
@@ -84237,10 +84237,10 @@ LocRoutine 080460:
   Jump: 080461
 LocOp 080461:
   TraceOperation 080461 (Set_text_style (Con 0));
-  Note "(\"TextStyle\",(Reverse,False))";
-  Note "(\"TextStyle\",(Bold,False))";
-  Note "(\"TextStyle\",(Italic,False))";
-  Note "(\"TextStyle\",(Fixed,False))";
+  TextStyle (Reverse,False);
+  TextStyle (Bold,False);
+  TextStyle (Italic,False);
+  TextStyle (Fixed,False);
   TraceOperation 080464 (CallN (Floc 080404) []);
   PushFrame;
   PushReturnAddress 080464;

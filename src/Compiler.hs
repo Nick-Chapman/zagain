@@ -155,8 +155,7 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
       Bind e f -> compileK s e $ \s a -> compileK s (f a) k
 
       GamePrint mes -> do Seq (Atom.GamePrint mes) <$> k s ()
-      TextStyle sb -> do
-        Seq (Atom.Note (show ("TextStyle",sb))) <$> k s ()
+      TextStyle sb -> do Seq (Atom.TextStyle sb) <$> k s ()
 
       Error msg -> do pure $ Prog.Error msg
       Debug msg -> do GDebug msg; k s ()

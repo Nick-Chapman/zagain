@@ -14,7 +14,6 @@ import System.Environment (getArgs)
 import qualified Console (runAction)
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
-import qualified Story
 import qualified WalkThrough (runAction)
 
 main :: IO ()
@@ -100,7 +99,6 @@ run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaC
       story <- loadStory storyFile
       a <- if | not viaCompiler -> do
                   let eff = Semantics.smallStep
-                  let _ = print (Story.header story)
                   pure $ Interpreter.runEffect screenWidth seed story eff
               | otherwise -> do
                   let eff = Semantics.smallStep

@@ -10,7 +10,7 @@ where
 import Data.Dynamic (Typeable)
 import Data.List (intercalate)
 import Dictionary (Dict)
-import Numbers (Addr,Byte,Value)
+import Numbers (Addr,Byte,Value,Style)
 import Operation (Operation)
 import Text.Printf (printf)
 import qualified Eff (StatusInfo(..))
@@ -112,6 +112,7 @@ data Atom
   | Note String
   | TraceOperation (Expression Addr) Operation
   | GamePrint (Expression String)
+  | TextStyle (Style,Bool)
   | MakeRoutineFrame Int
   | PushFrame
   | PopFrame
