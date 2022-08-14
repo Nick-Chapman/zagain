@@ -56,9 +56,8 @@ seeMemMap story = do
 discoverCode :: Story -> [String] -> IO ()
 discoverCode story walkthrough = do
   let endOfStory :: Addr = fromIntegral (size story)
-  let Header{initialPC=_, staticMem} = Story.header story
-
-  let ws = nub $ dynamicDiscovery story walkthrough
+  let Header{initialPC, staticMem} = Story.header story
+  let ws = nub (initialPC - 1 : dynamicDiscovery story walkthrough)
   let cs = routinesBetween story (staticMem,endOfStory)
   let lost = ws \\ cs
 

@@ -10,7 +10,7 @@ Memory Map:
 024557 Initial PC
 143872 End of story file
 --------------------------------------
-Found 444 routines by walkthrough
+Found 445 routines by walkthrough
 Found 1294 routines by speculative disassembly
 11 routines lost (in walkthrough but not disassembly)
 [088936,039116,038696,060728,044876,106720,107032,107228,108360,107460,107656]
