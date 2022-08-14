@@ -18,7 +18,7 @@ data P1 arg ret where
   IsZeroAddress :: P1 Addr Bool
   IsZeroByte :: P1 Byte Bool
   LoByte :: P1 Value Byte
-  LookupInDict :: Dict -> P1 String Addr
+  LookupInDict :: Dict -> P1 String Addr -- TODO: no Dict here
   Not :: P1 Bool Bool
   PackedAddress :: Zversion -> P1 Value Addr
   SevenMinus :: P1 Byte Byte
@@ -26,12 +26,12 @@ data P1 arg ret where
   SingleChar :: P1 Value String
   StringBytes :: P1 String [Byte]
   StringLength :: P1 String Byte
-  Tokenize :: Dict -> P1 String (Byte,[Byte],[String])
+  Tokenize :: Dict -> P1 String (Byte,[Byte],[String]) -- TODO: no Dict here
   Widen :: P1 Byte Value
 
 deriving instance Show (P1 a b)
 
-evalP1 :: P1 a r -> a -> r
+evalP1 :: P1 a r -> a -> r  -- TODO: take Dict here
 evalP1 = \case
   Address -> makeByteAddress
   DeAddress -> fromIntegral
@@ -41,7 +41,7 @@ evalP1 = \case
   IsZeroAddress -> (== 0)
   IsZeroByte -> (== 0)
   LoByte -> \v -> fromIntegral (v .&. 0xff)
-  LookupInDict dict-> Lex.lookupInDict dict
+  LookupInDict dict -> Lex.lookupInDict dict
   Not -> not
   PackedAddress zv -> makePackedAddress zv
   SevenMinus -> \v -> 7-v

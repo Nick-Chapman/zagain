@@ -353,7 +353,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       LookupInDict word -> do
         res <- genId "lookee"
-        Seq (Atom.Let (Binding res (LookupInDictE word))) <$> k s (Variable res)
+        Seq (Atom.Let (Binding res (LookupInDictE word))) <$> k s (Variable res) -- TODO: prefer unary op
 
       StringBytes string -> do
         split <- genId "string_bytes_"
@@ -421,7 +421,7 @@ data State = State
   }
 
 eagerStack :: Bool
-eagerStack = True -- disable the lazy stack optimization
+eagerStack = True -- disable the lazy stack optimization -- TODO: enable/explore/test
 
 initState :: Control DuringCompilation -> State
 initState control = State
@@ -479,7 +479,7 @@ doConstFolding = True
 
 makeUnary :: Show x => Prim.P1 x r -> Expression x -> Expression r
 makeUnary p1 = \case
-  Const x | doConstFolding -> Const (Prim.evalP1 p1 x)
+  Const x | doConstFolding -> Const (Prim.evalP1 p1 x) -- TODO: pass dict here
   x ->
     case (p1,x) of
       (Prim.LoByte,Binary Prim.MakeHiLo _ lo) -> lo

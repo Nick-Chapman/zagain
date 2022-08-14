@@ -126,7 +126,7 @@ runAtom q atom0 k = case atom0 of
       k $ (bind q x response) { lastCount = count }
   StringBytes e x -> do
     let a0 = Prim.evalP1 Prim.StringBytes (eval q e)
-    let a = map Const a0 -- TODO: hmm
+    let a = map Const a0 -- TODO: hmm -- is this really needed?
     k $ bind q x a
   Tokenize e (x,y,z) -> do
     let State{dict} = q
@@ -224,7 +224,7 @@ makeState screenWidth seed story code = do
         | CompiledRoutine{chunks=rChunks} <- routines
         , chunk@Chunk{label} <- rChunks
         ]
-  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
+  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict -- TODO: get dict from Code
   State
     { chunks
     , story

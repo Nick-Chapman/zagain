@@ -27,7 +27,7 @@ dumpCode Code{routines} = do
     | CompiledRoutine{chunks} <- routines
     ]
 
-data Code = Code
+data Code = Code -- TODO: add dict here
   { routines :: [CompiledRoutine]
   }
 
@@ -154,7 +154,7 @@ data Expression a where
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
   GetByteE :: Expression Addr -> Expression Byte -- TODO: bad also?
   GetTextE :: Expression Addr -> Expression String -- TODO: bad also?
-  LookupInDictE :: Expression String -> Expression Addr
+  LookupInDictE :: Expression String -> Expression Addr -- TODO: remove, prefer Unary-op
   Ite :: Expression Bool -> Expression a -> Expression a -> Expression a
 
 instance Show a => Show (Expression a) where
