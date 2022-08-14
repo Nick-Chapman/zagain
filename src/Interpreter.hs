@@ -201,7 +201,7 @@ runEffect screenWidth seed story smallStep = do
       IsZeroAddress x -> prim1 x Prim.IsZeroAddress
       IsZeroByte x -> prim1 x Prim.IsZeroByte
       LoByte x -> prim1 x Prim.LoByte
-      LookupInDict x -> prim1 x (Prim.LookupInDict dict)
+      LookupInDict x -> prim1 x Prim.LookupInDict
       Not x -> prim1 x Prim.Not
       PackedAddress x -> prim1 x (Prim.PackedAddress zv)
       SevenMinus x -> prim1 x Prim.SevenMinus
@@ -209,7 +209,7 @@ runEffect screenWidth seed story smallStep = do
       SingleChar x -> prim1 x Prim.SingleChar
       StringBytes x -> prim1 x Prim.StringBytes
       StringLength x -> prim1 x Prim.StringLength
-      Tokenize x -> prim1 x (Prim.Tokenize dict)
+      Tokenize x -> prim1 x Prim.Tokenize
       Widen x -> prim1 x Prim.Widen
 
       -- pure binary primitives
@@ -238,7 +238,7 @@ runEffect screenWidth seed story smallStep = do
 
       where
         prim1 :: forall x. x -> Prim.P1 x loopType -> Action
-        prim1 x p1 = k s (evalP1 p1 x)
+        prim1 x p1 = k s (evalP1 dict p1 x)
 
         prim2 :: forall x y. x -> y -> Prim.P2 x y loopType -> Action
         prim2 x y p2 = k s (evalP2 p2 x y)

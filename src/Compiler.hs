@@ -6,7 +6,7 @@ import Code (Code(..),CompiledRoutine(..),Chunk(..),Prog(Seq),Binding(..),Label(
 import Control.Monad (when,ap,liftM)
 import Data.Set (Set,(\\))
 import Decode (fetchOperation,fetchRoutineHeader,ztext)
-import Dictionary (fetchDict)
+import Dictionary (Dict,fetchDict)
 import Disassemble (Routine(..),disRoutine,branchesOf,routinesBetween)
 import Eff (Phase,Eff(..),Control(..))
 import Fetch (runFetch)
@@ -56,10 +56,11 @@ compileEffect conf story smallStep = do
         AtReturnFromCall{ caller = Const{} } -> True
         _ -> False
 
-  let static = Static { conf, story, smallStep, shouldInline }
+  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
+
+  let static = Static { conf, story, dict, smallStep, shouldInline }
 
   compiledRoutines <- sequence [ do compileRoutine static r | r <- routines ]
-  let (dict,_) = runFetch (OOB_Error "fetchDict") 0 story fetchDict
   pure Code { compiledRoutines, dict }
 
 
@@ -85,6 +86,7 @@ allAddressesToInline routines = do
 data Static = Static
   { conf :: Conf
   , story :: Story
+  , dict :: Dict
   , smallStep :: Effect ()
   , shouldInline :: Control DuringCompilation -> Bool
   }
@@ -116,7 +118,7 @@ compileRoutine static routine = do
 
 
 compileLoc :: Static -> Loc Addr -> Gen Chunk
-compileLoc Static{story,smallStep,shouldInline} loc = do
+compileLoc Static{story,dict,smallStep,shouldInline} loc = do
 
   let control = makeControl loc
   body <- compileK (initState control) smallStep kJump
@@ -369,7 +371,7 @@ compileLoc Static{story,smallStep,shouldInline} loc = do
 
       where
         prim1 :: (Show x) => Expression r ~ effectType => Expression x -> Prim.P1 x r -> Gen Prog
-        prim1 x p1 = k s (makeUnary p1 x)
+        prim1 x p1 = k s (makeUnary dict p1 x)
 
         prim2 :: (Show x, Show y) => Expression r ~ effectType => Expression x -> Expression y -> Prim.P2 x y r -> Gen Prog
         prim2 x y p2 = k s (makeBinary p2 x y)
@@ -479,9 +481,9 @@ data GenState = GenState { u :: Int }
 doConstFolding :: Bool
 doConstFolding = True
 
-makeUnary :: Show x => Prim.P1 x r -> Expression x -> Expression r
-makeUnary p1 = \case
-  Const x | doConstFolding -> Const (Prim.evalP1 p1 x) -- TODO: pass dict here
+makeUnary :: Show x => Dict -> Prim.P1 x r -> Expression x -> Expression r
+makeUnary dict p1 = \case
+  Const x | doConstFolding -> Const (Prim.evalP1 dict p1 x)
   x ->
     case (p1,x) of
       (Prim.LoByte,Binary Prim.MakeHiLo _ lo) -> lo

@@ -125,12 +125,13 @@ runAtom q atom0 k = case atom0 of
     A.Input statusLineM (count-lastCount) $ \response -> do
       k $ (bind q x response) { lastCount = count }
   StringBytes e x -> do
-    let a0 = Prim.evalP1 Prim.StringBytes (eval q e)
+    let State{dict} = q
+    let a0 = Prim.evalP1 dict Prim.StringBytes (eval q e)
     let a = map Const a0 -- TODO: hmm -- is this really needed?
     k $ bind q x a
   Tokenize e (x,y,z) -> do
     let State{dict} = q
-    let (a,b0,c0) = Prim.evalP1 (Prim.Tokenize dict) (eval q e)
+    let (a,b0,c0) = Prim.evalP1 dict Prim.Tokenize (eval q e)
     let b = map Const b0 -- TODO: hmm
     let c = map Const c0 -- TODO: hmm
     k $ bind (bind (bind q x a) y b) z c
@@ -170,7 +171,8 @@ eval q = \case
     let State{bindings} = q
     maybe (error (show ("eval/Variable",x))) id $ lookupB bindings x
   Unary p1 e1 -> do
-    Prim.evalP1 p1 (eval q e1)
+    let State{dict} = q
+    Prim.evalP1 dict p1 (eval q e1)
   Binary p2 e1 e2 -> do
     Prim.evalP2 p2 (eval q e1) (eval q e2)
   GetByteE e -> do
@@ -185,7 +187,7 @@ eval q = \case
     text
   LookupInDictE e -> do
     let State{dict} = q
-    Prim.evalP1 (Prim.LookupInDict dict) (eval q e)
+    Prim.evalP1 dict Prim.LookupInDict (eval q e)
   Ite i t e -> do
     eval q (if (eval q i) then t else e)
 
