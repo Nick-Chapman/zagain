@@ -155,7 +155,8 @@ tryDecodeRoutine story a = do
   case disRoutineM story a of
     Left{} -> Nothing
     Right Routine{finish,illegal,unused,defs=_} -> if
-      | length illegal == 0 && length unused <= 2
+      | length illegal == 0
+        && length unused <= 4 -- TODO: testing unused is a heuristic which might be wrong
         -> Just finish
       | otherwise
         -> Nothing

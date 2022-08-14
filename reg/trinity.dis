@@ -11,7 +11,7 @@ Memory Map:
 262065 End of story file
 --------------------------------------
 Found 19 routines by walkthrough
-Found 1838 routines by speculative disassembly
+Found 1833 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=38844
@@ -3317,7 +3317,13 @@ gap=2
 077211 Storeb (Var (Global 72)) (Con 2) (Con 0)
 077216 Rtrue
 --------------------------------------------------
-gap=97
+gap=45
+077262 RoutineHeader [777,17804,14,28615,768]
+-- unused: [1,2,4,5]
+077273 Storew (Var (Global 27)) (Var (Local 3)) (Var Sp)
+077278 Jump 077262
+--------------------------------------------------
+gap=33
 077314 RoutineHeader [-11952]
 -- unused: [1]
 077317 Je [Con 1,Con 0] (Branch T (Dloc 077352))
@@ -13827,55 +13833,72 @@ gap=2
 127639 Print_obj (Con 555)
 127642 Print_ret " drowns out your words."
 --------------------------------------------------
-gap=25
-127682 RoutineHeader []
+gap=3
+127660 RoutineHeader [0,0,0,0,0]
+-- unused: [2,3,4,5]
+127671 Je [Var (Local 1),Con 8] (Branch F (Dloc 127881))
+127676 Jz (Var (Global 108)) (Branch T (Dloc 127684))
+127679 Call (Floc 127616) [] Sp
 127683 Rtrue
---------------------------------------------------
-gap=18
-127702 RoutineHeader []
+127684 Je [Var (Global 139),Con 186] (Branch F (Dloc 127704))
+127688 Je [Var (Global 109),Con 54] (Branch F (Dloc 127699))
+127692 Call (Floc 128588) [Var (Global 221)] Sp
+127698 Rtrue
+127699 Call (Floc 128516) [] Sp
 127703 Rtrue
---------------------------------------------------
-gap=26
-127730 RoutineHeader []
+127704 Je [Var (Global 139),Con 24] (Branch F (Dloc 127757))
+127708 Je [Var (Global 109),Con 54] (Branch F (Dloc 127752))
+127712 Print "\"Why not tell me about "
+127727 Call (Floc 066384) [] Sp
 127731 Print " "
 127734 Print_obj (Con 54)
 127736 Print "?\" scoffs the "
 127747 Print_obj (Con 41)
 127749 Print_paddr (Var (Global 89))
 127751 Rtrue
---------------------------------------------------
-gap=54
-127806 RoutineHeader []
+127752 Call (Floc 128516) [] Sp
+127756 Rtrue
+127757 Je [Var (Global 139),Con 25] (Branch F (Dloc 127808))
+127761 Je [Var (Global 109),Con 54] (Branch F (Dloc 127803))
+127765 Print "\"I won't beg from the likes o' you,\" sniffs the "
+127798 Print_obj (Con 41)
+127800 Print_paddr (Var (Global 89))
+127802 Rtrue
+127803 Call (Floc 128516) [] Sp
 127807 Rtrue
---------------------------------------------------
-gap=12
-127820 RoutineHeader []
+127808 Je [Var (Global 139),Con 204,Con 206,Con 205] (Branch F (Dloc 127822))
+127815 Call (Floc 128588) [Var (Global 109)] Sp
 127821 Rtrue
---------------------------------------------------
-gap=10
-127832 RoutineHeader [12624]
--- unused: [1]
+127822 Je [Var (Global 139),Con 78,Con 80,Con 82] (Branch F (Dloc 127849))
+127829 Je [Var (Global 221),Con 305] (Branch F (Dloc 127849))
 127835 Je [Var (Global 109),Con 54] (Branch F (Dloc 127844))
 127839 Call (Floc 128488) [] Sp
 127843 Rtrue
 127844 Call (Floc 128516) [] Sp
 127848 Rtrue
---------------------------------------------------
-gap=25
-127874 RoutineHeader []
+127849 Je [Var (Global 139),Con 77,Con 79,Con 81] (Branch F (Dloc 127876))
+127856 Je [Var (Global 109),Con 305] (Branch F (Dloc 127876))
+127862 Je [Var (Global 221),Con 54] (Branch F (Dloc 127871))
+127866 Call (Floc 128488) [] Sp
+127870 Rtrue
+127871 Call (Floc 128516) [] Sp
 127875 Rtrue
---------------------------------------------------
-gap=18
-127894 RoutineHeader []
+127876 Call (Floc 127616) [] Sp
+127880 Rtrue
+127881 Jz (Var (Global 95)) (Branch T (Dloc 128145))
+127885 Je [Var (Global 139),Con 146,Con 188] (Branch F (Dloc 127896))
+127891 Call (Floc 128464) [] Sp
 127895 Rtrue
---------------------------------------------------
-gap=38
-127934 RoutineHeader [19456,-32631]
--- unused: [1,2]
-127939 Jl (Con 76) (Con 206) (Branch F (Dloc 135879))
-127944 Get_prop (Con 105) (Var (Global 188)) (Global 15)
-127948 Jl (Con 76) (Con 41) (Branch F (Dloc 131668))
-127953 And (Con 13) (Var (Global 212)) (Global 117)
+127896 Je [Var (Global 139),Con 77,Con 81] (Branch F Dfalse)
+127902 Set_attr (Con 41) (Con 24)
+127905 Jz (Var (Global 108)) (Branch T (Dloc 127931))
+127908 Print_ret "She's too frightened to respond."
+127931 Je [Var (Global 109),Con 588] (Branch F (Dloc 128064))
+127938 Remove_obj (Con 588)
+127941 Insert_obj (Con 305) (Con 105)
+127946 Clear_attr (Con 588) (Con 41)
+127951 Insert_obj (Con 133) (Con 41)
+127954 Store (Con 228) (Con 133)
 127957 Insert_obj (Con 402) (Con 41)
 127962 Print "\"Bless yer,\" coos the "
 127979 Print_obj (Con 41)
@@ -13888,19 +13911,26 @@ gap=38
 128056 Jz (Var (Global 142)) (Branch F Dtrue)
 128059 Call (Floc 083676) [] Sp
 128063 Rtrue
---------------------------------------------------
-gap=40
-128104 RoutineHeader [-23096,-18111]
--- unused: [1,2]
-128109 Ret (Con 81)
---------------------------------------------------
-gap=51
-128162 RoutineHeader []
+128064 Je [Var (Global 109),Con 133] (Branch F (Dloc 128073))
+128068 Call (Floc 128488) [] Sp
+128072 Rtrue
+128073 Je [Var (Global 109),Con 57] (Branch F (Dloc 128108))
+128077 Print_ret "\"I ain't Harrod's, dearie. Thirty p.\""
+128108 Je [Var (Global 139),Con 81] (Branch T Dfalse)
+128112 Call (Floc 066376) [] Sp
+128116 Print_ret " shakes her head. \"Keep it, dearie.\""
+128145 Je [Var (Global 139),Con 24] (Branch F (Dloc 128164))
+128149 Jz (Var (Global 108)) (Branch T (Dloc 128157))
+128152 Call (Floc 127616) [] Sp
+128156 Rtrue
+128157 Call (Floc 128588) [Var (Global 221)] Sp
 128163 Rtrue
---------------------------------------------------
-gap=186
-128350 RoutineHeader []
-128351 Dec_chk (Var (Global 144)) (Var (Global 108)) (Branch T (Dloc 128360))
+128164 Je [Var (Global 139),Con 62] (Branch F (Dloc 128347))
+128169 Jz (Var (Global 108)) (Branch F (Dloc 128308))
+128173 Print_ret "You get the feeling that she's been selling crumbs on this same bench, year after year, since well before you were born. Her face is lined with care for her feathered charges, who perch on her round shoulders without fear."
+128308 Print_ret "She's obviously terrified by all the sirens and commotion."
+128347 Je [Var (Global 139),Con 25] (Branch F (Dloc 128450))
+128352 Jz (Var (Global 108)) (Branch T (Dloc 128360))
 128355 Call (Floc 127616) [] Sp
 128359 Rtrue
 128360 Set_attr (Con 41) (Con 24)
@@ -13914,9 +13944,8 @@ gap=186
 128445 Print_obj (Var (Global 109))
 128447 Print_paddr (Var (Global 89))
 128449 Rtrue
---------------------------------------------------
-gap=10
-128460 RoutineHeader []
+128450 Scan_table (Var (Global 139)) (Var (Global 184)) (Con 18) Sp (Branch F Dfalse)
+128457 Call (Floc 128464) [] Sp
 128461 Rtrue
 --------------------------------------------------
 gap=2
@@ -36906,7 +36935,21 @@ gap=0
 251165 Call (Floc 068112) [] Sp
 251169 Ret (Con 2)
 --------------------------------------------------
-gap=1133
+gap=89
+251260 RoutineHeader [1089,21345,-11469,8560]
+-- unused: [1,2,3,4]
+251269 Jump 258159
+--------------------------------------------------
+gap=846
+252118 RoutineHeader [-19411,27356,-23291,-29105]
+-- unused: [1,2,3,4]
+252127 Test_attr (Con 93) (Var (Global 72)) (Branch F (Dloc 252166))
+252131 And (Var Sp) (Con 45) (Global 81)
+252135 Get_prop (Var (Global 53)) (Con 211) (Global 32)
+252139 Jin (Con 79) (Con 217) (Branch F (Dloc 249537))
+252144 Rtrue
+--------------------------------------------------
+gap=159
 252304 RoutineHeader []
 252305 Inc_chk (Con 93) (Var (Global 54)) (Branch F (Dloc 245607))
 252310 Rtrue
@@ -36924,13 +36967,36 @@ gap=850
 253412 Je [Con 186,Con 75] (Branch F (Dloc 253513))
 253417 Ret (Con -6594)
 --------------------------------------------------
-gap=368
+gap=52
+253472 RoutineHeader [2140,-9951,-20787]
+-- unused: [1,2,3]
+253479 Jz (Con 678) (Branch F (Dloc 245757))
+253484 Rtrue
+--------------------------------------------------
+gap=303
 253788 RoutineHeader []
 253789 Ret_popped
 --------------------------------------------------
-gap=1278
-255068 RoutineHeader [1612]
--- unused: [1]
+gap=222
+254012 RoutineHeader [3128,-11420,1833,16438]
+-- unused: [1,2,3,4]
+254021 Ret (Con 42)
+--------------------------------------------------
+gap=503
+254526 RoutineHeader [-15592,8226,-5523,-14168,-23293]
+-- unused: [1,3,4]
+254537 Get_next_prop (Con 26) (Con 160) (Global 85)
+254541 Print_obj (Var (Global 42))
+254543 Call (Floc 039372) [Var Sp,Con 2014,Var (Global 195)] (Global 53)
+254552 Je [Con 145,Con 7] (Branch F (Dloc 246739))
+254557 Test (Con 4) (Var (Global 183)) (Branch F (Dloc 248617))
+254562 Mod (Var (Local 2)) (Var (Global 1)) (Global 78)
+254566 Ret (Var (Local 5))
+--------------------------------------------------
+gap=490
+255058 RoutineHeader [15621,-21206,-8140,-11353]
+-- unused: [1,2,3,4]
+255067 Inc_chk (Con 1) (Con 6) (Branch F (Dloc 255081))
 255071 Ret_popped
 --------------------------------------------------
 gap=1984
@@ -36960,7 +37026,13 @@ gap=100
 259130 RoutineHeader []
 259131 Ret_popped
 --------------------------------------------------
-gap=738
+gap=662
+259794 RoutineHeader [-16360,6733,16438]
+-- unused: [1,2,3]
+259801 Print_addr (Con 70)
+259803 Jump 237441
+--------------------------------------------------
+gap=64
 259870 RoutineHeader [18944,11524]
 -- unused: [1,2]
 259875 Dec_chk (Con 27) (Con 52) (Branch F (Dloc 259885))

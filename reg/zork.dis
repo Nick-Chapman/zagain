@@ -11,7 +11,7 @@ Memory Map:
 084876 End of story file
 --------------------------------------
 Found 197 routines by walkthrough
-Found 464 routines by speculative disassembly
+Found 468 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=12202
@@ -8237,7 +8237,15 @@ gap=3212
 072743 Inc_chk (Con 34) (Var (Global 234)) (Branch F (Dloc 072755))
 072747 Rfalse
 --------------------------------------------------
-gap=4602
+gap=412
+073160 RoutineHeader [14121,16391,99]
+-- unused: [1,2,3]
+073167 Insert_obj (Var (Global 84)) (Con 199)
+073170 Inc_chk (Var (Global 48)) (Con 10) (Branch F (Dloc 073212))
+073174 Inc_chk (Var (Global 194)) (Con 29) (Branch T (Dloc 073195))
+073178 Rtrue
+--------------------------------------------------
+gap=4171
 077350 RoutineHeader []
 077351 Div (Con 6) (Var (Global 86)) (Global 14)
 077355 Ret (Con 40)
@@ -8270,12 +8278,36 @@ gap=1233
 080668 Inc_chk (Con 114) (Con 26) (Branch F (Dloc 083231))
 080673 Ret_popped
 --------------------------------------------------
-gap=1212
-081886 RoutineHeader [-1462]
--- unused: [1]
+gap=24
+080698 RoutineHeader [18018,-28117,-29413,8217]
+-- unused: [1,2,3]
+080707 Load (Con 25817) (Global 25)
+080711 Inc_chk (Con 200) (Var (Global 149)) (Branch F (Dloc 081772))
+080716 Dec_chk (Con 54) (Con 5) (Branch F (Dloc 080752))
+080720 Inc_chk (Con 138) (Var (Global 87)) (Branch F (Dloc 076192))
+080725 Jz (Con 19095) (Branch F (Dloc 074590))
+080730 Get_prop (Con 217) (Var (Global 11)) (Global 26)
+080734 Get_prop_len (Var (Global 162)) (Local 4)
+080737 Jl (Con 4) (Var (Global 21)) (Branch F (Dloc 080749))
+080741 Ret (Con 58)
+--------------------------------------------------
+gap=915
+081658 RoutineHeader [22569,20992,11017,10553]
+-- unused: [1,2,3,4]
+081667 Jump 096624
+--------------------------------------------------
+gap=206
+081876 RoutineHeader [18484,-10447,16652,19076]
+-- unused: [1,2,3,4]
+081885 Inc_chk (Con 1) (Con 250) (Branch F (Dloc 081897))
 081889 Ret_popped
 --------------------------------------------------
-gap=1708
+gap=314
+082204 RoutineHeader [7261,-10140,8969,20068]
+-- unused: [1,2,3,4]
+082213 Ret_popped
+--------------------------------------------------
+gap=1384
 083598 RoutineHeader [14162]
 -- unused: [1]
 083601 Ret_popped
