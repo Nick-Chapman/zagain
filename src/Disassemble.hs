@@ -147,15 +147,15 @@ routinesBetween story (start,end) = loop start
       if a > end then [] else do
         case tryDecodeRoutine story a of
           Nothing -> loop (a+1)
-          Just a' -> a : loop a'
+          Just a' -> a : loop a' -- TODO: (H1) using a' not (a+1) is a hueristic that sometimes fails. problem with (a+1) is the large amount of OVERLAP routines being disassembled
 
 tryDecodeRoutine :: Story -> Addr -> Maybe Addr
 tryDecodeRoutine story a = do
   case disRoutineM story a of
     Left{} -> Nothing
-    Right Routine{finish,illegal,unused,defs=_} -> if
+    Right Routine{finish,illegal,unused=_unused,defs=_} -> if
       | length illegal == 0
-        && length unused <= 4 -- TODO: testing unused is a heuristic which might be wrong
+        && length _unused <= 4 -- TODO: (H2) testing unused is a heuristic which might be wrong. but without it, H1 is more broken
         -> Just finish
       | otherwise
         -> Nothing
