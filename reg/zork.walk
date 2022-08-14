@@ -2291,7 +2291,17 @@ There is a small mailbox here.
 Stone Barrow
 You are standing in front of a massive barrow of stone. In the east face is a huge stone door which is open. You cannot see into the dark of the tomb.
 
->[370]west
+>[370]quit
+
+
+Your score is 350 (total of 350 points), in 373 moves.
+This gives you the rank of Master Adventurer.
+Do you wish to leave the game? (Y is affirmative): >[371]N
+
+
+Ok.
+
+>[372]west
 
 
 Inside the Barrow

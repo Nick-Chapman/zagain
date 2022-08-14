@@ -25,8 +25,8 @@ reg/trinity.trace: $(exe) scripts/trinity.script src/*.hs
 	bash -c '$(exe) -nodebug trinity -trace -walk <(head -17 scripts/trinity.script) > $@'
 
 
-reg/zork.walk: $(exe) scripts/zork.script src/*.hs
-	$(exe) -nodebug zork -walk scripts/zork.script -viacomp > $@
+reg/zork.walk: $(exe) scripts/zork.script src/*.hs Makefile
+	$(exe) -nodebug zork -walk scripts/zork.script > $@ # TODO: -viacomp
 
 reg/hitch.walk: $(exe) scripts/hitch.script src/*.hs
 	$(exe) -nodebug hitch -walk scripts/hitch.script -viacomp > $@
