@@ -71,8 +71,8 @@ runAtom q atom0 k = case atom0 of
   SetByte a b -> do
     let State{overrides} = q
     k q { overrides = Map.insert (eval q a) (eval q b) overrides }
-  Note{} -> do
-    undefined
+  Note mes -> do
+    A.Debug ("Note: " ++ mes) $ k q
   GamePrint mes -> do
     A.Output (eval q mes) $ k q
   MakeRoutineFrame{} -> k q --TODO

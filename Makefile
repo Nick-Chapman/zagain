@@ -11,7 +11,7 @@ gold.out: dev.out reg/trinity.trace
 	bash -c 'cat reg/trinity.trace | head -$$(cat dev.out | wc -l) > $@'
 
 dev.out: $(exe) Makefile
-	bash -c '$(exe) trinity -trace -walk scripts/trinity.script -trace -viacomp > $@ 2>&1 || true'
+	bash -c '$(exe) trinity -nodebug -trace -walk scripts/trinity.script -trace -viacomp > $@ 2>&1 || true'
 
 
 trace: .reg reg/zork.trace reg/trinity.trace
@@ -56,7 +56,7 @@ reg/trinity.dis: $(exe) src/*.hs
 	$(exe) dis trinity > $@
 
 reg/trinity.trace: $(exe) scripts/trinity.script src/*.hs Makefile
-	bash -c '$(exe) -nodebug trinity -trace -walk <(head -2 scripts/trinity.script) > $@'
+	bash -c '$(exe) -nodebug trinity -trace -walk <(head -17 scripts/trinity.script) > $@'
 
 reg/trinity.walk: $(exe) scripts/trinity.script src/*.hs
 	$(exe) -nodebug trinity -walk scripts/trinity.script > $@
