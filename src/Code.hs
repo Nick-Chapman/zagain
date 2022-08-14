@@ -157,7 +157,6 @@ data Expression a where
   Binary :: (Show x, Show y) => Prim.P2 x y r -> Expression x -> Expression y -> Expression r
   GetByteE :: Expression Addr -> Expression Byte -- TODO: bad also?
   GetTextE :: Expression Addr -> Expression String -- TODO: bad also?
-  LookupInDictE :: Expression String -> Expression Addr -- TODO: remove, prefer Unary-op
   Ite :: Expression Bool -> Expression a -> Expression a -> Expression a
 
 instance Show a => Show (Expression a) where
@@ -171,7 +170,6 @@ instance Show a => Show (Expression a) where
     Binary p2 x y -> show p2 ++ "(" ++ show x ++ "," ++ show y ++ ")"
     GetByteE a -> "M[" ++ show a ++ "]"
     GetTextE a -> "GetText(" ++ show a ++ ")"
-    LookupInDictE x -> "LookupInDict(" ++ show x ++ ")"
     Ite i t e -> "Ite(" ++ show (i,t,e) ++ ")"
 
 data Identifier a where

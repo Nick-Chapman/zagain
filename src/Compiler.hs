@@ -356,7 +356,7 @@ compileLoc Static{story,dict,smallStep,shouldInline} loc = do
 
       LookupInDict word -> do
         res <- genId "lookee"
-        Seq (Atom.Let (Binding res (LookupInDictE word))) <$> k s (Variable res) -- TODO: prefer unary op
+        Seq (Atom.Let (Binding res (makeUnary dict Prim.LookupInDict word))) <$> k s (Variable res)
 
       StringBytes string -> do
         split <- genId "string_bytes_"

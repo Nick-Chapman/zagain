@@ -187,9 +187,6 @@ eval q = \case
     let State{story} = q
     let (text,_) = runFetch (oob "eval/GetTextE") (eval q e) story ztext
     text
-  LookupInDictE e -> do
-    let State{dict} = q
-    Prim.evalP1 dict Prim.LookupInDict (eval q e)
   Ite i t e -> do
     eval q (if (eval q i) then t else e)
 
