@@ -52,7 +52,7 @@ reg/judo.dis: $(exe) src/*.hs
 
 
 reg/zork.code: $(exe) src/*.hs
-	$(exe) code zork -nodebug > $@
+	$(exe) code -nodebug zork > $@
 
 reg/hitch.code: $(exe) src/*.hs
 	$(exe) code -nodebug hitch > $@
