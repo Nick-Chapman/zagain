@@ -11,7 +11,7 @@ Memory Map:
 084876 End of story file
 --------------------------------------
 Found 197 routines by walkthrough
-Found 468 routines by speculative disassembly
+Found 471 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=12202
@@ -26,7 +26,22 @@ gap=22
 012236 RoutineHeader []
 012237 Ret (Con 511)
 --------------------------------------------------
-gap=3756
+gap=3210
+015450 RoutineHeader [29]
+-- unused: [1]
+015453 Clear_attr (Var (Global 194)) (Con 106)
+015456 Je [Var (Global 153),Con 0] (Branch F (Dloc 022960))
+015461 Quit
+--------------------------------------------------
+gap=282
+015744 RoutineHeader [31]
+-- unused: [1]
+015747 Div (Var (Global 188)) (Con 165) (Global 49)
+015751 Get_parent (Con 0) (Global 15)
+015754 Div (Var (Global 189)) (Con 73) (Global 18)
+015758 Quit
+--------------------------------------------------
+gap=237
 015996 RoutineHeader [34]
 -- unused: [1]
 015999 Ret (Con -21037)
@@ -1986,10 +2001,8 @@ gap=1
 028161 Jz (Var Sp) (Branch F (Dloc 028167))
 028164 Jz (Var (Local 1)) (Branch F (Dloc 028169))
 028167 Quit
-028168 Rtrue
-028169 Print_ret "Ok."
 --------------------------------------------------
-gap=0
+gap=6
 028174 RoutineHeader []
 028175 Call (Floc 066946) [Con 1] Sp
 028181 Print "Do you wish to restart? (Y is affirmative): "
@@ -3917,9 +3930,8 @@ gap=1
 037076 RoutineHeader []
 037077 Call (Floc 066946) [] Sp
 037082 Quit
-037083 Rtrue
 --------------------------------------------------
-gap=0
+gap=1
 037084 RoutineHeader []
 037085 Print ">"
 037090 Sread (Var (Global 109)) (Var (Global 110))
@@ -8228,7 +8240,12 @@ gap=0
 068367 Call (Floc 038192) [Con 217] Sp
 068373 Ret_popped
 --------------------------------------------------
-gap=1152
+gap=1096
+069470 RoutineHeader [5194]
+-- unused: [1]
+069473 Quit
+--------------------------------------------------
+gap=52
 069526 RoutineHeader []
 069527 Ret (Con 4356)
 --------------------------------------------------

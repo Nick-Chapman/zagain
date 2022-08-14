@@ -11,7 +11,7 @@ Memory Map:
 143872 End of story file
 --------------------------------------
 Found 444 routines by walkthrough
-Found 1280 routines by speculative disassembly
+Found 1294 routines by speculative disassembly
 11 routines lost (in walkthrough but not disassembly)
 [088936,039116,038696,060728,044876,106720,107032,107228,108360,107460,107656]
 --------------------------------------------------
@@ -44,7 +44,12 @@ gap=477
 023470 Inc (Var (Global 49))
 023472 Ret_popped
 --------------------------------------------------
-gap=1091
+gap=1083
+024556 RoutineHeader []
+024557 Call (Floc 052480) [] (Global 239)
+024562 Quit
+--------------------------------------------------
+gap=1
 024564 RoutineHeader []
 024565 Print_paddr (Con 28418)
 024568 Rtrue
@@ -1386,7 +1391,12 @@ gap=26
 030258 CallN (Floc 081916) [Var (Global 48)]
 030263 Print_ret "."
 --------------------------------------------------
-gap=18
+gap=10
+030276 RoutineHeader [0,0]
+-- unused: [1,2]
+030277 Quit
+--------------------------------------------------
+gap=6
 030284 RoutineHeader [0,0]
 -- unused: [1,2]
 030285 Print " into "
@@ -1450,7 +1460,13 @@ gap=55
 -- unused: [1,2]
 031001 Print_ret "."
 --------------------------------------------------
-gap=148
+gap=128
+031132 RoutineHeader [0,0]
+-- unused: [1,2]
+031133 Get_prop_addr (Var (Global 162)) (Con 0) (Global 174)
+031137 Quit
+--------------------------------------------------
+gap=14
 031152 RoutineHeader [0,0,0]
 -- unused: [1,2,3]
 031153 Loadw (Var (Global 162)) (Con 0) (Global 174)
@@ -1735,10 +1751,12 @@ gap=103
 --------------------------------------------------
 gap=39
 033502 RoutineHeader [0,0]
--- unused: [1]
+-- unused: [1,2]
 033503 Quit
-033504 Je [Var (Global 154),Var (Global 208)] (Branch F (Dloc 035005))
-033509 Loadw (Con 79) (Var (Global 239)) (Local 2)
+--------------------------------------------------
+gap=8
+033512 RoutineHeader [0,0]
+-- unused: [1,2]
 033513 Print ".\n"
 033518 Jump 033547
 --------------------------------------------------
@@ -1776,7 +1794,12 @@ gap=26
 033858 CallN (Floc 081916) [Var (Global 48)]
 033863 Print_ret "."
 --------------------------------------------------
-gap=18
+gap=10
+033876 RoutineHeader [0,0]
+-- unused: [1,2]
+033877 Quit
+--------------------------------------------------
+gap=6
 033884 RoutineHeader [0,0]
 -- unused: [1,2]
 033885 Print " on "
@@ -6613,7 +6636,11 @@ gap=1
 053496 CallN (Floc 025720) []
 053499 Rtrue
 --------------------------------------------------
-gap=4
+gap=0
+053500 RoutineHeader []
+053501 Quit
+--------------------------------------------------
+gap=2
 053504 RoutineHeader []
 053505 Jz (Var (Global 22)) (Branch F (Dloc 053510))
 053508 Inc (Con 39)
@@ -22325,7 +22352,32 @@ gap=96
 130797 Dec (Var (Global 84))
 130799 Ret_popped
 --------------------------------------------------
-gap=928
+gap=108
+130908 RoutineHeader [0,0]
+-- unused: [1,2]
+130909 Quit
+--------------------------------------------------
+gap=22
+130932 RoutineHeader [0,0]
+-- unused: [1,2]
+130933 Quit
+--------------------------------------------------
+gap=30
+130964 RoutineHeader [0,0]
+-- unused: [1,2]
+130965 Quit
+--------------------------------------------------
+gap=30
+130996 RoutineHeader [0,0]
+-- unused: [1,2]
+130997 Quit
+--------------------------------------------------
+gap=22
+131020 RoutineHeader [0,0]
+-- unused: [1,2]
+131021 Quit
+--------------------------------------------------
+gap=706
 131728 RoutineHeader [0,0]
 -- unused: [1]
 131729 Remove_obj (Con 53)
@@ -22369,17 +22421,23 @@ gap=10
 132528 RoutineHeader [0,0]
 -- unused: [1,2]
 132529 Quit
-132530 Jin (Var (Global 16)) (Con 113) (Branch T (Dloc 125977))
-132535 Ret_popped
 --------------------------------------------------
-gap=20
+gap=26
 132556 RoutineHeader [0,0]
 -- unused: [1,2]
 132557 Quit
-132558 Je [Var (Global 144),Var (Global 97)] (Branch T (Dloc 126005))
-132563 Ret_popped
 --------------------------------------------------
-gap=132
+gap=54
+132612 RoutineHeader [0,0]
+-- unused: [1,2]
+132613 Quit
+--------------------------------------------------
+gap=22
+132636 RoutineHeader [0,0]
+-- unused: [1,2]
+132637 Quit
+--------------------------------------------------
+gap=58
 132696 RoutineHeader [0,0]
 -- unused: [1,2]
 132697 Print_obj (Var (Global 66))
@@ -22400,7 +22458,16 @@ gap=154
 -- unused: [1,2]
 133419 Ret (Con 11289)
 --------------------------------------------------
-gap=588
+gap=42
+133464 RoutineHeader [0,0,0]
+-- unused: [2]
+133465 Print_obj (Con 6894)
+133468 Store (Var (Global 112)) (Con 101)
+133471 Print_obj (Var (Local 1))
+133473 CallN (Floc 050944) [Var (Global 30),Con 151,Var (Local 3),Var (Global 29),Con 10251,Con 15096,Con 25625]
+133488 Quit
+--------------------------------------------------
+gap=521
 134010 RoutineHeader [0,0]
 -- unused: [1,2]
 134011 Rfalse

@@ -11,7 +11,7 @@ Memory Map:
 113664 End of story file
 --------------------------------------
 Found 275 routines by walkthrough
-Found 580 routines by speculative disassembly
+Found 587 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=10094
@@ -26,13 +26,37 @@ gap=4
 010832 RoutineHeader []
 010833 Jump 011091
 --------------------------------------------------
-gap=3464
+gap=2890
+013726 RoutineHeader [25]
+-- unused: [1]
+013729 And (Con 221) (Var (Global 72)) (Global 49)
+013733 Get_child (Con 25) (Global 43) (Branch T (Dloc 020497))
+013739 Jl (Con 225) (Var Sp) (Branch F (Dloc 020263))
+013744 Get_prop_len (Con 165) (Global 3)
+013747 Loadb (Con 0) (Con 25) (Global 118)
+013751 Quit
+--------------------------------------------------
+gap=548
 014300 RoutineHeader [30]
 -- unused: [1]
 014303 Test_attr (Con 170) (Var (Global 53)) (Branch F Dtrue)
 014307 Ret (Var Sp)
 --------------------------------------------------
-gap=909
+gap=89
+014398 RoutineHeader [30]
+-- unused: [1]
+014401 Print_paddr (Con 148)
+014403 Inc (Var (Global 112))
+014405 Je [Con 0,Con 30] (Branch T (Dloc 014445))
+014409 Quit
+--------------------------------------------------
+gap=192
+014602 RoutineHeader []
+014603 Je [Con 166,Var (Global 170)] (Branch T (Dloc 014642))
+014607 Jz (Con 256) (Branch F (Dloc 006840))
+014612 Quit
+--------------------------------------------------
+gap=605
 015218 RoutineHeader []
 015219 Jin (Con 146) (Var (Global 152)) (Branch T (Dloc 008438))
 015224 Je [Con 0,Con 38] (Branch T (Dloc 020004))
@@ -43,7 +67,20 @@ gap=909
 015244 Dec_chk (Con 239) (Con 0) (Branch F (Dloc 008738))
 015249 Ret (Con 42)
 --------------------------------------------------
-gap=211
+gap=51
+015302 RoutineHeader [9958]
+-- unused: [1]
+015305 Quit
+--------------------------------------------------
+gap=136
+015442 RoutineHeader []
+015443 Test_attr (Con 42) (Var (Global 147)) (Branch F (Dloc 013176))
+015448 Insert_obj (Con 0) (Con 42)
+015451 Test (Var (Global 138)) (Con 240) (Branch T Dfalse)
+015455 Je [Con 140,Con 42] (Branch F (Dloc 015501))
+015459 Quit
+--------------------------------------------------
+gap=2
 015462 RoutineHeader [1834]
 -- unused: [1]
 015465 Loadw (Var (Global 195)) (Var (Global 181)) (Global 49)
@@ -87,7 +124,14 @@ gap=283
 016750 Je [Con 0,Con 68] (Branch T (Dloc 016775))
 016754 Rfalse
 --------------------------------------------------
-gap=457
+gap=73
+016828 RoutineHeader []
+016829 Inc_chk (Var (Global 185)) (Con 148) (Branch T (Dloc 010048))
+016834 Je [Con 0,Con 69] (Branch T (Dloc 016846))
+016838 Get_prop_len (Con 165) (Global 49)
+016841 Quit
+--------------------------------------------------
+gap=370
 017212 RoutineHeader [74]
 -- unused: [1]
 017215 Ret (Con 168)
@@ -145,17 +189,20 @@ gap=130
 019324 Inc (Var (Global 49))
 019326 Ret (Con 99)
 --------------------------------------------------
-gap=725
-020054 RoutineHeader [109]
+gap=719
+020048 RoutineHeader []
+020049 Store (Var (Global 71)) (Var (Global 209))
+020052 Inc_chk (Var (Global 112)) (Con 1) (Branch F (Dloc 020164))
 020057 Div (Var (Global 209)) (Con 212) (Global 49)
 020061 Jz (Con 110) (Branch F (Dloc 013377))
 020066 Quit
-020067 Jz (Var (Local 1)) (Branch F (Dloc 020093))
-020070 Insert_obj (Var (Global 124)) (Var (Global 194))
-020073 Inc_chk (Var (Global 18)) (Var (Global 116)) (Branch F (Dloc 020186))
-020078 Jump 008423
 --------------------------------------------------
-gap=149
+gap=1
+020068 RoutineHeader [22894]
+-- unused: [1]
+020071 Jump 008397
+--------------------------------------------------
+gap=156
 020230 RoutineHeader []
 020231 Get_prop (Var (Global 150)) (Var (Global 212)) (Global 149)
 020235 Je [Var (Global 233),Con 0] (Branch F (Dloc 020286))
@@ -2213,10 +2260,8 @@ gap=1
 028865 Call (Floc 029140) [] Sp
 028870 Jz (Var Sp) (Branch T (Dloc 028875))
 028873 Quit
-028874 Rtrue
-028875 Print_ret "Ok."
 --------------------------------------------------
-gap=0
+gap=6
 028880 RoutineHeader []
 028881 Call (Floc 029196) [Con 1] Sp
 028887 Print "Do you wish to restart? (Y is affirmative): "
@@ -2253,11 +2298,8 @@ gap=0
 029118 Loadw (Var (Global 194)) (Con 1) Sp
 029122 Je [Var Sp,Con 18131,Con 18103] (Branch F (Dloc 029132))
 029130 Quit
-029131 Rtrue
-029132 Call (Floc 028948) [Con 1] Sp
-029138 Ret_popped
 --------------------------------------------------
-gap=1
+gap=9
 029140 RoutineHeader []
 029141 Print ">"
 029146 Sread (Var (Global 193)) (Var (Global 194))
@@ -9078,9 +9120,8 @@ gap=1
 076824 New_line
 076825 New_line
 076826 Quit
-076827 Rtrue
 --------------------------------------------------
-gap=0
+gap=1
 076828 RoutineHeader []
 076829 Call (Floc 022320) [Con -27122,Con -1] Sp
 076838 Storew (Var Sp) (Con 0) (Con 1)
@@ -12565,9 +12606,8 @@ gap=1
 106219 Print " and the tree collapsing at the very beginning of the game. We apologise for this slight inaccuracy."
 106276 New_line
 106277 Quit
-106278 Rtrue
 --------------------------------------------------
-gap=515
+gap=516
 106794 RoutineHeader [5214]
 106797 Test_attr (Var (Global 76)) (Var (Local 1)) (Branch F (Dloc 100848))
 106802 Jl (Var (Global 150)) (Var (Global 77)) (Branch F Dtrue)

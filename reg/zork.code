@@ -1,4 +1,4 @@
-Code for 468 routines
+Code for 471 routines
 --------------------------------------------------
 LocRoutine 012202:
   MakeRoutineFrame 0;
@@ -23,6 +23,52 @@ LocOp 012237:
   PopReturnAddress return_address_1;
   SetResult 511;
   JumpIndirect: (return) return_address_1
+--------------------------------------------------
+LocRoutine 015450:
+  MakeRoutineFrame 1;
+  if (LessThanByte(num_actuals,1)) {
+    SetLocal 1 29;
+  }
+  Jump: 015453
+LocOp 015453:
+  TraceOperation 015453 (Clear_attr (Var (Global 194)) (Con 106));
+  Let b1 = M[009205];
+  Let b2 = M[009206];
+  Let b3 = M[Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),13)];
+  SetByte Offset(Offset(000741,Mul(MakeHiLo(b1,b2),9)),13) ClearBit(b3,5);
+  TraceOperation 015456 (Je [Var (Global 153),Con 0] (Branch F (Dloc 022960)));
+  Let b4 = M[009123];
+  Let b5 = M[009124];
+  if (Equal(MakeHiLo(b4,b5),0)) {
+    TraceOperation 015461 Quit;
+    Quit
+  } else {
+    Jump: 022960
+  }
+--------------------------------------------------
+LocRoutine 015744:
+  MakeRoutineFrame 1;
+  if (LessThanByte(num_actuals,1)) {
+    SetLocal 1 31;
+  }
+  Jump: 015747
+LocOp 015747:
+  TraceOperation 015747 (Div (Var (Global 188)) (Con 165) (Global 49));
+  Let b1 = M[009193];
+  Let b2 = M[009194];
+  SetByte 008915 HiByte(Div(MakeHiLo(b1,b2),165));
+  SetByte 008916 LoByte(Div(MakeHiLo(b1,b2),165));
+  TraceOperation 015751 (Get_parent (Con 0) (Global 15));
+  Let b3 = M[000745];
+  SetByte 008847 HiByte(Widen(b3));
+  SetByte 008848 LoByte(Widen(b3));
+  TraceOperation 015754 (Div (Var (Global 189)) (Con 73) (Global 18));
+  Let b4 = M[009195];
+  Let b5 = M[009196];
+  SetByte 008853 HiByte(Div(MakeHiLo(b4,b5),73));
+  SetByte 008854 LoByte(Div(MakeHiLo(b4,b5),73));
+  TraceOperation 015758 Quit;
+  Quit
 --------------------------------------------------
 LocRoutine 015996:
   MakeRoutineFrame 1;
@@ -11652,13 +11698,6 @@ LocOp 028164:
 LocOp 028167:
   TraceOperation 028167 Quit;
   Quit
-LocOp 028169:
-  TraceOperation 028169 (Print_ret "Ok.");
-  GamePrint "Ok.\n";
-  PopFrame;
-  PopReturnAddress return_address_1;
-  SetResult 1;
-  JumpIndirect: (return) return_address_1
 --------------------------------------------------
 LocRoutine 028174:
   MakeRoutineFrame 0;
@@ -49224,6 +49263,16 @@ LocReturn 068367:
   PopReturnAddress return_address_2;
   SetResult popped1;
   JumpIndirect: (return) return_address_2
+--------------------------------------------------
+LocRoutine 069470:
+  MakeRoutineFrame 1;
+  if (LessThanByte(num_actuals,1)) {
+    SetLocal 1 5194;
+  }
+  Jump: 069473
+LocOp 069473:
+  TraceOperation 069473 Quit;
+  Quit
 --------------------------------------------------
 LocRoutine 069526:
   MakeRoutineFrame 0;

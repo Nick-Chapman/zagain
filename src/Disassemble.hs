@@ -223,6 +223,7 @@ isStopping :: Operation -> Bool
 isStopping = \case
   Op.Jump{} -> True
   Op.Print_ret{} -> True
+  Op.Quit{} -> True
   Op.Ret_popped -> True
   Op.Ret{} -> True
   Op.Rfalse{} -> True
