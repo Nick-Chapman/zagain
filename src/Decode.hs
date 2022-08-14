@@ -105,7 +105,7 @@ decode zv op = case op of
 
   Code 182 []
     | zv<Z4 -> Op.Restore <$> label
-    | zv==Z4 -> bad op -- changes to target from Z4
+    | zv==Z4 -> Op.Restore4 <$> target
     | zv>Z4 -> bad op -- illegal from Z5
 
   Code 183 [] -> pure Op.Restart

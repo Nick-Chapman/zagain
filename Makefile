@@ -31,8 +31,8 @@ reg/zork.walk: $(exe) scripts/zork.script src/*.hs Makefile
 reg/hitch.walk: $(exe) scripts/hitch.script src/*.hs
 	$(exe) -nodebug hitch -walk scripts/hitch.script > $@
 
-reg/trinity.walk: $(exe) scripts/trinity.script src/*.hs
-	$(exe) -nodebug trinity -walk scripts/trinity.script > $@
+reg/trinity.walk: $(exe) scripts/trinity.script src/*.hs Makefile
+	$(exe) -nodebug trinity -walk scripts/trinity.script -viacomp > $@
 
 reg/judo.walk: $(exe) scripts/judo.script src/*.hs
 	$(exe) -nodebug judo -walk scripts/judo.script > $@

@@ -82,6 +82,7 @@ data Operation
   | Remove_obj Arg
   | Restart
   | Restore Label
+  | Restore4 Target
   | Ret Arg -- Return in niz
   | Ret_popped
   | Rfalse
@@ -212,6 +213,7 @@ opArgs = \case
   Remove_obj arg -> do [arg]
   Restart -> do []
   Restore _label -> do []
+  Restore4 _target -> do []
   Ret arg -> do [arg]
   Ret_popped -> do []
   Rfalse -> do []
@@ -298,6 +300,7 @@ opTargetOpt = \case
   Remove_obj _arg -> do Nothing
   Restart -> do Nothing
   Restore _label -> do Nothing
+  Restore4 target -> do Just target
   Ret _arg -> do Nothing
   Ret_popped -> do Nothing
   Rfalse -> do Nothing

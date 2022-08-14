@@ -396,6 +396,7 @@ eval here op = case op of
   Op.Pop -> Note op
   Op.Read_char{} -> Note op
   Op.Restore{} -> Note op
+  Op.Restore4{} -> Note op
 
   Op.Save_undo target -> do
     --Note (here,op,"-->",target)

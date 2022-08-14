@@ -11,7 +11,7 @@ Memory Map:
 262065 End of story file
 --------------------------------------
 Found 19 routines by walkthrough
-Found 1833 routines by speculative disassembly
+Found 1835 routines by speculative disassembly
 0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=38844
@@ -4848,7 +4848,19 @@ gap=0
 083307 Je [Var (Local 1),Con -10798,Con -10807,Con -10744] (Branch T Dfalse)
 083317 Jump 083204
 --------------------------------------------------
-gap=70
+gap=0
+083320 RoutineHeader [0]
+083323 Call (Floc 068936) [] Sp
+083327 Jz (Var Sp) (Branch T (Dloc 083332))
+083330 Ret (Con 2)
+083332 Store (Con 233) (Con 0)
+083335 Store (Con 239) (Con 0)
+083338 Restore4 (Local 1)
+083340 Jz (Var (Local 1)) (Branch F Dtrue)
+083343 Call (Floc 083456) [Con -2548] Sp
+083350 Rtrue
+--------------------------------------------------
+gap=39
 083390 RoutineHeader []
 083391 Ret (Con 2)
 --------------------------------------------------
@@ -20310,7 +20322,32 @@ gap=1
 167160 Print_paddr (Var (Global 89))
 167162 Rtrue
 --------------------------------------------------
-gap=161
+gap=1
+167164 RoutineHeader [0]
+167167 New_line
+167168 Call (Floc 083488) [] Sp
+167172 New_line
+167173 Print "Do you want to restart the story, restore a saved position, or quit?"
+167218 New_line
+167219 New_line
+167220 Print "[Type RESTART, RESTORE or QUIT.] >"
+167263 Sread (Var (Global 163)) (Var (Global 87))
+167267 Loadw (Var (Global 87)) (Con 1) (Local 1)
+167271 Je [Var (Local 1),Con -8143] (Branch F (Dloc 167291))
+167277 Restart
+167278 Store (Con 1) (Con 1)
+167281 Call (Floc 083456) [Con -2551] Sp
+167288 Jump 167220
+167291 Je [Var (Local 1),Con -8134] (Branch F (Dloc 167309))
+167297 Restore4 (Local 1)
+167299 Call (Floc 083456) [Con -2548] Sp
+167306 Jump 167220
+167309 Je [Var (Local 1),Con -8656,Con -8575] (Branch F (Dloc 167220))
+167318 New_line
+167319 Quit
+167320 Jump 167220
+--------------------------------------------------
+gap=1
 167324 RoutineHeader []
 167325 Je [Var (Global 139),Con 131,Con 152] (Branch F (Dloc 167336))
 167331 Call (Floc 069656) [] Sp
