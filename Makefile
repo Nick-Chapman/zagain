@@ -7,14 +7,14 @@ exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 dev: gold.out dev.out
 	git diff --no-index $^
 
-gold.out: dev.out reg/zork.trace
-	bash -c 'cat reg/zork.trace | head -$$(cat dev.out | wc -l) > $@'
+gold.out: dev.out reg/trinity.trace
+	bash -c 'cat reg/trinity.trace | head -$$(cat dev.out | wc -l) > $@'
 
 dev.out: $(exe) Makefile
-	bash -c '$(exe) zork -trace -walk scripts/zork.script -trace -viacomp > $@ 2>&1 || true'
+	bash -c '$(exe) trinity -trace -walk scripts/trinity.script -trace -viacomp > $@ 2>&1 || true'
 
 
-trace: .reg reg/zork.trace
+trace: .reg reg/zork.trace reg/trinity.trace
 walk: .reg reg/zork.walk reg/h.walk reg/judo.walk reg/trinity.walk
 dis: .reg reg/zork.dis reg/h.dis reg/judo.dis reg/trinity.dis
 code: .reg reg/zork.code reg/h.code reg/judo.code reg/trinity.code
@@ -54,6 +54,9 @@ reg/judo.code: $(exe) src/*.hs
 
 reg/trinity.dis: $(exe) src/*.hs
 	$(exe) dis trinity > $@
+
+reg/trinity.trace: $(exe) scripts/trinity.script src/*.hs Makefile
+	bash -c '$(exe) -nodebug trinity -trace -walk <(head -2 scripts/trinity.script) > $@'
 
 reg/trinity.walk: $(exe) scripts/trinity.script src/*.hs
 	$(exe) -nodebug trinity -walk scripts/trinity.script > $@
