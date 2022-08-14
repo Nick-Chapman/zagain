@@ -19,7 +19,7 @@ import Fetch (runFetch)
 import Header (Header(..))
 import Numbers (Byte,Addr)
 import Operation (Operation,RoutineHeader,opLocals,opLabels)
-import Story (Story(header,size),OOB_Mode(..))
+import Story (Story(header,size,maxUnusedWhenDis),OOB_Mode(..))
 import Text.Printf (printf)
 import qualified Data.Set as Set
 import qualified Interpreter (runEffect)
@@ -151,11 +151,12 @@ routinesBetween story (start,end) = loop start
 
 tryDecodeRoutine :: Story -> Addr -> Maybe Addr
 tryDecodeRoutine story a = do
+  let n = maxUnusedWhenDis story
   case disRoutineM story a of
     Left{} -> Nothing
     Right Routine{finish,illegal,unused=_unused,defs=_} -> if
       | length illegal == 0
-        && length _unused <= 4 -- TODO: (H2) testing unused is a heuristic which might be wrong. but without it, H1 is more broken
+        && length _unused <= n -- TODO: (H2) testing unused is a heuristic which might be wrong. but without it, H1 is more broken. worse, value for maxUnusedWhenDis is story dependent
         -> Just finish
       | otherwise
         -> Nothing
@@ -202,16 +203,23 @@ disRoutineM story start = do
         loop :: Set Addr -> [(Addr,Operation)] -> Addr -> Result ([(Addr,Operation)], Addr)
         loop bps acc a = do
           let (i,a') = runFetch OOB_Zero a story fetchOperation
-          case i of
-            Op.BadOperation{} -> Left (show (a,i))
-            Op.Call Op.BadFunc{} _ _ -> Left (show (a,i))
-            Op.CallN Op.BadFunc{} _ -> Left (show (a,i))
-            _ -> do
-              let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOf i)
-              let continue = not (isStopping i) || a' `Set.member` bps
-              if continue then loop bps' ((a,i):acc) a' else
-                Right (reverse((a,i):acc),a')
+          if isBadOp story i then Left (show (a,i)) else  do
+            let bps' :: Set Addr = bps `Set.union` Set.fromList (branchesOf i)
+            let acc' = ((a,i):acc)
+            if not (isStopping i) then loop bps' acc' a' else do
+              let ahead = [ x | x <- Set.toList bps', x >= a' ]
+              case ahead of
+                [] -> Right (reverse acc',a')
+                _ -> loop bps' acc' (minimum ahead)
 
+isBadOp :: Story -> Operation -> Bool
+isBadOp story = \case
+  Op.BadOperation{} -> True
+  Op.Call Op.BadFunc{} _ _ -> True
+  Op.Call (Op.Floc a) _ _ -> a >= size story
+  Op.CallN Op.BadFunc{} _ -> True
+  Op.CallN (Op.Floc a) _ -> a >= size story
+  _ -> False
 
 branchesOf :: Operation -> [Addr]
 branchesOf = \case

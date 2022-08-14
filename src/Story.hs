@@ -1,6 +1,9 @@
 
 -- | A z-machine story-file.
-module Story (Story(header,size),loadStory,readStoryByte,OOB_Mode(..)) where
+module Story
+  ( Story(header,size,maxUnusedWhenDis), loadStory
+  , readStoryByte,OOB_Mode(..)
+  ) where
 
 import Data.Array (Array,(!),listArray)
 import Header (Header(..))
@@ -12,14 +15,18 @@ data Story = Story
   { size :: Addr
   , bytesA :: Array Addr Byte
   , header :: Header
+  , maxUnusedWhenDis :: Int
   }
 
 loadStory :: FilePath -> IO Story
 loadStory path = do
+  let maxUnusedWhenDis = -- TODO: cleanup this hack
+        if (path =="story/judo-night.1-080706.z5") then 6 else 4
   bytes <- loadBytes path
   let size = fromIntegral $ length bytes
   let bytesA = listArray (0,size-1) bytes
-  let story = Story { size, bytesA, header = readHeader story }
+  let story = Story { size, bytesA, header = readHeader story
+                    , maxUnusedWhenDis }
   pure story
 
 loadBytes :: FilePath -> IO [Byte]

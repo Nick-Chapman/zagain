@@ -86,7 +86,7 @@ evalP2 = \case
   And -> (.&.)
   BwAnd -> (.&.)
   ClearBit -> \b n -> b `clearBit` fromIntegral n
-  Div -> div
+  Div -> \x y -> if y == 0 then undefined else x `div` y
   Equal -> (==)
   GreaterThan -> (>)
   GreaterThanEqual -> (>=)
@@ -96,7 +96,7 @@ evalP2 = \case
   LogOr -> (||)
   MakeHiLo -> makeHiLo
   MinusByte -> (-)
-  Mod -> mod
+  Mod -> \x y -> if y == 0 then 0 else x `mod` y -- TODO: hack
   Mul -> (*)
   Offset -> \base off -> base + fromIntegral off
   Or -> (.|.)

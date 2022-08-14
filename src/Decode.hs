@@ -31,7 +31,7 @@ fetchOperation = do
 decode :: Zversion -> OpCodeAndArgs -> Fetch Operation
 decode zv op = case op of
 
-  Code 1 ts -> Op.Je <$> args ts <*> label
+  Code 1 ts | length ts >=2 -> Op.Je <$> args ts <*> label
   Code 2 [t1,t2] -> Op.Jl <$> arg t1 <*> arg t2 <*> label
   Code 3 [t1,t2] -> Op.Jg <$> arg t1 <*> arg t2 <*> label
   Code 4 [t1,t2] -> Op.Dec_chk <$> arg t1 <*> arg t2 <*> label

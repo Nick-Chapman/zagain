@@ -11,9 +11,8 @@ Memory Map:
 143872 End of story file
 --------------------------------------
 Found 445 routines by walkthrough
-Found 1294 routines by speculative disassembly
-11 routines lost (in walkthrough but not disassembly)
-[088936,039116,038696,060728,044876,106720,107032,107228,108360,107460,107656]
+Found 1039 routines by speculative disassembly
+0 routines lost (in walkthrough but not disassembly)
 --------------------------------------------------
 gap=22276
 022276 RoutineHeader []
@@ -990,7 +989,6 @@ gap=1
 --------------------------------------------------
 gap=3
 027544 RoutineHeader [0,0,0]
--- unused: [3]
 027545 Store (Con 20) (Con 1)
 027548 Je [Var (Global 233),Con 8,Con 9] (Branch F (Dloc 027569))
 027554 Print_ret "There is no reply."
@@ -1144,365 +1142,526 @@ gap=3
 028354 Je [Var (Global 239),Con 22700] (Branch F (Dloc 028371))
 028360 Print_ret "lie down on."
 028371 Print_ret "enter."
---------------------------------------------------
-gap=34
-028412 RoutineHeader [0,0]
--- unused: [1,2]
+028381 Je [Var (Global 239),Con 3] (Branch F (Dloc 028416))
+028385 Print "You can't get into the closed "
+028408 CallN (Floc 082048) [Var (Local 2)]
 028413 Print_ret "."
---------------------------------------------------
-gap=2
-028418 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-028419 Test (Var (Global 125)) (Con 111) (Branch T (Dloc 032705))
+028416 Je [Var (Global 239),Con 4] (Branch F (Dloc 028425))
+028420 Print_paddr (Con 28560)
+028423 New_line
 028424 Rtrue
---------------------------------------------------
-gap=27
-028452 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+028425 Je [Var (Global 239),Con 5] (Branch F (Dloc 028461))
+028429 Print "You get "
+028436 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 028448))
+028440 Print "onto "
+028445 Jump 028453
+028448 Print "into "
 028453 CallN (Floc 081916) [Var (Local 2)]
 028458 Print_ret "."
---------------------------------------------------
-gap=93
-028554 RoutineHeader [0,0]
--- unused: [1,2]
+028461 Je [Var (Global 239),Con 6] (Branch F (Dloc 028507))
+028465 Print "(getting "
+028474 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 028486))
+028478 Print "off "
+028483 Jump 028493
+028486 Print "out of "
+028493 CallN (Floc 081916) [Var (Local 2)]
+028498 Print ")\n"
+028503 Store (Con 20) (Con 0)
+028506 Rtrue
+028507 Je [Var (Global 239),Con 7] (Branch F (Dloc 028575))
+028512 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 028535))
+028516 Print "(getting onto "
+028527 CallN (Floc 081916) [Var (Local 2)]
+028532 Print_ret ")"
+028535 Test_attr (Var (Local 2)) (Con 4) (Branch F (Dloc 028558))
+028539 Print "(getting into "
+028550 CallN (Floc 081916) [Var (Local 2)]
 028555 Print_ret ")"
---------------------------------------------------
-gap=8
-028566 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+028558 Print "(entering "
 028567 CallN (Floc 081916) [Var (Local 2)]
 028572 Print_ret ")"
---------------------------------------------------
-gap=17
-028592 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+028575 Je [Var (Global 239),Con 8] (Branch F (Dloc 028606))
+028579 CallN (Floc 081964) [Var (Global 37)]
+028584 Print " gets into "
 028593 CallN (Floc 081916) [Var (Local 2)]
 028598 Print ".\n"
 028603 Jump 028634
---------------------------------------------------
-gap=22
-028628 RoutineHeader [0,0]
--- unused: [1,2]
+028606 Je [Var (Global 239),Con 9] (Branch F (Dloc 028634))
+028610 CallN (Floc 081964) [Var (Global 37)]
+028615 Print " gets onto "
+028624 CallN (Floc 081916) [Var (Local 2)]
 028629 Print ".\n"
 028634 Rtrue
---------------------------------------------------
-gap=3
-028638 RoutineHeader []
-028639 CallN (Floc 047100) []
-028642 Je [Con 65,Con 255] (Branch F (Dloc 028972))
+028635 Je [Var (Global 233),Con 22] (Branch F (Dloc 028781))
+028640 Store (Con 255) (Var (Local 1))
+028643 Je [Var (Global 239),Con 1] (Branch F (Dloc 028652))
 028647 Print_paddr (Con 28569)
 028650 New_line
 028651 Rtrue
---------------------------------------------------
-gap=66
-028718 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+028652 Je [Var (Global 239),Con 2] (Branch F (Dloc 028687))
+028656 Print "You see nothing special about "
+028679 CallN (Floc 081916) [Var (Local 2)]
+028684 Print_ret "."
+028687 Je [Var (Global 239),Con 3] (Branch F (Dloc 028736))
+028691 CallN (Floc 081964) [Var (Local 2)]
+028696 Print " "
+028699 CallN (Floc 027308) [Var (Local 2)]
+028704 Print " currently switched "
 028719 Test_attr (Var (Local 2)) (Con 12) (Branch F (Dloc 028728))
 028723 Print_ret "on."
 028728 Print_ret "off."
---------------------------------------------------
-gap=29
-028762 RoutineHeader [0,0]
--- unused: [1,2]
+028736 Je [Var (Global 239),Con 4] (Branch F (Dloc 028771))
+028740 CallN (Floc 081964) [Var (Global 37)]
+028745 Print " looks closely at "
+028758 CallN (Floc 081916) [Var (Local 2)]
 028763 Print ".\n"
 028768 Jump 028780
---------------------------------------------------
-gap=13
-028784 RoutineHeader []
-028785 Verify (Branch F (Dloc 024177))
-028788 Je [Con 65,Con 255] (Branch F (Dloc 029118))
+028771 Je [Var (Global 239),Con 5] (Branch F (Dloc 028780))
+028775 Print_paddr (Con 28578)
+028778 New_line
+028779 Rtrue
+028780 Rtrue
+028781 Je [Var (Global 233),Con 23] (Branch F (Dloc 028973))
+028786 Store (Con 255) (Var (Local 1))
+028789 Je [Var (Global 239),Con 1] (Branch F (Dloc 028798))
 028793 Print_paddr (Con 28586)
 028796 New_line
 028797 Rtrue
---------------------------------------------------
-gap=160
-028958 RoutineHeader [0,0]
--- unused: [1,2]
-028959 Ret (Con -32603)
---------------------------------------------------
-gap=4
-028966 RoutineHeader [0,0]
--- unused: [1,2]
+028798 Je [Var (Global 239),Con 2] (Branch F (Dloc 028835))
+028802 Print "You can't get out of the closed "
+028827 CallN (Floc 082048) [Var (Local 2)]
+028832 Print_ret "."
+028835 Je [Var (Global 239),Con 3] (Branch F (Dloc 028873))
+028839 Print "You get "
+028846 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 028858))
+028850 Print "off "
+028855 Jump 028865
+028858 Print "out of "
+028865 CallN (Floc 081916) [Var (Local 2)]
+028870 Print_ret "."
+028873 Je [Var (Global 239),Con 4] (Branch F (Dloc 028911))
+028877 Print "But you aren't "
+028890 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 028900))
+028894 Print "on "
+028897 Jump 028903
+028900 Print "in "
+028903 CallN (Floc 081916) [Var (Local 2)]
+028908 Print_ret "."
+028911 Je [Var (Global 239),Con 5] (Branch F (Dloc 028942))
+028915 CallN (Floc 081964) [Var (Global 37)]
+028920 Print " gets off "
+028929 CallN (Floc 081916) [Var (Local 2)]
+028934 Print ".\n"
+028939 Jump 028972
+028942 Je [Var (Global 239),Con 6] (Branch F (Dloc 028972))
+028946 CallN (Floc 081964) [Var (Global 37)]
+028951 Print " gets out of "
+028962 CallN (Floc 081916) [Var (Local 2)]
 028967 Print ".\n"
 028972 Rtrue
---------------------------------------------------
-gap=23
-028996 RoutineHeader [0,0]
--- unused: [1,2]
+028973 Je [Var (Global 233),Con 24] (Branch F (Dloc 029010))
+028977 Print "But you aren't on "
+028992 CallN (Floc 081916) [Var (Local 2)]
 028997 Print_ret " at the moment."
---------------------------------------------------
-gap=52
-029062 RoutineHeader [0,0]
--- unused: [1,2]
+029010 Je [Var (Global 233),Con 25] (Branch F (Dloc 029261))
+029015 Store (Con 255) (Var (Local 1))
+029018 Je [Var (Global 239),Con 1] (Branch F (Dloc 029045))
+029022 Print "You aren't holding "
+029037 CallN (Floc 081916) [Var (Local 2)]
+029042 Print_ret "."
+029045 Je [Var (Global 239),Con 2] (Branch F (Dloc 029068))
+029049 Print "You juggle "
+029058 CallN (Floc 081916) [Var (Local 2)]
 029063 Print_paddr (Con 28594)
 029066 New_line
 029067 Rtrue
---------------------------------------------------
-gap=8
-029076 RoutineHeader [0,0]
--- unused: [1]
+029068 Je [Var (Global 239),Con 3] (Branch F (Dloc 029111))
+029072 CallN (Floc 081964) [Var (Local 2)]
 029077 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 029091))
 029081 Print " don't"
 029088 Jump 029098
 029091 Print " doesn't"
 029098 Print_ret " seem interested."
---------------------------------------------------
-gap=133
-029244 RoutineHeader [0,0]
--- unused: [1,2]
+029111 Je [Var (Global 239),Con 4] (Branch F (Dloc 029160))
+029115 CallN (Floc 081964) [Var (Local 2)]
+029120 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 029134))
+029124 Print " aren't"
+029131 Jump 029141
+029134 Print " isn't"
+029141 Print_ret " able to receive things."
+029160 Je [Var (Global 239),Con 5] (Branch F (Dloc 029191))
+029164 Print "You give "
+029173 CallN (Floc 081916) [Var (Local 2)]
+029178 Print " to "
+029183 CallN (Floc 081916) [Var (Global 48)]
+029188 Print_ret "."
+029191 Je [Var (Global 239),Con 6] (Branch F (Dloc 029224))
+029195 CallN (Floc 081964) [Var (Global 37)]
+029200 Print " gives "
+029207 CallN (Floc 081916) [Var (Local 2)]
+029212 Print " to you.\n"
+029221 Jump 029260
+029224 Je [Var (Global 239),Con 7] (Branch F (Dloc 029260))
+029228 CallN (Floc 081964) [Var (Global 37)]
+029233 Print " gives "
+029240 CallN (Floc 081916) [Var (Local 2)]
 029245 Print " to "
 029250 CallN (Floc 081916) [Var (Global 48)]
 029255 Print ".\n"
 029260 Rtrue
---------------------------------------------------
-gap=81
-029342 RoutineHeader [0,0,0]
--- unused: [1,3]
-029343 Add (Con 1) (Var (Global 1)) (Global 42)
-029347 Test (Var (Global 112)) (Con 165) (Branch T (Dloc 029375))
-029351 Loadw (Con 79) (Var (Global 239)) (Local 2)
+029261 Je [Var (Global 233),Con 26] (Branch F (Dloc 029999))
+029266 Store (Con 255) (Var (Local 1))
+029269 Je [Var (Global 239),Con 1] (Branch F (Dloc 029319))
+029273 Print "You'll have to get "
+029288 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 029300))
+029292 Print "off "
+029297 Jump 029307
+029300 Print "out of "
+029307 CallN (Floc 081916) [Var (Local 2)]
+029312 Print_ret " first."
+029319 Je [Var (Global 239),Con 2] (Branch F (Dloc 029327))
+029323 Print_paddr (Var (Global 123))
+029325 New_line
+029326 Rtrue
+029327 Je [Var (Global 239),Con 3] (Branch F (Dloc 029358))
+029331 Print "You are unable to climb "
+029350 CallN (Floc 081916) [Var (Local 2)]
 029355 Print_ret "."
---------------------------------------------------
-gap=56
-029414 RoutineHeader [0,0]
--- unused: [1]
+029358 Je [Var (Global 239),Con 4] (Branch F (Dloc 029391))
+029362 Print "You are unable to descend by "
+029383 CallN (Floc 081916) [Var (Local 2)]
+029388 Print_ret "."
+029391 Je [Var (Global 239),Con 5] (Branch F (Dloc 029434))
+029395 Print "You can't, since "
+029410 CallN (Floc 081916) [Var (Local 2)]
 029415 Print " "
 029418 CallN (Floc 027308) [Var (Local 2)]
 029423 Print_ret " in the way."
---------------------------------------------------
-gap=18
-029452 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+029434 Je [Var (Global 239),Con 6] (Branch F (Dloc 029489))
+029438 Print "You can't, since "
 029453 CallN (Floc 081916) [Var (Local 2)]
 029458 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 029473))
 029462 Print_ret " lead nowhere."
 029473 Print_ret " leads nowhere."
---------------------------------------------------
-gap=70
-029556 RoutineHeader [0,0]
--- unused: [1,2]
+029489 Je [Var (Global 239),Con 7] (Branch F (Dloc 029498))
+029493 Print_paddr (Con 28601)
+029496 New_line
+029497 Rtrue
+029498 Je [Var (Global 239),Con 8] (Branch F (Dloc 029517))
+029502 CallN (Floc 081964) [Var (Global 37)]
+029507 Print " goes up"
+029514 Jump 029998
+029517 Je [Var (Global 239),Con 9] (Branch F (Dloc 029538))
+029521 CallN (Floc 081964) [Var (Global 37)]
+029526 Print " goes down"
+029535 Jump 029998
+029538 Je [Var (Global 239),Con 10] (Branch F (Dloc 029560))
+029542 CallN (Floc 081964) [Var (Global 37)]
+029547 Print " goes "
+029552 CallN (Floc 082048) [Var (Local 2)]
 029557 Jump 029998
---------------------------------------------------
-gap=10
-029570 RoutineHeader []
-029571 Div (Con 219) (Con 43) Sp
-029576 Insert_obj (Con 244) (Var (Global 56))
-029579 Jin (Con 30) (Con 155) (Branch T (Dloc 023603))
+029560 Je [Var (Global 239),Con 11] (Branch F (Dloc 029587))
+029564 CallN (Floc 081964) [Var (Global 37)]
+029569 Print " arrives from above"
 029584 Jump 029998
---------------------------------------------------
-gap=53
-029640 RoutineHeader [0,0]
--- unused: [1,2]
+029587 Je [Var (Global 239),Con 12] (Branch F (Dloc 029614))
+029591 CallN (Floc 081964) [Var (Global 37)]
+029596 Print " arrives from below"
+029611 Jump 029998
+029614 Je [Var (Global 239),Con 13] (Branch F (Dloc 029644))
+029618 CallN (Floc 081964) [Var (Global 37)]
+029623 Print " arrives from the "
+029636 CallN (Floc 082048) [Var (Local 2)]
 029641 Jump 029998
---------------------------------------------------
-gap=34
-029678 RoutineHeader []
-029679 Ret (Con 32)
---------------------------------------------------
-gap=27
-029708 RoutineHeader []
-029709 Div (Con 219) (Con 43) Sp
-029714 Ret (Con 32)
---------------------------------------------------
-gap=4
-029720 RoutineHeader [0,0]
--- unused: [1,2]
+029644 Je [Var (Global 239),Con 14] (Branch F (Dloc 029663))
+029648 CallN (Floc 081964) [Var (Global 37)]
+029653 Print " arrives"
+029660 Jump 029998
+029663 Je [Var (Global 239),Con 15] (Branch F (Dloc 029698))
+029667 CallN (Floc 081964) [Var (Global 37)]
+029672 Print " arrives at "
+029681 CallN (Floc 081916) [Var (Local 2)]
+029686 Print " from above"
+029695 Jump 029998
+029698 Je [Var (Global 239),Con 16] (Branch F (Dloc 029733))
+029702 CallN (Floc 081964) [Var (Global 37)]
+029707 Print " arrives at "
+029716 CallN (Floc 081916) [Var (Local 2)]
 029721 Print " from below"
 029730 Jump 029998
---------------------------------------------------
-gap=15
-029748 RoutineHeader []
-029749 Ret (Con 32)
---------------------------------------------------
-gap=41
-029792 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+029733 Je [Var (Global 239),Con 17] (Branch F (Dloc 029773))
+029737 CallN (Floc 081964) [Var (Global 37)]
+029742 Print " arrives at "
+029751 CallN (Floc 081916) [Var (Local 2)]
+029756 Print " from the "
+029765 CallN (Floc 082048) [Var (Local 3)]
+029770 Jump 029998
+029773 Je [Var (Global 239),Con 18] (Branch F (Dloc 029801))
+029777 CallN (Floc 081964) [Var (Global 37)]
+029782 Print " goes through "
 029793 CallN (Floc 081916) [Var (Local 2)]
 029798 Jump 029998
---------------------------------------------------
-gap=19
-029820 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+029801 Je [Var (Global 239),Con 19] (Branch F (Dloc 029829))
+029805 CallN (Floc 081964) [Var (Global 37)]
+029810 Print " arrives from "
 029821 CallN (Floc 081916) [Var (Local 2)]
 029826 Jump 029998
---------------------------------------------------
-gap=11
-029840 RoutineHeader [0,0]
--- unused: [1,2]
+029829 Je [Var (Global 239),Con 20] (Branch F (Dloc 029844))
+029833 Print "on "
+029836 CallN (Floc 081916) [Var (Local 2)]
 029841 Jump 029998
---------------------------------------------------
-gap=32
-029876 RoutineHeader [0,0]
--- unused: [1,2]
+029844 Je [Var (Global 239),Con 21] (Branch F (Dloc 029859))
+029848 Print "in "
+029851 CallN (Floc 081916) [Var (Local 2)]
+029856 Jump 029998
+029859 Je [Var (Global 239),Con 22] (Branch F (Dloc 029901))
+029863 Print ", pushing "
+029872 CallN (Floc 081916) [Var (Local 2)]
 029877 Print " in front, and you along too"
 029898 Jump 029998
---------------------------------------------------
-gap=17
-029918 RoutineHeader [0,0]
--- unused: [1,2]
+029901 Je [Var (Global 239),Con 23] (Branch F (Dloc 029929))
+029905 Print ", pushing "
+029914 CallN (Floc 081916) [Var (Local 2)]
 029919 Print " in front"
 029926 Jump 029998
---------------------------------------------------
-gap=17
-029946 RoutineHeader [0,0]
--- unused: [1,2]
+029929 Je [Var (Global 239),Con 24] (Branch F (Dloc 029955))
+029933 Print ", pushing "
+029942 CallN (Floc 081916) [Var (Local 2)]
 029947 Print " away"
 029952 Jump 029998
---------------------------------------------------
-gap=17
-029972 RoutineHeader [0,0]
--- unused: [1,2]
+029955 Je [Var (Global 239),Con 25] (Branch F (Dloc 029979))
+029959 Print ", pushing "
+029968 CallN (Floc 081916) [Var (Local 2)]
 029973 Print " in"
 029976 Jump 029998
---------------------------------------------------
-gap=39
-030018 RoutineHeader [0,0,0]
--- unused: [3]
-030019 Add (Con 0) (Var (Global 218)) (Local 1)
-030023 Nop
-030024 Inc_chk (Var (Global 30)) (Con 205) (Branch T (Dloc 030245))
-030029 Loadw (Con 79) (Var (Global 239)) (Local 2)
+029979 Je [Var (Global 239),Con 26] (Branch F (Dloc 029998))
+029983 Print ", taking you along"
+029998 Rtrue
+029999 Je [Var (Global 233),Con 27] (Branch F (Dloc 030301))
+030004 Store (Con 255) (Var (Local 1))
+030007 Je [Var (Global 239),Con 1] (Branch F (Dloc 030070))
+030011 Print "You need to be holding "
+030028 CallN (Floc 081916) [Var (Local 2)]
 030033 Print " before you can put "
 030048 CallN (Floc 027260) [Var (Local 2)]
 030053 Print_ret " into something else."
---------------------------------------------------
-gap=8
-030078 RoutineHeader [0,0]
--- unused: [1,2]
+030070 Je [Var (Global 239),Con 2] (Branch F (Dloc 030096))
+030074 CallN (Floc 027352) [Var (Local 2)]
 030079 Print_ret " can't contain things."
---------------------------------------------------
-gap=2
-030098 RoutineHeader [0,0,0]
--- unused: [1,3]
-030099 Mul (Var (Global 202)) (Con 47) (Global 64)
-030103 Set_attr (Con 2) (Con 178)
-030106 Jz (Con -23078) (Branch F (Dloc 025783))
-030111 Ret (Var (Local 2))
---------------------------------------------------
-gap=109
-030222 RoutineHeader [0,0]
--- unused: [1,2]
+030096 Je [Var (Global 239),Con 3] (Branch F (Dloc 030120))
+030100 CallN (Floc 081964) [Var (Local 2)]
+030105 Print " "
+030108 CallN (Floc 027308) [Var (Local 2)]
+030113 Print_ret " closed."
+030120 Je [Var (Global 239),Con 4] (Branch F (Dloc 030155))
+030124 Print "You'll need to take "
+030141 CallN (Floc 027260) [Var (Local 2)]
+030146 Print_ret " off first."
+030155 Je [Var (Global 239),Con 5] (Branch F (Dloc 030164))
+030159 Print_paddr (Con 28611)
+030162 New_line
+030163 Rtrue
+030164 Je [Var (Global 239),Con 6] (Branch F (Dloc 030195))
+030168 Print "(first taking "
+030179 CallN (Floc 027260) [Var (Local 2)]
+030184 Print " off)\n"
+030191 Store (Con 20) (Con 0)
+030194 Rtrue
+030195 Je [Var (Global 239),Con 7] (Branch F (Dloc 030226))
+030199 Print "There is no more room in "
+030218 CallN (Floc 081916) [Var (Local 2)]
 030223 Print_ret "."
---------------------------------------------------
-gap=26
-030252 RoutineHeader [0,0]
--- unused: [1,2]
+030226 Je [Var (Global 239),Con 8] (Branch F (Dloc 030237))
+030230 Print_ret "Done."
+030237 Je [Var (Global 239),Con 9] (Branch F (Dloc 030266))
+030241 Print "You put "
+030248 CallN (Floc 081916) [Var (Local 2)]
 030253 Print " into "
 030258 CallN (Floc 081916) [Var (Global 48)]
 030263 Print_ret "."
---------------------------------------------------
-gap=10
-030276 RoutineHeader [0,0]
--- unused: [1,2]
-030277 Quit
---------------------------------------------------
-gap=6
-030284 RoutineHeader [0,0]
--- unused: [1,2]
+030266 Je [Var (Global 239),Con 10] (Branch F (Dloc 030300))
+030270 CallN (Floc 081964) [Var (Global 37)]
+030275 Print " puts "
+030280 CallN (Floc 081916) [Var (Local 2)]
 030285 Print " into "
 030290 CallN (Floc 081916) [Var (Global 48)]
 030295 Print ".\n"
 030300 Rtrue
---------------------------------------------------
-gap=83
-030384 RoutineHeader [0,0]
--- unused: [1]
+030301 Je [Var (Global 233),Con 28] (Branch F (Dloc 030415))
+030306 Store (Con 255) (Var (Local 1))
+030309 Je [Var (Global 239),Con 1] (Branch F (Dloc 030332))
+030313 Print_ret "You are carrying nothing."
+030332 Je [Var (Global 239),Con 2] (Branch F (Dloc 030352))
+030336 Print "You are carrying"
+030349 Jump 030414
+030352 Je [Var (Global 239),Con 3] (Branch F (Dloc 030364))
+030356 Print ":\n"
+030361 Jump 030414
+030364 Je [Var (Global 239),Con 4] (Branch F (Dloc 030376))
+030368 Print ".\n"
+030373 Jump 030414
+030376 Je [Var (Global 239),Con 5] (Branch F (Dloc 030414))
+030380 CallN (Floc 081964) [Var (Local 2)]
 030385 Print " looks through "
 030396 CallN (Floc 027464) [Var (Local 2)]
 030401 Print " possessions.\n"
 030414 Rtrue
---------------------------------------------------
-gap=63
-030478 RoutineHeader []
-030479 Je [Con 137,Con 45] (Branch T (Dloc 030544))
-030483 Je [Con 65,Con 255] (Branch F (Dloc 030826))
+030415 Je [Var (Global 233),Con 29] (Branch F (Dloc 030424))
+030419 Print_paddr (Con 28618)
+030422 New_line
+030423 Rtrue
+030424 Je [Var (Global 233),Con 30] (Branch F (Dloc 030449))
+030428 Print_ret "Keep your mind on the game."
+030449 Je [Var (Global 233),Con 31] (Branch F (Dloc 030474))
+030453 Print_ret "You hear nothing unexpected."
+030474 Je [Var (Global 233),Con 4096] (Branch F (Dloc 030872))
+030481 Store (Con 255) (Var (Local 1))
+030484 Je [Var (Global 239),Con 1] (Branch F (Dloc 030506))
 030488 Print " (providing light)"
 030503 Jump 030871
---------------------------------------------------
-gap=188
-030694 RoutineHeader []
-030695 Rfalse
---------------------------------------------------
-gap=20
-030716 RoutineHeader []
-030717 Ret (Con 65)
---------------------------------------------------
-gap=15
-030734 RoutineHeader []
-030735 Remove_obj (Con 16895)
-030738 Insert_obj (Con 74) (Con 178)
-030741 Jl (Con 52) (Var (Global 209)) (Branch F (Dloc 030752))
+030506 Je [Var (Global 239),Con 2] (Branch F (Dloc 030522))
+030510 Print " (closed)"
+030519 Jump 030871
+030522 Je [Var (Global 239),Con 4] (Branch F (Dloc 030538))
+030526 Print " (empty)"
+030535 Jump 030871
+030538 Je [Var (Global 239),Con 6] (Branch F (Dloc 030560))
+030542 Print " (closed and empty)"
+030557 Jump 030871
+030560 Je [Var (Global 239),Con 3] (Branch F (Dloc 030590))
+030564 Print " (closed and providing light)"
+030587 Jump 030871
+030590 Je [Var (Global 239),Con 5] (Branch F (Dloc 030618))
+030594 Print " (empty and providing light)"
+030615 Jump 030871
+030618 Je [Var (Global 239),Con 7] (Branch F (Dloc 030628))
+030622 Print_paddr (Con 28625)
+030625 Jump 030871
+030628 Je [Var (Global 239),Con 8] (Branch F (Dloc 030658))
+030632 Print " (providing light and being worn"
+030655 Jump 030871
+030658 Je [Var (Global 239),Con 9] (Branch F (Dloc 030678))
+030662 Print " (providing light"
+030675 Jump 030871
+030678 Je [Var (Global 239),Con 10] (Branch F (Dloc 030696))
+030682 Print " (being worn"
+030693 Jump 030871
+030696 Je [Var (Global 239),Con 11] (Branch F (Dloc 030706))
+030700 Print " ("
+030703 Jump 030871
+030706 Je [Var (Global 239),Con 12] (Branch F (Dloc 030718))
+030710 Print "open"
+030715 Jump 030871
+030718 Je [Var (Global 239),Con 13] (Branch F (Dloc 030736))
+030722 Print "open but empty"
+030733 Jump 030871
+030736 Je [Var (Global 239),Con 14] (Branch F (Dloc 030748))
+030740 Print "closed"
 030745 Jump 030871
---------------------------------------------------
-gap=50
-030798 RoutineHeader []
-030799 And (Var (Global 49)) (Con 255) (Global 2)
-030803 Insert_obj (Var (Global 162)) (Con 1)
-030806 Add (Con 79) (Con 38) (Global 42)
-030810 Insert_obj (Var (Global 189)) (Var (Global 112))
+030748 Je [Var (Global 239),Con 15] (Branch F (Dloc 030768))
+030752 Print "closed and locked"
+030765 Jump 030871
+030768 Je [Var (Global 239),Con 16] (Branch F (Dloc 030784))
+030772 Print " and empty"
+030781 Jump 030871
+030784 Je [Var (Global 239),Con 17] (Branch F (Dloc 030800))
+030788 Print " (empty)"
+030797 Jump 030871
+030800 Je [Var (Global 239),Con 18] (Branch F (Dloc 030816))
+030804 Print " containing "
 030813 Jump 030871
---------------------------------------------------
-gap=86
-030902 RoutineHeader []
-030903 Or (Con -255) (Var (Global 49)) (Global 239)
-030909 Je [Con 100,Con 74] (Branch F (Dloc 031450))
-030914 Loadb (Var (Global 162)) (Con 19) (Global 29)
-030918 Set_attr (Con 192) (Var (Global 22))
-030921 Get_parent (Con 23) (Global 9)
-030924 Jz (Con -23156) (Branch F (Dloc 030940))
+030816 Je [Var (Global 239),Con 19] (Branch F (Dloc 030828))
+030820 Print " (on "
+030825 Jump 030871
+030828 Je [Var (Global 239),Con 20] (Branch F (Dloc 030846))
+030832 Print ", on top of "
+030843 Jump 030871
+030846 Je [Var (Global 239),Con 21] (Branch F (Dloc 030858))
+030850 Print " (in "
+030855 Jump 030871
+030858 Je [Var (Global 239),Con 22] (Branch F (Dloc 030871))
+030862 Print ", inside "
+030871 Rtrue
+030872 Je [Var (Global 233),Con 32] (Branch F (Dloc 030881))
+030876 Print_paddr (Con 28632)
+030879 New_line
+030880 Rtrue
+030881 Je [Var (Global 233),Con 33] (Branch F (Dloc 030890))
+030885 Print_paddr (Con 28656)
+030888 New_line
+030889 Rtrue
+030890 Je [Var (Global 233),Con 34] (Branch F (Dloc 030899))
+030894 Print_paddr (Con 28677)
+030897 New_line
+030898 Rtrue
+030899 Je [Var (Global 233),Con 35] (Branch F (Dloc 031102))
+030904 Store (Con 255) (Var (Local 1))
+030907 Je [Var (Global 239),Con 1] (Branch F (Dloc 030945))
+030911 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 030929))
+030915 Print "They don't "
+030926 Jump 030940
 030929 Print "That doesn't "
 030940 Print_paddr (Con 28699)
 030943 New_line
 030944 Rtrue
---------------------------------------------------
-gap=55
-031000 RoutineHeader [0,0]
--- unused: [1,2]
+030945 Je [Var (Global 239),Con 2] (Branch F (Dloc 030971))
+030949 CallN (Floc 027404) [Var (Local 2)]
+030954 Print_ret " locked at the moment."
+030971 Je [Var (Global 239),Con 3] (Branch F (Dloc 031004))
+030975 Print "First you'll have to close "
+030996 CallN (Floc 081916) [Var (Local 2)]
 031001 Print_ret "."
---------------------------------------------------
-gap=128
-031132 RoutineHeader [0,0]
--- unused: [1,2]
-031133 Get_prop_addr (Var (Global 162)) (Con 0) (Global 174)
-031137 Quit
---------------------------------------------------
-gap=14
-031152 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-031153 Loadw (Var (Global 162)) (Con 0) (Global 174)
-031157 Ret (Con 0)
---------------------------------------------------
-gap=1
-031160 RoutineHeader [0,0]
--- unused: [1,2]
+031004 Je [Var (Global 239),Con 4] (Branch F (Dloc 031054))
+031008 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 031026))
+031012 Print "Those don't "
+031023 Jump 031037
+031026 Print "That doesn't "
+031037 Print_ret "seem to fit the lock."
+031054 Je [Var (Global 239),Con 5] (Branch F (Dloc 031075))
+031058 Print "You lock "
+031067 CallN (Floc 081916) [Var (Local 2)]
+031072 Print_ret "."
+031075 Je [Var (Global 239),Con 6] (Branch F (Dloc 031101))
+031079 CallN (Floc 081964) [Var (Global 37)]
+031084 Print " locks "
+031091 CallN (Floc 081916) [Var (Local 2)]
+031096 Print ".\n"
+031101 Rtrue
+031102 Je [Var (Global 233),Con 7] (Branch F (Dloc 031355))
+031107 Store (Con 255) (Var (Local 1))
+031110 Je [Var (Global 239),Con 1] (Branch F (Dloc 031130))
+031114 Print " (on "
+031119 CallN (Floc 081916) [Var (Local 2)]
+031124 Print ")"
+031127 Jump 031354
+031130 Je [Var (Global 239),Con 2] (Branch F (Dloc 031150))
+031134 Print " (in "
+031139 CallN (Floc 081916) [Var (Local 2)]
+031144 Print ")"
+031147 Jump 031354
+031150 Je [Var (Global 239),Con 3] (Branch F (Dloc 031167))
+031154 Print " (as "
+031159 Print_obj (Var (Local 2))
 031161 Print ")"
 031164 Jump 031354
---------------------------------------------------
-gap=13
-031180 RoutineHeader [0,0]
--- unused: [1]
+031167 Je [Var (Global 239),Con 4] (Branch F (Dloc 031198))
+031171 Print "On "
+031176 CallN (Floc 081916) [Var (Local 2)]
 031181 Print " "
 031184 Get_child (Var (Local 2)) Sp (Branch F (Dloc 031188))
 031188 CallN (Floc 038496) [Var Sp,Con 3288]
 031195 Print_ret "."
---------------------------------------------------
-gap=8
-031206 RoutineHeader [0,0]
--- unused: [1]
-031207 Get_prop (Con 224) (Con 74) (Local 2)
-031211 Get_prop (Con 74) (Con 178) (Global 2)
-031215 Get_parent (Con 128) (Global 149)
+031198 Je [Var (Global 239),Con 5,Con 6] (Branch F (Dloc 031291))
+031205 Je [Var (Local 2),Var (Global 1)] (Branch T (Dloc 031239))
+031209 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 031221))
+031213 Print "On "
 031218 Jump 031226
---------------------------------------------------
-gap=9
-031230 RoutineHeader [0,0]
--- unused: [1,2]
+031221 Print "In "
+031226 CallN (Floc 081916) [Var (Local 2)]
 031231 Print " you"
 031236 Jump 031244
---------------------------------------------------
-gap=9
-031248 RoutineHeader [0,0,0,0,0]
--- unused: [3,4,5]
+031239 Print "You"
+031244 Print " can "
 031249 Je [Var (Local 1),Con 5] (Branch F (Dloc 031258))
 031253 Print "also "
 031258 Print "see "
@@ -1511,18 +1670,131 @@ gap=9
 031274 Je [Var (Local 2),Var (Global 1)] (Branch T (Dloc 031281))
 031278 Print_ret "."
 031281 Print_ret " here."
---------------------------------------------------
-gap=564
-031852 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+031291 Je [Var (Global 239),Con 7] (Branch F (Dloc 031300))
+031295 Print_paddr (Con 28705)
+031298 New_line
+031299 Rtrue
+031300 Je [Var (Global 239),Con 8] (Branch F (Dloc 031332))
+031304 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 031316))
+031308 Print " (on "
+031313 Jump 031321
+031316 Print " (in "
+031321 CallN (Floc 081916) [Var (Local 2)]
+031326 Print ")"
+031329 Jump 031354
+031332 Je [Var (Global 239),Con 9] (Branch F (Dloc 031354))
+031336 CallN (Floc 081964) [Var (Global 37)]
+031341 Print " looks around.\n"
+031354 Rtrue
+031355 Je [Var (Global 233),Con 36] (Branch F (Dloc 031438))
+031360 Store (Con 255) (Var (Local 1))
+031363 Je [Var (Global 239),Con 1] (Branch F (Dloc 031380))
+031367 Print_ret "But it's dark."
+031380 Je [Var (Global 239),Con 2] (Branch F (Dloc 031407))
+031384 Print_ret "You find nothing of interest."
+031407 Je [Var (Global 239),Con 3] (Branch F (Dloc 031437))
+031411 CallN (Floc 081964) [Var (Global 37)]
+031416 Print " looks under "
+031427 CallN (Floc 081916) [Var (Local 2)]
+031432 Print ".\n"
+031437 Rtrue
+031438 Je [Var (Global 233),Con 37] (Branch F (Dloc 031449))
+031442 Print_ret "Quite."
+031449 Je [Var (Global 233),Con 4097] (Branch F (Dloc 032988))
+031456 Store (Con 255) (Var (Local 1))
+031459 Je [Var (Global 239),Con 1] (Branch F (Dloc 031468))
+031463 Print_paddr (Con 28713)
+031466 New_line
+031467 Rtrue
+031468 Je [Var (Global 239),Con 2] (Branch F (Dloc 031485))
+031472 Print_ret "Nothing to do!"
+031485 Je [Var (Global 239),Con 3] (Branch F (Dloc 031505))
+031489 Print " You have died "
+031502 Jump 032987
+031505 Je [Var (Global 239),Con 4] (Branch F (Dloc 031523))
+031509 Print " You have won "
+031520 Jump 032987
+031523 Je [Var (Global 239),Con 5] (Branch F (Dloc 031541))
+031527 Print_paddr (Con 28721)
+031530 Print_ret " or QUIT?"
+031541 Je [Var (Global 239),Con 6] (Branch F (Dloc 031550))
+031545 Print_paddr (Con 28732)
+031548 New_line
+031549 Rtrue
+031550 Je [Var (Global 239),Con 7] (Branch F (Dloc 031559))
+031554 Print_paddr (Con 28743)
+031557 New_line
+031558 Rtrue
+031559 Je [Var (Global 239),Con 8] (Branch F (Dloc 031568))
+031563 Print_paddr (Con 28754)
+031566 New_line
+031567 Rtrue
+031568 Je [Var (Global 239),Con 9] (Branch F (Dloc 031595))
+031572 Print_ret "It is now pitch dark in here!"
+031595 Je [Var (Global 239),Con 10] (Branch F (Dloc 031614))
+031599 Print_ret "I beg your pardon?"
+031614 Je [Var (Global 239),Con 11] (Branch F (Dloc 031623))
+031618 Print_paddr (Con 28761)
+031621 New_line
+031622 Rtrue
+031623 Je [Var (Global 239),Con 12] (Branch F (Dloc 031632))
+031627 Print_paddr (Con 28770)
+031630 New_line
+031631 Rtrue
+031632 Je [Var (Global 239),Con 13] (Branch F (Dloc 031659))
+031636 Print_ret "[Previous turn undone.]"
+031659 Je [Var (Global 239),Con 14] (Branch F (Dloc 031688))
+031663 Print_ret "Sorry, that can't be corrected."
+031688 Je [Var (Global 239),Con 15] (Branch F (Dloc 031709))
+031692 Print_ret "Think nothing of it."
+031709 Je [Var (Global 239),Con 16] (Branch F (Dloc 031718))
+031713 Print_paddr (Con 28780)
+031716 New_line
+031717 Rtrue
+031718 Je [Var (Global 239),Con 17] (Branch F (Dloc 031727))
+031722 Print_paddr (Con 28787)
+031725 New_line
+031726 Rtrue
+031727 Je [Var (Global 239),Con 18] (Branch F (Dloc 031741))
+031731 Print "yourself"
+031738 Jump 032987
+031741 Je [Var (Global 239),Con 19] (Branch F (Dloc 031764))
+031745 Print_ret "As good-looking as ever."
+031764 Je [Var (Global 239),Con 20] (Branch F (Dloc 031773))
+031768 Print_paddr (Con 28795)
+031771 New_line
+031772 Rtrue
+031773 Je [Var (Global 239),Con 21] (Branch F (Dloc 031798))
+031777 Print_ret "You can hardly repeat that."
+031798 Je [Var (Global 239),Con 22] (Branch F (Dloc 031825))
+031802 Print_ret "You can't begin with a comma."
+031825 Je [Var (Global 239),Con 23] (Branch F (Dloc 031834))
+031829 Print_paddr (Con 28810)
+031832 New_line
+031833 Rtrue
+031834 Je [Var (Global 239),Con 24] (Branch F (Dloc 031861))
+031838 Print "You can't talk to "
 031853 CallN (Floc 081916) [Var (Local 2)]
 031858 Print_ret "."
---------------------------------------------------
-gap=101
-031962 RoutineHeader [0,0,0]
--- unused: [1,3]
-031963 Store (Con 58) (Var (Global 92))
-031966 Dec (Con 69)
+031861 Je [Var (Global 239),Con 25] (Branch F (Dloc 031870))
+031865 Print_paddr (Con 28821)
+031868 New_line
+031869 Rtrue
+031870 Je [Var (Global 239),Con 26] (Branch F (Dloc 031893))
+031874 Print "(first taking "
+031885 CallN (Floc 081916) [Var (Local 2)]
+031890 Print_ret ")"
+031893 Je [Var (Global 239),Con 27] (Branch F (Dloc 031902))
+031897 Print_paddr (Con 28831)
+031900 New_line
+031901 Rtrue
+031902 Je [Var (Global 239),Con 28] (Branch F (Dloc 031912))
+031906 Print_paddr (Con 28838)
+031909 Jump 032987
+031912 Je [Var (Global 239),Con 29] (Branch F (Dloc 031941))
+031916 Print_ret "I didn't understand that number."
+031941 Je [Var (Global 239),Con 30] (Branch F (Dloc 031968))
+031945 Print_ret "You can't see any such thing."
 031968 Je [Var (Global 239),Con 31] (Branch F (Dloc 031977))
 031972 Print_paddr (Con 28846)
 031975 New_line
@@ -1702,131 +1974,201 @@ gap=101
 032985 New_line
 032986 Rtrue
 032987 Rtrue
---------------------------------------------------
-gap=134
-033122 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-033123 Test_attr (Con 42) (Con 88) (Branch T (Dloc 033291))
+032988 Je [Var (Global 233),Con 38,Con 39] (Branch F (Dloc 033017))
+032994 Print_ret "That was a rhetorical question."
+033017 Je [Var (Global 233),Con 40] (Branch F (Dloc 033040))
+033021 Print_ret "Score notification off."
+033040 Je [Var (Global 233),Con 41] (Branch F (Dloc 033061))
+033044 Print_ret "Score notification on."
+033061 Je [Var (Global 233),Con 42] (Branch F (Dloc 033290))
+033066 Store (Con 255) (Var (Local 1))
+033069 Je [Var (Global 239),Con 1] (Branch F (Dloc 033099))
+033073 CallN (Floc 027404) [Var (Local 2)]
+033078 Print_ret " not something you can open."
+033099 Je [Var (Global 239),Con 2] (Branch F (Dloc 033139))
+033103 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 033119))
+033107 Print "They seem "
+033116 Jump 033128
+033119 Print "It seems "
 033128 Print_ret "to be locked."
---------------------------------------------------
-gap=37
-033176 RoutineHeader [0,0]
--- unused: [1]
+033139 Je [Var (Global 239),Con 3] (Branch F (Dloc 033159))
+033143 CallN (Floc 027404) [Var (Local 2)]
+033148 Print_ret " already open."
+033159 Je [Var (Global 239),Con 4] (Branch F (Dloc 033213))
+033163 Print "You open "
+033172 CallN (Floc 081916) [Var (Local 2)]
 033177 Print ", revealing "
 033188 Get_child (Var (Local 2)) Sp (Branch F (Dloc 033192))
 033192 Call (Floc 038496) [Var Sp,Con 2120] Sp
 033200 Jz (Var Sp) (Branch F (Dloc 033210))
 033203 Print_ret "nothing."
 033210 Print_ret "."
---------------------------------------------------
-gap=17
-033230 RoutineHeader [0,0]
--- unused: [1,2]
+033213 Je [Var (Global 239),Con 5] (Branch F (Dloc 033234))
+033217 Print "You open "
+033226 CallN (Floc 081916) [Var (Local 2)]
 033231 Print_ret "."
---------------------------------------------------
-gap=10
-033244 RoutineHeader [0,0]
--- unused: [1]
-033245 Inc (Con 42)
-033247 Mod (Var (Global 112)) (Var (Global 149)) (Global 202)
-033251 Loadw (Con 79) (Var (Global 239)) (Local 2)
+033234 Je [Var (Global 239),Con 6] (Branch F (Dloc 033263))
+033238 CallN (Floc 081964) [Var (Global 37)]
+033243 Print " opens "
+033250 CallN (Floc 081916) [Var (Local 2)]
 033255 Print ".\n"
 033260 Jump 033289
---------------------------------------------------
-gap=63
-033326 RoutineHeader []
+033263 Je [Var (Global 239),Con 7] (Branch F (Dloc 033289))
+033267 CallN (Floc 081964) [Var (Local 2)]
+033272 Print " open"
+033277 Test_attr (Var (Local 2)) (Con 26) (Branch T (Dloc 033284))
+033281 Print "s"
+033284 Print ".\n"
+033289 Rtrue
+033290 Je [Var (Global 233),Con 43] (Branch F (Dloc 033361))
+033295 Store (Con 255) (Var (Local 1))
+033298 Je [Var (Global 239),Con 1] (Branch F (Dloc 033318))
+033302 Print "At the moment, "
+033315 Jump 033360
+033318 Je [Var (Global 239),Con 2] (Branch F (Dloc 033330))
+033322 Print "means "
 033327 Jump 033360
---------------------------------------------------
-gap=16
-033346 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-033347 Test (Var (Global 125)) (Con 113) (Branch F (Dloc 027137))
+033330 Je [Var (Global 239),Con 3] (Branch F (Dloc 033344))
+033334 Print "is unset"
+033341 Jump 033360
+033344 Je [Var (Global 239),Con 4] (Branch F (Dloc 033353))
+033348 Print_paddr (Con 28967)
+033351 New_line
 033352 Rtrue
---------------------------------------------------
-gap=103
-033456 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-033457 Test (Var (Global 125)) (Con 113) (Branch F (Dloc 028783))
+033353 Je [Var (Global 239),Con 5] (Branch F (Dloc 033360))
+033357 Print_ret "."
+033360 Rtrue
+033361 Je [Var (Global 233),Con 44,Con 45,Con 46] (Branch F (Dloc 033548))
+033369 Store (Con 255) (Var (Local 1))
+033372 Je [Var (Global 239),Con 1] (Branch F (Dloc 033412))
+033376 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 033392))
+033380 Print "Those are "
+033389 Jump 033399
+033392 Print "It is "
+033399 Print_ret "fixed in place."
+033412 Je [Var (Global 239),Con 2] (Branch F (Dloc 033431))
+033416 Print_ret "You are unable to."
+033431 Je [Var (Global 239),Con 3] (Branch F (Dloc 033454))
+033435 Print_ret "Nothing obvious happens."
+033454 Je [Var (Global 239),Con 4] (Branch F (Dloc 033463))
+033458 Print_paddr (Con 28973)
+033461 New_line
 033462 Rtrue
---------------------------------------------------
-gap=39
-033502 RoutineHeader [0,0]
--- unused: [1,2]
-033503 Quit
---------------------------------------------------
-gap=8
-033512 RoutineHeader [0,0]
--- unused: [1,2]
+033463 Je [Var (Global 239),Con 5] (Branch F (Dloc 033492))
+033467 CallN (Floc 081964) [Var (Global 37)]
+033472 Print " pulls "
+033479 CallN (Floc 081916) [Var (Local 2)]
+033484 Print ".\n"
+033489 Jump 033547
+033492 Je [Var (Global 239),Con 6] (Branch F (Dloc 033521))
+033496 CallN (Floc 081964) [Var (Global 37)]
+033501 Print " pushes "
+033508 CallN (Floc 081916) [Var (Local 2)]
 033513 Print ".\n"
 033518 Jump 033547
---------------------------------------------------
-gap=43
-033564 RoutineHeader [0,0]
--- unused: [1,2]
+033521 Je [Var (Global 239),Con 7] (Branch F (Dloc 033547))
+033525 CallN (Floc 081964) [Var (Global 37)]
+033530 Print " turns "
+033537 CallN (Floc 081916) [Var (Local 2)]
+033542 Print ".\n"
+033547 Rtrue
+033548 Je [Var (Global 233),Con 47] (Branch F (Dloc 033618))
+033553 Store (Con 255) (Var (Local 1))
+033556 Je [Var (Global 239),Con 1] (Branch F (Dloc 033571))
+033560 CallN (Floc 081964) [Var (Local 2)]
 033565 Print_paddr (Con 28979)
 033568 Jump 033617
---------------------------------------------------
-gap=95
-033666 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+033571 Je [Var (Global 239),Con 2] (Branch F (Dloc 033594))
+033575 Print_ret "That's not a direction."
+033594 Je [Var (Global 239),Con 3] (Branch F (Dloc 033617))
+033598 Print_ret "Not that way you can't."
+033617 Rtrue
+033618 Je [Var (Global 233),Con 48] (Branch F (Dloc 033901))
+033623 Store (Con 255) (Var (Local 1))
+033626 Je [Var (Global 239),Con 1] (Branch F (Dloc 033691))
+033630 Print "You need to be holding "
+033647 CallN (Floc 081916) [Var (Local 2)]
+033652 Print " before you can put "
 033667 CallN (Floc 027260) [Var (Local 2)]
 033672 Print_ret " on top of something else."
---------------------------------------------------
-gap=11
-033702 RoutineHeader [0,0,0]
--- unused: [1,3]
-033703 Test (Var (Global 162)) (Var (Global 2)) (Branch T (Dloc 032273))
-033708 Insert_obj (Con 77) (Var (Global 112))
-033711 Inc_chk (Var (Global 158)) (Var (Global 61)) (Branch T (Dloc 039860))
-033716 Get_parent (Con 128) (Global 149)
+033691 Je [Var (Global 239),Con 2] (Branch F (Dloc 033700))
+033695 Print_paddr (Con 28986)
+033698 New_line
+033699 Rtrue
+033700 Je [Var (Global 239),Con 3] (Branch F (Dloc 033741))
+033704 Print "Putting things on "
 033719 CallN (Floc 081916) [Var (Local 2)]
 033724 Print_ret " would achieve nothing."
---------------------------------------------------
-gap=81
-033822 RoutineHeader [0,0]
--- unused: [1,2]
+033741 Je [Var (Global 239),Con 4] (Branch F (Dloc 033764))
+033745 Print_ret "You lack the dexterity."
+033764 Je [Var (Global 239),Con 5] (Branch F (Dloc 033795))
+033768 Print "(first taking "
+033779 CallN (Floc 027260) [Var (Local 2)]
+033784 Print " off)\n"
+033791 Store (Con 20) (Con 0)
+033794 Rtrue
+033795 Je [Var (Global 239),Con 6] (Branch F (Dloc 033826))
+033799 Print "There is no more room on "
+033818 CallN (Floc 081916) [Var (Local 2)]
 033823 Print_ret "."
---------------------------------------------------
-gap=26
-033852 RoutineHeader [0,0]
--- unused: [1,2]
+033826 Je [Var (Global 239),Con 7] (Branch F (Dloc 033837))
+033830 Print_ret "Done."
+033837 Je [Var (Global 239),Con 8] (Branch F (Dloc 033866))
+033841 Print "You put "
+033848 CallN (Floc 081916) [Var (Local 2)]
 033853 Print " on "
 033858 CallN (Floc 081916) [Var (Global 48)]
 033863 Print_ret "."
---------------------------------------------------
-gap=10
-033876 RoutineHeader [0,0]
--- unused: [1,2]
-033877 Quit
---------------------------------------------------
-gap=6
-033884 RoutineHeader [0,0]
--- unused: [1,2]
+033866 Je [Var (Global 239),Con 9] (Branch F (Dloc 033900))
+033870 CallN (Floc 081964) [Var (Global 37)]
+033875 Print " puts "
+033880 CallN (Floc 081916) [Var (Local 2)]
 033885 Print " on "
 033890 CallN (Floc 081916) [Var (Global 48)]
 033895 Print ".\n"
 033900 Rtrue
---------------------------------------------------
-gap=111
-034012 RoutineHeader [0,0]
--- unused: [1]
-034013 Test_attr (Var (Global 58)) (Var (Local 2)) (Branch F (Dloc 040754))
+033901 Je [Var (Global 233),Con 0] (Branch F (Dloc 033962))
+033905 Store (Con 255) (Var (Local 1))
+033908 Je [Var (Global 239),Con 1] (Branch F (Dloc 033934))
+033912 Print "Please answer yes or no."
+033931 Jump 033961
+033934 Je [Var (Global 239),Con 2] (Branch F (Dloc 033961))
+033938 Print "Are you sure you want to quit? "
+033961 Rtrue
+033962 Je [Var (Global 233),Con 49] (Branch F (Dloc 034068))
+033967 Store (Con 255) (Var (Local 1))
+033970 Je [Var (Global 239),Con 1] (Branch F (Dloc 034010))
+033974 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 033988))
+033978 Print "They are"
+033985 Jump 033993
+033988 Print "It is"
+033993 Print_ret " unfortunately closed."
+034010 Je [Var (Global 239),Con 2] (Branch F (Dloc 034054))
+034014 Test_attr (Var (Local 2)) (Con 26) (Branch F (Dloc 034034))
 034018 Print "But they aren't"
 034031 Jump 034045
---------------------------------------------------
-gap=36
-034070 RoutineHeader [0]
--- unused: [1]
-034071 Set_colour (Var (Global 29)) (Con 255)
-034074 Je [Con 65,Con 255] (Branch F (Dloc 034405))
+034034 Print "But it isn't"
+034045 Print_ret " there now."
+034054 Je [Var (Global 239),Con 3] (Branch F (Dloc 034067))
+034058 Print_ret "Removed."
+034067 Rtrue
+034068 Je [Var (Global 233),Con 1] (Branch F (Dloc 034097))
+034072 Store (Con 255) (Var (Local 1))
+034075 Je [Var (Global 239),Con 1] (Branch F (Dloc 034085))
 034079 Print_paddr (Con 28994)
 034082 Jump 034096
---------------------------------------------------
-gap=59
-034144 RoutineHeader [0,0]
-034145 Add (Var (Global 85)) (Var (Global 158)) (Global 61)
-034149 Jz (Con 8128) (Branch F (Dloc 034188))
-034153 Load (Var (Global 208)) (Global 162)
+034085 Je [Var (Global 239),Con 2] (Branch F (Dloc 034096))
+034089 Print_ret "Failed."
+034096 Rtrue
+034097 Je [Var (Global 233),Con 2] (Branch F (Dloc 034131))
+034101 Store (Con 255) (Var (Local 1))
+034104 Je [Var (Global 239),Con 1] (Branch F (Dloc 034121))
+034108 Print_ret "Restore failed."
+034121 Je [Var (Global 239),Con 2] (Branch F (Dloc 034130))
+034125 Print_ret "Ok."
+034130 Rtrue
+034131 Je [Var (Global 233),Con 50] (Branch F (Dloc 034156))
+034135 Print_ret "You achieve nothing by this."
 034156 Je [Var (Global 233),Con 3] (Branch F (Dloc 034188))
 034160 Store (Con 255) (Var (Local 1))
 034163 Je [Var (Global 239),Con 1] (Branch F (Dloc 034178))
@@ -2750,7 +3092,6 @@ gap=1
 --------------------------------------------------
 gap=3
 038268 RoutineHeader [0,0,0,0]
--- unused: [2,3]
 038269 Jz (Var (Local 1)) (Branch T (Dloc 038278))
 038272 Get_parent (Var (Local 1)) Sp
 038275 Jz (Var Sp) (Branch F (Dloc 038279))
@@ -2765,29 +3106,37 @@ gap=3
 038302 Je [Var (Local 4),Con 1] (Branch F (Dloc 038310))
 038306 Get_sibling (Var (Local 1)) (Local 1) (Branch F (Dloc 038310))
 038310 Jump 038317
---------------------------------------------------
-gap=1
-038314 RoutineHeader [0]
--- unused: [1]
-038315 Je [Con 66,Con 160] (Branch F (Dloc 038641))
+038317 Jz (Var (Local 1)) (Branch F (Dloc 038321))
 038320 Rfalse
---------------------------------------------------
-gap=57
-038378 RoutineHeader [0]
-038379 Loadw (Con 69) (Con 140) (Global 239)
-038383 New_line
+038321 Jz (Var (Local 3)) (Branch T (Dloc 038338))
+038324 Get_prop (Var (Local 1)) (Con 28) (Global 239)
+038328 Push (Var (Global 239))
+038331 Je [Var Sp,Var (Local 3)] (Branch T (Dloc 038338))
+038335 Jump 038313
+038338 And (Var (Global 93)) (Con 512) Sp
+038344 Jz (Var Sp) (Branch T (Dloc 038357))
+038347 Jz (Var (Local 2)) (Branch F (Dloc 038357))
+038350 Test_attr (Var (Local 1)) (Con 34) (Branch T (Dloc 038357))
+038354 Jump 038313
+038357 Test_attr (Var (Local 1)) (Con 29) (Branch T (Dloc 038364))
+038361 Jump 038313
+038364 And (Var (Global 93)) (Con 2048) Sp
+038370 Jz (Var Sp) (Branch T (Dloc 038384))
+038373 Test_attr (Var (Local 1)) (Con 3) (Branch T (Dloc 038381))
+038377 Test_attr (Var (Local 1)) (Con 15) (Branch F (Dloc 038384))
+038381 Jump 038313
 038384 Ret (Var (Local 1))
 --------------------------------------------------
 gap=2
 038388 RoutineHeader [0,0,0,0]
--- unused: [2,3,4]
 038389 Store (Con 2) (Var (Local 1))
 038392 Jump 038399
---------------------------------------------------
-gap=25
-038420 RoutineHeader [0,0,0,0,0,0]
--- unused: [5,6]
-038421 Get_sibling (Var (Local 2)) (Local 2) (Branch F (Dloc 038425))
+038399 Jz (Var (Local 2)) (Branch T (Dloc 038492))
+038403 Get_prop (Var (Local 2)) (Con 28) (Global 239)
+038407 Store (Con 3) (Var (Global 239))
+038410 Jz (Var (Local 3)) (Branch T (Dloc 038489))
+038414 Get_sibling (Var (Local 2)) (Local 2) (Branch F (Dloc 038418))
+038418 Jump 038425
 038425 Jz (Var (Local 2)) (Branch T (Dloc 038442))
 038428 Get_prop (Var (Local 2)) (Con 28) (Global 239)
 038432 Push (Var (Global 239))
@@ -2797,11 +3146,7 @@ gap=25
 038445 Ret (Var (Local 1))
 038447 Get_sibling (Var (Local 2)) (Local 4) (Branch F (Dloc 038451))
 038451 Jump 038458
---------------------------------------------------
-gap=2
-038456 RoutineHeader [0,0,0,0]
--- unused: [2]
-038457 Jl (Var (Global 144)) (Con 4) (Branch T (Dloc 038489))
+038458 Jz (Var (Local 4)) (Branch T (Dloc 038489))
 038461 Get_prop (Var (Local 4)) (Con 28) (Global 239)
 038465 Push (Var (Global 239))
 038468 Je [Var Sp,Var (Local 3)] (Branch F (Dloc 038486))
@@ -2810,8 +3155,9 @@ gap=2
 038483 Jump 038389
 038486 Jump 038454
 038489 Jump 038395
+038492 Ret (Var (Local 1))
 --------------------------------------------------
-gap=4
+gap=2
 038496 RoutineHeader [0,0,0,0,0,0,0]
 038497 Push (Var (Global 95))
 038500 Push (Var (Global 93))
@@ -2872,8 +3218,7 @@ gap=0
 038694 Rtrue
 --------------------------------------------------
 gap=1
-**LOST**038696 RoutineHeader [0,0,0,0,0,0,0,0,0,0]
--- unused: [3,5,7,8,9,10]
+038696 RoutineHeader [0,0,0,0,0,0,0,0,0,0]
 038697 Store (Con 6) (Con 0)
 038700 Jl (Var (Local 6)) (Var (Local 2)) (Branch F (Dloc 038714))
 038704 Storeb (Var (Local 4)) (Var (Local 6)) (Con 0)
@@ -2883,23 +3228,14 @@ gap=1
 038717 Store (Con 6) (Var (Local 1))
 038720 Store (Con 7) (Con 0)
 038723 Jump 038737
---------------------------------------------------
-gap=-24 **OVERLAP**
-038702 RoutineHeader [0,0]
--- unused: [1,2]
-038703 Clear_attr (Var (Global 210)) (Con 167)
-038706 Dec_chk (Con 6) (Con 0) (Branch T (Dloc 044091))
-038711 Jump 038700
---------------------------------------------------
-gap=2
-038716 RoutineHeader [0]
-038717 Store (Con 6) (Var (Local 1))
-038720 Store (Con 7) (Con 0)
-038723 Jump 038737
---------------------------------------------------
-gap=60
-038786 RoutineHeader [0,0,0,0,0,0,0,0,0,0]
--- unused: [1,3,7]
+038737 Jl (Var (Local 7)) (Var (Local 2)) (Branch F (Dloc 038853))
+038742 Loadb (Var (Local 4)) (Var (Local 7)) Sp
+038746 Jz (Var Sp) (Branch F (Dloc 038850))
+038750 Storeb (Var (Local 4)) (Var (Local 7)) (Var (Local 9))
+038755 Storeb (Var (Local 5)) (Var (Local 9)) (Con 1)
+038760 Call (Fvar (Global 95)) [Var (Local 6),Var (Local 3),Var (Global 96),Con 1] (Local 8)
+038769 Add (Var (Local 7)) (Con 1) (Local 10)
+038773 Jump 038787
 038787 Jz (Var (Local 8)) (Branch T (Dloc 038844))
 038790 Jl (Var (Local 10)) (Var (Local 2)) (Branch F (Dloc 038844))
 038794 Loadb (Var (Local 4)) (Var (Local 10)) Sp
@@ -2918,8 +3254,10 @@ gap=60
 038844 Jl (Var (Local 9)) (Con 255) (Branch F (Dloc 038850))
 038848 Inc (Con 9)
 038850 Jump 038726
+038853 Dec (Con 9)
+038855 Ret (Var (Local 9))
 --------------------------------------------------
-gap=7
+gap=3
 038860 RoutineHeader [0,0]
 038861 Get_prop (Var (Local 1)) (Con 31) (Global 239)
 038865 Push (Var (Global 239))
@@ -2997,8 +3335,8 @@ gap=0
 039112 Ret (Var (Local 6))
 --------------------------------------------------
 gap=2
-**LOST**039116 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
--- unused: [4,5,6,7,8,9,10,11,12,13,14,15]
+039116 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+-- unused: [9]
 039117 Jz (Var (Local 1)) (Branch F (Dloc 039121))
 039120 Rtrue
 039121 Jz (Var (Local 3)) (Branch T (Dloc 039133))
@@ -3009,27 +3347,110 @@ gap=2
 039146 Store (Con 7) (Var (Local 1))
 039149 Store (Con 8) (Con 0)
 039152 Jump 039164
---------------------------------------------------
-gap=-7 **OVERLAP**
-039148 RoutineHeader [0]
--- unused: [1]
-039149 Store (Con 8) (Con 0)
-039152 Jump 039164
---------------------------------------------------
-gap=251
-039406 RoutineHeader []
+039164 Jz (Var (Local 7)) (Branch T (Dloc 039172))
+039167 Inc (Con 8)
+039169 Jump 039155
+039172 And (Var (Global 93)) (Con 1024) Sp
+039178 Jz (Var Sp) (Branch T (Dloc 039220))
+039181 Je [Var (Local 8),Con 1] (Branch F (Dloc 039194))
+039185 Test_attr (Var (Local 1)) (Con 26) (Branch T (Dloc 039194))
+039189 Print_paddr (Var (Global 130))
+039191 Jump 039196
+039194 Print_paddr (Var (Global 131))
+039196 And (Var (Global 93)) (Con 1) Sp
+039200 Jz (Var Sp) (Branch T (Dloc 039211))
+039203 Print ":\n"
+039208 Jump 039214
+039211 Print_char (Con 32)
+039214 Sub (Var (Global 93)) (Con 1024) (Global 93)
+039220 Div (Var (Local 8)) (Con 2) Sp
+039224 Add (Var Sp) (Con 2) Sp
+039228 Call (Floc 037736) [Var Sp] (Local 4)
+039234 Div (Var (Local 8)) (Con 2) Sp
+039238 Add (Var Sp) (Con 2) Sp
+039242 Call (Floc 037736) [Var Sp] (Local 5)
+039248 Jz (Var (Local 4)) (Branch T (Dloc 039254))
+039251 Jz (Var (Local 5)) (Branch F (Dloc 039261))
+039254 Call (Floc 086692) [Con 42] Sp
+039260 Ret_popped
+039261 Call (Floc 038696) [Var (Local 1),Var (Local 8),Var (Local 2),Var (Local 4),Var (Local 5)] (Local 12)
+039272 Call (Floc 039024) [Var (Local 1),Var (Local 12),Var (Local 2),Var (Local 4),Var (Local 5)] (Local 14)
+039283 Store (Con 6) (Con 1)
+039286 Store (Con 7) (Var (Local 1))
+039289 Store (Con 8) (Con 0)
+039292 Store (Con 15) (Con 0)
+039295 Jg (Var (Local 14)) (Con 0) (Branch F (Dloc 039589))
+039300 Loadb (Var (Local 4)) (Var (Local 8)) Sp
+039304 Je [Var Sp,Var (Local 6)] (Branch T (Dloc 039363))
+039308 Inc (Con 8)
+039310 Call (Fvar (Global 95)) [Var (Local 7),Var (Local 2),Var (Global 96),Con 1] (Local 7)
+039319 Jz (Var (Local 7)) (Branch F (Dloc 039360))
+039322 Print "*** Error in list-writer ***\n"
+039357 Jump 039363
+039360 Jump 039300
+039363 Get_prop (Var (Local 7)) (Con 28) (Global 239)
+039367 Push (Var (Global 239))
+039370 Je [Var Sp,Var (Global 96)] (Branch T (Dloc 039404))
+039374 Get_prop (Var (Local 7)) (Con 28) (Global 239)
+039378 Push (Var (Global 239))
+039381 Pull (Con 255)
+039384 Call (Floc 026172) [Var (Global 239),Con 3] Sp
+039391 Jz (Var Sp) (Branch F (Dloc 039410))
+039394 Call (Floc 026172) [Var (Global 239),Con 4] Sp
+039401 Jz (Var Sp) (Branch F (Dloc 039410))
+039404 Store (Con 15) (Con 0)
 039407 Jump 039538
---------------------------------------------------
-gap=110
-039520 RoutineHeader [0,0]
--- unused: [1,2]
-039521 Inc_chk (Con 81) (Con 7) (Branch F (Dloc 046947))
+039410 Get_prop (Var (Local 7)) (Con 28) (Global 239)
+039414 Push (Var (Global 239))
+039417 Je [Var Sp,Var (Local 15)] (Branch F (Dloc 039424))
+039421 Jump 039584
+039424 Push (Var (Global 98))
+039427 Store (Con 13) (Var (Local 7))
+039430 Store (Con 114) (Con 1)
+039433 Store (Con 10) (Var (Local 8))
+039436 Store (Con 11) (Var (Local 6))
+039439 Jl (Var (Local 11)) (Var (Local 12)) (Branch F (Dloc 039509))
+039444 Get_prop (Var (Local 7)) (Con 28) (Global 239)
+039448 Push (Var (Global 239))
+039451 Get_prop (Var (Local 13)) (Con 28) (Global 239)
+039455 Push (Var (Global 239))
+039458 Je [Var Sp,Var Sp] (Branch F (Dloc 039509))
+039462 Inc (Con 11)
+039464 Loadb (Var (Local 4)) (Var (Local 10)) Sp
+039468 Je [Var Sp,Var (Local 11)] (Branch T (Dloc 039486))
+039472 Inc (Con 10)
+039474 Call (Fvar (Global 95)) [Var (Local 13),Var (Local 2),Var (Global 96),Con 1] (Local 13)
+039483 Jump 039464
+039486 Get_prop (Var (Local 7)) (Con 28) (Global 239)
+039490 Push (Var (Global 239))
+039493 Get_prop (Var (Local 13)) (Con 28) (Global 239)
+039497 Push (Var (Global 239))
+039500 Je [Var Sp,Var Sp] (Branch F (Dloc 039506))
+039504 Inc (Con 114)
+039506 Jump 039439
+039509 Jg (Var (Global 98)) (Con 1) (Branch F (Dloc 039532))
+039513 CallN (Floc 039600) [Var (Local 6),Var (Local 7),Var (Local 2),Var (Local 5)]
+039522 Get_prop (Var (Local 7)) (Con 28) (Global 239)
 039526 Store (Con 15) (Var (Global 239))
 039529 Jump 039551
---------------------------------------------------
-gap=66
-039598 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+039532 Store (Con 15) (Con 0)
+039535 Pull (Con 114)
+039538 Loadb (Var (Local 5)) (Var (Local 6)) Sp
+039542 CallN (Floc 039872) [Var (Local 6),Var (Local 7),Var (Local 2),Var Sp]
+039551 Dec (Con 14)
+039553 And (Var (Global 93)) (Con 8) Sp
+039557 Jz (Var Sp) (Branch T (Dloc 039584))
+039560 Je [Var (Local 14),Con 1] (Branch F (Dloc 039577))
+039564 Jg (Var (Local 6)) (Con 1) (Branch T (Dloc 039574))
+039568 Print_paddr (Con 28520)
+039571 Jump 039577
+039574 Print_paddr (Con 28519)
+039577 Jg (Var (Local 14)) (Con 1) (Branch F (Dloc 039584))
+039581 Print_paddr (Con 28523)
+039584 Inc (Con 6)
+039586 Jump 039295
+039589 CallN (Floc 037764) [Var (Local 5)]
+039594 CallN (Floc 037764) [Var (Local 4)]
 039599 Rtrue
 --------------------------------------------------
 gap=0
@@ -3606,7 +4027,6 @@ gap=1
 --------------------------------------------------
 gap=2
 041572 RoutineHeader [0,0,0,0,0,0,0]
--- unused: [6,7]
 041573 Div (Var (Local 2)) (Con 100) (Local 3)
 041577 Mod (Var (Local 2)) (Con 100) Sp
 041581 Add (Var (Local 3)) (Var Sp) Sp
@@ -3621,12 +4041,17 @@ gap=2
 041620 Store (Con 6) (Var (Local 3))
 041623 Store (Con 7) (Var (Local 5))
 041626 Jump 041633
---------------------------------------------------
-gap=31
-041660 RoutineHeader []
+041633 Jg (Var (Local 7)) (Con 0) (Branch F (Dloc 041665))
+041637 Call (Fvar (Local 1)) [Var (Local 6),Con 0] Sp
+041643 Je [Var Sp,Con -1] (Branch T (Dloc 041662))
+041649 Mul (Var (Local 6)) (Con 100) Sp
+041653 Add (Var Sp) (Var (Global 75)) Sp
+041657 Sub (Var Sp) (Var (Local 6)) Sp
 041661 Ret_popped
+041662 Jump 041629
+041665 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 041668 RoutineHeader [0,0,0]
 041669 Store (Con 91) (Con 1)
 041672 Jz (Var (Local 2)) (Branch T Dfalse)
@@ -3805,8 +4230,9 @@ gap=3
 042323 CallN (Floc 036596) [Con 4097,Con 13]
 042330 Jump 041907
 042333 Ret (Var (Local 3))
+042338 Rtrue
 --------------------------------------------------
-gap=5
+gap=1
 042340 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0]
 -- unused: [8]
 042341 Store (Con 163) (Con 0)
@@ -4429,8 +4855,7 @@ gap=0
 044873 Ret (Var (Local 7))
 --------------------------------------------------
 gap=1
-**LOST**044876 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
--- unused: [7,8,9,10,11,12,13,14,15]
+044876 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 044877 Store (Con 171) (Con 0)
 044880 Store (Con 155) (Con 1)
 044883 Store (Con 255) (Var (Local 1))
@@ -4555,68 +4980,52 @@ gap=1
 045346 Je [Var (Local 5),Con -1] (Branch F (Dloc 045428))
 045353 Store (Con 5) (Con 1)
 045356 Jump 045363
---------------------------------------------------
-gap=-415 **OVERLAP**
-044944 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-044945 Ret (Con -1)
---------------------------------------------------
-gap=114
-045062 RoutineHeader [0,0,0,0,0,0]
--- unused: [1,2,4,5]
-045063 Set_colour (Var (Global 29)) (Con 91)
-045066 Or (Var (Global 120)) (Con 40) (Global 36)
-045070 Test_attr (Var (Global 29)) (Con 91) (Branch F (Dloc 046785))
-045075 Je [Var (Local 6),Con -1] (Branch F (Dloc 045098))
-045081 Add (Var (Local 3)) (Con 1) Sp
-045085 Loadw (Con 9811) (Var Sp) Sp
-045091 Je [Var Sp,Con 2] (Branch F (Dloc 045098))
-045095 Ret (Con -1)
-045098 Rfalse
---------------------------------------------------
-gap=83
-045182 RoutineHeader [0,0,0,0,0,0]
--- unused: [1,4,5]
-045183 Call (Floc 025032) [Var (Local 6)] Sp
-045189 Add (Con 10000) (Var Sp) Sp
-045195 Storew (Con 9683) (Var (Global 140)) (Var Sp)
-045201 Je [Var (Local 6),Var (Local 2)] (Branch F (Dloc 045206))
-045205 Rfalse
-045206 Call (Floc 046384) [Var (Local 6),Var (Local 3)] Sp
-045213 Je [Var Sp,Con -1] (Branch T (Dloc 045220))
-045219 Rfalse
-045220 Ret (Con -1)
---------------------------------------------------
-gap=21
-045244 RoutineHeader [0,0,0,0,0]
--- unused: [1,2,3,4]
-045245 Je [Var (Local 5),Con 1] (Branch F (Dloc 045255))
-045249 Store (Con 2) (Con 2)
-045252 Jump 045258
-045255 Store (Con 2) (Con 0)
-045258 Jump 045285
---------------------------------------------------
-gap=5
-045266 RoutineHeader [0]
--- unused: [1]
-045267 Jl (Con 171) (Con 13) (Branch F (Dloc 045782))
-045272 Jump 045285
---------------------------------------------------
-gap=59
-045334 RoutineHeader [0,0,0,0,0,0]
--- unused: [1,2,3,4]
-045335 Inc_chk (Con 160) (Con 5) (Branch T (Dloc 045428))
-045340 Store (Con 78) (Var (Local 6))
-045343 Store (Con 79) (Var (Local 5))
-045346 Je [Var (Local 5),Con -1] (Branch F (Dloc 045428))
-045353 Store (Con 5) (Con 1)
-045356 Jump 045363
---------------------------------------------------
-gap=187
-045546 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0]
--- unused: [2,3,6,11]
-045547 Jl (Var (Local 1)) (Con 136) (Branch F (Dloc 041586))
-045552 Jl (Var (Global 124)) (Con 1) (Branch F Dtrue)
+045363 Loadw (Con 9023) (Con 0) Sp
+045369 Jg (Var (Local 5)) (Var Sp) (Branch T (Dloc 045389))
+045373 Loadw (Con 9023) (Var (Local 5)) Sp
+045379 Je [Var (Local 6),Var Sp] (Branch F (Dloc 045386))
+045383 Jump 045428
+045386 Jump 045359
+045389 Store (Con 189) (Var (Global 62))
+045392 Store (Con 190) (Var (Global 63))
+045395 Store (Con 66) (Con 10)
+045398 Jl (Var (Global 61)) (Con 3) (Branch T (Dloc 045425))
+045402 Print "  [Stop: unset pronoun]\n"
+045425 Ret (Con -1)
+045428 Je [Var (Local 6),Con 22808,Con 22862,Con 23501] (Branch F (Dloc 045444))
+045438 Store (Con 78) (Var (Local 6))
+045441 Store (Con 79) (Var (Global 31))
+045444 Store (Con 186) (Con 1)
+045447 Store (Con 12) (Var (Global 75))
+045450 Call (Floc 046020) [Var (Local 14)] (Local 5)
+045456 Jz (Var (Local 5)) (Branch T (Dloc 045463))
+045459 Store (Con 66) (Var (Local 5))
+045462 Rfalse
+045463 Store (Con 164) (Var (Global 75))
+045466 Je [Var (Local 4),Con 1] (Branch T (Dloc 045688))
+045471 Loadw (Con 8338) (Con 0) (Local 7)
+045477 Call (Floc 046488) [Var (Global 38),Var (Global 37),Var (Local 4)] (Local 5)
+045485 Je [Var (Local 5),Con 10000] (Branch F (Dloc 045493))
+045491 Ret (Var (Local 5))
+045493 Je [Var (Global 164),Con 100] (Branch F (Dloc 045506))
+045497 Jz (Var (Local 5)) (Branch F (Dloc 045506))
+045500 Jz (Var (Global 175)) (Branch F (Dloc 045506))
+045503 Store (Con 5) (Con 1)
+045506 Jz (Var (Local 14)) (Branch T (Dloc 045522))
+045509 Jz (Var (Global 45)) (Branch F (Dloc 045522))
+045512 Je [Var (Global 137),Con 8] (Branch F (Dloc 045519))
+045516 Store (Con 153) (Con 1)
+045519 Store (Con 61) (Con 1)
+045522 Jz (Var (Local 5)) (Branch F (Dloc 045556))
+045525 Jz (Var (Global 168)) (Branch T (Dloc 045537))
+045528 CallN (Floc 045912) []
+045531 Store (Con 91) (Var (Local 12))
+045534 Jump 045463
+045537 Je [Var (Global 50),Con 8,Con 16] (Branch F (Dloc 045549))
+045543 Jz (Var (Global 45)) (Branch T (Dloc 045549))
+045546 Store (Con 66) (Con 1)
+045549 Call (Floc 049680) [] (Global 50)
+045553 Jump 045875
 045556 Je [Var (Local 5),Con 1] (Branch F (Dloc 045626))
 045561 Jz (Var (Local 13)) (Branch F (Dloc 045570))
 045564 Store (Con 13) (Con 1)
@@ -4652,29 +5061,62 @@ gap=187
 045677 Jump 045685
 045680 CallN (Floc 049776) [Var (Local 5)]
 045685 Jump 045736
---------------------------------------------------
-gap=30
-045718 RoutineHeader [0,0]
--- unused: [1,2]
+045688 Call (Floc 046488) [Var (Global 37),Var (Global 38),Var (Local 4)] (Local 5)
+045696 Je [Var (Local 5),Con 10000] (Branch F (Dloc 045704))
+045702 Ret (Var (Local 5))
+045704 Jz (Var (Local 5)) (Branch F (Dloc 045726))
+045707 Jz (Var (Global 168)) (Branch T (Dloc 045719))
+045710 CallN (Floc 045912) []
+045713 Store (Con 91) (Var (Local 12))
+045716 Jump 045463
 045719 Call (Floc 049680) [] (Global 50)
 045723 Jump 045875
---------------------------------------------------
-gap=80
-045806 RoutineHeader []
-045807 Je [Con 225,Con 27] (Branch F (Dloc 037764))
-045812 Je [Con 11,Con 13] (Branch F (Dloc 049144))
+045726 Get_parent (Var (Local 5)) (Local 6)
+045729 Je [Var (Local 6),Var (Global 37)] (Branch T (Dloc 045733))
+045733 Store (Con 11) (Var (Local 5))
+045736 Add (Var (Global 148)) (Var (Global 177)) (Global 75)
+045740 Call (Floc 041168) [] (Local 6)
+045744 Je [Var (Local 6),Con 21548,Con 21548,Con 21548] (Branch T (Dloc 045770))
+045754 Je [Var (Local 6),Con 21728,Con 22196,Con 21728] (Branch T (Dloc 045770))
+045764 Je [Var (Local 6),Con 21836] (Branch F (Dloc 045826))
+045770 Jz (Var (Local 14)) (Branch F (Dloc 045785))
+045773 Jz (Var (Global 45)) (Branch T (Dloc 045779))
+045776 Jump 045828
+045779 Store (Con 66) (Con 8)
+045782 Jump 045875
+045785 Je [Var (Local 6),Con 21728,Con 22196,Con 21728] (Branch F (Dloc 045799))
+045795 Sub (Con 1) (Var (Local 10)) (Local 10)
+045799 Jz (Var (Local 13)) (Branch F (Dloc 045817))
+045802 Storew (Con 8338) (Con 0) (Con 1)
+045808 Storew (Con 8338) (Con 1) (Var (Local 11))
+045814 Store (Con 13) (Con 1)
 045817 Store (Con 162) (Con 1)
 045820 Store (Con 160) (Con 0)
 045823 Jump 045314
---------------------------------------------------
-gap=10
-045836 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+045826 Dec (Con 91)
+045828 Jz (Var (Local 13)) (Branch T (Dloc 045840))
+045831 Store (Con 11) (Con 2)
+045834 Store (Con 177) (Var (Local 4))
 045837 Jump 045873
---------------------------------------------------
-gap=60
-045900 RoutineHeader []
-045901 Or (Var (Global 144)) (Con 61) (Global 53)
+045840 Je [Var (Global 162),Con 1] (Branch F (Dloc 045873))
+045844 And (Var (Global 163)) (Con 8) Sp
+045850 Jz (Var Sp) (Branch T (Dloc 045873))
+045853 Jl (Var (Global 164)) (Con 100) (Branch F (Dloc 045873))
+045857 Jg (Var (Global 164)) (Con 1) (Branch F (Dloc 045873))
+045861 Store (Con 176) (Con 1)
+045864 Store (Con 175) (Var (Global 164))
+045867 Store (Con 66) (Con 16)
+045870 Jump 045875
+045873 Ret (Var (Local 11))
+045875 Jz (Var (Global 170)) (Branch T (Dloc 045894))
+045878 Je [Var (Global 165),Con 1] (Branch F (Dloc 045894))
+045882 Store (Con 15) (Var (Global 164))
+045885 Store (Con 186) (Con 0)
+045888 Store (Con 91) (Var (Local 12))
+045891 Jump 045450
+045894 Jg (Var (Global 164)) (Con 0) (Branch T (Dloc 045902))
+045898 Jg (Var (Local 15)) (Con 0) (Branch F (Dloc 045908))
+045902 Jz (Var (Global 45)) (Branch F (Dloc 045908))
 045905 Store (Con 66) (Con 8)
 045908 Ret (Con -1)
 --------------------------------------------------
@@ -4692,7 +5134,7 @@ gap=1
 --------------------------------------------------
 gap=0
 045940 RoutineHeader [0,0,0,0,0,0]
--- unused: [2,4,5,6]
+-- unused: [4,6]
 045941 Jg (Var (Global 75)) (Var (Global 76)) (Branch F (Dloc 045946))
 045945 Rfalse
 045946 Store (Con 3) (Con 1)
@@ -4701,17 +5143,21 @@ gap=0
 045957 Store (Con 3) (Con 0)
 045960 Store (Con 2) (Con 1)
 045963 Jump 045970
---------------------------------------------------
-gap=32
-045998 RoutineHeader []
-045999 Inc_chk (Con 193) (Con 131) (Branch F (Dloc 047283))
-046004 Je [Con 1,Con 2] (Branch F (Dloc 046011))
+045970 Loadw (Con 9023) (Con 0) Sp
+045976 Jg (Var (Local 2)) (Var Sp) (Branch T (Dloc 046014))
+045980 Loadw (Con 9023) (Var (Local 2)) Sp
+045986 Je [Var (Local 1),Var Sp] (Branch F (Dloc 046011))
+045990 Add (Var (Local 2)) (Con 2) Sp
+045994 Loadw (Con 9023) (Var Sp) (Local 5)
+046000 Je [Var (Local 5),Con 257,Con 258] (Branch F (Dloc 046011))
 046008 Store (Con 3) (Con 1)
 046011 Jump 045966
+046014 Jump 045949
+046017 Dec (Con 91)
+046019 Rfalse
 --------------------------------------------------
-gap=6
+gap=0
 046020 RoutineHeader [0,0,0,0,0,0]
--- unused: [2,4,5,6]
 046021 CallN (Floc 045912) []
 046024 Jg (Var (Global 75)) (Var (Global 76)) (Branch F (Dloc 046029))
 046028 Rfalse
@@ -4721,13 +5167,72 @@ gap=6
 046040 Store (Con 3) (Con 0)
 046043 Store (Con 2) (Con 1)
 046046 Jump 046053
+046053 Loadw (Con 9023) (Con 0) Sp
+046059 Jg (Var (Local 2)) (Var Sp) (Branch T (Dloc 046191))
+046064 Loadw (Con 9023) (Var (Local 2)) Sp
+046070 Je [Var (Local 1),Var Sp] (Branch F (Dloc 046188))
+046075 Store (Con 3) (Con 1)
+046078 Add (Var (Local 2)) (Con 2) Sp
+046082 Loadw (Con 9023) (Var Sp) (Local 5)
+046088 Je [Var (Local 5),Con 257] (Branch T (Dloc 046097))
+046094 Store (Con 178) (Con 1)
+046097 Store (Con 184) (Con 1)
+046100 Add (Var (Local 2)) (Con 1) Sp
+046104 Loadw (Con 9023) (Var Sp) Sp
+046110 And (Var (Global 167)) (Var Sp) (Global 167)
+046114 Je [Var (Local 5),Con 256] (Branch F (Dloc 046170))
+046120 Add (Var (Local 2)) (Con 3) Sp
+046124 Loadw (Con 9023) (Var Sp) (Local 4)
+046130 Store (Con 255) (Var (Local 4))
+046133 Je [Var (Global 239),Con 0] (Branch F (Dloc 046144))
+046137 Or (Var (Global 163)) (Con 2) (Global 163)
+046141 Jump 046170
+046144 Je [Var (Global 239),Con 1] (Branch F (Dloc 046155))
+046148 Or (Var (Global 163)) (Con 4) (Global 163)
+046152 Jump 046170
+046155 Call (Floc 051720) [Var (Local 4)] (Global 166)
+046161 Je [Var (Global 166),Con -1] (Branch F (Dloc 046170))
+046167 Store (Con 182) (Con 9)
+046170 Je [Var (Local 5),Con 8] (Branch F (Dloc 046178))
+046174 Or (Var (Global 163)) (Con 16) (Global 163)
+046178 Je [Var (Local 5),Con -8] (Branch F (Dloc 046188))
+046184 Or (Var (Global 163)) (Con 32) (Global 163)
+046188 Jump 046049
+046191 Je [Var (Local 1),Con 21557,Con 23105,Con 23105] (Branch F (Dloc 046211))
+046201 Store (Con 178) (Con 1)
+046204 Store (Con 3) (Con 1)
+046207 Or (Var (Global 163)) (Con 1) (Global 163)
+046211 Je [Var (Local 1),Con 21512,Con 22088,Con 22169] (Branch T (Dloc 046229))
+046221 Je [Var (Local 1),Con 22178,Con 21656] (Branch F (Dloc 046249))
+046229 Store (Con 178) (Con 1)
+046232 Store (Con 3) (Con 1)
+046235 Store (Con 180) (Con 100)
+046238 Je [Var (Global 171),Con 1] (Branch F (Dloc 046245))
+046242 Store (Con 187) (Con 2)
+046245 Or (Var (Global 163)) (Con 8) (Global 163)
+046249 Jz (Var (Global 170)) (Branch T (Dloc 046292))
+046252 Call (Floc 051976) [Var (Local 1)] (Local 6)
+046258 Je [Var (Local 6),Con 1] (Branch F (Dloc 046268))
+046262 Store (Con 178) (Con 1)
+046265 Store (Con 3) (Con 1)
+046268 Jg (Var (Local 6)) (Con 1) (Branch F (Dloc 046292))
+046272 Store (Con 181) (Con 1)
+046275 Store (Con 178) (Con 1)
+046278 Store (Con 3) (Con 1)
+046281 Store (Con 180) (Var (Local 6))
+046284 Sub (Var (Global 75)) (Con 1) (Global 169)
+046288 Or (Var (Global 163)) (Con 8) (Global 163)
+046292 Je [Var (Local 3),Con 1] (Branch F (Dloc 046321))
+046296 Call (Floc 041228) [] Sp
+046300 Pull (Con 255)
+046303 Je [Var (Global 239),Con 23015,Con 23015,Con 23015] (Branch T (Dloc 046321))
+046313 Je [Var (Global 239),Con 23015] (Branch T (Dloc 046321))
+046319 Dec (Con 91)
+046321 Jump 046032
+046324 Dec (Con 91)
+046326 Rfalse
 --------------------------------------------------
-gap=101
-046150 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-046151 Print_ret "    "
---------------------------------------------------
-gap=174
+gap=1
 046328 RoutineHeader []
 046329 Push (Var (Global 162))
 046332 Push (Var (Global 163))
@@ -4973,20 +5478,44 @@ gap=3
 047350 CallN (Floc 051776) [Var Sp]
 047355 Store (Con 7) (Con 1)
 047358 Jump 047365
---------------------------------------------------
-gap=39
-047400 RoutineHeader []
+047365 Loadw (Con 8997) (Con 0) Sp
+047371 Jg (Var (Local 7)) (Var Sp) (Branch T (Dloc 047413))
+047375 Add (Var (Local 7)) (Con 2) Sp
+047379 Loadw (Con 8997) (Var Sp) Sp
+047385 Loadw (Con 9683) (Var (Local 6)) Sp
+047391 Je [Var Sp,Var Sp] (Branch F (Dloc 047410))
+047395 Loadw (Con 8997) (Var (Local 7)) Sp
 047401 Storew (Con 8932) (Con 1) (Var Sp)
 047407 Jump 047413
---------------------------------------------------
-gap=92
-047502 RoutineHeader []
+047410 Jump 047361
+047413 Jump 047440
+047416 Loadw (Con 9683) (Var (Local 6)) Sp
+047422 Sub (Var Sp) (Con 10000) Sp
+047428 Call (Floc 025052) [Var Sp] Sp
+047434 Storew (Con 8932) (Con 1) (Var Sp)
+047440 Loadw (Con 8932) (Con 1) Sp
+047446 Jz (Var Sp) (Branch T (Dloc 047522))
+047450 Add (Con 8498) (Var (Local 5)) (Local 7)
+047456 Output_stream (Con 3) (Just (Var (Local 7)))
+047460 Loadw (Con 8932) (Con 1) Sp
+047466 Print_addr (Var Sp)
+047468 Output_stream (Con -3) Nothing
+047472 Loadw (Var (Local 7)) (Con 0) (Local 7)
+047476 Store (Con 8) (Var (Local 5))
+047479 Add (Var (Local 5)) (Var (Local 7)) Sp
+047483 Jl (Var (Local 8)) (Var Sp) (Branch F (Dloc 047508))
+047487 Add (Var (Local 8)) (Con 2) Sp
+047491 Loadb (Con 8498) (Var Sp) Sp
+047497 Storeb (Con 8498) (Var (Local 8)) (Var Sp)
 047503 Inc (Con 8)
 047505 Jump 047479
---------------------------------------------------
-gap=28
-047536 RoutineHeader [0,0,0,0,0]
--- unused: [1,2,3,4]
+047508 Add (Var (Local 5)) (Var (Local 7)) (Local 5)
+047512 Sub (Var (Local 5)) (Con 2) Sp
+047516 Storeb (Con 8498) (Con 1) (Var Sp)
+047522 Inc (Con 6)
+047524 Jump 047254
+047527 Loadb (Con 8498) (Con 1) Sp
+047533 Add (Con 2) (Var Sp) (Local 5)
 047537 Store (Con 255) (Con 8498)
 047542 Store (Con 254) (Con 1)
 047545 Loadb (Var (Global 239)) (Var (Global 238)) (Global 237)
@@ -4997,10 +5526,6 @@ gap=28
 047561 Storeb (Con 8498) (Var Sp) (Con 32)
 047567 Store (Con 6) (Con 0)
 047570 Jump 047577
---------------------------------------------------
-gap=3
-047576 RoutineHeader [0,0,0,0,0,0]
--- unused: [1,2,3,4]
 047577 Loadb (Con 8621) (Con 1) Sp
 047583 Jl (Var (Local 6)) (Var Sp) (Branch F (Dloc 047638))
 047587 Add (Var (Local 6)) (Con 2) Sp
@@ -5023,7 +5548,6 @@ gap=3
 --------------------------------------------------
 gap=0
 047656 RoutineHeader [0,0,0,0,0,0,0,0,0,0]
--- unused: [4,9]
 047657 Sub (Var (Global 175)) (Con 1) (Local 3)
 047661 Store (Con 5) (Con 0)
 047664 Loadw (Con 10067) (Con 0) (Local 6)
@@ -5106,47 +5630,113 @@ gap=0
 047955 Loadw (Con 8338) (Con 0) (Local 10)
 047961 Call (Floc 049048) [] (Local 3)
 047965 Jump 047972
---------------------------------------------------
-gap=94
-048062 RoutineHeader [0,0,0,0]
--- unused: [1,2,3]
+047972 Je [Var (Local 3),Con -1] (Branch T (Dloc 048127))
+047979 Jl (Var (Local 2)) (Var (Global 164)) (Branch F (Dloc 048127))
+047984 Add (Var (Local 2)) (Var (Local 10)) Sp
+047988 Jl (Var Sp) (Con 63) (Branch F (Dloc 048127))
+047993 Store (Con 9) (Con 0)
+047996 CallN (Floc 078848) [Con 18,Var (Local 3)]
+048002 Call (Floc 078928) [Con 18,Var (Local 3)] Sp
+048009 Jz (Var Sp) (Branch F (Dloc 048083))
+048013 Test_attr (Var (Local 3)) (Con 3) (Branch T (Dloc 048024))
+048017 Test_attr (Var (Local 3)) (Con 22) (Branch T (Dloc 048024))
+048021 Store (Con 9) (Con 1)
+048024 Je [Var (Local 1),Con 3,Con 4] (Branch F (Dloc 048040))
+048030 Get_parent (Var (Local 3)) Sp
+048033 Je [Var Sp,Var (Global 37)] (Branch T (Dloc 048040))
+048037 Store (Con 9) (Con 0)
+048040 Je [Var (Global 73),Con 64,Con 49] (Branch F (Dloc 048056))
+048046 Get_parent (Var (Local 3)) Sp
+048049 Je [Var Sp,Var (Global 37)] (Branch F (Dloc 048056))
+048053 Store (Con 9) (Con 0)
+048056 Call (Floc 052104) [Var (Local 3),Var (Local 9)] (Local 4)
 048063 Je [Var (Local 4),Con 1] (Branch F (Dloc 048073))
 048067 Store (Con 9) (Con 1)
 048070 Jump 048080
 048073 Je [Var (Local 4),Con 2] (Branch F (Dloc 048080))
 048077 Store (Con 9) (Con 0)
 048080 Jump 048096
---------------------------------------------------
-gap=37
-048120 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
+048083 Store (Con 9) (Con 0)
+048086 Call (Floc 089832) [] Sp
+048090 Jz (Var Sp) (Branch T (Dloc 048096))
+048093 Store (Con 9) (Con 1)
+048096 CallN (Floc 078972) [Con 18,Var (Local 3)]
+048102 Je [Var (Local 9),Con 1] (Branch F (Dloc 048121))
+048106 Inc (Con 2)
+048108 Add (Var (Local 2)) (Var (Local 10)) Sp
+048112 Storew (Con 8338) (Var Sp) (Var (Local 3))
+048118 Jump 048124
 048121 Store (Con 2) (Var (Local 2))
 048124 Jump 047968
---------------------------------------------------
-gap=141
-048268 RoutineHeader []
+048127 Jl (Var (Local 2)) (Var (Global 164)) (Branch F (Dloc 048147))
+048131 Jl (Var (Global 164)) (Con 100) (Branch F (Dloc 048147))
+048135 Store (Con 66) (Con 16)
+048138 Store (Con 175) (Var (Global 164))
+048141 Store (Con 176) (Var (Local 2))
+048144 Ret (Con -1)
+048147 Add (Var (Local 2)) (Var (Local 10)) Sp
+048151 Storew (Con 8338) (Con 0) (Var Sp)
+048157 Store (Con 177) (Var (Local 1))
+048160 Rtrue
+048161 Store (Con 2) (Con 0)
+048164 Jl (Var (Local 2)) (Var (Global 175)) (Branch F (Dloc 048179))
+048168 Storew (Con 10195) (Var (Local 2)) (Con 0)
+048174 Inc (Con 2)
+048176 Jump 048164
+048179 Store (Con 7) (Con 1)
+048182 Store (Con 2) (Con 0)
+048185 Jl (Var (Local 2)) (Var (Global 175)) (Branch F (Dloc 048293))
+048190 Loadw (Con 10195) (Var (Local 2)) Sp
+048196 Jz (Var Sp) (Branch F (Dloc 048288))
+048200 Push (Var (Local 7))
+048203 Inc (Con 7)
+048205 Storew (Con 10195) (Var (Local 2)) (Var Sp)
+048211 Store (Con 9) (Con 0)
+048214 Add (Var (Local 2)) (Con 1) (Local 3)
+048218 Jl (Var (Local 3)) (Var (Global 175)) (Branch F (Dloc 048274))
+048222 Loadw (Con 10195) (Var (Local 3)) Sp
+048228 Jz (Var Sp) (Branch F (Dloc 048269))
+048231 Loadw (Con 10067) (Var (Local 3)) Sp
+048237 Loadw (Con 10067) (Var (Local 2)) Sp
+048243 Call (Floc 049176) [Var Sp,Var Sp] Sp
+048250 Je [Var Sp,Con 1] (Branch F (Dloc 048269))
+048254 Store (Con 9) (Con 1)
+048257 Loadw (Con 10195) (Var (Local 2)) Sp
+048263 Storew (Con 10195) (Var (Local 3)) (Var Sp)
 048269 Inc (Con 3)
 048271 Jump 048218
---------------------------------------------------
-gap=54
-048328 RoutineHeader [0,0,0,0]
--- unused: [1,3,4]
-048329 Mod (Var (Global 191)) (Con 47) (Global 24)
-048333 Get_next_prop (Var (Local 2)) (Con 4) (Global 191)
-048337 Loadw (Con 39) (Var (Global 195)) (Local 2)
-048341 Jg (Con 118) (Con 3) (Branch F (Dloc 049115))
+048274 Je [Var (Local 9),Con 1] (Branch F (Dloc 048288))
+048278 Sub (Con 1) (Var (Local 7)) Sp
+048282 Storew (Con 10195) (Var (Local 2)) (Var Sp)
+048288 Inc (Con 2)
+048290 Jump 048185
+048293 Dec (Con 7)
+048295 Store (Con 192) (Var (Local 7))
+048298 Jz (Var (Global 162)) (Branch F (Dloc 048394))
+048302 Jg (Var (Local 7)) (Con 1) (Branch F (Dloc 048394))
+048307 Store (Con 4) (Con -1)
+048312 Store (Con 2) (Con 0)
+048315 Jl (Var (Local 2)) (Var (Global 175)) (Branch F (Dloc 048390))
+048320 Loadw (Con 10323) (Var (Local 2)) Sp
+048326 Jg (Var Sp) (Var (Local 4)) (Branch F (Dloc 048352))
+048330 Loadw (Con 10323) (Var (Local 2)) (Local 4)
+048336 Loadw (Con 10195) (Var (Local 2)) (Local 3)
+048342 Mul (Var (Local 3)) (Var (Local 3)) (Local 3)
 048346 Store (Con 9) (Con 0)
 048349 Jump 048385
---------------------------------------------------
-gap=32
-048384 RoutineHeader [0]
--- unused: [1]
+048352 Loadw (Con 10323) (Var (Local 2)) Sp
+048358 Je [Var Sp,Var (Local 4)] (Branch F (Dloc 048385))
+048362 Loadw (Con 10195) (Var (Local 2)) Sp
+048368 Loadw (Con 10195) (Var (Local 2)) Sp
+048374 Mul (Var Sp) (Var Sp) Sp
+048378 Je [Var Sp,Var (Local 3)] (Branch T (Dloc 048385))
+048382 Store (Con 9) (Con 1)
 048385 Inc (Con 2)
 048387 Jump 048315
---------------------------------------------------
-gap=10
-048400 RoutineHeader [0]
--- unused: [1]
+048390 Jz (Var (Local 9)) (Branch T (Dloc 048394))
+048393 Rfalse
+048394 Je [Var (Local 7),Con 1] (Branch F (Dloc 048401))
+048398 Store (Con 162) (Con 1)
 048401 Call (Floc 049048) [] Sp
 048405 Ret_popped
 --------------------------------------------------
@@ -5926,7 +6516,6 @@ gap=0
 --------------------------------------------------
 gap=0
 051100 RoutineHeader [0,0,0]
--- unused: [2]
 051101 Call (Floc 041168) [] (Local 1)
 051105 Jz (Var (Local 1)) (Branch T Dfalse)
 051108 Je [Var (Local 1),Con 22808,Con 22862,Con 23501] (Branch F (Dloc 051119))
@@ -5934,12 +6523,18 @@ gap=0
 051119 Loadw (Con 8997) (Con 0) (Local 3)
 051125 Store (Con 2) (Con 1)
 051128 Jump 051135
---------------------------------------------------
-gap=21
-051152 RoutineHeader []
+051135 Jg (Var (Local 2)) (Var (Local 3)) (Branch T (Dloc 051157))
+051139 Loadw (Con 8997) (Var (Local 2)) Sp
+051145 Je [Var (Local 1),Var Sp] (Branch F (Dloc 051154))
+051149 Add (Var (Local 2)) (Con 2) Sp
 051153 Ret_popped
+051154 Jump 051131
+051157 Loadb (Var (Local 1)) (Con 6) Sp
+051161 And (Var Sp) (Con 128) Sp
+051165 Jz (Var Sp) (Branch T Dfalse)
+051168 Ret (Var (Local 1))
 --------------------------------------------------
-gap=18
+gap=2
 051172 RoutineHeader [0,0,0,0,0,0,0,0,0,0]
 051173 Store (Con 2) (Var (Global 75))
 051176 Store (Con 91) (Var (Local 1))
@@ -6088,12 +6683,8 @@ gap=2
 --------------------------------------------------
 gap=3
 051668 RoutineHeader [0,0,0]
--- unused: [1,2,3]
 051669 Store (Con 3) (Con 1)
 051672 Jump 051679
---------------------------------------------------
-gap=3
-051678 RoutineHeader [0,0,0]
 051679 Loadw (Con 8997) (Con 0) Sp
 051685 Jg (Var (Local 3)) (Var Sp) (Branch T (Dloc 051713))
 051689 Loadw (Con 8997) (Var (Local 3)) Sp
@@ -6107,12 +6698,8 @@ gap=3
 --------------------------------------------------
 gap=1
 051720 RoutineHeader [0,0]
--- unused: [1,2]
 051721 Store (Con 2) (Con 1)
 051724 Jump 051731
---------------------------------------------------
-gap=3
-051730 RoutineHeader [0,0]
 051731 Loadw (Con 8997) (Con 0) Sp
 051737 Jg (Var (Local 2)) (Var Sp) (Branch T (Dloc 051765))
 051741 Loadw (Con 8997) (Var (Local 2)) Sp
@@ -6130,20 +6717,24 @@ gap=2
 --------------------------------------------------
 gap=1
 051776 RoutineHeader [0,0,0]
--- unused: [2]
 051777 Je [Var (Local 1),Var (Global 31)] (Branch F (Dloc 051782))
 051781 Rtrue
 051782 Call (Floc 051528) [Var (Local 1)] Sp
 051788 Loadw (Con 7732) (Var Sp) (Local 3)
 051794 Store (Con 2) (Con 1)
 051797 Jump 051804
---------------------------------------------------
-gap=40
-051840 RoutineHeader [0]
--- unused: [1]
+051804 Loadw (Con 8997) (Con 0) Sp
+051810 Jg (Var (Local 2)) (Var Sp) (Branch T (Dloc 051844))
+051814 Add (Var (Local 2)) (Con 1) Sp
+051818 Loadw (Con 8997) (Var Sp) Sp
+051824 And (Var (Local 3)) (Var Sp) Sp
+051828 Jz (Var Sp) (Branch T (Dloc 051841))
+051831 Add (Var (Local 2)) (Con 2) Sp
+051835 Storew (Con 8997) (Var Sp) (Var (Local 1))
 051841 Jump 051800
+051844 Rtrue
 --------------------------------------------------
-gap=4
+gap=3
 051848 RoutineHeader [0]
 051849 Get_child (Var (Global 31)) Sp (Branch F (Dloc 051853))
 051853 Pull (Con 1)
@@ -6177,20 +6768,19 @@ gap=3
 --------------------------------------------------
 gap=3
 051976 RoutineHeader [0,0,0]
--- unused: [1,2]
 051977 Loadw (Con 9153) (Con 0) (Local 3)
 051983 Store (Con 2) (Con 1)
 051986 Jump 051993
---------------------------------------------------
-gap=5
-051994 RoutineHeader [0,0]
--- unused: [1]
-051995 Jg (Con 218) (Con 207) (Branch F (Dloc 047681))
-052000 Je [Con 97,Con 256,Con 19796,Var (Local 2)] (Branch F (Dloc 052265))
+051993 Jg (Var (Local 2)) (Var (Local 3)) (Branch T (Dloc 052021))
+051997 Loadw (Con 9153) (Var (Local 2)) Sp
+052003 Je [Var (Local 1),Var Sp] (Branch F (Dloc 052018))
+052007 Add (Var (Local 2)) (Con 1) Sp
 052011 Loadw (Con 9153) (Var Sp) Sp
 052017 Ret_popped
+052018 Jump 051989
+052021 Rfalse
 --------------------------------------------------
-gap=18
+gap=14
 052036 RoutineHeader [0,0]
 052037 Store (Con 2) (Var (Global 175))
 052040 Loadw (Con 10451) (Con 0) (Global 175)
@@ -7785,10 +8375,6 @@ gap=0
 057041 Call (Floc 108144) [Con 0] (Local 1)
 057047 Call (Floc 108144) [Var (Local 1)] (Local 2)
 057053 Jump 057065
---------------------------------------------------
-gap=2
-057058 RoutineHeader [0,0]
-057059 Call (Floc 108144) [Var (Local 2)] (Local 2)
 057065 Jz (Var (Local 1)) (Branch T (Dloc 057171))
 057069 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 057108))
 057073 Print "  [repetition with item set to "
@@ -8731,22 +9317,16 @@ gap=2
 --------------------------------------------------
 gap=1
 060564 RoutineHeader [0,0,0,0]
--- unused: [3,4]
 060565 Storew (Con 11427) (Con 38) (Con 0)
 060571 Call (Floc 108184) [Con 0] (Local 1)
 060577 Call (Floc 108184) [Var (Local 1)] (Local 2)
 060583 Jump 060595
---------------------------------------------------
-gap=18
-060604 RoutineHeader [0]
--- unused: [1]
+060595 Jz (Var (Local 1)) (Branch T (Dloc 060608))
+060598 CallN (Floc 088364) [Var (Local 1),Con 30,Con 1]
 060605 Jump 060586
---------------------------------------------------
-gap=6
-060614 RoutineHeader [0,0,0,0]
--- unused: [1,2]
-060615 Je [Con 217,Con 47] (Branch F (Dloc 060649))
-060619 Load (Con 3) Sp
+060608 Store (Con 3) (Con 12520)
+060613 Store (Con 4) (Con 1)
+060616 Call (Floc 098936) [Var (Local 3)] Sp
 060622 Jg (Var (Local 4)) (Var Sp) (Branch T (Dloc 060647))
 060626 Call (Floc 100664) [Var (Local 3),Var (Local 4)] Sp
 060633 Jz (Var Sp) (Branch F (Dloc 060642))
@@ -8779,29 +9359,18 @@ gap=1
 060719 Rfalse
 --------------------------------------------------
 gap=8
-**LOST**060728 RoutineHeader [0,0,0,0,0,0,0,0]
--- unused: [1,2,5,6,7,8]
+060728 RoutineHeader [0,0,0,0,0,0,0,0]
 060729 Store (Con 1) (Var (Global 11))
 060732 Store (Con 2) (Con 0)
 060735 Call (Floc 108216) [Con 0] (Local 3)
 060741 Call (Floc 108216) [Var (Local 3)] (Local 4)
 060747 Jump 060759
---------------------------------------------------
-gap=-4 **OVERLAP**
-060746 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-060747 Jump 060759
---------------------------------------------------
-gap=18
-060768 RoutineHeader [0]
--- unused: [1]
+060759 Jz (Var (Local 3)) (Branch T (Dloc 060772))
+060762 CallN (Floc 088364) [Var (Local 3),Con 34,Con 1]
 060769 Jump 060750
---------------------------------------------------
-gap=6
-060778 RoutineHeader [0,0,0,0,0,0,0,0]
--- unused: [1,5,6]
-060779 Je [Con 217,Con 47] (Branch F (Dloc 060813))
-060783 Load (Con 7) Sp
+060772 Store (Con 7) (Con 12520)
+060777 Store (Con 8) (Con 1)
+060780 Call (Floc 098936) [Var (Local 7)] Sp
 060786 Jg (Var (Local 8)) (Var Sp) (Branch T (Dloc 060835))
 060790 Call (Floc 100664) [Var (Local 7),Var (Local 8)] Sp
 060797 Jz (Var Sp) (Branch F (Dloc 060830))
@@ -8816,26 +9385,52 @@ gap=6
 060840 Call (Floc 108248) [Con 0] (Local 3)
 060846 Call (Floc 108248) [Var (Local 3)] (Local 4)
 060852 Jump 060864
---------------------------------------------------
-gap=101
-060956 RoutineHeader [0]
--- unused: [1]
+060864 Jz (Var (Local 3)) (Branch T (Dloc 060887))
+060867 Call (Floc 088304) [Var (Local 3),Con 30] Sp
+060874 Jz (Var Sp) (Branch T (Dloc 060884))
+060877 CallN (Floc 088364) [Var (Local 3),Con 34,Con 1]
+060884 Jump 060855
+060887 CallN (Floc 078848) [Con 7]
+060892 Call (Floc 108280) [] Sp
+060896 Jz (Var Sp) (Branch F (Dloc 060907))
+060899 CallN (Floc 079052) [Con 7]
+060904 Jump 061259
+060907 Call (Floc 078928) [Con 7] Sp
+060913 Jz (Var Sp) (Branch F (Dloc 061254))
+060917 Call (Floc 026172) [Var (Local 1),Con 13] Sp
+060924 Jz (Var Sp) (Branch T (Dloc 060966))
+060927 Je [Var (Local 1),Var (Global 32)] (Branch F (Dloc 060943))
+060931 Store (Con 20) (Con 1)
+060934 CallN (Floc 080952) [Con -31315]
+060940 Jump 060963
+060943 Store (Con 20) (Con 1)
+060946 CallN (Floc 080952) [Con -31633]
+060952 CallN (Floc 081916) [Var (Local 1)]
 060957 CallN (Floc 080952) [Con -31906]
 060963 Jump 061019
---------------------------------------------------
-gap=4
-060970 RoutineHeader [0]
-060971 Get_prop_addr (Con 0) (Con 160) Sp
-060975 Call (Floc 020484) [Con -9713] (Global 63)
-060982 Insert_obj (Con 132) (Con 188)
+060966 Call (Floc 026172) [Var (Local 1),Con 18] Sp
+060973 Jz (Var Sp) (Branch T (Dloc 060999))
+060976 Store (Con 20) (Con 1)
+060979 CallN (Floc 080952) [Con -31556]
 060985 CallN (Floc 081916) [Var (Local 1)]
 060990 CallN (Floc 080952) [Con -31906]
 060996 Jump 061019
---------------------------------------------------
-gap=77
-061076 RoutineHeader [0,0,0,0,0,0]
--- unused: [2]
-061077 Call (Floc 108320) [Var (Local 6)] (Local 6)
+060999 Store (Con 20) (Con 1)
+061002 CallN (Floc 080952) [Con -31633]
+061008 CallN (Floc 081916) [Var (Local 1)]
+061013 CallN (Floc 080952) [Con -31906]
+061019 Store (Con 20) (Con 1)
+061022 CallN (Floc 080952) [Con -31272]
+061028 Loadw (Con 11427) (Con 38) Sp
+061034 Jg (Var Sp) (Con 0) (Branch T (Dloc 061041))
+061038 Jump 061047
+061041 CallN (Floc 080952) [Con -31274]
+061047 CallN (Floc 080952) [Con -31261]
+061053 Store (Con 3) (Con 0)
+061056 Store (Con 4) (Con 1)
+061059 Call (Floc 108320) [Con 0] (Local 5)
+061065 Call (Floc 108320) [Var (Local 5)] (Local 6)
+061071 Jump 061083
 061083 Jz (Var (Local 5)) (Branch T (Dloc 061131))
 061086 Call (Floc 102384) [Var (Local 5)] Sp
 061092 Je [Var Sp,Var (Local 3)] (Branch T (Dloc 061111))
@@ -8907,12 +9502,8 @@ gap=8
 061350 Jz (Var Sp) (Branch T (Dloc 061359))
 061353 CallN (Floc 056504) [Var (Local 1),Con 0]
 061359 Rfalse
---------------------------------------------------
-gap=6
-061366 RoutineHeader [0]
--- unused: [1]
-061367 And (Var (Global 233)) (Con 7) (Global 79)
-061371 Erase_window (Con -8447)
+061364 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 061375))
+061368 CallN (Floc 098228) [Con 15327,Con 1]
 061375 Rfalse
 --------------------------------------------------
 gap=0
@@ -8930,12 +9521,8 @@ gap=0
 061418 Jz (Var Sp) (Branch T (Dloc 061427))
 061421 CallN (Floc 056504) [Var (Local 1),Con 0]
 061427 Rfalse
---------------------------------------------------
-gap=6
-061434 RoutineHeader [0]
--- unused: [1]
-061435 And (Var (Global 233)) (Con 7) (Global 79)
-061439 Erase_window (Con -4095)
+061432 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 061443))
+061436 CallN (Floc 098228) [Con 15344,Con 1]
 061443 Rfalse
 --------------------------------------------------
 gap=0
@@ -8953,12 +9540,8 @@ gap=0
 061486 Jz (Var Sp) (Branch T (Dloc 061495))
 061489 CallN (Floc 056504) [Var (Local 1),Con 0]
 061495 Rfalse
---------------------------------------------------
-gap=6
-061502 RoutineHeader [0]
--- unused: [1]
-061503 And (Var (Global 233)) (Con 7) (Global 79)
-061507 Erase_window (Con 257)
+061500 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 061511))
+061504 CallN (Floc 098228) [Con 15361,Con 1]
 061511 Rfalse
 --------------------------------------------------
 gap=0
@@ -8976,8 +9559,11 @@ gap=0
 061554 Jz (Var Sp) (Branch F (Dloc 061562))
 061557 CallN (Floc 051776) [Var (Local 1)]
 061562 Rfalse
+061567 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 061578))
+061571 CallN (Floc 098228) [Con 15378,Con 1]
+061578 Rfalse
 --------------------------------------------------
-gap=17
+gap=1
 061580 RoutineHeader [0]
 061581 Store (Con 1) (Var (Global 11))
 061584 Call (Floc 026172) [Var (Global 11),Con 14] Sp
@@ -9002,8 +9588,11 @@ gap=17
 061666 Store (Con 20) (Con 1)
 061669 CallN (Floc 080368) []
 061672 Rfalse
+061677 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 061688))
+061681 CallN (Floc 098228) [Con 15395,Con 1]
+061688 Rfalse
 --------------------------------------------------
-gap=19
+gap=3
 061692 RoutineHeader [0,0,0]
 061693 Store (Con 1) (Var (Global 11))
 061696 Call (Floc 026172) [Var (Global 11),Con 14] Sp
@@ -9038,10 +9627,6 @@ gap=19
 061822 Call (Floc 108764) [Var (Local 1),Con 0] (Local 2)
 061829 Call (Floc 108764) [Var (Local 1),Var (Local 2)] (Local 3)
 061836 Jump 061849
---------------------------------------------------
-gap=9
-061848 RoutineHeader [0,0,0]
--- unused: [3]
 061849 Jz (Var (Local 2)) (Branch T (Dloc 061878))
 061852 CallN (Floc 088364) [Var (Local 2),Con 34]
 061858 Call (Floc 088304) [Var (Local 2),Con 30] Sp
@@ -9060,8 +9645,11 @@ gap=9
 061921 New_line
 061922 CallN (Floc 088364) [Var (Local 1),Con 30]
 061928 Rfalse
+061933 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 061944))
+061937 CallN (Floc 098228) [Con 15423,Con 1]
+061944 Rfalse
 --------------------------------------------------
-gap=19
+gap=3
 061948 RoutineHeader [0,0,0]
 061949 Store (Con 1) (Var (Global 11))
 061952 Call (Floc 026172) [Var (Global 11),Con 14] Sp
@@ -9084,10 +9672,6 @@ gap=19
 062032 Call (Floc 108864) [Var (Local 1),Con 0] (Local 2)
 062039 Call (Floc 108864) [Var (Local 1),Var (Local 2)] (Local 3)
 062046 Jump 062059
---------------------------------------------------
-gap=9
-062058 RoutineHeader [0,0,0]
--- unused: [3]
 062059 Jz (Var (Local 2)) (Branch T (Dloc 062088))
 062062 CallN (Floc 088364) [Var (Local 2),Con 34]
 062068 Call (Floc 088304) [Var (Local 2),Con 30] Sp
@@ -9108,8 +9692,11 @@ gap=9
 062144 CallN (Floc 080316) []
 062147 New_line
 062148 Rfalse
+062153 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 062164))
+062157 CallN (Floc 098228) [Con 15487,Con 1]
+062164 Rfalse
 --------------------------------------------------
-gap=19
+gap=3
 062168 RoutineHeader []
 062169 Je [Var (Global 37),Var (Global 31)] (Branch F (Dloc 062201))
 062173 Jz (Var (Global 114)) (Branch T (Dloc 062182))
@@ -9323,7 +9910,6 @@ gap=2
 --------------------------------------------------
 gap=1
 062908 RoutineHeader [0,0,0,0]
--- unused: [2]
 062909 Jz (Var (Global 36)) (Branch F (Dloc 063056))
 062913 Jz (Var (Global 114)) (Branch T (Dloc 062922))
 062916 CallN (Floc 098228) [Con 15727]
@@ -9338,10 +9924,6 @@ gap=1
 062963 Call (Floc 109072) [Var (Global 37),Con 0] (Local 3)
 062970 Call (Floc 109072) [Var (Global 37),Var (Local 3)] (Local 4)
 062977 Jump 062990
---------------------------------------------------
-gap=2
-062982 RoutineHeader [0,0,0,0]
-062983 Call (Floc 109072) [Var (Global 37),Var (Local 4)] (Local 4)
 062990 Jz (Var (Local 3)) (Branch T (Dloc 063013))
 062993 Call (Floc 088304) [Var (Local 3),Con 8] Sp
 063000 Jz (Var Sp) (Branch F (Dloc 063010))
@@ -9358,12 +9940,8 @@ gap=2
 063048 Je [Var (Local 1),Var Sp] (Branch T (Dloc 063053))
 063052 Rtrue
 063053 Jump 063067
---------------------------------------------------
-gap=2
-063058 RoutineHeader [0]
--- unused: [1]
-063059 And (Var (Global 233)) (Con 7) (Global 79)
-063063 Erase_window (Con 28417)
+063056 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 063067))
+063060 CallN (Floc 098228) [Con 15727,Con 1]
 063067 Rfalse
 --------------------------------------------------
 gap=0
@@ -9730,12 +10308,8 @@ gap=0
 064411 Call (Floc 041040) [Con 48,Con 7,Var (Global 47)] Sp
 064419 Ret_popped
 064420 Rfalse
---------------------------------------------------
-gap=1
-064422 RoutineHeader []
-064423 Store (Con 67) (Con 130)
-064426 Je [Con 73,Con 249] (Branch F (Dloc 066316))
-064431 Erase_window (Con -8447)
+064424 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 064435))
+064428 CallN (Floc 098228) [Con 16095,Con 1]
 064435 Rfalse
 --------------------------------------------------
 gap=0
@@ -9908,12 +10482,8 @@ gap=0
 065063 Call (Floc 041040) [Con 27,Con 8,Var (Global 47)] Sp
 065071 Ret_popped
 065072 Rfalse
---------------------------------------------------
-gap=1
-065074 RoutineHeader []
-065075 Store (Con 67) (Con 130)
-065078 Je [Con 73,Con 249] (Branch F (Dloc 066968))
-065083 Erase_window (Con -32255)
+065076 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 065087))
+065080 CallN (Floc 098228) [Con 16258,Con 1]
 065087 Rfalse
 --------------------------------------------------
 gap=0
@@ -10428,13 +10998,14 @@ gap=0
 067354 Rtrue
 067355 Call (Floc 076480) [Con 21,Var (Global 47),Con 0] Sp
 067363 Ret_popped
---------------------------------------------------
-gap=6
-067370 RoutineHeader [0,0]
--- unused: [1,2]
+067365 Call (Floc 102384) [Var (Local 2)] (Local 2)
 067371 Jump 067297
+067374 Jump 067388
+067377 Jg (Var (Global 114)) (Con 1) (Branch F (Dloc 067388))
+067381 CallN (Floc 098228) [Con 16788,Con 1]
+067388 Rfalse
 --------------------------------------------------
-gap=18
+gap=3
 067392 RoutineHeader []
 067393 Jz (Var (Global 36)) (Branch F (Dloc 067411))
 067396 Jz (Var (Global 114)) (Branch T (Dloc 067405))
@@ -13534,10 +14105,15 @@ gap=3
 078295 CallN (Floc 081916) [Var (Local 1)]
 078300 Rtrue
 --------------------------------------------------
-gap=27
-078328 RoutineHeader [0,0,0,0,0,0,0,0]
--- unused: [1,7]
-078329 Mul (Var (Global 29)) (Var (Global 75)) (Local 2)
+gap=3
+078304 RoutineHeader [0,0,0,0,0,0,0,0]
+078305 Mod (Var (Local 1)) (Con 100) (Local 8)
+078309 Div (Var (Local 1)) (Con 100) (Local 7)
+078313 Print "\""
+078316 Store (Con 2) (Var (Local 7))
+078319 Jump 078326
+078326 Jl (Var (Local 5)) (Var (Local 8)) (Branch F (Dloc 078382))
+078330 Store (Con 91) (Var (Local 2))
 078333 Call (Floc 041084) [Var (Local 2)] (Local 3)
 078339 Call (Floc 041108) [Var (Local 2)] (Local 4)
 078345 Store (Con 6) (Var (Local 3))
@@ -13551,8 +14127,10 @@ gap=27
 078372 Jl (Var (Local 5)) (Var Sp) (Branch F (Dloc 078379))
 078376 Print " "
 078379 Jump 078322
+078382 Print "\""
+078385 Rtrue
 --------------------------------------------------
-gap=6
+gap=2
 078388 RoutineHeader [0]
 078389 Print_num (Var (Local 1))
 078392 Rtrue
@@ -14097,7 +14675,6 @@ gap=3
 --------------------------------------------------
 gap=3
 080132 RoutineHeader [0,0,0,0]
--- unused: [1,2,4]
 080133 Je [Var (Global 37),Var (Global 31)] (Branch F Dfalse)
 080137 CallN (Floc 041040) [Con 43,Con 1]
 080143 Loadw (Con 8997) (Con 0) Sp
@@ -14110,17 +14687,35 @@ gap=3
 080170 Store (Con 1) (Con 1)
 080173 Store (Con 4) (Con 0)
 080176 Jump 080183
---------------------------------------------------
-gap=79
-080258 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-080259 Je [Con 0,Con 97] (Branch F (Dloc 081286))
-080264 Inc_chk (Var (Global 125)) (Con 111) (Branch F (Dloc 080305))
+080183 Loadw (Con 8997) (Con 0) Sp
+080189 Jg (Var (Local 1)) (Var Sp) (Branch T (Dloc 080271))
+080194 Print "\""
+080197 Loadw (Con 8997) (Var (Local 1)) Sp
+080203 Print_addr (Var Sp)
+080205 Print "\" "
+080208 Add (Var (Local 1)) (Con 2) Sp
+080212 Loadw (Con 8997) (Var Sp) (Local 2)
+080218 Je [Var (Local 2),Con -1] (Branch F (Dloc 080233))
+080224 CallN (Floc 041040) [Con 43,Con 3]
+080230 Jump 080244
+080233 CallN (Floc 041040) [Con 43,Con 2]
+080239 CallN (Floc 081916) [Var (Local 2)]
+080244 Inc (Con 4)
+080246 Sub (Var (Local 3)) (Con 1) Sp
+080250 Jl (Var (Local 4)) (Var Sp) (Branch F (Dloc 080257))
+080254 Print ", "
+080257 Sub (Var (Local 3)) (Con 1) Sp
+080261 Je [Var (Local 4),Var Sp] (Branch F (Dloc 080268))
+080265 Print_paddr (Con 28519)
 080268 Jump 080179
---------------------------------------------------
-gap=29
-080300 RoutineHeader [0,0,0]
--- unused: [1,2]
+080271 Je [Var (Global 31),Con 41] (Branch T (Dloc 080304))
+080275 Print "\""
+080278 Print_addr (Con 22808)
+080281 Print "\" "
+080284 CallN (Floc 041040) [Con 43,Con 2]
+080290 Store (Con 3) (Var (Global 31))
+080293 Store (Con 47) (Con 41)
+080296 CallN (Floc 081916) [Var (Local 3)]
 080301 Store (Con 47) (Var (Local 3))
 080304 Print_ret "."
 --------------------------------------------------
@@ -15891,7 +16486,6 @@ gap=0
 --------------------------------------------------
 gap=1
 086692 RoutineHeader [0,0,0,0,0,0,0]
--- unused: [4,6,7]
 086693 Jz (Var (Global 16)) (Branch F (Dloc 086697))
 086696 Rtrue
 086697 Store (Con 32) (Con 0)
@@ -15935,105 +16529,224 @@ gap=1
 086959 Print ", violating '"
 086970 Store (Con 6) (Con 0)
 086973 Jump 086980
---------------------------------------------------
-gap=108
-087084 RoutineHeader [0,0]
--- unused: [1,2]
+086980 Loadw (Con 11790) (Var (Local 6)) Sp
+086986 Je [Var Sp,Con -1] (Branch T (Dloc 087040))
+086992 Add (Var (Local 6)) (Con 1) Sp
+086996 Loadw (Con 11790) (Var Sp) (Local 7)
+087002 Je [Var (Local 7),Con 4] (Branch T (Dloc 087010))
+087006 Je [Var (Local 7),Con 6] (Branch F (Dloc 087037))
+087010 Loadw (Con 11790) (Var (Local 6)) Sp
+087016 Je [Var (Local 3),Var Sp] (Branch F (Dloc 087037))
+087020 Add (Var (Local 6)) (Con 2) Sp
+087024 Loadw (Con 11790) (Var Sp) Sp
+087030 Print_paddr (Var Sp)
+087032 Print "'.\n"
+087037 Jump 086976
+087040 Jump 087953
+087043 Je [Var (Global 239),Con 6] (Branch F (Dloc 087053))
+087047 Print_paddr (Con 29748)
+087050 Jump 087953
+087053 Je [Var (Global 239),Con 7] (Branch F (Dloc 087063))
+087057 Print_paddr (Con 29757)
+087060 Jump 087953
+087063 Je [Var (Global 239),Con 8] (Branch F (Dloc 087073))
+087067 Print_paddr (Con 29765)
+087070 Jump 087953
+087073 Je [Var (Global 239),Con 9] (Branch F (Dloc 087093))
+087077 Print_paddr (Con 29773)
+087080 CallN (Floc 081916) [Var (Local 2)]
 087085 Print ".\n"
 087090 Jump 087953
---------------------------------------------------
-gap=69
-087162 RoutineHeader [0,0,0]
--- unused: [1,2,3]
+087093 Je [Var (Global 239),Con 10] (Branch F (Dloc 087140))
+087097 Print "Since "
+087104 CallN (Floc 081916) [Var (Local 2)]
+087109 Print " is not allowed the property \""
+087132 Print_paddr (Var (Local 3))
+087134 Print_paddr (Con 29781)
+087137 Jump 087953
+087140 Je [Var (Global 239),Con 11] (Branch F (Dloc 087169))
+087144 Print "Although "
+087153 CallN (Floc 081916) [Var (Local 2)]
+087158 Print_paddr (Con 29790)
+087161 Print_paddr (Var (Local 3))
 087163 Print_paddr (Con 29796)
 087166 Jump 087953
---------------------------------------------------
-gap=153
-087322 RoutineHeader [0,0,0,0,0]
--- unused: [1,2,4,5]
+087169 Je [Var (Global 239),Con 12] (Branch F (Dloc 087179))
+087173 Print_paddr (Con 29806)
+087176 Jump 087953
+087179 Je [Var (Global 239),Con 13] (Branch F (Dloc 087189))
+087183 Print_paddr (Con 29814)
+087186 Jump 087953
+087189 Je [Var (Global 239),Con 14] (Branch F (Dloc 087199))
+087193 Print_paddr (Con 29824)
+087196 Jump 087953
+087199 Je [Var (Global 239),Con 15] (Branch F (Dloc 087227))
+087203 Print "You can't move nothing.\n"
+087224 Jump 087953
+087227 Je [Var (Global 239),Con 16] (Branch F (Dloc 087237))
+087231 Print_paddr (Con 29833)
+087234 Jump 087953
+087237 Je [Var (Global 239),Con 17] (Branch F (Dloc 087265))
+087241 Print "You can't divide by zero.\n"
+087262 Jump 087953
+087265 Je [Var (Global 239),Con 18] (Branch F (Dloc 087286))
+087269 Print_paddr (Con 29840)
+087272 Print_paddr (Con 29850)
+087275 Print_num (Var (Local 2))
+087278 Print ".\n"
+087283 Jump 087953
+087286 Je [Var (Global 239),Con 19] (Branch F (Dloc 087348))
+087290 Print "Tried to move "
+087301 CallN (Floc 081916) [Var (Local 2)]
+087306 Print " (not a backdrop) to "
 087323 CallN (Floc 081916) [Var (Local 3)]
 087328 Print ", which is a region.\n"
 087345 Jump 087953
---------------------------------------------------
-gap=18
-087366 RoutineHeader [0,0]
--- unused: [1]
-087367 Set_attr (Var (Global 49)) (Con 255)
-087370 Sub (Con 82) (Con 141) (Global 100)
-087374 Print_obj (Var (Global 202))
-087376 Loadw (Con 99) (Var (Global 134)) (Local 2)
+087348 Je [Var (Global 239),Con 20] (Branch F (Dloc 087368))
+087352 Print_paddr (Con 29856)
+087355 CallN (Floc 101976) [Var (Local 2)]
+087360 Print "'.\n"
+087365 Jump 087953
+087368 Je [Var (Global 239),Con 21] (Branch F (Dloc 087388))
+087372 Print_paddr (Con 29866)
+087375 CallN (Floc 101976) [Var (Local 2)]
 087380 Print "'.\n"
 087385 Jump 087953
---------------------------------------------------
-gap=50
-087438 RoutineHeader [0,0,0,0,0]
--- unused: [1,3,4,5]
-087439 Call (Fvar (Global 202)) [Var (Global 31),Con 99,Con 150] (Local 2)
+087388 Je [Var (Global 239),Con 22] (Branch F (Dloc 087408))
+087392 Print_paddr (Con 29877)
+087395 CallN (Floc 101976) [Var (Local 2)]
+087400 Print "'.\n"
+087405 Jump 087953
+087408 Je [Var (Global 239),Con 23] (Branch F (Dloc 087454))
+087412 Print_paddr (Con 29887)
+087415 Print_num (Var (Local 3))
+087418 Print ", row "
+087425 Print_num (Var (Local 4))
+087428 Print " of the table '"
+087441 CallN (Floc 101976) [Var (Local 2)]
 087446 Print "'.\n"
 087451 Jump 087953
---------------------------------------------------
-gap=96
-087550 RoutineHeader [0]
--- unused: [1]
-087551 Get_parent (Con 65) (Global 239)
-087554 Jg (Con 82) (Var (Global 125)) (Branch F (Dloc 087609))
-087558 Jg (Con 218) (Con 47) (Branch F (Dloc 087595))
-087562 Dec (Con 2)
+087454 Je [Var (Global 239),Con 24] (Branch F (Dloc 087472))
+087458 Print_paddr (Con 29896)
+087461 Print_num (Var (Local 2))
+087464 Print ").\n"
+087469 Jump 087953
+087472 Je [Var (Global 239),Con 25] (Branch F (Dloc 087492))
+087476 Print_paddr (Con 29907)
+087479 CallN (Floc 101976) [Var (Local 2)]
+087484 Print "'.\n"
+087489 Jump 087953
+087492 Je [Var (Global 239),Con 26] (Branch F (Dloc 087512))
+087496 Print_paddr (Con 29919)
+087499 CallN (Floc 101976) [Var (Local 2)]
+087504 Print "'.\n"
+087509 Jump 087953
+087512 Je [Var (Global 239),Con 27] (Branch F (Dloc 087532))
+087516 Print_paddr (Con 29931)
+087519 CallN (Floc 101976) [Var (Local 2)]
+087524 Print "'.\n"
+087529 Jump 087953
+087532 Je [Var (Global 239),Con 34] (Branch F (Dloc 087552))
+087536 Print_paddr (Con 29943)
+087539 CallN (Floc 101976) [Var (Local 2)]
+087544 Print "'.\n"
+087549 Jump 087953
+087552 Je [Var (Global 239),Con 35] (Branch F (Dloc 087572))
+087556 Print_paddr (Con 29955)
+087559 CallN (Floc 101976) [Var (Local 2)]
 087564 Print "'.\n"
 087569 Jump 087953
---------------------------------------------------
-gap=36
-087608 RoutineHeader [0]
--- unused: [1]
-087609 Call (Fvar (Global 49)) [Con 255] (Global 13)
-087613 Or (Var (Global 125)) (Con 117) (Global 25)
+087572 Je [Var (Global 239),Con 36] (Branch F (Dloc 087592))
+087576 Print_paddr (Con 29968)
+087579 CallN (Floc 101976) [Var (Local 2)]
+087584 Print "'.\n"
+087589 Jump 087953
+087592 Je [Var (Global 239),Con 28] (Branch F (Dloc 087610))
+087596 Print_paddr (Con 29978)
+087599 CallN (Floc 081916) [Var (Local 2)]
+087604 Print_paddr (Con 29986)
+087607 Jump 087953
+087610 Je [Var (Global 239),Con 29] (Branch F (Dloc 087620))
+087614 Print_paddr (Con 29993)
 087617 Jump 087953
---------------------------------------------------
-gap=8
-087628 RoutineHeader [0]
--- unused: [1]
-087629 Inc_chk (Var (Global 49)) (Con 255) (Branch F (Dloc 095640))
+087620 Je [Var (Global 239),Con 30] (Branch F (Dloc 087630))
+087624 Print_paddr (Con 30007)
+087627 Jump 087953
+087630 Je [Var (Global 239),Con 31] (Branch F (Dloc 087640))
 087634 Print_paddr (Con 30019)
 087637 Jump 087953
---------------------------------------------------
-gap=152
-087792 RoutineHeader []
-087793 Get_sibling (Var (Global 49)) (Global 239) (Branch F (Dloc 082236))
+087640 Je [Var (Global 239),Con 32] (Branch F (Dloc 087650))
+087644 Print_paddr (Con 30030)
+087647 Jump 087953
+087650 Je [Var (Global 239),Con 33] (Branch F (Dloc 087684))
+087654 Print "Attempt to 'decide on nothing'.\n"
+087681 Jump 087953
+087684 Je [Var (Global 239),Con 37] (Branch F (Dloc 087706))
+087688 Print "Low level error.\n"
+087703 Jump 087953
+087706 Je [Var (Global 239),Con 38] (Branch F (Dloc 087716))
+087710 Print_paddr (Con 30042)
+087713 Jump 087953
+087716 Je [Var (Global 239),Con 39] (Branch F (Dloc 087742))
+087720 Print_paddr (Con 30050)
+087723 Print_num (Var (Local 2))
+087726 Print " to "
+087731 Print_num (Var (Local 3))
+087734 Print ".\n"
+087739 Jump 087953
+087742 Je [Var (Global 239),Con 40] (Branch F (Dloc 087768))
+087746 Print_paddr (Con 30062)
+087749 Print_num (Var (Local 2))
+087752 Print " to "
+087757 Print_num (Var (Local 3))
+087760 Print ".\n"
+087765 Jump 087953
+087768 Je [Var (Global 239),Con 41] (Branch F (Dloc 087794))
+087772 Print_paddr (Con 30074)
+087775 Print_num (Var (Local 2))
+087778 Print " to "
+087783 Print_num (Var (Local 3))
+087786 Print ".\n"
+087791 Jump 087953
+087794 Je [Var (Global 239),Con 42] (Branch F (Dloc 087804))
 087798 Print_paddr (Con 30086)
 087801 Jump 087953
---------------------------------------------------
-gap=8
-087812 RoutineHeader []
-087813 Print_paddr (Con 16895)
-087816 Clear_attr (Con 72) (Var (Global 125))
-087819 Sub (Var (Global 134)) (Var (Global 124)) Sp
-087823 Get_parent (Con 16895) (Global 29)
-087827 Or (Var (Global 125)) (Con 117) (Global 141)
+087804 Je [Var (Global 239),Con 43] (Branch F (Dloc 087814))
+087808 Print_paddr (Con 30094)
+087811 Jump 087953
+087814 Je [Var (Global 239),Con 44] (Branch F (Dloc 087824))
+087818 Print_paddr (Con 30102)
+087821 Jump 087953
+087824 Je [Var (Global 239),Con 45] (Branch F (Dloc 087834))
+087828 Print_paddr (Con 30109)
 087831 Jump 087953
---------------------------------------------------
-gap=16
-087850 RoutineHeader []
-087851 Set_colour (Con 0) (Var (Global 27))
-087854 Print_paddr (Var (Global 11))
-087856 Mod (Var (Global 85)) (Con 73) (Global 6)
-087860 Inc_chk (Var (Global 140)) (Con 165) (Branch T (Dloc 090935))
-087865 Call (Fvar (Global 49)) [Con 255] (Global 31)
-087869 Or (Var (Global 125)) (Con 117) (Global 151)
+087834 Je [Var (Global 239),Con 46] (Branch F (Dloc 087866))
+087838 Print "The memory stack is exhausted.\n"
+087863 Jump 087953
+087866 Je [Var (Global 239),Con 47] (Branch F (Dloc 087876))
+087870 Print_paddr (Con 30119)
 087873 Jump 087953
---------------------------------------------------
-gap=28
-087904 RoutineHeader []
-087905 Get_prop (Con 65) (Var (Global 239)) (Global 33)
-087909 Or (Var (Global 125)) (Con 117) (Global 160)
+087876 Je [Var (Global 239),Con 48] (Branch F (Dloc 087906))
+087880 Print "Error handling external file.\n"
+087903 Jump 087953
+087906 Je [Var (Global 239),Con 49] (Branch F (Dloc 087916))
+087910 Print_paddr (Con 30128)
 087913 Jump 087953
---------------------------------------------------
-gap=18
-087934 RoutineHeader []
-087935 Get_next_prop (Con 65) (Con 255) (Global 36)
-087939 Or (Var (Global 125)) (Con 117) (Global 183)
+087916 Je [Var (Global 239),Con 50] (Branch F (Dloc 087926))
+087920 Print_paddr (Con 30135)
+087923 Jump 087953
+087926 Je [Var (Global 239),Con 51] (Branch F (Dloc 087936))
+087930 Print_paddr (Con 30144)
+087933 Jump 087953
+087936 Je [Var (Global 239),Con 52] (Branch F (Dloc 087946))
+087940 Print_paddr (Con 30151)
 087943 Jump 087953
+087946 Je [Var (Global 239),Con 53] (Branch F (Dloc 087953))
+087950 Print_paddr (Con 30159)
+087953 Print "\n"
+087956 Rtrue
 --------------------------------------------------
-gap=14
+gap=3
 087960 RoutineHeader [0,0,0]
 087961 Print "** Library error "
 087978 Print_num (Var (Local 1))
@@ -16299,8 +17012,7 @@ gap=0
 088934 Rtrue
 --------------------------------------------------
 gap=1
-**LOST**088936 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
--- unused: [1,4,6,7,8,9,10,11,12,13,14]
+088936 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 088937 Jz (Var (Local 3)) (Branch T (Dloc 088943))
 088940 Store (Con 3) (Con 24)
 088943 And (Var (Global 5)) (Con 8) Sp
@@ -16311,25 +17023,26 @@ gap=1
 088961 Store (Con 27) (Var (Local 2))
 088964 Sub (Var (Global 194)) (Con 3) (Local 5)
 088968 Jump 088975
---------------------------------------------------
-gap=29
-089000 RoutineHeader [0,0,0,0,0]
--- unused: [2,4,5]
-089001 Je [Con 0,Con 207] (Branch F (Dloc 084722))
-089006 Get_child (Con 0) (Global 81) (Branch F Dtrue)
-089012 Loadb (Var (Global 56)) (Con 3) (Global 16)
-089016 Jg (Con 193) (Con 151) (Branch F (Dloc 091070))
-089021 Dec_chk (Con 70) (Con 72) (Branch F (Dloc 089794))
-089026 Jg (Con 84) (Con 5) (Branch F (Dloc 089541))
+088975 Jl (Var (Local 5)) (Con 0) (Branch T (Dloc 089048))
+088980 Loadw (Con 18050) (Var (Local 5)) (Local 8)
+088986 Je [Var (Local 8),Con -1] (Branch F (Dloc 088999))
+088992 Add (Var (Local 5)) (Con 3) (Local 5)
+088996 Jump 089048
+088999 Add (Var (Local 5)) (Con 1) Sp
+089003 Loadw (Con 18050) (Var Sp) Sp
+089009 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 089027))
+089013 Or (Var (Local 3)) (Con 32) (Local 3)
+089017 Je [Var (Local 8),Con 3,Con 4] (Branch F (Dloc 089027))
+089023 Or (Var (Local 3)) (Con 2) (Local 3)
+089027 Add (Var (Local 5)) (Con 2) Sp
 089031 Loadw (Con 18050) (Var Sp) Sp
 089037 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 089045))
 089041 Or (Var (Local 3)) (Con 32) (Local 3)
 089045 Jump 088971
---------------------------------------------------
-gap=8
-089056 RoutineHeader [0,0,0,0,0,0]
--- unused: [2,5,6]
-089057 Inc_chk (Con 73) (Con 3) (Branch F (Dloc 089572))
+089048 Jl (Var (Local 5)) (Con 0) (Branch F (Dloc 089055))
+089052 Store (Con 5) (Con 0)
+089055 Store (Con 6) (Var (Local 5))
+089058 And (Var (Local 3)) (Con 2) Sp
 089062 Jz (Var Sp) (Branch T (Dloc 089069))
 089065 Jz (Var (Local 4)) (Branch F (Dloc 089069))
 089068 Rfalse
@@ -16339,10 +17052,8 @@ gap=8
 089079 And (Var (Local 3)) (Con 32) Sp
 089083 Jz (Var Sp) (Branch T (Dloc 089231))
 089087 Jump 089094
---------------------------------------------------
-gap=14
-089104 RoutineHeader [0,0,0,0,0,0,0,0]
--- unused: [6]
+089094 Jl (Var (Local 5)) (Var (Global 194)) (Branch F (Dloc 089231))
+089099 Loadw (Con 18050) (Var (Local 5)) (Local 8)
 089105 Add (Var (Local 5)) (Con 1) Sp
 089109 Loadw (Con 18050) (Var Sp) Sp
 089115 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 089169))
@@ -16372,33 +17083,73 @@ gap=14
 089223 Jz (Var (Local 4)) (Branch T (Dloc 089228))
 089226 Ret (Var (Local 4))
 089228 Jump 089090
---------------------------------------------------
-gap=59
-089290 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-089291 Or (Con 0) (Con 160) Sp
-089295 Or (Var (Global 216)) (Con 127) Sp
+089231 And (Var (Local 3)) (Con 1) Sp
+089235 Jz (Var Sp) (Branch T Dfalse)
+089238 Store (Con 8) (Var (Global 197))
+089241 Jz (Var (Global 197)) (Branch T (Dloc 089250))
+089244 CallN (Floc 098176) [Var (Local 7),Var (Local 2)]
+089250 Add (Var (Global 196)) (Var (Global 197)) (Global 196)
+089254 Jl (Var (Local 7)) (Con 0) (Branch T (Dloc 089475))
+089259 Jl (Var (Local 7)) (Con 375) (Branch F (Dloc 089475))
+089266 Loadw (Con 14735) (Var (Local 7)) (Local 10)
+089272 Loadw (Var (Local 10)) (Con 0) (Local 11)
+089276 Store (Con 5) (Con 0)
+089279 Store (Con 9) (Var (Global 21))
+089282 Je [Var (Local 11),Con -1] (Branch T (Dloc 089472))
+089289 And (Var (Local 3)) (Con 8) Sp
+089293 Jz (Var Sp) (Branch F (Dloc 089302))
+089296 Push (Con 0)
 089299 Jump 089305
---------------------------------------------------
-gap=98
-089400 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-089401 Dec_chk (Con 0) (Con 160) (Branch F (Dloc 089601))
+089302 Push (Con 1)
+089305 Pull (Con 12)
+089308 Je [Var (Local 7),Con 8] (Branch T (Dloc 089317))
+089312 CallN (Floc 079884) [Var (Local 7)]
+089317 Je [Var (Local 11),Con -2] (Branch F (Dloc 089417))
+089324 Store (Con 5) (Con 1)
+089327 Je [Var (Local 9),Var (Global 21)] (Branch F (Dloc 089414))
+089332 Loadw (Var (Local 10)) (Var (Local 5)) (Local 11)
+089336 Je [Var (Local 11),Con -1] (Branch F (Dloc 089345))
+089342 Jump 089414
+089345 Jz (Var (Local 13)) (Branch F (Dloc 089376))
+089348 Store (Con 14) (Var (Local 11))
+089351 Inc (Con 5)
+089353 Loadw (Var (Local 10)) (Var (Local 5)) (Local 13)
+089357 Jl (Var (Local 13)) (Con 1) (Branch T (Dloc 089365))
+089361 Jg (Var (Local 13)) (Con 31) (Branch F (Dloc 089370))
+089365 Store (Con 13) (Con 1)
+089368 Dec (Con 5)
+089370 Inc (Con 5)
+089372 Loadw (Var (Local 10)) (Var (Local 5)) (Local 11)
+089376 Dec (Con 13)
+089378 Je [Var (Local 14),Con -2,Var (Global 40)] (Branch T (Dloc 089388))
+089385 Jump 089409
+089388 Call (Floc 088936) [Var (Local 11),Var (Local 2),Var (Local 12)] (Local 4)
+089396 Jz (Var (Local 4)) (Branch T (Dloc 089409))
+089399 And (Var (Local 3)) (Con 4) Sp
+089403 Jz (Var Sp) (Branch T (Dloc 089409))
 089406 Jump 089463
---------------------------------------------------
-gap=37
-089446 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-089447 Dec_chk (Con 0) (Con 160) (Branch F (Dloc 089647))
+089409 Inc (Con 5)
+089411 Jump 089327
+089414 Jump 089460
+089417 Je [Var (Local 9),Var (Global 21)] (Branch F (Dloc 089460))
+089421 Loadw (Var (Local 10)) (Var (Local 5)) (Local 11)
+089425 Je [Var (Local 11),Con -1] (Branch F (Dloc 089434))
+089431 Jump 089460
+089434 Call (Floc 088936) [Var (Local 11),Var (Local 2),Var (Local 12)] (Local 4)
+089442 Jz (Var (Local 4)) (Branch T (Dloc 089455))
+089445 And (Var (Local 3)) (Con 4) Sp
+089449 Jz (Var Sp) (Branch T (Dloc 089455))
 089452 Jump 089463
---------------------------------------------------
-gap=15
-089470 RoutineHeader [0,0,0,0,0,0,0,0]
--- unused: [1,2,6]
-089471 Test (Con 140) (Con 0) (Branch F (Dloc 095778))
-089476 Add (Con 204) (Con 73) (Local 3)
-089480 Loadb (Con 0) (Con 160) Sp
-089484 Inc_chk (Var (Global 127)) (Con 78) (Branch F (Dloc 089533))
+089455 Inc (Con 5)
+089457 Jump 089417
+089460 Store (Con 4) (Con 0)
+089463 Je [Var (Local 7),Con 8] (Branch T (Dloc 089472))
+089467 CallN (Floc 079904) [Var (Local 7)]
+089472 Jump 089497
+089475 Jz (Var (Global 4)) (Branch T (Dloc 089488))
+089478 And (Var (Local 3)) (Con 16) Sp
+089482 Jz (Var Sp) (Branch F (Dloc 089488))
+089485 CallN (Floc 080316) []
 089488 Call (Fvar (Local 7)) [] (Local 4)
 089491 Jz (Var (Local 4)) (Branch T (Dloc 089497))
 089494 Store (Con 4) (Var (Local 7))
@@ -16427,8 +17178,31 @@ gap=15
 089609 Jz (Var Sp) (Branch T (Dloc 089703))
 089613 Sub (Var (Global 194)) (Con 3) (Local 5)
 089617 Jump 089624
+089624 Jl (Var (Local 5)) (Var (Local 6)) (Branch T (Dloc 089703))
+089629 Loadw (Con 18050) (Var (Local 5)) Sp
+089635 Je [Var Sp,Con 4] (Branch F (Dloc 089700))
+089640 Add (Var (Local 5)) (Con 2) Sp
+089644 Loadw (Con 18050) (Var Sp) Sp
+089650 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 089700))
+089654 And (Var (Local 3)) (Con 8) Sp
+089658 Jz (Var Sp) (Branch F (Dloc 089667))
+089661 Push (Con 0)
+089664 Jump 089670
+089667 Push (Con 1)
+089670 Add (Var (Local 5)) (Con 1) Sp
+089674 Loadw (Con 18050) (Var Sp) Sp
+089680 Call (Floc 088936) [Var Sp,Var (Local 2),Var Sp,Con 1] (Local 4)
+089690 Jz (Var (Local 4)) (Branch T (Dloc 089700))
+089693 Dec (Con 212)
+089695 Store (Con 213) (Var (Local 8))
+089698 Ret (Var (Local 4))
+089700 Jump 089620
+089703 Sub (Var (Global 196)) (Var (Global 197)) (Global 196)
+089707 Storew (Con 18050) (Var (Global 194)) (Con 0)
+089713 Store (Con 213) (Var (Local 8))
+089716 Rfalse
 --------------------------------------------------
-gap=100
+gap=3
 089720 RoutineHeader [0]
 089721 Jz (Var (Local 1)) (Branch T (Dloc 089727))
 089724 Store (Con 82) (Var (Local 1))
@@ -17998,7 +18772,21 @@ gap=1
 098709 Jump 098689
 098712 Rtrue
 --------------------------------------------------
-gap=47
+gap=3
+098716 RoutineHeader [0,0,0,0,0,0,0,0]
+-- unused: [4,5,6,7,8]
+098717 Je [Var (Local 1),Var (Local 2)] (Branch T (Dloc 098725))
+098721 Je [Var (Local 2),Var (Local 3)] (Branch F (Dloc 098726))
+098725 Rtrue
+098726 Sub (Var (Local 2)) (Con 1) Sp
+098730 CallN (Floc 098688) [Var (Local 1),Var Sp]
+098736 Sub (Var (Local 3)) (Con 1) Sp
+098740 CallN (Floc 098688) [Var (Local 2),Var Sp]
+098746 Sub (Var (Local 3)) (Con 1) Sp
+098750 CallN (Floc 098688) [Var (Local 1),Var Sp]
+098756 Rtrue
+--------------------------------------------------
+gap=3
 098760 RoutineHeader [0,0,0,0,0,0,0,0,0,0]
 098761 Jz (Var (Local 4)) (Branch T (Dloc 098767))
 098764 Jz (Var (Local 5)) (Branch F (Dloc 098768))
@@ -18120,7 +18908,7 @@ gap=1
 --------------------------------------------------
 gap=3
 099228 RoutineHeader [0,0,0,0,0,0,0,0,0,0]
--- unused: [4,5,9,10]
+-- unused: [4]
 099229 Jl (Var (Local 2)) (Con 100) (Branch T (Dloc 099240))
 099233 Call (Floc 098884) [Var (Local 1),Var (Local 2)] (Local 2)
 099240 Jz (Var (Local 2)) (Branch T Dtrue)
@@ -18143,10 +18931,23 @@ gap=3
 099310 And (Var Sp) (Con 511) (Local 8)
 099316 Store (Con 10) (Con 0)
 099319 Jump 099326
---------------------------------------------------
-gap=76
-099398 RoutineHeader [0,0,0,0,0]
--- unused: [1,2,4]
+099326 Loadw (Con 12661) (Var (Local 10)) Sp
+099332 Jz (Var Sp) (Branch T (Dloc 099358))
+099335 Loadw (Con 12661) (Var (Local 10)) Sp
+099341 Je [Var Sp,Var (Local 8)] (Branch F (Dloc 099355))
+099345 Add (Var (Local 10)) (Con 1) Sp
+099349 Loadw (Con 12661) (Var Sp) (Local 9)
+099355 Jump 099322
+099358 Je [Var (Local 9),Con 1] (Branch T (Dloc 099381))
+099362 Call (Floc 110032) [Var (Local 9)] Sp
+099368 Add (Var (Local 3)) (Con 2) Sp
+099372 Loadw (Var (Local 1)) (Var (Local 2)) Sp
+099376 Storew (Var Sp) (Var Sp) (Var Sp)
+099381 Dec (Con 3)
+099383 Div (Var (Local 3)) (Con 8) Sp
+099387 Loadw (Var (Local 1)) (Var (Local 2)) Sp
+099391 Loadw (Var Sp) (Con 2) Sp
+099395 Add (Var Sp) (Var Sp) (Local 5)
 099399 Mod (Var (Local 3)) (Con 8) Sp
 099403 Loadb (Con 19810) (Var Sp) Sp
 099409 Loadb (Con 12650) (Var (Local 5)) Sp
@@ -18839,7 +19640,6 @@ gap=2
 --------------------------------------------------
 gap=0
 102064 RoutineHeader [0,0,0,0,0,0,0,0,0]
--- unused: [7,9]
 102065 Store (Con 2) (Con 1)
 102068 Loadw (Var (Local 1)) (Con 0) Sp
 102072 Jg (Var (Local 2)) (Var Sp) (Branch T (Dloc 102098))
@@ -18867,8 +19667,33 @@ gap=0
 102165 Store (Con 9) (Con 54)
 102168 Store (Con 2) (Con 0)
 102171 Jump 102178
+102178 Loadw (Con 12661) (Var (Local 2)) Sp
+102184 Jz (Var Sp) (Branch T (Dloc 102210))
+102187 Loadw (Con 12661) (Var (Local 2)) Sp
+102193 Je [Var Sp,Var (Local 8)] (Branch F (Dloc 102207))
+102197 Add (Var (Local 2)) (Con 1) Sp
+102201 Loadw (Con 12661) (Var Sp) (Local 9)
+102207 Jump 102174
+102210 Add (Var (Local 5)) (Con 2) Sp
+102214 Loadw (Var (Local 1)) (Var (Local 6)) Sp
+102218 Loadw (Var Sp) (Var Sp) (Local 7)
+102222 Je [Var (Local 7),Con 32739] (Branch F (Dloc 102247))
+102228 Call (Floc 098952) [Var (Local 1),Var (Local 6),Var (Local 5)] Sp
+102236 Jz (Var Sp) (Branch T (Dloc 102247))
+102239 Print "-- "
+102244 Jump 102263
+102247 Call (Floc 110028) [Var (Local 7),Var (Local 9)] Sp
+102254 Jz (Var Sp) (Branch F (Dloc 102260))
+102257 Print_num (Var (Local 7))
+102260 Print " "
+102263 Inc (Con 6)
+102265 Jump 102142
+102268 Print "\n"
+102271 Inc (Con 5)
+102273 Jump 102134
+102276 Rfalse
 --------------------------------------------------
-gap=106
+gap=3
 102280 RoutineHeader [0,0,0]
 -- unused: [1,2,3]
 102281 Print_ret "."
@@ -18981,29 +19806,21 @@ gap=1
 --------------------------------------------------
 gap=1
 102620 RoutineHeader [0,0,0,0]
--- unused: [3,4]
 102621 Call (Floc 102432) [Var (Local 1)] (Local 1)
 102627 Call (Floc 102432) [Var (Local 2)] (Local 2)
 102633 Store (Con 3) (Var (Local 1))
 102636 Jump 102645
---------------------------------------------------
-gap=5
-102644 RoutineHeader [0,0,0]
--- unused: [1]
 102645 Jz (Var (Local 3)) (Branch T (Dloc 102675))
 102648 Store (Con 4) (Var (Local 2))
 102651 Jump 102660
---------------------------------------------------
-gap=4
-102658 RoutineHeader [0,0,0,0]
--- unused: [1,2]
-102659 Dec_chk (Con 160) (Con 4) (Branch T (Dloc 102672))
+102660 Jz (Var (Local 4)) (Branch T (Dloc 102672))
 102663 Je [Var (Local 4),Var (Local 3)] (Branch F (Dloc 102669))
 102667 Ret (Var (Local 4))
 102669 Jump 102654
 102672 Jump 102639
+102675 Rfalse
 --------------------------------------------------
-gap=1
+gap=0
 102676 RoutineHeader [0,0]
 102677 Jz (Var (Local 1)) (Branch T Dfalse)
 102680 Jz (Var (Local 2)) (Branch T Dfalse)
@@ -19020,9 +19837,6 @@ gap=1
 102731 Jz (Var Sp) (Branch F Dfalse)
 102734 Call (Floc 102384) [Var (Local 2)] (Local 2)
 102740 Jump 102749
---------------------------------------------------
-gap=5
-102748 RoutineHeader [0,0]
 102749 Jz (Var (Local 2)) (Branch T (Dloc 102759))
 102752 Je [Var (Local 2),Var (Local 1)] (Branch T Dtrue)
 102756 Jump 102743
@@ -19154,7 +19968,7 @@ gap=0
 --------------------------------------------------
 gap=1
 103120 RoutineHeader [0,0,0,0]
--- unused: [2,4]
+-- unused: [2]
 103121 Get_prop (Var (Local 1)) (Con 20) (Global 239)
 103125 Store (Con 3) (Var (Global 239))
 103128 Put_prop (Var (Local 1)) (Con 20) (Con 0)
@@ -19172,12 +19986,19 @@ gap=1
 103171 Get_prop (Var (Local 3)) (Con 19) (Global 239)
 103175 Store (Con 4) (Var (Global 239))
 103178 Jump 103188
---------------------------------------------------
-gap=37
-103218 RoutineHeader []
+103188 Jz (Var (Local 4)) (Branch T (Dloc 103223))
+103191 Get_prop (Var (Local 4)) (Con 21) (Global 239)
+103195 Push (Var (Global 239))
+103198 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 103220))
+103202 Get_prop (Var (Local 1)) (Con 21) (Global 239)
+103206 Push (Var (Global 239))
+103209 Put_prop (Var (Local 4)) (Con 21) (Var Sp)
+103214 Put_prop (Var (Local 1)) (Con 21) (Con 0)
 103219 Rtrue
+103220 Jump 103181
+103223 Rtrue
 --------------------------------------------------
-gap=4
+gap=0
 103224 RoutineHeader [0,0,0,0,0]
 103225 Jz (Var (Local 1)) (Branch F (Dloc 103235))
 103228 Call (Floc 086692) [Con 15] Sp
@@ -19272,8 +20093,9 @@ gap=1
 103561 Store (Con 1) (Var (Local 2))
 103564 Jump 103483
 103567 Rfalse
+103571 Rfalse
 --------------------------------------------------
-gap=4
+gap=0
 103572 RoutineHeader [0,0]
 103573 Push (Var (Global 37))
 103576 Store (Con 53) (Var (Global 31))
@@ -19800,7 +20622,6 @@ gap=2
 --------------------------------------------------
 gap=1
 105316 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0]
--- unused: [2,7,8,9]
 105317 Store (Con 11) (Var (Global 75))
 105320 Store (Con 91) (Var (Local 11))
 105323 Call (Floc 041228) [] (Local 1)
@@ -19843,28 +20664,83 @@ gap=1
 105470 Jz (Var (Local 5)) (Branch T (Dloc 105579))
 105474 Store (Con 10) (Con 0)
 105477 Jump 105486
---------------------------------------------------
-gap=90
-105570 RoutineHeader [0,0]
--- unused: [1,2]
-105571 CallN (Fvar (Global 130)) [Con 84]
-105574 Get_prop (Con 196) (Con 150) (Global 75)
+105486 Loadb (Var (Local 3)) (Var (Local 10)) Sp
+105490 Je [Var Sp,Con 58] (Branch T (Dloc 105509))
+105494 Loadb (Var (Local 3)) (Var (Local 10)) Sp
+105498 Add (Var (Local 8)) (Var Sp) Sp
+105502 Sub (Var Sp) (Con 48) (Local 8)
+105506 Jump 105480
+105509 Div (Var (Local 8)) (Con 10) (Local 8)
+105513 Inc (Con 10)
+105515 Jump 105524
+105524 Jl (Var (Local 10)) (Var (Local 4)) (Branch F (Dloc 105543))
+105528 Loadb (Var (Local 3)) (Var (Local 10)) Sp
+105532 Add (Var (Local 9)) (Var Sp) Sp
+105536 Sub (Var Sp) (Con 48) (Local 9)
+105540 Jump 105518
+105543 Div (Var (Local 9)) (Con 10) (Local 9)
+105547 Call (Floc 041228) [] (Local 2)
+105551 Call (Floc 105816) [Var (Local 8),Var (Local 9),Var (Local 2)] (Global 58)
+105559 Je [Var (Global 58),Con -1] (Branch F (Dloc 105568))
+105565 Ret (Con -1)
+105568 Je [Var (Local 2),Con 23186,Con 21521] (Branch T (Dloc 105578))
+105576 Dec (Con 91)
 105578 Rtrue
---------------------------------------------------
-gap=135
-105714 RoutineHeader []
+105579 Store (Con 7) (Con -1)
+105584 Je [Var (Local 1),Con 22439] (Branch F (Dloc 105593))
+105590 Store (Con 7) (Con 30)
+105593 Je [Var (Local 1),Con 23312] (Branch F (Dloc 105602))
+105599 Store (Con 7) (Con 15)
+105602 Jl (Var (Local 7)) (Con 0) (Branch F (Dloc 105616))
+105606 Sub (Var (Global 75)) (Con 1) Sp
+105610 Call (Floc 051172) [Var Sp] (Local 7)
+105616 Jl (Var (Local 7)) (Con 0) (Branch T (Dloc 105624))
+105620 Jl (Var (Local 7)) (Con 60) (Branch T (Dloc 105627))
+105624 Ret (Con -1)
+105627 Call (Floc 041228) [] (Local 2)
+105631 Store (Con 255) (Var (Local 2))
+105634 Je [Var (Global 239),Con 23006,Con 21521,Con 23186] (Branch T (Dloc 105650))
+105644 Je [Var (Global 239),Con -1] (Branch F (Dloc 105663))
+105650 Store (Con 8) (Var (Local 7))
+105653 Jg (Var (Local 8)) (Con 12) (Branch F (Dloc 105660))
+105657 Ret (Con -1)
+105660 Jump 105787
+105663 Je [Var (Global 239),Con 24104,Con 23150] (Branch F (Dloc 105756))
+105672 Store (Con 9) (Var (Local 7))
+105675 Call (Floc 051172) [Var (Global 75)] (Local 8)
+105681 Jg (Var (Local 8)) (Con 0) (Branch T (Dloc 105721))
+105685 Call (Floc 041228) [] Sp
+105689 Pull (Con 255)
+105692 Je [Var (Global 239),Con 22925,Con 22817] (Branch F (Dloc 105706))
+105700 Store (Con 8) (Con 12)
+105703 Jump 105721
+105706 Je [Var (Global 239),Con 22826] (Branch F (Dloc 105718))
+105712 Store (Con 8) (Con 0)
 105715 Jump 105721
---------------------------------------------------
-gap=34
-105752 RoutineHeader [0,0]
--- unused: [1,2]
+105718 Ret (Con -1)
+105721 Jl (Var (Local 8)) (Con 13) (Branch T (Dloc 105728))
+105725 Ret (Con -1)
+105728 Je [Var (Local 2),Con 24104] (Branch F (Dloc 105747))
+105734 Sub (Con 60) (Var (Local 9)) (Local 9)
+105738 Dec (Con 8)
+105740 Jl (Var (Local 8)) (Con 0) (Branch F (Dloc 105747))
+105744 Store (Con 8) (Con 23)
+105747 Inc (Con 91)
+105749 Call (Floc 041228) [] (Local 2)
 105753 Jump 105787
---------------------------------------------------
-gap=48
-105804 RoutineHeader [0,0]
--- unused: [1,2]
-105805 CallN (Fvar (Global 130)) [Con 84]
-105808 Get_prop (Con 89) (Con 222) (Global 180)
+105756 Store (Con 8) (Var (Local 7))
+105759 Dec (Con 91)
+105761 Push (Var (Global 75))
+105764 Call (Floc 051172) [Var Sp] (Local 9)
+105770 Jl (Var (Local 9)) (Con 0) (Branch T (Dloc 105778))
+105774 Jl (Var (Local 9)) (Con 60) (Branch T (Dloc 105781))
+105778 Ret (Con -1)
+105781 Inc (Con 91)
+105783 Call (Floc 041228) [] (Local 2)
+105787 Call (Floc 105816) [Var (Local 8),Var (Local 9),Var (Local 2)] (Global 58)
+105795 Jl (Var (Global 58)) (Con 0) (Branch F (Dloc 105802))
+105799 Ret (Con -1)
+105802 Je [Var (Local 2),Con 23186,Con 21521,Con 23006] (Branch T (Dloc 105814))
 105812 Dec (Con 91)
 105814 Rtrue
 --------------------------------------------------
@@ -20148,7 +21024,7 @@ gap=2
 106719 Rtrue
 --------------------------------------------------
 gap=0
-**LOST**106720 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
+106720 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
 -- unused: [2,6,7,8,9,10]
 106721 Jl (Var (Global 61)) (Con 3) (Branch T (Dloc 106748))
 106725 Print "Two-pass parse_name called\n"
@@ -20226,26 +21102,8 @@ gap=0
 107024 CallN (Floc 051600) [Var (Local 1),Var (Local 4)]
 107030 Ret (Var (Local 4))
 --------------------------------------------------
-gap=-234 **OVERLAP**
-106798 RoutineHeader [0]
--- unused: [1]
-106799 Jump 106781
---------------------------------------------------
-gap=168
-106970 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-106971 Inc (Con 11)
-106973 Jump 106754
---------------------------------------------------
-gap=36
-107012 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107013 Clear_attr (Con 116) (Con 1)
-107016 Dec_chk (Con 91) (Con 160) (Branch F (Dloc 108112))
-107021 Ret (Con -1)
---------------------------------------------------
-gap=8
-**LOST**107032 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
+gap=0
+107032 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
 -- unused: [2,6,7,8,9,10]
 107033 Jl (Var (Global 61)) (Con 3) (Branch T (Dloc 107060))
 107037 Print "Two-pass parse_name called\n"
@@ -20293,26 +21151,8 @@ gap=8
 107218 CallN (Floc 051600) [Var (Local 1),Var (Local 4)]
 107224 Ret (Var (Local 4))
 --------------------------------------------------
-gap=-116 **OVERLAP**
-107110 RoutineHeader [0]
--- unused: [1]
-107111 Jump 107093
---------------------------------------------------
-gap=50
-107164 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107165 Inc (Con 11)
-107167 Jump 107066
---------------------------------------------------
-gap=36
-107206 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107207 Clear_attr (Con 116) (Con 1)
-107210 Dec_chk (Con 91) (Con 160) (Branch F (Dloc 108306))
-107215 Ret (Con -1)
---------------------------------------------------
-gap=10
-**LOST**107228 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
+gap=2
+107228 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
 -- unused: [2,6,7,8,9,10]
 107229 Jl (Var (Global 61)) (Con 3) (Branch T (Dloc 107256))
 107233 Print "Two-pass parse_name called\n"
@@ -20369,36 +21209,8 @@ gap=10
 107449 CallN (Floc 051600) [Var (Local 1),Var (Local 4)]
 107455 Ret (Var (Local 4))
 --------------------------------------------------
-gap=-151 **OVERLAP**
-107306 RoutineHeader [0]
--- unused: [1]
-107307 Jump 107289
---------------------------------------------------
-gap=60
-107370 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107371 Jump 107354
---------------------------------------------------
-gap=8
-107382 RoutineHeader [0,0,0,0]
--- unused: [1,2,3]
-107383 Jg (Con 0) (Con 117) (Branch F Dtrue)
-107388 Dec_chk (Con 65) (Con 11) (Branch F (Dloc 107716))
-107393 Store (Con 12) (Var (Local 4))
-107396 Inc (Con 11)
-107398 Jump 107262
---------------------------------------------------
-gap=33
-107434 RoutineHeader [0,0,0,0]
--- unused: [2,3]
-107435 Inc_chk (Var (Global 29)) (Con 4) (Branch F (Dloc 110626))
-107440 Je [Con 4,Con 91] (Branch T (Dloc 099255))
-107445 Inc_chk (Var (Global 123)) (Con 255) (Branch T (Dloc 107510))
-107449 CallN (Floc 051600) [Var (Local 1),Var (Local 4)]
-107455 Ret (Var (Local 4))
---------------------------------------------------
 gap=3
-**LOST**107460 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
+107460 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
 -- unused: [2,6,7,8,9,10]
 107461 Jl (Var (Global 61)) (Con 3) (Branch T (Dloc 107488))
 107465 Print "Two-pass parse_name called\n"
@@ -20446,26 +21258,8 @@ gap=3
 107646 CallN (Floc 051600) [Var (Local 1),Var (Local 4)]
 107652 Ret (Var (Local 4))
 --------------------------------------------------
-gap=-116 **OVERLAP**
-107538 RoutineHeader [0]
--- unused: [1]
-107539 Jump 107521
---------------------------------------------------
-gap=50
-107592 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107593 Inc (Con 11)
-107595 Jump 107494
---------------------------------------------------
-gap=36
-107634 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107635 Clear_attr (Con 116) (Con 1)
-107638 Dec_chk (Con 91) (Con 160) (Branch F (Dloc 108734))
-107643 Ret (Con -1)
---------------------------------------------------
-gap=10
-**LOST**107656 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
+gap=2
+107656 RoutineHeader [0,0,0,0,0,0,0,0,0,0,0,0]
 -- unused: [2,6,7,8,9,10]
 107657 Jl (Var (Global 61)) (Con 3) (Branch T (Dloc 107684))
 107661 Print "Two-pass parse_name called\n"
@@ -20513,25 +21307,7 @@ gap=10
 107842 CallN (Floc 051600) [Var (Local 1),Var (Local 4)]
 107848 Ret (Var (Local 4))
 --------------------------------------------------
-gap=-116 **OVERLAP**
-107734 RoutineHeader [0]
--- unused: [1]
-107735 Jump 107717
---------------------------------------------------
-gap=50
-107788 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107789 Inc (Con 11)
-107791 Jump 107690
---------------------------------------------------
-gap=36
-107830 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-107831 Clear_attr (Con 116) (Con 1)
-107834 Dec_chk (Con 91) (Con 160) (Branch F (Dloc 108930))
-107839 Ret (Con -1)
---------------------------------------------------
-gap=10
+gap=2
 107852 RoutineHeader [0,0,0,0,0,0]
 -- unused: [4,5]
 107853 Store (Con 91) (Var (Local 1))
@@ -20627,84 +21403,89 @@ gap=2
 --------------------------------------------------
 gap=2
 108100 RoutineHeader [0]
--- unused: [1]
 108101 Store (Con 1) (Con 41)
 108104 Jump 108114
+108114 Jz (Var (Local 1)) (Branch T (Dloc 108140))
+108117 Call (Floc 088304) [Var (Local 1),Con 36] Sp
+108124 Jz (Var Sp) (Branch T (Dloc 108137))
+108127 Call (Floc 102676) [Con 43,Var (Local 1)] Sp
+108134 Jz (Var Sp) (Branch F Dtrue)
+108137 Jump 108107
+108140 Rfalse
 --------------------------------------------------
-gap=37
+gap=3
 108144 RoutineHeader [0]
 108145 Jz (Var (Local 1)) (Branch T (Dloc 108151))
 108148 Jump 108179
 108151 Store (Con 1) (Con 41)
 108154 Jump 108164
---------------------------------------------------
-gap=21
-108178 RoutineHeader [0]
--- unused: [1]
+108164 Jz (Var (Local 1)) (Branch T (Dloc 108182))
+108167 Call (Floc 088304) [Var (Local 1),Con 36] Sp
+108174 Jz (Var Sp) (Branch T (Dloc 108179))
+108177 Ret (Var (Local 1))
 108179 Jump 108157
+108182 Rfalse
 --------------------------------------------------
-gap=2
+gap=1
 108184 RoutineHeader [0]
 108185 Jz (Var (Local 1)) (Branch T (Dloc 108191))
 108188 Jump 108209
 108191 Store (Con 1) (Con 41)
 108194 Jump 108204
---------------------------------------------------
-gap=11
-108208 RoutineHeader [0]
--- unused: [1]
+108204 Jz (Var (Local 1)) (Branch T (Dloc 108212))
+108207 Ret (Var (Local 1))
 108209 Jump 108197
+108212 Rfalse
 --------------------------------------------------
-gap=4
+gap=3
 108216 RoutineHeader [0]
 108217 Jz (Var (Local 1)) (Branch T (Dloc 108223))
 108220 Jump 108241
 108223 Store (Con 1) (Con 41)
 108226 Jump 108236
---------------------------------------------------
-gap=11
-108240 RoutineHeader [0]
--- unused: [1]
+108236 Jz (Var (Local 1)) (Branch T (Dloc 108244))
+108239 Ret (Var (Local 1))
 108241 Jump 108229
+108244 Rfalse
 --------------------------------------------------
-gap=4
+gap=3
 108248 RoutineHeader [0]
 108249 Jz (Var (Local 1)) (Branch T (Dloc 108255))
 108252 Jump 108273
 108255 Store (Con 1) (Con 41)
 108258 Jump 108268
---------------------------------------------------
-gap=11
-108272 RoutineHeader [0]
--- unused: [1]
+108268 Jz (Var (Local 1)) (Branch T (Dloc 108276))
+108271 Ret (Var (Local 1))
 108273 Jump 108261
+108276 Rfalse
 --------------------------------------------------
-gap=4
+gap=3
 108280 RoutineHeader [0,0]
--- unused: [1,2]
 108281 Store (Con 1) (Con 41)
 108284 Jump 108294
---------------------------------------------------
-gap=21
-108308 RoutineHeader [0,0]
--- unused: [1,2]
+108294 Jz (Var (Local 1)) (Branch T (Dloc 108315))
+108297 Call (Floc 088304) [Var (Local 1),Con 34] Sp
+108304 Jz (Var Sp) (Branch T (Dloc 108312))
+108307 Inc (Con 2)
 108309 Jump 108312
+108312 Jump 108287
+108315 Ret (Var (Local 2))
 --------------------------------------------------
-gap=8
+gap=3
 108320 RoutineHeader [0]
 108321 Jz (Var (Local 1)) (Branch T (Dloc 108327))
 108324 Jump 108355
 108327 Store (Con 1) (Con 41)
 108330 Jump 108340
---------------------------------------------------
-gap=21
-108354 RoutineHeader [0]
--- unused: [1]
+108340 Jz (Var (Local 1)) (Branch T (Dloc 108358))
+108343 Call (Floc 088304) [Var (Local 1),Con 34] Sp
+108350 Jz (Var Sp) (Branch T (Dloc 108355))
+108353 Ret (Var (Local 1))
 108355 Jump 108333
+108358 Rfalse
 --------------------------------------------------
-gap=2
-**LOST**108360 RoutineHeader [0,0,0,0,0,0,0]
--- unused: [2,3,4,5,6,7]
+gap=1
+108360 RoutineHeader [0,0,0,0,0,0,0]
 108361 Jl (Var (Local 1)) (Con 0) (Branch T (Dloc 108373))
 108365 Store (Con 2) (Var (Local 1))
 108368 Store (Con 1) (Con -1)
@@ -20716,54 +21497,79 @@ gap=2
 108395 Store (Con 6) (Con 32767)
 108400 Store (Con 2) (Con 41)
 108403 Jump 108413
---------------------------------------------------
-gap=120
-108526 RoutineHeader [0,0]
--- unused: [1,2]
+108413 Jz (Var (Local 2)) (Branch T (Dloc 108479))
+108417 Call (Floc 088304) [Var (Local 2),Con 30] Sp
+108424 Jz (Var Sp) (Branch F (Dloc 108476))
+108427 Jg (Var (Global 13)) (Con 0) (Branch F (Dloc 108455))
+108431 Call (Floc 110116) [Var (Local 2),Var (Global 12)] Sp
+108438 Jl (Var Sp) (Var (Local 6)) (Branch T (Dloc 108452))
+108442 Call (Floc 110116) [Var (Local 2),Var (Global 12)] (Local 6)
+108449 Store (Con 7) (Var (Local 2))
+108452 Jump 108476
+108455 Call (Floc 110116) [Var (Local 2),Var (Global 12)] Sp
+108462 Jg (Var Sp) (Var (Local 6)) (Branch T (Dloc 108476))
+108466 Call (Floc 110116) [Var (Local 2),Var (Global 12)] (Local 6)
+108473 Store (Con 7) (Var (Local 2))
+108476 Jump 108406
+108479 Ret (Var (Local 7))
+108481 Je [Var (Global 239),Con -5] (Branch F (Dloc 108532))
+108487 Store (Con 2) (Con 41)
+108490 Jump 108500
+108500 Jz (Var (Local 2)) (Branch T (Dloc 108530))
+108503 Call (Floc 088304) [Var (Local 2),Con 30] Sp
+108510 Jz (Var Sp) (Branch F (Dloc 108527))
+108513 Call (Floc 110116) [Var (Local 2),Var (Global 12)] Sp
+108520 Add (Var (Local 3)) (Var Sp) (Local 3)
+108524 Jump 108527
 108527 Jump 108493
---------------------------------------------------
-gap=16
-108546 RoutineHeader []
+108530 Ret (Var (Local 3))
+108532 Je [Var (Global 239),Con -4] (Branch F (Dloc 108598))
+108539 Store (Con 5) (Con -1)
+108544 Store (Con 4) (Con 0)
 108547 Store (Con 2) (Con 41)
 108550 Jump 108560
---------------------------------------------------
-gap=27
-108580 RoutineHeader [0,0]
--- unused: [1,2]
+108560 Jz (Var (Local 2)) (Branch T (Dloc 108587))
+108563 Call (Floc 088304) [Var (Local 2),Con 30] Sp
+108570 Jz (Var Sp) (Branch F (Dloc 108584))
+108573 Inc (Con 4)
+108575 Je [Var (Local 4),Var (Local 5)] (Branch F (Dloc 108581))
+108579 Ret (Var (Local 2))
 108581 Jump 108584
---------------------------------------------------
-gap=4
-108588 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
-108589 Jg (Var (Global 161)) (Con 231) (Branch T (Dloc 108340))
-108594 Inc_chk (Con 140) (Con 255) (Branch T (Dloc 108608))
+108584 Jump 108553
+108587 Jz (Var (Local 4)) (Branch F (Dloc 108591))
+108590 Rfalse
+108591 Random (Var (Local 4)) (Local 5)
+108595 Jump 108544
 108598 Je [Var (Global 239),Con -3] (Branch F (Dloc 108640))
 108604 Store (Con 2) (Con 41)
 108607 Jump 108617
---------------------------------------------------
-gap=16
-108626 RoutineHeader []
+108617 Jz (Var (Local 2)) (Branch T (Dloc 108638))
+108620 Call (Floc 088304) [Var (Local 2),Con 30] Sp
 108627 Jz (Var Sp) (Branch F (Dloc 108635))
 108630 Inc (Con 4)
 108632 Jump 108635
 108635 Jump 108610
---------------------------------------------------
-gap=26
-108664 RoutineHeader [0,0]
--- unused: [1]
+108638 Ret (Var (Local 4))
+108640 Je [Var (Global 239),Con -2] (Branch F (Dloc 108684))
+108646 Jz (Var (Local 2)) (Branch T (Dloc 108652))
+108649 Jump 108680
+108652 Store (Con 2) (Con 41)
+108655 Jump 108665
 108665 Jz (Var (Local 2)) (Branch T (Dloc 108683))
 108668 Call (Floc 088304) [Var (Local 2),Con 30] Sp
 108675 Jz (Var Sp) (Branch F (Dloc 108680))
 108678 Ret (Var (Local 2))
 108680 Jump 108658
 108683 Rfalse
---------------------------------------------------
-gap=22
-108706 RoutineHeader []
+108684 Je [Var (Global 239),Con -1] (Branch F (Dloc 108711))
+108690 Call (Floc 026172) [Var (Local 2),Con 14] Sp
+108697 Jz (Var Sp) (Branch T (Dloc 108710))
+108700 Call (Floc 088304) [Var (Local 2),Con 30] Sp
 108707 Jz (Var Sp) (Branch T Dtrue)
 108710 Rfalse
+108711 Rtrue
 --------------------------------------------------
-gap=1
+gap=0
 108712 RoutineHeader [0,0]
 108713 Get_child (Var (Local 1)) Sp (Branch F (Dloc 108717))
 108717 Pull (Con 2)
@@ -20827,35 +21633,35 @@ gap=3
 --------------------------------------------------
 gap=0
 108912 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 108913 Jz (Con 1) (Branch T (Dloc 108949))
 108916 Store (Con 3) (Con 0)
 108919 Store (Con 2) (Con 43)
 108922 Jump 108932
---------------------------------------------------
-gap=11
-108936 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+108932 Jz (Var (Local 2)) (Branch T (Dloc 108946))
+108935 Inc (Con 4)
 108937 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 108943))
 108941 Inc (Con 3)
 108943 Jump 108925
+108946 Jz (Var (Local 3)) (Branch T Dtrue)
+108949 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 108952 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 108953 Jz (Con 1) (Branch T (Dloc 108989))
 108956 Store (Con 3) (Con 0)
 108959 Store (Con 2) (Con 41)
 108962 Jump 108972
---------------------------------------------------
-gap=11
-108976 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+108972 Jz (Var (Local 2)) (Branch T (Dloc 108986))
+108975 Inc (Con 4)
 108977 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 108983))
 108981 Inc (Con 3)
 108983 Jump 108965
+108986 Jz (Var (Local 3)) (Branch T Dtrue)
+108989 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 108992 RoutineHeader [0,0,0]
 108993 Get_child (Var (Local 1)) Sp (Branch F (Dloc 108997))
 108997 Pull (Con 2)
@@ -20929,33 +21735,32 @@ gap=2
 --------------------------------------------------
 gap=2
 109216 RoutineHeader [0,0,0]
--- unused: [3]
 109217 Call (Floc 102880) [Var (Local 1)] (Local 2)
 109223 Jump 109233
---------------------------------------------------
-gap=16
-109242 RoutineHeader []
+109233 Jz (Var (Local 2)) (Branch T (Dloc 109254))
+109236 Call (Floc 026172) [Var (Local 2),Con 14] Sp
 109243 Jz (Var Sp) (Branch T (Dloc 109251))
 109246 Inc (Con 3)
 109248 Jump 109251
 109251 Jump 109226
+109254 Ret (Var (Local 3))
 --------------------------------------------------
-gap=2
+gap=0
 109256 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109257 Jz (Con 1) (Branch T (Dloc 109293))
 109260 Store (Con 3) (Con 0)
 109263 Store (Con 2) (Con 44)
 109266 Jump 109276
---------------------------------------------------
-gap=11
-109280 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109276 Jz (Var (Local 2)) (Branch T (Dloc 109290))
+109279 Inc (Con 4)
 109281 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109287))
 109285 Inc (Con 3)
 109287 Jump 109269
+109290 Jz (Var (Local 3)) (Branch T Dtrue)
+109293 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109296 RoutineHeader [0,0,0]
 109297 Get_child (Var (Local 1)) Sp (Branch F (Dloc 109301))
 109301 Pull (Con 2)
@@ -20972,85 +21777,80 @@ gap=6
 --------------------------------------------------
 gap=2
 109344 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109345 Jz (Con 1) (Branch T (Dloc 109381))
 109348 Store (Con 3) (Con 0)
 109351 Store (Con 2) (Con 46)
 109354 Jump 109364
---------------------------------------------------
-gap=11
-109368 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109364 Jz (Var (Local 2)) (Branch T (Dloc 109378))
+109367 Inc (Con 4)
 109369 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109375))
 109373 Inc (Con 3)
 109375 Jump 109357
+109378 Jz (Var (Local 3)) (Branch T Dtrue)
+109381 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109384 RoutineHeader [0,0,0]
--- unused: [3]
 109385 Call (Floc 102880) [Var (Local 1)] (Local 2)
 109391 Jump 109401
---------------------------------------------------
-gap=16
-109410 RoutineHeader []
+109401 Jz (Var (Local 2)) (Branch T (Dloc 109422))
+109404 Call (Floc 026172) [Var (Local 2),Con 14] Sp
 109411 Jz (Var Sp) (Branch T (Dloc 109419))
 109414 Inc (Con 3)
 109416 Jump 109419
 109419 Jump 109394
+109422 Ret (Var (Local 3))
 --------------------------------------------------
-gap=2
+gap=0
 109424 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109425 Jz (Con 1) (Branch T (Dloc 109461))
 109428 Store (Con 3) (Con 0)
 109431 Store (Con 2) (Con 41)
 109434 Jump 109444
---------------------------------------------------
-gap=11
-109448 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109444 Jz (Var (Local 2)) (Branch T (Dloc 109458))
+109447 Inc (Con 4)
 109449 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109455))
 109453 Inc (Con 3)
 109455 Jump 109437
+109458 Jz (Var (Local 3)) (Branch T Dtrue)
+109461 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109464 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109465 Jz (Con 1) (Branch T (Dloc 109501))
 109468 Store (Con 3) (Con 0)
 109471 Store (Con 2) (Con 46)
 109474 Jump 109484
---------------------------------------------------
-gap=11
-109488 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109484 Jz (Var (Local 2)) (Branch T (Dloc 109498))
+109487 Inc (Con 4)
 109489 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109495))
 109493 Inc (Con 3)
 109495 Jump 109477
+109498 Jz (Var (Local 3)) (Branch T Dtrue)
+109501 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109504 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109505 Jz (Con 1) (Branch T (Dloc 109541))
 109508 Store (Con 3) (Con 0)
 109511 Store (Con 2) (Con 44)
 109514 Jump 109524
---------------------------------------------------
-gap=11
-109528 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109524 Jz (Var (Local 2)) (Branch T (Dloc 109538))
+109527 Inc (Con 4)
 109529 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109535))
 109533 Inc (Con 3)
 109535 Jump 109517
+109538 Jz (Var (Local 3)) (Branch T Dtrue)
+109541 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109544 RoutineHeader [0,0]
 109545 Call (Floc 102880) [Var (Local 1)] (Local 2)
 109551 Jump 109561
---------------------------------------------------
-gap=6
-109560 RoutineHeader [0,0]
--- unused: [1]
 109561 Jz (Var (Local 2)) (Branch T (Dloc 109597))
 109564 Call (Floc 026172) [Var (Local 2),Con 14] Sp
 109571 Jz (Var Sp) (Branch T (Dloc 109594))
@@ -21080,71 +21880,68 @@ gap=2
 --------------------------------------------------
 gap=0
 109660 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109661 Jz (Con 1) (Branch T (Dloc 109697))
 109664 Store (Con 3) (Con 0)
 109667 Store (Con 2) (Con 41)
 109670 Jump 109680
---------------------------------------------------
-gap=11
-109684 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109680 Jz (Var (Local 2)) (Branch T (Dloc 109694))
+109683 Inc (Con 4)
 109685 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109691))
 109689 Inc (Con 3)
 109691 Jump 109673
+109694 Jz (Var (Local 3)) (Branch T Dtrue)
+109697 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109700 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109701 Jz (Con 1) (Branch T (Dloc 109737))
 109704 Store (Con 3) (Con 0)
 109707 Store (Con 2) (Con 41)
 109710 Jump 109720
---------------------------------------------------
-gap=11
-109724 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109720 Jz (Var (Local 2)) (Branch T (Dloc 109734))
+109723 Inc (Con 4)
 109725 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109731))
 109729 Inc (Con 3)
 109731 Jump 109713
+109734 Jz (Var (Local 3)) (Branch T Dtrue)
+109737 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109740 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109741 Jz (Con 1) (Branch T (Dloc 109777))
 109744 Store (Con 3) (Con 0)
 109747 Store (Con 2) (Con 41)
 109750 Jump 109760
---------------------------------------------------
-gap=11
-109764 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109760 Jz (Var (Local 2)) (Branch T (Dloc 109774))
+109763 Inc (Con 4)
 109765 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109771))
 109769 Inc (Con 3)
 109771 Jump 109753
+109774 Jz (Var (Local 3)) (Branch T Dtrue)
+109777 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109780 RoutineHeader [0,0,0,0]
--- unused: [1,2,3,4]
+-- unused: [4]
 109781 Jz (Con 1) (Branch T (Dloc 109817))
 109784 Store (Con 3) (Con 0)
 109787 Store (Con 2) (Con 29)
 109790 Jump 109800
---------------------------------------------------
-gap=11
-109804 RoutineHeader [0,0,0,0]
--- unused: [3,4]
+109800 Jz (Var (Local 2)) (Branch T (Dloc 109814))
+109803 Inc (Con 4)
 109805 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 109811))
 109809 Inc (Con 3)
 109811 Jump 109793
+109814 Jz (Var (Local 3)) (Branch T Dtrue)
+109817 Rfalse
 --------------------------------------------------
-gap=6
+gap=2
 109820 RoutineHeader [0]
 109821 Call (Floc 102880) [Con 67] (Local 1)
 109827 Jump 109837
---------------------------------------------------
-gap=6
-109836 RoutineHeader [0]
 109837 Jz (Var (Local 1)) (Branch T (Dloc 109853))
 109840 Call (Floc 026172) [Var (Local 1),Con 14] Sp
 109847 Jz (Var Sp) (Branch F Dtrue)
@@ -21268,7 +22065,12 @@ gap=2
 -- unused: [1]
 110061 Rtrue
 --------------------------------------------------
-gap=6
+gap=2
+110064 RoutineHeader [0,0,0,0,0,0]
+-- unused: [1,2,3,4,5,6]
+110065 Rfalse
+--------------------------------------------------
+gap=2
 110068 RoutineHeader [0,0,0,0]
 -- unused: [1,2,3,4]
 110069 Rfalse
@@ -21655,7 +22457,6 @@ gap=3
 --------------------------------------------------
 gap=1
 111404 RoutineHeader [0,0,0,0,0,0,0,0,0]
--- unused: [7,9]
 111405 Store (Con 5) (Con 0)
 111408 Jl (Var (Local 5)) (Con 48) (Branch F (Dloc 111430))
 111412 Test_attr (Var (Local 2)) (Var (Local 5)) (Branch F (Dloc 111422))
@@ -21700,19 +22501,33 @@ gap=1
 111542 Get_prop (Var (Local 2)) (Con 3) (Global 239)
 111546 Store (Con 5) (Var (Global 239))
 111549 Jump 111560
---------------------------------------------------
-gap=82
-111634 RoutineHeader [0,0,0,0,0,0,0]
--- unused: [1,2,3,4]
-111635 Jg (Con 84) (Con 8) (Branch F (Dloc 112406))
+111560 Loadw (Var (Local 5)) (Con 0) Sp
+111564 Jz (Var Sp) (Branch T (Dloc 111664))
+111568 Loadw (Var (Local 5)) (Con 0) (Local 9)
+111572 Loadb (Var (Local 5)) (Con 2) (Local 8)
+111576 Get_prop (Var (Local 1)) (Con 3) (Global 239)
+111580 Store (Con 6) (Var (Global 239))
+111583 Jump 111598
+111598 Loadw (Var (Local 6)) (Con 0) Sp
+111602 Jz (Var Sp) (Branch T (Dloc 111661))
+111605 Loadw (Var (Local 6)) (Con 0) Sp
+111609 And (Var Sp) (Con 32767) Sp
+111615 And (Var (Local 9)) (Con 32767) Sp
+111621 Je [Var Sp,Var Sp] (Branch F (Dloc 111658))
+111625 Loadb (Var (Local 6)) (Con 2) Sp
+111629 Je [Var (Local 8),Var Sp] (Branch F (Dloc 111658))
+111633 Store (Con 7) (Con 3)
+111636 Add (Var (Local 8)) (Con 3) Sp
 111640 Jl (Var (Local 7)) (Var Sp) (Branch F (Dloc 111658))
 111644 Loadb (Var (Local 5)) (Var (Local 7)) Sp
 111648 Storeb (Var (Local 6)) (Var (Local 7)) (Var Sp)
 111653 Inc (Con 7)
 111655 Jump 111636
 111658 Jump 111586
+111661 Jump 111552
+111664 Rtrue
 --------------------------------------------------
-gap=7
+gap=3
 111668 RoutineHeader [0,0,0,0,0,0]
 111669 Print "\n[** Programming error: "
 111694 Jl (Var (Local 1)) (Con 0) (Branch F (Dloc 111701))
@@ -22179,23 +22994,7 @@ gap=72
 -- unused: [1,2]
 120503 Ret (Con 870)
 --------------------------------------------------
-gap=654
-121160 RoutineHeader []
-121161 Jump 127892
---------------------------------------------------
-gap=20
-121184 RoutineHeader []
-121185 Jump 127916
---------------------------------------------------
-gap=416
-121604 RoutineHeader []
-121605 Jump 145824
---------------------------------------------------
-gap=18
-121626 RoutineHeader []
-121627 Jump 145846
---------------------------------------------------
-gap=294
+gap=1418
 121924 RoutineHeader [0,0]
 -- unused: [1,2]
 121925 Ret (Con 192)
@@ -22220,42 +23019,17 @@ gap=30
 -- unused: [1,2]
 122221 Ret (Con 558)
 --------------------------------------------------
-gap=980
-123204 RoutineHeader [0,0]
--- unused: [1,2]
-123205 Add (Var (Global 90)) (Var (Global 80)) (Global 79)
-123209 Get_prop (Var (Global 24)) (Con 244) (Global 194)
-123213 Inc_chk (Con 0) (Con 0) (Branch F (Dloc 129737))
-123218 Test_attr (Con 224) (Var (Global 3)) (Branch F (Dloc 129963))
-123223 Rfalse
---------------------------------------------------
-gap=358
+gap=1358
 123582 RoutineHeader [0,0]
 -- unused: [1,2]
 123583 Rfalse
 --------------------------------------------------
-gap=962
-124546 RoutineHeader []
-124547 Jump 145495
---------------------------------------------------
-gap=14
-124564 RoutineHeader []
-124565 Jump 145513
---------------------------------------------------
-gap=142
-124710 RoutineHeader []
-124711 Jump 135777
---------------------------------------------------
-gap=2
+gap=1132
 124716 RoutineHeader [0,0]
 -- unused: [1,2]
 124717 Ret (Con 11287)
 --------------------------------------------------
-gap=12
-124732 RoutineHeader []
-124733 Jump 135799
---------------------------------------------------
-gap=2
+gap=18
 124738 RoutineHeader [0,0]
 -- unused: [1,2]
 124739 Ret (Con 11287)
@@ -22263,270 +23037,5 @@ gap=2
 gap=836
 125578 RoutineHeader []
 125579 Jump 140794
---------------------------------------------------
-gap=18
-125600 RoutineHeader []
-125601 Jump 140816
---------------------------------------------------
-gap=2714
-128318 RoutineHeader []
-128319 Ret (Con 42)
---------------------------------------------------
-gap=27
-128348 RoutineHeader []
-128349 Ret (Con 42)
---------------------------------------------------
-gap=967
-129318 RoutineHeader [0,0]
--- unused: [1,2]
-129319 Ret (Con 11287)
---------------------------------------------------
-gap=30
-129352 RoutineHeader [0,0]
--- unused: [1,2]
-129353 Ret (Con 11287)
---------------------------------------------------
-gap=552
-129908 RoutineHeader [0,0]
--- unused: [1,2]
-129909 Ret (Con 430)
---------------------------------------------------
-gap=20
-129932 RoutineHeader [0,0]
--- unused: [1,2]
-129933 Ret (Con 200)
---------------------------------------------------
-gap=28
-129964 RoutineHeader [0,0]
--- unused: [1,2]
-129965 Ret (Con 200)
---------------------------------------------------
-gap=28
-129996 RoutineHeader [0,0]
--- unused: [1,2]
-129997 Ret (Con 200)
---------------------------------------------------
-gap=78
-130078 RoutineHeader [0,0]
--- unused: [1,2]
-130079 Rfalse
---------------------------------------------------
-gap=456
-130536 RoutineHeader [0,0]
--- unused: [1]
-130537 Remove_obj (Con 53)
-130539 Div (Var (Local 2)) (Con 170) (Global 66)
-130543 Rfalse
---------------------------------------------------
-gap=48
-130592 RoutineHeader [0,0,0]
--- unused: [1,3]
-130593 Jin (Con 65) (Var (Global 48)) (Branch F (Dloc 129358))
-130598 Set_attr (Var Sp) (Con 83)
-130601 Call (Fvar (Local 2)) [Con 139] (Local 2)
-130605 Rfalse
---------------------------------------------------
-gap=34
-130640 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-130641 Jin (Con 65) (Var (Global 48)) (Branch F (Dloc 130692))
-130645 Dec (Var (Global 84))
-130647 Ret_popped
---------------------------------------------------
-gap=20
-130668 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-130669 Jin (Con 65) (Var (Global 48)) (Branch F (Dloc 130720))
-130673 Dec (Var (Global 84))
-130675 Ret_popped
---------------------------------------------------
-gap=18
-130694 RoutineHeader [0,0]
--- unused: [1,2]
-130695 Rfalse
---------------------------------------------------
-gap=96
-130792 RoutineHeader [0]
--- unused: [1]
-130793 Div (Con 82) (Var (Global 144)) (Global 97)
-130797 Dec (Var (Global 84))
-130799 Ret_popped
---------------------------------------------------
-gap=108
-130908 RoutineHeader [0,0]
--- unused: [1,2]
-130909 Quit
---------------------------------------------------
-gap=22
-130932 RoutineHeader [0,0]
--- unused: [1,2]
-130933 Quit
---------------------------------------------------
-gap=30
-130964 RoutineHeader [0,0]
--- unused: [1,2]
-130965 Quit
---------------------------------------------------
-gap=30
-130996 RoutineHeader [0,0]
--- unused: [1,2]
-130997 Quit
---------------------------------------------------
-gap=22
-131020 RoutineHeader [0,0]
--- unused: [1,2]
-131021 Quit
---------------------------------------------------
-gap=706
-131728 RoutineHeader [0,0]
--- unused: [1]
-131729 Remove_obj (Con 53)
-131731 Div (Var (Local 2)) (Con 170) (Global 66)
-131735 Rfalse
---------------------------------------------------
-gap=16
-131752 RoutineHeader [0,0]
--- unused: [1]
-131753 Remove_obj (Con 53)
-131755 Div (Var (Local 2)) (Con 170) (Global 66)
-131759 Rfalse
---------------------------------------------------
-gap=84
-131844 RoutineHeader [0,0]
--- unused: [1]
-131845 Remove_obj (Con 53)
-131847 Div (Var (Local 2)) (Con 170) (Global 66)
-131851 Rfalse
---------------------------------------------------
-gap=16
-131868 RoutineHeader [0,0]
--- unused: [1,2]
-131869 Add (Con 34) (Var Sp) (Global 97)
-131873 Dec (Var (Global 84))
-131875 Ret_popped
---------------------------------------------------
-gap=234
-132110 RoutineHeader [0,0]
--- unused: [1,2]
-132111 Ret (Con 11287)
---------------------------------------------------
-gap=396
-132510 RoutineHeader [0,0]
--- unused: [1]
-132511 Remove_obj (Con 53)
-132513 Div (Var (Local 2)) (Con 170) (Global 66)
-132517 Rfalse
---------------------------------------------------
-gap=10
-132528 RoutineHeader [0,0]
--- unused: [1,2]
-132529 Quit
---------------------------------------------------
-gap=26
-132556 RoutineHeader [0,0]
--- unused: [1,2]
-132557 Quit
---------------------------------------------------
-gap=54
-132612 RoutineHeader [0,0]
--- unused: [1,2]
-132613 Quit
---------------------------------------------------
-gap=22
-132636 RoutineHeader [0,0]
--- unused: [1,2]
-132637 Quit
---------------------------------------------------
-gap=58
-132696 RoutineHeader [0,0]
--- unused: [1,2]
-132697 Print_obj (Var (Global 66))
-132699 Rfalse
---------------------------------------------------
-gap=290
-132990 RoutineHeader [0,0]
--- unused: [1,2]
-132991 Ret (Con 11287)
---------------------------------------------------
-gap=266
-133260 RoutineHeader [0,0]
--- unused: [1,2]
-133261 Ret (Con 788)
---------------------------------------------------
-gap=154
-133418 RoutineHeader [0,0]
--- unused: [1,2]
-133419 Ret (Con 11289)
---------------------------------------------------
-gap=42
-133464 RoutineHeader [0,0,0]
--- unused: [2]
-133465 Print_obj (Con 6894)
-133468 Store (Var (Global 112)) (Con 101)
-133471 Print_obj (Var (Local 1))
-133473 CallN (Floc 050944) [Var (Global 30),Con 151,Var (Local 3),Var (Global 29),Con 10251,Con 15096,Con 25625]
-133488 Quit
---------------------------------------------------
-gap=521
-134010 RoutineHeader [0,0]
--- unused: [1,2]
-134011 Rfalse
---------------------------------------------------
-gap=142
-134154 RoutineHeader [0,0]
--- unused: [1,2]
-134155 Ret (Con 11287)
---------------------------------------------------
-gap=494
-134652 RoutineHeader []
-134653 Ret (Con 24009)
---------------------------------------------------
-gap=490
-135146 RoutineHeader [0,0]
--- unused: [1,2]
-135147 Get_sibling (Con 36) (Global 172) (Branch F (Dloc 130246))
-135152 Sub (Con 212) (Var (Global 61)) (Global 57)
-135156 Je [Con 134,Con 96] (Branch F (Dloc 141405))
-135161 Ret (Con 40)
---------------------------------------------------
-gap=927
-136090 RoutineHeader [0,0]
--- unused: [1,2]
-136091 Ret (Con 980)
---------------------------------------------------
-gap=382
-136476 RoutineHeader [0]
--- unused: [1]
-136477 Print_obj (Var (Global 77))
-136479 Inc_chk (Var (Global 184)) (Con 165) (Branch F Dfalse)
-136484 Get_next_prop (Con 45) (Con 42) (Global 218)
-136488 Je [Con 216,Con 0] (Branch T Dfalse)
-136492 Jg (Var (Global 39)) (Var (Global 66)) (Branch F (Dloc 136538))
-136496 Jg (Con 18) (Con 42) (Branch F (Dloc 132661))
-136501 Ret (Con 390)
---------------------------------------------------
-gap=56
-136560 RoutineHeader [0,0,0]
--- unused: [1,2,3]
-136561 Print_obj (Con 6880)
-136564 Insert_obj (Con 151) (Var Sp)
-136567 Ret (Con 24009)
---------------------------------------------------
-gap=28
-136598 RoutineHeader [0,0]
--- unused: [1,2]
-136599 Ret (Con 813)
---------------------------------------------------
-gap=186
-136788 RoutineHeader []
-136789 Ret (Con 24009)
---------------------------------------------------
-gap=22
-136814 RoutineHeader [0,0]
--- unused: [1,2]
-136815 Ret (Con 11443)
---------------------------------------------------
-gap=362
-137180 RoutineHeader [0,0]
--- unused: [1,2]
-137181 Ret (Con 582)
+140794 Call (Fvar (Global 54)) [Con 101] (Global 195)
+140798 Rtrue
