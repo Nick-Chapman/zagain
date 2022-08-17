@@ -1,6 +1,5 @@
 Found 4340 headers
-Found 12500 operations
-Of which 8590 operations are overlapped
+Found 8590 operations; 1985 overlapped
 * 012237 Ret (Con 511)                                                  012240
 * 015453 Clear_attr (Var (Global 194)) (Con 106)                        015456
   015456 Je [Var (Global 153),Con 0] (Branch F (Dloc 022960))           015461

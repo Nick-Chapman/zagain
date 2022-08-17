@@ -18,9 +18,11 @@ $(exe): src/*.hs
 	stack build; touch $(exe)
 
 
-dis2: reg/zork.dis2
+dis2: reg/zork.dis2 reg/hitch.dis2
 reg/zork.dis2: $(exe) src/*.hs
 	$(exe) dis2 zork > $@
+reg/hitch.dis2: $(exe) src/*.hs
+	$(exe) dis2 hitch > $@
 
 
 

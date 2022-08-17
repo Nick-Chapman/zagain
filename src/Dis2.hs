@@ -55,9 +55,10 @@ dis story = do
       | (Info{end},Info{begin=next}) <- (zip ys (tail ys))
       ] ++ [False]
 
+  let yos = [ i | i@Info{thing=Operation{}} <- ys ]
+
   printf "Found %d headers\n" (length hs)
-  printf "Found %d operations\n" (length os)
-  printf "Of which %d operations are overlapped\n" (length overlaps)
+  printf "Found %d operations; %d overlapped\n" (length yos) (length [ () | b <- overlaps, b ])
 
   flip mapM_ (zip ys overlaps) $ \(i@Info{begin},overlap) -> do
     let eMarker = if isEntry begin then "* " else "  "
