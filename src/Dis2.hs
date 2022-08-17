@@ -10,7 +10,9 @@ import qualified Operation as Op
 import Header (Header(..))
 import Text.Printf (printf)
 import qualified Data.Set as Set
+import qualified Data.Map as Map
 import Data.Set (Set)
+import Data.Map (Map)
 
 dis :: Story -> IO ()
 dis story = do
@@ -63,17 +65,21 @@ dis story = do
     putStrLn (eMarker ++ show i ++ oMarker)
 
 
+type VM = Map Addr Bool
+
 disBetween :: Story -> (Addr,Addr) -> [Info]
 disBetween story (start,stop) = do
-  [ i | a <- [ start .. stop - 1 ], i <- disInfo story a ]
+  let allA = [ start .. stop - 1 ]
+  let vm = Map.fromList [ (a, validOp vm story a) | a <- allA ]
+  [ i | a <- allA, i <- disInfo vm story a ]
 
-disInfo :: Story -> Addr -> [Info]
-disInfo story addr = do
+disInfo :: VM -> Story -> Addr -> [Info]
+disInfo vm story addr = do
   let begin = addr
   let opM = disOpM story addr
-  let validO = validOp story addr
+  let validO = validOp vm story addr
   let headM = disRoutineHeader story addr
-  let validH = validRH story addr
+  let validH = validRH vm story addr
   (case opM of
     Nothing -> []
     Just (op,end) | validO -> do
@@ -88,14 +94,14 @@ disInfo story addr = do
       _  -> [])
 
 
-validRH :: Story -> Addr -> Bool
-validRH story a = do
+validRH :: VM -> Story -> Addr -> Bool
+validRH vm story a = do
   case disRoutineHeader story a of
     Nothing -> False
-    Just (_,a') -> validOp story a'
+    Just (_,a') -> validOp vm story a'
 
-validOp :: Story -> Addr -> Bool
-validOp story = recurse
+validOp :: VM -> Story -> Addr -> Bool
+validOp vm story = recurse
   where
     recurse :: Addr -> Bool
     recurse a =
@@ -104,13 +110,15 @@ validOp story = recurse
         Just (Op.Jump a',_) -> callRecurse a'
         Just (op,end) -> do
           isStopping op ||
-            any id [ callRecurse a'
+            all id [ callRecurse a'
                    | a' <- [ end ] ++ branchesOf op
                    ]
       where
         callRecurse :: Addr -> Bool
         callRecurse a' =
-          if a' > a then recurse a' else True -- break recursive loops
+          if a' > a
+          then maybe False id $ Map.lookup a' vm
+          else True -- break recursive loops
 
 
 disOpM :: Story -> Addr -> Maybe (Operation,Addr)
