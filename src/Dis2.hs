@@ -109,16 +109,28 @@ validOp vm story = recurse
         Nothing -> False
         Just (Op.Jump a',_) -> callRecurse a'
         Just (op,end) -> do
-          isStopping op ||
-            all id [ callRecurse a'
-                   | a' <- [ end ] ++ branchesOf op
-                   ]
+          case directCall op of
+            Just _ha -> do
+              --validRH vm story _ha && -- TODO: sort this
+                callRecurse end
+            Nothing -> do
+              isStopping op ||
+                all id [ callRecurse a'
+                       | a' <- [ end ] ++ branchesOf op
+                       ]
       where
         callRecurse :: Addr -> Bool
         callRecurse a' =
           if a' > a
           then maybe False id $ Map.lookup a' vm
           else True -- break recursive loops
+
+
+directCall :: Operation -> Maybe Addr
+directCall = \case
+  Op.Call (Op.Floc a) _ _ -> Just a
+  Op.CallN (Op.Floc a) _ -> Just a
+  _ -> Nothing
 
 
 disOpM :: Story -> Addr -> Maybe (Operation,Addr)
