@@ -1,5 +1,5 @@
 
-top: trace walk dis code diff
+top: trace walk dis dis2 code diff
 
 trace: .reg reg/zork.trace reg/trinity.trace reg/judo.trace
 walk: .reg reg/zork.walk reg/hitch.walk reg/trinity.walk reg/judo.walk
@@ -16,6 +16,12 @@ exe = .stack-work/dist/x86_64-linux/Cabal-3.2.1.0/build/main.exe/main.exe
 
 $(exe): src/*.hs
 	stack build; touch $(exe)
+
+
+dis2: reg/zork.dis2
+reg/zork.dis2: $(exe) src/*.hs
+	$(exe) dis2 zork > $@
+
 
 
 reg/zork.trace: $(exe) scripts/zork.script src/*.hs

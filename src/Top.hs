@@ -12,6 +12,7 @@ import RunCode (runCode)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
 import qualified Console (runAction)
+import qualified Dis2 (dis)
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
 import qualified WalkThrough (runAction)
@@ -31,7 +32,7 @@ data Config = Config
   , viaCompiler :: Bool
   }
 
-data Mode = Dictionary | Run | Disassemble | Compile
+data Mode = Dictionary | Run | Disassemble | Dis2 | Compile
 
 config0 :: Config
 config0 = Config
@@ -61,6 +62,7 @@ parseCommandLine = loop config0
       [] -> pure c
       "dict":more -> loop c { mode = Dictionary } more
       "dis":more -> loop c { mode = Disassemble } more
+      "dis2":more -> loop c { mode = Dis2 } more
       "code":more -> loop c { mode = Compile } more
       "-noconsole":more -> loop c { mayStartConsole = False } more
       "-nodebug":more -> loop c { iconf = iconf { debug = False }} more
@@ -110,6 +112,10 @@ run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaC
     Disassemble -> do
       story <- loadStory storyFile
       disassemble story inputs
+      pure ()
+    Dis2 -> do
+      story <- loadStory storyFile
+      Dis2.dis story
       pure ()
     Compile -> do
       story <- loadStory storyFile
