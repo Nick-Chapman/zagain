@@ -1,5 +1,5 @@
-Found 4340 headers
-Found 8590 operations; 1985 overlapped
+Found 4134 headers
+Found 8149 operations; 1556 overlapped
 * 012237 Ret (Con 511)                                                  012240
 * 015453 Clear_attr (Var (Global 194)) (Con 106)                        015456
   015456 Je [Var (Global 153),Con 0] (Branch F (Dloc 022960))           015461
@@ -9,46 +9,15 @@ Found 8590 operations; 1985 overlapped
   015751 Get_parent (Con 0) (Global 15)                                 015754
   015754 Div (Var (Global 189)) (Con 73) (Global 18)                    015758
   015758 Quit                                                           015759
-* 015872 Je [Con 166,Var (Global 191)] (Branch F (Dloc 009028))         015877
-  015877 Print_ret " The drwhich eto c "                                015886
-* 015914 Je [Con 180,Var (Global 186)] (Branch T (Dloc 009070))         015919
-  015919 Get_prop_len (Con 0) (Global 17)                               015922
-  015922 Quit                                                           015923
 * 015999 Ret (Con -21037)                                               016002
 * 016118 Div (Var (Global 209)) (Con 69) (Global 49)                    016122
   016122 Ret (Con 0)                                                    016124
-* 016159 Dec_chk (Con 210) (Var (Global 188)) (Branch T (Dloc 009315))  016164
-  016164 Ret (Con 0)                                                    016166
 * 016628 Store (Con 209) (Var (Global 180))                             016631
   016631 Inc (Var (Global 49))                                          016633
   016633 Ret (Var Sp)                                                   016635
-* 016838 Loadw (Con 72) (Var (Global 176)) (Global 149)                 016842
-  016842 Je [Var (Global 139),Con 0] (Branch F (Dloc 012566))           016847
-  016847 Rfalse                                                         016848
-* 016880 Loadb (Con 217) (Var (Global 152)) (Global 149)                016884
-  016884 Jz (Con 256) (Branch F (Dloc 013008))                          016889
-  016889 Ret (Var (Local 5))                                            016891
-* 017006 Get_prop_addr (Con 230) (Var (Global 213)) (Global 195)        017010
-  017010 Jz (Con 256) (Branch F (Dloc 013663))                          017015
-  017015 Ret (Con 10)                                                   017017
-* 017419 Je [Var (Global 193),Con 196] (Branch T (Dloc 010575))         017424
-  017424 Ret_popped                                                     017425
-* 017426 Je [Var (Global 200),Con 224] (Branch T (Dloc 010582))         017431
-  017431 Quit                                                           017432
 * 017868 Ret (Con 168)                                                  017870
-* 018798 Je [Var (Global 54),Var (Global 226)] (Branch T (Dloc 024723)) 018803
-  018803 Print_ret " probably mbeumleading c "                          018812
-* 018882 Je [Var (Global 158),Var (Global 212)] (Branch T (Dloc 012038))018887
-  018887 Ret (Con 0)                                                    018889
 * 018904 Quit                                                           018905
-* 018966 Jl (Var (Global 10)) (Var (Global 182)) (Branch F (Dloc 012185))018971
-  018971 Je [Con 0,Con 98] (Branch F (Dloc 012494))                     018976 !
-* 018973 Jl (Var (Global 22)) (Var (Global 160)) (Branch T (Dloc 012192))018978 !
-  018976 Inc (Var (Global 112))                                         018978
-  018978 Je [Con 0,Con 98] (Branch F (Dloc 012573))                     018983 !
-* 018980 Jl (Var (Global 22)) (Var (Global 232)) (Branch T (Dloc 012136))018985 !
-* 018981 Jin (Con 248) (Var (Global 149)) (Branch F Dtrue)              018985 !
-  018983 Inc (Var (Global 49))                                          018985
+* 018981 Jin (Con 248) (Var (Global 149)) (Branch F Dtrue)              018985
   018985 Ret_popped                                                     018986
 * 019100 Restart                                                        019101
   019101 Ret (Con 197)                                                  019103
@@ -102,9 +71,7 @@ Found 8590 operations; 1985 overlapped
   020185 New_line                                                       020186
 * 020186 Call (Floc 038192) [Con 174] Sp                                020192
 * 020192 Rfalse                                                         020193
-  020193 Print "You can't go that way."                                 020204 !
-* 020195 Je [Var (Global 21),Con 148] (Branch F (Dloc 020301))          020200
-  020200 Jg (Con 134) (Con 248) (Branch T (Dloc 016806))                020205 !
+  020193 Print "You can't go that way."                                 020204
 * 020204 New_line                                                       020205
   020205 Rfalse                                                         020206
 * 020209 Je [Var (Local 1),Con 1] (Branch F Dfalse)                     020213
@@ -116,17 +83,14 @@ Found 8590 operations; 1985 overlapped
 * 020238 Storew (Var Sp) (Con 0) (Con 1)                                020243
   020243 Call (Floc 021618) [Con -32644,Con -1] Sp                      020252
 * 020252 Call (Floc 021618) [Con -32528,Con -1] Sp                      020261
-* 020261 Storew (Var Sp) (Con 0) (Con 1)                                020266 !
-* 020265 Je [Con 224,Con 7] (Branch F (Dloc 014693))                    020270 !
-  020266 Call (Floc 021618) [Con 28522,Con 40] Sp                       020274 !
-  020270 Loadw (Var (Global 90)) (Var (Global 24)) Sp                   020274
+* 020261 Storew (Var Sp) (Con 0) (Con 1)                                020266
+  020266 Call (Floc 021618) [Con 28522,Con 40] Sp                       020274
 * 020274 Call (Floc 021618) [Con 28501,Con 200] Sp                      020282
 * 020282 Put_prop (Con 156) (Con 6) (Con 4)                             020287
   020287 Add (Var (Global 16)) (Con 2) Sp                               020291
 * 020291 Storew (Var (Global 10)) (Con 1) (Var Sp)                      020296
 * 020296 Add (Var (Global 16)) (Con 4) Sp                               020300
-* 020300 Storew (Var (Global 10)) (Con 2) (Var Sp)                      020305 !
-  020301 Ret (Con 26)                                                   020303
+* 020300 Storew (Var (Global 10)) (Con 2) (Var Sp)                      020305
 * 020305 Add (Var (Global 14)) (Con 2) Sp                               020309
 * 020309 Storew (Var (Global 9)) (Con 2) (Var Sp)                       020314
 * 020314 Add (Var (Global 14)) (Con 4) Sp                               020318
@@ -345,8 +309,7 @@ Found 8590 operations; 1985 overlapped
 * 021724 Inc_chk (Con 232) (Con 191) (Branch T (Dloc 026707))           021729 !
   021725 Push (Var (Global 131))                                        021728
   021728 Add (Var (Global 132)) (Var Sp) (Local 1)                      021732 !
-  021729 Get_prop_len (Con 0) (Local 1)                                 021732 !
-* 021731 Je [Con 84,Con 148] (Branch T (Dloc 018664))                   021736 !
+  021729 Get_prop_len (Con 0) (Local 1)                                 021732
   021732 Add (Var (Global 132)) (Con 180) (Local 2)                     021736
   021736 Je [Var (Local 1),Var (Local 2)] (Branch F (Dloc 021751))      021740 !
 * 021739 Store (Var (Global 181)) (Con 79)                              021742 !
@@ -379,13 +342,11 @@ Found 8590 operations; 1985 overlapped
   021837 Jz (Var (Global 127)) (Branch T (Dloc 022347))                 021841
   021841 Loadw (Var (Global 85)) (Var (Global 81)) (Local 1)            021845
   021845 Loadw (Var (Global 86)) (Var (Global 81)) (Local 2)            021849
-  021849 Jz (Var (Local 2)) (Branch F (Dloc 021858))                    021852 !
-* 021850 Jl (Con 72) (Con 232) (Branch T (Dloc 021599))                 021855 !
+  021849 Jz (Var (Local 2)) (Branch F (Dloc 021858))                    021852
   021852 Push (Var (Local 2))                                           021855
 * 021855 Jump 021907                                                    021858 !
 * 021857 Get_next_prop (Con 67) (Var (Local 2)) (Local 1)               021861 !
   021858 Jg (Var (Local 2)) (Con 1) (Branch F (Dloc 021884))            021862 !
-* 021859 Jl (Con 1) (Con 88) (Branch F (Dloc 017004))                   021864 !
   021861 Mod (Var (Global 29)) (Con 6) (Global 86)                      021865 !
   021862 Store (Con 6) (Var (Global 86))                                021865 !
 * 021864 Jin (Var (Global 144)) (Var (Local 1)) (Branch F (Dloc 021874))021868 !
@@ -512,8 +473,7 @@ Found 8590 operations; 1985 overlapped
   022259 Jump 022032                                                    022262
   022262 Je [Var (Local 9),Con 12] (Branch F (Dloc 022271))             022266
   022266 Print_obj (Var (Global 107))                                   022268
-  022268 Jump 022273                                                    022271 !
-* 022270 Dec_chk (Con 170) (Con 9) (Branch T (Dloc 018840))             022275 !
+  022268 Jump 022273                                                    022271
 * 022271 Print_obj (Var (Local 9))                                      022273
   022273 Print ": "                                                     022276 !
 * 022275 Jz (Var (Local 13)) (Branch F (Dloc 024838))                   022279 !
@@ -593,8 +553,7 @@ Found 8590 operations; 1985 overlapped
   022545 Jz (Var (Local 4)) (Branch T (Dloc 022551))                    022548 !
 * 022546 Dec_chk (Con 197) (Con 140) (Branch F (Dloc 022644))           022551 !
   022548 Jump 022644                                                    022551
-  022551 Loadw (Var (Global 156)) (Var (Local 1)) Sp                    022555 !
-* 022553 Je [Con 0,Con 224] (Branch T (Dloc 022300))                    022558 !
+  022551 Loadw (Var (Global 156)) (Var (Local 1)) Sp                    022555
 * 022555 Call (Fvar Sp) [] (Local 4)                                    022559 !
 * 022558 Dec_chk (Con 160) (Con 4) (Branch T (Dloc 022565))             022562 !
   022559 Jz (Var (Local 4)) (Branch T (Dloc 022565))                    022562
@@ -793,9 +752,7 @@ Found 8590 operations; 1985 overlapped
 * 023241 Jg (Con 2) (Con 140) (Branch F (Dloc 023397))                  023246 !
   023243 Jump 023397                                                    023246
   023246 Je [Var (Global 97),Con 2] (Branch F (Dloc 023277))            023250
-  023250 Print "There were too many nouns in that sentence."            023275 !
-* 023267 Jg (Con 10) (Con 79) (Branch F (Dloc 017715))                  023272
-  023272 Test_attr (Con 150) (Con 69) (Branch T (Dloc 022172))          023277 !
+  023250 Print "There were too many nouns in that sentence."            023275
   023275 New_line                                                       023276
   023276 Rfalse                                                         023277
   023277 Inc (Con 113)                                                  023279
@@ -813,9 +770,7 @@ Found 8590 operations; 1985 overlapped
 * 023315 Dec_chk (Con 239) (Con 0) (Branch F (Dloc 023319))             023319
   023319 Call (Floc 023466) [Var (Local 2),Con 64,Con 1] Sp             023327
 * 023327 Jz (Var Sp) (Branch T (Dloc 023383))                           023330
-  023330 Print "Please consult your manual for the correct way to talk to other people or creatures."023381 !
-* 023363 Inc_chk (Con 99) (Con 54) (Branch T (Dloc 017816))             023368
-  023368 Rfalse                                                         023369
+  023330 Print "Please consult your manual for the correct way to talk to other people or creatures."023381
   023381 New_line                                                       023382
   023382 Rfalse                                                         023383
   023383 Call (Floc 024640) [Var (Local 1)] Sp                          023389
@@ -889,8 +844,7 @@ Found 8590 operations; 1985 overlapped
 * 023643 Jz (Var (Local 3)) (Branch F (Dloc 023656))                    023646
   023646 Call (Floc 023992) [Var (Local 1)] (Local 3)                   023652 !
 * 023651 Jg (Con 160) (Con 3) (Branch T (Dloc 023972))                  023656 !
-  023652 Jz (Var (Local 3)) (Branch T (Dloc 023972))                    023656 !
-* 023653 Jg (Con 129) (Con 62) (Branch T (Dloc 015593))                 023658 !
+  023652 Jz (Var (Local 3)) (Branch T (Dloc 023972))                    023656
   023656 Jz (Var (Global 113)) (Branch F (Dloc 023665))                 023659 !
 * 023658 Or (Var (Local 13)) (Con 8) Sp                                 023662 !
   023659 Store (Con 8) (Con 0)                                          023662 !
@@ -993,10 +947,8 @@ Found 8590 operations; 1985 overlapped
 * 024023 Add (Var (Global 110)) (Var Sp) Sp                             024027
 * 024027 Loadb (Var Sp) (Con 3) (Local 3)                               024031
   024031 Dec_chk (Con 2) (Con 0) (Branch F (Dloc 024038))               024035
-  024035 Jump 024086                                                    024038 !
-* 024037 Get_prop_addr (Con 112) (Var (Global 109)) (Local 3)           024041 !
-  024038 Loadb (Var (Global 109)) (Var (Local 3)) (Local 4)             024042 !
-  024041 Dec_chk (Con 65) (Con 4) (Branch F (Dloc 022583))              024046 !
+  024035 Jump 024086                                                    024038
+  024038 Loadb (Var (Global 109)) (Var (Local 3)) (Local 4)             024042
   024042 Je [Var (Local 4),Con 58] (Branch F (Dloc 024055))             024046
   024046 Store (Con 6) (Var (Local 5))                                  024049
   024049 Store (Con 5) (Con 0)                                          024052 !
@@ -1179,8 +1131,7 @@ Found 8590 operations; 1985 overlapped
   024691 Add (Var (Global 110)) (Var (Local 2)) Sp                      024695
 * 024695 Loadb (Var Sp) (Con 3) Sp                                      024699
 * 024699 Call (Floc 024538) [Var (Local 3),Var Sp] Sp                   024706
-* 024706 Print "\" in a way that I don't understand."                   024727 !
-  024723 Dec_chk (Var (Global 195)) (Var (Global 148)) (Branch T (Dloc 021329))024728 !
+* 024706 Print "\" in a way that I don't understand."                   024727
   024727 New_line                                                       024728
   024728 Store (Con 112) (Con 0)                                        024731
 * 024731 Store (Con 121) (Con 0)                                        024734
@@ -1269,9 +1220,7 @@ Found 8590 operations; 1985 overlapped
   025021 Call (Floc 025674) [Var (Local 6)] Sp                          025027
 * 025027 Ret_popped                                                     025028
 * 025028 Je [Var (Local 8),Con 172] (Branch F (Dloc 025055))            025032
-  025032 Print "That question can't be answered."                       025053 !
-* 025046 Mod (Var (Global 97)) (Var (Global 71)) (Global 25)            025050
-  025050 Inc_chk (Con 200) (Var (Global 149)) (Branch T (Dloc 023950))  025055 !
+  025032 Print "That question can't be answered."                       025053
   025053 New_line                                                       025054
   025054 Rfalse                                                         025055
   025055 Je [Var (Global 111),Var (Global 128)] (Branch T (Dloc 025065))025059
@@ -1435,9 +1384,7 @@ Found 8590 operations; 1985 overlapped
 * 025664 Sub (Var (Local 2)) (Con 1) Sp                                 025668
 * 025668 Loadw (Var (Global 154)) (Var Sp) Sp                           025672
 * 025672 Ret (Var Sp)                                                   025674
-* 025674 Je [Con 0,Con 0] (Branch F (Dloc 020944))                      025679 !
-* 025677 Store (Con 131) (Var (Local 1))                                025680 !
-  025679 Je [Con 80,Con 1] (Branch F (Dloc 027610))                     025684 !
+* 025677 Store (Con 131) (Var (Local 1))                                025680
   025680 Loadb (Var (Local 1)) (Con 7) (Global 120)                     025684
 * 025684 Ret (Var (Global 120))                                         025686
 * 025695 Je [Var (Local 1),Con 18] (Branch F (Dloc 025701))             025699 !
@@ -1459,15 +1406,12 @@ Found 8590 operations; 1985 overlapped
 * 025750 Get_prop_addr (Con 18) (Var (Local 3)) (Local 3)               025754
   025754 Print_addr (Var (Local 3))                                     025756
   025756 Je [Var (Local 3),Con 18077] (Branch F (Dloc 025765))          025762 !
-* 025759 Jin (Var (Global 141)) (Con 69) (Branch T (Dloc 022308))       025764 !
 * 025760 Print_paddr (Con 69)                                           025762
-* 025762 Print " of"                                                    025765 !
-  025764 Ret (Con 16644)                                                025767 !
+* 025762 Print " of"                                                    025765
 * 025765 Je [Var (Local 4),Con 1] (Branch F (Dloc 025782))              025769
   025769 Print " your hands)"                                           025778
   025778 New_line                                                       025779
-  025779 Jump 025785                                                    025782 !
-* 025781 Inc_chk (Con 178) (Con 128) (Branch F (Dloc 017657))           025786 !
+  025779 Jump 025785                                                    025782
   025782 Print " the "                                                  025785
   025785 Je [Var (Local 4),Con 1] (Branch T (Dloc 025795))              025789 !
 * 025786 Dec_chk (Con 1) (Con 200) (Branch T (Dloc 020161))             025791 !
@@ -1509,10 +1453,8 @@ Found 8590 operations; 1985 overlapped
 * 025919 Storew (Var (Global 83)) (Var (Global 81)) (Con 0)             025924
 * 025924 Dec_chk (Con 2) (Con 0) (Branch F (Dloc 025931))               025928
   025928 Jump 025964                                                    025931
-  025931 Loadw (Var (Local 1)) (Var (Local 4)) (Local 6)                025935 !
-* 025933 Dec_chk (Con 6) (Con 224) (Branch F (Dloc 020614))             025938 !
-* 025935 Call (Floc 027682) [Var (Local 6),Var (Global 84)] Sp          025942 !
-  025938 Get_prop (Con 6) (Con 100) Sp                                  025942
+  025931 Loadw (Var (Local 1)) (Var (Local 4)) (Local 6)                025935
+* 025935 Call (Floc 027682) [Var (Local 6),Var (Global 84)] Sp          025942
 * 025942 Jz (Var Sp) (Branch T (Dloc 025948))                           025945
   025945 Jump 025959                                                    025948
   025948 Add (Var (Local 5)) (Con 1) Sp                                 025952
@@ -1558,20 +1500,15 @@ Found 8590 operations; 1985 overlapped
 * 026098 Jz (Var Sp) (Branch T Dfalse)                                  026101
   026101 Store (Con 4) (Var (Global 84))                                026104
   026104 Storew (Var (Local 4)) (Var (Global 81)) (Con 0)               026109
-* 026109 Jump 026291                                                    026112 !
-* 026111 Save (Branch T Dtrue)                                          026113 !
-  026112 Je [Var (Local 7),Con 15172,Con 18042] (Branch F (Dloc 026170))026120 !
-  026113 Get_parent (Con 1851) (Global 52)                              026117
-  026117 Jin (Var (Global 106)) (Con 116) (Branch T (Dloc 018033))      026122 !
-  026120 Jz (Var (Global 89)) (Branch F (Dloc 026140))                  026123 !
-  026122 Get_next_prop (Var (Local 13)) (Con 96) (Local 2)              026126 !
+* 026109 Jump 026291                                                    026112
+  026112 Je [Var (Local 7),Con 15172,Con 18042] (Branch F (Dloc 026170))026120
+  026120 Jz (Var (Global 89)) (Branch F (Dloc 026140))                  026123
   026123 Store (Con 96) (Con 2)                                         026126
   026126 Je [Var (Local 8),Con 18000] (Branch F (Dloc 026291))          026133
   026133 Add (Var (Local 1)) (Con 4) (Local 1)                          026137
 * 026137 Jump 026291                                                    026140
   026140 Store (Con 106) (Var (Global 116))                             026143
-  026143 Jz (Var (Local 4)) (Branch T (Dloc 026152))                    026146 !
-* 026144 Dec_chk (Con 200) (Con 232) (Branch T (Dloc 025895))           026149 !
+  026143 Jz (Var (Local 4)) (Branch T (Dloc 026152))                    026146
   026146 Push (Var (Local 4))                                           026149
   026149 Jump 026155                                                    026152
   026152 Push (Var (Local 3))                                           026155
@@ -1629,11 +1566,6 @@ Found 8590 operations; 1985 overlapped
   026369 Jz (Var (Global 91)) (Branch F (Dloc 026404))                  026372
   026372 Jz (Var (Local 2)) (Branch T Dfalse)                           026375
   026375 Print "There seems to be a noun missing in that sentence!"     026402 !
-* 026378 Mod (Con 43) (Con 9) (Global 22)                               026382
-* 026382 Jl (Con 116) (Con 106) (Branch F (Dloc 026416))                026386
-  026386 And (Var (Global 200)) (Con 97) (Global 195)                   026390
-  026390 Loadb (Con 1) (Var (Global 76)) (Global 87)                    026394
-* 026394 Jg (Con 10) (Con 79) (Branch F (Dloc 020842))                  026399
 * 026399 Test_attr (Con 150) (Con 133) (Branch T (Dloc 025299))         026404 !
 * 026401 Inc (Con -17487)                                               026404 !
   026402 New_line                                                       026403
@@ -1671,8 +1603,7 @@ Found 8590 operations; 1985 overlapped
   026516 Storew (Var (Local 1)) (Var (Global 81)) (Con 1)               026521
 * 026521 Jump 026738                                                    026524
   026524 Jg (Var (Local 4)) (Con 1) (Branch T (Dloc 026539))            026528
-  026528 Jz (Var (Local 4)) (Branch F (Dloc 026670))                    026532 !
-* 026531 Jump 010547                                                    026534 !
+  026528 Jz (Var (Local 4)) (Branch F (Dloc 026670))                    026532
   026532 Je [Var (Global 92),Con -1] (Branch T (Dloc 026670))           026539 !
 * 026538 Inc (Con -15985)                                               026541 !
   026539 Je [Var (Global 92),Con -1] (Branch F (Dloc 026567))           026545 !
@@ -1748,14 +1679,10 @@ Found 8590 operations; 1985 overlapped
   026793 Jump 026775                                                    026796
 * 026796 Loadw (Var (Local 1)) (Var (Global 81)) (Local 3)              026800
 * 026800 Jz (Var (Local 3)) (Branch F (Dloc 026811))                    026803
-  026803 Call (Floc 027166) [Con 249,Con 1,Con 1] Sp                    026811 !
-* 026808 Je [Con 1,Con 0] (Branch F (Dloc 026857))                      026812 !
-* 026811 Loadw (Var (Local 1)) (Var (Global 81)) (Local 3)              026815 !
-* 026812 Je [Con 97,Con 3] (Branch T (Dloc 018626))                     026817 !
-* 026815 Jz (Var (Local 3)) (Branch F (Dloc 026826))                    026818 !
-  026817 Test_attr (Var (Global 208)) (Con 21) (Branch F (Dloc 024019)) 026822 !
-  026818 Call (Floc 027166) [Con 82,Con 1,Con 1] Sp                     026826 !
-  026822 Get_prop_addr (Var (Local 1)) (Con 1) Sp                       026826
+  026803 Call (Floc 027166) [Con 249,Con 1,Con 1] Sp                    026811
+* 026811 Loadw (Var (Local 1)) (Var (Global 81)) (Local 3)              026815
+* 026815 Jz (Var (Local 3)) (Branch F (Dloc 026826))                    026818
+  026818 Call (Floc 027166) [Con 82,Con 1,Con 1] Sp                     026826
 * 026826 Loadw (Var (Local 1)) (Var (Global 81)) (Local 3)              026830
 * 026830 Je [Var (Local 3),Con 1] (Branch F (Dloc 026838))              026834
   026834 Loadw (Var (Local 1)) (Con 1) (Global 76)                      026838
@@ -1778,9 +1705,7 @@ Found 8590 operations; 1985 overlapped
 * 026896 Test_attr (Con 224) (Con 21) (Branch F (Dloc 023165))          026901 !
   026897 Call (Floc 025300) [Con 8,Con 9,Con 0] Sp                      026905 !
   026901 Or (Con 9) (Con 0) Sp                                          026905
-* 026905 Print " do you mean, "                                         026914 !
-* 026906 Je [Con 52,Con 0] (Branch F (Dloc 020582))                     026911
-  026911 Jin (Var (Global 188)) (Con 35) (Branch T (Dloc 032291))       026916 !
+* 026905 Print " do you mean, "                                         026914
   026914 Inc (Con 1)                                                    026916
   026916 Loadw (Var (Local 3)) (Var (Local 1)) (Local 4)                026920
   026920 Print "the "                                                   026923 !
@@ -1868,8 +1793,7 @@ Found 8590 operations; 1985 overlapped
 * 027233 Je [Var (Local 3),Con 2] (Branch T (Dloc 027261))              027237
   027237 Get_prop_addr (Var (Local 1)) (Con 18) Sp                      027241
 * 027241 Jz (Var Sp) (Branch T (Dloc 027261))                           027244
-  027244 Call (Floc 027932) [Var (Local 1),Var (Local 2)] Sp            027251 !
-  027247 Load (Con 258) Sp                                              027251
+  027244 Call (Floc 027932) [Var (Local 1),Var (Local 2)] Sp            027251
 * 027251 Jz (Var Sp) (Branch T (Dloc 027261))                           027254
 * 027254 Call (Floc 027322) [Var (Local 1),Var (Local 2)] Sp            027261
 * 027261 Je [Var (Local 3),Con 0] (Branch F (Dloc 027273))              027265
@@ -1968,8 +1892,7 @@ Found 8590 operations; 1985 overlapped
   027595 Print "You can't use multiple "                                027608 !
   027601 Get_prop_addr (Con 106) (Con 57) (Global 42)                   027605
 * 027605 Rfalse                                                         027606
-  027608 Je [Var (Local 1),Con 2] (Branch F (Dloc 027615))              027612 !
-  027610 Jl (Con 69) (Con 178) (Branch T (Dloc 026178))                 027615 !
+  027608 Je [Var (Local 1),Con 2] (Branch F (Dloc 027615))              027612
 * 027612 Print "in"                                                     027615
 * 027615 Print "direct objects with \""                                 027630
   027630 Loadw (Var (Global 100)) (Con 1) (Local 2)                     027634
@@ -1980,10 +1903,8 @@ Found 8590 operations; 1985 overlapped
   027648 Jz (Var (Global 104)) (Branch T (Dloc 027660))                 027651
   027651 Loadw (Var (Local 2)) (Con 0) Sp                               027655
 * 027655 Print_addr (Var Sp)                                            027657
-* 027657 Jump 027675                                                    027660 !
-* 027659 Get_prop (Con 80) (Con 2) (Local 2)                            027663 !
-  027660 Loadb (Var (Local 2)) (Con 2) (Local 3)                        027664 !
-  027663 Jg (Con 80) (Con 2) (Branch F (Dloc 028434))                   027668 !
+* 027657 Jump 027675                                                    027660
+  027660 Loadb (Var (Local 2)) (Con 2) (Local 3)                        027664
   027664 Loadb (Var (Local 2)) (Con 3) Sp                               027668
 * 027668 Call (Floc 024538) [Var (Local 3),Var Sp] Sp                   027675
 * 027675 Print "\"."                                                    027680 !
@@ -2009,8 +1930,7 @@ Found 8590 operations; 1985 overlapped
 * 027755 Jz (Var (Global 72)) (Branch T (Dloc 027762))                  027758
   027758 Je [Var (Global 111),Var (Global 128)] (Branch T Dtrue)        027762
   027762 Store (Con 107) (Con 20)                                       027765
-  027765 Store (Con 3) (Var (Global 0))                                 027768 !
-  027767 Loadb (Con 45) (Con 16) (Local 1)                              027771 !
+  027765 Store (Con 3) (Var (Global 0))                                 027768
   027768 Store (Con 16) (Var (Local 1))                                 027771
   027771 Jz (Var (Local 2)) (Branch T (Dloc 027784))                    027774
   027774 Test_attr (Var (Local 1)) (Con 20) (Branch F (Dloc 027784))    027778 !
@@ -2043,11 +1963,8 @@ Found 8590 operations; 1985 overlapped
   027878 Loadw (Var (Global 100)) (Con 7) Sp                            027882
 * 027882 Call (Floc 025326) [Var (Local 1),Var Sp,Con 0] Sp             027890
 * 027890 Ret_popped                                                     027891
-* 027892 Je [Con 0,Con 0] (Branch T (Dloc 019823))                      027897 !
-* 027895 Jz (Var (Global 104)) (Branch F (Dloc 027912))                 027898 !
-  027897 Loadb (Var (Global 63)) (Con 116) (Local 8)                    027901 !
-  027898 Loadw (Var (Global 100)) (Con 8) (Local 1)                     027902 !
-  027901 Je [Con 79,Con 1] (Branch F Dfalse)                            027906 !
+* 027895 Jz (Var (Global 104)) (Branch F (Dloc 027912))                 027898
+  027898 Loadw (Var (Global 100)) (Con 8) (Local 1)                     027902
   027902 Loadw (Var (Local 1)) (Con 0) Sp                               027906
 * 027906 Je [Var Sp,Con 17356] (Branch F (Dloc 027918))                 027912
   027912 Print " "                                                      027915
@@ -2097,17 +2014,7 @@ Found 8590 operations; 1985 overlapped
 * 028108 Jl (Con 0) (Con 1) (Branch F Dfalse)                           028113
 * 028113 Call (Floc 066946) [] Sp                                       028118
 * 028118 Jz (Var (Local 1)) (Branch T (Dloc 028164))                    028121
-  028121 Print "Do you wish to leave the game? (Y is affirmative): "    028156 !
-* 028122 Get_prop (Con 52) (Con 0) (Global 23)                          028126 !
-* 028125 Test (Con 113) (Var (Global 200)) (Branch F (Dloc 025057))     028130 !
-  028126 Get_prop (Var (Global 200)) (Var (Global 36)) (Local 1)        028130
-  028130 Insert_obj (Con 42) (Var (Global 11))                          028133
-  028133 Test_attr (Var Sp) (Var (Global 16)) (Branch F (Dloc 024250))  028138
-  028138 Or (Con 181) (Var Sp) (Global 174)                             028142
-  028142 Get_next_prop (Con 192) (Con 4) (Global 150)                   028146
-  028146 Store (Con 110) (Var (Global 78))                              028149
-  028149 Jin (Var (Global 85)) (Con 219) (Branch F (Dloc 022199))       028154
-  028154 Print_addr (Con 160)                                           028156
+  028121 Print "Do you wish to leave the game? (Y is affirmative): "    028156
   028156 Call (Floc 037084) [] Sp                                       028161
 * 028161 Jz (Var Sp) (Branch F (Dloc 028167))                           028164 !
 * 028163 Inc_chk (Var (Global 144)) (Con 1) (Branch F (Dloc 028169))    028167 !
@@ -2152,14 +2059,7 @@ Found 8590 operations; 1985 overlapped
 * 028383 Rtrue                                                          028384
 * 028387 Print "ZORK I: The Great Underground Empire\nCopyright (c) 1981, 1982, 1983 Infocom, Inc. "028456 !
 * 028399 Jump 052278                                                    028402
-  028434 Mul (Con 37) (Con 64) (Global 154)                             028438
-  028438 Dec_chk (Con 101) (Con 36) (Branch T (Dloc 024623))            028443
-  028443 Inc_chk (Con 44) (Con 4) (Branch F (Dloc 027017))              028448
-  028448 Get_prop (Var (Global 4)) (Con 72) (Global 19)                 028452
-  028452 Get_prop (Con 211) (Con 160) (Global 28)                       028456
-  028456 Print "All rights reserved."                                   028473 !
-  028467 Test_attr (Con 251) (Var (Global 25)) (Branch F (Dloc 021758)) 028472
-  028472 Inc (Var (Global 171))                                         028474 !
+  028456 Print "All rights reserved."                                   028473
   028473 New_line                                                       028474
   028474 Loadb (Con 0) (Con 1) Sp                                       028478
 * 028478 And (Var Sp) (Con 8) Sp                                        028482
@@ -2173,10 +2073,8 @@ Found 8590 operations; 1985 overlapped
 * 028565 Print " / Serial number "                                      028580 !
 * 028567 Quit                                                           028568
   028580 Inc_chk (Con 1) (Con 23) (Branch F (Dloc 028587))              028584
-* 028584 Jump 028597                                                    028587 !
-* 028586 Clear_attr (Con 48) (Con 0)                                    028589 !
-  028587 Loadb (Con 0) (Var (Local 1)) Sp                               028591 !
-* 028589 Je [Con 0,Con 229] (Branch T (Dloc 028336))                    028594 !
+* 028584 Jump 028597                                                    028587
+  028587 Loadb (Con 0) (Var (Local 1)) Sp                               028591
 * 028591 Print_char (Var Sp)                                            028594
 * 028594 Jump 028580                                                    028597
   028597 New_line                                                       028598
@@ -2197,8 +2095,7 @@ Found 8590 operations; 1985 overlapped
 * 028701 Jz (Var Sp) (Branch T (Dloc 028708))                           028704
   028704 Test_attr (Var (Global 125)) (Con 7) (Branch F (Dloc 028711))  028708
   028708 Store (Con 1) (Var (Global 125))                               028711
-  028711 Jz (Var (Global 124)) (Branch T (Dloc 028727))                 028714 !
-* 028712 Jump 016332                                                    028715 !
+  028711 Jz (Var (Global 124)) (Branch T (Dloc 028727))                 028714
   028714 Get_parent (Var (Global 124)) Sp                               028717
 * 028717 Jz (Var Sp) (Branch T (Dloc 028724))                           028720
   028720 Test_attr (Var (Global 124)) (Con 7) (Branch F (Dloc 028727))  028724
@@ -2207,9 +2104,7 @@ Found 8590 operations; 1985 overlapped
   028730 Je [Var (Local 1),Con 13,Con 82] (Branch T (Dloc 028759))      028736 !
 * 028731 Print_addr (Con 1)                                             028733
   028733 Store (Con 82) (Con 217)                                       028736
-  028736 Print "You can't see the "                                     028745 !
-* 028737 Dec_chk (Con 65) (Con 39) (Branch F (Dloc 031340))             028742
-  028742 Je [Con 128,Con 165] (Branch T (Dloc 023114))                  028747 !
+  028736 Print "You can't see the "                                     028745
 * 028745 Print_obj (Var (Local 1))                                      028747
   028747 Print " anymore."                                              028756
   028756 New_line                                                       028757
@@ -2235,10 +2130,7 @@ Found 8590 operations; 1985 overlapped
   028846 Print_obj (Var (Global 118))                                   028848
   028848 Print_ret " isn't sleeping."                                   028861 !
 * 028852 Ret_popped                                                     028853
-* 028863 Print "Nobody seems to be awaiting your answer."               028886 !
-* 028874 Loadb (Var (Global 190)) (Var (Global 85)) (Global 195)        028878
-  028878 Loadb (Con 1) (Var (Global 0)) (Global 195)                    028882
-* 028882 Jg (Var (Global 122)) (Var (Global 204)) (Branch T (Dloc 025488))028887 !
+* 028863 Print "Nobody seems to be awaiting your answer."               028886
   028886 New_line                                                       028887
   028887 Store (Con 124) (Con 0)                                        028890
 * 028890 Store (Con 112) (Con 0)                                        028893 !
@@ -2322,8 +2214,7 @@ Found 8590 operations; 1985 overlapped
   029414 Jin (Var (Global 111)) (Var (Global 118)) (Branch F (Dloc 029424))029418
   029418 Print "in"                                                     029421
   029421 Jump 029431                                                    029424
-* 029424 Print "holding"                                                029431 !
-* 029426 Get_sibling (Con 37) (Global 195) (Branch T (Dloc 025498))     029431
+* 029424 Print "holding"                                                029431
   029431 Call (Floc 067174) [Con -26041] Sp                             029438
 * 029438 Ret_popped                                                     029439
   029439 Call (Floc 030906) [Var (Global 118)] Sp                       029445
@@ -2389,10 +2280,7 @@ Found 8590 operations; 1985 overlapped
 * 029731 Test_attr (Var (Global 118)) (Con 19) (Branch T (Dloc 029767)) 029735 !
   029732 Dec (Con 5090)                                                 029735
   029735 Test_attr (Var (Global 118)) (Con 23) (Branch T (Dloc 029767)) 029739
-  029739 Print "You must tell me how to do that to a "                  029762 !
-* 029753 Set_attr (Con 38) (Var (Global 112))                           029756
-  029756 Clear_attr (Con 224) (Con 5)                                   029759
-  029759 Jin (Var (Global 112)) (Var (Global 149)) (Branch T (Dloc 024264))029764 !
+  029739 Print "You must tell me how to do that to a "                  029762
   029762 Print_obj (Var (Global 118))                                   029764
   029764 Print_ret "."                                                  029767
   029767 Test_attr (Var (Global 118)) (Con 10) (Branch T (Dloc 029829)) 029771
@@ -2426,8 +2314,7 @@ Found 8590 operations; 1985 overlapped
   029879 Print "The "                                                   029882
 * 029882 Print_obj (Var (Global 118))                                   029884
   029884 Print_ret " pays no attention."                                029899
-  029899 Print_ret "You cannot talk to that!"                           029910 !
-* 029906 Inc_chk (Con 99) (Con 156) (Branch T (Dloc 026837))            029911
+  029899 Print_ret "You cannot talk to that!"                           029910
 * 029911 Je [Var (Global 118),Con 10] (Branch F (Dloc 029942))          029915
   029915 Print_ret "Well, for one, you are playing Zork..."             029942 !
 * 029933 Dec_chk (Con 126) (Con 151) (Branch F Dfalse)                  029937
@@ -2461,8 +2348,7 @@ Found 8590 operations; 1985 overlapped
   030143 Print_obj (Var (Global 118))                                   030145
   030145 Print_ret " into innumerable slivers which blow away."         030170
   030170 Test_attr (Var (Global 119)) (Con 29) (Branch T (Dloc 030208)) 030174
-  030174 Print "The \"cutting edge\" of a "                             030191 !
-* 030188 Test_attr (Con 152) (Var (Local 5)) (Branch T (Dloc 024694))   030193 !
+  030174 Print "The \"cutting edge\" of a "                             030191
   030191 Print_obj (Var (Global 119))                                   030193
   030193 Print_ret " is hardly adequate."                               030208
   030208 Print "Strange concept, cutting the "                          030229
@@ -2472,19 +2358,14 @@ Found 8590 operations; 1985 overlapped
 * 030251 Jz (Var (Global 119)) (Branch F (Dloc 030257))                 030254
   030254 Store (Con 135) (Con 1)                                        030257
   030257 Je [Var (Global 119),Con 121] (Branch F (Dloc 030284))         030261
-  030261 Print_ret "There's no reason to be digging here."              030284 !
-* 030281 Je [Con 224,Con 178] (Branch F (Dloc 030293))                  030285 !
-* 030284 Test_attr (Var (Global 119)) (Con 28) (Branch F (Dloc 030316)) 030288 !
-  030285 Print_addr (Con 7262)                                          030288
-  030288 Print "Digging with the "                                      030299 !
-* 030293 Store (Var (Global 112)) (Con 5)                               030296
-  030296 Get_sibling (Var (Global 112)) (Global 149) (Branch T (Dloc 024802))030301 !
+  030261 Print_ret "There's no reason to be digging here."              030284
+* 030284 Test_attr (Var (Global 119)) (Con 28) (Branch F (Dloc 030316)) 030288
+  030288 Print "Digging with the "                                      030299
   030299 Print_obj (Var (Global 119))                                   030301
   030301 Print_ret " is slow and tedious."                              030316
   030316 Print "Digging with a "                                        030327
   030327 Print_obj (Var (Global 119))                                   030329
-  030329 Print_ret " is silly."                                         030338 !
-* 030334 Test (Var (Global 181)) (Con 200) (Branch T (Dloc 023425))     030339
+  030329 Print_ret " is silly."                                         030338
 * 030339 Get_parent (Var (Global 111)) Sp                               030342
 * 030342 Je [Var Sp,Var (Global 118)] (Branch T (Dloc 030358))          030346 !
 * 030344 Dec (Con -12622)                                               030347 !
@@ -2578,16 +2459,12 @@ Found 8590 operations; 1985 overlapped
 * 030832 Add (Var (Local 5)) (Var Sp) Sp                                030836
 * 030836 Sub (Var Sp) (Con 1) (Local 2)                                 030840
   030840 Inc_chk (Con 3) (Con 2) (Branch F (Dloc 030849))               030844
-* 030844 Print_ret "..."                                                030849 !
-* 030848 Print "o the c pc  cDc Mwon't  "                               030863 !
+* 030844 Print_ret "..."                                                030849
   030849 Loadb (Var (Local 1)) (Con 1) Sp                               030853
 * 030853 Sub (Var Sp) (Con 1) (Local 4)                                 030857
-  030857 Inc_chk (Con 4) (Var (Local 2)) (Branch F (Dloc 030864))       030861 !
-* 030858 Dec_chk (Con 2) (Con 69) (Branch T (Dloc 033933))              030863 !
-  030861 Jump 030874                                                    030864 !
-* 030863 Clear_attr (Con 112) (Con 125)                                 030866 !
-* 030864 Loadb (Var (Global 109)) (Var (Local 4)) Sp                    030868 !
-  030866 Dec_chk (Con 0) (Con 229) (Branch T (Dloc 030613))             030871 !
+  030857 Inc_chk (Con 4) (Var (Local 2)) (Branch F (Dloc 030864))       030861
+  030861 Jump 030874                                                    030864
+* 030864 Loadb (Var (Global 109)) (Var (Local 4)) Sp                    030868
 * 030868 Print_char (Var Sp)                                            030871
 * 030871 Jump 030857                                                    030874
   030874 Print " "                                                      030877
@@ -2677,15 +2554,9 @@ Found 8590 operations; 1985 overlapped
 * 031321 Test_attr (Var (Local 1)) (Con 30) (Branch F (Dloc 031337))    031325
 * 031325 Print "The "                                                   031328
   031328 Print_obj (Var (Local 1))                                      031330
-  031330 Print_ret " has it."                                           031337 !
-* 031332 Get_prop (Var (Global 43)) (Var (Global 21)) (Global 184)      031336 !
-* 031334 Inc_chk (Con 200) (Var (Global 149)) (Branch F (Dloc 031346))  031338 !
-  031336 Inc (Var (Global 58))                                          031338 !
-* 031337 Test_attr (Var (Local 1)) (Con 10) (Branch F (Dloc 031351))    031341 !
-  031338 Je [Con 10,Con 76] (Branch T (Dloc 027767))                    031343 !
-  031340 Clear_attr (Var (Global 162)) (Con 10)                         031343 !
-* 031341 Print "It's on the "                                           031346 !
-  031343 Jl (Con 200) (Con 32) (Branch T (Dloc 025715))                 031348 !
+  031330 Print_ret " has it."                                           031337
+* 031337 Test_attr (Var (Local 1)) (Con 10) (Branch F (Dloc 031351))    031341
+* 031341 Print "It's on the "                                           031346
   031346 Print_obj (Var (Local 1))                                      031348
 * 031348 Print_ret "."                                                  031351 !
 * 031350 Inc_chk (Var (Global 58)) (Con 1) (Branch F (Dloc 036293))     031355 !
@@ -2715,9 +2586,7 @@ Found 8590 operations; 1985 overlapped
 * 031498 Dec (Con 133)                                                  031500
   031500 Print "The "                                                   031503
   031503 Print_obj (Var (Global 119))                                   031505
-* 031505 Print_ret " refuses it politely."                              031520 !
-* 031512 Loadw (Con 53) (Con 82) (Global 30)                            031516
-  031516 Inc_chk (Var (Global 65)) (Var (Global 232)) (Branch T (Dloc 027935))031521
+* 031505 Print_ret " refuses it politely."                              031520
 * 031521 Print_ret "Bizarre!"                                           031530
 * 031531 Jz (Var (Global 118)) (Branch T (Dloc 031613))                 031535
   031535 Test_attr (Var (Global 118)) (Con 30) (Branch F (Dloc 031565)) 031539
@@ -2762,10 +2631,7 @@ Found 8590 operations; 1985 overlapped
   031769 Add (Var (Global 14)) (Var (Global 121)) (Global 104)          031773
   031773 Ret_popped                                                     031774
   031776 Get_prop_addr (Var (Global 58)) (Con 150) (Global 53)          031780
-  031780 Print "Why knock on a "                                        031791 !
-* 031782 Print_paddr (Con 30736)                                        031785
-  031785 Insert_obj (Var (Global 120)) (Con 64)                         031788
-  031788 Jl (Con 200) (Con 192) (Branch T (Dloc 026293))                031793 !
+  031780 Print "Why knock on a "                                        031791
   031791 Print_obj (Var (Global 118))                                   031793
 * 031793 Print_ret "?"                                                  031796
 * 031797 Test_attr (Var (Global 118)) (Con 31) (Branch F (Dloc 031862)) 031802
@@ -2859,8 +2725,7 @@ Found 8590 operations; 1985 overlapped
   032230 Print_obj (Var (Global 118))                                   032232
   032232 Print_ret " makes no sound."                                   032245
 * 032247 Print_ret "It doesn't seem to work."                           032260
-* 032261 Call (Floc 035994) [Con 1] Sp                                  032267 !
-* 032265 Je [Con 0,Con 160] (Branch F (Dloc 032460))                    032270 !
+* 032261 Call (Floc 035994) [Con 1] Sp                                  032267
 * 032267 Jz (Var Sp) (Branch T Dfalse)                                  032270
   032270 Call (Floc 036174) [Con 1] Sp                                  032276
 * 032276 Ret_popped                                                     032277
@@ -2907,17 +2772,10 @@ Found 8590 operations; 1985 overlapped
 * 032447 Test_attr (Var (Global 118)) (Con 10) (Branch F (Dloc 032459)) 032451
   032451 Call (Floc 022396) [Con 57,Var (Global 118)] Sp                032458
 * 032458 Rtrue                                                          032459
-  032459 Print "Look on a "                                             032468 !
-  032460 Get_prop_addr (Con 52) (Con 82) Sp                             032464
-* 032464 Test_attr (Con 70) (Con 128) (Branch T (Dloc 025725))          032469 !
-  032468 Print_obj (Var (Global 118))                                   032470 !
-  032469 Dec (Con -19690)                                               032472 !
-* 032470 Print_ret "???"                                                032475 !
-  032472 Inc (Var (Global 196))                                         032474
-  032474 Save (Branch F Dfalse)                                         032477
-* 032477 Print_ret "There is nothing but dust there."                   032490 !
-* 032482 And (Con 73) (Con 107) (Global 9)                              032486
-  032486 Jg (Con 33) (Con 224) (Branch T (Dloc 028905))                 032491
+  032459 Print "Look on a "                                             032468
+  032468 Print_obj (Var (Global 118))                                   032470
+* 032470 Print_ret "???"                                                032475
+* 032477 Print_ret "There is nothing but dust there."                   032490
 * 032491 Call (Floc 037468) [Con -26002] Sp                             032498
 * 032498 Ret_popped                                                     032499
 * 032501 Print_ret "You can't do that."                                 032510
@@ -2981,7 +2839,6 @@ Found 8590 operations; 1985 overlapped
 * 032856 Ret_popped                                                     032857
   032857 Print_ret "Wasn't he a sailor?"                                032874
 * 032875 Print_ret "You probably put spinach in your gas tank, too."    032900 !
-* 032892 Dec_chk (Var (Global 195)) (Var (Global 48)) (Branch F (Dloc 025573))032897
 * 032897 Get_prop_len (Con 150) (Global 53)                             032900
   032900 Jl (Con 0) (Con 0) (Branch F Dfalse)                           032905
 * 032905 Test_attr (Var (Global 118)) (Con 19) (Branch F (Dloc 033015)) 032910
@@ -2990,13 +2847,10 @@ Found 8590 operations; 1985 overlapped
   032918 Test_attr (Var (Global 118)) (Con 11) (Branch F (Dloc 032931)) 032922
   032922 Print_ret "It is already open."                                032931
   032931 Set_attr (Var (Global 118)) (Con 11)                           032934 !
-  032932 Dec (Con 2891)                                                 032935 !
 * 032933 Set_attr (Con 75) (Con 134)                                    032936 !
   032934 Set_attr (Var (Global 118)) (Con 3)                            032937 !
-  032935 Dec (Con 930)                                                  032938 !
   032936 Jg (Con 162) (Con 134) (Branch F (Dloc 033009))                032941 !
-  032937 Get_child (Var (Global 118)) Sp (Branch F (Dloc 032945))       032941 !
-  032938 Dec (Con 70)                                                   032941
+  032937 Get_child (Var (Global 118)) Sp (Branch F (Dloc 032945))       032941
   032941 Test_attr (Var (Global 118)) (Con 12) (Branch F (Dloc 032952)) 032945 !
 * 032943 Clear_attr (Con 73) (Con 179)                                  032946 !
   032945 Print_ret "Opened."                                            032952 !
@@ -3035,10 +2889,7 @@ Found 8590 operations; 1985 overlapped
 * 033044 New_line                                                       033045
   033045 Set_attr (Var (Global 118)) (Con 11)                           033048
   033048 Rtrue                                                          033049
-  033049 Print "You must tell me how to do that to a "                  033072 !
-* 033063 Set_attr (Con 38) (Var (Global 112))                           033066
-  033066 Clear_attr (Con 224) (Con 5)                                   033069
-  033069 Jin (Var (Global 112)) (Var (Global 149)) (Branch T (Dloc 027574))033074 !
+  033049 Print "You must tell me how to do that to a "                  033072
   033072 Print_obj (Var (Global 118))                                   033074
   033074 Print_ret "."                                                  033077
 * 033078 Je [Con 0,Con 0] (Branch F Dtrue)                              033082 !
@@ -3063,12 +2914,9 @@ Found 8590 operations; 1985 overlapped
 * 033149 Print_ret "That's silly!"                                      033162
 * 033163 Print_ret "This has no effect."                                033174 !
 * 033171 Or (Var (Global 212)) (Con 178) Sp                             033175
-* 033175 Je [Var (Global 118),Con 237] (Branch F (Dloc 033252))         033180 !
-* 033179 Test_attr (Var (Global 208)) (Con 47) (Branch F (Dloc 032251)) 033184 !
-  033180 Call (Floc 030906) [Var (Global 118)] Sp                       033186 !
-  033184 Dec (Con 74)                                                   033187 !
-* 033186 Test_attr (Var (Global 119)) (Con 25) (Branch F (Dloc 033220)) 033190 !
-  033187 Print_addr (Con 6496)                                          033190
+* 033175 Je [Var (Global 118),Con 237] (Branch F (Dloc 033252))         033180
+  033180 Call (Floc 030906) [Var (Global 118)] Sp                       033186
+* 033186 Test_attr (Var (Global 119)) (Con 25) (Branch F (Dloc 033220)) 033190
   033190 Test_attr (Var (Global 119)) (Con 20) (Branch F (Dloc 033220)) 033194
   033194 Print "The "                                                   033197
   033197 Print_obj (Var (Global 119))                                   033199
@@ -3082,14 +2930,8 @@ Found 8590 operations; 1985 overlapped
   033219 Rtrue                                                          033220
   033220 Print "The water spills over the "                             033231
   033231 Print_obj (Var (Global 119))                                   033233
-  033233 Print_ret ", to the floor, and evaporates."                    033252 !
-* 033235 Je [Var (Global 28),Var (Global 16)] (Branch F (Dloc 028682))  033240
-  033240 Get_prop_addr (Var (Global 209)) (Con 12) (Global 22)          033244
-  033244 Set_attr (Con 102) (Var (Global 70))                           033247
-  033247 Print_addr (Con 27)                                            033249
-  033249 Test_attr (Con 224) (Var (Global 162)) (Branch F Dtrue)        033253 !
-  033252 Je [Var (Global 118),Con 98] (Branch F (Dloc 033265))          033256 !
-  033253 Dec (Con 25163)                                                033256
+  033233 Print_ret ", to the floor, and evaporates."                    033252
+  033252 Je [Var (Global 118),Con 98] (Branch F (Dloc 033265))          033256
   033256 Call (Floc 022396) [Con 18,Con 98,Var (Global 119)] Sp         033264
 * 033264 Ret_popped                                                     033265
   033265 Print_ret "You can't pour that."                               033276 !
@@ -3134,7 +2976,6 @@ Found 8590 operations; 1985 overlapped
   033456 Print_obj (Var (Global 119))                                   033458
   033458 Print " isn't open."                                           033469 !
 * 033462 Ret_popped                                                     033463
-  033467 Dec (Con 69)                                                   033469
   033469 New_line                                                       033470
   033470 Call (Floc 038192) [Var (Global 119)] Sp                       033476 !
 * 033474 Print_addr (Con 184)                                           033477 !
@@ -3180,12 +3021,10 @@ Found 8590 operations; 1985 overlapped
   033649 Call (Floc 022396) [Con 49,Var (Global 118)] Sp                033656 !
 * 033654 Dec (Con 176)                                                  033657 !
 * 033656 Rtrue                                                          033657
-  033657 Test_attr (Var (Global 119)) (Con 10) (Branch F (Dloc 033667)) 033661 !
-  033658 Print_addr (Con 2632)                                          033661
+  033657 Test_attr (Var (Global 119)) (Con 10) (Branch F (Dloc 033667)) 033661
 * 033661 Call (Floc 033418) [] Sp                                       033666
 * 033666 Ret_popped                                                     033667
-  033667 Print "There's no good surface on the "                        033688 !
-* 033685 Je [Var (Global 112),Con 165] (Branch T (Dloc 028191))         033690 !
+  033667 Print "There's no good surface on the "                        033688
   033688 Print_obj (Var (Global 119))                                   033690
   033690 Print_ret "."                                                  033693
 * 033695 Print_ret "You can't do that."                                 033704
@@ -3194,7 +3033,6 @@ Found 8590 operations; 1985 overlapped
 * 033713 Print_ret "What a (ahem!) strange idea."                       033736
 * 033737 Jz (Var (Global 66)) (Branch F (Dloc 033757))                  033740
   033740 Print_ret "It is impossible to read in the dark."              033757 !
-  033755 Dec (Con 69)                                                   033757 !
 * 033756 Inc_chk (Var (Global 144)) (Con 135) (Branch T Dfalse)         033760 !
   033757 Jz (Var (Global 119)) (Branch T Dfalse)                        033760 !
 * 033758 Print_addr (Con -16310)                                        033761 !
@@ -3209,12 +3047,9 @@ Found 8590 operations; 1985 overlapped
   033783 Print_ret "?"                                                  033786 !
   033785 Inc (Var Sp)                                                   033787
 * 033787 Test_attr (Var (Global 118)) (Con 16) (Branch T (Dloc 033811)) 033791
-* 033791 Print "How does one read a "                                   033806 !
-  033800 Or (Con 23) (Var (Global 24)) (Global 185)                     033804
-  033804 Jz (Con -16214) (Branch T (Dloc 035522))                       033809 !
+* 033791 Print "How does one read a "                                   033806
   033806 Print_obj (Var (Global 118))                                   033808
-  033808 Print_ret "?"                                                  033811 !
-  033809 Dec (Con 165)                                                  033811
+  033808 Print_ret "?"                                                  033811
   033811 Get_prop (Var (Global 118)) (Con 8) Sp                         033815
 * 033815 Print_paddr (Var Sp)                                           033817
 * 033817 New_line                                                       033818
@@ -3222,13 +3057,9 @@ Found 8590 operations; 1985 overlapped
 * 033821 Call (Floc 022396) [Con 83,Var (Global 118)] Sp                033828
 * 033828 Rtrue                                                          033829
 * 033831 Print_ret "It could very well be too late!"                    033852
-* 033853 Print "It is hardly likely that the "                          033870 !
-  033868 Get_prop_len (Con 1450) (Global 118)                           033872 !
-  033870 Print_obj (Var (Global 118))                                   033872 !
-* 033871 Dec (Con -19968)                                               033874 !
-  033872 Print " is interested."                                        033883 !
-* 033874 Inc_chk (Con 58) (Var (Global 105)) (Branch F (Dloc 028479))   033879
-  033879 Jg (Var (Global 26)) (Var (Global 148)) (Branch T (Dloc 030485))033884 !
+* 033853 Print "It is hardly likely that the "                          033870
+  033870 Print_obj (Var (Global 118))                                   033872
+  033872 Print " is interested."                                        033883
   033883 New_line                                                       033884
 * 033884 Store (Con 124) (Con 0)                                        033887
 * 033887 Store (Con 112) (Con 0)                                        033890
@@ -3236,14 +3067,9 @@ Found 8590 operations; 1985 overlapped
 * 033893 Print_ret "How, exactly, can you ring that?"                   033914
 * 033915 Call (Floc 037468) [Con -25991] Sp                             033922
 * 033922 Ret_popped                                                     033923
-* 033924 Je [Con 0,Con 0] (Branch T (Dloc 025859))                      033929 !
-* 033927 Jz (Var (Global 108)) (Branch F (Dloc 033939))                 033930 !
-  033929 Set_attr (Var (Global 163)) (Con 19)                           033932 !
+* 033927 Jz (Var (Global 108)) (Branch F (Dloc 033939))                 033930
   033930 Print_ret "Say what?"                                          033939 !
-  033932 Jin (Con 120) (Con 28) (Branch F (Dloc 031080))                033937 !
-  033933 Mod (Var (Global 12)) (Var (Global 36)) (Global 201)           033937 !
-* 033935 Add (Con 217) (Var (Global 134)) (Global 149)                  033939 !
-  033937 Dec (Con 165)                                                  033939
+* 033935 Add (Con 217) (Var (Global 134)) (Global 149)                  033939
   033939 Store (Con 112) (Con 0)                                        033942
 * 033942 Rtrue                                                          033943
 * 033964 Get_prop_len (Con 1450) (Local 1)                              033968 !
@@ -3266,8 +3092,7 @@ Found 8590 operations; 1985 overlapped
   034067 Print "Why would you send for the "                            034080
   034080 Print_obj (Var (Global 118))                                   034082
 * 034082 Print_ret "?"                                                  034085
-  034085 Print_ret "That doesn't make sends."                           034100 !
-  034097 Mod (Con 150) (Var (Global 53)) Sp                             034101
+  034085 Print_ret "That doesn't make sends."                           034100
 * 034101 Call (Floc 022396) [Con 63,Var (Global 119),Var (Global 118)] Sp034109
 * 034109 Rtrue                                                          034110
 * 034111 Print_ret "Foo!"                                               034116
@@ -3285,8 +3110,7 @@ Found 8590 operations; 1985 overlapped
   034170 Test_attr (Var (Global 118)) (Con 11) (Branch F (Dloc 034241)) 034175
   034175 Get_child (Var (Global 118)) Sp (Branch F (Dloc 034234))       034179
   034179 Call (Floc 034300) [] Sp                                       034184
-* 034184 Print "The contents of the "                                   034195 !
-  034192 Je [Con 168,Con 32] (Branch T (Dloc 028697))                   034197 !
+* 034184 Print "The contents of the "                                   034195
 * 034195 Print_obj (Var (Global 118))                                   034197
   034197 Print " spills "                                               034204
   034204 Test_attr (Var (Global 0)) (Con 6) (Branch T (Dloc 034222))    034208 !
@@ -3301,7 +3125,6 @@ Found 8590 operations; 1985 overlapped
   034224 Je [Var (Local 1),Var (Global 135)] (Branch F (Dloc 034245))   034228
 * 034228 Get_next_prop (Var (Global 148)) (Con 165) (Global 163)        034232 !
 * 034229 Get_prop_len (Var (Global 149)) (Global 163)                   034232 !
-  034230 Inc (Var (Global 163))                                         034232 !
   034231 Print_ret "."                                                  034234 !
   034232 Dec (Con 69)                                                   034234
 * 034234 Print_ret "Shaken."                                            034241
@@ -3372,8 +3195,7 @@ Found 8590 operations; 1985 overlapped
   034568 Print "Since you aren't versed in hand-to-hand combat, you'd better attack the "034617
 * 034617 Print_obj (Var (Global 118))                                   034619
   034619 Print_ret " with a weapon."                                    034630
-  034630 Call (Floc 022396) [Con 14,Var (Global 118)] Sp                034637 !
-  034634 Insert_obj (Con 134) (Con 0)                                   034637
+  034630 Call (Floc 022396) [Con 14,Var (Global 118)] Sp                034637
 * 034637 Rtrue                                                          034638
 * 034639 Call (Floc 038048) [Con 238,Var (Global 0)] Sp                 034646
 * 034646 Jz (Var Sp) (Branch T (Dloc 034696))                           034649
@@ -3445,12 +3267,10 @@ Found 8590 operations; 1985 overlapped
   034935 Ret (Var (Global 0))                                           034937
   034937 Print "The "                                                   034940
   034940 Print_obj (Var (Global 118))                                   034942
-  034942 Print_ret " pauses for a moment, perhaps thinking that you should re-read the manual."034989 !
-  034960 Ret_popped                                                     034961
+  034942 Print_ret " pauses for a moment, perhaps thinking that you should re-read the manual."034989
   034989 Print "You can't talk to the "                                 035000
   035000 Print_obj (Var (Global 118))                                   035002
-  035002 Print "!"                                                      035005 !
-  035003 Dec (Con 133)                                                  035005
+  035002 Print "!"                                                      035005
   035005 New_line                                                       035006
   035006 Store (Con 112) (Con 0)                                        035009
 * 035009 Store (Con 124) (Con 0)                                        035012
@@ -3479,7 +3299,6 @@ Found 8590 operations; 1985 overlapped
   035111 Print_ret " as you attempt this feat."                         035128
   035128 Jz (Var (Local 1)) (Branch T (Dloc 035140))                    035131
   035131 Print_ret "You can't do that!"                                 035140 !
-* 035132 Dec_chk (Con 65) (Con 37) (Branch F (Dloc 032063))             035137
 * 035137 Test (Var (Global 134)) (Var (Global 117)) (Branch F (Dloc 035177))035141 !
   035140 Jin (Var (Global 118)) (Var (Global 111)) (Branch F (Dloc 035169))035144 !
 * 035141 Dec (Con 32603)                                                035144
@@ -3590,9 +3409,6 @@ Found 8590 operations; 1985 overlapped
   035619 New_line                                                       035620
 * 035620 Ret (Con 2)                                                    035622
 * 035622 Print "You can't go that way."                                 035633 !
-* 035625 Inc_chk (Con 148) (Var Sp) (Branch F (Dloc 035666))            035629 !
-* 035626 Get_prop_len (Con 0) (Global 87)                               035629
-  035629 Jg (Con 134) (Con 248) (Branch T (Dloc 032235))                035634 !
 * 035632 Print "iwv"                                                    035635 !
   035633 New_line                                                       035634
   035634 Ret (Con 2)                                                    035636 !
@@ -3610,11 +3426,8 @@ Found 8590 operations; 1985 overlapped
   035668 New_line                                                       035669
 * 035669 Ret (Con 2)                                                    035671
 * 035671 Print "The "                                                   035674
-* 035674 Print_obj (Var (Local 4))                                      035676 !
-* 035675 Dec_chk (Con 178) (Con 0) (Branch F (Dloc 028777))             035680 !
-  035676 Print " is closed."                                            035683 !
-  035680 Inc (Var (Global 184))                                         035682
-  035682 Inc (Var (Global 171))                                         035684 !
+* 035674 Print_obj (Var (Local 4))                                      035676
+  035676 Print " is closed."                                            035683
   035683 New_line                                                       035684
 * 035684 Call (Floc 038192) [Var (Local 4)] Sp                          035690
 * 035690 Ret (Con 2)                                                    035692
@@ -3632,11 +3445,9 @@ Found 8590 operations; 1985 overlapped
   035765 Call (Floc 067174) [Con -25878] Sp                             035772
 * 035772 Ret_popped                                                     035773
   035773 Print "You can't go that way."                                 035784 !
-  035781 Dec (Con -1870)                                                035784 !
-* 035783 Print "iwv"                                                    035786 !
+  035781 Dec (Con -1870)                                                035784
   035784 New_line                                                       035785
-  035785 Ret (Con 2)                                                    035787 !
-  035786 Jl (Con 0) (Con 0) (Branch T (Dloc 032480))                    035791 !
+  035785 Ret (Con 2)                                                    035787
 * 035789 Print_ret "Use compass directions for movement."               035814 !
 * 035791 Mod (Var (Global 24)) (Con 8) (Global 66)                      035795
   035795 Sub (Var (Global 11)) (Con 24) (Local 1)                       035799
@@ -3687,12 +3498,9 @@ Found 8590 operations; 1985 overlapped
   036075 Store (Con 2) (Con 1)                                          036078
   036078 Test_attr (Var (Global 0)) (Con 5) (Branch F (Dloc 036085))    036082 !
 * 036080 Inc_chk (Con 69) (Con 76) (Branch F (Dloc 040182))             036085 !
-* 036081 Inc_chk (Var (Global 60)) (Con 16) (Branch F (Dloc 036922))    036086 !
   036082 Clear_attr (Var (Global 0)) (Con 3)                            036085
-  036085 Jin (Var (Global 0)) (Con 82) (Branch F (Dloc 036106))         036089 !
-  036086 Loadb (Con 82) (Con 83) (Global 154)                           036090 !
-  036089 Print_obj (Var (Global 0))                                     036091 !
-  036090 Loadb (Con 163) (Con 127) (Local 4)                            036094 !
+  036085 Jin (Var (Global 0)) (Con 82) (Branch F (Dloc 036106))         036089
+  036089 Print_obj (Var (Global 0))                                     036091
 * 036091 Get_parent (Var (Global 111)) (Local 4)                        036094
   036094 Test_attr (Var (Local 4)) (Con 27) (Branch F (Dloc 036105))    036098
   036098 Print ", in the "                                              036103
@@ -3745,11 +3553,9 @@ Found 8590 operations; 1985 overlapped
   036271 Jz (Var (Local 3)) (Branch F (Dloc 036297))                    036274
   036274 Test_attr (Var (Local 1)) (Con 3) (Branch T (Dloc 036285))     036278
 * 036278 Get_prop (Var (Local 1)) (Con 14) (Local 4)                    036282 !
-* 036279 Je [Con 14,Con 4] (Branch T (Dloc 028094))                     036284 !
 * 036280 Insert_obj (Con 4) (Con 160)                                   036283 !
 * 036282 Jz (Var (Local 4)) (Branch F (Dloc 036292))                    036285 !
 * 036283 Dec_chk (Con 73) (Con 81) (Branch F (Dloc 036553))             036288 !
-  036284 And (Var (Global 65)) (Con 1) (Local 11)                       036288 !
   036285 Get_prop (Var (Local 1)) (Con 11) (Local 4)                    036289 !
   036288 Dec_chk (Con 160) (Con 4) (Branch T (Dloc 036297))             036292 !
 * 036289 Jz (Var (Local 4)) (Branch T (Dloc 036297))                    036292
@@ -3758,8 +3564,7 @@ Found 8590 operations; 1985 overlapped
   036294 Jump 036383                                                    036297 !
 * 036296 Mod (Var (Global 144)) (Con 3) (Global 85)                     036300 !
 * 036297 Jz (Var (Local 3)) (Branch F (Dloc 036335))                    036300
-  036300 Print "There is a "                                            036305 !
-* 036302 Je [Con 148,Con 192] (Branch T (Dloc 030674))                  036307 !
+  036300 Print "There is a "                                            036305
 * 036305 Print_obj (Var (Local 1))                                      036307
   036307 Print " here"                                                  036310
 * 036310 Test_attr (Var (Local 1)) (Con 20) (Branch F (Dloc 036329))    036314
@@ -3809,13 +3614,10 @@ Found 8590 operations; 1985 overlapped
   036473 Jz (Var (Local 3)) (Branch F (Dloc 036479))                    036476 !
   036475 Inc_chk (Var (Global 162)) (Con 132) (Branch T (Dloc 036482))  036479 !
   036476 Print "and "                                                   036479
-  036479 Print "a "                                                     036482 !
-* 036481 Inc_chk (Con 170) (Con 2) (Branch T (Dloc 028297))             036486 !
+  036479 Print "a "                                                     036482
   036482 Print_obj (Var (Local 2))                                      036484
-  036484 Jz (Var (Local 5)) (Branch F (Dloc 036496))                    036487 !
-  036486 Set_attr (Var (Global 144)) (Con 6)                            036489 !
-  036487 Jz (Var (Local 6)) (Branch F (Dloc 036496))                    036490 !
-  036489 Or (Var (Global 29)) (Con 5) (Local 2)                         036493 !
+  036484 Jz (Var (Local 5)) (Branch F (Dloc 036496))                    036487
+  036487 Jz (Var (Local 6)) (Branch F (Dloc 036496))                    036490
   036490 Store (Con 5) (Var (Local 2))                                  036493 !
 * 036491 Inc_chk (Con 2) (Con 140) (Branch F (Dloc 036502))             036496 !
   036493 Jump 036502                                                    036496 !
@@ -3859,8 +3661,7 @@ Found 8590 operations; 1985 overlapped
   036616 Get_prop (Var (Local 4)) (Con 14) (Local 8)                    036620 !
   036619 Or (Con 160) (Con 8) (Global 225)                              036623 !
   036620 Jz (Var (Local 8)) (Branch T (Dloc 036670))                    036623
-  036623 Test_attr (Var (Local 4)) (Con 14) (Branch T (Dloc 036633))    036627 !
-* 036624 Dec_chk (Con 14) (Con 200) (Branch T (Dloc 031771))            036629 !
+  036623 Test_attr (Var (Local 4)) (Con 14) (Branch T (Dloc 036633))    036627
   036627 Print_paddr (Var (Local 8))                                    036629
   036629 New_line                                                       036630
   036630 Store (Con 6) (Con 0)                                          036633
@@ -3927,22 +3728,14 @@ Found 8590 operations; 1985 overlapped
 * 036879 Jg (Var (Local 2)) (Con 0) (Branch F (Dloc 036889))            036883
   036883 Loadw (Var (Global 57)) (Var (Local 2)) Sp                     036887
 * 036887 Print_paddr (Var Sp)                                           036889
-* 036889 Test_attr (Var (Local 1)) (Con 10) (Branch F (Dloc 036911))    036893 !
-* 036890 Je [Con 10,Con 84] (Branch T (Dloc 033328))                    036895 !
-* 036893 Print "Sitting on the "                                        036904 !
-  036895 Insert_obj (Con 103) (Con 46)                                  036898
-  036898 Store (Var (Global 112)) (Con 10)                              036901
-  036901 Je [Var (Global 112),Con 165] (Branch T (Dloc 031273))         036906 !
+* 036889 Test_attr (Var (Local 1)) (Con 10) (Branch F (Dloc 036911))    036893
+* 036893 Print "Sitting on the "                                        036904
   036904 Print_obj (Var (Local 1))                                      036906
   036906 Print_ret " is: "                                              036911
-  036911 Test_attr (Var (Local 1)) (Con 30) (Branch F (Dloc 036931))    036915 !
-* 036912 Je [Con 30,Con 82] (Branch T (Dloc 033463))                    036917 !
-* 036915 Print "The "                                                   036918 !
-  036917 Inc_chk (Con 170) (Var (Local 1)) (Branch T (Dloc 033592))     036922 !
+  036911 Test_attr (Var (Local 1)) (Con 30) (Branch F (Dloc 036931))    036915
+* 036915 Print "The "                                                   036918
   036918 Print_obj (Var (Local 1))                                      036920
-  036920 Print_ret " is holding: "                                      036931 !
-* 036922 Inc_chk (Con 54) (Var (Global 129)) (Branch F (Dloc 030224))   036927
-  036927 Loadb (Con 189) (Var (Global 112)) (Global 149)                036931
+  036920 Print_ret " is holding: "                                      036931
   036931 Print "The "                                                   036934
   036934 Print_obj (Var (Local 1))                                      036936
   036936 Print_ret " contains:"                                         036945
@@ -3957,12 +3750,7 @@ Found 8590 operations; 1985 overlapped
 * 036982 Store (Con 156) (Con 1)                                        036985
   036985 Clear_attr (Con 109) (Con 7)                                   036988
   036988 Clear_attr (Con 180) (Con 3)                                   036991
-  036991 Print_ret "An almost inaudible voice whispers in your ear, \"Look to your treasures for the final secret.\""037050 !
-* 037037 Get_next_prop (Var (Local 4)) (Con 11) (Global 42)             037041
-  037041 Jin (Var (Global 52)) (Var (Global 8)) (Branch F (Dloc 031179))037046
-  037046 Set_attr (Con 37) (Var (Global 184))                           037049
-  037049 Pop                                                            037050
-  037050 Jl (Con 0) (Con 0) (Branch F Dfalse)                           037055
+  036991 Print_ret "An almost inaudible voice whispers in your ear, \"Look to your treasures for the final secret.\""037050
 * 037055 Get_prop (Var (Local 1)) (Con 13) (Local 2)                    037059
 * 037059 Jg (Var (Local 2)) (Con 0) (Branch F Dfalse)                   037063
 * 037063 Call (Floc 036962) [Var (Local 2)] Sp                          037069 !
@@ -4000,8 +3788,7 @@ Found 8590 operations; 1985 overlapped
 * 037179 Test_attr (Var Sp) (Con 11) (Branch F Dfalse)                  037183
   037183 Get_parent (Var (Global 118)) Sp                               037186
 * 037186 Jin (Var Sp) (Var (Global 111)) (Branch T (Dloc 037265))       037191
-  037191 Call (Floc 037420) [Var (Global 118)] (Local 4)                037197 !
-  037193 And (Var (Global 6)) (Con 134) (Local 4)                       037197
+  037191 Call (Floc 037420) [Var (Global 118)] (Local 4)                037197
   037197 Call (Floc 037420) [Var (Global 111)] Sp                       037203
 * 037203 Add (Var (Local 4)) (Var Sp) Sp                                037207
 * 037207 Jg (Var Sp) (Var (Global 133)) (Branch F (Dloc 037265))        037211 !
@@ -4117,9 +3904,7 @@ Found 8590 operations; 1985 overlapped
 * 037614 Rfalse                                                         037615
   037615 Jz (Var (Local 3)) (Branch F (Dloc 037630))                    037618
   037618 Test_attr (Var (Local 1)) (Var (Local 5)) (Branch T (Dloc 037630))037622
-* 037622 Call (Floc 037510) [Var (Local 5),Var (Local 4)] Sp            037629 !
-* 037623 Set_attr (Con 73) (Var (Global 51))                            037626
-  037626 Inc_chk (Con 4) (Con 0) (Branch T (Dloc 033863))               037631 !
+* 037622 Call (Floc 037510) [Var (Local 5),Var (Local 4)] Sp            037629
 * 037629 Rfalse                                                         037630
   037630 Test_attr (Var (Global 0)) (Con 6) (Branch F (Dloc 037656))    037634 !
 * 037631 Loadb (Con 6) (Con 88) (Global 144)                            037635 !
@@ -4127,30 +3912,21 @@ Found 8590 operations; 1985 overlapped
   037635 Jg (Con 213) (Con 160) (Branch F (Dloc 039128))                037640 !
 * 037637 Jz (Var (Local 5)) (Branch T (Dloc 037656))                    037640
   037640 Je [Var (Local 5),Con 6] (Branch T (Dloc 037656))              037644
-  037644 Test_attr (Var (Local 1)) (Var (Local 5)) (Branch T (Dloc 037656))037648 !
-* 037645 Je [Con 5,Con 202] (Branch T (Dloc 037679))                    037649 !
-* 037648 Call (Floc 037510) [Var (Local 5),Var (Local 4)] Sp            037655 !
-* 037649 Set_attr (Con 73) (Var (Global 51))                            037652
-* 037652 Inc_chk (Con 4) (Con 0) (Branch T (Dloc 033889))               037657 !
+  037644 Test_attr (Var (Local 1)) (Var (Local 5)) (Branch T (Dloc 037656))037648
+* 037648 Call (Floc 037510) [Var (Local 5),Var (Local 4)] Sp            037655
 * 037655 Rfalse                                                         037656
-  037656 Test_attr (Var (Local 1)) (Con 18) (Branch F (Dloc 037668))    037660 !
-* 037657 Je [Con 18,Con 74] (Branch F (Dloc 037676))                    037661 !
-* 037660 Get_prop (Var (Local 1)) (Con 11) Sp                           037664 !
-  037661 Je [Con 11,Con 0] (Branch T (Dloc 032800))                     037666 !
+  037656 Test_attr (Var (Local 1)) (Con 18) (Branch F (Dloc 037668))    037660
+* 037660 Get_prop (Var (Local 1)) (Con 11) Sp                           037664
 * 037664 Print_paddr (Var Sp)                                           037666
 * 037666 New_line                                                       037667
   037667 Rfalse                                                         037668
   037668 Jz (Var (Local 3)) (Branch T (Dloc 037708))                    037671
   037671 Test_attr (Var (Global 0)) (Con 6) (Branch T (Dloc 037708))    037675
-  037675 Jz (Var (Global 62)) (Branch F (Dloc 037708))                  037678 !
-* 037676 Insert_obj (Var (Global 80)) (Con 74)                          037679 !
-  037678 Test_attr (Var (Local 4)) (Con 27) (Branch F (Dloc 037708))    037682 !
-  037679 Dec_chk (Con 27) (Con 92) (Branch T (Dloc 034230))             037684 !
-  037682 Print "The "                                                   037685 !
-  037684 Inc_chk (Con 170) (Var (Local 4)) (Branch T (Dloc 034104))     037689 !
+  037675 Jz (Var (Global 62)) (Branch F (Dloc 037708))                  037678
+  037678 Test_attr (Var (Local 4)) (Con 27) (Branch F (Dloc 037708))    037682
+  037682 Print "The "                                                   037685
 * 037685 Print_obj (Var (Local 4))                                      037687
   037687 Print " comes to a rest on the shore."                         037706 !
-  037689 Add (Con 73) (Con 88) Sp                                       037693 !
 * 037691 Mod (Var Sp) (Con 43) (Global 8)                               037695 !
 * 037693 Set_attr (Con 24) (Var (Global 7))                             037696 !
 * 037695 Div (Con 43) (Con 25) Sp                                       037699 !
@@ -4223,14 +3999,10 @@ Found 8590 operations; 1985 overlapped
 * 037981 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 037973))             037986
 * 037986 Je [Var (Local 3),Var (Local 4)] (Branch T Dfalse)             037990
   037990 Add (Var (Local 3)) (Con 1) Sp                                 037994
-* 037994 Loadw (Var (Local 2)) (Var Sp) Sp                              037998 !
-* 037995 Jl (Con 0) (Con 0) (Branch T (Dloc 032622))                    038000 !
+* 037994 Loadw (Var (Local 2)) (Var Sp) Sp                              037998
 * 037998 Ret (Var Sp)                                                   038000
-* 038000 Je [Con 0,Con 0] (Branch F (Dloc 033250))                      038005 !
-* 038003 Store (Con 111) (Var (Local 1))                                038006 !
-  038005 Je [Con 224,Con 27] (Branch F (Dloc 032822))                   038010 !
-  038006 Call (Floc 022396) [Con 137,Var (Local 1)] Sp                  038013 !
-  038010 Remove_obj (Con 256)                                           038013
+* 038003 Store (Con 111) (Var (Local 1))                                038006
+  038006 Call (Floc 022396) [Con 137,Var (Local 1)] Sp                  038013
 * 038013 Ret_popped                                                     038014
 * 038023 Get_prop_addr (Var (Local 1)) (Con 18) (Local 3)               038027
 * 038027 Get_prop_len (Var (Local 3)) Sp                                038030
@@ -4241,10 +4013,8 @@ Found 8590 operations; 1985 overlapped
 * 038055 Get_prop_addr (Var (Local 2)) (Con 5) (Local 3)                038059
   038059 Jz (Var (Local 3)) (Branch T Dfalse)                           038062
   038062 Get_prop_len (Var (Local 3)) Sp                                038065
-* 038065 Sub (Var Sp) (Con 1) Sp                                        038069 !
-* 038067 Je [Con 0,Con 224] (Branch F (Dloc 032492))                    038072 !
-* 038069 Call (Floc 027722) [Var (Local 1),Var (Local 3),Var Sp] Sp     038077 !
-  038072 Inc_chk (Con 1) (Var (Local 3)) (Branch F Dfalse)              038077
+* 038065 Sub (Var Sp) (Con 1) Sp                                        038069
+* 038069 Call (Floc 027722) [Var (Local 1),Var (Local 3),Var Sp] Sp     038077
 * 038077 Ret_popped                                                     038078
 * 038085 Get_child (Var (Local 1)) (Local 3) (Branch T (Dloc 038089))   038089
 * 038089 Jz (Var (Local 3)) (Branch T Dfalse)                           038092
@@ -4270,10 +4040,8 @@ Found 8590 operations; 1985 overlapped
   038159 Get_prop_len (Var (Local 3)) Sp                                038162
 * 038162 Je [Var Sp,Con 5] (Branch F (Dloc 038147))                     038167
 * 038167 Loadb (Var (Local 3)) (Con 1) Sp                               038171
-* 038171 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 038147))             038176 !
-* 038173 Je [Con 63,Con 229] (Branch T (Dloc 032802))                   038178 !
+* 038171 Je [Var Sp,Var (Local 1)] (Branch F (Dloc 038147))             038176
 * 038176 Ret (Var (Local 2))                                            038178
-  038178 Jl (Con 0) (Con 0) (Branch F Dfalse)                           038183
 * 038183 Set_attr (Var (Local 1)) (Con 18)                              038186
   038186 Put_prop (Var (Local 1)) (Con 11) (Var (Local 2))              038191 !
 * 038187 Ret (Con 1)                                                    038189
@@ -4315,19 +4083,11 @@ Found 8590 operations; 1985 overlapped
 * 038449 Print_paddr (Var Sp)                                           038451
 * 038451 New_line                                                       038452
   038452 Rtrue                                                          038453
-* 038455 Je [Var (Global 120),Con 56,Con 93] (Branch F Dfalse)          038461 !
-* 038456 Print_addr (Con 136)                                           038458
-  038458 Mod (Con 93) (Var (Global 48)) (Global 163)                    038462 !
-  038461 Print_ret "The boards are securely fastened."                  038482 !
-* 038462 Dec_chk (Con 39) (Con 80) (Branch T (Dloc 038487))             038466
-  038466 Test (Con 0) (Var (Local 5)) (Branch T (Dloc 038492))          038470
-  038470 And (Con 26) (Var (Global 77)) (Global 65)                     038474
-  038474 Mod (Var (Local 11)) (Var (Global 11)) (Global 9)              038478
-  038478 Test_attr (Con 106) (Var (Global 148)) (Branch T (Dloc 034897))038483
+* 038455 Je [Var (Global 120),Con 56,Con 93] (Branch F Dfalse)          038461
+  038461 Print_ret "The boards are securely fastened."                  038482
 * 038483 Je [Var (Global 120),Con 26] (Branch F Dfalse)                 038487
   038487 Je [Var (Global 118),Con 248] (Branch F Dfalse)                038491
-  038491 Je [Var (Global 119),Con 98] (Branch F (Dloc 038507))          038495 !
-  038492 Print_addr (Con 25166)                                         038495
+  038491 Je [Var (Global 119),Con 98] (Branch F (Dloc 038507))          038495
   038495 Jin (Var (Global 119)) (Var (Global 111)) (Branch F (Dloc 038507))038499
   038499 Call (Floc 067174) [Con -25737] Sp                             038506
 * 038506 Ret_popped                                                     038507
@@ -4361,8 +4121,7 @@ Found 8590 operations; 1985 overlapped
   038761 Je [Var (Global 120),Con 61] (Branch F (Dloc 038778))          038765
   038765 Print_ret "It can't be followed."                              038778
   038778 Print_ret "You can't see any songbird here."                   038797
-* 038799 Je [Var (Global 0),Con 203,Con 193,Con 201] (Branch F (Dloc 038838))038806 !
-* 038805 Jl (Var (Global 49)) (Var (Global 120)) (Branch F (Dloc 037867))038810 !
+* 038799 Je [Var (Global 0),Con 203,Con 193,Con 201] (Branch F (Dloc 038838))038806
   038806 Je [Var (Global 120),Con 60] (Branch F (Dloc 038827))          038810
   038810 Print_ret "Why not find your brains?"                          038827
   038827 Je [Var (Global 120),Con 139] (Branch F Dfalse)                038831
@@ -4388,13 +4147,6 @@ Found 8590 operations; 1985 overlapped
 * 038954 Rtrue                                                          038955
   038955 Je [Var (Global 120),Con 56] (Branch F (Dloc 039035))          038960
   038960 Print_ret "The house is a beautiful colonial house which is painted white. It is clear that the owners must have been extremely wealthy."039035 !
-* 039013 Set_attr (Var (Global 72)) (Con 100)                           039016
-* 039016 Je [Con 64,Con 234] (Branch F (Dloc 033483))                   039021 !
-* 039019 Test_attr (Con 96) (Var (Global 27)) (Branch T (Dloc 037323))  039024 !
-  039021 Set_attr (Con 185) (Var (Global 77))                           039024
-  039024 Get_prop_addr (Var (Global 26)) (Con 62) (Local 3)             039028
-  039028 Print_obj (Con 6713)                                           039031
-  039031 Div (Con 197) (Var (Global 184)) (Global 149)                  039035 !
 * 039034 Inc (Var (Global 177))                                         039036 !
   039035 Je [Var (Global 120),Con 43,Con 34] (Branch F (Dloc 039094))   039041 !
   039036 Print_addr (Con 136)                                           039038
@@ -4407,10 +4159,7 @@ Found 8590 operations; 1985 overlapped
   039067 New_line                                                       039068
   039068 Call (Floc 038192) [Con 235] Sp                                039074
 * 039074 Ret_popped                                                     039075
-  039075 Print_ret "I can't see how to get in from here."               039094 !
-  039083 Jz (Con 1388) (Branch F (Dloc 033742))                         039088
-  039088 Jin (Con 225) (Con 76) (Branch F (Dloc 037193))                039093
-  039093 Inc_chk (Var (Global 49)) (Con 136) (Branch F (Dloc 046328))   039098 !
+  039075 Print_ret "I can't see how to get in from here."               039094
   039094 Je [Var (Global 120),Con 28] (Branch F Dfalse)                 039098
   039098 Print_ret "You must be joking."                                039111
 * 039113 Je [Var (Global 120),Con 139] (Branch F (Dloc 039124))         039117
@@ -4479,8 +4228,7 @@ Found 8590 operations; 1985 overlapped
 * 039433 Print_addr (Con -4031)                                         039436 !
   039435 Je [Var (Global 119),Con 236] (Branch T (Dloc 039481))         039439 !
   039436 Print_addr (Con -4884)                                         039439
-  039439 Print "The water leaks out of the "                            039452 !
-* 039449 Je [Var (Global 112),Con 165] (Branch T (Dloc 033955))         039454 !
+  039439 Print "The water leaks out of the "                            039452
   039452 Print_obj (Var (Global 119))                                   039454
   039454 Print " and evaporates immediately."                           039473
   039473 New_line                                                       039474
@@ -4522,8 +4270,7 @@ Found 8590 operations; 1985 overlapped
   039629 Je [Var (Global 120),Con 63,Con 49] (Branch F (Dloc 039719))   039636
   039636 Call (Floc 030906) [Con 237] Sp                                039642
 * 039642 Jz (Var (Local 1)) (Branch T (Dloc 039678))                    039645
-  039645 Print "There is now a puddle in the bottom of the "            039668 !
-* 039665 Test_attr (Con 132) (Var (Local 5)) (Branch T (Dloc 034037))   039670 !
+  039645 Print "There is now a puddle in the bottom of the "            039668
   039668 Print_obj (Var (Local 1))                                      039670
   039670 Print "."                                                      039673
   039673 New_line                                                       039674
@@ -4742,10 +4489,6 @@ Found 8590 operations; 1985 overlapped
   041760 Jz (Var (Local 2)) (Branch T (Dloc 041797))                    041763
 * 041763 Test_attr (Con 183) (Con 11) (Branch F (Dloc 041797))          041767
   041767 Print "and a rug lying beside an open trap door."              041794 !
-* 041777 Test (Con 43) (Con 14) (Branch F (Dloc 034932))                041782
-  041782 Loadw (Con 84) (Con 85) (Global 67)                            041786
-  041786 Jg (Con 55) (Con 26) (Branch T (Dloc 033635))                  041791
-  041791 Get_prop_len (Con 220) (Global 162)                            041794 !
 * 041793 Print "won't  "                                                041796 !
   041794 Jump 041875                                                    041797 !
 * 041796 Loadb (Var (Global 144)) (Con 2) (Global 200)                  041800 !
@@ -4815,11 +4558,7 @@ Found 8590 operations; 1985 overlapped
 * 042148 New_line                                                       042149
   042149 Rtrue                                                          042150
 * 042153 Je [Var (Local 1),Con 3] (Branch F (Dloc 042249))              042158
-  042158 Print_ret "You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable."042249 !
-* 042233 Jl (Con 230) (Con 74) (Branch T (Dloc 034050))                 042238
-* 042238 Je [Con 23,Var (Global 67)] (Branch F (Dloc 034607))           042243
-  042243 Or (Var (Global 214)) (Con 30) (Global 26)                     042247
-  042247 Dec (Con 69)                                                   042249
+  042158 Print_ret "You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable."042249
   042249 Je [Var (Local 1),Con 2] (Branch F Dfalse)                     042253
 * 042253 Test_attr (Con 183) (Con 11) (Branch F Dfalse)                 042257
   042257 Test_attr (Con 183) (Con 3) (Branch T Dfalse)                  042261
@@ -4884,8 +4623,7 @@ Found 8590 operations; 1985 overlapped
 * 042734 Insert_obj (Var (Local 10)) (Con 183)                          042737 !
   042735 Test_attr (Con 183) (Con 11) (Branch T (Dloc 042811))          042740 !
   042737 Set_attr (Con 128) (Con 73)                                    042740
-  042740 Print_ret "Underneath the rug is a closed trap door. As you drop the corner of the rug, the trap door is once again concealed from view."042811 !
-* 042810 Inc_chk (Var (Global 49)) (Con 136) (Branch F (Dloc 034941))   042815 !
+  042740 Print_ret "Underneath the rug is a closed trap door. As you drop the corner of the rug, the trap door is once again concealed from view."042811
   042811 Je [Var (Global 120),Con 33] (Branch F Dfalse)                 042815
   042815 Jz (Var (Global 48)) (Branch F (Dloc 042889))                  042819
   042819 Test_attr (Con 183) (Con 11) (Branch T (Dloc 042889))          042824
@@ -5091,8 +4829,6 @@ Found 8590 operations; 1985 overlapped
   044349 Rtrue                                                          044350
   044350 Je [Var (Local 1),Con 3] (Branch F Dfalse)                     044354
 * 044354 Print "You are in a clearing, with a forest surrounding you on all sides. A path leads south."044405 !
-* 044399 Jl (Var (Global 138)) (Var (Global 85)) (Branch T (Dloc 037690))044404 !
-  044400 Print_obj (Con 101)                                            044402
 * 044402 Inc (Var (Global 184))                                         044404
   044404 Inc (Var (Local 10))                                           044406 !
   044405 Test_attr (Con 174) (Con 11) (Branch F (Dloc 044444))          044409 !
@@ -5106,8 +4842,7 @@ Found 8590 operations; 1985 overlapped
   044448 Print "There is a grating securely fastened into the ground."  044475
   044475 New_line                                                       044476
   044476 Rtrue                                                          044477
-* 044481 Je [Var (Local 1),Con 2] (Branch F (Dloc 044489))              044485 !
-* 044483 Jl (Con 70) (Con 12) (Branch T (Dloc 039885))                  044488 !
+* 044481 Je [Var (Local 1),Con 2] (Branch F (Dloc 044489))              044485
 * 044485 Clear_attr (Con 174) (Con 7)                                   044488
 * 044488 Rtrue                                                          044489
   044489 Je [Var (Local 1),Con 3] (Branch F Dfalse)                     044493
@@ -5159,11 +4894,8 @@ Found 8590 operations; 1985 overlapped
   044777 Print_obj (Var (Global 119))                                   044779
   044779 Print_ret "?"                                                  044782
   044782 Je [Var (Global 120),Con 92] (Branch F (Dloc 044799))          044786
-  044786 Print_ret "You can't pick the lock."                           044799 !
-* 044796 Loadb (Con 150) (Con 69) (Global 177)                          044800 !
+  044786 Print_ret "You can't pick the lock."                           044799
   044799 Je [Var (Global 120),Con 35,Con 43] (Branch F (Dloc 044904))   044806 !
-* 044800 Print_addr (Con 136)                                           044802
-* 044802 Jg (Con 43) (Var Sp) (Branch F (Dloc 044840))                  044806 !
 * 044805 Dec_chk (Var (Global 144)) (Var (Global 45)) (Branch T (Dloc 044893))044810 !
   044806 Jz (Var (Global 45)) (Branch T (Dloc 044893))                  044810
   044810 Je [Var (Global 0),Con 74] (Branch F (Dloc 044821))            044814
@@ -5173,11 +4905,9 @@ Found 8590 operations; 1985 overlapped
   044821 Push (Con -25523)                                              044825
   044825 Call (Floc 038394) [Con 174,Var Sp,Con -28399] Sp              044834
 * 044834 Test_attr (Con 174) (Con 11) (Branch F (Dloc 044889))          044838
-  044838 Je [Var (Global 0),Con 74] (Branch T (Dloc 044885))            044842 !
-  044840 Test_attr (Var (Global 221)) (Con 160) (Branch F (Dloc 044437))044845 !
+  044838 Je [Var (Global 0),Con 74] (Branch T (Dloc 044885))            044842
   044842 Jz (Var (Global 46)) (Branch F (Dloc 044885))                  044845
-  044845 Print "A pile of leaves falls onto your head and to the ground."044878 !
-* 044877 Inc_chk (Var (Global 171)) (Con 13) (Branch F (Dloc 044369))   044882 !
+  044845 Print "A pile of leaves falls onto your head and to the ground."044878
   044878 New_line                                                       044879
   044879 Store (Con 62) (Con 1)                                         044882
   044882 Insert_obj (Con 144) (Var (Global 0))                          044885 !
@@ -5201,9 +4931,7 @@ Found 8590 operations; 1985 overlapped
   044939 Get_prop_len (Con 9642) (Global 118)                           044943 !
   044941 Print_obj (Var (Global 118))                                   044943
   044943 Print_ret " goes through the grating into the darkness below." 044966
-* 044967 Print "You won't be able to get back up to the tunnel you are going through when it gets to the next room."045018 !
-* 045010 Jl (Con 106) (Con 119) (Branch F (Dloc 036834))                045015
-* 045015 Inc_chk (Con 200) (Con 165) (Branch T (Dloc 043925))           045020 !
+* 044967 Print "You won't be able to get back up to the tunnel you are going through when it gets to the next room."045018
   045018 New_line                                                       045019
 * 045019 New_line                                                       045020
   045020 Je [Var (Global 0),Con 69] (Branch F (Dloc 045026))            045024
@@ -5216,9 +4944,7 @@ Found 8590 operations; 1985 overlapped
   045042 Ret (Con 167)                                                  045044
 * 045045 Je [Var (Global 120),Con 93] (Branch F (Dloc 045111))          045050
   045050 Jin (Con 110) (Var (Global 111)) (Branch F Dfalse)             045054
-  045054 Print "As you touch the rusty knife, your sword gives a single pulse of blinding blue light."045109 !
-* 045103 Inc_chk (Var (Global 188)) (Con 55) (Branch F (Dloc 038394))   045108
-  045108 Inc (Var (Global 171))                                         045110 !
+  045054 Print "As you touch the rusty knife, your sword gives a single pulse of blinding blue light."045109
   045109 New_line                                                       045110
   045110 Rfalse                                                         045111
   045111 Je [Var (Global 119),Con 128] (Branch F (Dloc 045119))         045115
@@ -5238,8 +4964,7 @@ Found 8590 operations; 1985 overlapped
   045176 Print "A ghost appears in the room and is appalled at your desecration of the remains of a fellow adventurer. He casts a curse on your valuables and banishes them to the Land of the Living Dead. The ghost leaves, muttering obscenities."045307
   045307 New_line                                                       045308
   045308 Call (Floc 066488) [Var (Global 0),Con 230,Con 100] Sp         045316
-* 045316 Call (Floc 066488) [Con 4,Con 230] Sp                          045323 !
-* 045320 Dec_chk (Con 230) (Con 0) (Branch T (Dloc 041227))             045325 !
+* 045316 Call (Floc 066488) [Con 4,Con 230] Sp                          045323
 * 045323 Rtrue                                                          045324
 * 045325 Je [Var (Global 120),Con 56] (Branch F (Dloc 045344))          045329
 * 045329 Print_ret "The torch is burning."                              045344
@@ -5289,25 +5014,16 @@ Found 8590 operations; 1985 overlapped
   045764 New_line                                                       045765
   045765 Rtrue                                                          045766
   045766 Je [Var (Global 120),Con 93] (Branch F (Dloc 045799))          045770
-  045770 Print_ret "The mirror is many times your size. Give up."       045799 !
-* 045786 Dec_chk (Con 97) (Var (Global 207)) (Branch F (Dloc 039689))   045791
-  045791 Get_prop (Con 142) (Con 109) (Global 48)                       045795
-  045795 Test_attr (Var (Global 149)) (Var (Global 184)) (Branch T (Dloc 039079))045800 !
-  045799 Je [Var (Global 120),Con 19,Con 127,Con 42] (Branch F Dfalse)  045806 !
-  045800 Inc (Con 136)                                                  045802
-  045802 Get_next_prop (Con 127) (Con 42) (Global 48)                   045806
+  045770 Print_ret "The mirror is many times your size. Give up."       045799
+  045799 Je [Var (Global 120),Con 19,Con 127,Con 42] (Branch F Dfalse)  045806
   045806 Jz (Var (Global 44)) (Branch T (Dloc 045838))                  045809
   045809 Print_ret "Haven't you done enough damage already?"            045838
   045838 Store (Con 60) (Con 1)                                         045841
   045841 Store (Con 76) (Con 0)                                         045844
 * 045844 Print_ret "You have broken the mirror. I hope you have a seven years' supply of good luck handy."045895 !
-* 045877 Jg (Var (Global 69)) (Var (Global 70)) (Branch F (Dloc 045368))045882 !
-* 045878 Sub (Var (Global 70)) (Con 62) Sp                              045882 !
-* 045879 Mul (Var (Global 46)) (Con 0) (Global 26)                      045883 !
-* 045882 Test_attr (Con 50) (Var (Global 132)) (Branch F (Dloc 038734)) 045887 !
+* 045879 Mul (Var (Global 46)) (Con 0) (Global 26)                      045883
   045883 Get_prop_addr (Con 148) (Var (Global 20)) (Global 1)           045887
-  045887 And (Var (Global 0)) (Var (Local 1)) (Global 150)              045891 !
-* 045889 Je [Con 166,Con 77] (Branch F (Dloc 045530))                   045894 !
+  045887 And (Var (Global 0)) (Var (Local 1)) (Global 150)              045891
   045891 Store (Var (Global 46)) (Con 150)                              045894
   045894 Inc_chk (Var Sp) (Con 1) (Branch F Dfalse)                     045899
 * 045899 Je [Var (Local 1),Con 3] (Branch F Dfalse)                     045903
@@ -5330,8 +5046,7 @@ Found 8590 operations; 1985 overlapped
   046317 Store (Con 16) (Con 105)                                       046320
   046320 Rtrue                                                          046321
   046321 Je [Var (Global 120),Con 69] (Branch F Dfalse)                 046325
-  046325 Call (Floc 067174) [Con -25449] Sp                             046332 !
-  046328 Get_next_prop (Con 156) (Var (Global 135)) Sp                  046332
+  046325 Call (Floc 067174) [Con -25449] Sp                             046332
 * 046332 Ret_popped                                                     046333
 * 046337 Je [Var (Local 1),Con 3] (Branch F (Dloc 046557))              046342
   046342 Print "You are outside a large gateway, on which is inscribed\n\n  Abandon every hope all ye who enter here!\n\nThe gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard."046501 !
@@ -5340,8 +5055,7 @@ Found 8590 operations; 1985 overlapped
   046502 Jz (Var (Global 145)) (Branch F Dfalse)                        046505
   046505 Jz (Var (Global 62)) (Branch F Dfalse)                         046508
   046508 Print_ret "The way through the gate is barred by evil spirits, who jeer at your attempts to pass."046557
-  046557 Je [Var (Local 1),Con 1] (Branch F (Dloc 047078))              046562 !
-* 046561 Jin (Con 65) (Con 136) (Branch F (Dloc 045151))                046566 !
+  046557 Je [Var (Local 1),Con 1] (Branch F (Dloc 047078))              046562
 * 046562 Je [Var (Global 120),Con 58] (Branch F (Dloc 046623))          046566
   046566 Jz (Var (Global 145)) (Branch F Dfalse)                        046569
   046569 Jin (Con 221) (Var (Global 111)) (Branch F (Dloc 046600))      046573
@@ -5370,8 +5084,7 @@ Found 8590 operations; 1985 overlapped
 * 046849 Call (Floc 021618) [Con 23614,Con 6] Sp                        046857
 * 046857 Storew (Var Sp) (Con 0) (Con 1)                                046862
   046862 Call (Floc 021618) [Con 23666,Con 20] Sp                       046870
-* 046870 Storew (Var Sp) (Con 0) (Con 1)                                046875 !
-* 046874 Je [Con 176,Con 160] (Branch F (Dloc 045277))                  046879 !
+* 046870 Storew (Var Sp) (Con 0) (Con 1)                                046875
   046875 Rtrue                                                          046876
   046876 Jz (Var (Global 41)) (Branch T Dfalse)                         046879
   046879 Je [Var (Global 120),Con 83] (Branch F Dfalse)                 046883
@@ -5410,10 +5123,8 @@ Found 8590 operations; 1985 overlapped
 * 047331 Ret_popped                                                     047332
 * 047333 Call (Floc 030906) [Con 219] Sp                                047339
 * 047339 Insert_obj (Con 221) (Con 232)                                 047342
-  047342 Je [Var (Global 0),Con 232] (Branch F Dfalse)                  047346 !
-* 047343 Loadb (Con 232) (Con 64) (Global 163)                          047347 !
+  047342 Je [Var (Global 0),Con 232] (Branch F Dfalse)                  047346
   047346 Print_ret "The bell appears to have cooled down."              047365 !
-  047347 Dec_chk (Con 39) (Con 42) (Branch F (Dloc 043510))             047352
 * 047352 Mul (Con 5) (Var (Global 81)) (Global 49)                      047356
 * 047356 Add (Con 82) (Con 42) (Global 20)                              047360
   047360 And (Con 83) (Con 147) (Global 134)                            047364
@@ -5431,9 +5142,7 @@ Found 8590 operations; 1985 overlapped
   047555 Jump 047762                                                    047558
   047558 Jz (Var (Global 39)) (Branch T (Dloc 047618))                  047561
   047561 Print "The sluice gates are open, and water rushes through the dam. The water level behind the dam is still high."047614 !
-* 047603 Je [Con 23,Con 25] (Branch F (Dloc 046119))                    047608 !
-* 047607 Get_prop (Con 1) (Var (Global 158)) (Global 33)                047611 !
-  047608 Je [Con 174,Con 49] (Branch T (Dloc 040899))                   047613 !
+* 047607 Get_prop (Con 1) (Var (Global 158)) (Global 33)                047611
 * 047611 Inc (Var (Global 184))                                         047613
   047613 Inc (Var (Global 171))                                         047615 !
   047614 New_line                                                       047615
@@ -5448,16 +5157,13 @@ Found 8590 operations; 1985 overlapped
   047761 New_line                                                       047762
   047762 Print "There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble"047833
   047833 Jz (Var (Global 40)) (Branch T (Dloc 047851))                  047836
-  047836 Print " which is glowing serenely"                             047851 !
-  047845 Jg (Con 10) (Con 93) (Branch F (Dloc 047866))                  047849
-  047849 Print_obj (Var (Global 46))                                    047851
+  047836 Print " which is glowing serenely"                             047851
   047851 Print_ret "."                                                  047854
 * 047855 Je [Var (Global 120),Con 89] (Branch F (Dloc 048058))          047860
   047860 Je [Var (Global 119),Con 91] (Branch F (Dloc 048020))          047865 !
 * 047864 Print_paddr (Con 160)                                          047866 !
   047865 Jz (Var (Global 40)) (Branch T (Dloc 047997))                  047869 !
   047866 Mod (Con 128) (Var (Global 114)) (Local 12)                    047870 !
-* 047867 Jz (Con -32244) (Branch F (Dloc 044289))                       047872 !
   047869 Clear_attr (Con 50) (Con 3)                                    047872 !
   047870 Get_prop_addr (Con 3) (Var (Global 144)) (Global 39)           047874 !
   047872 Jz (Var (Global 39)) (Branch T (Dloc 047944))                  047876 !
@@ -5487,10 +5193,7 @@ Found 8590 operations; 1985 overlapped
   048062 Call (Floc 048140) [] Sp                                       048067
 * 048067 Ret_popped                                                     048068
   048068 Je [Var (Global 120),Con 85] (Branch F Dfalse)                 048072
-  048072 Print_ret "Hmm. It appears the tube contained glue, not oil. Turning the bolt won't get any easier...."048127 !
-* 048115 Mod (Var (Local 10)) (Var (Global 11)) (Local 14)              048119
-  048119 Test_attr (Con 229) (Var (Global 56)) (Branch T (Dloc 044560)) 048124
-  048124 Inc_chk (Var (Global 184)) (Con 165) (Branch F Dfalse)         048129
+  048072 Print_ret "Hmm. It appears the tube contained glue, not oil. Turning the bolt won't get any easier...."048127
 * 048129 Je [Var (Global 120),Con 93] (Branch F Dfalse)                 048133
   048133 Call (Floc 048140) [] Sp                                       048138
 * 048138 Ret_popped                                                     048139
@@ -5506,15 +5209,11 @@ Found 8590 operations; 1985 overlapped
   048195 Get_parent (Var (Global 111)) Sp                               048198
 * 048198 Test_attr (Var Sp) (Con 27) (Branch F (Dloc 048245))           048202
 * 048202 Print_ret "The boat lifts gently out of the mud and is now floating on the reservoir."048245
-  048245 Call (Floc 067174) [Con -25433] Sp                             048252 !
-  048250 Print_addr (Var Sp)                                            048252
+  048245 Call (Floc 067174) [Con -25433] Sp                             048252
 * 048252 Rtrue                                                          048253
   048253 Je [Var (Global 0),Con 40] (Branch F (Dloc 048296))            048257
-  048257 Print_ret "A sound, like that of flowing water, starts to come from below."048296 !
-* 048288 And (Var (Global 48)) (Con 6) (Global 87)                      048292
-  048292 Test_attr (Con 52) (Var (Global 224)) (Branch T (Dloc 044776)) 048297 !
-  048296 Je [Var (Global 0),Con 138] (Branch F (Dloc 048380))           048301 !
-  048297 Loadb (Con 138) (Con 0) (Global 65)                            048301
+  048257 Print_ret "A sound, like that of flowing water, starts to come from below."048296
+  048296 Je [Var (Global 0),Con 138] (Branch F (Dloc 048380))           048301
   048301 Print "All of a sudden, an alarmingly loud roaring sound fills the room. Filled with fear, you scramble away."048366
   048366 New_line                                                       048367
 * 048367 Call (Floc 020076) [Var (Global 38)] Sp                        048373
@@ -5573,7 +5272,6 @@ Found 8590 operations; 1985 overlapped
   048807 Print_ret "Click."                                             048814
 * 048815 Je [Var (Global 120),Con 56] (Branch F (Dloc 048836))          048819
   048819 Print_ret "The chests are all empty."                          048836 !
-* 048826 Inc_chk (Con 198) (Con 70) (Branch F (Dloc 040679))            048831
 * 048831 Sub (Var (Global 87)) (Con 197) (Global 184)                   048835
   048835 Inc (Var (Global 177))                                         048837 !
   048836 Je [Var (Global 120),Con 18,Con 43,Con 93] (Branch F (Dloc 048894))048843 !
@@ -5740,9 +5438,7 @@ Found 8590 operations; 1985 overlapped
   050705 Print_ret "The cyclops prefers eating to making conversation." 050734
   050734 Jz (Var (Global 149)) (Branch T (Dloc 050845))                 050738
   050738 Je [Var (Global 120),Con 56] (Branch F (Dloc 050777))          050742
-* 050742 Print_ret "The cyclops is sleeping like a baby, albeit a very ugly one."050777 !
-* 050769 Mod (Var (Global 10)) (Var (Global 34)) (Global 46)            050773
-  050773 Jl (Con 147) (Con 168) (Branch T (Dloc 047385))                050778 !
+* 050742 Print_ret "The cyclops is sleeping like a baby, albeit a very ugly one."050777
   050777 Je [Var (Global 120),Con 19,Con 70,Con 136] (Branch T (Dloc 050790))050784 !
 * 050778 Inc (Con 136)                                                  050780
   050780 Get_next_prop (Con 70) (Con 136) (Global 184)                  050784
@@ -5754,7 +5450,6 @@ Found 8590 operations; 1985 overlapped
   050830 Jl (Var (Local 1)) (Con 0) (Branch F (Dloc 050840))            050834 !
 * 050833 Or (Var (Global 37)) (Con 0) (Local 1)                         050837 !
 * 050834 Sub (Con 0) (Var (Local 1)) (Global 35)                        050838 !
-* 050836 Je [Con 51,Con 171] (Branch F (Dloc 047556))                   050841 !
   050837 Get_next_prop (Con 171) (Var (Global 35)) (Global 29)          050841 !
   050838 Ret (Var (Global 35))                                          050840 !
 * 050839 Get_next_prop (Con 45) (Var (Global 35)) (Local 1)             050843 !
@@ -5806,16 +5501,10 @@ Found 8590 operations; 1985 overlapped
   051314 Inc (Con 136)                                                  051316
   051316 Test_attr (Con 19) (Var (Global 111)) (Branch F (Dloc 051428)) 051321
   051321 Call (Floc 021618) [Con 25759,Con -1] Sp                       051330
-* 051330 Storew (Var Sp) (Con 0) (Con 1)                                051335 !
-* 051334 Je [Con 65,Con 136] (Branch F (Dloc 045816))                   051339 !
+* 051330 Storew (Var Sp) (Con 0) (Con 1)                                051335
   051335 Je [Var (Global 120),Con 42] (Branch F (Dloc 051384))          051339
   051339 Print_ret "\"Do you think I'm as stupid as my father was?\", he says, dodging."051384
-* 051384 Print "The cyclops shrugs but otherwise ignores your pitiful attempt."051419 !
-* 051402 Add (Var (Global 77)) (Var (Global 72)) Sp                     051406
-* 051406 Dec_chk (Con 85) (Var (Global 201)) (Branch F (Dloc 049739))   051411
-  051411 Dec_chk (Var (Local 6)) (Con 103) (Branch F (Dloc 045856))     051416
-  051416 Pop                                                            051417
-  051417 Dec (Con 69)                                                   051419
+* 051384 Print "The cyclops shrugs but otherwise ignores your pitiful attempt."051419
   051419 New_line                                                       051420
   051420 Je [Var (Global 120),Con 127] (Branch F Dtrue)                 051424
   051424 Insert_obj (Var (Global 118)) (Var (Global 0))                 051427 !
@@ -5879,8 +5568,6 @@ Found 8590 operations; 1985 overlapped
   051745 Jz (Var (Global 35)) (Branch F (Dloc 051886))                  051749 !
 * 051748 Ret (Con -19700)                                               051751 !
   051749 Print_ret "A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people."051886 !
-* 051877 Insert_obj (Con 65) (Var (Global 72))                          051880
-  051880 Jl (Con 170) (Con 82) (Branch T (Dloc 048211))                 051885 !
 * 051881 Print_obj (Var (Global 66))                                    051883 !
 * 051882 Get_prop_addr (Var (Global 161)) (Con 168) (Global 162)        051886 !
   051883 Rfalse                                                         051884
@@ -5893,8 +5580,7 @@ Found 8590 operations; 1985 overlapped
 * 051982 Ret_popped                                                     051983
   052049 Je [Var (Local 1),Con 2] (Branch F Dfalse)                     052053
 * 052053 Jz (Var (Global 35)) (Branch T Dtrue)                          052056
-* 052056 Call (Floc 021638) [Con 25759] Sp                              052063 !
-  052058 Test_attr (Con 67) (Var (Global 84)) (Branch T (Dloc 059997))  052063
+* 052056 Call (Floc 021638) [Con 25759] Sp                              052063
 * 052063 Storew (Var Sp) (Con 0) (Con 1)                                052068
   052068 Rtrue                                                          052069
 * 052070 Jl (Con 0) (Con 0) (Branch F Dfalse)                           052075
@@ -5911,8 +5597,7 @@ Found 8590 operations; 1985 overlapped
   052273 Je [Var (Local 1),Con 6] (Branch F (Dloc 052412))              052278
   052278 Jz (Var (Global 39)) (Branch T (Dloc 052412))                  052282
   052282 Jz (Var (Global 144)) (Branch F (Dloc 052412))                 052286
-  052286 Print "It is unbearably loud here, with an ear-splitting roar seeming to come from all around you. There is a pounding in your head which won't stop. With a tremendous effort, you scramble out of the room."052397 !
-  052394 Inc_chk (Con 200) (Con 165) (Branch T (Dloc 051304))           052399 !
+  052286 Print "It is unbearably loud here, with an ear-splitting roar seeming to come from all around you. There is a pounding in your head which won't stop. With a tremendous effort, you scramble out of the room."052397
 * 052397 New_line                                                       052398
   052398 New_line                                                       052399
   052399 Call (Floc 020076) [Var (Global 38)] Sp                        052405
@@ -5977,8 +5662,7 @@ Found 8590 operations; 1985 overlapped
   052660 Je [Var (Local 2),Con 16383] (Branch F (Dloc 052700))          052666
   052666 Store (Con 49) (Con 1)                                         052669
   052669 Clear_attr (Con 139) (Con 9)                                   052672
-  052672 Print "The acoustics of the room change subtly."               052697 !
-* 052693 Test (Var (Global 181)) (Con 200) (Branch T (Dloc 045971))     052698 !
+  052672 Print "The acoustics of the room change subtly."               052697
   052697 New_line                                                       052698
   052698 New_line                                                       052699
   052699 Rtrue                                                          052700
@@ -5986,9 +5670,6 @@ Found 8590 operations; 1985 overlapped
 * 052705 Jump 052474                                                    052708
 * 052711 Je [Var (Local 1),Con 3] (Branch F Dfalse)                     052715
 * 052715 Print "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down."052786 !
-* 052761 Get_sibling (Con 6932) (Global 91) (Branch F (Dloc 048014))    052767
-  052767 Mod (Var (Global 84)) (Con 44) (Local 12)                      052771
-  052771 Ret_popped                                                     052772
 * 052781 And (Con 83) (Con 147) (Global 134)                            052785
 * 052785 Inc_chk (Var (Global 144)) (Con 55) (Branch T (Dloc 052840))   052789 !
   052786 Jz (Var (Global 39)) (Branch T (Dloc 052840))                  052789
@@ -5997,8 +5678,7 @@ Found 8590 operations; 1985 overlapped
 * 052837 Jump 052875                                                    052840 !
 * 052839 Inc_chk (Con 160) (Var (Global 39)) (Branch F (Dloc 052848))   052843 !
   052840 Jz (Var (Global 39)) (Branch F (Dloc 052848))                  052843
-  052843 Jz (Var (Global 144)) (Branch T (Dloc 052848))                 052846 !
-* 052844 Jz (Var (Global 180)) (Branch T (Dloc 051742))                 052848 !
+  052843 Jz (Var (Global 144)) (Branch T (Dloc 052848))                 052846
   052846 New_line                                                       052847
   052847 Rtrue                                                          052848
   052848 Print " You can hear the sound of flowing water from below."   052875 !
@@ -6050,8 +5730,6 @@ Found 8590 operations; 1985 overlapped
 * 053295 Random (Con 100) Sp                                            053299
 * 053299 Jg (Con 30) (Var Sp) (Branch F (Dloc 053358))                  053303
   053303 Print "The holder of the large bag just left, looking disgusted. Fortunately, he took nothing."053348 !
-  053336 Or (Con 25) (Var (Global 66)) (Global 128)                     053340
-  053340 Jl (Con 116) (Con 101) (Branch T (Dloc 048812))                053345
 * 053345 Inc (Con -14171)                                               053348 !
 * 053347 Inc (Var (Global 171))                                         053349 !
   053348 New_line                                                       053349
@@ -6101,8 +5779,7 @@ Found 8590 operations; 1985 overlapped
   053692 Set_attr (Con 114) (Con 7)                                     053695
   053695 Store (Con 1) (Con 0)                                          053698
 * 053698 Rtrue                                                          053699
-* 053699 Print_ret "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled."053774 !
-  053770 Inc_chk (Var (Global 57)) (Con 150) (Branch F (Dloc 053777))   053774
+* 053699 Print_ret "A \"lean and hungry\" gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled."053774
   053774 Jz (Var (Local 1)) (Branch T Dfalse)                           053777
   053777 Random (Con 100) Sp                                            053781
 * 053781 Jg (Con 30) (Var Sp) (Branch F Dfalse)                         053785
@@ -6171,12 +5848,10 @@ Found 8590 operations; 1985 overlapped
   054078 Test_attr (Var (Local 2)) (Con 17) (Branch F (Dloc 054177))    054083
 * 054083 Test_attr (Var (Local 2)) (Con 7) (Branch T (Dloc 054177))     054088
   054088 Random (Con 100) Sp                                            054092
-* 054092 Jg (Con 40) (Var Sp) (Branch F (Dloc 054177))                  054097 !
-  054093 Or (Con 0) (Var Sp) (Global 66)                                054097
+* 054092 Jg (Con 40) (Var Sp) (Branch F (Dloc 054177))                  054097
   054097 Print "You hear, off in the distance, someone saying \"My, I wonder what this fine "054144
 * 054144 Print_obj (Var (Local 2))                                      054146
-  054146 Print " is doing here.\""                                      054157 !
-* 054153 Test (Con 5) (Con 200) (Branch T (Dloc 052551))                054158 !
+  054146 Print " is doing here.\""                                      054157
   054157 New_line                                                       054158
   054158 Call (Floc 020034) [Con 60] Sp                                 054164
 * 054164 Jz (Var Sp) (Branch T Dtrue)                                   054167
@@ -6230,30 +5905,16 @@ Found 8590 operations; 1985 overlapped
 * 054578 Storew (Var Sp) (Con 0) (Con 1)                                054583
   054583 Call (Floc 066364) [] Sp                                       054588
 * 054588 Put_prop (Con 114) (Con 11) (Var (Global 29))                  054593
-  054593 Print "Your proposed victim suddenly recovers consciousness."  054628 !
-  054623 Mod (Var (Global 61)) (Con 88) (Global 208)                    054627 !
-  054624 Store (Var (Global 72)) (Con 224)                              054627
-  054627 Print "iui"                                                    054630 !
+  054593 Print "Your proposed victim suddenly recovers consciousness."  054628
   054628 New_line                                                       054629
-  054629 Insert_obj (Var (Global 118)) (Con 114)                        054632 !
-  054630 Dec (Con 29265)                                                054633 !
-  054632 Get_prop (Var (Global 118)) (Con 12) Sp                        054636 !
-  054633 Dec (Con 3072)                                                 054636
+  054629 Insert_obj (Var (Global 118)) (Con 114)                        054632
+  054632 Get_prop (Var (Global 118)) (Con 12) Sp                        054636
 * 054636 Jg (Var Sp) (Con 0) (Branch F (Dloc 054708))                   054641
   054641 Store (Con 46) (Con 1)                                         054644
-  054644 Print "The thief is taken aback by your unexpected generosity, but accepts the "054685 !
-* 054668 Print_obj (Con 19799)                                          054671 !
-* 054670 Div (Var (Global 67)) (Con 14) (Global 87)                     054674 !
-  054671 Get_next_prop (Var (Local 14)) (Con 103) (Global 177)          054675 !
-* 054672 Insert_obj (Con 103) (Con 193)                                 054675 !
-  054674 Je [Con 18969,Con 2090] (Branch T (Dloc 052984))               054682 !
-  054675 Clear_attr (Con 74) (Con 25)                                   054678
-  054678 Or (Con 42) (Con 185) (Global 80)                              054682
-  054682 Je [Con 128,Con 165] (Branch T (Dloc 049187))                  054687 !
+  054644 Print "The thief is taken aback by your unexpected generosity, but accepts the "054685
 * 054685 Print_obj (Var (Global 118))                                   054687
   054687 Print_ret " and stops to admire its beauty."                   054708
-  054708 Print "The thief places the "                                  054719 !
-  054716 Je [Con 128,Con 165] (Branch T (Dloc 049221))                  054721 !
+  054708 Print "The thief places the "                                  054719
 * 054719 Print_obj (Var (Global 118))                                   054721
   054721 Print_ret " in his bag and thanks you politely."               054742
   054742 Je [Var (Global 120),Con 93] (Branch F (Dloc 054771))          054746
@@ -6295,8 +5956,7 @@ Found 8590 operations; 1985 overlapped
 * 055121 Store (Con 2) (Con 1)                                          055124
 * 055124 Print "As the thief dies, the power of his magic decreases, and his treasures reappear:"055171
   055171 New_line                                                       055172
-* 055172 Print "  A "                                                   055177 !
-* 055174 Jg (Con 148) (Con 165) (Branch T (Dloc 049548))                055179 !
+* 055172 Print "  A "                                                   055177
   055177 Print_obj (Var (Local 3))                                      055179
   055179 Get_child (Var (Local 3)) Sp (Branch F (Dloc 055203))          055183
   055183 Call (Floc 036946) [Var (Local 3)] Sp                          055189 !
@@ -6350,12 +6010,6 @@ Found 8590 operations; 1985 overlapped
   055430 Print_ret "Sadly for you, the robber collapsed on top of the bag. Trying to take it would wake him."055483 !
 * 055446 Or (Con 82) (Con 49) (Global 10)                               055450
   055450 Ret_popped                                                     055451
-* 055463 Get_next_prop (Con 55) (Con 121) (Global 195)                  055467
-  055467 Loadb (Con 1) (Var (Global 31)) (Global 22)                    055471
-* 055471 Je [Var (Global 48),Con 15] (Branch F (Dloc 047841))           055476
-  055476 Dec (Con 16704)                                                055479
-  055479 Sub (Con 210) (Var (Global 134)) (Global 53)                   055483 !
-  055481 Dec (Con 69)                                                   055483
   055483 Print_ret "The bag will be taken over his dead body."          055508
   055508 Je [Var (Global 120),Con 18] (Branch F (Dloc 055531))          055512
   055512 Je [Var (Global 119),Con 115] (Branch F (Dloc 055531))         055516
@@ -6411,8 +6065,7 @@ Found 8590 operations; 1985 overlapped
 * 055903 Get_child (Var (Global 0)) (Local 1) (Branch T (Dloc 055907))  055907
   055907 Jz (Var (Local 1)) (Branch T (Dloc 055961))                    055910
   055910 Get_sibling (Var (Local 1)) Sp (Branch F (Dloc 055961))        055914
-* 055914 Print "The thief gestures mysteriously, and the treasures in the room suddenly vanish."055959 !
-  055957 Dec (Con 69)                                                   055959
+* 055914 Print "The thief gestures mysteriously, and the treasures in the room suddenly vanish."055959
   055959 New_line                                                       055960
   055960 New_line                                                       055961
   055961 Jz (Var (Local 1)) (Branch T Dtrue)                            055964
@@ -6425,10 +6078,8 @@ Found 8590 operations; 1985 overlapped
   055987 Print_ret "The door cannot be opened."                         056000
   056000 Je [Var (Global 120),Con 28] (Branch F (Dloc 056017))          056004
   056004 Print_ret "You cannot burn this door."                         056017 !
-* 056011 And (Con 233) (Con 82) (Global 135)                            056015 !
-* 056014 Print_addr (Con 150)                                           056016 !
-  056015 Dec (Con 69)                                                   056017 !
-  056016 Inc_chk (Var (Global 49)) (Con 136) (Branch F (Dloc 050472))   056021 !
+* 056011 And (Con 233) (Con 82) (Global 135)                            056015
+  056015 Dec (Con 69)                                                   056017
   056017 Je [Var (Global 120),Con 42] (Branch F (Dloc 056040))          056021
   056021 Print_ret "You can't seem to damage the door."                 056040 !
 * 056031 Jin (Var (Global 33)) (Con 64) (Branch F (Dloc 057067))        056036
@@ -6474,7 +6125,6 @@ Found 8590 operations; 1985 overlapped
   056483 Je [Var (Global 120),Con 14] (Branch F (Dloc 056523))          056487
   056487 Test_attr (Con 164) (Con 18) (Branch F (Dloc 056510))          056491
   056491 Print_ret "A burned-out lamp won't light."                     056510 !
-  056503 Jg (Con 2) (Con 46) (Branch F (Dloc 052851))                   056508
 * 056508 Dec (Con 69)                                                   056510
 * 056510 Call (Floc 021638) [Con 28501] Sp                              056517
 * 056517 Storew (Var Sp) (Con 0) (Con 1)                                056522 !
@@ -6494,16 +6144,10 @@ Found 8590 operations; 1985 overlapped
   056572 Test_attr (Con 164) (Con 18) (Branch F (Dloc 056590))          056576
   056576 Print "has burned out."                                        056587
   056587 Jump 056613                                                    056590
-  056590 Test_attr (Con 164) (Con 20) (Branch F (Dloc 056602))          056594 !
-* 056593 Test_attr (Var (Global 162)) (Con 4) (Branch T (Dloc 053728))  056598 !
-  056594 Print "is on."                                                 056599 !
-  056598 Print "won't  "                                                056601 !
-  056599 Jump 056613                                                    056602 !
-* 056601 Store (Con 178) (Con 4)                                        056604 !
+  056590 Test_attr (Con 164) (Con 20) (Branch F (Dloc 056602))          056594
+  056594 Print "is on."                                                 056599
+  056599 Jump 056613                                                    056602
   056602 Print "is turned off."                                         056613 !
-* 056604 Pop                                                            056605
-  056605 Test_attr (Var (Global 227)) (Var (Global 25)) (Branch F (Dloc 048497))056610
-  056610 Set_attr (Var (Global 134)) (Var (Global 53))                  056613 !
 * 056611 Dec (Con 69)                                                   056613 !
 * 056612 Inc_chk (Var (Global 171)) (Con 176) (Branch F Dfalse)         056617 !
   056613 New_line                                                       056614
@@ -6548,12 +6192,9 @@ Found 8590 operations; 1985 overlapped
 * 056831 Je [Con 92,Con 56] (Branch T (Dloc 062599))                    056836 !
 * 056834 Dec (Con 133)                                                  056836
   056836 New_line                                                       056837
-  056837 Call (Floc 021618) [Con 28486,Con 0] Sp                        056845 !
-* 056842 Jin (Var Sp) (Con 0) (Branch T (Dloc 052942))                  056847 !
+  056837 Call (Floc 021618) [Con 28486,Con 0] Sp                        056845
 * 056845 Rtrue                                                          056846
-  056846 Je [Var (Global 120),Con 43,Con 37] (Branch F (Dloc 056896))   056852 !
-  056847 Print_addr (Con 136)                                           056849
-  056849 Set_attr (Con 37) (Var (Global 94))                            056852
+  056846 Je [Var (Global 120),Con 43,Con 37] (Branch F (Dloc 056896))   056852
   056852 Print "You have "                                              056857
   056857 Sub (Var (Global 26)) (Con 1) (Local 1)                        056861
   056861 Jg (Var (Local 1)) (Con 0) (Branch T (Dloc 056871))            056865
@@ -6583,17 +6224,12 @@ Found 8590 operations; 1985 overlapped
   056995 Call (Floc 027746) [Var (Global 0)] (Global 66)                057001
   057001 Rtrue                                                          057002
 * 057007 Load (Con 43) (Local 2)                                        057010
-  057010 Loadw (Var (Local 2)) (Con 0) (Local 1)                        057014 !
-* 057013 Je [Con 224,Con 11] (Branch F (Dloc 051441))                   057018 !
-* 057014 Call (Floc 021618) [Con 28501,Var (Local 1)] Sp                057022 !
-  057018 Loadw (Var (Global 69)) (Var (Local 1)) Sp                     057022
+  057010 Loadw (Var (Local 2)) (Con 0) (Local 1)                        057014
+* 057014 Call (Floc 021618) [Con 28501,Var (Local 1)] Sp                057022
 * 057022 Storew (Var Sp) (Con 0) (Con 1)                                057027
   057027 Call (Floc 057090) [Con 164,Var (Local 2),Var (Local 1)] Sp    057035
-* 057035 Jz (Var (Local 1)) (Branch T Dfalse)                           057038 !
-* 057036 Je [Con 192,Con 84] (Branch F (Dloc 057555))                   057041 !
-* 057038 Add (Var (Local 2)) (Con 4) (Global 27)                        057042 !
-* 057039 Jl (Con 4) (Con 43) (Branch T (Dloc 051709))                   057044 !
-  057041 Set_attr (Con 171) (Var (Global 27))                           057044 !
+* 057035 Jz (Var (Local 1)) (Branch T Dfalse)                           057038
+* 057038 Add (Var (Local 2)) (Con 4) (Global 27)                        057042
   057042 Ret (Var (Global 27))                                          057044
 * 057044 Jl (Con 0) (Con 0) (Branch F Dfalse)                           057049
 * 057049 Load (Con 41) (Local 2)                                        057052
@@ -6665,11 +6301,6 @@ Found 8590 operations; 1985 overlapped
   057362 Test_attr (Con 147) (Con 20) (Branch F (Dloc 057397))          057366
   057366 Print_ret "You realize, just in time, that the candles are already lighted."057397
   057397 Print "The heat from the torch is so intense that the candles are vaporized."057432 !
-* 057403 Get_next_prop (Con 4) (Var (Global 9)) (Global 66)             057407
-* 057407 Push (Con 279)                                                 057411
-  057411 Add (Con 1) (Con 211) (Global 85)                              057415
-* 057415 Get_next_prop (Var (Global 81)) (Con 64) (Local 12)            057419
-  057419 Call (Floc 001264) [Con 11884,Con 213,Con 21230] (Global 109)  057429 !
 * 057426 Get_prop_addr (Var (Global 222)) (Con 125) (Global 57)         057430 !
 * 057429 And (Var (Global 134)) (Con 69) (Global 171)                   057433 !
   057430 Dec (Con 69)                                                   057432
@@ -6684,20 +6315,11 @@ Found 8590 operations; 1985 overlapped
 * 057544 Storew (Var Sp) (Con 0) (Con 0)                                057549
 * 057549 Test_attr (Con 147) (Con 20) (Branch F (Dloc 057603))          057553 !
 * 057550 Get_parent (Con 20) (Global 100)                               057553
-  057553 Print "The flame is extinguished."                             057570 !
-  057555 Set_attr (Con 68) (Var (Global 194))                           057558
-  057558 Or (Con 1) (Var (Global 5)) (Global 77)                        057562
-* 057562 Inc_chk (Var (Global 195)) (Var (Global 35)) (Branch F (Dloc 057578))057566
-  057566 Je [Var (Global 154),Var (Global 148)] (Branch T (Dloc 053997))057571 !
-* 057570 Clear_attr (Con 147) (Con 20)                                  057573 !
-  057571 Get_parent (Con 20) (Global 208)                               057574 !
-  057573 Call (Floc 027746) [Var (Global 0)] (Global 66)                057579 !
-  057574 Loadw (Con 54) (Var (Global 33)) (Global 0)                    057578
-  057578 Get_prop_addr (Var (Global 144)) (Con 82) (Global 69)          057582 !
+  057553 Print "The flame is extinguished."                             057570
+* 057570 Clear_attr (Con 147) (Con 20)                                  057573
+  057573 Call (Floc 027746) [Var (Global 0)] (Global 66)                057579
   057579 Jz (Var (Global 66)) (Branch F (Dloc 057601))                  057582
-  057582 Print " It's really dark in here...."                          057601 !
-* 057593 Jin (Con 225) (Con 96) (Branch T (Dloc 054034))                057598
-  057598 Inc_chk (Var (Global 184)) (Con 178) (Branch T (Dloc 056497))  057603 !
+  057582 Print " It's really dark in here...."                          057601
   057601 New_line                                                       057602
   057602 Rtrue                                                          057603
   057603 Print_ret "The candles are not lighted."                       057616
@@ -6721,9 +6343,6 @@ Found 8590 operations; 1985 overlapped
 * 057705 Storew (Var Sp) (Con 0) (Con 0)                                057710
 * 057710 Clear_attr (Con 147) (Con 20)                                  057713
   057713 Print "A gust of wind blows out your candles!"                 057736 !
-* 057719 Test_attr (Con 113) (Var (Global 195)) (Branch F (Dloc 050561))057724
-  057724 Jin (Var (Global 140)) (Con 96) (Branch F (Dloc 058543))       057729
-  057729 Dec_chk (Con 32) (Var (Global 195)) (Branch F (Dloc 051118))   057734
 * 057734 Call (Fvar (Global 171)) [] (Global 208)                       057738 !
 * 057735 Nop                                                            057736
   057736 New_line                                                       057737
@@ -6768,16 +6387,14 @@ Found 8590 operations; 1985 overlapped
   058000 New_line                                                       058001
 * 058001 Jump 058078                                                    058004
   058004 Print "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here."058077 !
-* 058072 Div (Con 7) (Var (Local 5)) (Global 184)                       058076 !
-* 058073 Test (Con 5) (Con 200) (Branch T (Dloc 051351))                058078 !
+* 058072 Div (Con 7) (Var (Local 5)) (Global 184)                       058076
   058076 Inc (Var (Global 171))                                         058078 !
   058077 New_line                                                       058078
   058078 Call (Floc 067174) [Con -24905] Sp                             058085
 * 058085 Ret_popped                                                     058086
 * 058089 Get_parent (Con 189) Sp                                        058092
 * 058092 Je [Var Sp,Var (Global 111),Var (Global 0)] (Branch F (Dloc 058162))058099
-  058099 Print_ret "In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose."058162 !
-* 058157 Jl (Var (Global 62)) (Con 152) (Branch T (Dloc 052194))        058162
+  058099 Print_ret "In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose."058162
   058162 Print_ret "A large vampire bat, hanging from the ceiling, swoops down at you!"058203
 * 058207 Je [Var (Local 1),Con 3] (Branch F (Dloc 058242))              058211
 * 058211 Print_ret "You are in a small room which has doors only to the east and south."058242
@@ -6790,14 +6407,11 @@ Found 8590 operations; 1985 overlapped
 * 058268 Ret_popped                                                     058269
 * 058273 Je [Var (Local 1),Con 3] (Branch F Dfalse)                     058277
 * 058277 Print "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled \"START\". The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is "058484
-  058484 Test_attr (Con 158) (Con 11) (Branch F (Dloc 058496))          058488 !
-  058486 Set_attr (Con 74) (Con 178)                                    058489 !
+  058484 Test_attr (Con 158) (Con 11) (Branch F (Dloc 058496))          058488
   058488 Print "open."                                                  058493 !
 * 058489 Get_prop_addr (Var (Global 154)) (Con 204) (Global 162)        058493
-  058493 Jump 058501                                                    058496 !
-* 058495 Test (Con 178) (Con 11) (Branch T (Dloc 051786))               058500 !
-  058496 Print "closed."                                                058501 !
-  058500 Inc (Var (Global 171))                                         058502 !
+  058493 Jump 058501                                                    058496
+  058496 Print "closed."                                                058501
   058501 New_line                                                       058502
   058502 Rtrue                                                          058503
 * 058505 Je [Var (Global 120),Con 93] (Branch F (Dloc 058524))          058509
@@ -6843,7 +6457,6 @@ Found 8590 operations; 1985 overlapped
   058679 Je [Var (Global 119),Con 123] (Branch F (Dloc 058842))         058684
   058684 Test_attr (Con 158) (Con 11) (Branch F (Dloc 058715))          058688
   058688 Print_ret "The machine doesn't seem to want to do anything."   058715 !
-* 058698 Test_attr (Var (Global 56)) (Con 1) (Branch F (Dloc 054483))   058703
 * 058703 Loadw (Var (Global 16)) (Con 5) (Global 89)                    058707
   058707 Loadb (Var (Local 6)) (Con 79) (Global 201)                    058711 !
 * 058709 Loadw (Var (Global 201)) (Con 53) (Global 195)                 058713 !
@@ -6864,9 +6477,7 @@ Found 8590 operations; 1985 overlapped
   058838 Insert_obj (Con 146) (Con 158)                                 058841
   058841 Rtrue                                                          058842
   058842 Jz (Var (Global 119)) (Branch F (Dloc 058864))                 058845
-  058845 Print_ret "You can't turn it with your hands..."               058864 !
-* 058855 Dec_chk (Con 52) (Var (Global 195)) (Branch F (Dloc 052463))   058860
-  058860 Or (Var (Global 162)) (Con 150) (Global 53)                    058864
+  058845 Print_ret "You can't turn it with your hands..."               058864
   058864 Print "It seems that a "                                       058871 !
 * 058867 Mod (Con 103) (Con 128) (Global 176)                           058871
   058871 Print_obj (Var (Global 119))                                   058873
@@ -6915,9 +6526,7 @@ Found 8590 operations; 1985 overlapped
 * 059134 New_line                                                       059135
   059135 Je [Var (Global 0),Con 136] (Branch F (Dloc 059177))           059139
   059139 Jin (Con 137) (Con 136) (Branch F (Dloc 059177))               059143
-  059143 Print "A shimmering pot of gold appears at the end of the rainbow."059176 !
-* 059166 Dec_chk (Con 1) (Var (Global 24)) (Branch F (Dloc 051069))     059171
-  059171 Insert_obj (Con 244) (Con -3918)                               059176
+  059143 Print "A shimmering pot of gold appears at the end of the rainbow."059176
   059176 New_line                                                       059177
   059177 Store (Con 158) (Con 1)                                        059180
   059180 Ret (Var (Global 142))                                         059182
@@ -6943,9 +6552,7 @@ Found 8590 operations; 1985 overlapped
   059365 Jz (Var (Global 142)) (Branch T (Dloc 059394))                 059368
   059368 Print "A solid rainbow spans the falls."                       059391
   059391 Jump 059429                                                    059394
-* 059394 Print "A beautiful rainbow can be seen over the falls and to the west."059429 !
-* 059421 Dec_chk (Con 193) (Con 44) (Branch F (Dloc 051345))            059426
-  059426 Mod (Var (Global 212)) (Con 178) (Global 171)                  059430 !
+* 059394 Print "A beautiful rainbow can be seen over the falls and to the west."059429
   059429 New_line                                                       059430
 * 059430 Rtrue                                                          059431
 * 059433 Je [Var (Global 120),Con 34,Con 38] (Branch F (Dloc 059518))   059440
@@ -6960,8 +6567,6 @@ Found 8590 operations; 1985 overlapped
   059473 Call (Floc 037558) [Con 29] Sp                                 059479
 * 059479 Ret_popped                                                     059480
   059480 Print_ret "You'll have to say which way..."                    059501 !
-  059492 Je [Con 71,Con 134] (Branch F (Dloc 059550))                   059496
-  059496 Print ".."                                                     059501 !
 * 059500 Inc (Var (Global 163))                                         059502 !
   059501 Print_ret "Can you walk on water vapor?"                       059518 !
   059502 Get_prop (Con 3) (Con 104) (Global 23)                         059506
@@ -6970,11 +6575,8 @@ Found 8590 operations; 1985 overlapped
 * 059514 Get_prop_addr (Var (Global 213)) (Con 212) (Global 149)        059518
   059518 Je [Var (Global 120),Con 81] (Branch F Dfalse)                 059522
   059522 Print_ret "The Frigid River flows under the rainbow."          059547
-* 059549 Je [Var (Global 120),Con 50,Con 18] (Branch F (Dloc 059565))   059555 !
-  059550 Print_addr (Con 136)                                           059552
-  059552 Get_prop_addr (Con 18) (Var (Global 60)) (Global 49)           059556 !
-  059555 Je [Var (Global 118),Con 98] (Branch F (Dloc 059565))          059559 !
-  059556 Dec (Con 25160)                                                059559
+* 059549 Je [Var (Global 120),Con 50,Con 18] (Branch F (Dloc 059565))   059555
+  059555 Je [Var (Global 118),Con 98] (Branch F (Dloc 059565))          059559
   059559 Call (Floc 059620) [] Sp                                       059564
 * 059564 Ret_popped                                                     059565
   059565 Je [Var (Global 120),Con 59,Con 23] (Branch F (Dloc 059598))   059571
@@ -6996,8 +6598,7 @@ Found 8590 operations; 1985 overlapped
 * 059659 Je [Var (Global 120),Con 18] (Branch F (Dloc 059785))          059664
   059664 Je [Var (Global 119),Con 131] (Branch F Dfalse)                059668
   059668 Je [Var (Global 118),Con 5] (Branch F (Dloc 059680))           059672
-  059672 Call (Floc 067174) [Con -24846] Sp                             059679 !
-  059676 Load (Con 242) Sp                                              059679
+  059672 Call (Floc 067174) [Con -24846] Sp                             059679
 * 059679 Ret_popped                                                     059680
   059680 Je [Var (Global 118),Con 156] (Branch F (Dloc 059711))         059684 !
 * 059681 Dec (Con -25507)                                               059684
@@ -7009,12 +6610,9 @@ Found 8590 operations; 1985 overlapped
   059715 Call (Floc 030906) [Var (Global 118)] Sp                       059721
 * 059721 Print "The "                                                   059724
   059724 Print_obj (Var (Global 118))                                   059726
-  059726 Print_ret " floats for a moment, then sinks."                  059749 !
-* 059748 Inc_chk (Var (Global 208)) (Con 47) (Branch F (Dloc 058820))   059753 !
-  059749 Call (Floc 030906) [Var (Global 118)] Sp                       059755 !
-  059753 Dec (Con 178)                                                  059756 !
-* 059755 Print "The "                                                   059758 !
-  059756 Get_prop_len (Con 9642) (Global 118)                           059760 !
+  059726 Print_ret " floats for a moment, then sinks."                  059749
+  059749 Call (Floc 030906) [Var (Global 118)] Sp                       059755
+* 059755 Print "The "                                                   059758
   059758 Print_obj (Var (Global 118))                                   059760
   059760 Print_ret " splashes into the water and is gone forever."      059785
   059785 Je [Var (Global 120),Con 34,Con 69] (Branch F Dfalse)          059791
@@ -7076,8 +6674,7 @@ Found 8590 operations; 1985 overlapped
   060123 Call (Floc 037934) [Var (Global 21)] (Local 2)                 060129
   060129 Je [Var (Local 2),Con 1] (Branch F (Dloc 060154))              060133
 * 060133 Call (Floc 037960) [Var (Global 0),Var (Global 23)] Sp         060140 !
-* 060134 Set_attr (Con 74) (Var (Global 20))                            060137 !
-* 060135 Test_attr (Var (Global 20)) (Con 16) (Branch F (Dloc 053738))  060140 !
+* 060134 Set_attr (Con 74) (Var (Global 20))                            060137
   060137 Loadb (Con 39) (Con 0) (Global 208)                            060141 !
 * 060140 Call (Floc 021618) [Con 29937,Var Sp] Sp                       060148 !
   060141 Set_attr (Con 42) (Con 57)                                     060144
@@ -7153,11 +6750,7 @@ Found 8590 operations; 1985 overlapped
 * 060647 Ret_popped                                                     060648
 * 060649 Je [Var (Global 120),Con 59,Con 23] (Branch F Dfalse)          060655
   060655 Jin (Con 141) (Var (Global 0)) (Branch T (Dloc 060684))        060659
-  060659 Print_ret "The boat must be on the ground to be inflated."     060684 !
-* 060669 Jl (Con 72) (Var (Global 16)) (Branch F (Dloc 064097))         060674
-  060674 Clear_attr (Con 73) (Var (Global 42))                          060677
-  060677 Set_attr (Var (Global 52)) (Var (Global 201))                  060680
-  060680 And (Con 37) (Var (Global 184)) (Global 149)                   060684
+  060659 Print_ret "The boat must be on the ground to be inflated."     060684
   060684 Je [Var (Global 119),Con 173] (Branch F (Dloc 060762))         060689
   060689 Print "The boat inflates and appears seaworthy."               060712
   060712 New_line                                                       060713
@@ -7241,11 +6834,9 @@ Found 8590 operations; 1985 overlapped
   061126 Print "The nest falls to the ground, and the egg spills out of it, seriously damaged."061173
   061173 New_line                                                       061174
   061174 Call (Floc 030906) [Con 87] Sp                                 061180
-* 061180 Insert_obj (Con 86) (Con 75)                                   061183 !
-  061182 Set_attr (Var (Global 160)) (Con 65)                           061185 !
+* 061180 Insert_obj (Con 86) (Con 75)                                   061183
   061183 Rtrue                                                          061184
-  061184 Je [Var (Global 118),Con 87] (Branch F (Dloc 061235))          061188 !
-  061185 Dec (Con 22385)                                                061188
+  061184 Je [Var (Global 118),Con 87] (Branch F (Dloc 061235))          061188
   061188 Print "The egg falls to the ground and springs open, seriously damaged."061225 !
 * 061198 Je [Var Sp,Var (Global 91)] (Branch F (Dloc 062441))           061203 !
 * 061200 Set_attr (Var (Local 4)) (Var (Global 200))                    061203
@@ -7302,8 +6893,6 @@ Found 8590 operations; 1985 overlapped
 * 061491 Print_obj (Var (Global 119))                                   061493
 * 061493 Print_ret " isn't original too..."                             061512 !
 * 061497 Ret_popped                                                     061498
-  061507 Inc (Con 18610)                                                061510
-  061510 Dec (Con 69)                                                   061512
   061512 Print "The concept of using a "                                061527
   061527 Print_obj (Var (Global 119))                                   061529
   061529 Print " is certainly original."                                061546
@@ -7400,9 +6989,7 @@ Found 8590 operations; 1985 overlapped
   062389 Print_ret "The rope is already tied to it."                    062406
   062406 Print "The rope drops over the side and comes within ten feet of the floor."062445 !
 * 062414 Ret_popped                                                     062415
-  062441 Get_prop_addr (Var (Global 135)) (Con 150) (Global 53)         062445 !
-* 062442 Print_addr (Con 150)                                           062444
-  062444 Inc_chk (Var (Global 171)) (Con 13) (Branch T (Dloc 055024))   062449 !
+  062441 Get_prop_addr (Var (Global 135)) (Con 150) (Global 53)         062445
   062445 New_line                                                       062446
   062446 Store (Con 163) (Con 1)                                        062449 !
 * 062448 Je [Con 11,Con 129] (Branch F (Dloc 066182))                   062453 !
@@ -7473,10 +7060,7 @@ Found 8590 operations; 1985 overlapped
   062758 Call (Floc 038000) [Con 29] Sp                                 062764
 * 062764 Rtrue                                                          062765
   062765 Print "You tumble down the slide...."                          062786 !
-* 062775 Je [Con 3,Con 17] (Branch F (Dloc 061028))                     062780
-  062780 Mul (Con 69) (Con 72) (Global 162)                             062784 !
-* 062783 Print "."                                                      062786 !
-  062784 Dec (Con 69)                                                   062786
+* 062783 Print "."                                                      062786
   062786 New_line                                                       062787
   062787 Call (Floc 037558) [Con 72] Sp                                 062793
 * 062793 Ret_popped                                                     062794
@@ -7643,12 +7227,9 @@ Found 8590 operations; 1985 overlapped
 * 064008 Jump 063984                                                    064011
 * 064011 Get_prop (Var (Local 4)) (Con 17) Sp                           064015
 * 064015 Call (Fvar Sp) [Con 1] Sp                                      064020
-* 064020 Jz (Var Sp) (Branch T (Dloc 064026))                           064023 !
-* 064022 Inc_chk (Var (Global 239)) (Con -10016) (Branch F (Dloc 058776))064029 !
+* 064020 Jz (Var Sp) (Branch T (Dloc 064026))                           064023
   064023 Jump 063984                                                    064026
-  064026 Call (Floc 064270) [Var (Local 5),Var (Local 6)] (Local 3)     064033 !
-  064029 Print_addr (Con 1286)                                          064032
-  064032 Jg (Con 160) (Con 3) (Branch F (Dloc 064042))                  064036 !
+  064026 Call (Floc 064270) [Var (Local 5),Var (Local 6)] (Local 3)     064033
   064033 Jz (Var (Local 3)) (Branch F (Dloc 064042))                    064036
   064036 Store (Con 3) (Con 0)                                          064039
 * 064039 Jump 064058                                                    064042
@@ -7664,10 +7245,8 @@ Found 8590 operations; 1985 overlapped
 * 064085 Loadw (Var (Local 1)) (Con 0) (Local 4)                        064089
 * 064089 Inc_chk (Con 5) (Var (Local 4)) (Branch F (Dloc 064096))       064093
   064093 Jump 064123                                                    064096
-  064096 Loadw (Var (Local 1)) (Var (Local 5)) (Local 6)                064100 !
-* 064097 Je [Con 5,Con 6] (Branch F Dtrue)                              064101 !
-* 064100 Je [Var (Local 6),Con 0] (Branch F (Dloc 064109))              064104 !
-* 064101 Jin (Con 0) (Con 71) (Branch T (Dloc 058475))                  064106 !
+  064096 Loadw (Var (Local 1)) (Var (Local 5)) (Local 6)                064100
+* 064100 Je [Var (Local 6),Con 0] (Branch F (Dloc 064109))              064104
   064104 Print_obj (Var (Local 3))                                      064106
   064106 Jump 064089                                                    064109
 * 064109 Je [Var (Local 6),Con 1] (Branch F (Dloc 064118))              064113
@@ -7758,10 +7337,8 @@ Found 8590 operations; 1985 overlapped
   064432 Jl (Var (Local 6)) (Con -1) (Branch F (Dloc 064446))           064438
   064438 Store (Con 6) (Con -2)                                         064443
   064443 Jump 064453                                                    064446
-  064446 Jg (Var (Local 6)) (Con 1) (Branch F (Dloc 064453))            064450 !
-* 064447 Jin (Con 1) (Con 69) (Branch F (Dloc 067784))                  064452 !
-  064450 Store (Con 6) (Con 2)                                          064453 !
-  064452 Jl (Con 84) (Con 6) (Branch F (Dloc 064967))                   064457 !
+  064446 Jg (Var (Local 6)) (Con 1) (Branch F (Dloc 064453))            064450
+  064450 Store (Con 6) (Con 2)                                          064453
 * 064453 Add (Var (Local 6)) (Con 2) Sp                                 064457
 * 064457 Loadw (Var (Global 8)) (Var Sp) (Local 10)                     064461 !
 * 064460 Test_attr (Con 231) (Con 127) (Branch F (Dloc 066767))         064465 !
@@ -8055,7 +7632,6 @@ Found 8590 operations; 1985 overlapped
 * 065518 Inc (Con 1)                                                    065520
   065520 Put_prop (Var (Global 111)) (Con 7) (Var (Local 1))            065525 !
   065521 Ret (Con 127)                                                  065523
-* 065524 Je [Con 66,Con 1] (Branch F (Dloc 065615))                     065529 !
   065525 Jl (Var (Local 1)) (Con 0) (Branch F (Dloc 065551))            065529
 * 065529 Jl (Var (Global 133)) (Var (Global 134)) (Branch F (Dloc 065537))065533
   065533 Add (Var (Global 133)) (Con 10) (Global 133)                   065537
@@ -8079,10 +7655,8 @@ Found 8590 operations; 1985 overlapped
   065608 Jin (Var (Local 5)) (Var (Global 0)) (Branch F (Dloc 065703))  065613 !
 * 065609 Inc_chk (Con 16) (Con 0) (Branch F (Dloc 065639))              065613
   065613 Test_attr (Var (Local 5)) (Con 7) (Branch T (Dloc 065703))     065618 !
-* 065614 Inc_chk (Con 7) (Con 128) (Branch F (Dloc 065639))             065618 !
-* 065615 Test (Con 128) (Con 87) (Branch F Dtrue)                       065619 !
+* 065614 Inc_chk (Con 7) (Con 128) (Branch F (Dloc 065639))             065618
 * 065618 Je [Var (Local 5),Con 114] (Branch F (Dloc 065631))            065622 !
-  065619 Inc_chk (Con 114) (Con 75) (Branch T (Dloc 057476))            065624 !
 * 065620 Get_prop_addr (Var (Global 59)) (Var (Global 144)) (Global 30) 065624 !
   065622 Jz (Var (Global 30)) (Branch T (Dloc 065631))                  065625 !
   065624 Or (Con 11776) (Con -29441) (Global 202)                       065631 !
@@ -8093,13 +7667,9 @@ Found 8590 operations; 1985 overlapped
   065639 Loadw (Var (Local 4)) (Con 3) (Local 6)                        065643
 * 065643 Jz (Var (Local 6)) (Branch T (Dloc 065668))                    065646
   065646 Random (Con 100) Sp                                            065650
-* 065650 Jg (Var (Local 6)) (Var Sp) (Branch F (Dloc 065668))           065654 !
-* 065653 Loadb (Var (Global 209)) (Con 151) (Local 4)                   065657 !
-  065654 Storew (Var (Local 4)) (Con 3) (Con 0)                         065659 !
-* 065655 Print_addr (Con 4)                                             065657
-* 065657 Jg (Con 0) (Con 224) (Branch F (Dloc 061436))                  065662 !
-* 065659 Call (Floc 065752) [Var (Local 5)] Sp                          065665 !
-  065662 Clear_attr (Var (Local 5)) (Var Sp)                            065665
+* 065650 Jg (Var (Local 6)) (Var Sp) (Branch F (Dloc 065668))           065654
+  065654 Storew (Var (Local 4)) (Con 3) (Con 0)                         065659
+* 065659 Call (Floc 065752) [Var (Local 5)] Sp                          065665
 * 065665 Jump 065591                                                    065668
   065668 Add (Var (Local 6)) (Con 25) Sp                                065672
 * 065672 Storew (Var (Local 4)) (Con 3) (Var Sp)                        065677
@@ -8185,8 +7755,7 @@ Found 8590 operations; 1985 overlapped
   066040 Push (Con 0)                                                   066043
 * 066043 Store (Con 3) (Var Sp)                                         066046
 * 066046 Jz (Var (Local 3)) (Branch T (Dloc 066052))                    066049
-  066049 Get_parent (Con 114) (Local 1)                                 066052 !
-* 066051 Je [Con 65,Con 1] (Branch T (Dloc 065632))                     066056 !
+  066049 Get_parent (Con 114) (Local 1)                                 066052
   066052 Je [Var (Local 1),Con 190] (Branch F (Dloc 066080))            066056
 * 066056 Je [Var (Local 1),Var (Global 0)] (Branch T (Dloc 066080))     066060
 * 066060 Jz (Var (Local 3)) (Branch T (Dloc 066071))                    066063
@@ -8287,14 +7856,9 @@ Found 8590 operations; 1985 overlapped
   066447 Store (Con 163) (Con 0)                                        066450
 * 066450 Je [Var (Local 1),Var (Global 0)] (Branch F Dfalse)            066454
 * 066454 Print "You suddenly notice that the "                          066471 !
-* 066464 Insert_obj (Con 33) (Var (Global 48))                          066467
-  066467 Clear_attr (Con 224) (Con 132)                                 066470 !
   066469 Get_prop_len (Con 1450) (Local 2)                              066473 !
-  066470 Inc_chk (Con 170) (Con 2) (Branch T (Dloc 063148))             066475 !
   066471 Print_obj (Var (Local 2))                                      066473
-  066473 Print_ret " vanished."                                         066482 !
-  066475 Jin (Var (Global 61)) (Var (Global 200)) (Branch F (Dloc 063735))066480
-  066480 Dec (Con 69)                                                   066482
+  066473 Print_ret " vanished."                                         066482
   066482 Store (Con 2) (Var (Local 3))                                  066485
   066485 Jump 066391                                                    066488
 * 066501 Get_child (Var (Local 1)) (Local 5) (Branch T (Dloc 066505))   066505
@@ -8462,8 +8026,6 @@ Found 8590 operations; 1985 overlapped
   067704 Call (Floc 037558) [Con 232] Sp                                067710
 * 067710 Jump 067800                                                    067713
 * 067713 Print "Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything."067792 !
-  067784 Test_attr (Con 254) (Var (Global 85)) (Branch T (Dloc 063256)) 067789
-  067789 Inc (Con -14171)                                               067792 !
 * 067791 Inc (Var (Global 171))                                         067793 !
   067792 New_line                                                       067793
   067793 New_line                                                       067794
@@ -8550,8 +8112,7 @@ Found 8590 operations; 1985 overlapped
 * 068275 Je [Var (Global 120),Con 88,Con 93] (Branch F (Dloc 068294))   068281
 * 068281 Print_ret "The chain is secure."                               068294
   068294 Je [Var (Global 120),Con 84,Con 105] (Branch F (Dloc 068325))  068300
-  068300 Print_ret "Perhaps you should do that to the basket."          068325 !
-* 068316 Call (Floc 049664) [Con -6558,Con 10,Con 228] (Global 162)     068325
+  068300 Print_ret "Perhaps you should do that to the basket."          068325
   068325 Je [Var (Global 120),Con 56] (Branch F Dfalse)                 068329
   068329 Print_ret "The chain secures a basket within the shaft."       068356
 * 068359 Je [Var (Local 1),Con 2] (Branch F Dfalse)                     068363
@@ -8574,7 +8135,6 @@ Found 8590 operations; 1985 overlapped
 * 079413 Ret (Var (Global 90))                                          079415
 * 079909 Mod (Var Sp) (Con 88) (Local 4)                                079913
   079913 Ret_popped                                                     079914
-* 079940 Test_attr (Con 101) (Var (Global 184)) (Branch T (Dloc 073043))079945 !
 * 079943 Inc (Var (Local 12))                                           079945
   079945 Print_ret "asty-looking troll, brandishing a bloody axe, blocks all passages out of the room."079990
 * 080589 Or (Con 121) (Var (Global 1)) (Global 66)                      080593
@@ -8586,7 +8146,6 @@ Found 8590 operations; 1985 overlapped
 * 081889 Ret_popped                                                     081890
 * 081957 Ret_popped                                                     081958
 * 082213 Ret_popped                                                     082214
-* 083596 Jin (Var (Global 140)) (Con 1) (Branch F (Dloc 081377))        083601
 * 083601 Ret_popped                                                     083602
 * 084527 Inc (Var (Local 12))                                           084529
   084529 Rfalse                                                         084530

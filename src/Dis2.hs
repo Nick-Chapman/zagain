@@ -129,7 +129,9 @@ makeAnalysis story (start,stop) = do
   let
     vf0 = \_ -> True
     vf1 = validOpX story vf0
-    vf = vf1
+    vf2 = validOpX story vf1
+    --vf3 = validOpX story vf2
+    vf = vf2
   let
     f_rh :: Addr -> Maybe (RoutineHeader,Addr)
     f_rh a =
