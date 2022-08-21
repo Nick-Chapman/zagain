@@ -1,9 +1,9 @@
 
 -- | Explore the static structure of a strory file
 module Disassemble
-  ( disassemble
+  ( disassemble, seeMemMap
   , dynamicDiscovery, routinesBetween
-  , Routine(..), disRoutine, dumpRoutine
+  , Routine(..), disRoutine
   , branchesOf, isStopping
   ) where
 

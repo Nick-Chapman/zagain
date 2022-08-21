@@ -12,7 +12,7 @@ import RunCode (runCode)
 import Story (loadStory,OOB_Mode(..))
 import System.Environment (getArgs)
 import qualified Console (runAction)
-import qualified Dis2 (dis)
+import qualified Dis2 (disassemble)
 import qualified Interpreter (runEffect)
 import qualified Semantics (smallStep)
 import qualified WalkThrough (runAction)
@@ -115,7 +115,7 @@ run Config{mode,storyFile,iconf=iconf@Conf{wrapSpec},inputs,mayStartConsole,viaC
       pure ()
     Dis2 -> do
       story <- loadStory storyFile
-      Dis2.dis story
+      Dis2.disassemble story
       pure ()
     Compile -> do
       story <- loadStory storyFile

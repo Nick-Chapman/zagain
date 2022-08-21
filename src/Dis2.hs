@@ -1,6 +1,7 @@
 -- | Speculative disassembly based on tracing invalidity
-module Dis2 (dis) where
+module Dis2 (disassemble) where
 
+import Disassemble(seeMemMap)
 import Numbers (Addr,Value)
 import Operation (Operation,RoutineHeader,opLabels)
 import Story (Story(header,size),OOB_Mode(..))
@@ -13,6 +14,12 @@ import qualified Data.Set as Set
 import qualified Data.Map as Map
 import Data.Set (Set)
 import Data.Map (Map)
+
+
+disassemble :: Story -> IO ()
+disassemble story = do
+  seeMemMap story
+  dis story
 
 dis :: Story -> IO ()
 dis story = do
@@ -50,10 +57,10 @@ dis story = do
   let ys = [ x | x@Info{begin} <- os , reach begin ]
 
   let
-    overlaps =
+    overlaps = [False] ++ -- overlap with next
       [ end > next
       | (Info{end},Info{begin=next}) <- (zip ys (tail ys))
-      ] ++ [False]
+      ] -- ++ [False] -- overlap with next
 
   let yos = [ i | i@Info{thing=Thing_Operation{}} <- ys ]
 
@@ -61,9 +68,11 @@ dis story = do
   printf "Found %d operations; %d overlapped\n" (length yos) (length [ () | b <- overlaps, b ])
 
   flip mapM_ (zip ys overlaps) $ \(i@Info{begin},overlap) -> do
-    let eMarker = if isEntry begin then "* " else "  "
-    let oMarker = if overlap then " !" else ""
-    putStrLn (eMarker ++ show i ++ oMarker)
+    let _eMarker = if isEntry begin then "* " else "  "
+    let _oMarker = if overlap then "! " else "  "
+    --putStrLn (_eMarker ++ show i ++ _oMarker)
+    putStrLn (_eMarker ++ _oMarker ++ show i)
+    --putStrLn (show i)
 
 
 staticRangeOfStory :: Story -> (Addr,Addr)
@@ -84,11 +93,12 @@ data Info = Info
 data Thing = Thing_Operation Operation | Thing_HeaderDefaults [Value]
 
 instance Show Info where
-  show Info{begin,thing,end} = do
-    ljust (show begin ++ " " ++ show thing) 70 ++ show end
+  show Info{begin,thing,end=_end} = do
+    -- _ljust (show begin ++ " " ++ show thing) 70 ++ show _end
+    show begin ++ " " ++ show thing
 
-ljust :: String -> Int -> String
-ljust s n = s ++ spaces (n - length s)
+_ljust :: String -> Int -> String
+_ljust s n = s ++ spaces (n - length s)
 
 spaces :: Int -> String
 spaces n = [ ' ' | _ <- [0..n-1] ]
