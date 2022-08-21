@@ -2,8 +2,8 @@
 module Dis2 (disassemble) where
 
 import Disassemble(seeMemMap)
-import Numbers (Addr,Value)
-import Operation (Operation,RoutineHeader,opLabels)
+import Numbers (Byte,Addr,Value)
+import Operation (Operation,RoutineHeader,opLabels,Target(..),opTargets)
 import Story (Story(header,size),OOB_Mode(..))
 import Fetch (runFetch)
 import Decode (fetchOperation,fetchRoutineHeader)
@@ -137,7 +137,7 @@ makeAnalysis :: Story -> (Addr,Addr) -> Analysis
 makeAnalysis story (start,stop) = do
   let allA = [ start .. stop - 1 ]
   let
-    vf0 = \_ -> True
+    vf0 = \_ -> Valid 0
     vf1 = validOpX story vf0
     vf2 = validOpX story vf1
     --vf3 = validOpX story vf2
@@ -148,14 +148,16 @@ makeAnalysis story (start,stop) = do
       case disRoutineHeader story a of
         Nothing -> Nothing
         Just res@(_,a') ->
-          if vf a'
-          then Just res
-          else Nothing
+          case vf a' of
+            Valid{} -> Just res -- TODO: check enough formals
+            Invalid -> Nothing
 
   let
     f_op :: Addr -> Maybe (Operation,Addr)
     f_op a =
-      if vf a then disOpM story a else Nothing
+      case vf a of
+        Valid{} -> disOpM story a
+        Invalid -> Nothing
 
   let headers = Map.fromList [ (a,res) | a <- allA, Just res <- [f_rh a] ]
   let ops = Map.fromList [ (a,res) | a <- allA, Just res <- [f_op a] ]
@@ -163,46 +165,93 @@ makeAnalysis story (start,stop) = do
 
 ----------------------------------------------------------------------
 
-validOpX :: Story -> (Addr -> Bool) -> Addr -> Bool
+data Validity = Invalid | Valid Byte
+
+andV :: Validity -> Validity -> Validity
+andV = \case
+  Invalid -> \_ -> Invalid
+  Valid n -> \case
+    Invalid -> Invalid
+    Valid m -> Valid (max n m)
+
+allV :: [Validity] -> Validity
+allV = foldl andV (Valid 0)
+
+{-orV :: Validity -> Validity -> Validity
+orV = \case
+  Valid -> \_ -> Valid
+  Invalid -> \x -> x
+
+anyV :: [Validity] -> Validity
+anyV = foldl orV Invalid-}
+
+withFormalsCount :: Int -> Validity -> Validity
+withFormalsCount n = \case -- n is number of provided formals
+  Invalid -> Invalid
+  Valid m -> -- m is maximum local var referenced or assigned
+    if fromIntegral n >= m then Valid 0 else Invalid
+
+
+validOpX :: Story -> (Addr -> Validity) -> Addr -> Validity
 validOpX story vfLast = do
   let (start,stop) = staticRangeOfStory story
   let allA = [ start .. stop - 1 ]
   let
-    vm :: Map Addr Bool
+    vm :: Map Addr Validity
     vm = Map.fromList [ (a, validOp_unfixed vf story a) | a <- allA ]
-    vf :: Addr -> Bool
+    vf :: Addr -> Validity
     vf addr = do
-      if addr < start || addr >= stop then False else
-        maybe undefined id $ Map.lookup addr vm
+      if addr < start || addr >= stop then Invalid else
+        maybe (error (show ("vf",addr))) id $ Map.lookup addr vm
   vf
   where
-    validOp_unfixed :: (Addr -> Bool) -> Story -> Addr -> Bool
-    validOp_unfixed vf story = recurse
+    validOp_unfixed :: (Addr -> Validity) -> Story -> Addr -> Validity
+    validOp_unfixed vf story = checkA
       where
-        recurse :: Addr -> Bool
-        recurse a =
+        checkA :: Addr -> Validity
+        checkA a =
           case disOpM story a of
-            Nothing -> False
-            Just (Op.Jump a',_) -> callRecurse a'
-            Just (op,next) -> do
-              case directCall op of
-                Just rha -> do
-                  case disRoutineHeader story rha of
-                    Nothing -> do
-                      False
-                    Just (_,routineStart) -> do
-                      callRecurse routineStart && callRecurse next
-                Nothing -> do
-                  isStopping op ||
-                    all id [ callRecurse a'
-                           | a' <- [ next ] ++ branchesOf op
-                           ]
+            Nothing -> Invalid
+            Just (op,next) ->
+              allV [ Valid (maxLocalRef op)
+                   , checkAOA a op next
+                   ]
+        checkAOA :: Addr -> Operation -> Addr -> Validity
+        checkAOA a op next = case op of
+          Op.Jump a' -> callRecurse a'
+          _ -> do
+            case directCall op of
+              Just rha -> do
+                case disRoutineHeader story rha of
+                  Nothing -> do
+                    Invalid
+                  Just (Op.BadRoutineHeader{},_) ->
+                    error "BadRH impossible here"
+                  Just (Op.RoutineHeader defs,routineStart) -> do
+                    allV [ withFormalsCount (length defs)
+                           (callRecurse routineStart)
+                         , callRecurse next
+                         ]
+              Nothing -> do
+                if isStopping op then Valid 0 else do
+                  allV [ callRecurse a'
+                       | a' <- [ next ] ++ branchesOf op
+                       ]
           where
-            callRecurse :: Addr -> Bool
+            callRecurse :: Addr -> Validity
             callRecurse a' =
               if a' > a
               then vf a'
               else vfLast a'
+
+
+maxLocalRef :: Operation -> Byte
+maxLocalRef op = case _opLocals op of
+  [] -> 0
+  xs -> maximum xs
+
+_opLocals :: Operation -> [Byte]
+_opLocals op = [ b | t <- opTargets op, Local b <- [t] ]
 
 
 directCall :: Operation -> Maybe Addr
