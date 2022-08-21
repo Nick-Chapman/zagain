@@ -109,15 +109,18 @@ validOp vm story = recurse
       case disOpM story a of
         Nothing -> False
         Just (Op.Jump a',_) -> callRecurse a'
-        Just (op,end) -> do
+        Just (op,next) -> do
           case directCall op of
-            Just _ha -> do
-              --validRH vm story _ha && -- TODO: sort this
-                callRecurse end
+            Just rha -> do
+              case disRoutineHeader story rha of
+                Nothing -> do
+                  False
+                Just (_,routineStart) -> do
+                  callRecurse routineStart && callRecurse next
             Nothing -> do
               isStopping op ||
                 all id [ callRecurse a'
-                       | a' <- [ end ] ++ branchesOf op
+                       | a' <- [ next ] ++ branchesOf op
                        ]
       where
         callRecurse :: Addr -> Bool

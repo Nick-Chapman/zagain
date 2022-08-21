@@ -1,5 +1,5 @@
-Found 5701 headers
-Found 13190 operations; 2628 overlapped
+Found 5698 headers
+Found 13179 operations; 2619 overlapped
 * 010095 Print_ret " cthe         gkthe c        9 sdon't         g Ford k "010126 !
 * 010113 Rfalse                                                         010114
 * 010122 Rtrue                                                          010123
@@ -6511,15 +6511,9 @@ Found 13190 operations; 2628 overlapped
   050440 Print "dark"                                                   050445
   050445 Print ". It has two small buttons, a red one labelled \"Call Engineer\" and a green one labelled \"Hitchhike.\""050512
 * 050512 Call (Floc 057998) [] Sp                                       050517
-* 050517 Print " Affixed to the Thumb is a lifetime "                   050542 !
-* 050519 Dec (Con 11630)                                                050522
-  050522 Sub (Var (Global 57)) (Var Sp) (Global 27)                     050526
-  050526 Dec_chk (Con 4) (Con 101) (Branch T (Dloc 049065))             050531
-  050531 Call (Floc 035844) [Con 11821,Con 89,Con 58] (Global 58)       050540
-  050540 Jz (Con -23142) (Branch F (Dloc 051746))                       050545 !
+* 050517 Print " Affixed to the Thumb is a lifetime "                   050542
   050542 Print_obj (Con 4)                                              050544
-  050544 Print_ret "."                                                  050547 !
-  050545 Dec (Con 69)                                                   050547
+  050544 Print_ret "."                                                  050547
   050547 Je [Var (Global 203),Con 124] (Branch F (Dloc 050567))         050551
   050551 Je [Var (Global 120),Con 142] (Branch F (Dloc 050567))         050555
   050555 Jin (Con 124) (Var (Global 0)) (Branch F (Dloc 050567))        050559
@@ -8578,7 +8572,6 @@ Found 13190 operations; 2628 overlapped
 * 069716 Je [Con 72,Con 155] (Branch F (Dloc 069722))                   069720
   069720 Ret_popped                                                     069721
   069722 Quit                                                           069723
-  069802 Call (Floc 053948) [Con -27392,Con 35,Con 139] (Global 117)    069811 !
 * 069810 Inc (Con -25892)                                               069813 !
   069811 Print_obj (Con 220)                                            069813
   069813 Print " on the way home. After a brief 900 parsec trip, you are escorted into the Transporter Chamber of the warship. The transporter glows, and your surroundings change..."069916 !
@@ -10909,8 +10902,6 @@ Found 13190 operations; 2628 overlapped
   089968 Rfalse                                                         089969
   089977 Print_obj (Con 220)                                            089979
 * 089979 Print ", but you can't for the life of you remember any details."090010 !
-* 089995 Get_prop_addr (Var (Global 26)) (Con 71) (Global 26)           089999
-  089999 Call (Floc 064514) [Con 42,Var (Global 84),Var (Global 190)] (Global 55)090007 !
   090006 Test (Var (Local 5)) (Con 200) (Branch T (Dloc 083284))        090011 !
   090007 Inc_chk (Con 200) (Con 165) (Branch T (Dloc 088917))           090012 !
   090010 New_line                                                       090011
@@ -12090,8 +12081,7 @@ Found 13190 operations; 2628 overlapped
   098368 Je [Var (Global 203),Con 98,Con 114,Con 40] (Branch F Dfalse)  098375
   098375 Print "Switched."                                              098384
   098384 Jin (Con 206) (Con 209) (Branch F (Dloc 098440))               098388
-  098388 Print " Some lights on the "                                   098401 !
-* 098398 Jl (Con 184) (Con 32) (Branch T (Dloc 105266))                 098403 !
+  098388 Print " Some lights on the "                                   098401
   098401 Print_obj (Con 209)                                            098403
 * 098403 Print_ret " flash briefly. A promising hum quickly dies away." 098440
   098440 New_line                                                       098441
@@ -13075,8 +13065,7 @@ Found 13190 operations; 2628 overlapped
   105241 Print_obj (Con 179)                                            105243
   105243 Print " is no longer suspended in"                             105262 !
 * 105259 Insert_obj (Con 204) (Con 165)                                 105262
-  105262 Call (Floc 043738) [Var (Global 208),Con 1] Sp                 105269 !
-  105266 Call (Floc 000356) [Con -27067,Con -17651,Con 224] Sp          105276 !
+  105262 Call (Floc 043738) [Var (Global 208),Con 1] Sp                 105269
 * 105269 Print "."                                                      105272 !
 * 105270 Dec (Con 69)                                                   105272
   105272 New_line                                                       105273
