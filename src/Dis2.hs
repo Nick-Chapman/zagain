@@ -20,10 +20,10 @@ dis story = do
   let Header{initialPC=_,staticMem} = Story.header story
   let (start,stop) = (staticMem,endOfStory)
 
-  let xs = disBetween story (start,stop)
+  let xs = disBetween_dropIn story (start,stop)
 
-  let hs = [ i | i@Info{thing=HeaderDefaults{}} <- xs ]
-  let os = [ i | i@Info{thing=Operation{}} <- xs ]
+  let hs = [ i | i@Info{thing=Thing_HeaderDefaults{}} <- xs ]
+  let os = [ i | i@Info{thing=Thing_Operation{}} <- xs ]
 
   let
     step :: Addr -> [Addr]
@@ -55,7 +55,7 @@ dis story = do
       | (Info{end},Info{begin=next}) <- (zip ys (tail ys))
       ] ++ [False]
 
-  let yos = [ i | i@Info{thing=Operation{}} <- ys ]
+  let yos = [ i | i@Info{thing=Thing_Operation{}} <- ys ]
 
   printf "Found %d headers\n" (length hs)
   printf "Found %d operations; %d overlapped\n" (length yos) (length [ () | b <- overlaps, b ])
@@ -66,68 +66,131 @@ dis story = do
     putStrLn (eMarker ++ show i ++ oMarker)
 
 
-type VM = Map Addr Bool
+staticRangeOfStory :: Story -> (Addr,Addr)
+staticRangeOfStory story = do
+  let endOfStory :: Addr = fromIntegral (size story)
+  let Header{initialPC=_,staticMem} = Story.header story
+  (staticMem,endOfStory)
 
-disBetween :: Story -> (Addr,Addr) -> [Info]
-disBetween story (start,stop) = do
+----------------------------------------------------------------------
+-- info/thing
+
+data Info = Info
+  { begin :: Addr
+  , thing :: Thing
+  , end :: Addr
+  }
+
+data Thing = Thing_Operation Operation | Thing_HeaderDefaults [Value]
+
+instance Show Info where
+  show Info{begin,thing,end} = do
+    ljust (show begin ++ " " ++ show thing) 70 ++ show end
+
+ljust :: String -> Int -> String
+ljust s n = s ++ spaces (n - length s)
+
+spaces :: Int -> String
+spaces n = [ ' ' | _ <- [0..n-1] ]
+
+instance Show Thing where
+  show = \case
+    Thing_HeaderDefaults xs -> do
+      "----------Header: " ++ show xs ++ "----------"
+    Thing_Operation op -> do
+      show op
+
+----------------------------------------------------------------------
+
+disBetween_dropIn :: Story -> (Addr,Addr) -> [Info]
+disBetween_dropIn story (start,stop) = do
+  let x = makeAnalysis story (start,stop)
+  infosFromAnalysis x
+
+infosFromAnalysis :: Analysis -> [Info]
+infosFromAnalysis Analysis{headers,ops} =
+  [ info
+  | (begin,(Op.RoutineHeader defs, end)) <- Map.toList headers
+  , let info = Info { begin, thing = Thing_HeaderDefaults defs, end }
+  ] ++
+  [ info
+  | (begin,(op, end)) <- Map.toList ops
+  , let info = Info { begin, thing = Thing_Operation op, end }
+  ]
+
+data Analysis = Analysis
+  { headers :: Map Addr (RoutineHeader,Addr)
+  , ops :: Map Addr (Operation,Addr)
+  }
+
+makeAnalysis :: Story -> (Addr,Addr) -> Analysis
+makeAnalysis story (start,stop) = do
   let allA = [ start .. stop - 1 ]
-  let vm = Map.fromList [ (a, validOp vm story a) | a <- allA ]
-  [ i | a <- allA, i <- disInfo vm story a ]
+  let
+    vf0 = \_ -> True
+    vf1 = validOpX story vf0
+    vf = vf1
+  let
+    f_rh :: Addr -> Maybe (RoutineHeader,Addr)
+    f_rh a =
+      case disRoutineHeader story a of
+        Nothing -> Nothing
+        Just res@(_,a') ->
+          if vf a'
+          then Just res
+          else Nothing
 
-disInfo :: VM -> Story -> Addr -> [Info]
-disInfo vm story addr = do
-  let begin = addr
-  let opM = disOpM story addr
-  let validO = validOp vm story addr
-  let headM = disRoutineHeader story addr
-  let validH = validRH vm story addr
-  (case opM of
-    Nothing -> []
-    Just (op,end) | validO -> do
-      [Info { begin, thing = Operation op, end }]
-    _  -> []
-    ) ++
-    (case headM of
-      Nothing -> []
-      Just (Op.BadRoutineHeader{}, _) -> []
-      Just (Op.RoutineHeader defs, end) | validH -> do
-        [Info { begin, thing = HeaderDefaults defs, end }]
-      _  -> [])
+  let
+    f_op :: Addr -> Maybe (Operation,Addr)
+    f_op a =
+      if vf a then disOpM story a else Nothing
 
+  let headers = Map.fromList [ (a,res) | a <- allA, Just res <- [f_rh a] ]
+  let ops = Map.fromList [ (a,res) | a <- allA, Just res <- [f_op a] ]
+  Analysis { headers, ops }
 
-validRH :: VM -> Story -> Addr -> Bool
-validRH vm story a = do
-  case disRoutineHeader story a of
-    Nothing -> False
-    Just (_,a') -> validOp vm story a'
+----------------------------------------------------------------------
 
-validOp :: VM -> Story -> Addr -> Bool
-validOp vm story = recurse
+validOpX :: Story -> (Addr -> Bool) -> Addr -> Bool
+validOpX story vfLast = do
+  let (start,stop) = staticRangeOfStory story
+  let allA = [ start .. stop - 1 ]
+  let
+    vm :: Map Addr Bool
+    vm = Map.fromList [ (a, validOp_unfixed vf story a) | a <- allA ]
+    vf :: Addr -> Bool
+    vf addr = do
+      if addr < start || addr >= stop then False else
+        maybe undefined id $ Map.lookup addr vm
+  vf
   where
-    recurse :: Addr -> Bool
-    recurse a =
-      case disOpM story a of
-        Nothing -> False
-        Just (Op.Jump a',_) -> callRecurse a'
-        Just (op,next) -> do
-          case directCall op of
-            Just rha -> do
-              case disRoutineHeader story rha of
-                Nothing -> do
-                  False
-                Just (_,routineStart) -> do
-                  callRecurse routineStart && callRecurse next
-            Nothing -> do
-              isStopping op ||
-                all id [ callRecurse a'
-                       | a' <- [ next ] ++ branchesOf op
-                       ]
+    validOp_unfixed :: (Addr -> Bool) -> Story -> Addr -> Bool
+    validOp_unfixed vf story = recurse
       where
-        callRecurse :: Addr -> Bool
-        callRecurse a' =
-          if a' > a
-          then maybe False id $ Map.lookup a' vm
-          else True -- break recursive loops
+        recurse :: Addr -> Bool
+        recurse a =
+          case disOpM story a of
+            Nothing -> False
+            Just (Op.Jump a',_) -> callRecurse a'
+            Just (op,next) -> do
+              case directCall op of
+                Just rha -> do
+                  case disRoutineHeader story rha of
+                    Nothing -> do
+                      False
+                    Just (_,routineStart) -> do
+                      callRecurse routineStart && callRecurse next
+                Nothing -> do
+                  isStopping op ||
+                    all id [ callRecurse a'
+                           | a' <- [ next ] ++ branchesOf op
+                           ]
+          where
+            callRecurse :: Addr -> Bool
+            callRecurse a' =
+              if a' > a
+              then vf a'
+              else vfLast a'
 
 
 directCall :: Operation -> Maybe Addr
@@ -135,7 +198,6 @@ directCall = \case
   Op.Call (Op.Floc a) _ _ -> Just a
   Op.CallN (Op.Floc a) _ -> Just a
   _ -> Nothing
-
 
 disOpM :: Story -> Addr -> Maybe (Operation,Addr)
 disOpM story a = do
@@ -150,30 +212,6 @@ disRoutineHeader story a = do
   case header of
     Op.BadRoutineHeader -> Nothing
     Op.RoutineHeader{} -> Just (header, a')
-
-data Info = Info
-  { begin :: Addr
-  , thing :: Thing
-  , end :: Addr
-  }
-
-data Thing = Operation Operation | HeaderDefaults [Value]
-
-instance Show Info where
-  show Info{begin,thing,end} = do
-    ljust (show begin ++ " " ++ show thing) 70 ++ show end
-
-ljust :: String -> Int -> String
-ljust s n = s ++ spaces (n - length s)
-
-spaces :: Int -> String
-spaces n = [ ' ' | _ <- [0..n-1] ]
-
-instance Show Thing where
-  show = \case
-    HeaderDefaults xs -> "----------Header: " ++ show xs ++ "----------"
-    Operation op -> show op
-
 
 ----------------------------------------------------------------------
 -- copied from Disassemble
